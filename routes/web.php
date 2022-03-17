@@ -16,7 +16,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 	Route::namespace('Admin')->group(function () {
 		Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
+
 	});
 });
 
 //Auth::routes();
+
+Route::namespace('Front')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+
+});
