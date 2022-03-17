@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 	Route::namespace('Admin')->group(function () {
 		Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 	});
 });
+
+//Auth::routes();
