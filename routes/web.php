@@ -36,3 +36,11 @@ Route::namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
 
 });
+
+Route::get('admin/pages', 'PageController@index');
+Route::get('admin/pages/create', 'PageController@create')->name('create');
+Route::post('admin/pages/add', 'PageController@add');
+Route::get('admin/pages/update/{id}', 'PageController@update')->name('create');
+Route::post('admin/pages/edit/{id}', 'PageController@edit');
+Route::get('admin/delete-page/{id}', 'PageController@delete');
+Route::get('admin/pages/status/{id}/{status}', 'PageController@status');

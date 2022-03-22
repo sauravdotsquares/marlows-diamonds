@@ -70,7 +70,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/add-page" class="nav-link">
+                <a href="/admin/pages/create" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Page</p>
                 </a>
