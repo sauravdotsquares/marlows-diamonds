@@ -15,7 +15,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/admin/dashboard';
 
 
     /**
@@ -25,9 +25,9 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        /*if (auth()->guard('employee')->check()) {
+        if (auth()->guard('employee')->check()) {
             return redirect()->route('admin.dashboard');
-        }*/
+        }
 
         return view('auth.admin.login');
     }
@@ -42,6 +42,7 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
+        // dd($request->all());
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -54,7 +55,7 @@ class LoginController extends Controller
         }
 
         $details = $request->only('email', 'password');
-        $details['status'] = 1;
+        $details['is_active'] = 1;
         if (auth()->guard('employee')->attempt($details)) {
             return $this->sendLoginResponse($request);
         }

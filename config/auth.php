@@ -40,6 +40,21 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'checkout' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employee',
+
+        ],
+
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -62,13 +77,13 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Shop\Customers\Customer::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'employee' => [
+             'driver' => 'eloquent',
+             'model' => App\Shop\Employees\User::class,
+         ],
     ],
 
     /*
@@ -92,6 +107,11 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'employee' => [
+            'provider' => 'employee',
+            'table' => 'password_resets',
+            'expire' => 60,
         ],
     ],
 
