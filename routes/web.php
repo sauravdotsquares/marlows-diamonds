@@ -22,11 +22,13 @@ Route::namespace('Admin')->group(function () {
     Route::get('admin/logout', 'LoginController@logout')->name('admin.logout');
 });
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'], function () {
 	Route::namespace('Admin')->group(function () {
-		Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+		//Route::group(['middleware' => ['role:admin|superadmin, guard:employee']], function () {
+			Route::get('/', 'DashboardController@index')->name('dashboard');
+			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-
+		//});
 	});
 });
 
