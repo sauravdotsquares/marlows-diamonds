@@ -7,7 +7,7 @@
          <div class="col-12">
             <div class="card">
                <div class="card-header">
-                  <h3 class="card-title">Add New Page</h3>
+                  <h3 class="card-title">Add New Post</h3>
                </div>
                <!-- /.card-header -->
                <div class="card-body">
@@ -21,21 +21,21 @@
                         </tr>
                      </thead>
                      <tbody>
-                        @if(!empty($pages))  
+                        @if(!empty($posts))  
                         @php ($i = 1)  
-                        @foreach($pages as $page)
+                        @foreach($posts as $post)
                         <tr>
-                           <td>{{$page->title}}</td>
-                           <td>{{$page->slug}}</td>
-                           <td>{{$page->created_at}}</td>
+                           <td>{{$post->title}}</td>
+                           <td>{{$post->slug}}</td>
+                           <td>{{$post->created_at}}</td>
                            <td>
-                              @if($page->status == 1) 
-                              <a title="Change Status" href="{{ url('admin/pages/status/'.base64_encode($page->id).'/0')}}"><i class="fa fa-check " aria-hidden="true"></i></a>
+                              @if($post->status == 1) 
+                              <a title="Change Status" href="{{ url('admin/posts/status/'.base64_encode($post->id).'/0')}}"><i class="fa fa-check " aria-hidden="true"></i></a>
                               @else
-                              <a title="Change Status" href="{{ url('admin/pages/status/'.base64_encode($page->id).'/1')}}"><i class="fa fa-times " aria-hidden="true"></i></a>  
+                              <a title="Change Status" href="{{ url('admin/posts/status/'.base64_encode($post->id).'/1')}}"><i class="fa fa-times " aria-hidden="true"></i></a>  
                               @endif  
-                              <a title="Edit" href="{{ url('admin/pages/update/'.base64_encode($page->id))}}"><i class="fa fa-edit " aria-hidden="true"></i></a>
-                              <a title="Delete" href="{{ url('admin/delete-page/'.base64_encode($page->id))}}" onclick="return myFunction()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                              <a title="Edit" href="{{ url('admin/posts/update/'.base64_encode($post->id))}}"><i class="fa fa-edit " aria-hidden="true"></i></a>
+                              <a title="Delete" href="{{ url('admin/delete-post/'.base64_encode($post->id))}}" onclick="return myFunction()"><i class="fa fa-trash" aria-hidden="true"></i></a>
                            </td>
                         </tr>
                         @php ($i++)  

@@ -47,7 +47,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/add-post" class="nav-link">
+                <a href="/admin/posts/create" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Post</p>
                 </a>
