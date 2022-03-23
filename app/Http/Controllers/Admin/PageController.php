@@ -18,8 +18,8 @@ class PageController extends Controller
     public function index()
     {
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
-            ["name" => "Pages", "url" => route("admin.pages"), "icon" => "fa fa-home"],
+            ["name" => "Pages", "url" => route("admin.pages"), "icon" => "fa fa-dashboard"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
