@@ -54,8 +54,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item @if(request()->segment(2) == 'pages') menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(request()->segment(2) == 'pages') active @endif">
               <i class="nav-icon fa fa-book"></i>
               <p>
                 Pages
@@ -64,13 +64,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/pages" class="nav-link">
+                <a href="/admin/pages" class="nav-link @if(request()->segment(2) == 'pages' && request()->segment(3) != 'create') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pages</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/pages/create" class="nav-link">
+                <a href="/admin/pages/create" class="nav-link @if(request()->segment(2) == 'pages' && request()->segment(3) == 'create') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Page</p>
                 </a>
