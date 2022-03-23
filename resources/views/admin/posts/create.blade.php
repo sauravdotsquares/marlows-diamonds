@@ -25,13 +25,13 @@
    <!-- DataTables Example -->
    <section class="content">
       <div class="container-fluid">
-         <form id="cmsForm" action="{{ url('admin/pages/add') }}" enctype="multipart/form-data" method="post" >
+         <form id="cmsForm" action="{{ url('admin/posts/add') }}" enctype="multipart/form-data" method="post" >
             @csrf
             <div class="row">
                <div class="col-md-8">
                   <div class="card card-primary">
                      <div class="card-header">
-                        <h3 class="card-title">Add Page</h3>
+                        <h3 class="card-title">Add Post</h3>
                      </div>
                      <div class="card-body">
                         <div class="form-group">
@@ -117,4 +117,3 @@
    })
 </script>  
 @endsection
-
