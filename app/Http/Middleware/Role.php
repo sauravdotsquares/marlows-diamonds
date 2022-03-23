@@ -15,8 +15,10 @@ class Role
      * @param string $guard
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $role)
     {
+        echo Auth::user()->user_role; die;
+        
         if (!Auth::check()) // I included this check because you have it, but it really should be part of your 'auth' middleware, most likely added as part of a route group.
         return redirect(route('admin.login'));
 

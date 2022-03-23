@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Shop\Employees\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -57,6 +58,10 @@ class LoginController extends Controller
         $details = $request->only('email', 'password');
         $details['is_active'] = 1;
         if (auth()->guard('employee')->attempt($details)) {
+            if(Auth::attempt($details, true)){
+
+                Auth::login(Auth::user(), true);
+            }
             return $this->sendLoginResponse($request);
         }
 
