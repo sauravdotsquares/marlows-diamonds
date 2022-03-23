@@ -51,7 +51,7 @@
 	 
 	          <div class="form-group">
               <div class="form-label-group">
-                <textarea id="cms_description" name="description" class="form-control ckeditor" placeholder="Page Description" ></textarea>                    
+                <textarea id="description" name="description" class="form-control ckeditor" placeholder="Page Description" ></textarea>                    
               </div>
             </div>
           
@@ -99,12 +99,11 @@
       </div> 	
 <!-- Sticky Footer -->
 
-<script type="text/javascript">
-    CKEDITOR.replace( 'cms_description',
-    {
-      customConfig : 'config.js',
-      toolbar : 'simple',
-      maxlength : 75
-    });
+<script>
+  $(function () {
+    // Summernote
+    $('#description').summernote()
+ 
+  })
 </script>  
 @endsection  

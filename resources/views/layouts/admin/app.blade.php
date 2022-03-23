@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="{{ asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
+  
   @yield('css')
   <!-- jQuery -->
     <script src="{{ asset('admin/plugins/jquery/jquery.min.js')}}"></script>
@@ -68,7 +70,9 @@
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{ asset('admin/dist/js/pages/dashboard2.js')}}"></script>
+
 <!-- Page specific script -->
 <script>
   $(function () {
