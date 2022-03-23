@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Pages;
+use App\Posts;
 use App\Http\Controllers\Controller;
 
 use URL;
-class PageController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +19,12 @@ class PageController extends Controller
     {
         $breadcrumb = [
             ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
-            ["name" => "Homex", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Posts", "url" => route("admin.posts"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
-		$pages = Pages::all();
-		return view('admin.pages.index', compact('pages'));
+		$posts = Posts::all();
+		return view('admin.posts.index', compact('posts'));
 		
     }
 
@@ -40,8 +40,8 @@ class PageController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-        $pages = Pages::all();
-        return view('admin.pages.create',compact('pages'));
+        $posts = Posts::all();
+        return view('admin.posts.create',compact('posts'));
 	}
 	
     /**
@@ -95,9 +95,9 @@ class PageController extends Controller
 		
 		//dd($input);
 
-        $pages = Pages::create($input);
+        $posts = Posts::create($input);
 
-        return redirect()->action('PageController@index')->with('alert-success', 'Page Added Successfully');
+        return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Added Successfully');
     }
 
     /**
@@ -106,7 +106,7 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($pageid=null){
+    public function update($postid=null){
         $breadcrumb = [
             ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Homex", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
@@ -114,18 +114,18 @@ class PageController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
 		
-		$id = base64_decode($pageid);
+		$id = base64_decode($postid);
 		if ($id == '') {
             return 'URL NOT FOUND';
         }
 		
-		$pages = Pages::find($id);
-		if (empty($pages)) {
+		$posts = Posts::find($id);
+		if (empty($posts)) {
             return 'URL NOT FOUND';
         }
-        $pages = Pages::find($id);
-		//dd($pages );
-        return view('admin.pages.edit',compact('pages'));
+        $posts = Posts::find($id);
+		//dd($posts );
+        return view('admin.posts.edit',compact('posts'));
 	}
 
     /**
@@ -134,16 +134,16 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $pageid) {
+    public function edit(Request $request, $postid) {
         
-		$id = base64_decode($pageid);
+		$id = base64_decode($postid);
         if ($id == '') {
             return 'URL NOT FOUND';
         }
 
-        $pages = Pages::findOrFail($id);
+        $posts = Posts::findOrFail($id);
 
-        if (empty($pages)) {
+        if (empty($posts)) {
             return 'URL NOT FOUND';
         }
 
@@ -173,7 +173,7 @@ class PageController extends Controller
                 }*/
 				//dd($input['image']);
                 if (!empty($request->file('image'))) {
-                    $image_prefix = 'page_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
+                    $image_prefix = 'post_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
                     $ext = $request->file('image')->getClientOriginalExtension();
                     $image = $image_prefix . '.' . $ext;
                     //$image_array[] = $image;
@@ -190,9 +190,9 @@ class PageController extends Controller
 			
 			$input['image'] = $image;
 		}
-        $pages->fill($input)->save();
+        $posts->fill($input)->save();
 
-        return redirect()->action('PageController@index')->with('alert-success', 'Page Updated Successfully');
+        return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Updated Successfully');
     }
 
     
@@ -203,26 +203,26 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($pageid) {
-        $id = base64_decode($pageid);
-        Pages::find($id)->delete(); 
-		return redirect()->action('PageController@index')->with('alert-success', 'Page Deleted Successfully');
+    public function delete($postid) {
+        $id = base64_decode($postid);
+        Posts::find($id)->delete(); 
+		return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Deleted Successfully');
     }
 	 /**
      * Status
      */
 	public function status($ids,$status) { 
         $ids = base64_decode($ids);       
-        $pages =  Pages::find($ids);
-        if (empty($pages)) {
+        $posts =  Posts::find($ids);
+        if (empty($posts)) {
             return 'URL NOT FOUND';
         }
 
         $input['status'] = $status;
         unset($input['_token']);
         
-        $pages->fill($input)->save();
+        $posts->fill($input)->save();
 
-        return redirect()->action('PageController@index')->with('alert-success', 'Page Status Updated Successfully');
+        return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Status Updated Successfully');
     }
 }

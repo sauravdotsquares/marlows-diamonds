@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\UserRoles;
+use App\Models\Role;
 
 class UsersRoleTableDataSeeder extends Seeder
 {
@@ -14,19 +14,19 @@ class UsersRoleTableDataSeeder extends Seeder
      */
     public function run()
     {
-        UserRoles::create([
+        Role::create([
 	            'name' => 'Superadmin',
 	        ]);
-        UserRoles::create([
+        Role::create([
 	            'name' => 'Admin',
 	        ]);
-        UserRoles::create([
+        Role::create([
 	            'name' => 'Customer',
 	        ]);
-        UserRoles::create([
+        Role::create([
 	            'name' => 'Subscriber',
 	        ]);
-        UserRoles::create([
+        Role::create([
 	            'name' => 'Member',
 	        ]);
     }

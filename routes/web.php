@@ -27,7 +27,21 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		//Route::group(['middleware' => ['role:admin|superadmin, guard:employee']], function () {
 			Route::get('/', 'DashboardController@index')->name('dashboard');
 			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
+			Route::get('/pages', 'PageController@index')->name('pages');
+			Route::get('/pages/create', 'PageController@create')->name('create');
+			Route::post('/pages/add', 'PageController@add')->name('add');
+			Route::get('/pages/update/{id}', 'PageController@update')->name('create');
+			Route::post('/pages/edit/{id}', 'PageController@edit');
+			Route::get('/delete-page/{id}', 'PageController@delete');
+			Route::get('/pages/status/{id}/{status}', 'PageController@status');
+		// Posts
+			Route::get('/posts', 'PostController@index')->name('posts');
+			Route::get('/posts/create', 'PostController@create')->name('create');
+			Route::post('/posts/add', 'PostController@add')->name('add');
+			Route::get('/posts/update/{id}', 'PostController@update')->name('create');
+			Route::post('/posts/edit/{id}', 'PostController@edit');
+			Route::get('/delete-post/{id}', 'PostController@delete');
+			Route::get('/posts/status/{id}/{status}', 'PostController@status');	
 		//});
 	});
 });
@@ -39,10 +53,3 @@ Route::namespace('Front')->group(function () {
 
 });
 
-Route::get('admin/pages', 'PageController@index');
-Route::get('admin/pages/create', 'PageController@create')->name('create');
-Route::post('admin/pages/add', 'PageController@add');
-Route::get('admin/pages/update/{id}', 'PageController@update')->name('create');
-Route::post('admin/pages/edit/{id}', 'PageController@edit');
-Route::get('admin/delete-page/{id}', 'PageController@delete');
-Route::get('admin/pages/status/{id}/{status}', 'PageController@status');
