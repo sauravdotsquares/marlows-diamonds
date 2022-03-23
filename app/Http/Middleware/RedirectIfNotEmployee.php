@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Auth;
 class RedirectIfNotEmployee
 {
     /**
@@ -16,6 +16,7 @@ class RedirectIfNotEmployee
      */
     public function handle($request, Closure $next, $guard = 'employee')
     {
+        //dd(Auth::user()->user_role); die;
         if (!auth()->guard($guard)->check()) {
             $request->session()->flash('error', 'You must be an employee to see this page');
             return redirect(route('admin.login'));

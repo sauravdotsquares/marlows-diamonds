@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Admin routes
  */
+
 Route::namespace('Admin')->group(function () {
     Route::get('admin/login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('admin/login', 'LoginController@login')->name('admin.login');
@@ -24,9 +25,10 @@ Route::namespace('Admin')->group(function () {
 
 Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'], function () {
 	Route::namespace('Admin')->group(function () {
-		//Route::group(['middleware' => ['role:admin|superadmin, guard:employee']], function () {
+		//Route::group(['middleware' => ['role:superadmin|admin']], function () {
 			Route::get('/', 'DashboardController@index')->name('dashboard');
 			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+			Route::get('/change-password', 'PasswordController@index')->name('change-password');
 			Route::get('/pages', 'PageController@index')->name('pages');
 			Route::get('/pages/create', 'PageController@create')->name('create');
 			Route::post('/pages/add', 'PageController@add')->name('add');
@@ -42,6 +44,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/posts/edit/{id}', 'PostController@edit');
 			Route::get('/delete-post/{id}', 'PostController@delete');
 			Route::get('/posts/status/{id}/{status}', 'PostController@status');	
+
 		//});
 	});
 });
