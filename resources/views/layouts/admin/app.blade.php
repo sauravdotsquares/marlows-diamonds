@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="{{ asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('admin/dist/css/adminlte.min.css')}}">
+
+  <link rel="stylesheet" href="{{ asset('admin/dist/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css')}}">
   <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
   
   @yield('css')
