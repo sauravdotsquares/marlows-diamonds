@@ -17,8 +17,8 @@ class SettingsController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
         
-		$settings = Settings::all();
-        return view('admin.settings.index',compact('settings'));
+		
+        return view('admin.settings.index');
         
     }
 	public function update(Request $request){
@@ -30,7 +30,7 @@ class SettingsController extends Controller
 			// echo "<pre>";
 		// print_r($option_value[0]);
 		// die;
-			if($request->hasFile('image')) {
+			if($request->hasFile('logo')) {
 
             //$image_array = [];
 

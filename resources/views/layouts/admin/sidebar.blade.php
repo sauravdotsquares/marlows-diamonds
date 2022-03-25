@@ -204,6 +204,33 @@
              
             </ul>
           </li>
+		  
+		  <li class="nav-item @if(request()->segment(2) == 'faqs') menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(request()->segment(2) == 'faqs') active @endif">
+              <i class="nav-icon fa fa-book"></i>
+              <p>
+                Faqs
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/admin/faqs" class="nav-link @if(request()->segment(2) == 'faqs' && request()->segment(3) != 'create') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Faqs</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/faqs/create" class="nav-link @if(request()->segment(2) == 'faqs' && request()->segment(3) == 'create') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Faq</p>
+                </a>
+              </li>
+              
+              
+            </ul>
+          </li>
+		  
 		  <li class="nav-item">
             <a href="pages/calendar.html" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>

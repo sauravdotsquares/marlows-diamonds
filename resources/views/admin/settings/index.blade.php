@@ -1,10 +1,10 @@
 @extends('layouts.admin.app')
 
 @section('content')
- 
+@inject('settings1', 'App\Models\Settings') 
 <div id="content-wrapper">
   <div class="container-fluid">
-      <!-- Breadcrumbs-->
+      
       @if(session()->has('alert-danger'))
         <div class="alert alert-danger">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session()->get('alert-danger') }}
@@ -27,35 +27,63 @@
         <div class="card-body">
           <form action="{{ url('admin/settings-update') }}" enctype="multipart/form-data" method="post">
            @csrf 
-            <div class="col-lg-12">
-              <table class="table table-bordered" id="" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Option Name</th>
-                      <th>Option Value</th>
-                    </tr>
-                  </thead>
-                  
-                  <tbody>
-				          @foreach($settings as $option)
-                    <tr>
-                      <td>{{$option->option_name}}</td>
-					            <td>
-								
-                      <input type="{{$option->option_type}}" name="option_value[{{$option->id}}][]" class="form-control" placeholder="Option Value" value="{{$option->option_value}}">
-                        @if($option->option_type=='file' && $option->option_value!='')
-                           <img src="{{url('/')}}/images/{{$option->option_value}}" width="120">
-                        @endif
-                      </td>
-                    </tr>
-					        @endforeach
-                  </tbody>
-              </table>
-              <div class="form-group">
-                <div class="form-group">
-                  <input type="submit" class="btn btn-primary" value="Save">
-                </div>
-              </div>          
+            
+			<div class="row">
+               <div class="col-md-8">
+                  <div class="card card-primary">
+                     
+                     <div class="card-body">
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Site Title</label>
+                              <input type="text" id="site_title" name="site_title" value="{{$settings1->get_options('site_title')}}" class="form-control" placeholder="Site Title">
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Contact No.</label>
+                              <input type="text" id="contact_no" name="contact_no" value="{{$settings1->get_options('contact_no')}}" class="form-control" placeholder="Contact No.">
+                           </div>
+                        </div>
+                       <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Copyright</label>
+                              
+							 <textarea id="copyright" name="copyright" class="form-control">{{$settings1->get_options('copyright')}}</textarea>   
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Facebook</label>
+                              <input type="text" id="facebook" name="facebook" value="{{$settings1->get_options('facebook')}}" class="form-control" placeholder="Facebook">
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Twitter</label>
+                              <input type="text" id="twitter" name="twitter" value="{{$settings1->get_options('twitter')}}" class="form-control" placeholder="Twitter">
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Instagram</label>
+                              <input type="text" id="instagram" name="instagram" value="{{$settings1->get_options('instagram')}}" class="form-control" placeholder="Instagram">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-4">
+                  <div class="card card-header">
+                     
+                     
+                     
+                    
+                     <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                     </div>
+                  </div>
+               </div>
             </div>
           </form>
         </div>
@@ -63,4 +91,11 @@
   </div>
 </div>
 <!-- Sticky Footer -->
+<script>
+   $(function () {
+     // Summernote
+     $('#copyright').summernote()
+   
+   })
+</script>  
 @endsection

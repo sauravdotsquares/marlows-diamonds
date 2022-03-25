@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 			// Change Password Routes
 			Route::get('/change-password', 'PasswordController@index')->name('change-password');
+			Route::post('/change-password', 'PasswordController@changePassword');
 			// Settings Route
 			Route::get('/settings', 'SettingsController@index');
 			Route::post('/settings-update', 'SettingsController@update');
@@ -52,6 +53,14 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			//Appreance>Menus Routes
 			Route::get('/menus', 'MenuController@index')->name('menus');
 			Route::post('/menus/save', 'MenuController@save');
+			// Faqs Route
+			Route::get('/faqs', 'FaqController@index')->name('faqs');
+			Route::get('/faqs/create', 'FaqController@create')->name('create');
+			Route::post('/faqs/add', 'FaqController@add')->name('add');
+			Route::get('/faqs/update/{id}', 'FaqController@update')->name('create');
+			Route::post('/faqs/edit/{id}', 'FaqController@edit');
+			Route::get('/delete-faq/{id}', 'FaqController@delete');
+			Route::get('/faqs/status/{id}/{status}', 'FaqController@status');
 		//});
 	});
 });
