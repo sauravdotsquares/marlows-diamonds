@@ -28,10 +28,12 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		//Route::group(['middleware' => ['role:superadmin|admin']], function () {
 			Route::get('/', 'DashboardController@index')->name('dashboard');
 			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+			// Change Password Routes
 			Route::get('/change-password', 'PasswordController@index')->name('change-password');
-			Route::post('/change-password', 'PasswordController@changePassword');
+			// Settings Route
 			Route::get('/settings', 'SettingsController@index');
 			Route::post('/settings-update', 'SettingsController@update');
+			// Pages Route
 			Route::get('/pages', 'PageController@index')->name('pages');
 			Route::get('/pages/create', 'PageController@create')->name('create');
 			Route::post('/pages/add', 'PageController@add')->name('add');
@@ -39,7 +41,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/pages/edit/{id}', 'PageController@edit');
 			Route::get('/delete-page/{id}', 'PageController@delete');
 			Route::get('/pages/status/{id}/{status}', 'PageController@status');
-		// Posts
+			// Blog/Posts Routes
 			Route::get('/posts', 'PostController@index')->name('posts');
 			Route::get('/posts/create', 'PostController@create')->name('create');
 			Route::post('/posts/add', 'PostController@add')->name('add');
@@ -47,7 +49,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/posts/edit/{id}', 'PostController@edit');
 			Route::get('/delete-post/{id}', 'PostController@delete');
 			Route::get('/posts/status/{id}/{status}', 'PostController@status');	
-
+			//Appreance>Menus Routes
+			Route::get('/menus', 'MenuController@index')->name('menus');
+			Route::post('/menus/save', 'MenuController@save');
 		//});
 	});
 });
