@@ -52,6 +52,8 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			//Appreance>Menus Routes
 			Route::get('/menus', 'MenuController@index')->name('menus');
 			Route::post('/menus/save', 'MenuController@save');
+
+			Route::get('/users','UserController@index')->name('users');
 		//});
 	});
 });
