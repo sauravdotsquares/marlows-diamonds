@@ -30,6 +30,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 			// Change Password Routes
 			Route::get('/change-password', 'PasswordController@index')->name('change-password');
+			// Settings Route
+			Route::get('/settings', 'SettingsController@index');
+			Route::post('/settings-update', 'SettingsController@update');
 			// Pages Route
 			Route::get('/pages', 'PageController@index')->name('pages');
 			Route::get('/pages/create', 'PageController@create')->name('create');

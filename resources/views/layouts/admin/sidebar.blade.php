@@ -14,7 +14,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{auth()->user()->nicename}}</a>
+          <a href="#" class="d-block"></a>
         </div>
       </div>
 
@@ -215,7 +215,7 @@
           </li>
           
           <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
+            <a href="/admin/settings" class="nav-link">
               <i class="nav-icon fas fa fa-cog"></i>
               <p>
                 Settings

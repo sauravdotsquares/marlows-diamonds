@@ -10,45 +10,71 @@
           <div class="col-md-12">
             <!-- jquery validation -->
             <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
-              </div>
+              
               <!-- /.card-header -->
               <!-- form start -->
-              <form id="quickForm">
-                <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                  </div>
-                  <div class="form-group mb-0">
+              
+				@if(old('msg'))
+				<p>msg:{{ old('msg') }}<p>
+				@endif
+            <form id="quickForm" method="POST" name="change_paswd" action="{{ url('admin/change-password') }}">
+                @csrf
+                @method('POST')
+				<div class="card-header">
+				<i class="fas fa-table"></i> Change Password
+				</div>
+				<div class="card-body">
+                <div class="form-group row">
+                    <label for="old_password" class="col-md-2 col-form-label">{{ __('Current Password') }} <span class="required-field-start">*</span></label>
+                    <div class="col-md-6">
+                        <input id="old_password" name="old_password" type="password" class="form-control" autocomplete="off" required1 autofocus>
+                    </div>
+                    <span class="help-block">
+                        <strong>{{ $errors->first('old_password') }}</strong>
+                    </span>
+                </div>
+                <div class="form-group row">
+                    <label for="new_password" class="col-md-2 col-form-label">{{ __('New Password') }}  <span class="required-field-start">*</span></label>
+                    <div class="col-md-6">
+                        <input id="new_password" name="new_password" type="password" class="form-control" autocomplete="off" required1 autofocus>
+                    </div>
+                    <span class="help-block">
+                        <strong>{{ $errors->first('new_password') }}</strong>
+                    </span>
+                </div>
+                <div class="form-group row">
+                    <label for="password_confirmation" class="col-md-2 col-form-label">{{ __('Confirm Password') }}  <span class="required-field-start">*</span></label>
+                    <div class="col-md-6">
+                        <input id="password_confirmation" name="password_confirmation" type="password" class="form-control" autocomplete="off" required1 autofocus>
+                    </div>
+                    <span class="help-block">
+                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                    </span>
+                </div>
+				<div class="form-group mb-0">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
                       <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
                     </div>
-                  </div>
                 </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
+				</div>  
+				<div class="card-footer">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+				
+			</form>
+			</div>
+        
             </div>
             <!-- /.card -->
             </div>
           <!--/.col (left) -->
           <!-- right column -->
-          <div class="col-md-6">
-
-          </div>
+          
           <!--/.col (right) -->
         </div>
         <!-- /.row -->
-      </div><!-- /.container-fluid -->
+      
     </section>
     <!-- /.content -->
 @endsection
