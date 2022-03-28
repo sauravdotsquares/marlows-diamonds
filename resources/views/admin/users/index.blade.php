@@ -1,161 +1,96 @@
 @extends('layouts.admin.app')
 @section('css')
-
+<style>
+   .error {
+      color: red;
+      /* background-color: #acf; */
+   }
+</style>
 @endsection
 @section('content')
-<div class="content">
-    <section class="content">
-      <!-- <div class="container-fluid">
-         <form id="cmsForm" action="{{ url('admin/posts/add') }}" enctype="multipart/form-data" method="post" >
-            @csrf
-            <div class="row">
-               <div class="col-md-8 offset-md-2">
-                  <div class="card card-primary">
-                     <div class="card-header">
-                        <h3 class="card-title">Add Users</h3>
-                     </div>
-                     <div class="card-body">
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="product_name">Title</label>
-                              <input type="text" id="title" name="title" class="form-control" placeholder="Title" >
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="product_name">Sub title</label>
-                              <input type="text" id="subtitle" name="subtitle" class="form-control" placeholder="Subtitle" >
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="product_name">Slug</label>
-                              <input type="text" id="slug" name="slug" class="form-control" placeholder="Slug" >
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="product_name">Short Description</label>
-                              <textarea id="short_description" name="short_description" class="form-control"></textarea>                    
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="product_name">Description</label>
-                              <textarea id="description" name="description" class="form-control ckeditor"></textarea>                    
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="card card-header">
-                     <div class="form-group">
-                        <label for="exampleInputFile">Banner Image</label>
-                        <div class="input-group">
-                           <div class="custom-file">
-                              <input type="file" id="image" name="image" class="custom-file-input" accept="image/*">
-                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <div class="form-label-group">
-                           <select id="status" name="status" class="form-control">
-                              <option value="">Select Status</option>
-                              <option value="1">Enable</option>
-                              <option value="0">Disable</option>
-                           </select>
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <div class="form-label-group">
-                           <label for="product_name">Meta Title</label>
-                           <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title" >
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <div class="form-label-group">
-                           <textarea id="meta_description" name="meta_description" class="form-control ckeditor" placeholder="Meta Description" ></textarea>                    
-                        </div>
-                     </div>
-                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </form>
-      </div> -->
-      
-    </section>
-</div>
+      @if(Session::has('success'))
+         <div class="alert alert-success">
+            {{ Session::get('success') }}
+            @php
+                  Session::forget('success');
+            @endphp
+         </div>
+      @endif
+
+
 <!-- Main content -->
 <section class="content">
    <div class="container-fluid">
       <div class="row">
          <div class="col-12">
             <div class="card">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card-header">
-                            <h3 class="card-title">Add New Post</h3>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card-header1">
-                            <button><a href="javascript:void()" id="addForm">Add</a></button>
-                        </div>
-                    </div>
-                </div>
-               
+               <div class="row">
+                  <div class="col-6">
+                     <div class="card-header">
+                        <h3 class="card-title">User</h3>
+                     </div>
+                  </div>
+                  <div class="col-6">
+                     <div class="card-header1">
+                        <!-- <button><a href="javascript:void()" id="addForm">Add</a></button> -->
+                        <button type="button" id="addformdata" class="btn btn-primary" data-toggle="modal" data-target="#addEditForm">
+                           Add
+                        </button>
+                     </div>
+                  </div>
+               </div>
+
                <!-- /.card-header -->
                <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
                      <thead>
                         <tr>
+                           <th>Sr No</th>
                            <th>Name</th>
                            <th>Email</th>
                            <th>Nice Name</th>
                            <th>Role</th>
                            <th>Description</th>
-                           <th>Status</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
                      </thead>
-                     <tbody> 
-                        @foreach($getData as $value)
-                            <tr>
-                                <td>{{$value->name}}</td>
-                                <td>{{$value->email}}</td>
-                                <td>{{$value->nicename}}</td>
-                                <td>{{$value->user_role}}</td>
-                                <td>{{$value->description}}</td>
-                                <td>{{$value->is_active}}</td>
-                                <td>{{$value->created_at}}</td>
-                                <td>
-                                    @if($value->status == 1) 
-                                        <a title="Change Status" href="{{ url('admin/posts/status/'.base64_encode($value->id).'/0')}}"><i class="fa fa-check " aria-hidden="true"></i></a>
-                                    @else
-                                        <a title="Change Status" href="{{ url('admin/posts/status/'.base64_encode($value->id).'/1')}}"><i class="fa fa-times " aria-hidden="true"></i></a>  
-                                    @endif  
-                                    <a title="Edit" href="{{ url('admin/posts/update/'.base64_encode($value->id))}}"><i class="fa fa-edit " aria-hidden="true"></i></a>
-                                    <a title="Delete" href="{{ url('admin/delete-post/'.base64_encode($value->id))}}" onclick="return myFunction()"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                </td>
-                            </tr> 
+                     <tbody>
+                        @foreach($getData as $key => $value)
+                        <tr>
+                           <td>{{++$key}}</td>
+                           <td>{{$value->name}}</td>
+                           <td>{{$value->email}}</td>
+                           <td>{{$value->nicename}}</td>
+                           <td>Customer</td>
+                           <td>{{$value->description}}</td>
+                           <td>{{$value->created_at}}</td>
+                           <td>
+                              @if($value->is_active == 1)
+                                 <a title="Change Status"
+                                 href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="0"><i
+                                    class="fa fa-check" aria-hidden="true"></i></a>
+                              @else
+                                 <a title="Change Status"
+                                 href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="1"><i
+                                    class="fa fa-times" aria-hidden="true"></i></a>
+                              @endif
+                              <a title="Edit" href="javascript:void(0);" class="btn btn-warning btn-sm data_edit" data-value="{{$value}}"><i class="fa fa-edit " aria-hidden="true"></i></a>
+                              <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$value}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                           </td>
+                        </tr>
                         @endforeach
                      </tbody>
                      <tfoot>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Nice Name</th>
-                            <th>Role</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Created</th>
-                            <th>Action</th>
+                           <th>Sr No.</th>
+                           <th>Name</th>
+                           <th>Email</th>
+                           <th>Nice Name</th>
+                           <th>Role</th>
+                           <th>Description</th>
+                           <th>Created</th>
+                           <th>Action</th>
                         </tr>
                      </tfoot>
                   </table>
@@ -172,10 +107,307 @@
    <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="addEditFormModal" tabindex="-1" role="dialog" aria-labelledby="addEditFormLabel"
+   aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addEditFormLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="alert alert-danger print-error-msg" style="display:none">
+            <ul></ul>
+         </div>
+         <div class="modal-body">
+            <form id="addEditForm">
+               @csrf
+               <input type="hidden" name="table_id" id="table_id" value="" />
+               <div class="form-group row">
+                  <label for="name">Name <span style="color:red;">*</span></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" id="name" name="name">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="email">Email <span style="color:red;">*</span></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" id="email" name="email">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="username">User Name <span style="color:red;">*</span></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" id="username" name="username">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="nicename">Nice Name <span style="color:red;">*</span></label>
+                  <div class="col-sm-10">
+                     <input type="text" class="form-control" id="nicename" name="nicename">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="password">Password <span style="color:red;">*</span></label>
+                  <div class="col-sm-10">
+                     <input type="password" class="form-control" id="password" name="password">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="confirm_password">Confirm Password <span style="color:red;">*</span></label>
+                  <div class="col-sm-10">
+                     <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                  </div>
+               </div>
+               <div class="form-group row">
+                  <label for="description">Description <span style="color:red;">*</span></label>
+                  <div class="col-sm-10">
+                     <textarea name="description" id="description" class="form-control" cols="30" rows="10">
+
+                     </textarea>
+                  </div>
+               </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+         </div>
+         </form>
+      </div>
+   </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialod">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">
+            </h4>
+            <button class="close" type="button" data-bs-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body">
+            <div class="deleteContent">
+               Are you sure want to delete <span class="title"></span>?
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn actionBtn" data-dismiss="modal">
+               <span id="footer_action_button"></span>
+            </button>
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">
+               <span class="glyphicon glyphicon"></span> Close
+            </button>
+            <input type="hidden" name="themeId" value="" />
+         </div>
+      </div>
+   </div>
+</div>
+
 @endsection
 
 @section('js')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    // $(document).ready()
+   $(document).ready(function(){
+      // $('#description').summernote();
+
+      $('#addformdata').on('click',function(){
+         getBlankForm();
+         $('#addEditFormModal').modal('show');
+      });
+      
+      //validation and form submission function here
+      $('form#addEditForm').validate({
+         rules:{
+            name:{
+               required:true,
+            },
+            password:{
+               required: function () {
+                  if($('input[name="table_id"]').val() == ''){
+                     return true;
+                  }else{
+                     return false;
+                  }
+               },
+            },
+            confirm_password:{
+               required: function () {
+                  if($('input[name="table_id"]').val() == ''){
+                     return true;
+                  }else{
+                     return false;
+                  }
+               },
+            },
+            email:{
+               required:true,
+               email:true,
+            },
+            username:{
+               required:false,
+            },
+            description:{
+               required:false,
+            },
+         },
+         messages:{
+            name:{
+               required:"Name is required",
+            },
+            password:{
+               required:"Password is required",
+            },
+            confirm_password:{
+               required:"Confirm Password is required",
+               equalTo : '#password',
+            },
+            email:{
+               required:"Email is required",
+               email:"Enter email is valid format",
+            },
+            username:{
+               required:"Username is required",
+            },
+            description:{
+               required:"Description is required",
+            }
+         },
+         submitHandler:function(form){
+            var form_data = new FormData(form);
+            $.ajax({
+               type:"POST",
+               url:'{{asset("admin/users")}}',
+               cache:false,
+               contentType:false,
+               processData:false,
+               data:form_data,
+               success:function(res){
+                  if($.isEmptyObject(res.error)){
+                     // alert(res.success);
+                     $('#addEditModal').modal('hide');
+                     Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: res.success,
+                        showConfirmButton: false,
+                        timer: 1500
+                     });
+                  }else{
+                     printErrorMsg(res.error);
+                     Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: res.success,
+                        showConfirmButton: false,
+                        timer: 1500
+                     });   
+                  }
+                  location.reload();
+               }
+            });
+         }
+      });
+
+      function printErrorMsg (msg) {
+         $(".print-error-msg").find("ul").html('');
+         $(".print-error-msg").css('display','block');
+         $.each( msg, function( key, value ) {
+               $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+         });
+      }
+
+      function getBlankForm(){
+         $('#table_id').data('');
+         $('#name').data('');
+         $('#email').data('');
+         $('#username').data('');
+         $('#nicename').data('');
+         $('#description').data('');
+      }
+
+      $('.data_edit').on('click',function(){
+         getBlankForm();
+         // console.log(value);
+         $('#table_id').val($(this).data('value').id);
+         $('#name').val($(this).data('value').name);
+         $('#email').val($(this).data('value').email);
+         $('#username').val($(this).data('value').username);
+         $('#nicename').val($(this).data('value').nicename);
+         $('#description').val($(this).data('value').description);
+         $('#addEditFormModal').modal('show');
+      });
+
+      $(document).on('click','.delete-modal',function(){
+         roe=$(this).parent('id').parent('tr');
+         $('#footer_action_button').text('Delete');
+         $('#footer_action_button').removeClass('glyphicon-check');
+         $('#footer_action_button').addClass('glyphicon-trash');
+         $('.actionBtn').removeClass('btn-success');
+         $('.actionBtn').removeClass('btn-danger');
+         $('.actionBtn').addClass('delete');
+         $('.modal-title').text('Delete ?');
+         $('.modal-footer').find('input[name=themeId]').val($(this).data('value').id);
+         $('.deleteContent').show();
+         $('.form-horizontal').hide();
+         $('.title').html($(this).data('value').title);
+         $('#myModal').modal('show');
+
+      });
+
+      $('.statusSwitch').on('click',function(){
+         $.ajax({
+            type:'POST',
+            url:'{{asset("admin/change-record")}}',
+            data:{
+               '_token':"{{csrf_token()}}",
+               'id':$(this).data('record'),
+               'status':$(this).data('value')
+            },
+            success:function(responseText){
+               Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: "Changed",
+                  showConfirmButton: false,
+                  timer: 1500
+               });
+               location.reload();
+            }
+         })
+      });
+
+      $('.modal-footer').on('click','.delete',function(){
+         let themeId = $('input[name=themeId]').val();
+         $.ajax({
+            type:"POST",
+            url:'{{asset("admin/delete-record")}}',
+            data:{
+               "_token": "{{ csrf_token() }}",
+               'id':themeId,
+            },
+            success:function(res){
+               Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: "Deleted",
+                  showConfirmButton: false,
+                  timer: 1500
+               });
+               location.reload();
+            }
+         });
+      });
+
+   })
 </script>
 @endsection

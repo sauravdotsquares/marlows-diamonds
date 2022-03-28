@@ -54,6 +54,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/menus/save', 'MenuController@save');
 
 			Route::get('/users','UserController@index')->name('users');
+			Route::post('/users','UserController@store');
+			Route::post('/change-record','UserController@status');
+			Route::post('/delete-record','UserController@delete');
 		//});
 	});
 });
