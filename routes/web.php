@@ -61,6 +61,14 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/faqs/edit/{id}', 'FaqController@edit');
 			Route::get('/delete-faq/{id}', 'FaqController@delete');
 			Route::get('/faqs/status/{id}/{status}', 'FaqController@status');
+			// Reviews Route
+			Route::get('/reviews', 'ReviewController@index')->name('faqs');
+			Route::get('/reviews/create', 'ReviewController@create')->name('create');
+			Route::post('/reviews/add', 'ReviewController@add')->name('add');
+			Route::get('/reviews/update/{id}', 'ReviewController@update')->name('create');
+			Route::post('/reviews/edit/{id}', 'ReviewController@edit');
+			Route::get('/delete-review/{id}', 'ReviewController@delete');
+			Route::get('/reviews/status/{id}/{status}', 'ReviewController@status');
 		//});
 	});
 });
