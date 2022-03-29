@@ -129,49 +129,48 @@
             <form id="addEditForm">
                @csrf
                <input type="hidden" name="table_id" id="table_id" value="" />
-               <div class="form-group row">
-                  <label for="name">Name <span style="color:red;">*</span></label>
-                  <div class="col-sm-10">
-                     <input type="text" class="form-control" id="name" name="name">
-                  </div>
+               <div class="form-group">
+               <div class="form-label-group">
+				  <label for="name">Name <span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" id="name" name="name">
                </div>
-               <div class="form-group row">
+               </div>
+               <div class="form-group">
+			   <div class="form-label-group">
                   <label for="email">Email <span style="color:red;">*</span></label>
-                  <div class="col-sm-10">
-                     <input type="text" class="form-control" id="email" name="email">
-                  </div>
+                  <input type="text" class="form-control" id="email" name="email">
                </div>
-               <div class="form-group row">
+               </div>
+               <div class="form-group">
+			   <div class="form-label-group">
                   <label for="username">User Name <span style="color:red;">*</span></label>
-                  <div class="col-sm-10">
-                     <input type="text" class="form-control" id="username" name="username">
-                  </div>
+                  <input type="text" class="form-control" id="username" name="username">
                </div>
-               <div class="form-group row">
+               </div>
+               <div class="form-group">
+			   <div class="form-label-group">
                   <label for="nicename">Nice Name <span style="color:red;">*</span></label>
-                  <div class="col-sm-10">
-                     <input type="text" class="form-control" id="nicename" name="nicename">
-                  </div>
+                  <input type="text" class="form-control" id="nicename" name="nicename">
                </div>
-               <div class="form-group row">
+               </div>
+               <div class="form-group">
+			   <div class="form-label-group">
                   <label for="password">Password <span style="color:red;">*</span></label>
-                  <div class="col-sm-10">
-                     <input type="password" class="form-control" id="password" name="password">
-                  </div>
+                  <input type="password" class="form-control" id="password" name="password">
                </div>
-               <div class="form-group row">
+               </div>
+               <div class="form-group">
+			   <div class="form-label-group">
                   <label for="confirm_password">Confirm Password <span style="color:red;">*</span></label>
-                  <div class="col-sm-10">
-                     <input type="password" class="form-control" id="confirm_password" name="confirm_password">
-                  </div>
+                  <input type="password" class="form-control" id="confirm_password" name="confirm_password">
                </div>
-               <div class="form-group row">
+               </div>
+               <div class="form-group">
+			   <div class="form-label-group">
                   <label for="description">Description <span style="color:red;">*</span></label>
-                  <div class="col-sm-10">
-                     <textarea name="description" id="description" class="form-control" cols="30" rows="10">
-
-                     </textarea>
-                  </div>
+					<textarea name="description" id="description" class="form-control" cols="20" rows="5">
+					</textarea>
+               </div>
                </div>
          </div>
          <div class="modal-footer">

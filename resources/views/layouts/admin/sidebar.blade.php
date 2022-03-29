@@ -233,12 +233,12 @@
             </ul>
           </li>
 		  
-		  <li class="nav-item">
-            <a href="pages/calendar.html" class="nav-link">
+		  <li class="nav-item @if(request()->segment(2) == 'enquiries') menu-is-opening menu-open @endif">
+            <a href="enquiries" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
                 Newsletter Enquiries
-                <span class="badge badge-info right">2</span>
+                <!--<span class="badge badge-info right">2</span>!-->
               </p>
             </a>
           </li>
