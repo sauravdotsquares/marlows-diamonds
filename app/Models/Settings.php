@@ -14,5 +14,10 @@ class Settings extends Model
 	use HasFactory;
 	
 	
-	
+	function get_options($option_key)
+	{
+		
+		return Self::where('option_name',$option_key)->value('option_value');
+		
+	}
 }

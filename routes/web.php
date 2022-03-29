@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 			// Change Password Routes
 			Route::get('/change-password', 'PasswordController@index')->name('change-password');
+			Route::post('/change-password', 'PasswordController@changePassword');
 			// Settings Route
 			Route::get('/settings', 'SettingsController@index');
 			Route::post('/settings-update', 'SettingsController@update');
@@ -57,6 +58,22 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/users','UserController@store');
 			Route::post('/change-record','UserController@status');
 			Route::post('/delete-record','UserController@delete');
+			// Faqs Route
+			Route::get('/faqs', 'FaqController@index')->name('faqs');
+			Route::get('/faqs/create', 'FaqController@create')->name('create');
+			Route::post('/faqs/add', 'FaqController@add')->name('add');
+			Route::get('/faqs/update/{id}', 'FaqController@update')->name('create');
+			Route::post('/faqs/edit/{id}', 'FaqController@edit');
+			Route::get('/delete-faq/{id}', 'FaqController@delete');
+			Route::get('/faqs/status/{id}/{status}', 'FaqController@status');
+			// Reviews Route
+			Route::get('/reviews', 'ReviewController@index')->name('faqs');
+			Route::get('/reviews/create', 'ReviewController@create')->name('create');
+			Route::post('/reviews/add', 'ReviewController@add')->name('add');
+			Route::get('/reviews/update/{id}', 'ReviewController@update')->name('create');
+			Route::post('/reviews/edit/{id}', 'ReviewController@edit');
+			Route::get('/delete-review/{id}', 'ReviewController@delete');
+			Route::get('/reviews/status/{id}/{status}', 'ReviewController@status');
 		//});
 	});
 });

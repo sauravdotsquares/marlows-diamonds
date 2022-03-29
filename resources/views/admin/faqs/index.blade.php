@@ -7,45 +7,45 @@
          <div class="col-12">
             <div class="card">
                <div class="card-header">
-                  <h3 class="card-title">Add New Page</h3>
+                  <h3 class="card-title">Add New Faq</h3>
                </div>
                <!-- /.card-header -->
                <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
                      <thead>
                         <tr>
-                           <th>Title</th>
-                           <th>Slug</th>
+                           <th>Question</th>
+                           <th>Answer</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
                      </thead>
                      <tbody>
-                        @if(!empty($pages))  
-                        
-                        @foreach($pages as $page)
+                        @if(!empty($faqs))  
+                        @php ($i = 1)  
+                        @foreach($faqs as $faq)
                         <tr>
-                           <td>{{$page->title}}</td>
-                           <td>{{$page->slug}}</td>
-                           <td>{{$page->created_at}}</td>
+                           <td>{{$faq->title}}</td>
+                           <td><?php echo html_entity_decode($faq->description);?></td>
+                           <td>{{$faq->created_at}}</td>
                            <td>
-                              @if($page->status == 1) 
-                              <a title="Change Status" href="{{ url('admin/pages/status/'.base64_encode($page->id).'/0')}}"><i class="fa fa-check " aria-hidden="true"></i></a>
+                              @if($faq->status == 1) 
+                              <a title="Change Status" href="{{ url('admin/faqs/status/'.base64_encode($faq->id).'/0')}}"><i class="fa fa-check " aria-hidden="true"></i></a>
                               @else
-                              <a title="Change Status" href="{{ url('admin/pages/status/'.base64_encode($page->id).'/1')}}"><i class="fa fa-times " aria-hidden="true"></i></a>  
+                              <a title="Change Status" href="{{ url('admin/faqs/status/'.base64_encode($faq->id).'/1')}}"><i class="fa fa-times " aria-hidden="true"></i></a>  
                               @endif  
-                              <a title="Edit" href="{{ url('admin/pages/update/'.base64_encode($page->id))}}"><i class="fa fa-edit " aria-hidden="true"></i></a>
-                              <a title="Delete" href="{{ url('admin/delete-page/'.base64_encode($page->id))}}" onclick="return myFunction()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                              <a title="Edit" href="{{ url('admin/faqs/update/'.base64_encode($faq->id))}}"><i class="fa fa-edit " aria-hidden="true"></i></a>
+                              <a title="Delete" href="{{ url('admin/delete-faq/'.base64_encode($faq->id))}}" onclick="return myFunction()"><i class="fa fa-trash" aria-hidden="true"></i></a>
                            </td>
                         </tr>
-                       
+                        @php ($i++)  
                         @endforeach
                         @endif
                      </tbody>
                      <tfoot>
                         <tr>
-                           <th>Title</th>
-                           <th>Slug</th>
+                           <th>Question</th>
+                           <th>Answer</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>

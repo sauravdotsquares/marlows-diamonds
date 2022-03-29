@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Pages;
 use App\Http\Controllers\Controller;
+use App\Models\Faqs;
 
 use URL;
-class PageController extends Controller
+class FaqController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,13 +18,13 @@ class PageController extends Controller
     public function index()
     {
         $breadcrumb = [
-            ["name" => "Pages", "url" => route("admin.pages"), "icon" => "fa fa-dashboard"],
+            ["name" => "Faqs", "url" => route("admin.faqs"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
-		$pages = Pages::all();
-		return view('admin.pages.index', compact('pages'));
+		$faqs = Faqs::all();
+		return view('admin.faqs.index', compact('faqs'));
 		
     }
 
@@ -35,13 +35,13 @@ class PageController extends Controller
      */
     public function create(){
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Add Faq", "url" => route("admin.faqs"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
-        $pages = Pages::all();
-        return view('admin.pages.create',compact('pages'));
+        $faqs = Faqs::all();
+        return view('admin.faqs.create',compact('faqs'));
 	}
 	
     /**
@@ -94,10 +94,13 @@ class PageController extends Controller
 		}
 		
 		//dd($input);
+		// echo "<pre>";
+		// print_r($input);
+		// die;
 
-        $pages = Pages::create($input);
+        $faqs = Faqs::create($input);
 
-        return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Added Successfully');
+        return redirect()->action('Admin\FaqController@index')->with('alert-success', 'Faq Added Successfully');
     }
 
     /**
@@ -106,26 +109,26 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($pageid=null){
+    public function update($faqid=null){
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Edit Faq", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
 		
-		$id = base64_decode($pageid);
+		$id = base64_decode($faqid);
 		if ($id == '') {
             return 'URL NOT FOUND';
         }
 		
-		$pages = Pages::find($id);
-		if (empty($pages)) {
+		$faqs = Faqs::find($id);
+		if (empty($faqs)) {
             return 'URL NOT FOUND';
         }
-        $pages = Pages::find($id);
-		//dd($pages );
-        return view('admin.pages.edit',compact('pages'));
+        $faqs = Faqs::find($id);
+		//dd($faqs );
+        return view('admin.faqs.edit',compact('faqs'));
 	}
 
     /**
@@ -134,16 +137,16 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $pageid) {
+    public function edit(Request $request, $faqid) {
         
-		$id = base64_decode($pageid);
+		$id = base64_decode($faqid);
         if ($id == '') {
             return 'URL NOT FOUND';
         }
 
-        $pages = Pages::findOrFail($id);
+        $faqs = Faqs::findOrFail($id);
 
-        if (empty($pages)) {
+        if (empty($faqs)) {
             return 'URL NOT FOUND';
         }
 
@@ -156,43 +159,10 @@ class PageController extends Controller
             'status' => 'required',
 			
         ]);
-		/*image update*/
-       if($request->hasFile('image')) {
+		
+        $faqs->fill($input)->save();
 
-            //$image_array = [];
-
-            //foreach ($request->file('image') as $image) {
-                
-                $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
-
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'page_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
-            //}
-        }
-
-        
-       if(empty($image)){
-			//$input['image'] = '';
-		}
-		else{
-			
-			$input['image'] = $image;
-		}
-        $pages->fill($input)->save();
-
-        return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Updated Successfully');
+        return redirect()->action('Admin\FaqController@index')->with('alert-success', 'Faq Updated Successfully');
     }
 
     
@@ -203,26 +173,26 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($pageid) {
-        $id = base64_decode($pageid);
-        Pages::find($id)->delete(); 
-		return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Deleted Successfully');
+    public function delete($faqid) {
+        $id = base64_decode($faqid);
+        Faqs::find($id)->delete(); 
+		return redirect()->action('Admin\FaqController@index')->with('alert-success', 'Faq Deleted Successfully');
     }
 	 /**
      * Status
      */
 	public function status($ids,$status) { 
         $ids = base64_decode($ids);       
-        $pages =  Pages::find($ids);
-        if (empty($pages)) {
+        $faqs =  Faqs::find($ids);
+        if (empty($faqs)) {
             return 'URL NOT FOUND';
         }
 
         $input['status'] = $status;
         unset($input['_token']);
         
-        $pages->fill($input)->save();
+        $faqs->fill($input)->save();
 
-        return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Status Updated Successfully');
+        return redirect()->action('Admin\FaqController@index')->with('alert-success', 'Faq Status Updated Successfully');
     }
 }

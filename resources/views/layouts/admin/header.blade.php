@@ -10,18 +10,14 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="{{ asset('')}}" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ asset('index3.html')}}" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ asset('')}}" class="nav-link">Contact</a>
-      </li>
+      
+     
     </ul>
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-      <li class="nav-item">
+      <li class="nav-item d-none">
         <a class="nav-link" data-widget="navbar-search" href="{{ asset(' ')}}" role="button">
           <i class="fas fa-search"></i>
         </a>
@@ -132,11 +128,7 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+      
     </ul>
   </nav>
   <!-- /.navbar -->
