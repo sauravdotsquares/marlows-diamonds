@@ -63,6 +63,11 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/products/categories/create/{catid?}','CategoryController@createForm')->name('create');
 			Route::post('/products/categories/add','CategoryController@add')->name('add');
 			Route::post('/get-categories','CategoryController@getCategory')->name('get-category');
+			Route::post('/change-categories','CategoryController@status');
+			Route::post('/delete-categories','CategoryController@delete');
+
+			// Product Add Pages Routes
+
 			// Faqs Route
 			Route::get('/faqs', 'FaqController@index')->name('faqs');
 			Route::get('/faqs/create', 'FaqController@create')->name('create');

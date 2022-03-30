@@ -4,10 +4,13 @@
 
 
 <?php 
-    // echo "<pre>";
-    // print_r("Checking");
-    // die;
-
+   if(isset($getData->parent_id) && $getData->parent_id != 0){
+      $selectedParentId = $getData->parent_id;
+   }elseif(isset($getData->parent_id) && $getData->parent_id == 0){
+      $selectedParentId = $getData->id;
+   }else{
+      $selectedParentId = null;
+   }
 ?>
 @if (\Session::has('success'))
     <div class="alert alert-success">
@@ -36,7 +39,9 @@
       <div class="container-fluid">
          <form id="addForm" action="{{ asset('admin/products/categories/add') }}" enctype="multipart/form-data" method="POST">
             @csrf
-            <input type="hidden" name="table_id" id="table_id" value="">
+            <input type="hidden" name="table_id" id="table_id" value="{{isset($getData->id)?$getData->id:''}}">
+            <input type="hidden" name="slug_bk" id="slug_bk" value="{{isset($getData->slug)?$getData->slug:''}}">
+            <input type="hidden" name="image_url_bk" id="image_url_bk" value="{{isset($getData->image_url)?$getData->image_url:''}}">
             <div class="row">
                <div class="col-md-8">
                   <div class="card card-primary">
@@ -47,13 +52,13 @@
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Name</label>
-                              <input type="text" id="name" name="name" class="form-control" placeholder="Name">
+                              <input type="text" id="name" name="name" class="form-control" placeholder="Name" value="{{isset($getData->name)?$getData->name:''}}">
                            </div>
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Slug</label>
-                              <input type="text" id="slug" name="slug" class="form-control" placeholder="Slug" >
+                              <input type="text" id="slug" name="slug" class="form-control" placeholder="Slug" value="{{isset($getData->slug)?$getData->slug:''}}">
                            </div>
                         </div>
                         <div class="form-group">
@@ -67,7 +72,7 @@
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Description</label>
-                              <textarea id="description" name="description" class="form-control ckeditor"></textarea>                    
+                              <textarea id="description" name="description" class="form-control ckeditor">{{isset($getData->description)?$getData->description:''}}</textarea>                    
                            </div>
                         </div>
                      </div>
@@ -77,6 +82,9 @@
                   <div class="card card-header">
                      <div class="form-group">
                         <label for="exampleInputFile">Banner Image</label>
+                        @if(isset($getData->image_url) && !empty($getData->image_url))
+                           <img src="{{asset('images').'/'.$getData->image_url}}" alt="" height="50px" width="50px">
+                        @endif
                         <div class="input-group">
                            <div class="custom-file">
                               <input type="file" id="image" name="image" class="custom-file-input" accept="image/*">
@@ -88,20 +96,35 @@
                         <div class="form-label-group">
                            <select id="status" name="status" class="form-control">
                               <option value="">Select Status</option>
-                              <option value="1">Enable</option>
-                              <option value="0">Disable</option>
+                              @if(isset($getData->image_url) && $getData->image_url == 1)
+                                 <option value="1" selected>Enable</option>
+                                 <option value="0">Disable</option>
+                              @elseif(isset($getData->image_url) && $getData->image_url == 0)
+                                 <option value="1">Enable</option>
+                                 <option value="0" selected>Disable</option>
+                              @else
+                                 <option value="1">Enable</option>
+                                 <option value="0">Disable</option>
+                              @endif
                            </select>
                         </div>
                      </div>
                      <div class="form-group">
                         <div class="form-label-group">
-                           <label for="product_name">Meta Title</label>
-                           <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title" >
+                           <label for="meta_title">Meta Title</label>
+                           <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title" value="{{isset($getData->meta_title)?$getData->meta_title:''}}">
                         </div>
                      </div>
                      <div class="form-group">
                         <div class="form-label-group">
-                           <textarea id="meta_description" name="meta_description" class="form-control ckeditor" placeholder="Meta Description" ></textarea>                    
+                           <label for="meta_keyword">Meta Keywords</label>
+                           <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Title" value="{{isset($getData->meta_keyword)?$getData->meta_keyword:''}}">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="form-label-group">
+                           <label for="meta_keyword">Meta Description</label>
+                           <textarea id="meta_description" name="meta_description" class="form-control ckeditor" placeholder="Meta Description" >{{isset($getData->meta_description)?$getData->meta_description:''}}</textarea>                    
                         </div>
                      </div>
                      <div class="form-group">
@@ -125,10 +148,14 @@
                $('#description').summernote()
          
          });
-        
-         getParentCategory();
 
-         function getParentCategory(){
+         var selectedCategoryData = '{{$selectedParentId}}';
+        
+         getParentCategory(selectedCategoryData);
+
+         function getParentCategory(selectedCategoryData){
+               // console.log("selectedCategoryData");
+               // console.log(selectedCategoryData);
                $.ajax({
                   type:'POST',
                   url:'{{asset("admin/get-categories")}}',
@@ -139,10 +166,14 @@
                   },
                   success:function(res){
                         if(res){
-                           $("#parent_id").append('<option>Select Category</option>');
+                           $("#parent_id").append('<option value="">Select Category</option>');
                            $.each(res,function(key,value){
                               if(value.parent_id == 0){
-                                 $("#parent_id").append('<option value="'+value.id+'">'+value.name+'(Parent)</option>');
+                                 if(selectedCategoryData == value.id){
+                                    $("#parent_id").append('<option value="'+value.id+'" selected>'+value.name+'(Parent)</option>');
+                                 }else{
+                                    $("#parent_id").append('<option value="'+value.id+'">'+value.name+'(Parent)</option>');
+                                 }
                               }
                            });
                         }
