@@ -13,6 +13,9 @@ class Settings extends Model
     protected $table = 'settings';
 	use HasFactory;
 	
+	protected $fillable = [
+	'option_value','option_name'
+	];
 	
 	function get_options($option_key)
 	{

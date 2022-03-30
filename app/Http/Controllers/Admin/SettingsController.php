@@ -22,51 +22,49 @@ class SettingsController extends Controller
         
     }
 	public function update(Request $request){
+		$request->request->remove('_token'); // to remove property from $request
 		$input = $request->all();
-		// echo "<pre>";
-		// print_r($input); die;
 		
-		foreach($request->option_value as $id=>$option_value){
-			// echo "<pre>";
-		// print_r($option_value[0]);
-		// die;
+		foreach($input as $key=>$value){
+		
+		if($key == 'logo'){
 			if($request->hasFile('logo')) {
 
-            //$image_array = [];
+				//$image_array = [];
 
-            //foreach ($request->file('image') as $image) {
-                
-                $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
+				//foreach ($request->file('image') as $image) {
+					
+					$image = '';
+					$uploadpath = public_path().'\images';
+					//$original_name = $input['image']->getClientOriginalName();
+					$original_name = $request->file('logo')->getClientOriginalName();
 
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'logo_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-					print_r()($ext);
-					die;
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
-            //}
-        }
-		if(empty($image)){
-			$input['image'] = '';
+					/*if (!$request->file('image')->isValid() || empty($uploadpath)) {
+						return $image;
+					}*/
+					//dd($input['image']);
+					if (!empty($request->file('logo'))) {
+						$image_prefix = 'logo_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
+						$ext = $request->file('logo')->getClientOriginalExtension();
+						
+						$image = $image_prefix . '.' . $ext;
+						//$image_array[] = $image;
+						$request->file('logo')->move($uploadpath, $image);
+					}
+				//}
+				$value = $image;
+			}else{
+				$value = $request->image_bk;
+			}
 		}
-		else{
-			
-			$input['image'] = $image;
-		}
-			Settings::where('id',$id)->update(['option_value'=>$option_value[0]]);
-			
+			$getData = Settings::updateOrCreate(['option_name'=>$key],[
+				'option_name'=>$key,
+				'option_value'=>$value,
+			]);	
 			
 		}
+		
+		
 		
 		return back()->withInput(array('msg' => 'Setting Updated Successfully'));
     }
