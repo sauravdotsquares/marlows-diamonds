@@ -85,11 +85,23 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/delete-review/{id}', 'ReviewController@delete');
 			Route::get('/reviews/status/{id}/{status}', 'ReviewController@status');
 			// Enquiries
-			Route::get('/enquiries', 'EnquiryController@index')->name('faqs');
+			Route::get('/enquiries', 'EnquiryController@index')->name('enquiries');
 			Route::get('/enquiries/update/{id}', 'EnquiryController@update')->name('create');
 			Route::post('/enquiries/edit/{id}', 'EnquiryController@edit');
 			Route::get('/delete-enquiry/{id}', 'EnquiryController@delete');
-			
+			// Appointments
+			Route::get('/appointments', 'AppointmentController@index')->name('appointments');
+			Route::get('/appointments/update/{id}', 'AppointmentController@update')->name('create');
+			Route::post('/appointments/edit/{id}', 'AppointmentController@edit');
+			Route::get('/delete-appointment/{id}', 'AppointmentController@delete');
+			// Popups Route
+			Route::get('/popups', 'PopupController@index')->name('popups');
+			Route::get('/popups/create', 'PopupController@create')->name('create');
+			Route::post('/popups/add', 'PopupController@add')->name('add');
+			Route::get('/popups/update/{id}', 'PopupController@update')->name('create');
+			Route::post('/popups/edit/{id}', 'PopupController@edit');
+			Route::get('/delete-popup/{id}', 'PopupController@delete');
+			Route::get('/popups/status/{id}/{status}', 'PopupController@status');
 		//});
 	});
 });

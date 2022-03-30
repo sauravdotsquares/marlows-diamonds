@@ -70,15 +70,30 @@
                               <input type="text" id="instagram" name="instagram" value="{{$settings1->get_options('instagram')}}" class="form-control" placeholder="Instagram">
                            </div>
                         </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Cookie bar message</label>
+                             <textarea id="cookie" name="cookie" class="form-control">{{$settings1->get_options('cookie')}}</textarea> 
+                           </div>
+                        </div>
+						
                      </div>
                   </div>
                </div>
                <div class="col-md-4">
                   <div class="card card-header">
-                     
-                     
-                     
-                    
+                     <div class="form-group">
+                        <label for="exampleInputFile">Logo</label>
+                        <div class="input-group">
+                           <div class="custom-file">
+                              @if($settings1->get_options('logo')!='') 
+                              <img src="{{url('/').'/images/'.$settings1->get_options('logo')}}" width="150px;">
+                              @endif
+                              <input type="file" id="logo" name="logo" value="{{ $settings1->get_options('logo') }}" class="custom-file-input" accept="image/*">
+                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                           </div>
+                        </div>
+                     </div>
                      <div class="form-group">
                         <button type="submit" class="btn btn-primary">Submit</button>
                      </div>
