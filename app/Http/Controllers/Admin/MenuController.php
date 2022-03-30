@@ -16,7 +16,7 @@ class MenuController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-        $getData = Menus::orderBy('id')->get()->toArray();
+        $getData =  Menus::orderBy('id')->get()->toArray();
         $menusArray = array();
         if(count($getData)>0){
         	foreach ($getData as $key => $value) {
@@ -25,9 +25,21 @@ class MenuController extends Controller
         		if($value['parent']==0){
         			
         			$arrayChild = array();
-        			foreach (Menus::orderBy('id')->get()->toArray() as $key1 => $value1) {
+        			foreach ($getData as $key1 => $value1) {
 	        			if($value1['parent']!=0 && $_id==$value1['parent']){
-	        				$arrayChild[] = array('text'=>$value1['title'],'href'=>$value1['slug'],'icon'=>$value1['icon'],'target'=>$value1['target'],'title'=>$value1['tooltip']);
+
+	        				
+
+	        				$arrayChild1 = array();
+		        			foreach ($getData as $key2 => $value2) {
+			        			if($value2['parent']!=0 && $value1['id']==$value2['parent']){
+
+			        				$arrayChild1[] = array('text'=>$value2['title'],'href'=>$value2['slug'],'icon'=>$value2['icon'],'target'=>$value2['target'],'title'=>$value2['tooltip']);
+			        				
+			        			}
+			        		}
+
+			        		$arrayChild[] = array('text'=>$value1['title'],'href'=>$value1['slug'],'icon'=>$value1['icon'],'target'=>$value1['target'],'title'=>$value1['tooltip'],'children'=>$arrayChild1);
 	        			}
 	        		}
 
