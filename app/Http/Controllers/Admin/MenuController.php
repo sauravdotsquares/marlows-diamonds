@@ -16,7 +16,30 @@ class MenuController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-        return view('admin.menus');
+        $getData = Menus::orderBy('id')->get()->toArray();
+        $menusArray = array();
+        if(count($getData)>0){
+        	foreach ($getData as $key => $value) {
+
+        		$_id = $value['id']; 
+        		if($value['parent']==0){
+        			
+        			$arrayChild = array();
+        			foreach (Menus::orderBy('id')->get()->toArray() as $key1 => $value1) {
+	        			if($value1['parent']!=0 && $_id==$value1['parent']){
+	        				$arrayChild[] = array('text'=>$value1['title'],'href'=>$value1['slug'],'icon'=>$value1['icon'],'target'=>$value1['target'],'title'=>$value1['tooltip']);
+	        			}
+	        		}
+
+	        		$menusArray[] = array('text'=>$value['title'],'href'=>$value['slug'],'icon'=>$value['icon'],'target'=>$value['target'],'title'=>$value['tooltip'],'children'=>$arrayChild);
+	        		
+        		}
+        	}
+        }
+        $data = json_encode($menusArray);
+        //echo '<pre>'; print_r($menusArray);
+        //dd($getData);
+        return view('admin.menus',compact('data'));
     }
     /**
      * Store a newly created resource in storage.
@@ -29,8 +52,8 @@ class MenuController extends Controller
     	$data_array = json_decode($data['out']);
     	//echo '<pre>'; print_r($data_array);
     	Menus::truncate();
-    	foreach ($data_array as $key => $value) {
-    		
+    	foreach ($data_array as $key => $value) { // Level 1
+    		// Save the date for level 1
     		$menus = new Menus();
 	        $menus->title = $value->text;
 	        $menus->slug = $value->href;
@@ -43,8 +66,8 @@ class MenuController extends Controller
 	     
 
     		if(isset($value->children) && count($value->children)>0){
-    			foreach ($value->children as $key1 => $value1) {
-		    		
+    			foreach ($value->children as $key1 => $value1) { // Level 2
+		    		// Save the date for level 2 
 		    		$menus1 = new Menus();
 			        $menus1->parent = $menusId;
 			        $menus1->title = $value1->text;
@@ -57,8 +80,8 @@ class MenuController extends Controller
 			        $menusId1 = $menus1->id;
 
 		    		if(isset($value1->children) && count($value1->children)>0){
-		    			foreach ($value1->children as $key2 => $value2) {
-
+		    			foreach ($value1->children as $key2 => $value2) { // Level 3
+		    				// Save the date for level 3
 				    		$menus2 = new Menus();
 					        $menus2->parent = $menusId1;
 					        $menus2->title = $value2->text;
