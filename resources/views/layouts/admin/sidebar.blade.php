@@ -110,8 +110,8 @@
               
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item @if(request()->segment(2) == 'products') menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(request()->segment(2) == 'products') active @endif">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Products
@@ -132,21 +132,21 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/editors.html" class="nav-link">
+                <a href="{{asset('admin/products/categories')}}" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'categories') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/validation.html" class="nav-link">
+                <a href="{{asset('admin/categories')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create category</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item @if(request()->segment(2) == 'users') menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(request()->segment(2) == 'users') active @endif">
               <i class="nav-icon fa fa-users"></i>
               <p>
                 Customers
@@ -155,18 +155,11 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
+                <a href="{{asset('admin/users')}}" class="nav-link @if(request()->segment(2) == 'users') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Customers</p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/tables/data.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Create customer</p>
-                </a>
-              </li>
-              
+              </li>              
             </ul>
           </li>
          

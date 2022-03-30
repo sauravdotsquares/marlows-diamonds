@@ -53,11 +53,16 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			//Appreance>Menus Routes
 			Route::get('/menus', 'MenuController@index')->name('menus');
 			Route::post('/menus/save', 'MenuController@save');
-
+			// Customer Users Routes
 			Route::get('/users','UserController@index')->name('users');
 			Route::post('/users','UserController@store');
 			Route::post('/change-record','UserController@status');
 			Route::post('/delete-record','UserController@delete');
+			// Product Category Routes
+			Route::get('/products/categories','CategoryController@index')->name('categories');
+			Route::get('/products/categories/create/{catid?}','CategoryController@createForm')->name('create');
+			Route::post('/products/categories/add','CategoryController@add')->name('add');
+			Route::post('/get-categories','CategoryController@getCategory')->name('get-category');
 			// Faqs Route
 			Route::get('/faqs', 'FaqController@index')->name('faqs');
 			Route::get('/faqs/create', 'FaqController@create')->name('create');
