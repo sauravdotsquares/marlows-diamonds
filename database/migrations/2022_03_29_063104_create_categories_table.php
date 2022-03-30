@@ -20,6 +20,10 @@ class CreateCategoriesTable extends Migration
             $table->integer('parent_id')->default(0);
             $table->text('description')->nullable();
             $table->string('image_url')->nullable();
+            $table->text('meta_title')->nullable();
+            $table->text('meta_keyword')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->integer('status')->default(0); // 0 for disable and 1 for enable
             $table->timestamps();
         });
     }
