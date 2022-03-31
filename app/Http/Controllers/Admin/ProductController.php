@@ -9,6 +9,13 @@ class ProductController extends Controller
 {
     public function index(Type $var = null)
     {
-        return view('');
+        return view('admin.products.index');
+    }
+
+    public function create($prodSlug)
+    {
+        echo "Product Slug<pre>";
+        print_r($prodSlug);
+        die;
     }
 }

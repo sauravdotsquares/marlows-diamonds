@@ -19,7 +19,7 @@
                <div class="row">
                   <div class="col-6">
                      <div class="card-header">
-                        <h3 class="card-title">Category</h3>
+                        <h3 class="card-title">Products</h3>
                      </div>
                   </div>
                   <div class="col-6">
