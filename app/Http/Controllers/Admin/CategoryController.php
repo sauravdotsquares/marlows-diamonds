@@ -27,7 +27,7 @@ class CategoryController extends Controller
         return view('admin.categories.index',$result);
     }
 
-    public function getCategory(Request $request)
+    public function getCategory()
     {
         $getParentData = Category::where('status',1)->where('parent_id',0)->get()->toArray();
         $dataArray = $child1 = array();

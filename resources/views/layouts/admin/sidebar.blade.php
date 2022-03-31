@@ -1,6 +1,11 @@
   <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
+    <?php 
+      // echo request()->segment(4);
+      // die;
+    
+    ?>
     <a href="{{asset('/')}}" class="brand-link">
       <img src="{{ asset('admin/dist/img/MarlowsDiamonds-Logo.png')}}" alt="Marlow's Diamond" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Marlow's Diamond</span>
@@ -120,13 +125,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/forms/general.html" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'products-list') active @endif">
+                <a href="{{route('admin.products-list')}}" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'products') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/advanced.html" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'products-list') active @endif">
+                <a href="{{route('admin.products-createform')}}" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'create') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create product</p>
                 </a>

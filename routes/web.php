@@ -67,8 +67,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/delete-categories','CategoryController@delete');
 
 			// Product Add Pages Routes
-			Route::get('/products/products-list','ProductController@index')->name('products-list');
-			Route::get('/products/products-list/create/{prodslug?}','ProductController@create')->name('products-createform');
+			Route::get('/products/products','ProductController@index')->name('products-list');
+			Route::get('/products/create/{prodslug?}/{proid?}','ProductController@create')->name('products-createform');
+			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
 
 			// Faqs Route
 			Route::get('/faqs', 'FaqController@index')->name('faqs');

@@ -25,7 +25,7 @@
                   <div class="col-6">
                      <div class="card-header1">
                         <!-- <button><a href="javascript:void()" id="addForm">Add</a></button> -->
-                        <a href="{{asset('admin/products/categories/create')}}">
+                        <a href="{{route('admin.products-createform')}}">
                            <button type="button" class="btn btn-primary">
                               Add
                            </button>
@@ -50,30 +50,35 @@
                         </tr>
                      </thead>
                      <tbody>
-                        @foreach($getData as $key => $value)
-                           <tr>
-                              <td>{{++$key}}</td>
-                              <td>{{$value->name}}</td>
-                              <td><img src="{{asset('images').'/'.$value->image_url}}" alt=""></td>
-                              <td>{{$value->slug}}</td>
-                              <td>Parent</td>
-                              <td>{!!$value->description!!}</td>
-                              <td>{{$value->created_at}}</td>
-                              <td>
-                                 @if($value->status == 1)
-                                    <a title="Change Status"
-                                    href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="0"><i
-                                       class="fa fa-check" aria-hidden="true"></i></a>
-                                 @else
-                                    <a title="Change Status"
-                                    href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="1"><i
-                                       class="fa fa-times" aria-hidden="true"></i></a>
-                                 @endif
-                                 <a title="Edit" href="{{asset('admin/products/categories/create/'.$value->slug)}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
-                                 <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$value}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                              </td>
-                           </tr>
-                        @endforeach
+                        @if(isset($getData) && !$getData->isEmpty())
+                           @foreach($getData as $key => $value)
+                              <tr>
+                                 <td>{{++$key}}</td>
+                                 <td>{{$value->name}}</td>
+                                 <td><img src="{{asset('images').'/'.$value->image_url}}" alt=""></td>
+                                 <td>{{$value->slug}}</td>
+                                 <td>Parent</td>
+                                 <td>{!!$value->description!!}</td>
+                                 <td>{{$value->created_at}}</td>
+                                 <td>
+                                    @if($value->status == 1)
+                                       <a title="Change Status"
+                                       href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="0"><i
+                                          class="fa fa-check" aria-hidden="true"></i></a>
+                                    @else
+                                       <a title="Change Status"
+                                       href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="1"><i
+                                          class="fa fa-times" aria-hidden="true"></i></a>
+                                    @endif
+                                    <a title="Edit" href="{{asset('admin/products/categories/create/'.$value->slug)}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
+                                    <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$value}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                 </td>
+                              </tr>
+                           @endforeach
+                        @else
+                           No record found
+                        @endif
+
                      </tbody>
                      <tfoot>
                         <tr>

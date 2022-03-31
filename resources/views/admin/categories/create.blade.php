@@ -96,10 +96,10 @@
                         <div class="form-label-group">
                            <select id="status" name="status" class="form-control">
                               <option value="">Select Status</option>
-                              @if(isset($getData->image_url) && $getData->image_url == 1)
+                              @if(isset($getData->status) && $getData->status == 1)
                                  <option value="1" selected>Enable</option>
                                  <option value="0">Disable</option>
-                              @elseif(isset($getData->image_url) && $getData->image_url == 0)
+                              @elseif(isset($getData->status) && $getData->status == 0)
                                  <option value="1">Enable</option>
                                  <option value="0" selected>Disable</option>
                               @else
