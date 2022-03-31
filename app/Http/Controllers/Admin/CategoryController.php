@@ -15,8 +15,8 @@ class CategoryController extends Controller
     public function index()
     {
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
-            ["name" => "Category", "url" => route("admin.categories"), "icon" => "fa-list-alt"],
+            ["name" => "Categories", "url" => route("admin.categories"), "icon" => "fa fa-home"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
@@ -29,15 +29,51 @@ class CategoryController extends Controller
 
     public function getCategory(Request $request)
     {
-        $getData = Category::latest()->get();
-        return response()->json($getData);
+        $getParentData = Category::where('status',1)->where('parent_id',0)->get()->toArray();
+        $dataArray = $child1 = array();
+        if(count($getParentData)>0){
+            foreach ($getParentData as $key => $parent) {
+                $dataArray[$key]['id'] = $parent['id']; 
+                $dataArray[$key]['name'] = $parent['name'];
+
+                echo '<option value="'.$parent['id'].'">'.$parent['name'] . '</option>';
+                $child = $this->getChildData($parent['id'], 0);
+                if(count($child)>0){
+                    $dataArray[$key]['parent'] = $child;
+                }
+            }
+        }
+        die;
+        //echo '<pre>'; print_r($dataArray);die;
+        //return response()->json($dataArray);
+    }
+
+    public function getChildData($parent_id, $level){
+        $getChildData = Category::where('status',1)->where('parent_id',$parent_id)->get()->toArray();
+        $level++;
+        $dataArray = $child1 = array();
+        if(count($getChildData)>0){
+            foreach ($getChildData as $key => $child) {
+                //echo str_repeat("-", ($level * 2)) . $child['name'] . '<br>';
+                echo '<option value="'.$child['id'].'">'.str_repeat("-", ($level * 2)) . $child['name'] . '</option>';
+                $dataArray[$key]['id'] = $child['id']; 
+                $dataArray[$key]['name'] = $child['name'];
+
+                $child = $this->getChildData($child['id'], $level);
+                if(count($child)>0){
+                    $dataArray[$key]['parent'] = $child;
+                }
+
+            }
+        }
+        return $dataArray;
     }
 
     public function createForm($catId = null)
     {
         $breadcrumb = [
+            ["name" => "Create Category", "url" => route("admin.categories"), "icon" => "fa fa-home"],
             ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
-            ["name" => "Category-Create", "url" => route("admin.categories"), "icon" => "fa-list-alt"],
         ];
         populate_breadcrumb($breadcrumb);
 
@@ -101,7 +137,7 @@ class CategoryController extends Controller
                     'name'=> $request->name,
                     'slug'=> strtolower($newCustomSlug),
                     'status'=> isset($request->status)?$request->status:0,
-                    'parent_id'=>$request->parent_id,
+                    'parent_id'=>isset($request->parent_id)?$request->parent_id:0,
                     'description'=> $request->description,
                     'meta_title'=> $request->meta_title,
                     'meta_keyword'=> $request->meta_keyword,
@@ -116,7 +152,7 @@ class CategoryController extends Controller
                 'name'=> $request->name,
                 'slug'=> strtolower($newCustomSlug),
                 'status'=> isset($request->status)?$request->status:0,
-                'parent_id'=>$request->parent_id,
+                'parent_id'=>isset($request->parent_id)?$request->parent_id:0,
                 'description'=> $request->description,
                 'meta_title'=> $request->meta_title,
                 'meta_keyword'=> $request->meta_keyword,

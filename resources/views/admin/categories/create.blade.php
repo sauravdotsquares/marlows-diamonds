@@ -166,8 +166,8 @@
                   },
                   success:function(res){
                         if(res){
-                           $("#parent_id").append('<option value="">Select Category</option>');
-                           $.each(res,function(key,value){
+                           $("#parent_id").append('<option value="">Select Category</option>'+res);
+                           /*$.each(res,function(key,value){
                               if(value.parent_id == 0){
                                  if(selectedCategoryData == value.id){
                                     $("#parent_id").append('<option value="'+value.id+'" selected>'+value.name+'(Parent)</option>');
@@ -175,7 +175,7 @@
                                     $("#parent_id").append('<option value="'+value.id+'">'+value.name+'(Parent)</option>');
                                  }
                               }
-                           });
+                           });*/
                         }
                   }
                })
