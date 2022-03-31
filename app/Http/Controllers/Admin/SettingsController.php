@@ -67,5 +67,73 @@ class SettingsController extends Controller
 		
 		
 		return back()->withInput(array('msg' => 'Setting Updated Successfully'));
+		
+		
+    }
+	public function headerSetting()
+    {
+    	$breadcrumb = [
+            ["name" => "Settings", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+
+        ];
+        populate_breadcrumb($breadcrumb);
+        
+		
+        return view('admin.settings.headerSetting');
+        
+    }
+	
+	public function headerSettingUpdate(Request $request){
+		$request->request->remove('_token'); // to remove property from $request
+		$input = $request->all();
+		
+		foreach($input as $key=>$value){
+		
+			$getData = Settings::updateOrCreate(['option_name'=>$key],[
+				'option_name'=>$key,
+				'option_value'=>$value,
+			]);	
+			
+		}
+		
+		
+		
+		return back()->withInput(array('msg' => 'Setting Updated Successfully'));
+		
+		
+    }
+	public function footerSetting()
+    {
+    	$breadcrumb = [
+            ["name" => "Settings", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+
+        ];
+        populate_breadcrumb($breadcrumb);
+        
+		
+        return view('admin.settings.footerSetting');
+        
+    }
+	
+	public function footerSettingUpdate(Request $request){
+		$request->request->remove('_token'); // to remove property from $request
+		$input = $request->all();
+		
+		foreach($input as $key=>$value){
+		
+			$getData = Settings::updateOrCreate(['option_name'=>$key],[
+				'option_name'=>$key,
+				'option_value'=>$value,
+			]);	
+			
+		}
+		
+		
+		
+		return back()->withInput(array('msg' => 'Setting Updated Successfully'));
+		
+		
     }
 }

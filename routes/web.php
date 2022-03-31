@@ -102,6 +102,13 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/popups/edit/{id}', 'PopupController@edit');
 			Route::get('/delete-popup/{id}', 'PopupController@delete');
 			Route::get('/popups/status/{id}/{status}', 'PopupController@status');
+			
+			// Header Settings Route
+			Route::get('/header-settings', 'SettingsController@headerSetting')->name('header-settings');
+			Route::post('/header-settings-update', 'SettingsController@headerSettingUpdate');
+			// Footer Settings Route
+			Route::get('/footer-settings', 'SettingsController@footerSetting')->name('footer-settings');
+			Route::post('/footer-settings-update', 'SettingsController@footerSettingUpdate');
 		//});
 	});
 });
