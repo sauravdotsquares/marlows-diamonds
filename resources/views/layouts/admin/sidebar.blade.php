@@ -120,13 +120,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/forms/general.html" class="nav-link">
+                <a href="pages/forms/general.html" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'products-list') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/forms/advanced.html" class="nav-link">
+                <a href="pages/forms/advanced.html" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'products-list') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create product</p>
                 </a>
