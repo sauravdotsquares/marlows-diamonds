@@ -27,18 +27,18 @@ if (!function_exists("single_image_upload")) {
         $uploadpath = public_path().'\images\\'.$folderName;
         if(is_array($imageUrl)){
             foreach($imageUrl as $file) {
-                $original_name = $file->getClientOriginalName();
-                // $filename = $folderName.'/'.time() . '_' . $file->getClientOriginalName();
-                $filename = $original_name;
+                // $original_name = $file->getClientOriginalName();
+                $filename = $folderName.'/'.time() . '_' . $file->getClientOriginalName();
+                // $filename = $original_name;
                 $file->move($uploadpath, $filename);
                 $data[] = $filename;
             }
         }else{
-            $original_name = $file->getClientOriginalName();
-            // $filename = $folderName.'/'.time() . '_' . $file->getClientOriginalName();
-            $filename = $original_name;
-            $file->file('image')->move($uploadpath, $filename);
-            $data = $filename;
+            // $original_name = $imageUrl->getClientOriginalName();
+            $filename = $folderName.'/'.time() . '_' . $imageUrl->getClientOriginalName();
+            // $filename = $original_name;
+            $imageUrl->move($uploadpath, $filename);
+            $data['f2'] = $filename;
         }
 
         // echo "uploaded <pre>";

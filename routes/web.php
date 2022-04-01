@@ -70,6 +70,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/products/products','ProductController@index')->name('products-list');
 			Route::get('/products/create/{prodslug?}/{proid?}','ProductController@create')->name('products-createform');
 			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
+			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
+			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
+			Route::post('/products/get-selected-attribute','ProductController@getSelectedAttribute')->name('get-selected-attribute');
 
 			// Faqs Route
 			Route::get('/faqs', 'FaqController@index')->name('faqs');
