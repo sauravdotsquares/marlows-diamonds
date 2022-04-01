@@ -16,6 +16,49 @@ if (!function_exists("helper_test")) {
     }
 }
 
+if (!function_exists("single_image_upload")) {
+    function single_image_upload($imageUrl,$folderName)
+    {
+        // echo "it is working single";
+        if (!file_exists('images/'.$folderName)) {
+            mkdir('images/'.$folderName, 0777);
+        }
+        // mkdir('images/'.$folderName, 0777);
+        $uploadpath = public_path().'\images\\'.$folderName;
+        if(is_array($imageUrl)){
+            foreach($imageUrl as $file) {
+                $original_name = $file->getClientOriginalName();
+                // $filename = $folderName.'/'.time() . '_' . $file->getClientOriginalName();
+                $filename = $original_name;
+                $file->move($uploadpath, $filename);
+                $data[] = $filename;
+            }
+        }else{
+            $original_name = $file->getClientOriginalName();
+            // $filename = $folderName.'/'.time() . '_' . $file->getClientOriginalName();
+            $filename = $original_name;
+            $file->file('image')->move($uploadpath, $filename);
+            $data = $filename;
+        }
+
+        // echo "uploaded <pre>";
+        // print_r($original_name);
+        // print_r($data);
+        // die;
+        return $data;
+
+        
+    }
+}
+
+if (!function_exists("multiple_image_upload")) {
+    function multiple_image_upload()
+    {
+        echo "it is working multiple";
+    }
+}
+
+
 if (!function_exists("populate_breadcrumb")) {
     /**
      * popular data to layouts.admin.app when send from controller
@@ -72,7 +115,7 @@ if (!function_exists('validate_breadcrumb')) {
             $validator = Validator::make($item, [
                 'name' => 'required',
                 'url' => "required|url",
-//                "icon" => ""
+                // "icon" => ""
             ], $messages);
             if ($validator->fails()) {
                 $validated = false;
