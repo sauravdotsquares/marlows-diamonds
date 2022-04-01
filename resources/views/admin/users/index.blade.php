@@ -24,21 +24,13 @@
       <div class="row">
          <div class="col-12">
             <div class="card">
-               <div class="row">
-                  <div class="col-6">
-                     <div class="card-header">
-                        <h3 class="card-title">User</h3>
-                     </div>
-                  </div>
-                  <div class="col-6">
-                     <div class="card-header1">
-                        <!-- <button><a href="javascript:void()" id="addForm">Add</a></button> -->
+               <div class="card-header">
+						<!-- <button><a href="javascript:void()" id="addForm">Add</a></button> -->
                         <button type="button" id="addformdata" class="btn btn-primary" data-toggle="modal" data-target="#addEditForm">
                            Add
                         </button>
-                     </div>
                   </div>
-               </div>
+               
 
                <!-- /.card-header -->
                <div class="card-body">

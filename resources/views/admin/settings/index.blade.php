@@ -45,13 +45,7 @@
                               <input type="text" id="contact_no" name="contact_no" value="{{$settings1->get_options('contact_no')}}" class="form-control" placeholder="Contact No.">
                            </div>
                         </div>
-                       <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="product_name">Copyright</label>
-                              
-							 <textarea id="copyright" name="copyright" class="form-control">{{$settings1->get_options('copyright')}}</textarea>   
-                           </div>
-                        </div>
+                       
 						<div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Facebook</label>
@@ -72,11 +66,34 @@
                         </div>
 						<div class="form-group">
                            <div class="form-label-group">
+                              <label for="product_name">Pinterest</label>
+                              <input type="text" id="pinterest" name="pinterest" value="{{$settings1->get_options('pinterest')}}" class="form-control" placeholder="Pinterest">
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Youtube</label>
+                              <input type="text" id="youtube" name="youtube" value="{{$settings1->get_options('youtube')}}" class="form-control" placeholder="Youtube">
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Linkedin</label>
+                              <input type="text" id="linkedin" name="linkedin" value="{{$settings1->get_options('linkedin')}}" class="form-control" placeholder="Linkedin">
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
                               <label for="product_name">Cookie bar message</label>
                              <textarea id="cookie" name="cookie" class="form-control">{{$settings1->get_options('cookie')}}</textarea> 
                            </div>
                         </div>
-						
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Google Analytics</label>
+                             <textarea id="google" name="google" class="form-control">{{$settings1->get_options('google')}}</textarea> 
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>

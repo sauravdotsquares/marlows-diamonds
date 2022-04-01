@@ -112,6 +112,14 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			// Footer Settings Route
 			Route::get('/footer-settings', 'SettingsController@footerSetting')->name('footer-settings');
 			Route::post('/footer-settings-update', 'SettingsController@footerSettingUpdate');
+			// Banner Route
+			Route::get('/banners', 'BannerController@index')->name('banners');
+			Route::get('/banners/create', 'BannerController@create')->name('create');
+			Route::post('/banners/add', 'BannerController@add')->name('add');
+			Route::get('/banners/update/{id}', 'BannerController@update')->name('create');
+			Route::post('/banners/edit/{id}', 'BannerController@edit');
+			Route::get('/delete-banner/{id}', 'BannerController@delete');
+			Route::get('/banners/status/{id}/{status}', 'BannerController@status');
 		//});
 	});
 });

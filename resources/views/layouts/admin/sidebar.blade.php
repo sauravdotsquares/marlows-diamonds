@@ -16,7 +16,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{auth()->user()->nicename}}</a>
@@ -34,7 +34,31 @@
               <p> Dashboard </p>
             </a>
           </li>
-          
+          <li class="nav-item @if(request()->segment(2) == 'banners') menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(request()->segment(2) == 'banners') active @endif">
+              <i class="nav-icon fas fa fa-image"></i>
+              <p>
+                Banners
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/admin/banners" class="nav-link @if(request()->segment(2) == 'banners' && request()->segment(3) != 'create') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Banners</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/banners/create" class="nav-link @if(request()->segment(2) == 'banners' && request()->segment(3) == 'create') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Banner</p>
+                </a>
+              </li>
+              
+              
+            </ul>
+          </li>
           <li class="nav-item @if(request()->segment(2) == 'posts') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'posts') active @endif">
               <i class="nav-icon fas fa-copy"></i>
@@ -207,7 +231,7 @@
 		  
 		  <li class="nav-item @if(request()->segment(2) == 'faqs') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'faqs') active @endif">
-              <i class="nav-icon fa fa-book"></i>
+              <i class="nav-icon fa fa-question-circle"></i>
               <p>
                 Faqs
                 <i class="right fas fa-angle-left"></i>
@@ -232,7 +256,7 @@
           </li>
 		  
 		  <li class="nav-item @if(request()->segment(2) == 'enquiries') menu-is-opening menu-open @endif">
-            <a href="enquiries" class="nav-link">
+            <a href="/admin/enquiries" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
                 Newsletter Enquiries
@@ -241,7 +265,7 @@
             </a>
           </li>
           <li class="nav-item @if(request()->segment(2) == 'appointments') menu-is-opening menu-open @endif">
-            <a href="appointments" class="nav-link">
+            <a href="/admin/appointments" class="nav-link">
               <i class="nav-icon far fa-calendar"></i>
               <p>
                 Appointments
@@ -250,13 +274,29 @@
             </a>
           </li>
 		  <li class="nav-item @if(request()->segment(2) == 'popups') menu-is-opening menu-open @endif">
-            <a href="popups" class="nav-link">
+            <a href="#" class="nav-link @if(request()->segment(2) == 'popups') active @endif">
               <i class="nav-icon far fa-window-maximize"></i>
               <p>
                 Popups
-                <!--<span class="badge badge-info right">2</span>!-->
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/admin/popups" class="nav-link @if(request()->segment(2) == 'popups' && request()->segment(3) != 'create') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Popups</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/popups/create" class="nav-link @if(request()->segment(2) == 'popups' && request()->segment(3) == 'create') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Popup</p>
+                </a>
+              </li>
+              
+              
+            </ul>
           </li>
           <li class="nav-item">
             <a href="/admin/settings" class="nav-link">
