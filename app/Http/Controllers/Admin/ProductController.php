@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Products;
+use App\Models\ProductImages;
+use App\Models\Attributes;
 
 class ProductController extends Controller
 {
@@ -49,21 +51,7 @@ class ProductController extends Controller
             'featured_image' => 'required',
         ]);
 
-        if($request->hasFile('gallery_image')) {
-            $imagegallery_image = single_image_upload($request->file('gallery_image'),'Products');
-        }else{
-            $imagegallery_image = $request->image_url_bk;
-        }
-
-        if($request->hasFile('featured_image')) {
-            $imagefeatured_image = single_image_upload($request->file('featured_image'),'Products');
-        }else{
-            $featured_image = $request->image_url_bk;
-        }
-
-        // echo "<pre>";
-        // print_r($request->all(''));
-        // die;
+        
 
         //  setup categories 
         //  $getParentId = 0;
@@ -87,25 +75,9 @@ class ProductController extends Controller
         }
 
         if($validator->fails()){
-            if(isset($request->table_id) && !empty($request->table_id)){
-                Products::updateOrCreate(['id'=>$request->table_id],[
-                    'title'=> $request->title,
-                    'slug'=> strtolower($newCustomSlug),
-                    'tags'=> $request->tags,
-                    'status'=> isset($request->status)?$request->status:0,
-                    'is_featured'=> isset($request->is_featured)?$request->is_featured:0,
-                    'categories'=>isset($request->categories)?implode(",",$request->categories):0,
-                    'description'=> $request->description,
-                    'meta_title'=> $request->meta_title,
-                    'meta_keyword'=> $request->meta_keyword,
-                    'meta_description'=> $request->meta_description,
-                    // 'image_url'=> $image,
-                ]);
-                return redirect()->back()->with('success', 'Successfully updated!!!'); 
-            }
             return Redirect::back()->withErrors($validator->errors())->withInput();
         }else{
-            Products::updateOrCreate(['id'=>$request->table_id],[
+            $productDetails = Products::updateOrCreate(['id'=>$request->table_id],[
                 'title'=> $request->title,
                 'slug'=> strtolower($newCustomSlug),
                 'tags'=> $request->tags,
@@ -118,8 +90,80 @@ class ProductController extends Controller
                 'meta_description'=> $request->meta_description,
                 // 'image_url'=> $image,
             ]);
-            return redirect()->back()->with('success', 'Successfully added!!!');   
+            $msg = 'Successfully added!!!';
+            
         }
 
+        if($request->hasFile('gallery_image')) {
+            $imagegallery_image = single_image_upload($request->file('gallery_image'),'Products');
+        }else{
+            $imagegallery_image = $request->image_url_bk;
+        }
+
+        if($request->hasFile('featured_image')) {
+            $imagefeatured_image = single_image_upload($request->file('featured_image'),'Products');
+        }else{
+            $featured_image = $request->image_url_bk;
+        }
+
+        $finalArrayImages = array_merge($imagegallery_image,$imagefeatured_image);
+        if(isset($finalArrayImages) && !empty($finalArrayImages) && count($finalArrayImages)){
+            $this->uploadProductImages($finalArrayImages,$productDetails->id);
+        }
+        return redirect()->back()->with('success', $msg);  
+    }
+
+    public function uploadProductImages($imagesArray,$productId)
+    {
+        foreach($imagesArray as $key => $image){
+            if($key == 'f2'){
+                $productDetails = ProductImages::create([
+                    'product_id'=> $productId,
+                    'image_url'=> $image,
+                    'is_featured'=> 1,
+                ]);
+            }else{
+                $productDetails = ProductImages::create([
+                    'product_id'=> $productId,
+                    'image_url'=> $image,
+                    'is_featured'=> 0,
+                ]);
+            }
+        }
+        return true;
+    }
+
+    public function addAttribute(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'value' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return Redirect::back()->withErrors($validator->errors())->withInput();
+        }else{
+            $addAttributes = Attributes::updateOrCreate(['name'=>$request->name],[
+                'name'=> $request->name,
+                'values'=> $request->value,
+            ]);
+        }
+
+        // echo "sdafsdfas<pre>";
+        // print_r($request->all());
+        // die;
+
+        return response()->json(['success'=>"true"]);
+    }
+
+    public function getAttribute()
+    {
+        $getData = Attributes::latest()->get();
+        return response()->json($getData);
+    }
+    public function getSelectedAttribute(Request $request){
+        echo "<pre>";
+        print_r($request->all(''));
+        die;
     }
 }
