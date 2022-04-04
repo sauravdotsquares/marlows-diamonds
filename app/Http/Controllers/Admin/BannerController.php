@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Models\Banners;
+use App\Models\BannerDetails;
 use App\Http\Controllers\Controller;
 use App\Pages;
 use URL;
@@ -55,14 +56,26 @@ class BannerController extends Controller
     public function add(Request $request){
 
 
-        $input = $request->all();
+        $data = $request->all();
 		 $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
 			
         ]);
-        if($request->hasFile('image')) {
+		$input = array();
+		$input['page_id'] = $data['page_id'];
+		$input['title'] = $data['title'];
+		$input['status'] = $data['status'];
+		
+		$banners = Banners::create($input);
+		
+		if($banners->id !='' && count($data['description'] ) > 0)
+		{
+			$details = array();
+			foreach($data['description'] as $value)
+			{
+				if($request->hasFile('image')) {
 
             //$image_array = [];
 
@@ -94,6 +107,16 @@ class BannerController extends Controller
 			
 			$input['image'] = $image;
 		}
+				
+				$details['banner_id'] = $banners->id;
+				$details['description'] = $value;
+				BannerDetails::create($details);
+				
+				
+			}	
+		}
+		
+        
 		
 		//dd($input);
 

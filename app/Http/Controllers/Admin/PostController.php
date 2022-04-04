@@ -35,8 +35,8 @@ class PostController extends Controller
      */
     public function create(){
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
-            ["name" => "Homex", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Add New", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);

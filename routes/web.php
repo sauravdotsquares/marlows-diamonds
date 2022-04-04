@@ -54,10 +54,13 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/menus', 'MenuController@index')->name('menus');
 			Route::post('/menus/save', 'MenuController@save');
 			// Customer Users Routes
-			Route::get('/users','UserController@index')->name('users');
-			Route::post('/users','UserController@store');
-			Route::post('/change-record','UserController@status');
-			Route::post('/delete-record','UserController@delete');
+			Route::get('/users', 'UserController@index')->name('users');
+			Route::get('/users/create', 'UserController@create')->name('create');
+			Route::post('/users/add', 'UserController@add')->name('add');
+			Route::get('/users/update/{id}', 'UserController@update')->name('create');
+			Route::post('/users/edit/{id}', 'UserController@edit');
+			Route::get('/delete-user/{id}', 'UserController@delete');
+			Route::get('/users/status/{id}/{status}', 'UserController@status');
 			// Product Category Routes
 			Route::get('/products/categories','CategoryController@index')->name('categories');
 			Route::get('/products/categories/create/{catslug?}','CategoryController@createForm')->name('create');
