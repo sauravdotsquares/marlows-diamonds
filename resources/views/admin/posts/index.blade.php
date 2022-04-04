@@ -7,7 +7,7 @@
          <div class="col-12">
             <div class="card">
                <div class="card-header">
-                  <h3 class="card-title">Add New Post</h3>
+                  <a href="{{ url('admin/posts/create')}}"><button type="button" class="btn btn-primary add-button">Add New Post</button></a>
                </div>
                <!-- /.card-header -->
                <div class="card-body">

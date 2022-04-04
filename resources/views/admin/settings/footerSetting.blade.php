@@ -29,30 +29,75 @@
            @csrf 
             
 			<div class="row">
-               <div class="col-md-8">
+               <div class="col-md-7">
                   <div class="card card-primary">
                      
                      <div class="card-body">
-                        
-                        
-                       
-						
-						
-						
-						
-						<div class="form-group">
+                        <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Footer Scripts</label>
-                             <textarea id="footer" name="footer-scripts" class="form-control">{{$settings1->get_options('footer-scripts')}}</textarea> 
+                              <label for="product_name">About</label>
+                              
+							 <textarea id="about" name="about" class="form-control">{{$settings1->get_options('about')}}</textarea>   
                            </div>
                         </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Catalogue</label>
+                              
+							 <textarea id="catalogue" name="catalogue" class="form-control">{{$settings1->get_options('catalogue')}}</textarea>   
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Resources</label>
+                              
+							 <textarea id="resources" name="resources" class="form-control">{{$settings1->get_options('resources')}}</textarea>   
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Resources</label>
+                              
+							 <textarea id="sec-resources" name="sec-resources" class="form-control">{{$settings1->get_options('sec-resources')}}</textarea>   
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Policies</label>
+                              
+							 <textarea id="policies" name="policies" class="form-control">{{$settings1->get_options('policies')}}</textarea>   
+                           </div>
+                        </div>
+						
 						
                      </div>
                   </div>
                </div>
-               <div class="col-md-4">
+               <div class="col-md-5">
                   <div class="card card-header">
-                     
+                    <div class="card card-info">
+						<div class="card-header">
+						<h3 class="card-title">Footer Bottom</h3>
+						</div>
+					</div> 
+					<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Footer Left</label>
+                             <textarea id="footer-left" name="footer-left" class="form-control">{{$settings1->get_options('footer-left')}}</textarea> 
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Footer Center</label>
+                             <textarea id="footer-center" name="footer-center" class="form-control">{{$settings1->get_options('footer-center')}}</textarea> 
+                           </div>
+                        </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Footer Right</label>
+                             <textarea id="footer-right" name="footer-right" class="form-control">{{$settings1->get_options('footer-right')}}</textarea> 
+                           </div>
+                        </div>
                      <div class="form-group">
                         <button type="submit" class="btn btn-primary">Submit</button>
                      </div>
@@ -68,7 +113,15 @@
 <script>
    $(function () {
      // Summernote
-     $('#copyright').summernote()
+     $('#about').summernote()
+     $('#catalogue').summernote()
+     $('#resources').summernote()
+     $('#sec-resources').summernote()
+     $('#policies').summernote()
+     $('#footer-left').summernote()
+     $('#footer-center').summernote()
+     $('#footer-right').summernote()
+     
    
    })
 </script>  
