@@ -131,8 +131,21 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 
 Auth::routes();
 
+/*
+*** Frontend Routes
+*/
+
 Route::namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
 
+});
+
+/*
+*** Angular Routes Group
+*/
+
+Route::group(['prefix' => 'api/v1'], function() {
+ 
+ 
 });
 
