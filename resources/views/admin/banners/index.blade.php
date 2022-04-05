@@ -15,7 +15,7 @@
                      <thead>
                         <tr>
                            <th>Title</th>
-                           <th>Description</th>
+                           
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
@@ -26,7 +26,7 @@
                         @foreach($banners as $banner)
                         <tr>
                            <td>{{$banner->title}}</td>
-                           <td><?php echo html_entity_decode($banner->description);?></td>
+                           
                           <td>{{$banner->created_at}}</td>
                            <td>
                               @if($banner->status == 1) 
@@ -45,7 +45,7 @@
                      <tfoot>
                         <tr>
                            <th>Title</th>
-						   <th>Description</th>
+						   
                            <th>Created</th>
                            <th>Action</th>
                         </tr>

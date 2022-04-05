@@ -14,5 +14,5 @@ class Reviews extends Model
     
     use HasFactory;
 	
-	protected $fillable = ['title','rating','description'];
+	protected $fillable = ['title','rating','description','status'];
 }

@@ -14,5 +14,9 @@ class Banners extends Model
     
     use HasFactory;
 	
-	protected $fillable = ['page_id','title','description','image'];
+	protected $fillable = ['page_id','title','description','image','status'];
+	
+	public function getBannerDetails(){
+		return $this->hasMany('App\Models\BannerDetails','banner_id','id');
+	}
 }
