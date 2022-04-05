@@ -69,7 +69,23 @@ $('.photo-slider').owlCarousel({
         }
     }
 });
-
+$('.mobil-bar').owlCarousel({
+    loop:true,
+    margin:10,
+    nav:false,
+    dots:false,
+    responsive:{
+        0:{
+            items:1
+        },
+        600:{
+            items:1
+        },
+        1000:{
+            items:1
+        }
+    }
+})
  // variables 
       var toTop = $('#scroll-to-top');
       // logic

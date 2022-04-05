@@ -63,6 +63,12 @@
                               <input type="text" id="field3" name="field3" value="{{$settings1->get_options('field3')}}" class="form-control" placeholder="Field 3">
                            </div>
                         </div>
+            <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Field 4</label>
+                              <input type="text" id="field4" name="field4" value="{{$settings1->get_options('field4')}}" class="form-control" placeholder="Field 4">
+                           </div>
+                        </div>
                       </div>
                      </div>
 					 

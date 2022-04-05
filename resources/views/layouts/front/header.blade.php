@@ -1,3 +1,4 @@
+@inject('header_settings', 'App\Models\Settings') 
 <!-- Header Start here -->
 <header class="header-main">
     <!-- Mobile Top Start here -->
@@ -5,18 +6,18 @@
         <div class="container">
             <div class="owl-carousel owl-theme mobil-bar">
                 <div class="item">
-                    <a class="whatspp-num" href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i>WhatsApp Help: +44753 5425059</a>
+                    <a class="whatspp-num" href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i>{{WHATSAPP_TITLE}}: {!!$header_settings->get_options('field1')!!}</a>
                 </div>
                 <div class="item">
                     <div class="addr-number">
-                        <p>Birmingham:<a href="tel:01212364415">0121 236 4415</a> | London:<a href="tel:02074051477">020 7405 1477</a></p>
+                        {!!$header_settings->get_options('field2')!!}
                     </div>
                 </div>
                 <div class="item">
-                    <p>FINE JEWELLERS SINCE 1951 | TRUSTED BY THOUSANDS</p>
+                    <p>{!!$header_settings->get_options('field3')!!}</p>
                 </div>
                 <div class="item">
-                    <img src="assets/images/review-one.png" alt="review-one">
+                    {!!$header_settings->get_options('field4')!!}
                 </div>
             </div>  
         </div>
@@ -26,7 +27,7 @@
     <!--Top bar start -->
     <div class="top-bar">
         <div class="container">
-            <p>STORE OPEN NOW. OVER 2500 DIAMONDS IN STOCK TO TAKE AWAY AT ONLINE PRICES</p>
+            <p>{{$header_settings->get_options('top-bar-desktop')}}</p>
         </div>
     </div>
     <!--Top bar end --> 
@@ -37,21 +38,21 @@
             <div class="middle-topbar-wrap flexed flex-justify-between">
                 <div class="middle-topbar-left">
                     <div class="whatsapp-top-h">
-                        <a href="tel:+447535425059">
-                            <i class="fa fa-whatsapp" aria-hidden="true"></i> WHATSAPP HELP +447535425059
+                        <a href="tel:{{$header_settings->get_options('whatsapp')}}">
+                            <i class="fa fa-whatsapp" aria-hidden="true"></i> {{WHATSAPP_TITLE}} {{$header_settings->get_options('whatsapp')}}
                         </a>
                     </div>
                     <div class="location-top-h">
                         <a href="#">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>LOCATIONS
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>{{LOCATION_TITLE}}
                             <div class="location-drop">
                                 <div class="location-drop-inner">
-                                    <p class="location-details-title">Birmingham Details</p>
-                                    <p class="location-text">Birmingham: 0121 236 4415 <br>(Customer Help: 9am - 9pm) </p>
+                                    <p class="location-details-title">{{BRIMINGHAM_LOCATION_TITLE}}</p>
+                                    <p class="location-text">{!!$header_settings->get_options('location1')!!}</p>
                                 </div>
                                 <div class="location-drop-inner">
-                                    <p class="location-details-title">London Details</p>
-                                    <p class="location-text">London: 0207 4051477  <br> (Customer Help: 9am - 9pm) </p>
+                                    <p class="location-details-title">{{LONDON_LOCATION_TITLE}}</p>
+                                    <p class="location-text">{!!$header_settings->get_options('location2')!!}</p>
                                 </div>
                             </div>
                         </a>

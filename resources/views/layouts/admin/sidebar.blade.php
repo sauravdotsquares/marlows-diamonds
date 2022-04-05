@@ -109,8 +109,8 @@
               
             </ul>
           </li>
-          <li class="nav-item @if(request()->segment(2) == 'menus') menu-is-opening menu-open @endif">
-            <a href="#" class="nav-link @if(request()->segment(2) == 'menus') active @endif">
+          <li class="nav-item @if(request()->segment(2) == 'menus' || request()->segment(2) == 'header-settings' || request()->segment(2) == 'footer-settings') menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(request()->segment(2) == 'menus' || request()->segment(2) == 'header-settings' || request()->segment(2) == 'footer-settings') active @endif">
               <i class="nav-icon fas fa-tree"></i>
               <p>
                Appearance
