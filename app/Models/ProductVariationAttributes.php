@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attributes extends Model
+class ProductVariationAttributes extends Model
 {
     use HasFactory;
 
-    protected $table = 'attributes';
+    protected $table = 'product_variation_attributes';
 
     protected $fillable = [
-        'name','slug','values','status'
+        'product_id','attr_values'
     ];
-
-    protected $hidden = ['status','created_at','updated_at'];
 }

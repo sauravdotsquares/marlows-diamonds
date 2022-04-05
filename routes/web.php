@@ -75,8 +75,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
 			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
 			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
-			Route::post('/products/get-selected-attribute','ProductController@getSelectedAttribute')->name('get-selected-attribute');
-
+			
 			// Faqs Route
 			Route::get('/faqs', 'FaqController@index')->name('faqs');
 			Route::get('/faqs/create', 'FaqController@create')->name('create');
