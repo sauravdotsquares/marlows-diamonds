@@ -166,6 +166,7 @@ h1, .heading-h-one{
     line-height: 1.2;
     color: #2b2b2b;
     font-weight: 400;
+    letter-spacing: 2px;
 }
 
 h2, .heading-h-two{
@@ -245,17 +246,25 @@ a.btn-bg-large, .btn-bg-small{
 .white-bg-btn:hover{
     box-shadow: 7px 7px 0px rgba(0,0,0, 0.8);
 }
-
+.my-cart-blk img {
+    max-width: 18px;
+    vertical-align: top;
+    display: inline-block;
+    margin: 0 8px 0 0;
+}
 textarea:focus{
     outline: none;
+}
+.mobile-cart a > img {
+    max-width: 27px;
 }
 
 /** Customized container size **/
 .container{
     width: 100%;
-    max-width: 1460px;
-    padding-left: 15px;
-    padding-right: 15px;
+    max-width: 1470px;
+    padding-left: 20px;
+    padding-right: 20px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -268,16 +277,16 @@ textarea:focus{
     display: -webkit-flex;     /* NEW - Chrome */
     display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
-.justify-between{
+.flex-justify-between{
     -webkit-justify-content: space-between;
     justify-content: space-between;
 }
 
-.items-center{
+.flex-items-center{
     -webkit-align-items: center;
     align-items: center;
 }
-.flex-wrap{
+.flex-flex-wrap{
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
@@ -294,25 +303,109 @@ textarea:focus{
     margin: 0;
     line-height: 30px;
 }
+.top-bar-mob{
+    background: #8e2e65;
+    padding: 5px 0;
+    display: none;
+}
+.top-bar-mob a{
+    color: #fff;
+    text-decoration: none;
+    padding: 0 2px;
+    display: inline-block;
+}
+.top-bar-mob a.whatspp-num .fa-whatsapp {
+    background: #25d366;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 18px;
+    font-size: 12px;
+    vertical-align: middle;
+    display: inline-block;
+    margin:0 5px 0 0;
+}
+.top-bar-mob{
+    text-align: center;
+    font-size: 12px;
+}
+.top-bar-mob p{
+    margin: 0;
+    color: #fff;
+}
+.top-bar-mob img{
+    margin: auto;
+}
+
 /** top bar css end **/
 
 /** middle top bar css start **/
+.mob-cart-number {
+    background: #8e2e65;
+    width: 16px;
+    height: 17px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0;
+    position: absolute;
+    top: -4px;
+    right: -12px;
+}
+.mobile-cart .fa-shopping-bag {
+    font-size: 23px;
+    color: #000;
+}
+.mobile-cart {
+    position: relative;
+}
+.navbar-toggler .togglebar-nav {
+    cursor: pointer;
+    color: #902f66;
+    position: relative;
+    height: 30px;
+    width: 30px;
+}
 
-.middle-topbar-left > ul > li {
+.navbar-toggler .togglebar-nav span {
+    cursor: pointer;
+    color: #902f66;    
+    background: #902f66;
+    width: 33px;    
+    height: 2px;
+    display:block;
+    position: relative;
+    border-radius: 4px ;
+    margin: 7px 0;
+}
+
+.mobile-wishlist {
+    margin: 0 17px 0 0;
+}
+.mobile-wishlist a {
+    color: #000;
+    font-size: 25px;
+}
+
+.middle-topbar-left .whatsapp-top-h, .middle-topbar-left .location-top-h {
     display: inline-block;
     vertical-align: middle;
     margin: 0 30px 0 0;
 }
-.middle-topbar-left li a{
+.middle-topbar-left a{
     color: #878787;
     text-decoration: none;
 }
 
-.middle-topbar-left li a:hover{
+.middle-topbar-left a:hover{
     color: #8E2E65;
 }
 
-.middle-topbar-left li a i {
+.middle-topbar-left a i {
     color: #000;
     font-size: 18px;
     padding: 0 11px 0 0;
@@ -322,6 +415,7 @@ textarea:focus{
 .middle-topbar {
     border-bottom: 1px solid #EFEFEF;
     padding: 21px 0;
+    position: relative;
 }
 
 .middle-topbar-right li {
@@ -329,6 +423,47 @@ textarea:focus{
     vertical-align: middle;
     margin: 0 0 0 30px;
 }
+.location-drop {
+    position: absolute;
+    box-shadow: 0 1px 10px rgba(0,0,0,.25);
+    background: #fff;
+    width: 370px;
+    z-index: 9;
+    padding: 10px 15px;
+    top: 170%;
+    left: 0;
+    display: none;
+}
+.location-top-h:hover .location-drop{
+    display: block;
+}
+
+.location-details-title {
+    background: #eee;
+    color: #222;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 12px 8px;
+}
+.location-top-h {
+    position: relative;
+}
+.location-text {
+    color: #858c8e;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+.location-drop-inner {
+    display: flex;
+    align-items: center;
+}
+.location-text {
+    color: #858c8e;
+    font-size: 13px;
+    text-transform: uppercase;
+    padding: 0 0 0 8px;
+}
+
 .middle-topbar-right li a{
     color: #878787;
     text-decoration: none;
@@ -344,16 +479,29 @@ textarea:focus{
     position: relative;
     top: 1px;
 }
+.middle-topbar-right li.my-cart-blk .fa-shopping-bag {
+    color: #8e2e65;
+}
+
 
 /** middle top bar css end **/
 
 /** logo and menus css start **/
 
 .logo-menu-bar {
-    padding: 11px 0;
+    padding: 15px 0;
     background: #fff;
     width: 100%;
 }
+.mobile-cart-wishlist{
+    display: none;
+    align-items: center;
+}
+.navbar-toggler{
+    display: none;
+}
+
+
 .sticky-header .logo-menu-bar {
     position: fixed;
     top: 0;
@@ -365,6 +513,7 @@ textarea:focus{
 
 .logo-menu-bar-wrap {
     align-items: center;
+    position: relative;
 }
 .main-navigaiton .nav-navbars .level-zero {
     display: inline-block;
@@ -375,7 +524,7 @@ textarea:focus{
 .main-navigaiton .nav-navbars .level-zero a {
     text-decoration: none;
     color: #444;
-    font-weight: 600;
+    font-weight: bold;
     text-transform: uppercase;
     font-size: 12px;
 }
@@ -386,13 +535,20 @@ textarea:focus{
 .nav-navbars .level-zero.submenu .inner-submenu {
     display: none;
 }
+.nav-navbars .static-megamenu {
+    text-align: center;
+}
+.nav-navbars .static-megamenu *{
+    text-align: left;
+}
 
 .main-navigaiton .nav-navbars .level-zero .inner-submenu {
     background: #fff;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
     position: absolute;
-    top: 100%;
+    top: 160%;
     width: 250px;
+    transition: all 300ms ease-in-out;
 }
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li {
     display: block;
@@ -408,28 +564,50 @@ textarea:focus{
     font-size: 15px;
     position: relative;
 }
-.main-navigaiton .nav-navbars .level-zero:hover > .inner-submenu {
-    display: block;
-}
-.main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one:hover > .inner-submenu{
-    display: block;
-}
-.main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one .inner-submenu{
-    right: 0
-}
+
+
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one .inner-submenu {
     right: -100%;
     top: 0;
 }
 
 
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -7%, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+
 .head-mini-search .formgroup input {
     height: 40px;
     border: 1px solid #ddd;
-    font-size: 13px;
+    font-size: 14px;
     padding: 0 10px 0 40px;
     width: 100%;
 }
+
+input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #959595;  
+}
+input::-moz-placeholder { /* Firefox 19+ */
+  color: #959595;
+}
+input:-ms-input-placeholder { /* IE 10+ */
+  color: #959595;
+}
+input:-moz-placeholder { /* Firefox 18- */
+  color: #959595;
+}
+
 
 .head-mini-search .formgroup input:focus{
     box-shadow: 0 0 9px 1px rgba(0,0,0,.06);    
@@ -453,6 +631,27 @@ textarea:focus{
 textarea.input-control{
     height: 100px;
 }
+.mobile-serch-box {
+    background: #f4f4f4;
+    border-radius: 40px;
+    height: 40px;
+    margin: 22px 16px 20px;
+    padding: 5px 12px;
+    display: none;
+    align-items: center;
+    cursor: pointer;
+    color: #C2C2C2
+}
+.mobile-serch-box img {
+    max-width: 21px;
+    margin-right: 6px;
+}
+.remve-mobile-serch-box{
+    display: none;
+}
+
+
+
 
 
 /** logo and menus css end **/
@@ -717,6 +916,7 @@ textarea.input-control{
 .whychoose-col-inner {
     border: 1px dashed #979797;
     padding: 50px 30px 20px 30px;
+    height: 100%
 }
 .whychoose-col-inner:hover .whychoose-col-img {
     transform: translateY(-8px);
@@ -997,3 +1197,20 @@ input.input-control {
     color: #fff;
     font-size: 18px;
 }
+
+/** mega menuhover **/
+@media(min-width: 767px){    
+    .main-navigaiton .nav-navbars .level-zero:hover > .inner-submenu {
+    display: block;
+    animation-name: fadeIn;
+    animation-duration: 300ms;
+}
+.main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one:hover > .inner-submenu{
+    display: block;
+    animation-name: fadeIn;
+    animation-duration: 300ms;
+}
+
+}
+
+
