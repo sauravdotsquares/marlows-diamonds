@@ -2,7 +2,7 @@
 @section('content')
 <!-- home main-banner start -->
 <div class="home-main-banner">
-    <div class="main-banner-wraper flex-wrap flexed">
+    <div class="main-banner-wraper flex-flex-wrap flexed">
         <div class="main-banner-col banner-left-col">
             <div class="main-banner-left-text">
                 <h1>Find the Perfect Diamond Rings from Marlow’s</h1>               
@@ -125,7 +125,7 @@
             <div class="rating-img">
                 <img src="assets/images/top2.png" alt="rating star">
             </div>
-            <div class="whychoose-rows flex-wrap flexed">
+            <div class="whychoose-rows flex-flex-wrap flexed">
                 <div class="whychoose-col">
                     <div class="whychoose-col-inner">
                         <div class="whychoose-col-img">
@@ -390,7 +390,7 @@
 <div class="leftright-img-text">
     <div class="container">
         <div class="leftright-img-text-wraper">
-            <div class="leftright-imt-rows flexed flex-wrap items-center">
+            <div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
                 <div class="leftright-imt-col leftright-img">
                     <img src="assets/images/banner-hand.jpg" alt="banner-hand">
                 </div>
@@ -407,7 +407,7 @@
         </div>
 
         <div class="leftright-img-text-wraper">
-            <div class="leftright-imt-rows flexed flex-wrap items-center">
+            <div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
                 <div class="leftright-imt-col leftright-text">
                     <div class="leftright-heading heading-h-three">
                         Choose Your Diamond with Marlow’s Terminology Guide
@@ -440,7 +440,7 @@
             </div>
             <div class="joinour-mailing-form">
                 <form>
-                    <div class="form-rows flexed flex-wrap">
+                    <div class="form-rows flexed flex-flex-wrap">
                         <div class="form-col width-50">
                             <label>Yor Name<sup>*</sup></label>
                             <input class="input-control" type="text" name="name" placeholder="Your Name">
@@ -450,7 +450,7 @@
                             <input class="input-control" type="text" name="email" placeholder="Email Address">
                         </div>
                     </div>
-                    <div class="form-rows flexed flex-wrap">
+                    <div class="form-rows flexed flex-flex-wrap">
                         <div class="form-col">
                             <label>Message</label>
                             <textarea class="input-control" placeholder="Message"></textarea>
@@ -530,5 +530,7 @@
         <a class="btn-bg-small" href="#"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
     </div>
 </div>
+
+
 <!-- insta photos section end -->
 @endsection

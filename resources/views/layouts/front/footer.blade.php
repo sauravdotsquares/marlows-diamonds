@@ -2,8 +2,8 @@
 <footer class="footer-main">
     <div class="container">
         <div class="footer-wraper">
-            <div class="footer-links-row flexed flex-wrap">
-                <div class="column-one-fifth">
+            <div class="footer-links-row flexed flex-flex-wrap">
+                <div class="column-one-fifth about-footer">
                     <div class="footer-title">
                         <h4>About</h4>
                     </div>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4>Catalogue</h4>
+                        <h4 class="accordian-toggle">Catalogue</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
                         <ul>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4>Resources</h4>
+                        <h4 class="accordian-toggle">Resources</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
                         <ul>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4>Resources</h4>
+                        <h4 class="accordian-toggle">Resources</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
                         <ul>
@@ -63,7 +63,7 @@
 
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4>Policies</h4>
+                        <h4 class="accordian-toggle">Policies</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
                         <ul>
@@ -76,7 +76,7 @@
                 </div>
             </div>
 
-            <div class="footer-content-wrap flexed flex-wrap">
+            <div class="footer-content-wrap flexed flex-flex-wrap">
                 <div class="fcontent-column icon-payment">
                     <div class="paymentgate-logo"><img src="assets/images/payment-gateways.png" alt="payment">
                     </div>
