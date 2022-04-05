@@ -57,6 +57,7 @@ class BannerController extends Controller
 
 
         $data = $request->all();
+		
 		 $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
@@ -73,56 +74,29 @@ class BannerController extends Controller
 		if($banners->id !='' && count($data['description'] ) > 0)
 		{
 			$details = array();
-			foreach($data['description'] as $value)
+			foreach($data['description'] as $key => $value)
 			{
-				if($request->hasFile('image')) {
-
-            //$image_array = [];
-
-            //foreach ($request->file('image') as $image) {
-                
-                $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
-
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
-            //}
-        }
-		
-		if(empty($image)){
-			$input['image'] = '';
-		}
-		else{
-			
-			$input['image'] = $image;
-		}
-				
+				$details['image'] = '';
+				if($request->hasFile('image.'.$key)) {
+				// echo "testingnn";
+					// die;
+					$image_array = [];
+					$image = '';
+					$uploadpath = public_path().'\images\banners';   
+					$original_name = $request->file('image.'.$key)->getClientOriginalName();
+					$image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
+					$ext = $request->file('image.'.$key)->getClientOriginalExtension();
+					$image = $image_prefix . '.' . $ext;				
+					$request->file('image.'.$key)->move($uploadpath, $image);
+					$details['image'] = $image;
+				}		
 				$details['banner_id'] = $banners->id;
 				$details['description'] = $value;
 				BannerDetails::create($details);
 				
-				
 			}	
 		}
-		
-        
-		
-		//dd($input);
-
-        $banners = Banners::create($input);
-	
-        return redirect()->action('Admin\BannerController@index')->with('alert-success', 'Banner Added Successfully');
+		return redirect()->action('Admin\BannerController@index')->with('alert-success', 'Banner Added Successfully');
     }
 
     /**
@@ -144,11 +118,15 @@ class BannerController extends Controller
             return 'URL NOT FOUND';
         }
 		
-		$banners = Banners::find($id);
+		$banners = Banners::with('getBannerDetails')->find($id);
 		if (empty($banners)) {
             return 'URL NOT FOUND';
         }
-        $banners = Banners::find($id);
+		
+		// echo "<pre>";
+		// print_r($banners);
+		// die;
+		
 		$pages = Pages::all();
 		//dd($banners );
         return view('admin.banners.edit',compact('banners','pages'));
@@ -175,48 +153,40 @@ class BannerController extends Controller
 
        
 
-        $input = $request->all();
+        $data = $request->all();
 		$request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
 			
         ]);
-		/*image update*/
-       if($request->hasFile('image')) {
-
-            //$image_array = [];
-
-            //foreach ($request->file('image') as $image) {
-                
-                $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
-
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
-            //}
-        }
-
-        
-       if(empty($image)){
-			//$input['image'] = '';
+		if($banners->id !='' && count($data['description'] ) > 0)
+		{
+			$details = array();
+			foreach($data['description'] as $key => $value)
+			{
+				$details['image'] = '';
+				if($request->hasFile('image.'.$key)) {
+				// echo "testingnn";
+					// die;
+					$image_array = [];
+					$image = '';
+					$uploadpath = public_path().'\images\banners';   
+					$original_name = $request->file('image.'.$key)->getClientOriginalName();
+					$image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
+					$ext = $request->file('image.'.$key)->getClientOriginalExtension();
+					$image = $image_prefix . '.' . $ext;				
+					$request->file('image.'.$key)->move($uploadpath, $image);
+					$details['image'] = $image;
+				}		
+				$details['banner_id'] = $banners->id;
+				$details['description'] = $value;
+				BannerDetails::updateOrCreate($details);
+				
+			}	
 		}
-		else{
-			
-			$input['image'] = $image;
-		}
-        $banners->fill($input)->save();
+       
+        //$banners->fill($input)->save();
 
         return redirect()->action('Admin\BannerController@index')->with('alert-success', 'Banner Updated Successfully');
     }

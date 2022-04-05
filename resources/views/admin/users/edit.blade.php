@@ -12,9 +12,9 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('name') }}
    </div>
    @endif
-   @if ($errors->has('description'))
+   @if ($errors->has('username'))
    <div class="alert alert-danger">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('description') }}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('username') }}
    </div>
    @endif
    @if ($errors->has('is_active'))
@@ -78,10 +78,10 @@
                      
                      <div class="form-group">
                         <div class="form-label-group">
-                           <select id="status" name="status" class="form-control">
+                           <select id="is_active" name="is_active" class="form-control">
                               <option value="">Select Status</option>
-                              <option value="1" {{ $users->status=='1' ? 'selected' : '' }} >Enable</option>
-                              <option value="0" {{ $users->status=='0' ? 'selected' : '' }} >Disable</option>
+                              <option value="1" {{ $users->is_active=='1' ? 'selected' : '' }} >Enable</option>
+                              <option value="0" {{ $users->is_active=='0' ? 'selected' : '' }} >Disable</option>
                            </select>
                         </div>
                      </div>

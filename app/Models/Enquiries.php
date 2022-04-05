@@ -14,5 +14,5 @@ class Enquiries extends Model
     
     use HasFactory;
 	
-	protected $fillable = ['title','email','description'];
+	protected $fillable = ['title','email','description','status'];
 }

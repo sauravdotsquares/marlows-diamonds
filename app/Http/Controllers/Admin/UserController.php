@@ -56,11 +56,12 @@ class UserController extends Controller
      */
     public function add(Request $request){
 
-        $input = $request->all();
+        
+		$input = $request->all();
 		$request->validate([
             'name' => 'required|max:255',
-            'description' => 'required',
-            'status' => 'required',
+            'username' => 'required',
+            
 			
         ]);
 		
@@ -126,12 +127,12 @@ class UserController extends Controller
 		// print_r($input);
 		// die;
 		
-		$request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
-            'status' => 'required',
+		// $request->validate([
+            // 'name' => 'required|max:255',
+            // 'description' => 'required',
+            // 'status' => 'required',
 			
-        ]);
+        // ]);
 		
         $users->fill($input)->save();
 

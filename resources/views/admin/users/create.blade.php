@@ -1,5 +1,6 @@
 @extends('layouts.admin.app')
 @section('content')
+
 <div class="content">
    <!-- Breadcrumbs-->
    @if(session()->has('alert-danger'))
@@ -12,9 +13,9 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('name') }}
    </div>
    @endif
-   @if ($errors->has('description'))
+   @if ($errors->has('username'))
    <div class="alert alert-danger">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('description') }}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('username') }}
    </div>
    @endif
    @if ($errors->has('is_active'))
@@ -103,12 +104,5 @@
    </section>
 </div>
 <!-- Sticky Footer -->
-<script>
-   $(function () {
-     // Summernote
-     $('#description').summernote()
-   
-   })
-</script>  
+  
 @endsection
-
