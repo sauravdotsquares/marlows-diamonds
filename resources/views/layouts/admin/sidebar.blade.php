@@ -255,8 +255,8 @@
             </ul>
           </li>
 		  
-		  <li class="nav-item @if(request()->segment(2) == 'enquiries') menu-is-opening menu-open @endif">
-            <a href="/admin/enquiries" class="nav-link">
+		  <li class="nav-item">
+            <a href="/admin/enquiries" class="nav-link @if(request()->segment(2) == 'enquiries') active @endif">
               <i class="nav-icon far fa-envelope"></i>
               <p>
                 Newsletter Enquiries
@@ -264,8 +264,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item @if(request()->segment(2) == 'appointments') menu-is-opening menu-open @endif">
-            <a href="/admin/appointments" class="nav-link">
+          <li class="nav-item">
+            <a href="/admin/appointments" class="nav-link @if(request()->segment(2) == 'appointments') active @endif">
               <i class="nav-icon far fa-calendar"></i>
               <p>
                 Appointments
@@ -299,7 +299,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/admin/settings" class="nav-link">
+            <a href="/admin/settings" class="nav-link @if(request()->segment(2) == 'settings') active @endif">
               <i class="nav-icon fas fa fa-cog"></i>
               <p>
                 Settings
