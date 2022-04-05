@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAttributesTable extends Migration
+class CreateProductVariationDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateAttributesTable extends Migration
      */
     public function up()
     {
-        Schema::create('attributes', function (Blueprint $table) {
+        Schema::create('product_variation_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug',255)->nullable();
-            $table->text('values');
-            $table->tinyInteger('status')->default(0);
+            $table->integer('variation_id');
+            $table->string('key')->nullable();
+            $table->string('value')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attributes');
+        Schema::dropIfExists('product_variation_details');
     }
 }

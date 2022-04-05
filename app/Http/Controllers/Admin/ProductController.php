@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Products;
 use App\Models\ProductImages;
+use App\Models\ProductVariations;
+use App\Models\ProductVariationAttributes;
+use App\Models\ProductVariationDetails;
 use App\Models\Attributes;
 
 class ProductController extends Controller
@@ -43,12 +46,24 @@ class ProductController extends Controller
 
     public function submitProduct(Request $request)
     {
+
+        // return response()->json(implode(",",$request->selected_attribute_name));
+        // echo "<pre>";
+        // print_r($request->selected_attribute_name);
+        $arrayAttribute = [];
+        foreach($request->selected_attribute_name as $key => $attribute){
+            // echo $attribute;
+            $arrayAttribute[$attribute]  = $request[$attribute];
+
+        }
+        // print_r($arrayAttribute);
+        // die;
         
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'categories' => 'required',
-            'description' => 'required',
-            'featured_image' => 'required',
+            // 'title' => 'required',
+            // 'categories' => 'required',
+            // 'description' => 'required',
+            // 'featured_image' => 'required',
         ]);
 
         
@@ -91,7 +106,6 @@ class ProductController extends Controller
                 // 'image_url'=> $image,
             ]);
             $msg = 'Successfully added!!!';
-            
         }
 
         if($request->hasFile('gallery_image')) {
@@ -110,7 +124,82 @@ class ProductController extends Controller
         if(isset($finalArrayImages) && !empty($finalArrayImages) && count($finalArrayImages)){
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
         }
+
+        $getVariationArray = [
+            'vari_sale_price' => $request->vari_sale_price,
+            'vari_regular_price' => $request->vari_regular_price,
+            'vari_stock_status' => $request->vari_stock_status,
+            'arrayAttribute' =>$arrayAttribute,
+            
+        ];
+
+
+
+        $this->updateProductVariation($productDetails->id,$getVariationArray);
+        
+
+        $this->uploadProductVariationAttributes($productDetails->id,implode(",",$request->selected_attribute_name));
+
+        echo "Final Submit";
+
         return redirect()->back()->with('success', $msg);  
+    }
+
+    public function updateProductVariation($productId,$getVariationArray)
+    {
+        // echo "<pre>";
+        // print_r($getVariationArray['arrayAttribute']);
+        // // print_r();
+        // die;
+
+        $attrKeys = array_keys($getVariationArray['arrayAttribute']);
+        
+        foreach($getVariationArray["vari_sale_price"] as $key => $value){
+            $getProductData = ProductVariations::create([
+                'product_id'=>$productId,
+                'sale_price'=>isset($value)?$value:0.0,
+                'regular_price'=>isset($getVariationArray['vari_regular_price'][$key])?$getVariationArray['vari_regular_price'][$key]:0.0,
+                'stock_status'=>isset($getVariationArray['vari_stock_status'][$key])?$getVariationArray['vari_stock_status'][$key]:0,
+            ]);
+
+            foreach($getVariationArray['arrayAttribute'] as $key1 => $attr){
+                // echo "<pre>";
+                // print_r($key1);
+                // print_r($key);
+                // print_r($attr);
+                // die;
+                ProductVariationDetails::create([
+                    'variation_id'=>$getProductData->id,
+                    'key' =>$key1,
+                    'value' =>$attr[$key],
+                ]);
+            }
+
+        }
+        // echo "final";
+        // die;
+
+        return true;
+    }
+
+    public function uploadProductVariationAttributes($productId,$variationAttributesArray)
+    {
+        ProductVariationAttributes::updateOrCreate(['product_id'=>$productId],[
+            'product_id'=>$productId,
+            'attr_values'=> $variationAttributesArray,
+        ]);
+
+        $this->uploadProductVariationDetails();
+
+        return true;
+        // echo "Done<pre>";
+        // print_r($variationAttributesArray);
+        // die;
+    }
+
+    public function uploadProductVariationDetails()
+    {
+        # code...
     }
 
     public function uploadProductImages($imagesArray,$productId)
@@ -140,18 +229,20 @@ class ProductController extends Controller
             'value' => 'required',
         ]);
 
+        $newSlug = new SlugController;
+        $newCustomSlug = $newSlug->makeNewSlugName('Attributes',$request->name,$request->name);  
+        // 1. Model Name 2. Name/Title. 3. slugName
+    
+
         if($validator->fails()){
             return Redirect::back()->withErrors($validator->errors())->withInput();
         }else{
-            $addAttributes = Attributes::updateOrCreate(['name'=>$request->name],[
+            $addAttributes = Attributes::updateOrCreate(['slug'=>$request->slug],[
                 'name'=> $request->name,
+                'slug'=> strtolower($newCustomSlug),
                 'values'=> $request->value,
             ]);
         }
-
-        // echo "sdafsdfas<pre>";
-        // print_r($request->all());
-        // die;
 
         return response()->json(['success'=>"true"]);
     }
@@ -160,10 +251,5 @@ class ProductController extends Controller
     {
         $getData = Attributes::latest()->get();
         return response()->json($getData);
-    }
-    public function getSelectedAttribute(Request $request){
-        echo "<pre>";
-        print_r($request->all(''));
-        die;
     }
 }
