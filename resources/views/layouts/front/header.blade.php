@@ -10,7 +10,7 @@
                 </div>
                 <div class="item">
                     <div class="addr-number">
-                        {!!$header_settings->get_options('field2')!!}
+                        <p>{!!$header_settings->get_options('field2')!!}</p>
                     </div>
                 </div>
                 <div class="item">
