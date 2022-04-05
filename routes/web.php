@@ -68,7 +68,11 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 
 			// Product Add Pages Routes
 			Route::get('/products/products','ProductController@index')->name('products-list');
-			Route::get('/products/create/{prodslug?}/{proid?}','ProductController@create')->name('products-createform');
+			Route::get('/products/create','ProductController@create')->name('products-createform');
+			Route::get('/products/update/{prodid}','ProductController@updatePage')->name('products-updateform');
+			Route::post('/products/change-product-status','ProductController@status')->name('change-product-status');
+			Route::post('/products/delete-product-records','ProductController@delete')->name('delete-product-records');
+
 			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
 			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
 			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');

@@ -19,6 +19,8 @@ class CreateProductVariationsTable extends Migration
             $table->decimal('sale_price',8,2)->nullable();
             $table->decimal('regular_price',8,2)->nullable();
             $table->tinyInteger('stock_status')->nullable();
+            $table->string('vari_image')->nullable();
+            $table->string('vari_video')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

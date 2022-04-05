@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\SlugController;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Products;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Str;
@@ -27,17 +28,28 @@ class CategoryController extends Controller
         return view('admin.categories.index',$result);
     }
 
-    public function getCategory()
+    public function getCategory(Request $request)
     {
+        $getCatId_arr = [];
+        if(isset($request->id)){
+            $getCategory = Products::find($request->id);
+            $getCatId = $getCategory->categories;
+            $getCatId_arr = explode(",",$getCategory->categories);
+        }
+        // dd($getCatId_arr);
+
         $getParentData = Category::where('status',1)->where('parent_id',0)->get()->toArray();
         $dataArray = $child1 = array();
         if(count($getParentData)>0){
             foreach ($getParentData as $key => $parent) {
                 $dataArray[$key]['id'] = $parent['id']; 
                 $dataArray[$key]['name'] = $parent['name'];
-
-                echo '<option value="'.$parent['id'].'">'.$parent['name'] . '</option>';
-                $child = $this->getChildData($parent['id'], 0);
+                if(in_array($parent['id'],$getCatId_arr)){
+                    echo '<option selected value="'.$parent['id'].'">'.$parent['name'] . '</option>';
+                }else{
+                    echo '<option  value="'.$parent['id'].'">'.$parent['name'] . '</option>';
+                }
+                $child = $this->getChildData($parent['id'], 0,$getCatId_arr);
                 if(count($child)>0){
                     $dataArray[$key]['parent'] = $child;
                 }
@@ -48,18 +60,22 @@ class CategoryController extends Controller
         //return response()->json($dataArray);
     }
 
-    public function getChildData($parent_id, $level){
+    public function getChildData($parent_id, $level,$getCatId_arr){
         $getChildData = Category::where('status',1)->where('parent_id',$parent_id)->get()->toArray();
         $level++;
         $dataArray = $child1 = array();
         if(count($getChildData)>0){
             foreach ($getChildData as $key => $child) {
                 //echo str_repeat("-", ($level * 2)) . $child['name'] . '<br>';
-                echo '<option value="'.$child['id'].'">'.str_repeat("-", ($level * 2)) . $child['name'] . '</option>';
+                if(in_array($child['id'],$getCatId_arr)){
+                    echo '<option selected value="'.$child['id'].'">'.str_repeat("-", ($level * 2)) . $child['name'] . '</option>';
+                }else{
+                    echo '<option value="'.$child['id'].'">'.str_repeat("-", ($level * 2)) . $child['name'] . '</option>';
+                }
                 $dataArray[$key]['id'] = $child['id']; 
                 $dataArray[$key]['name'] = $child['name'];
 
-                $child = $this->getChildData($child['id'], $level);
+                $child = $this->getChildData($child['id'], $level,$getCatId_arr);
                 if(count($child)>0){
                     $dataArray[$key]['parent'] = $child;
                 }

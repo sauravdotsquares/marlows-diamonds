@@ -19,35 +19,60 @@ if (!function_exists("helper_test")) {
 if (!function_exists("single_image_upload")) {
     function single_image_upload($imageUrl,$folderName)
     {
+        if (!file_exists('images/'.$folderName)) {
+            mkdir('images/'.$folderName, 0777);
+        }
+        $uploadpath = public_path().'\images\\'.$folderName;
+        if(is_array($imageUrl)){
+            foreach($imageUrl as $file) {
+                // $original_name = $file->getClientOriginalName();
+                $filename = $folderName.'/'.rand().time() . '_' . $file->getClientOriginalName();
+                $file->move($uploadpath, $filename);
+                $data[] = $filename;
+            }
+        }else{
+            // $original_name = $imageUrl->getClientOriginalName();
+            $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
+            $imageUrl->move($uploadpath, $filename);
+            $data['f2'] = $filename;
+        }
+        return $data;
+    }
+}
+if (!function_exists("product_image_upload")) {
+    function product_image_upload($imageUrl,$folderName)
+    {
         // echo "it is working single";
         if (!file_exists('images/'.$folderName)) {
             mkdir('images/'.$folderName, 0777);
         }
         // mkdir('images/'.$folderName, 0777);
         $uploadpath = public_path().'\images\\'.$folderName;
-        if(is_array($imageUrl)){
-            foreach($imageUrl as $file) {
-                // $original_name = $file->getClientOriginalName();
-                $filename = $folderName.'/'.time() . '_' . $file->getClientOriginalName();
-                // $filename = $original_name;
-                $file->move($uploadpath, $filename);
-                $data[] = $filename;
-            }
-        }else{
-            // $original_name = $imageUrl->getClientOriginalName();
-            $filename = $folderName.'/'.time() . '_' . $imageUrl->getClientOriginalName();
-            // $filename = $original_name;
-            $imageUrl->move($uploadpath, $filename);
-            $data['f2'] = $filename;
+        // $original_name = $imageUrl->getClientOriginalName();
+        $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
+        // $filename = $original_name;
+        $imageUrl->move($uploadpath, $filename);
+        return  $filename;
+
+        // return $data;
+    }
+}
+if (!function_exists("product_video_upload")) {
+    function product_video_upload($imageUrl,$folderName)
+    {
+        // echo "it is working single";
+        if (!file_exists('images/'.$folderName)) {
+            mkdir('images/'.$folderName, 0777);
         }
+        // mkdir('images/'.$folderName, 0777);
+        $uploadpath = public_path().'\images\\'.$folderName;
+        // $original_name = $imageUrl->getClientOriginalName();
+        $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
+        // $filename = $original_name;
+        $imageUrl->move($uploadpath, $filename);
+        return  $filename;
 
-        // echo "uploaded <pre>";
-        // print_r($original_name);
-        // print_r($data);
-        // die;
-        return $data;
-
-        
+        // return $data;
     }
 }
 

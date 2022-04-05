@@ -12,6 +12,15 @@ class Products extends Model
     protected $table = 'products';
 
     protected $fillable = [
-        'title','slug','tags','description','categories','sale_price','regular_price','meta_title','meta_keyword','meta_description','status','is_featured'
+        'title','slug','tags','description','categories','sale_price','regular_price','meta_title','meta_keyword','meta_description','status','is_featured','is_taxable'
     ];
+
+    public function getProductImages(){
+        return $this->hasOne(ProductImages::class,'product_id','id')->where('is_featured',1);
+    }
+    
+    public function getProductGallery(){
+        return $this->hasMany(ProductImages::class,'product_id','id');
+    }
+
 }

@@ -10,6 +10,13 @@
          </div>
       @endif
       
+      <?php 
+         // echo "<pre>";
+         // print_r($getProducts);
+         // die;
+      
+      
+      ?>
 <!-- Main content -->
 <section class="content">
    <div class="container-fluid">
@@ -40,25 +47,34 @@
                      <thead>
                         <tr>
                            <th>Sr No</th>
-                           <th>Name</th>
-                           <th>Image</th>
-                           <th>Slug</th>
-                           <th>Parent</th>
-                           <th>Description</th>
+                           <th><span class="wc-image tips">Image</span></th>
+                           <th>Title</th>
+                           <th>SKU</th>
+                           <th>Stock</th>
+                           <th>Price</th>
+                           <th>Category</th>
+                           <th>Tags</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
                      </thead>
                      <tbody>
-                        @if(isset($getData) && !$getData->isEmpty())
-                           @foreach($getData as $key => $value)
+                        @if(isset($getProducts) && !$getProducts->isEmpty())
+                           @foreach($getProducts as $key => $value)
+                           <?php 
+                              // echo "<pre>";
+                              // print_r($value->title);
+                              // die;
+                           ?>
                               <tr>
                                  <td>{{++$key}}</td>
-                                 <td>{{$value->name}}</td>
-                                 <td><img src="{{asset('images').'/'.$value->image_url}}" alt=""></td>
-                                 <td>{{$value->slug}}</td>
-                                 <td>Parent</td>
-                                 <td>{!!$value->description!!}</td>
+                                 <td></td>
+                                 <td>{{isset($value->title)?$value->title:''}}</td>
+                                 <td>{{isset($value->sku)?$value->sku:''}}</td>
+                                 <td>In Stock</td>
+                                 <td>{{isset($value->sale_price)?$value->sale_price:''}}</td>
+                                 <td>{{isset($value->categories)?$value->categories:''}}</td>
+                                 <td>--</td>
                                  <td>{{$value->created_at}}</td>
                                  <td>
                                     @if($value->status == 1)
@@ -70,7 +86,7 @@
                                        href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="1"><i
                                           class="fa fa-times" aria-hidden="true"></i></a>
                                     @endif
-                                    <a title="Edit" href="{{asset('admin/products/categories/create/'.$value->slug)}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
+                                    <a title="Edit" href="{{route('admin.products-updateform',[$value->id])}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
                                     <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$value}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                  </td>
                               </tr>
@@ -78,18 +94,19 @@
                         @else
                            No record found
                         @endif
-
                      </tbody>
                      <tfoot>
                         <tr>
-                            <th>Sr No</th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Slug</th>
-                            <th>Parent</th>
-                            <th>Description</th>
-                            <th>Created</th>
-                            <th>Action</th>
+                           <th>Sr No</th>
+                           <th><span class="wc-image tips">Image</span></th>
+                           <th>Title</th>
+                           <th>SKU</th>
+                           <th>Stock</th>
+                           <th>Price</th>
+                           <th>Category</th>
+                           <th>Tags</th>
+                           <th>Created</th>
+                           <th>Action</th>
                         </tr>
                      </tfoot>
                   </table>
@@ -148,7 +165,7 @@
          $('.statusSwitch').on('click',function(){
                $.ajax({
                   type:'POST',
-                  url:'{{asset("admin/change-categories")}}',
+                  url:'{{route("admin.change-product-status")}}',
                   data:{
                   '_token':"{{csrf_token()}}",
                   'id':$(this).data('record'),
@@ -188,7 +205,7 @@
             let themeId = $('input[name=themeId]').val();
             $.ajax({
                type:"POST",
-               url:'{{asset("admin/delete-categories")}}',
+               url:'{{route("admin.delete-product-records")}}',
                data:{
                   "_token": "{{ csrf_token() }}",
                   'id':themeId,
