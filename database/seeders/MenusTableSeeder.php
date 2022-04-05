@@ -96,107 +96,92 @@ class MenusTableSeeder extends Seeder
 	        ]);
         Menus::create([
 	            'parent' => 10,
-	            'title' => '',
-	            'slug' => '',
-	            'icon' => 'fas fa-align-justify',
+	            'title' => 'Diamond Band',
+	            'slug' => '/product-category/wedding-rings/womens/diamond-band-womens/',
+	            'icon' => 'fas fa-angle-right',
 	            'target' => '_self',
-	            'tooltip' => ''
+	            'tooltip' => 'Womens Diamond Band'
 	        ]);
         Menus::create([
 	            'parent' => 10,
-	            'title' => '',
-	            'slug' => '',
-	            'icon' => 'fas fa-align-justify',
+	            'title' => 'Plain Band',
+	            'slug' => '/product-category/wedding-rings/womens/plain-band-womens/',
+	            'icon' => 'fas fa-angle-right',
 	            'target' => '_self',
-	            'tooltip' => ''
+	            'tooltip' => 'Womens Plain Band'
 	        ]);
         Menus::create([
 	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
+	            'title' => 'Diamond Jewellery',
+	            'slug' => '/product-category/diamond-jewellery/',
 	            'icon' => 'fas fa-align-justify',
 	            'target' => '_self',
-	            'tooltip' => ''
+	            'tooltip' => 'Diamond Jewellery'
+	        ]);
+        Menus::create([
+	            'parent' => 13,
+	            'title' => 'Bracelets',
+	            'slug' => '/product-category/diamond-jewellery/bracelets/',
+	            'icon' => 'fas fa-angle-double-right',
+	            'target' => '_self',
+	            'tooltip' => 'Bracelets'
+	        ]);
+        Menus::create([
+	            'parent' => 13,
+	            'title' => 'Earrings',
+	            'slug' => '/product-category/diamond-jewellery/earrings/',
+	            'icon' => 'fas fa-angle-double-right',
+	            'target' => '_self',
+	            'tooltip' => 'Earrings'
+	        ]);
+        Menus::create([
+	            'parent' => 13,
+	            'title' => 'Necklaces',
+	            'slug' => '/product-category/diamond-jewellery/necklaces/',
+	            'icon' => 'fas fa-angle-double-right',
+	            'target' => '_self',
+	            'tooltip' => 'Necklaces'
+	        ]);
+        Menus::create([
+	            'parent' => 13,
+	            'title' => 'Pendants',
+	            'slug' => '/product-category/diamond-jewellery/pendants/',
+	            'icon' => 'fas fa-angle-double-right',
+	            'target' => '_self',
+	            'tooltip' => 'Pendants'
 	        ]);
         Menus::create([
 	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
+	            'title' => 'Bespoke Diamond Search',
+	            'slug' => '/live-diamond-search/',
 	            'icon' => 'fas fa-align-justify',
 	            'target' => '_self',
-	            'tooltip' => ''
+	            'tooltip' => 'Bespoke Diamond Search'
 	        ]);
         Menus::create([
 	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
+	            'title' => 'Sustainable Diamonds',
+	            'slug' => '/lab-grown-diamond-engagement-rings/',
 	            'icon' => 'fas fa-align-justify',
 	            'target' => '_self',
-	            'tooltip' => ''
+	            'tooltip' => 'Sustainable Diamonds'
 	        ]);
         Menus::create([
 	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
+	            'title' => 'Visit Us',
+	            'slug' => '/visit-us/',
 	            'icon' => 'fas fa-align-justify',
 	            'target' => '_self',
-	            'tooltip' => ''
+	            'tooltip' => 'Visit Us'
 	        ]);
         Menus::create([
 	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
+	            'title' => 'Blog',
+	            'slug' => '/blog-resources/',
 	            'icon' => 'fas fa-align-justify',
 	            'target' => '_self',
-	            'tooltip' => ''
+	            'tooltip' => 'Blog'
 	        ]);
-        Menus::create([
-	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
-	            'icon' => 'fas fa-align-justify',
-	            'target' => '_self',
-	            'tooltip' => ''
-	        ]);
-        Menus::create([
-	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
-	            'icon' => 'fas fa-align-justify',
-	            'target' => '_self',
-	            'tooltip' => ''
-	        ]);
-        Menus::create([
-	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
-	            'icon' => 'fas fa-align-justify',
-	            'target' => '_self',
-	            'tooltip' => ''
-	        ]);
-        Menus::create([
-	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
-	            'icon' => 'fas fa-align-justify',
-	            'target' => '_self',
-	            'tooltip' => ''
-	        ]);
-        Menus::create([
-	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
-	            'icon' => 'fas fa-align-justify',
-	            'target' => '_self',
-	            'tooltip' => ''
-	        ]);
-        Menus::create([
-	            'parent' => 0,
-	            'title' => '',
-	            'slug' => '',
-	            'icon' => 'fas fa-align-justify',
-	            'target' => '_self',
-	            'tooltip' => ''
-	        ]);
+        
     }
 }
