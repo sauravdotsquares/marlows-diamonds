@@ -193,13 +193,13 @@
         <div class="container">
             <div class="post-bar-wraper flexed flex-justify-between flex-items-center">
                 <div class="post-bar-left">
-                    <p>Fine Jewellers Since 1951</p>
+                    <p>{!!$header_settings->get_options('header-left')!!}</p>
                 </div>  
                 <div class="post-bar-center">
-                    <img src="assets/images/reviewss.png" alt="review">
+                    {!!$header_settings->get_options('header-center')!!}
                 </div>  
                 <div class="post-bar-right">
-                    <p>Trusted by thousands and free 30 day returns.</p>
+                    <p>{!!$header_settings->get_options('header-right')!!}</p>
                 </div>  
             </div>
         </div>
