@@ -3,7 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name') }}</title>
+    <title>{!! $data->meta_title !!}</title>
+    <meta name="description" content="{!! $data->meta_description !!}" />
+
+    <link rel="canonical" href="{{url()->current()}}" />
+
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{!! $data->meta_title !!}" />
+    <meta property="og:description" content="{!! $data->meta_description !!}" />
+    <meta property="og:url" content="{{url()->current()}}" />
+    <meta property="og:site_name" content="{!! config('app.name') !!}" />
+    <meta property="og:image" content="" />
+    <meta property="og:image:width" content="120" />
+    <meta property="og:image:height" content="120" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@marlowsdiamonds" />
 
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     
