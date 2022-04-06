@@ -1,4 +1,7 @@
 @inject('header_settings', 'App\Models\Settings') 
+<?php
+//echo '<pre>'; print_r($navbars); die; 
+?>
 <!-- Header Start here -->
 <header class="header-main">
     <!-- Mobile Top Start here -->
@@ -118,8 +121,27 @@
                             Search for products...
                         </div>
                     <nav class="nav-navbars">
+
                         <ul class="static-megamenu">
-                            <li class="level-zero submenu">
+
+                            @if(!empty($navbars))
+
+                                @foreach($navbars as $navbarItem)
+                                    <li class="level-zero submenu {{$navbarItem['class_level']}}">
+                                        <a href="{{url($navbarItem['href'])}}">{{$navbarItem['text']}}
+                                            @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
+                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                            @endif
+                                        </a>
+                                        @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
+                                            @include('layouts.front.menus-sub', ['subs' => $navbarItem['children']])
+                                        @endif
+                                    </li>
+                                @endforeach
+
+                            @endif
+
+                           <!--  <li class="level-zero submenu">
                                 <a href="#">Engagement Rings <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                 <ul class="inner-submenu">
                                     <li class="level-one"><a href="#">Solitare</a></li>
@@ -165,7 +187,7 @@
                             </li>
                             <li class="level-zero">
                                 <a href="#">Blog</a>
-                            </li>
+                            </li> -->
                         </ul>
                     </nav>
                     </div>
