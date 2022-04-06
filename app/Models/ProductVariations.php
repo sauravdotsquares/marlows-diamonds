@@ -14,4 +14,17 @@ class ProductVariations extends Model
     protected $fillable = [
         'product_id','sale_price','regular_price','stock_status','vari_image','vari_video'
     ];
+
+    protected $appends = ['get_vari_attri_id','get_vari_details_id'];
+
+    public function getGetVariAttriIdAttribute()
+    {
+        return ProductVariationAttributes::where('product_id',$this->product_id)->first();
+    }
+    public function getGetVariDetailsIdAttribute()
+    {
+        // $getVariId = self::where('product_id',$this->product_id)->pluck('id');
+        return ProductVariationDetails::where('variation_id',$this->id)->select('variation_id','key','value')->get();
+    }
+
 }
