@@ -39,7 +39,7 @@
                 <!-- Color Picker -->
                 <div class="form-group">
                   <label>Section 1 Title</label>
-                  <input type="text" id="sec1-title" name="sec1-title" value="{{$settings1->get_options('sec1-title')}}" class="form-control" placeholder="Section 1 Title" >
+                  <input type="text" id="sec1-title" name="footer_sec1-title" value="{{$settings1->get_options('footer_sec1-title')}}" class="form-control" placeholder="Section 1 Title" >
                 </div>
                 
 				<div class="form-label-group">
@@ -61,7 +61,7 @@
                 <!-- Color Picker -->
                 <div class="form-group">
                   <label>Section 2 Title</label>
-                  <input type="text" id="sec2-title" name="sec2-title" value="{{$settings1->get_options('sec2-title')}}" class="form-control" placeholder="Section 2 Title" >
+                  <input type="text" id="footer_sec2-title" name="footer_sec2-title" value="{{$settings1->get_options('footer_sec2-title')}}" class="form-control" placeholder="Section 2 Title" >
                 </div>
                 
 				<div class="form-label-group">
@@ -83,7 +83,7 @@
                 <!-- Color Picker -->
                 <div class="form-group">
                   <label>Section 3 Title</label>
-                  <input type="text" id="sec3-title" name="sec3-title" value="{{$settings1->get_options('sec3-title')}}" class="form-control" placeholder="Section 3 Title" >
+                  <input type="text" id="footer_sec3-title" name="footer_sec3-title" value="{{$settings1->get_options('footer_sec3-title')}}" class="form-control" placeholder="Section 3 Title" >
                 </div>
                 
 				<div class="form-label-group">
@@ -105,7 +105,7 @@
                 <!-- Color Picker -->
                 <div class="form-group">
                   <label>Section 4 Title</label>
-                  <input type="text" id="sec4-title" name="sec4-title" value="{{$settings1->get_options('sec4-title')}}" class="form-control" placeholder="Section 4 Title" >
+                  <input type="text" id="footer_sec4-title" name="footer_sec4-title" value="{{$settings1->get_options('footer_sec4-title')}}" class="form-control" placeholder="Section 4 Title" >
                 </div>
                 
 				<div class="form-label-group">
@@ -126,7 +126,7 @@
                 <!-- Color Picker -->
                 <div class="form-group">
                   <label>Section 5 Title</label>
-                  <input type="text" id="sec5-title" name="sec5-title" value="{{$settings1->get_options('sec5-title')}}" class="form-control" placeholder="Section 5 Title" >
+                  <input type="text" id="footer_sec5-title" name="footer_sec5-title" value="{{$settings1->get_options('footer_sec5-title')}}" class="form-control" placeholder="Section 5 Title" >
                 </div>
                 
 				<div class="form-label-group">

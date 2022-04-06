@@ -123,6 +123,10 @@ class BannerController extends Controller
             return 'URL NOT FOUND';
         }
 		
+		// echo "<pre>";
+		// print_r($banners);
+		// die;
+		
 		$pages = Pages::all();
 		//dd($banners );
         return view('admin.banners.edit',compact('banners','pages'));
@@ -156,74 +160,38 @@ class BannerController extends Controller
             'status' => 'required',
 			
         ]);
-		
-		$input = array();
-	   
-		$banners->page_id = $data['page_id'];
-		$banners->title = $data['title'];
-		$banners->status = $data['status'];
-		//dd($data['ids']);
-        $banners->save();
-		//dd(count($data['image']));
-	 	if($banners->id !='' && count($data['description'] ) > 0)
+		if($banners->id !='' && count($data['description'] ) > 0)
 		{
 			$details = array();
-			$arr_delete = array();
-			
-			//BannerDetails::where("banner_id", $id)->delete();
-			
 			foreach($data['description'] as $key => $value)
-			{				
-				 $image = $request->file('image.'.$key);
-				// dd($data['ids'][$key]);
+			{
+				$details['image'] = '';
+				if($request->hasFile('image.'.$key)) {
+				// echo "testingnn";
+					// die;
+					$image_array = [];
+					$image = '';
+					$uploadpath = public_path().'\images\banners';   
+					$original_name = $request->file('image.'.$key)->getClientOriginalName();
+					$image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
+					$ext = $request->file('image.'.$key)->getClientOriginalExtension();
+					$image = $image_prefix . '.' . $ext;				
+					$request->file('image.'.$key)->move($uploadpath, $image);
+					$details['image'] = $image;
+				}		
+				$details['banner_id'] = $banners->id;
+				$details['description'] = $value;
+				BannerDetails::updateOrCreate($details);
 				
-				 if ($image != null){ 
-				//  dd($image);
-					if($request->hasFile('image.'.$key) && isset($data['image'])) {
-					
-						$image_array = [];
-						$image = '';
-						$uploadpath = public_path().'\images\banners';   
-						$original_name = $request->file('image.'.$key)->getClientOriginalName();
-						$image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-						$ext = $request->file('image.'.$key)->getClientOriginalExtension();
-						$image = $image_prefix . '.' . $ext;				
-						$request->file('image.'.$key)->move($uploadpath, $image);
-						
-						if(isset($data['ids'][$key]) && (!empty($data['ids']))){
-							$banner_details =  BannerDetails::find($data['ids'][$key]); 
-							$banner_details->banner_id =  $banners->id;
-							$banner_details->image =  $image;
-							$banner_details->description  = $value;
-							// die($banner_details);
-							 $banner_details->save();
-						 }else{
-							$details['image'] = $image;		
-							$details['banner_id'] = $banners->id;
-							$details['description'] = $value;
-							BannerDetails::create($details);
-						 }
-							
-							
-						
-					}
-				 }else if(isset($data['ids'][$key]) && (!empty($data['ids']))){
-					$banner_details =  BannerDetails::find($data['ids'][$key]); 
-					$banner_details->banner_id =  $banners->id;
-					$banner_details->description  = $value;
-					// die($banner_details);
-					 $banner_details->save();
-				 }else{
-					$details['banner_id'] = $banners->id;
-					$details['description'] = $value;
-					BannerDetails::create($details);
-				 }
-	
 			}	
-			
-		} 
-		return redirect()->action('Admin\BannerController@index')->with('alert-success', 'Banner Updated Successfully');
+		}
+       
+        //$banners->fill($input)->save();
+
+        return redirect()->action('Admin\BannerController@index')->with('alert-success', 'Banner Updated Successfully');
     }
+
+    
 
     /**
      * Remove the specified resource from storage.
@@ -253,13 +221,4 @@ class BannerController extends Controller
 
         return redirect()->action('Admin\BannerController@index')->with('alert-success', 'Banner Status Updated Successfully');
     }
-	
-	public function deleteBannerImage($id){
-	//dd($id);
-		BannerDetails::find($id)->delete($id);	  
-		return response()->json([
-			'success' => 'Record deleted successfully!'
-		]);
-	}
-
 }
