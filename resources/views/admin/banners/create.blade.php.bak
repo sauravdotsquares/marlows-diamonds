@@ -22,18 +22,10 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('status') }}
    </div>
    @endif
-   
-	<?php 
-		// echo "In the blade file<pre>";
-		// print_r($banners->getBannerDetails[0]);
-		// die;
-	
-	?>
-   
    <!-- DataTables Example -->
    <section class="content">
       <div class="container-fluid">
-         <form id="cmsForm" action="{{ url('admin/banners/edit/'.base64_encode($banners->id)) }}" enctype="multipart/form-data" method="post" id="cmsForm" >
+         <form id="cmsForm" action="{{ url('admin/banners/add') }}" enctype="multipart/form-data" method="post" >
             @csrf
             <div class="row">
                <div class="col-md-12">
@@ -47,7 +39,7 @@
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Title</label>
-                              <input type="text" id="title" name="title" class="form-control" value="{{ $banners->title }}" placeholder="Title" >
+                              <input type="text" id="title" name="title" class="form-control" placeholder="Title" >
                            </div>
                         </div>
 					 </div>	
@@ -55,12 +47,12 @@
 						<div class="form-group">
 							<div class="form-label-group">
 							<label for="product_name">Select Page</label>
-							  <select id="page_id" name="page_id" class="form-control"  autofocus="autofocus">
-								<option value="">Select Page</option>
+							  <select id="page_id" name="page_id" class="form-control" autofocus="autofocus">
+								<option value="0">Select Page</option>
 								@foreach($pages as $page)
-								<option value = {{ $page->id }} {{ $page->id==$banners->page_id ? 'selected' : '' }} >{{ $page->title }}</option>
-							@endforeach
-							</select>                  
+								  <option value = {{ $page->id }} >{{ $page->title }}</option>
+								@endforeach
+							  </select>                    
 							</div>
 						</div>
 					 </div>
@@ -70,8 +62,8 @@
 						<label for="product_name">Status</label>
                            <select id="status" name="status" class="form-control">
                               <option value="">Select Status</option>
-                              <option value="1" {{ $banners->status=='1' ? 'selected' : '' }} >Enable</option>
-                              <option value="0" {{ $banners->status=='0' ? 'selected' : '' }} >Disable</option>
+                              <option value="1">Enable</option>
+                              <option value="0">Disable</option>
                            </select>
                         </div>
 						</div>
@@ -83,22 +75,18 @@
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Description</label>
-                               <textarea id="description" name="description[]" class="form-control ckeditor description" placeholder="Banner Description" >{!! $banners->getBannerDetails[0]->description !!}</textarea>                    
+                              <textarea id="description" name="description[]" rows="20" class="form-control description"></textarea>                    
                            </div>
                         </div>
                      </div>
                        <div class="col-md-5"> 
 						 <div class="form-group">
 							<label for="exampleInputFile">Banner Image</label>
-							<input type="hidden" name="ids[]" value="{{$banners->getBannerDetails[0]->id}}">
 							<div class="input-group">
 							   <div class="custom-file">
-                              @if($banners->getBannerDetails[0]->image!='') 
-								<img src="{{url('/').'/images/banners/'.$banners->getBannerDetails[0]->image}}" width="150px;">
-                              @endif
-                              <input type="file" id="image" name="image[]" value="{{ $banners->getBannerDetails[0]->image }}" class="custom-file-input" accept="image/*">
-                              <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                           </div>
+								  <input type="file" id="image" name="image[]" class="custom-file-input" accept="image/*">
+								  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+							   </div>
 							</div>
 						 </div>
 					   </div>
@@ -110,41 +98,6 @@
 					   </div>
 					</div> 
                       <div class="" id="dynamic_field" >
-					  <?php $i = 1; ?>
-					  @if($banners->getBannerDetails)
-						@foreach($banners->getBannerDetails as $key => $bannerDetails)
-							@if($key>0)
-								
-								<div class="row" id="row{{$i}}" class="dynamic-added">
-								<input type="hidden" name="ids[]" value="{{$bannerDetails->id}}">
-									<div class="col-md-5">
-										<div class="form-group">
-											<div class="form-label-group">
-												<label for="product_name">Description</label>
-													<textarea id="description{{$i}}" name="description[]" class="form-control description">{{$bannerDetails->description}}</textarea>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-5">
-										<div class="form-group">
-											<label for="exampleInputFile">Banner Image</label>
-											<div class="input-group">
-												<img width="150" src="{{url('/').'/images/banners/'.$bannerDetails->image}}" >
-												<div class="custom-file">
-													<input type="file" id="image{{$i}}" name="image[]" class="custom-file-input" accept="image/*">
-														<label class="custom-file-label" for="exampleInputFile">Choose file</label>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-2">
-										<button type="button" name="remove" id="{{$i}}" data-remove_id="{{$bannerDetails->id}}" class="btn btn-danger btn_remove">X</button>
-									</div>
-								</div>
-							@endif
-							<?php $i= $i+1; ?>
-						@endforeach
-					  @endif
 					  </div>
                      
                      
@@ -167,11 +120,6 @@
 <!-- Sticky Footer -->
 @section('js')
 <script>
-
-$(document).on('change', '.custom-file-input', function (event) {
-    $(this).next('.custom-file-label').html(event.target.files[0].name);
-})
-
    $(function () {
      // Summernote
      $('.description').summernote({
@@ -180,7 +128,6 @@ $(document).on('change', '.custom-file-input', function (event) {
 		
    })
 </script> 
-<input type="hidden" name="csrf-token" content="{{ csrf_token() }}">
 <script type="text/javascript">
 
     $(document).ready(function(){      
@@ -201,40 +148,14 @@ $(document).on('change', '.custom-file-input', function (event) {
 
       });  
 
-		$(".btn_remove").click(function(){
-			var id = $(this).data("remove_id");
-			var token = $("input[name='csrf-token']").attr("content");
-		    var button_id = $(this).attr("id");	
-			$.ajax(
-			{
-				//url: "delete-banner-image/"+id,
-				
-				 url: "{{ url('/admin/delete-banner-image/') }}/"+id,
-				type: 'DELETE',
-				data: {
-					"id": id,
-					"_token": token,
-				},
-				success: function (){
-					 
-					//alert(button_id);
-					   $('#row'+button_id).remove();  
-				}
-			});
-		   
-		});
 
+      $(document).on('click', '.btn_remove', function(){  
 
-      /* $(document).on('click', '.btn_remove', function(){  
-			
-           var button_id = $(this).attr("id"); 
-	
-			console.log(button_id);
-			
+           var button_id = $(this).attr("id");   
 
            $('#row'+button_id+'').remove();  
 
-      });   */
+      });  
 
 
       $.ajaxSetup({
