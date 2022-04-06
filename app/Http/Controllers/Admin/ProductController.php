@@ -25,10 +25,14 @@ class ProductController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
 
-        return view('admin.products.index');
+        $getProducts = Products::latest()->get();
+
+
+
+        return view('admin.products.index',compact('getProducts'));
     }
 
-    public function create($prodSlug=null,$proid=null)
+    public function create()
     {
 
         $breadcrumb = [
@@ -44,35 +48,49 @@ class ProductController extends Controller
         return view('admin.products.create');
     }
 
+    public function updatePage($productId = null)
+    {
+
+        
+
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Product Form", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
+        ];
+        populate_breadcrumb($breadcrumb);
+
+        $getProductData = Products::with('getProductImages','getProductGallery')->where('id',$productId)->first();
+
+        if ($productId == '' && !isset($getProductData) && empty($getProductData)){
+            return 'URL NOT FOUND';
+        }
+
+        // echo "asfs<pre>";
+        // print_r($getProductData);
+        // die;
+
+        $result = [
+            'getProductData' => $getProductData,
+        ];
+
+        return view('admin.products.update',$result);
+    }
+
     public function submitProduct(Request $request)
     {
 
-        // return response()->json(implode(",",$request->selected_attribute_name));
-        // echo "<pre>";
-        // print_r($request->selected_attribute_name);
-        $arrayAttribute = [];
-        foreach($request->selected_attribute_name as $key => $attribute){
-            // echo $attribute;
-            $arrayAttribute[$attribute]  = $request[$attribute];
+        // return response()->json($request->data);
 
-        }
-        // print_r($arrayAttribute);
-        // die;
-        
         $validator = Validator::make($request->all(), [
             // 'title' => 'required',
-            // 'categories' => 'required',
             // 'description' => 'required',
             // 'featured_image' => 'required',
         ]);
-
-        
 
         //  setup categories 
         //  $getParentId = 0;
         if(isset($request->table_id) && !empty($request->table_id)){
             if($request->table_id == $request->categories){
-                
                 $request->categories = 0;
             }elseif(!isset($request->categories) && empty($request->categories)){
                 $request->categories = 0;
@@ -98,8 +116,11 @@ class ProductController extends Controller
                 'tags'=> $request->tags,
                 'status'=> isset($request->status)?$request->status:0,
                 'is_featured'=> isset($request->is_featured)?$request->is_featured:0,
+                'is_taxable'=> isset($request->is_taxable)?$request->is_taxable:0,
                 'categories'=>isset($request->categories)?implode(",",$request->categories):0,
                 'description'=> $request->description,
+                'sale_price'=> $request->sale_price,
+                'regular_price'=> $request->regular_price,
                 'meta_title'=> $request->meta_title,
                 'meta_keyword'=> $request->meta_keyword,
                 'meta_description'=> $request->meta_description,
@@ -119,66 +140,62 @@ class ProductController extends Controller
         }else{
             $featured_image = $request->image_url_bk;
         }
-
+        
         $finalArrayImages = array_merge($imagegallery_image,$imagefeatured_image);
         if(isset($finalArrayImages) && !empty($finalArrayImages) && count($finalArrayImages)){
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
         }
 
         $getVariationArray = [
-            'vari_sale_price' => $request->vari_sale_price,
-            'vari_regular_price' => $request->vari_regular_price,
-            'vari_stock_status' => $request->vari_stock_status,
-            'arrayAttribute' =>$arrayAttribute,
-            
+            'variationData' => $request->data,
         ];
-
-
 
         $this->updateProductVariation($productDetails->id,$getVariationArray);
         
 
         $this->uploadProductVariationAttributes($productDetails->id,implode(",",$request->selected_attribute_name));
 
-        echo "Final Submit";
+        // return response()->json($request->all());
 
         return redirect()->back()->with('success', $msg);  
     }
 
     public function updateProductVariation($productId,$getVariationArray)
     {
-        // echo "<pre>";
-        // print_r($getVariationArray['arrayAttribute']);
-        // // print_r();
-        // die;
+        foreach($getVariationArray['variationData'] as $key => $value){
 
-        $attrKeys = array_keys($getVariationArray['arrayAttribute']);
-        
-        foreach($getVariationArray["vari_sale_price"] as $key => $value){
-            $getProductData = ProductVariations::create([
-                'product_id'=>$productId,
-                'sale_price'=>isset($value)?$value:0.0,
-                'regular_price'=>isset($getVariationArray['vari_regular_price'][$key])?$getVariationArray['vari_regular_price'][$key]:0.0,
-                'stock_status'=>isset($getVariationArray['vari_stock_status'][$key])?$getVariationArray['vari_stock_status'][$key]:0,
-            ]);
-
-            foreach($getVariationArray['arrayAttribute'] as $key1 => $attr){
-                // echo "<pre>";
-                // print_r($key1);
-                // print_r($key);
-                // print_r($attr);
-                // die;
-                ProductVariationDetails::create([
-                    'variation_id'=>$getProductData->id,
-                    'key' =>$key1,
-                    'value' =>$attr[$key],
-                ]);
+            if(isset($value['vari_image']) && $value['vari_image']) {
+                $imageVariImage = product_image_upload($value['vari_image'],'ProductsVariImages');
+            }else{
+                $imageVariImage = null;
             }
 
-        }
-        // echo "final";
-        // die;
+            if(isset($value['vari_video']) && $value['vari_video']) {
+                $imageVariVideo = product_video_upload($value['vari_video'],'ProductsVariVideos');
+            }else{
+                $imageVariVideo = null;
+            }
 
+            $getProductDataVariation = ProductVariations::create([
+                'product_id'=>$productId,
+                'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
+                'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
+                'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
+                'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
+                'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
+            ]);
+
+            foreach($value as $key1 => $variData){
+                $newKey = explode("_",$key1);
+                if(isset($newKey[0]) && $newKey[0] === 'attri'){
+                    ProductVariationDetails::create([
+                        'variation_id'=>$getProductDataVariation->id,
+                        'key' =>$key1,
+                        'value' =>$variData,
+                    ]);
+                }
+            }
+        }
         return true;
     }
 
@@ -189,17 +206,7 @@ class ProductController extends Controller
             'attr_values'=> $variationAttributesArray,
         ]);
 
-        $this->uploadProductVariationDetails();
-
         return true;
-        // echo "Done<pre>";
-        // print_r($variationAttributesArray);
-        // die;
-    }
-
-    public function uploadProductVariationDetails()
-    {
-        # code...
     }
 
     public function uploadProductImages($imagesArray,$productId)
@@ -243,13 +250,57 @@ class ProductController extends Controller
                 'values'=> $request->value,
             ]);
         }
-
         return response()->json(['success'=>"true"]);
     }
 
-    public function getAttribute()
+    public function getAttribute(Request $request)
     {
+        
+
+        $getAttrId_arr = [];
+        if(isset($request->id)){
+            $getAttribute = ProductVariationAttributes::where('product_id',$request->id)->first();
+            if(isset($getAttribute) && !empty($getAttribute)){
+                $getAttrId = $getAttribute->attr_values;
+                $getAttrId_arr = explode(",",$getAttribute->attr_values);
+            }
+        }
+
         $getData = Attributes::latest()->get();
-        return response()->json($getData);
+
+
+        if(count($getData)>0){
+            foreach ($getData as $key => $parent) {
+                if(in_array('attri_'.$parent->slug,$getAttrId_arr)){
+                    // echo '<option selected value="'.$parent['id'].'">'.$parent['name'] . '</option>';
+                    echo '<div><input type="checkbox" checked id="attributevari'.$parent->id.'" name="selected_attribute_name[]" data-name="'.$parent->name.'" data-value="'.$parent->values.'" value="attri_'.$parent->slug.'">'.$parent->name.'</div>';
+                }else{
+                    echo '<div><input type="checkbox" id="attributevari'.$parent->id.'" name="selected_attribute_name[]" data-name="'.$parent->name.'" data-value="'.$parent->values.'" value="attri_'.$parent->slug.'">'.$parent->name.'</div>';
+                }
+            }
+        }
+        die;
+        // return response()->json($getData);
+    }
+
+
+    public function status(Request $request)
+    {
+        $statusChange = Products::findOrFail($request->id);
+        if($statusChange){
+            
+            $statusChange->update([
+                'status'=>$request->status,
+            ]);
+            return response()->json($statusChange);
+        }
+        return response()->json(['error'=>'geterror'],422);
+    }
+
+    public function delete(Request $request)
+    {
+        
+        $post = Products::find($request->id)->delete();
+        return response()->json($post);
     }
 }

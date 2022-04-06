@@ -18,13 +18,12 @@
 
 
 <?php 
-   if(isset($getData->categories) && $getData->categories != 0){
-      $selectedParentId = $getData->categories;
-   }elseif(isset($getData->categories) && $getData->categories == 0){
-      $selectedParentId = $getData->id;
-   }else{
-      $selectedParentId = null;
-   }
+
+    $cateArray = explode(",",$getProductData->categories);
+    //  echo "<pre>";
+    //  print_r($getProductData->getProductGallery);
+    //  die;
+
 ?>
 @if (\Session::has('success'))
 <div class="alert alert-success">
@@ -53,10 +52,10 @@
       <div class="container-fluid">
          <form id="addForm" action="{{route('admin.submit-product')}}" enctype="multipart/form-data" method="POST">
             @csrf
-            <input type="hidden" name="table_id" id="table_id" value="{{isset($getData->id)?$getData->id:''}}">
-            <input type="hidden" name="slug_bk" id="slug_bk" value="{{isset($getData->slug)?$getData->slug:''}}">
+            <input type="hidden" name="table_id" id="table_id" value="{{isset($getProductData->id)?$getProductData->id:''}}">
+            <input type="hidden" name="slug_bk" id="slug_bk" value="{{isset($getProductData->slug)?$getProductData->slug:''}}">
             <input type="hidden" name="featured_image_bk" id="featured_image_bk"
-               value="{{isset($getData->featured_image)?$getData->featured_image:''}}">
+               value="{{isset($getProductData->featured_image)?$getProductData->featured_image:''}}">
             <div class="row">
                <div class="col-md-12">
                   <div class="card card-primary">
@@ -68,21 +67,21 @@
                            <div class="form-label-group">
                               <label for="product_name">Title</label>
                               <input type="text" id="title" name="title" class="form-control" placeholder="Title"
-                                 value="{{isset($getData->title)?$getData->title:''}}">
+                                 value="{{isset($getProductData->title)?$getProductData->title:''}}">
                            </div>
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Slug</label>
                               <input type="text" id="slug" name="slug" class="form-control" placeholder="Slug"
-                                 value="{{isset($getData->slug)?$getData->slug:''}}">
+                                 value="{{isset($getProductData->slug)?$getProductData->slug:''}}">
                            </div>
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Tags (Separate tags with commas)</label>
                               <input type="text" id="tags" name="tags" class="form-control" placeholder="Tags"
-                                 data-role="tagsinput" value="{{isset($getData->tags)?$getData->tags:''}}">
+                                 data-role="tagsinput" value="{{isset($getProductData->tags)?$getProductData->tags:''}}">
                            </div>
                         </div>
                         <div class="form-group">
@@ -119,7 +118,7 @@
                            <div class="form-label-group">
                               <label for="product_name">Description</label>
                               <textarea id="description" name="description"
-                                 class="form-control ckeditor">{{isset($getData->description)?$getData->description:''}}</textarea>
+                                 class="form-control ckeditor">{{isset($getProductData->description)?$getProductData->description:''}}</textarea>
                            </div>
                         </div>
                      </div>
@@ -129,8 +128,8 @@
                   <div class="card card-header">
                      <div class="form-group">
                         <label for="exampleInputFile">Product Image</label>
-                        @if(isset($getData->image_url) && !empty($getData->image_url))
-                        <img src="{{asset('images').'/'.$getData->image_url}}" alt="" height="50px" width="50px">
+                        @if(isset($getProductData->getProductImages) && !empty($getProductData->getProductImages))
+                            <img src="{{asset('images').'/'.$getProductData->getProductImages->image_url}}" alt="" height="50px" width="50px">
                         @endif
                         <div class="input-group">
                            <div class="custom-file">
@@ -142,8 +141,10 @@
                      </div>
                      <div class="form-group">
                         <label for="exampleInputFile">Product Gallery</label>
-                        @if(isset($getData->image_url) && !empty($getData->image_url))
-                        <img src="{{asset('images').'/'.$getData->image_url}}" alt="" height="50px" width="50px">
+                        @if(isset($getProductData->getProductGallery) && !empty($getProductData->getProductGallery))
+                            @foreach($getProductData->getProductGallery as $key => $gallery)
+                                <img src="{{asset('images').'/'.$gallery->image_url}}" alt="" height="50px" width="50px">
+                            @endforeach
                         @endif
                         <div class="input-group">
                            <div class="custom-file">
@@ -186,7 +187,7 @@
                         <div class="form-label-group">
                            <label for="meta_title">Meta Title</label>
                            <input type="text" id="meta_title" name="meta_title" class="form-control"
-                              placeholder="Meta Title" value="{{isset($getData->meta_title)?$getData->meta_title:''}}">
+                              placeholder="Meta Title" value="{{isset($getProductData->meta_title)?$getProductData->meta_title:''}}">
                         </div>
                      </div>
                      <div class="form-group">
@@ -194,14 +195,14 @@
                            <label for="meta_keyword">Meta Keywords</label>
                            <input type="text" id="meta_keyword" name="meta_keyword" class="form-control"
                               placeholder="Meta Keywords"
-                              value="{{isset($getData->meta_keyword)?$getData->meta_keyword:''}}">
+                              value="{{isset($getProductData->meta_keyword)?$getProductData->meta_keyword:''}}">
                         </div>
                      </div>
                      <div class="form-group">
                         <div class="form-label-group">
                            <label for="meta_keyword">Meta Description</label>
                            <textarea id="meta_description" name="meta_description" class="form-control ckeditor"
-                              placeholder="Meta Description">{{isset($getData->meta_description)?$getData->meta_description:''}}</textarea>
+                              placeholder="Meta Description">{{isset($getProductData->meta_description)?$getProductData->meta_description:''}}</textarea>
                         </div>
                      </div>
 
@@ -223,9 +224,6 @@
                               <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill"
                                  href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages"
                                  aria-selected="false">Variations</a>
-                              <!-- <a class="nav-link" id="vert-tabs-settings-tab" data-toggle="pill"
-                                 href="#vert-tabs-settings" role="tab" aria-controls="vert-tabs-settings"
-                                 aria-selected="false">Settings</a> -->
                            </div>
                         </div>
                         <div class="col-7 col-sm-9">
@@ -237,14 +235,14 @@
                                        <div class="form-label-group">
                                           <label for="product_name">Sale Price</label>
                                           <input type="text" id="sale_price" name="sale_price" class="form-control"
-                                             placeholder="Sale Price" value="{{isset($getData->sale_price)?$getData->sale_price:''}}">
+                                             placeholder="Sale Price" value="{{isset($getProductData->sale_price)?$getProductData->sale_price:''}}">
                                        </div>
                                     </div>
                                     <div class="form-group">
                                        <div class="form-label-group">
                                           <label for="product_name">Regular Price</label>
                                           <input type="text" id="regular_price" name="regular_price" class="form-control"
-                                             placeholder="Regular Price" value="{{isset($getData->regular_price)?$getData->regular_price:''}}">
+                                             placeholder="Regular Price" value="{{isset($getProductData->regular_price)?$getProductData->regular_price:''}}">
                                        </div>
                                     </div>
                                     <div class="form-group">
@@ -252,8 +250,16 @@
                                           <label for="product_name">Taxable</label>
                                           <select name="is_taxable" id="is_taxable" class="form-control">
                                              <option value=""> Select Any</option>
-                                             <option value="0"> Non Taxable</option>
-                                             <option value="1"> Taxable</option>
+                                             @if($getProductData->is_taxable == 0)
+                                                <option value="0" selected> Non Taxable</option>
+                                                <option value="1"> Taxable</option>
+                                             @elseif($getProductData->is_taxable == 1)
+                                                <option value="0"> Non Taxable</option>
+                                                <option value="1" selected> Taxable</option>
+                                             @else
+                                                <option value="0"> Non Taxable</option>
+                                                <option value="1"> Taxable</option>
+                                             @endif
                                           </select>
                                        </div>
                                     </div>
@@ -416,6 +422,8 @@
 
    $("#tags").tagsinput('items');
 
+   
+
    $(function () {
       // Summernote
       $('#description').summernote()
@@ -452,6 +460,7 @@
          url: '{{route("admin.get-attribute")}}',
          data: {
             '_token': "{{csrf_token()}}",
+            'id': '{{$getProductData->id}}',
          },
          success: function (res) {
             console.log(res);
@@ -461,14 +470,6 @@
                
             }
             return false;
-            // console.log(res);
-            // if (res.length) {
-            //    $('#show_attributes').empty();
-            //    $.each(res, function (key, value) {
-            //       $("#show_attributes").append('<div><input type="checkbox" id="attributevari' + value.id + '" name="selected_attribute_name[]" data-name="' + value.name + '" data-value="' + value.values + '" value="attri_' + value.slug + '">' + value.name + '</div>');
-            //    });
-            // }
-            // return false;
          }
       });
    }
@@ -498,18 +499,16 @@
       
    // });
 
-   var selectedCategoryData = '{{$selectedParentId}}';
 
-   getParentCategory(selectedCategoryData);
+   getParentCategory();
 
-   function getParentCategory(selectedCategoryData) {
+   function getParentCategory() {
       $.ajax({
          type: 'POST',
          url: '{{asset("admin/get-categories")}}',
          data: {
             '_token': "{{csrf_token()}}",
-            'id': $(this).data('record'),
-            'status': $(this).data('value')
+            'id': '{{$getProductData->id}}',
          },
          success: function (res) {
             if (res) {
@@ -522,6 +521,31 @@
 
    var id = 0;
    $(document).ready(function () {
+
+        var valArray = '{{$getProductData->categories}}';
+        
+        // console.log(valArray);
+        var valArray = valArray.split(',');
+        // console.log(trainindIdArray);
+
+        // window.setTimeout( show_popup, 5000 ); // 5 seconds
+
+        $.each(valArray, function (key, value) {
+            // console.log("value");
+            // console.log(value);
+            $("#categories option[value="+value+"]").prop("selected",true).delay(5000).trigger("change");
+        });
+        // for (xxx in valArray){
+        //     console.log("xxx");
+        //     console.log(xxx);
+            
+        //     $("#categories option[value="+xxx+"]").prop("selected",true).delay(2000).trigger("change");
+        // }
+            
+        // $('#categories').select2().val(trainindIdArray).trigger("change");
+        // setInterval(function() {
+        // }, 1000);
+
       var max = 10;
 
       $('#add_item').click(function () {
