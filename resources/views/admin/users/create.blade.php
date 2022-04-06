@@ -104,5 +104,13 @@
    </section>
 </div>
 <!-- Sticky Footer -->
-  
+<script>
+   $(function () {
+     // Summernote
+     $('#description').summernote({
+	 height:250
+	})
+   
+   })
+</script>
 @endsection
