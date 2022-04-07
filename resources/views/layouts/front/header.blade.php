@@ -1,7 +1,5 @@
 @inject('header_settings', 'App\Models\Settings') 
-<?php
-//echo '<pre>'; print_r($navbars); die; 
-?>
+
 <!-- Header Start here -->
 <header class="header-main">
     <!-- Mobile Top Start here -->
@@ -64,13 +62,13 @@
                 <div class="middle-topbar-right">
                     <ul>
                         <li class="my-account-blk">
-                            <a href="#"><i class="fa fa-user-o" aria-hidden="true"></i>MY ACCOUNT</a>
+                            <a href="#"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
                         </li>
                         <li class="my-whishlist-blk">
-                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i>MY WISHLIST</a>
+                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i>{{MY_WISHLIST_TITLE}}</a>
                         </li>
                         <li class="my-cart-blk">
-                            <a href="#"><img src="assets/images/cart-color.png" alt="cart"> MY CART <span class="cart-number">(0)</span></a>
+                            <a href="#"><img src="assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}}<span class="cart-number">(0)</span></a>
                         </li>
                     </ul>
                 </div>
@@ -85,8 +83,16 @@
             <div class="logo-menu-bar-wrap flexed flex-justify-between">
 
                 <div class="site-logo-main">
-                    <a href="#">
-                        <img src="assets/images/marlowsdiamonds-logo.png" alt="site-logo">
+                    <a href="{{url('/')}}" title="{{$header_settings->get_options('site_title')}}">
+                        @if($header_settings->get_options('logo')!='')
+                            <img src="{{asset('images/'.$header_settings->get_options('logo'))}}" alt="{{$header_settings->get_options('site_title')}}">
+
+                        @elseif($header_settings->get_options('site_title')!='')
+                            <div>{{$header_settings->get_options('site_title')}}</div>
+                            <span>{{$header_settings->get_options('site_tagline')}}</span>
+                        @else
+                            <span>{{env('APP_NAME')}}</span>
+                        @endif
                     </a>
                 </div>
                 <div class="mobile-cart-wishlist">
@@ -140,54 +146,6 @@
                                 @endforeach
 
                             @endif
-
-                           <!--  <li class="level-zero submenu">
-                                <a href="#">Engagement Rings <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="inner-submenu">
-                                    <li class="level-one"><a href="#">Solitare</a></li>
-                                    <li class="level-one"><a href="#">Shoulder Set</a></li>
-                                    <li class="level-one"><a href="#">Halo</a></li>
-                                    <li class="level-one"><a href="#">Multi-Stone</a></li>
-                                </ul>
-                            </li>
-                            <li class="level-zero submenu">
-                                <a href="#">Wedding / Eternity Rings  <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="inner-submenu">
-                                    <li class="level-one level-one-sumenu"><a href="#">Mens <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="inner-submenu">
-                                            <li class="level-two"><a href="#">Diamond Band</a></li>
-                                            <li class="level-two"><a href="#">Plain Band</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="level-one level-one-sumenu"><a href="#">Womens <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                                        <ul class="inner-submenu">
-                                            <li class="level-two"><a href="#">Diamond Band</a></li>
-                                            <li class="level-two"><a href="#">Plain Band</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="level-zero submenu">
-                                <a href="#">Diamond Jewellery <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul class="inner-submenu">
-                                    <li class="level-one"><a href="#">Bracelets</a></li>
-                                    <li class="level-one"><a href="#">Earrings</a></li>
-                                    <li class="level-one"><a href="#">Necklaces</a></li>
-                                    <li class="level-one"><a href="#">Pendants</a></li>
-                                </ul>
-                            </li>
-                            <li class="level-zero">
-                                <a href="#">Bespoke Diamond Search</a>
-                            </li>
-                            <li class="level-zero">
-                                <a href="#">Sustainable Diamonds</a>
-                            </li>
-                            <li class="level-zero">
-                                <a href="#">Visit Us</a>
-                            </li>
-                            <li class="level-zero">
-                                <a href="#">Blog</a>
-                            </li> -->
                         </ul>
                     </nav>
                     </div>

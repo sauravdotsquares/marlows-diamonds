@@ -149,7 +149,9 @@ Auth::routes();
 */
 
 Route::namespace('Front')->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'PageController@page')->name('home');
+    Route::get('{page}', 'PageController@page')->name('page');
+
 
 });
 
