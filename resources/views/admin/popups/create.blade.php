@@ -75,9 +75,11 @@
 <script>
    $(function () {
      // Summernote
-     $('#description').summernote()
+     $('#description').summernote({
+	 height:250
+	})
    
    })
-</script>  
+</script>
 @endsection
 

@@ -1,5 +1,19 @@
 @extends('layouts.admin.app')
+@section('css')
+<link rel="stylesheet" href="{{asset('')}}/admin/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('')}}/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+@endsection
 @section('content')
+<?php 
+   if(isset($getData->categories) && $getData->categories != 0){
+      $selectedParentId = $getData->categories;
+	  
+   }elseif(isset($getData->categories) && $getData->categories == 0){
+      $selectedParentId = $getData->id;
+   }else{
+      $selectedParentId = null;
+   }
+?>
 <div class="content">
    <!-- Breadcrumbs-->
    @if(session()->has('alert-danger'))
@@ -87,6 +101,16 @@
                            </select>
                         </div>
                      </div>
+					 <div class="form-group">
+						   <div class="form-label-group">
+							  <label for="product_name">Categories</label>
+							  <select name="categories[]" id="categories" class="select2 select2-hidden-accessible"
+								 multiple="" data-dropdown-css-class="select2-purple" style="width: 100%;"
+								 data-select2-id="7" tabindex="-1" aria-hidden="true">
+
+							  </select>
+						   </div>
+					  </div>  
                      <div class="form-group">
                         <div class="form-label-group">
                            <label for="product_name">Meta Title</label>
@@ -109,11 +133,42 @@
    </section>
 </div>
 <!-- Sticky Footer -->
+ 
+@endsection
+@section('js')
+<script src="{{asset('')}}/admin/plugins/select2/js/select2.full.min.js"></script>
 <script>
+	$(document).on('change', '.custom-file-input', function (event) {
+		$(this).next('.custom-file-label').html(event.target.files[0].name);
+	})
+	$('.select2').select2();
    $(function () {
      // Summernote
-     $('#description').summernote()
+     $('#description').summernote({
+		 height:250
+	 })
    
    })
-</script>  
+   var selectedCategoryData = '{{$selectedParentId}}';
+
+   getParentCategory(selectedCategoryData);
+
+   function getParentCategory(selectedCategoryData) {
+      $.ajax({
+         type: 'POST',
+         url: '{{asset("admin/get-postcategories")}}',
+         data: {
+            '_token': "{{csrf_token()}}",
+            'id': $(this).data('record'),
+            'status': $(this).data('value')
+         },
+         success: function (res) {
+            if (res) {
+               $("#categories").append('<option value="">Select Category</option>' + res);
+            }
+         }
+      })
+   }
+   
+</script> 
 @endsection

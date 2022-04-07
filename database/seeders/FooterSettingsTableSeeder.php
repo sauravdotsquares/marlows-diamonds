@@ -27,7 +27,7 @@ class FooterSettingsTableSeeder extends Seeder
 	        ]);
 		Settings::create([
 	            'option_name' => 'catalogue',
-	            'option_value' => '<ul><li><a href="http://dev.marlows-diamond.com/#">Engagement Rings</a></li><li><a href="http://dev.marlows-diamond.com/#">Wedding Rings</a></li><li><a href="http://dev.marlows-diamond.com/#">Eternity Rings</a></li><li><a href="http://dev.marlows-diamond.com/#">Diamond Jewellery</a></li><li><a href="http://dev.marlows-diamond.com/#">Auction</a></li><li><a href="http://dev.marlows-diamond.com/#">Live Diamond Search</a></li></ul>',
+	            'option_value' => '<ul><li><a href="/engagement-rings/">Engagement Rings</a></li><li><a href="/product-category/wedding-rings/">Wedding Rings</a></li><li><a href="/product-category/eternity-rings/">Eternity Rings</a></li><li><a href="/product-category/diamond-jewellery/">Diamond Jewellery</a></li><li><a href="/auctions/">Auction</a></li><li><a href="/live-diamond-search/">Live Diamond Search</a></li></ul>',
 	        ]);
 		Settings::create([
 	            'option_name' => 'footer_sec3-title',
@@ -35,7 +35,7 @@ class FooterSettingsTableSeeder extends Seeder
 	        ]);
 		Settings::create([
 	            'option_name' => 'resources',
-	            'option_value' => '<ul><li><a href="http://dev.marlows-diamond.com/#">COVID-19 Policy</a></li><li><a href="http://dev.marlows-diamond.com/#">Locations</a></li><li><a href="http://dev.marlows-diamond.com/#">FAQ</a></li><li><a href="http://dev.marlows-diamond.com/#">Certificates Explained</a></li><li><a href="http://dev.marlows-diamond.com/#">Finance</a></li><li><a href="http://dev.marlows-diamond.com/#">Blog</a></li></ul>',
+	            'option_value' => '<ul><li><a href="/covid-19-policy/">COVID-19 Policy</a></li><li><a href="/visit-us/">Locations</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/certificates-explained/">Certificates Explained</a></li><li><a href="/finance-options/">Finance</a></li><li><a href="/blog-resources/">Blog</a></li></ul>',
 	        ]);	
 		Settings::create([
 			'option_name' => 'footer_sec4-title',
@@ -43,7 +43,7 @@ class FooterSettingsTableSeeder extends Seeder
 		]);	
 		Settings::create([
 			'option_name' => 'sec-resources',
-			'option_value' => '<ul><li><a href="http://dev.marlows-diamond.com/#">Guide To Buying An Engagement Ring Online</a></li><li><a href="http://dev.marlows-diamond.com/#">Marlows Gia Certified Diamonds</a></li><li><a href="http://dev.marlows-diamond.com/#">Bespoke Engagement Rings</a></li><li><a href="http://dev.marlows-diamond.com/#">Diamond Education</a></li><li><a href="http://dev.marlows-diamond.com/#">Hearts And Arrows Diamonds</a></li></ul>',
+			'option_value' => '<ul><li><a href="/buying-engagement-ring-online-guide/">Guide To Buying An Engagement Ring Online</a></li><li><a href="/gia-certified-diamonds/">Marlows Gia Certified Diamonds</a></li><li><a href="/bespoke-engagement-rings/">Bespoke Engagement Rings</a></li><li><a href="/diamond-education/">Diamond Education</a></li><li><a href="/hearts-and-arrows-diamonds/">Hearts And Arrows Diamonds</a></li></ul>',
 		]);
 		Settings::create([
 			'option_name' => 'footer_sec5-title',
@@ -51,11 +51,11 @@ class FooterSettingsTableSeeder extends Seeder
 		]);
 		Settings::create([
 			'option_name' => 'policies',
-			'option_value' => '<ul><li><a href="http://dev.marlows-diamond.com/#">Conflict-Free diamonds</a></li><li><a href="http://dev.marlows-diamond.com/#">Privacy Policy</a></li><li><a href="http://dev.marlows-diamond.com/#">Cookies Policy</a></li><li><a href="http://dev.marlows-diamond.com/#">Terms and Conditions</a></li></ul>',
+			'option_value' => '<ul><li><a href="/diamond-certificates/">Conflict-Free diamonds</a></li><li><a href="/privacy/">Privacy Policy</a></li><li><a href="/cookies/">Cookies Policy</a></li><li><a href="/terms/">Terms and Conditions</a></li></ul>',
 		]);
 		Settings::create([
 			'option_name' => 'footer-left',
-			'option_value' => '<img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2020/03/Payment-Gateways.png" alt="Payment Gateways"><img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2020/03/Deko_landscape_bw_darkBG.png" alt="Deko Pay">',
+			'option_value' => '<img src="/Payment-Gateways.png" alt="Payment Gateways"><img src="/Deko_landscape_bw_darkBG.png" alt="Deko Pay">',
 		]);
 		Settings::create([
 			'option_name' => 'footer-center',
