@@ -13,6 +13,7 @@ use App\Models\ProductVariations;
 use App\Models\ProductVariationAttributes;
 use App\Models\ProductVariationDetails;
 use App\Models\Attributes;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
@@ -255,8 +256,6 @@ class ProductController extends Controller
 
     public function getAttribute(Request $request)
     {
-        
-
         $getAttrId_arr = [];
         if(isset($request->id)){
             $getAttribute = ProductVariationAttributes::where('product_id',$request->id)->first();
@@ -270,17 +269,25 @@ class ProductController extends Controller
 
 
         if(count($getData)>0){
+            $getAttributeDesign = '';
             foreach ($getData as $key => $parent) {
                 if(in_array('attri_'.$parent->slug,$getAttrId_arr)){
                     // echo '<option selected value="'.$parent['id'].'">'.$parent['name'] . '</option>';
-                    echo '<div><input type="checkbox" checked id="attributevari'.$parent->id.'" name="selected_attribute_name[]" data-name="'.$parent->name.'" data-value="'.$parent->values.'" value="attri_'.$parent->slug.'">'.$parent->name.'</div>';
+                    $getAttributeDesign .=  '<div><input type="checkbox" checked id="attributevari'.$parent->id.'" name="selected_attribute_name[]" data-name="'.$parent->name.'" data-value="'.$parent->values.'" value="attri_'.$parent->slug.'">'.$parent->name.'</div>';
                 }else{
-                    echo '<div><input type="checkbox" id="attributevari'.$parent->id.'" name="selected_attribute_name[]" data-name="'.$parent->name.'" data-value="'.$parent->values.'" value="attri_'.$parent->slug.'">'.$parent->name.'</div>';
+                    $getAttributeDesign .=  '<div><input type="checkbox" id="attributevari'.$parent->id.'" name="selected_attribute_name[]" data-name="'.$parent->name.'" data-value="'.$parent->values.'" value="attri_'.$parent->slug.'">'.$parent->name.'</div>';
                 }
             }
         }
-        die;
-        // return response()->json($getData);
+
+        $finalResult = [
+            'getAttributeDesign' => $getAttributeDesign,
+            'getAttrId_arr' => $getAttrId_arr,
+            'getAttribute' => $getAttribute,
+            'getData'=>$getData
+        ];
+        // die;
+        return response()->json($finalResult);
     }
 
 
@@ -302,5 +309,74 @@ class ProductController extends Controller
         
         $post = Products::find($request->id)->delete();
         return response()->json($post);
+    }
+
+    // public function getProductDetailsVariation(Request $request)
+    // {
+    //     $getVariationId = ProductVariations::where('product_id',$request->id)->pluck('id');
+    //     $getVariationData = ProductVariations::where('product_id',$request->id)->get();
+
+    //     $getVariationDetails = ProductVariationDetails::select('variation_id','key','value')->whereIn('variation_id',$getVariationId)->get();
+
+    //     $getData = Attributes::latest()->get();
+
+    //     $result = [
+    //         'getVariationId' => $getVariationId,
+    //         'getVariationData' => $getVariationData,
+    //         'getVariationDetails' => $getVariationDetails,
+    //         'getData'=>$getData
+    //     ];
+
+    //     return response()->json($result);
+
+    // }
+
+    public function getProductDetailsVariation(Request $request)
+    {
+        $getVariationId = ProductVariations::where('product_id',$request->id)->pluck('id');
+        $getVariationData = ProductVariations::where('product_id',$request->id)->select('id','product_id','sale_price','regular_price','stock_status','vari_image','vari_video')->get();
+        $getVariationDetails = ProductVariationDetails::select('variation_id','key','value')->whereIn('variation_id',$getVariationId)->get()->toArray();
+
+        // return response()->json($getVariationData);
+        // echo "<pre>";
+        // print_r($getVariationData);
+        // die;
+
+        $getAttrId_arr = [];
+        if(isset($request->id)){
+            $getAttribute = ProductVariationAttributes::where('product_id',$request->id)->first();
+            if(isset($getAttribute) && !empty($getAttribute)){
+                $getAttrId = $getAttribute->attr_values;
+                
+                $getAttrId_arr = explode(",",$getAttribute->attr_values);
+            }
+        }
+
+        $getData = Attributes::latest()->pluck('values','slug')->toArray();
+
+        if(count($getData)>0){
+            $getAttributeDesign = '';
+            $getHtml = '';
+            $i = 0;
+            foreach ($getData as $key => $parent) {
+                if(in_array('attri_'.$key,$getAttrId_arr)){
+                    $getValues = explode('|',$parent);
+
+                    $getHtml .= '<select data-field="attri_'.$key.'" id="attri_'.$key.'"
+                    name="data['.$i.'][attri_'.$key.']" clas="form-control"> <option value="">Select Any'.ucfirst(str_replace('-',' ',$key)).'</option>';
+
+                    foreach($getValues as $newKey => $valAnother){
+                        $getHtml .= '<option value="'.$valAnother.'">'.$valAnother.'</option>';
+                    }
+                    $getHtml .= '</select>';
+                    
+                    // print_r($getValues);
+                }
+                $i = $i+1;
+            }
+        }
+
+        // $breedlist = $this->getBreedList($species_id);
+        return view('admin.ajax.product-variation',compact('getVariationId','getVariationDetails','getData','getAttrId_arr','getVariationData'));
     }
 }

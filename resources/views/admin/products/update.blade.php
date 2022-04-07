@@ -20,9 +20,10 @@
 <?php 
 
     $cateArray = explode(",",$getProductData->categories);
-    //  echo "<pre>";
-    //  print_r($getProductData->getProductGallery);
-    //  die;
+
+   //   echo "<pre>";
+   //   print_r($getProductData);
+   //   die;
 
 ?>
 @if (\Session::has('success'))
@@ -221,7 +222,7 @@
                               <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill"
                                  href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile"
                                  aria-selected="false">Attributes</a>
-                              <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill"
+                              <a class="nav-link" id="variationData" data-toggle="pill"
                                  href="#vert-tabs-messages" role="tab" aria-controls="vert-tabs-messages"
                                  aria-selected="false">Variations</a>
                            </div>
@@ -309,7 +310,7 @@
 
                               </div>
                               <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel"
-                                 aria-labelledby="vert-tabs-messages-tab">
+                                 aria-labelledby="variationData">
 
                                  <div id="show_variation">
                                     <p style="margin:0px 0px 0px 0px;"> <a href="javascript:void(0)" name="add_item" id="add_item" style="font-weight:bold;font-size:16px;">Add Variation</a>
@@ -318,7 +319,7 @@
                                     <div class="accordion" id="accordionExample">
                                        <div id="item_details" class="card">
                                           <div class="card-header" id="headingOne">
-                                             <div id="dropdownVariation">
+                                             <div id="dropdownVariation" class="dropdownVariation">
 
 
                                              </div>
@@ -466,8 +467,8 @@
             console.log(res);
             if (res) {
                $('#show_attributes').empty();
-               $("#show_attributes").append(res);
-               
+               $("#show_attributes").append(res.getAttributeDesign);
+               getDropdownDesign(res.getData);
             }
             return false;
          }
@@ -484,7 +485,7 @@
 
 
       if ($(this).prop('checked') == true) {
-         $("#dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + $(this).data('name') + "</option></select> ");
+         $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + $(this).data('name') + "</option></select> ");
          $.each($(this).data('value').split('|'), function (key, value) {
             console.log(value);
             $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
@@ -494,6 +495,54 @@
          $("#" + changeText).remove();
       }
    });
+
+   function getDropdownDesign(res){
+      $('.dropdownVariation').html("");
+      $.each(res, function (key, value) {
+         console.log('key 1 ');
+         console.log(key);
+         let changeText = $(document).find('#attributevari'+value.id).val();
+         let changeTextArray = $(document).find('#attributevari'+value.id).data('value').split('|');
+         let changeTextName = $(document).find('#attributevari'+value.id).data('name');
+         // $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
+         
+         if ($(document).find('#attributevari'+value.id).prop('checked') == true) {
+            $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
+            $.each(changeTextArray, function (key, value) {
+               console.log('key 1 ');
+               console.log(key);
+               // console.log(value);
+               $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
+            });
+         }else {
+            $("#" + changeText).remove();
+         }
+      });
+   }
+
+   function getDropdownDesign(res){
+      $('.dropdownVariation').html("");
+      $.each(res, function (key, value) {
+         console.log('key 1 ');
+         console.log(key);
+         let changeText = $(document).find('#attributevari'+value.id).val();
+         let changeTextArray = $(document).find('#attributevari'+value.id).data('value').split('|');
+         let changeTextName = $(document).find('#attributevari'+value.id).data('name');
+         // $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
+         
+         if ($(document).find('#attributevari'+value.id).prop('checked') == true) {
+            $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
+            $.each(changeTextArray, function (key, value) {
+               console.log('key 1 ');
+               console.log(key);
+               // console.log(value);
+               $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
+            });
+         }else {
+            $("#" + changeText).remove();
+         }
+      });
+   }
 
    // $("#addVariationClone").on('click',function(){
       
@@ -519,35 +568,39 @@
    }
 
 
+   $('#variationData').on('click',function(){
+      console.log("In Variation tab");
+      $.ajax({
+         type: 'POST',
+         url: '{{asset("admin/get-product-details-variation")}}',
+         data: {
+            '_token': "{{csrf_token()}}",
+            'id': '{{$getProductData->id}}',
+         },
+         success: function (res) {
+            console.log("res");
+            console.log(res);
+            $("#accordionExample").append(res);
+            return false;
+            $.each(res.getVariationData, function (key, value) {
+               console.log(key);
+               console.log(value);
+              
+            });
+            // getDropdownDesign(res.getData);
+            // getDropdownDesign(res)
+            // getAttribute();
+            // if(res){
+            //    $("#categories").append('<option value="">Select Category</option>' + res);
+            // }
+         }
+      })
+   });
+
+
    var id = 0;
    $(document).ready(function () {
-
-        var valArray = '{{$getProductData->categories}}';
-        
-        // console.log(valArray);
-        var valArray = valArray.split(',');
-        // console.log(trainindIdArray);
-
-        // window.setTimeout( show_popup, 5000 ); // 5 seconds
-
-        $.each(valArray, function (key, value) {
-            // console.log("value");
-            // console.log(value);
-            $("#categories option[value="+value+"]").prop("selected",true).delay(5000).trigger("change");
-        });
-        // for (xxx in valArray){
-        //     console.log("xxx");
-        //     console.log(xxx);
-            
-        //     $("#categories option[value="+xxx+"]").prop("selected",true).delay(2000).trigger("change");
-        // }
-            
-        // $('#categories').select2().val(trainindIdArray).trigger("change");
-        // setInterval(function() {
-        // }, 1000);
-
       var max = 10;
-
       $('#add_item').click(function () {
          var button = $('#item_details').clone(true);
          id++;
@@ -557,16 +610,14 @@
          button.attr('id', 'new_' + id);
 
          button.find('input').each(function() {
-               const fieldname = $(this).attr('data-field');
-               $(this).attr('name', 'data[' + id + '][' + fieldname + ']');
+            const fieldname = $(this).attr('data-field');
+            $(this).attr('name', 'data[' + id + '][' + fieldname + ']');
          });
 
          button.find('select').each(function() {
                const fieldname = $(this).attr('data-field');
                $(this).attr('name', 'data[' + id + '][' + fieldname + ']');
          });
-
-
       });
 
       $('.remove').click(function(e){

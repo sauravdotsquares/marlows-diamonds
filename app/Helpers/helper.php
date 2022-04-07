@@ -152,4 +152,11 @@ if (!function_exists('validate_breadcrumb')) {
         }
         return ["errors" => $errors, "valid" => $validated];
     }
+
+    if (!function_exists('in_array_r')) {
+        // Function to iteratively search for a given value
+        function in_array_r($item , $array){
+            return preg_match('/"'.preg_quote($item, '/').'"/i' , json_encode($array));
+        }
+    }
 }

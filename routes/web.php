@@ -82,6 +82,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/products/update/{prodid}','ProductController@updatePage')->name('products-updateform');
 			Route::post('/products/change-product-status','ProductController@status')->name('change-product-status');
 			Route::post('/products/delete-product-records','ProductController@delete')->name('delete-product-records');
+			Route::post('/get-product-details-variation','ProductController@getProductDetailsVariation')->name('get-product-details-variation');
 
 			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
 			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
