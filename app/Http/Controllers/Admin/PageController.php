@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Pages;
 use App\Http\Controllers\Controller;
+use File;
 
 use URL;
 class PageController extends Controller
@@ -40,8 +41,17 @@ class PageController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
+
+        $templates = [];
+        $files = File::allFiles(resource_path('views/front/pages/templates'));
+        foreach ($files as $key => $value) {
+             $explode = explode('.',$value->getfileName());
+             $templates[$key]['value'] = $explode[0];
+             $templates[$key]['name'] = ucwords(str_replace('_',' ',$explode[0]));
+        }
+     
         $pages = Pages::all();
-        return view('admin.pages.create',compact('pages'));
+        return view('admin.pages.create',compact('pages','templates'));
 	}
 	
     /**
