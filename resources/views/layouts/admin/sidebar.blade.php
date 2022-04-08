@@ -172,7 +172,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{asset('admin/categories')}}" class="nav-link">
+                <a href="{{asset('admin/products/categories/create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create category</p>
                 </a>

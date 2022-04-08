@@ -153,6 +153,8 @@ Route::namespace('Front')->group(function () {
     Route::get('{page}', 'PageController@page')->name('page');
 
 
+	Route::get('{slug}','ProductController@index');
+	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 });
 
 /*

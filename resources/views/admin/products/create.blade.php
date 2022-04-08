@@ -370,7 +370,7 @@
                                                                <label for="vari_regular_price">Regular Price</label>
                                                                <input data-field="vari_regular_price" type="text" id="vari_regular_price"
                                                                   name="data[0][vari_regular_price]" class="form-control"
-                                                                  placeholder="regular_price">
+                                                                  placeholder="Regular Price">
                                                             </div>
                                                          </div>
                                                       </div>
@@ -457,8 +457,10 @@
             console.log(res);
             if (res) {
                $('#show_attributes').empty();
-               $("#show_attributes").append(res);
-               
+               $("#show_attributes").append(res.getAttributeDesign);
+               $('#attribute_name').va("");
+               $('#attribute_value').va("");
+               getDropdownDesign(res.getData);
             }
             return false;
             // console.log(res);
@@ -469,6 +471,23 @@
             //    });
             // }
             // return false;
+         }
+      });
+   }
+
+   function getDropdownDesign(res){
+      $('.dropdownVariation').html("");
+      $.each(res, function (key, value) {
+         let changeText = $(document).find('#attributevari'+value.id).val();
+         let changeTextArray = $(document).find('#attributevari'+value.id).data('value').split('|');
+         let changeTextName = $(document).find('#attributevari'+value.id).data('name');
+         if ($(document).find('#attributevari'+value.id).prop('checked') == true) {
+            $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
+            $.each(changeTextArray, function (key, value) {
+               $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
+            });
+         }else {
+            $("#" + changeText).remove();
          }
       });
    }

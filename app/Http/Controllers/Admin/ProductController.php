@@ -127,7 +127,7 @@ class ProductController extends Controller
                 'meta_description'=> $request->meta_description,
                 // 'image_url'=> $image,
             ]);
-            $msg = 'Successfully added!!!';
+            $msg = 'Successfully submitted!!!';
         }
 
         if($request->hasFile('gallery_image')) {
@@ -163,6 +163,10 @@ class ProductController extends Controller
 
     public function updateProductVariation($productId,$getVariationArray)
     {
+
+        $getProductVariation = ProductVariations::where('product_id',$productId)->pluck('id');
+        ProductVariationDetails::whereIn('variation_id',$getProductVariation)->delete();
+        ProductVariations::where('product_id',$productId)->delete();
         foreach($getVariationArray['variationData'] as $key => $value){
 
             if(isset($value['vari_image']) && $value['vari_image']) {
@@ -176,6 +180,8 @@ class ProductController extends Controller
             }else{
                 $imageVariVideo = null;
             }
+
+
 
             $getProductDataVariation = ProductVariations::create([
                 'product_id'=>$productId,
@@ -212,6 +218,8 @@ class ProductController extends Controller
 
     public function uploadProductImages($imagesArray,$productId)
     {
+
+        ProductImages::where('product_id',$productId)->delete();
         foreach($imagesArray as $key => $image){
             if($key == 'f2'){
                 $productDetails = ProductImages::create([
@@ -283,7 +291,7 @@ class ProductController extends Controller
         $finalResult = [
             'getAttributeDesign' => $getAttributeDesign,
             'getAttrId_arr' => $getAttrId_arr,
-            'getAttribute' => $getAttribute,
+            'getAttribute' => isset($getAttribute)?$getAttribute:'',
             'getData'=>$getData
         ];
         // die;
@@ -336,8 +344,9 @@ class ProductController extends Controller
         $getVariationId = ProductVariations::where('product_id',$request->id)->pluck('id');
         $getVariationData = ProductVariations::where('product_id',$request->id)->select('id','product_id','sale_price','regular_price','stock_status','vari_image','vari_video')->get();
         $getVariationDetails = ProductVariationDetails::select('variation_id','key','value')->whereIn('variation_id',$getVariationId)->get()->toArray();
+        // $getVariationDetailsFinal = ProductVariationDetails::select('variation_id','key','value')->whereIn('variation_id',$getVariationId)->pluck('key')->toArray();
 
-        // return response()->json($getVariationData);
+        // return response()->json($getVariationDetails);
         // echo "<pre>";
         // print_r($getVariationData);
         // die;

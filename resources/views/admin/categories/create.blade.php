@@ -103,7 +103,7 @@
                                  <option value="1">Enable</option>
                                  <option value="0" selected>Disable</option>
                               @else
-                                 <option value="1">Enable</option>
+                                 <option value="1" selected>Enable</option>
                                  <option value="0">Disable</option>
                               @endif
                            </select>
@@ -118,7 +118,7 @@
                      <div class="form-group">
                         <div class="form-label-group">
                            <label for="meta_keyword">Meta Keywords</label>
-                           <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Title" value="{{isset($getData->meta_keyword)?$getData->meta_keyword:''}}">
+                           <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Keywords" value="{{isset($getData->meta_keyword)?$getData->meta_keyword:''}}">
                         </div>
                      </div>
                      <div class="form-group">
