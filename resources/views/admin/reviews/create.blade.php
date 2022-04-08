@@ -77,13 +77,15 @@
       </div>
    </section>
 </div>
-<!-- Sticky Footer -->
+<!-- Sticky Footer --> 
 <script>
    $(function () {
      // Summernote
-     $('#description').summernote()
+     $('#description').summernote({
+	 height:250
+	})
    
    })
-</script>  
+</script>
 @endsection
 

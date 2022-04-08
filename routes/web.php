@@ -50,6 +50,13 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/posts/edit/{id}', 'PostController@edit');
 			Route::get('/delete-post/{id}', 'PostController@delete');
 			Route::get('/posts/status/{id}/{status}', 'PostController@status');	
+			// Post Category Routes
+			Route::get('/posts/categories','PostCategoryController@index')->name('postcategories');
+			Route::get('/posts/categories/create/{catslug?}','PostCategoryController@createForm')->name('create');
+			Route::post('/posts/categories/add','PostCategoryController@add')->name('add');
+			Route::post('/get-postcategories','PostCategoryController@getPostCategory')->name('get-postcategories');
+			Route::post('/change-postcategories','PostCategoryController@status');
+			Route::post('/delete-postcategories','PostCategoryController@delete');
 			//Appreance>Menus Routes
 			Route::get('/menus', 'MenuController@index')->name('menus');
 			Route::post('/menus/save', 'MenuController@save');
@@ -142,7 +149,9 @@ Auth::routes();
 */
 
 Route::namespace('Front')->group(function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'PageController@page')->name('home');
+    Route::get('{page}', 'PageController@page')->name('page');
+
 
 	Route::get('{slug}','ProductController@index');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');

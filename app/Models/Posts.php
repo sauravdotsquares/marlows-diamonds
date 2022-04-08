@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -16,7 +16,7 @@ class Posts extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'title', 'subtitle', 'slug', 'short_description', 'description', 'categories', 'status', 'image', 'meta_title', 'meta_description', 'meta_keyword', 'deleted_at', 'created_at','updated_at'
+        'title', 'subtitle', 'slug', 'short_description', 'description', 'status', 'image', 'meta_title', 'meta_description', 'meta_keyword', 'deleted_at', 'created_at','updated_at'
     ];
 
     /**

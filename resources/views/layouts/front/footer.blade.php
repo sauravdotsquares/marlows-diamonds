@@ -1,3 +1,4 @@
+@inject('footer_settings', 'App\Models\Settings') 
 <!-- Footer start here -->
 <footer class="footer-main">
     <div class="container">
@@ -5,94 +6,76 @@
             <div class="footer-links-row flexed flex-flex-wrap">
                 <div class="column-one-fifth about-footer">
                     <div class="footer-title">
-                        <h4>About</h4>
+                        <h4>{!!$footer_settings->get_options('footer_sec1-title')!!}</h4>
                     </div>
                     <div class="footerabout-col footer-inn-text">
-                        <p>For over three generations, we’ve been helping countless happy couples express love and commitment. At Marlow’s, we add sparkle to life’s special moments through our beautiful range of diamond jewellery.</p>
+                        <p>{!!$footer_settings->get_options('about')!!}</p>
                         <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            @if($footer_settings->get_options('facebook')!='')
+                                <a href="{{$footer_settings->get_options('facebook')}}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            @endif
+                            @if($footer_settings->get_options('twitter')!='')
+                                <a href="{{$footer_settings->get_options('twitter')}}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            @endif
+                            @if($footer_settings->get_options('instagram')!='')
+                                <a href="{{$footer_settings->get_options('instagram')}}"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            @endif
+                            @if($footer_settings->get_options('pinterest')!='')
+                                <a href="{{$footer_settings->get_options('pinterest')}}"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            @endif
+                            @if($footer_settings->get_options('youtube')!='')
+                                <a href="{{$footer_settings->get_options('youtube')}}"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                            @endif
+                            @if($footer_settings->get_options('linkedin')!='')
+                                <a href="{{$footer_settings->get_options('linkedin')}}"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4 class="accordian-toggle">Catalogue</h4>
+                        <h4 class="accordian-toggle">{!!$footer_settings->get_options('footer_sec2-title')!!}</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
-                        <ul>
-                            <li><a href="#">Engagement Rings</a></li>
-                            <li><a href="#">Wedding Rings</a></li>
-                            <li><a href="#">Eternity Rings</a></li>
-                            <li><a href="#">Diamond Jewellery</a></li>
-                            <li><a href="#">Auction</a></li>
-                            <li><a href="#">Live Diamond Search</a></li>
-                        </ul>
+                        {!!$footer_settings->get_options('catalogue')!!}
                     </div>
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4 class="accordian-toggle">Resources</h4>
+                        <h4 class="accordian-toggle">{!!$footer_settings->get_options('footer_sec3-title')!!}</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
-                        <ul>
-                            <li><a href="#">COVID-19 Policy</a></li>
-                            <li><a href="#">Locations</a></li>
-                            <li><a href="#">FAQ</a></li>
-                            <li><a href="#">Certificates Explained</a></li>
-                            <li><a href="#">Finance</a></li>
-                            <li><a href="#">Blog</a></li>
-                        </ul>
+                        {!!$footer_settings->get_options('resources')!!}
                     </div>
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4 class="accordian-toggle">Resources</h4>
+                        <h4 class="accordian-toggle">{!!$footer_settings->get_options('footer_sec4-title')!!}</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
-                        <ul>
-                            <li><a href="#">Guide To Buying An Engagement Ring Online</a></li>
-                            <li><a href="#">Marlows Gia Certified Diamonds</a></li>
-                            <li><a href="#">Bespoke Engagement Rings</a></li>
-                            <li><a href="#">Diamond Education</a></li>                          
-                            <li><a href="#">Hearts And Arrows Diamonds</a></li>
-                        </ul>
+                        {!!$footer_settings->get_options('sec-resources')!!}
                     </div>
                 </div>
 
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4 class="accordian-toggle">Policies</h4>
+                        <h4 class="accordian-toggle">{!!$footer_settings->get_options('footer_sec5-title')!!}</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
-                        <ul>
-                            <li><a href="#">Conflict-Free diamonds</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Cookies Policy</a></li>
-                            <li><a href="#">Terms and Conditions</a></li>
-                        </ul>
+                        {!!$footer_settings->get_options('policies')!!}
                     </div>
                 </div>
             </div>
 
             <div class="footer-content-wrap flexed flex-flex-wrap">
                 <div class="fcontent-column icon-payment">
-                    <div class="paymentgate-logo"><img src="assets/images/payment-gateways.png" alt="payment">
-                    </div>
-                    <div class="deko-logo-f">
-                        <img src="assets/images/dek-logo.png" alt="deko-logo">
-                    </div>
+                    {!!$footer_settings->get_options('footer-left')!!}
                 </div>
                 <div class="fcontent-column disclaimer-content">
-                    <p>Important Disclaimer - Marlow’s Diamonds & JE Marlow & Sons Ltd do not issue diamond certificates or lab reports. These are issued by indepedent bodies such as the GIA, HRD or IGI<br>
-                    J E Marlow & Sons Ltd. is acting as a credit broker offering finance products from Omni Capital Retail Finance Limited is authorised and regulated by the Financial Conduct Authority (register number 720279). Credit is subject to status</p>
+                    {!!$footer_settings->get_options('footer-center')!!}
                 </div>
                 <div class="fcontent-column disclaimer-content">
-                    <p>Copyright J E Marlow & Sons Ltd. Registered in England and Wales.<br>
-                    <b>Birmingham Store:</b> 46-47 Warstone Lane Hockley, Birmingham B18 6JJ.<br>
-                    <b>London Store:</b> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ. <br> Registraton No. 00867377. VAT No. GB 111114741<br>
-                    <b>© 2020 Marlows Diamonds. All Rights Reserved.</b></p>
+                    {!!$footer_settings->get_options('footer-right')!!}
                 </div>
 
             </div>

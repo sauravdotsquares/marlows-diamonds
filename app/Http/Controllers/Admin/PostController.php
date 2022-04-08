@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Posts;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\PostCategoryController;
 
 use URL;
 class PostController extends Controller
@@ -60,6 +61,9 @@ class PostController extends Controller
             'status' => 'required',
 			
         ]);
+		
+		
+		
         if($request->hasFile('image')) {
 
             //$image_array = [];
@@ -93,8 +97,7 @@ class PostController extends Controller
 			$input['image'] = $image;
 		}
 		
-		//dd($input);
-
+		$input['categories'] = implode(",",$request->categories);
         $posts = Posts::create($input);
 
         return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Added Successfully');
@@ -190,6 +193,7 @@ class PostController extends Controller
 			
 			$input['image'] = $image;
 		}
+		$input['categories'] = implode(",",$request->categories);
         $posts->fill($input)->save();
 
         return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Updated Successfully');

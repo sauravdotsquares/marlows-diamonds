@@ -81,12 +81,24 @@
                      <div class="form-group">
                         <div class="form-label-group">
                            <select id="status" name="status" class="form-control">
-                              <option value="">Select Status</option>
                               <option value="1">Enable</option>
                               <option value="0">Disable</option>
                            </select>
                         </div>
                      </div>
+                     @if(count($templates)>0)
+                     <div class="form-group">
+                        <div class="form-label-group">
+                           
+                           <select id="status" name="status" class="form-control">
+                              @foreach($templates as $template)
+                                 <option value="{{$template['value']}}" {{$template['value']=='default_template'?'selected':''}}>{{$template['name']}}</option>
+                              @endforeach
+                           </select>
+
+                        </div>
+                     </div>
+                     @endif
                      <div class="form-group">
                         <div class="form-label-group">
                            <label for="product_name">Meta Title</label>
@@ -110,9 +122,16 @@
 </div>
 <!-- Sticky Footer -->
 <script>
+   
+   $(document).on('change', '.custom-file-input', function (event) {
+		$(this).next('.custom-file-label').html(event.target.files[0].name);
+	})
+   
    $(function () {
      // Summernote
-     $('#description').summernote()
+     $('#description').summernote({
+	 height:250
+	})
    
    })
 </script>  

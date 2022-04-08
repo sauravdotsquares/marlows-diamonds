@@ -69,7 +69,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/admin/posts" class="nav-link @if(request()->segment(2) == 'posts' && request()->segment(3) != 'create') active @endif">
+                <a href="/admin/posts" class="nav-link @if(request()->segment(2) == 'posts' && request()->segment(3) != 'create' && request()->segment(3) != 'categories') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Posts</p>
                 </a>
@@ -80,7 +80,12 @@
                   <p>Add Post</p>
                 </a>
               </li>
-              
+              <li class="nav-item">
+                <a href="/admin/posts/categories" class="nav-link @if(request()->segment(2) == 'posts' && request()->segment(3) == 'categories') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Categories</p>
+                </a>
+              </li>
               
             </ul>
           </li>
