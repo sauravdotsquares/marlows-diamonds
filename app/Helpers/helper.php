@@ -39,6 +39,25 @@ if (!function_exists("single_image_upload")) {
         return $data;
     }
 }
+
+if (!function_exists("single_storage_image_upload")) {
+    function single_storage_image_upload($imageUrl,$folderName)
+    {
+        $image      = $request->file('photo');
+        $image_name = time() . '.' . $imageUrl->extension();
+
+        $image = Image::make($request->file('photo'))
+            ->resize(120, 120, function ($constraint) {
+                $constraint->aspectRatio();
+             });
+
+        //here you can define any directory name whatever you want, if dir is not exist it will created automatically.
+        Storage::putFileAs('public/images/1/smalls/' . $image_name, (string)$imageUrl->encode('png', 95), $image_name);
+    }
+}
+
+
+
 if (!function_exists("product_image_upload")) {
     function product_image_upload($imageUrl,$folderName)
     {

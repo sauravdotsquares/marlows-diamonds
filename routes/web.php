@@ -144,6 +144,8 @@ Auth::routes();
 Route::namespace('Front')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
 
+	Route::get('{slug}','ProductController@index');
+	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 });
 
 /*

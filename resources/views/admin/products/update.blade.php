@@ -55,8 +55,7 @@
             @csrf
             <input type="hidden" name="table_id" id="table_id" value="{{isset($getProductData->id)?$getProductData->id:''}}">
             <input type="hidden" name="slug_bk" id="slug_bk" value="{{isset($getProductData->slug)?$getProductData->slug:''}}">
-            <input type="hidden" name="featured_image_bk" id="featured_image_bk"
-               value="{{isset($getProductData->featured_image)?$getProductData->featured_image:''}}">
+            <input type="hidden" name="featured_image_bk" id="featured_image_bk" value="{{isset($getProductData->featured_image)?$getProductData->featured_image:''}}">
             <div class="row">
                <div class="col-md-12">
                   <div class="card card-primary">
@@ -579,6 +578,7 @@
          },
          success: function (res) {
             console.log("res");
+            $('#item_details').css('display','none');
             console.log(res);
             $("#accordionExample").append(res);
             return false;
@@ -598,16 +598,17 @@
    });
 
 
-   var id = 0;
+   var id = 11;
    $(document).ready(function () {
       var max = 10;
       $('#add_item').click(function () {
-         var button = $('#item_details').clone(true);
+         var button = $('#item_details0').clone(true);
          id++;
          button.find('input').val('');
          button.removeAttr('id');
          button.insertBefore('.new_item_details');
-         button.attr('id', 'new_' + id);
+         button.attr('id', 'item_details' + id);
+         button.attr('id', 'item_details' + id);
 
          button.find('input').each(function() {
             const fieldname = $(this).attr('data-field');
@@ -620,8 +621,15 @@
          });
       });
 
-      $('.remove').click(function(e){
-         $("#new_"+id).remove();
+      $(document).on('click', "[id^=remove_item]", function (e) {
+         var index = parseInt($(this).attr("id").replace("remove_item", ''));
+         if(index > 0){
+            $('#item_details'+index).remove();
+         }
+         e.preventDefault();
+      });
+      $(document).on('click','.remove',function(e){
+         $(this).remove();
          id--;
          e.preventDefault();
       });
