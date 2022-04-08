@@ -22,6 +22,7 @@
     <meta name="twitter:site" content="@marlowsdiamonds" />
 
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
@@ -39,6 +40,7 @@
 
     @include('layouts.front.footer')
 
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>

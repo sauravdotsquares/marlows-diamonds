@@ -63,12 +63,16 @@
                            @foreach($getProducts as $key => $value)
                            <?php 
                               // echo "<pre>";
-                              // print_r($value->title);
+                              // print_r($value->getProductImages->image_url);
                               // die;
                            ?>
                               <tr>
                                  <td>{{++$key}}</td>
-                                 <td></td>
+                                 <td>
+                                    @if(isset($value->getProductImages) && !empty($value->getProductImages->image_url))
+                                       <img src="{{ asset('storage/'.$value->getProductImages->image_url) }}" alt="" height="50px" width="50px">
+                                    @endif
+                                 </td>
                                  <td>{{isset($value->title)?$value->title:''}}</td>
                                  <td>{{isset($value->sku)?$value->sku:''}}</td>
                                  <td>In Stock</td>

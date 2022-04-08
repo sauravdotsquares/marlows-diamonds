@@ -8,6 +8,7 @@
 
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 if (!function_exists("helper_test")) {
     function helper_test()
@@ -25,16 +26,39 @@ if (!function_exists("single_image_upload")) {
         $uploadpath = public_path().'\images\\'.$folderName;
         if(is_array($imageUrl)){
             foreach($imageUrl as $file) {
+
+                $filenameWithExt = $file->getClientOriginalName();
+                //Get just filename
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Get just ext
+                $extension = $file->getClientOriginalExtension();
+                // Filename to store
+                $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
+                // Upload Image
+                $path = $file->storeAs('public',$fileNameToStore);
+                // return $fileNameToStore;
+
                 // $original_name = $file->getClientOriginalName();
-                $filename = $folderName.'/'.rand().time() . '_' . $file->getClientOriginalName();
-                $file->move($uploadpath, $filename);
-                $data[] = $filename;
+                // $filename = $folderName.'/'.rand().time() . '_' . $file->getClientOriginalName();
+                // $file->move($uploadpath, $filename);
+                $data[] = $fileNameToStore;
             }
         }else{
+
+            $filenameWithExt = $imageUrl->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Get just ext
+            $extension = $imageUrl->getClientOriginalExtension();
+            // Filename to store
+            $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $imageUrl->storeAs('public',$fileNameToStore);
+
             // $original_name = $imageUrl->getClientOriginalName();
-            $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
-            $imageUrl->move($uploadpath, $filename);
-            $data['f2'] = $filename;
+            // $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
+            // $imageUrl->move($uploadpath, $filename);
+            $data['f2'] = $fileNameToStore;
         }
         return $data;
     }
@@ -43,16 +67,16 @@ if (!function_exists("single_image_upload")) {
 if (!function_exists("single_storage_image_upload")) {
     function single_storage_image_upload($imageUrl,$folderName)
     {
-        $image      = $request->file('photo');
-        $image_name = time() . '.' . $imageUrl->extension();
-
-        $image = Image::make($request->file('photo'))
-            ->resize(120, 120, function ($constraint) {
-                $constraint->aspectRatio();
-             });
-
-        //here you can define any directory name whatever you want, if dir is not exist it will created automatically.
-        Storage::putFileAs('public/images/1/smalls/' . $image_name, (string)$imageUrl->encode('png', 95), $image_name);
+        $filenameWithExt = $imageUrl->getClientOriginalName();
+        //Get just filename
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        // Get just ext
+        $extension = $imageUrl->getClientOriginalExtension();
+        // Filename to store
+        $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
+        // Upload Image
+        $path = $imageUrl->storeAs('public',$fileNameToStore);
+        return $fileNameToStore;
     }
 }
 
@@ -61,17 +85,29 @@ if (!function_exists("single_storage_image_upload")) {
 if (!function_exists("product_image_upload")) {
     function product_image_upload($imageUrl,$folderName)
     {
-        // echo "it is working single";
-        if (!file_exists('images/'.$folderName)) {
-            mkdir('images/'.$folderName, 0777);
-        }
-        // mkdir('images/'.$folderName, 0777);
-        $uploadpath = public_path().'\images\\'.$folderName;
-        // $original_name = $imageUrl->getClientOriginalName();
-        $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
-        // $filename = $original_name;
-        $imageUrl->move($uploadpath, $filename);
-        return  $filename;
+
+        $filenameWithExt = $imageUrl->getClientOriginalName();
+        //Get just filename
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        // Get just ext
+        $extension = $imageUrl->getClientOriginalExtension();
+        // Filename to store
+        $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
+        // Upload Image
+        $path = $imageUrl->storeAs('public',$fileNameToStore);
+
+        // // echo "it is working single";
+        // if (!file_exists('images/'.$folderName)) {
+        //     mkdir('images/'.$folderName, 0777);
+        // }
+        // // mkdir('images/'.$folderName, 0777);
+        // $uploadpath = public_path().'\images\\'.$folderName;
+        // // $original_name = $imageUrl->getClientOriginalName();
+        // $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
+        // // $filename = $original_name;
+        // $imageUrl->move($uploadpath, $filename);
+
+        return  $fileNameToStore;
 
         // return $data;
     }
@@ -79,17 +115,27 @@ if (!function_exists("product_image_upload")) {
 if (!function_exists("product_video_upload")) {
     function product_video_upload($imageUrl,$folderName)
     {
+        $filenameWithExt = $imageUrl->getClientOriginalName();
+        //Get just filename
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        // Get just ext
+        $extension = $imageUrl->getClientOriginalExtension();
+        // Filename to store
+        $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
+        // Upload Image
+        $path = $imageUrl->storeAs('public',$fileNameToStore);
+
         // echo "it is working single";
-        if (!file_exists('images/'.$folderName)) {
-            mkdir('images/'.$folderName, 0777);
-        }
-        // mkdir('images/'.$folderName, 0777);
-        $uploadpath = public_path().'\images\\'.$folderName;
-        // $original_name = $imageUrl->getClientOriginalName();
-        $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
-        // $filename = $original_name;
-        $imageUrl->move($uploadpath, $filename);
-        return  $filename;
+        // if (!file_exists('images/'.$folderName)) {
+        //     mkdir('images/'.$folderName, 0777);
+        // }
+        // // mkdir('images/'.$folderName, 0777);
+        // $uploadpath = public_path().'\images\\'.$folderName;
+        // // $original_name = $imageUrl->getClientOriginalName();
+        // $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
+        // // $filename = $original_name;
+        // $imageUrl->move($uploadpath, $filename);
+        return  $fileNameToStore;
 
         // return $data;
     }

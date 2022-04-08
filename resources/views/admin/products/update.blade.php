@@ -129,7 +129,7 @@
                      <div class="form-group">
                         <label for="exampleInputFile">Product Image</label>
                         @if(isset($getProductData->getProductImages) && !empty($getProductData->getProductImages))
-                            <img src="{{asset('images').'/'.$getProductData->getProductImages->image_url}}" alt="" height="50px" width="50px">
+                            <img src="{{ asset('storage/'.$getProductData->getProductImages->image_url) }}" alt="" height="50px" width="50px">
                         @endif
                         <div class="input-group">
                            <div class="custom-file">
@@ -143,7 +143,7 @@
                         <label for="exampleInputFile">Product Gallery</label>
                         @if(isset($getProductData->getProductGallery) && !empty($getProductData->getProductGallery))
                             @foreach($getProductData->getProductGallery as $key => $gallery)
-                                <img src="{{asset('images').'/'.$gallery->image_url}}" alt="" height="50px" width="50px">
+                                <img src="{{ asset('storage/'.$gallery->image_url) }}" alt="" height="50px" width="50px">
                             @endforeach
                         @endif
                         <div class="input-group">

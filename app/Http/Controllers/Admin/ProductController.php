@@ -35,7 +35,6 @@ class ProductController extends Controller
 
     public function create()
     {
-
         $breadcrumb = [
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Product Form", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
@@ -51,9 +50,6 @@ class ProductController extends Controller
 
     public function updatePage($productId = null)
     {
-
-        
-
         $breadcrumb = [
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Product Form", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
@@ -80,7 +76,7 @@ class ProductController extends Controller
     public function submitProduct(Request $request)
     {
 
-        // return response()->json($request->data);
+        // return response()->json($request->all());
 
         $validator = Validator::make($request->all(), [
             // 'title' => 'required',
@@ -133,16 +129,20 @@ class ProductController extends Controller
         if($request->hasFile('gallery_image')) {
             $imagegallery_image = single_image_upload($request->file('gallery_image'),'Products');
         }else{
-            $imagegallery_image = $request->image_url_bk;
+            $imagegallery_image = [];
         }
 
         if($request->hasFile('featured_image')) {
             $imagefeatured_image = single_image_upload($request->file('featured_image'),'Products');
         }else{
-            $featured_image = $request->image_url_bk;
+            $imagefeatured_image = [];
         }
         
-        $finalArrayImages = array_merge($imagegallery_image,$imagefeatured_image);
+        if(count($imagegallery_image) || count($imagefeatured_image)){
+            $finalArrayImages = array_merge($imagegallery_image,$imagefeatured_image);
+        }else{
+            $finalArrayImages = [];
+        }
         if(isset($finalArrayImages) && !empty($finalArrayImages) && count($finalArrayImages)){
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
         }
@@ -218,23 +218,25 @@ class ProductController extends Controller
 
     public function uploadProductImages($imagesArray,$productId)
     {
-
-        ProductImages::where('product_id',$productId)->delete();
-        foreach($imagesArray as $key => $image){
-            if($key == 'f2'){
-                $productDetails = ProductImages::create([
-                    'product_id'=> $productId,
-                    'image_url'=> $image,
-                    'is_featured'=> 1,
-                ]);
-            }else{
-                $productDetails = ProductImages::create([
-                    'product_id'=> $productId,
-                    'image_url'=> $image,
-                    'is_featured'=> 0,
-                ]);
+        if(count($imagesArray) && !empty($imagesArray)){
+            ProductImages::where('product_id',$productId)->delete();
+            foreach($imagesArray as $key => $image){
+                if($key == 'f2'){
+                    $productDetails = ProductImages::create([
+                        'product_id'=> $productId,
+                        'image_url'=> $image,
+                        'is_featured'=> 1,
+                    ]);
+                }else{
+                    $productDetails = ProductImages::create([
+                        'product_id'=> $productId,
+                        'image_url'=> $image,
+                        'is_featured'=> 0,
+                    ]);
+                }
             }
         }
+        
         return true;
     }
 
