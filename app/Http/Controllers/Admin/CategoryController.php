@@ -113,15 +113,8 @@ class CategoryController extends Controller
             'name' => 'required',
         ]);
         if($request->hasFile('image')) {
-            $image = '';
-            $uploadpath = public_path().'\images';
-            $original_name = $request->file('image')->getClientOriginalName();
-            if (!empty($request->file('image'))) {
-                $image_prefix = 'category_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                $ext = $request->file('image')->getClientOriginalExtension();
-                $image = $image_prefix . '.' . $ext;
-                $request->file('image')->move($uploadpath, $image);
-            }
+
+            $image = single_storage_image_upload($request->file('image'),'Category');
         }else{
             $image = $request->image_url_bk;
         }
@@ -197,7 +190,6 @@ class CategoryController extends Controller
         $post = Category::find($request->id)->delete();
         return response()->json($post);
     }
-
 
     function getCategoryTree($parent_id = 0, $spacing = '', $tree_array = array()) {
         $categories = Category::select('id', 'name', 'parent_id')->where('parent_id' ,'=', $parent_id)->orderBy('parent_id')->get();

@@ -54,7 +54,7 @@
                            <tr>
                               <td>{{++$key}}</td>
                               <td>{{$value->name}}</td>
-                              <td><img src="{{asset('images').'/'.$value->image_url}}" alt=""></td>
+                              <td><img src="{{ asset('storage/'.$value->image_url) }}" alt=""></td>
                               <td>{{$value->slug}}</td>
                               <td>Parent</td>
                               <td>{!!$value->description!!}</td>
