@@ -28,8 +28,6 @@ class ProductController extends Controller
 
         $getProducts = Products::latest()->get();
 
-
-
         return view('admin.products.index',compact('getProducts'));
     }
 
@@ -115,6 +113,7 @@ class ProductController extends Controller
                 'is_featured'=> isset($request->is_featured)?$request->is_featured:0,
                 'is_taxable'=> isset($request->is_taxable)?$request->is_taxable:0,
                 'categories'=>isset($request->categories)?implode(",",$request->categories):0,
+                'short_description'=> $request->short_description,
                 'description'=> $request->description,
                 'sale_price'=> $request->sale_price,
                 'regular_price'=> $request->regular_price,
@@ -147,14 +146,17 @@ class ProductController extends Controller
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
         }
 
-        $getVariationArray = [
-            'variationData' => $request->data,
-        ];
-
-        $this->updateProductVariation($productDetails->id,$getVariationArray);
         
-
-        $this->uploadProductVariationAttributes($productDetails->id,implode(",",$request->selected_attribute_name));
+        if(isset($request->data) && !empty($request->data)){
+            $getVariationArray = [
+                'variationData' => $request->data,
+            ];
+            $this->updateProductVariation($productDetails->id,$getVariationArray);
+        }
+        
+        if(isset($request->selected_attribute_name) && !empty($request->selected_attribute_name)){
+            $this->uploadProductVariationAttributes($productDetails->id,implode(",",$request->selected_attribute_name));
+        }
 
         // return response()->json($request->all());
 

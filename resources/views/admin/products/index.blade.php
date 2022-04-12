@@ -77,7 +77,7 @@
                                  <td>{{isset($value->sku)?$value->sku:''}}</td>
                                  <td>In Stock</td>
                                  <td>{{isset($value->sale_price)?$value->sale_price:''}}</td>
-                                 <td>{{isset($value->categories)?$value->categories:''}}</td>
+                                 <td>{{isset($value->cat_details)?$value->cat_details:''}}</td>
                                  <td>--</td>
                                  <td>{{$value->created_at}}</td>
                                  <td>

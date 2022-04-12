@@ -51,19 +51,25 @@
                      <div class="card-body">
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Name</label>
+                              <label for="name">Name</label>
                               <input type="text" id="name" name="name" class="form-control" placeholder="Name" value="{{isset($getData->name)?$getData->name:''}}">
                            </div>
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Slug</label>
+                              <label for="title">Title</label>
+                              <input type="text" id="title" name="title" class="form-control" placeholder="Title" value="{{isset($getData->title)?$getData->title:''}}">
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="slug">Slug</label>
                               <input type="text" id="slug" name="slug" class="form-control" placeholder="Slug" value="{{isset($getData->slug)?$getData->slug:''}}">
                            </div>
                         </div>
                         <div class="form-group">
                             <div class="form-label-group">
-                                <label for="product_name">Parent_id</label>
+                                <label for="parent_id">Parent_id</label>
                                 <select name="parent_id" id="parent_id" class="form-control" >
 
                                 </select>             
@@ -71,7 +77,13 @@
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Description</label>
+                              <label for="short_description">Short Description</label>
+                              <textarea id="short_description" name="short_description" class="form-control ckeditor">{{isset($getData->short_description)?$getData->short_description:''}}</textarea>                    
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="description">Description</label>
                               <textarea id="description" name="description" class="form-control ckeditor">{{isset($getData->description)?$getData->description:''}}</textarea>                    
                            </div>
                         </div>
@@ -83,7 +95,7 @@
                      <div class="form-group">
                         <label for="exampleInputFile">Banner Image</label>
                         @if(isset($getData->image_url) && !empty($getData->image_url))
-                           <img src="{{asset('images').'/'.$getData->image_url}}" alt="" height="50px" width="50px">
+                           <img src="{{ asset('storage/'.$getData->image_url) }}" alt="" height="50px" width="50px">
                         @endif
                         <div class="input-group">
                            <div class="custom-file">
@@ -123,7 +135,7 @@
                      </div>
                      <div class="form-group">
                         <div class="form-label-group">
-                           <label for="meta_keyword">Meta Description</label>
+                           <label for="meta_description">Meta Description</label>
                            <textarea id="meta_description" name="meta_description" class="form-control ckeditor" placeholder="Meta Description" >{{isset($getData->meta_description)?$getData->meta_description:''}}</textarea>                    
                         </div>
                      </div>
@@ -145,7 +157,8 @@
     <script>
          $(function () {
                // Summernote
-               $('#description').summernote()
+               $('#short_description').summernote();
+               $('#description').summernote();
          
          });
 
@@ -161,8 +174,7 @@
                   url:'{{asset("admin/get-categories")}}',
                   data:{
                      '_token':"{{csrf_token()}}",
-                     'id':$(this).data('record'),
-                     'status':$(this).data('value')
+                     'cate_id':'{{$getData->id}}',
                   },
                   success:function(res){
                         if(res){

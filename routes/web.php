@@ -153,6 +153,7 @@ Route::namespace('Front')->group(function () {
     Route::get('{page}', 'PageController@page')->name('page');
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
 	Route::get('product/{slug?}','ProductController@productDetails');
+	Route::post('product/get-product-list','ProductController@getProductList');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 });
 
@@ -161,7 +162,7 @@ Route::namespace('Front')->group(function () {
 */
 
 Route::group(['prefix' => 'api/v1'], function() {
- 
- 
+
+	
 });
 

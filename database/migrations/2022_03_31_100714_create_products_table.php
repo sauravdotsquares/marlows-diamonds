@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('title',180);
             $table->string('slug',250)->nullable();
             $table->string('tags',250)->nullable();
+            $table->text('short_description')->nullable();
             $table->text('description')->nullable();
             $table->string('categories');
             $table->decimal('sale_price',8,2)->nullable();

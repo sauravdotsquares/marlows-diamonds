@@ -53,10 +53,6 @@
       <div class="container-fluid">
          <form id="addForm" action="{{route('admin.submit-product')}}" enctype="multipart/form-data" method="POST">
             @csrf
-            <input type="hidden" name="table_id" id="table_id" value="{{isset($getData->id)?$getData->id:''}}">
-            <input type="hidden" name="slug_bk" id="slug_bk" value="{{isset($getData->slug)?$getData->slug:''}}">
-            <input type="hidden" name="featured_image_bk" id="featured_image_bk"
-               value="{{isset($getData->featured_image)?$getData->featured_image:''}}">
             <div class="row">
                <div class="col-md-12">
                   <div class="card card-primary">
@@ -66,28 +62,28 @@
                      <div class="card-body">
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Title</label>
+                              <label for="title">Title</label>
                               <input type="text" id="title" name="title" class="form-control" placeholder="Title"
                                  value="{{isset($getData->title)?$getData->title:''}}">
                            </div>
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Slug</label>
+                              <label for="slug">Slug</label>
                               <input type="text" id="slug" name="slug" class="form-control" placeholder="Slug"
                                  value="{{isset($getData->slug)?$getData->slug:''}}">
                            </div>
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Tags (Separate tags with commas)</label>
+                              <label for="tags">Tags (Separate tags with commas)</label>
                               <input type="text" id="tags" name="tags" class="form-control" placeholder="Tags"
                                  data-role="tagsinput" value="{{isset($getData->tags)?$getData->tags:''}}">
                            </div>
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Categories</label>
+                              <label for="categories">Categories</label>
                               <select name="categories[]" id="categories" class="select2 select2-hidden-accessible"
                                  multiple="" data-dropdown-css-class="select2-purple" style="width: 100%;"
                                  data-select2-id="7" tabindex="-1" aria-hidden="true">
@@ -97,8 +93,8 @@
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Variation</label>
-                              <select name="is_taxable" id="is_taxable" class="form-control">
+                              <label for="is_variation">Variation</label>
+                              <select name="is_variation" id="is_variation" class="form-control">
                                  <option value=""> Select Any</option>
                                  <option value="0" selected> No</option>
                                  <option value="1"> Yes</option>
@@ -107,8 +103,8 @@
                         </div>
                         <div class="form-group" style="display:none;">
                            <div class="form-label-group">
-                              <label for="product_name">Manage Quantity</label>
-                              <select name="is_taxable" id="is_taxable" class="form-control">
+                              <label for="is_quantity">Manage Quantity</label>
+                              <select name="is_quantity" id="is_quantity" class="form-control">
                                  <option value=""> Select Any</option>
                                  <option value="0"> Out Stock</option>
                                  <option value="1" selected> In Stock</option>
@@ -117,7 +113,14 @@
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Description</label>
+                              <label for="short_description">Short Description</label>
+                              <textarea id="short_description" name="short_description"
+                                 class="form-control ckeditor">{{isset($getData->short_description)?$getData->short_description:''}}</textarea>
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="description">Description</label>
                               <textarea id="description" name="description"
                                  class="form-control ckeditor">{{isset($getData->description)?$getData->description:''}}</textarea>
                            </div>
@@ -128,7 +131,7 @@
                <div class="col-md-12">
                   <div class="card card-header">
                      <div class="form-group">
-                        <label for="exampleInputFile">Product Image</label>
+                        <label for="featured_image">Product Image</label>
                         @if(isset($getData->image_url) && !empty($getData->image_url))
                         <img src="{{asset('images').'/'.$getData->image_url}}" alt="" height="50px" width="50px">
                         @endif
@@ -141,9 +144,9 @@
                         </div>
                      </div>
                      <div class="form-group">
-                        <label for="exampleInputFile">Product Gallery</label>
+                        <label for="gallery_image">Product Gallery</label>
                         @if(isset($getData->image_url) && !empty($getData->image_url))
-                        <img src="{{asset('images').'/'.$getData->image_url}}" alt="" height="50px" width="50px">
+                        <img src="{{ asset('storage/'.$getData->image_url) }}" alt="" height="50px" width="50px">
                         @endif
                         <div class="input-group">
                            <div class="custom-file">
@@ -199,7 +202,7 @@
                      </div>
                      <div class="form-group">
                         <div class="form-label-group">
-                           <label for="meta_keyword">Meta Description</label>
+                           <label for="meta_description">Meta Description</label>
                            <textarea id="meta_description" name="meta_description" class="form-control ckeditor"
                               placeholder="Meta Description">{{isset($getData->meta_description)?$getData->meta_description:''}}</textarea>
                         </div>
@@ -235,21 +238,21 @@
                                  <div class="card-body">
                                     <div class="form-group">
                                        <div class="form-label-group">
-                                          <label for="product_name">Sale Price</label>
+                                          <label for="sale_price">Sale Price</label>
                                           <input type="text" id="sale_price" name="sale_price" class="form-control"
                                              placeholder="Sale Price" value="{{isset($getData->sale_price)?$getData->sale_price:''}}">
                                        </div>
                                     </div>
                                     <div class="form-group">
                                        <div class="form-label-group">
-                                          <label for="product_name">Regular Price</label>
+                                          <label for="regular_price">Regular Price</label>
                                           <input type="text" id="regular_price" name="regular_price" class="form-control"
                                              placeholder="Regular Price" value="{{isset($getData->regular_price)?$getData->regular_price:''}}">
                                        </div>
                                     </div>
                                     <div class="form-group">
                                        <div class="form-label-group">
-                                          <label for="product_name">Taxable</label>
+                                          <label for="is_taxable">Taxable</label>
                                           <select name="is_taxable" id="is_taxable" class="form-control">
                                              <option value=""> Select Any</option>
                                              <option value="0"> Non Taxable</option>
@@ -268,7 +271,7 @@
                                        <div class="col-md-2">
                                           <div class="form-group">
                                              <div class="form-label-group">
-                                                <label for="product_name">Name</label>
+                                                <label for="attribute_name">Name</label>
                                                 <input type="text" id="attribute_name" name="attribute_name"
                                                    class="form-control" placeholder="Title"
                                                    value="{{isset($getData->title)?$getData->title:''}}">
@@ -278,7 +281,7 @@
                                        <div class="col-md-3">
                                           <div class="form-group">
                                              <div class="form-label-group">
-                                                <label for="product_name">Value</label>
+                                                <label for="attribute_value">Value</label>
                                                 <textarea name="attribute_value" id="attribute_value" cols="30"
                                                    rows="10"
                                                    placeholder="Enter some text, or some attributes by '|' separating values."></textarea>
@@ -418,6 +421,7 @@
 
    $(function () {
       // Summernote
+      $('#short_description').summernote()
       $('#description').summernote()
 
    });

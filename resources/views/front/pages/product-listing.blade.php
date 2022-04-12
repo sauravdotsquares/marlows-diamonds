@@ -145,8 +145,8 @@
 
                 <!-- Category listing -->
                 <div class="product-grid-wrap">
-                    <div class="product-grid-row flexed flex-flex-wrap">
-                        <div class="product-grid-items-item">
+                    <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
+                        <!-- <div class="product-grid-items-item">
                             <div class="product-items-item-info">
                                 <div class="product-items-item-image">
                                     <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/R1-143_0003-225x225.jpg" alt="image"></a>
@@ -242,9 +242,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> -->
                     </div>
+                </div>
+
+                <div class="ajax-load text-center" style="display:block">
+                    <img src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More post</p>
                 </div>
 
             </div>
@@ -408,4 +411,77 @@
 </div>
 
 
+<input type="hidden" id="pagescroll" value="1">
+
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        loadMoreData(page);
+        var page = $('#pagescroll').val();
+        $(window).scroll(function() {
+            if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                var page = $('#pagescroll').val();
+                loadMoreData(page);
+            }
+        });
+
+        function loadMoreData(page){
+            $.ajax(
+                {
+                    url: '{{url("product/get-product-list")}}?page='+page,
+                    type: "post",
+                    data: {
+                        '_token': "{{csrf_token()}}",
+                        'cate_id':'{{$data->id}}',
+                        'page':page,
+                    },
+                    beforeSend: function()
+                    {
+                        $('.ajax-load').show();
+                    }
+                })
+                .done(function(data)
+                {
+                    $('#pagescroll').val(data.page.current_page+1);
+                    // console.log(data.page.current_page);
+
+                    if(data.html == ""){
+                        $('.ajax-load').html("No more products found");
+                        return false;
+                    }
+                    $('.ajax-load').hide();
+                    $("#showProductList").append(data.html);
+                })
+                .fail(function(jqXHR, ajaxOptions, thrownError)
+                {
+                        alert('server not responding...');
+                });
+        }
+    </script>
+
+    <script>
+        // $(document).ready(function(){
+        //     getProductList();
+        // });
+
+        // function getProductList(){
+        //     console.log("Checking list");
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '',
+        //         data: {
+        //             '_token': "{{csrf_token()}}",
+        //         },
+        //         success: function (res) {
+        //             console.log(res);
+        //             return false;
+        //             // if (res) {
+        //             //     $("#categories").append('<option value="">Select Category</option>' + res);
+        //             // }
+        //         }
+        //     });
+        // }
+
+    </script>
 @endsection
