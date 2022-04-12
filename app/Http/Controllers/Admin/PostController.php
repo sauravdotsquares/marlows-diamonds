@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Posts;
+use App\Models\Posts;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\PostCategoryController;
+use Intervention\Image\Facades\Image;
 
 use URL;
 class PostController extends Controller
@@ -62,32 +63,21 @@ class PostController extends Controller
 			
         ]);
 		
-		
-		
-        if($request->hasFile('image')) {
-
-            //$image_array = [];
-
-            //foreach ($request->file('image') as $image) {
-                
-                $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
-
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
-            //}
+		if($request->hasFile('image')) {
+			
+			// $image = $request->file('image');
+			// $imageName = $image->getClientOriginalName();
+			// $fileName =  'public/news/' . time() . '-' . $imageName;
+			// Image::make($image)->resize(600,300)->save(storage_path('app/' . $fileName));
+			// $news->image = $fileName;
+  
+            $image = single_storage_image_upload($request->file('image'),'Post','500','300');
+            $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
         }
+		
+		// echo "Check";
+		// print_r($image);
+		// die;
 		
 		if(empty($image)){
 			$input['image'] = '';
@@ -97,7 +87,7 @@ class PostController extends Controller
 			$input['image'] = $image;
 		}
 		
-		$input['categories'] = implode(",",$request->categories);
+		$input['categories'] = !empty($request->categories)?implode(",",$request->categories):"";
         $posts = Posts::create($input);
 
         return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Added Successfully');
@@ -112,7 +102,7 @@ class PostController extends Controller
     public function update($postid=null){
         $breadcrumb = [
             ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
-            ["name" => "Homex", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
@@ -193,7 +183,7 @@ class PostController extends Controller
 			
 			$input['image'] = $image;
 		}
-		$input['categories'] = implode(",",$request->categories);
+		$input['categories'] = !empty($request->categories)?implode(",",$request->categories):"";
         $posts->fill($input)->save();
 
         return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Updated Successfully');

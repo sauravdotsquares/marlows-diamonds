@@ -89,6 +89,21 @@
                            </select>
                         </div>
                      </div>
+					 
+					 @if(count($templates)>0)
+                     <div class="form-group">
+                        <div class="form-label-group">
+                           
+                           <select id="template" name="template" class="form-control">
+                              @foreach($templates as $template)
+                                 <option value="{{$template['value']}}" {{$template['value']=="$pages->template"?'selected':''}}>{{$template['name']}}</option>
+                              @endforeach
+                           </select>
+
+                        </div>
+                     </div>
+                     @endif
+					 
                      <div class="form-group">
                         <div class="form-label-group">
                            <label for="product_name">Meta Title</label>

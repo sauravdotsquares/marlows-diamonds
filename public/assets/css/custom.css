@@ -274,7 +274,7 @@ input.input-control{height:38px}
 /** product listing page start here **/
 .category-banner{ text-align: center; background-repeat: no-repeat; background-position: center; background-size: cover;padding: 40px 0; position: relative; margin:0 0 28px 0;}
 .category-banner-text {position: relative;}
-.category-banner:before{ content: ""; background: #000; position: absolute;top: 0; left: 0; width: 100%; height: 100%; opacity: 0.54;}
+.category-banner:before{ content: ""; background: #000; position: absolute;top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4;}
 .category-banner-text h1 {font-family: 'Lato';font-size: 24px;line-height: 30px;margin: 0 0 10px 0; color: #fff;}
 .category-banner-text h2 {font-family: 'Lato';font-size: 18px;line-height: 34px;margin: 0; color: #fff; font-weight: 300;}
 .filter-tags-col {padding: 0 15px; text-align: center;width: 100%;max-width: 25%;flex: 0 0 25%;-ms-flex: 0 0 25%}
@@ -338,7 +338,7 @@ input.input-control{height:38px}
 .product-title-name h1 {font-family: "Lato";font-size: 26px;letter-spacing: 0;font-weight: bold;}
 .type-variations-row {display: flex;flex-wrap: wrap;margin: 0 -9px 17px;}
 .type-variations-col {width: 100%;flex: 0 0 50%;-ms-flex: 0 0 50%;max-width: 50%;padding: 0 9px;}
-label.label {display: block;margin: ;margin: 0 0 5px 0;}
+label.label {display: block;margin: 0 0 5px 0;}
 .product-title-name {margin: 0 0 30px 0;}
 .required {color: red;}
 .type-variations-col-one {width: 100%;padding: 0 10px;}
@@ -374,6 +374,34 @@ label.label {display: block;margin: ;margin: 0 0 5px 0;}
 .faq-list .accordion-item .accordion-body {font-size: 15px;color: #404040;line-height: 28px;}
 .vew-tc-btn {margin: 15px 0 0 0;}
 .category-product-filter-text {margin-top: 10px;}
+
+/** Blog Listing page **/
+.category-banner-text p {color: #fff;font-size: 15px;margin: 12px 0 0 0;}
+.blos-listbox {background: #fff;box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);height: 100%;border-radius: 2px;overflow: hidden;}
+.blos-listbox-img a {max-height: 204px;overflow: hidden;display: block;}
+.blos-listbox-img {padding: 10px 10px;}
+.blos-listbox-img:hover img{ transform: scale(1.2); }
+.blos-listbox-text {padding: 11px 14px;}
+.bloglist-wraper [class*="col"] {padding-bottom: 26px;}
+.blos-listbox-text {padding: 11px 16px 20px;}
+.blos-list-date span {color: #707070;font-size: 15px;margin: 0 10px 0 0;}
+.blos-list-date span i{padding: 0 3px 0 0;}
+.blos-list-title {margin: 12px 0 12px 0;}
+.blos-list-title a {font-size: 18px;text-decoration: none;color: #8e2e65;}
+.blos-list-desc p {margin: 0;font-size: 14px;}
+.blos-list-desc {margin: 0 0 17px 0;}
+.bloglist-wraper {padding: 20px 0 0 0;}
+
+/** Blog Details**/
+.breadcrumb-navs ul li {display: inline-block;margin: 0 34px 0 0; position: relative;}
+.breadcrumb-navs ul li a{ text-decoration: none; font-size: 14px; color: #505050 }
+.breadcrumb-navs {padding: 11px 0 20px 0;}
+.breadcrumb-navs ul li:not(:last-child)::after {content: "\f105";font-family: FontAwesome;right: -22px;position: absolute;top: 0px;bottom: 0;margin: auto;font-size: 15px;}
+
+.blog-title h1 {font-weight: bold;font-size: 32px;}
+.blogdetails-left .blos-list-date {margin: 26px 0 18px 0;}
+.blogdetails-wrap {padding: 30px 0 60px 0;}
+.blos-list-date span a {color: #707070;}
 
 
 /** mega menuhover **/

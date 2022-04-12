@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 use App\Models\Pages;
+use App\Models\Posts;
 //use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class PageController
@@ -14,8 +15,10 @@ class PageController
     {
         if($slug!=null){
             $pageData = Pages::where('slug',$slug)->first();
+			$blogdata= Posts::take(5)->orderBy('id','desc')->get();
+			
             if($pageData){
-                return view('front.pages.templates.default_template',['data'=>$pageData]);
+                return view('front.pages.templates.'.$pageData->template.'',['data'=>$pageData,'showdata'=>$blogdata]);
             }
             return view('layouts.errors.404');
         }else{

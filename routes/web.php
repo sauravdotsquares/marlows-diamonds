@@ -154,6 +154,7 @@ Route::namespace('Front')->group(function () {
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
 	Route::get('product/{slug?}','ProductController@productDetails');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
+	
 });
 
 /*

@@ -9,6 +9,7 @@
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 if (!function_exists("helper_test")) {
     function helper_test()
@@ -65,18 +66,28 @@ if (!function_exists("single_image_upload")) {
 }
 
 if (!function_exists("single_storage_image_upload")) {
-    function single_storage_image_upload($imageUrl,$folderName)
+    function single_storage_image_upload($imageUrl,$folderName,$height,$width)
     {
-        $filenameWithExt = $imageUrl->getClientOriginalName();
-        //Get just filename
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        // Get just ext
-        $extension = $imageUrl->getClientOriginalExtension();
-        // Filename to store
-        $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
-        // Upload Image
-        $path = $imageUrl->storeAs('public',$fileNameToStore);
-        return $fileNameToStore;
+		// $height = 200;
+		// $width = 200;
+		$image = $imageUrl;
+		$imageName = $imageUrl->getClientOriginalName();
+		$fileName =  'public/posts/' . time() . '-'.$height.'x'.$width. $imageName;
+		Image::make($image)->resize($height,$width)->save(storage_path('app/' . $fileName));
+		return $fileName;
+		
+        // $filenameWithExt = $imageUrl->getClientOriginalName();
+        ////Get just filename
+        // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        ////Get just ext
+        // $extension = $imageUrl->getClientOriginalExtension();
+        ////Filename to store
+        // $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
+		
+		// Image::make($imageUrl)->resize(600,300)->save(storage_path('app/' . $fileNameToStore));
+        ////Upload Image
+        ////$path = $imageUrl->storeAs('public',$fileNameToStore);
+        // return $fileNameToStore;
     }
 }
 

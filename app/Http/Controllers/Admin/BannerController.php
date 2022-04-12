@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Models\Banners;
 use App\Models\BannerDetails;
 use App\Http\Controllers\Controller;
-use App\Pages;
+use App\Models\Pages;
 use URL;
 class BannerController extends Controller
 {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Pages;
+use App\Models\Pages;
 use App\Http\Controllers\Controller;
 use File;
 
@@ -124,6 +124,14 @@ class PageController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
 		
+		$templates = [];
+        $files = File::allFiles(resource_path('views/front/pages/templates'));
+        foreach ($files as $key => $value) {
+             $explode = explode('.',$value->getfileName());
+             $templates[$key]['value'] = $explode[0];
+             $templates[$key]['name'] = ucwords(str_replace('_',' ',$explode[0]));
+        }
+		
 		$id = base64_decode($pageid);
 		if ($id == '') {
             return 'URL NOT FOUND';
@@ -135,7 +143,7 @@ class PageController extends Controller
         }
         $pages = Pages::find($id);
 		//dd($pages );
-        return view('admin.pages.edit',compact('pages'));
+        return view('admin.pages.edit',compact('pages','templates'));
 	}
 
     /**

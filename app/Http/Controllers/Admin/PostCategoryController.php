@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\SlugController;
 use Illuminate\Http\Request;
 use App\Models\PostCategory;
-use App\Posts;
+use App\Models\Posts;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Str;
