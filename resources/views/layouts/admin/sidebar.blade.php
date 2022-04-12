@@ -63,7 +63,7 @@
             <a href="#" class="nav-link @if(request()->segment(2) == 'posts') active @endif">
               <i class="nav-icon fas fa-copy"></i>
               <p>
-                Posts
+                Blogs
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -71,13 +71,13 @@
               <li class="nav-item">
                 <a href="/admin/posts" class="nav-link @if(request()->segment(2) == 'posts' && request()->segment(3) != 'create' && request()->segment(3) != 'categories') active @endif">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Posts</p>
+                  <p>Blogs</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="/admin/posts/create" class="nav-link @if(request()->segment(2) == 'posts' && request()->segment(3) == 'create') active @endif">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add Post</p>
+                  <p>Add Blog</p>
                 </a>
               </li>
               <li class="nav-item">

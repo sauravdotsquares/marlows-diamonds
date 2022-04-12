@@ -72,8 +72,8 @@ if (!function_exists("single_storage_image_upload")) {
 		// $width = 200;
 		$image = $imageUrl;
 		$imageName = $imageUrl->getClientOriginalName();
-		$fileName =  'public/posts/' . time() . '-'.$height.'x'.$width. $imageName;
-		Image::make($image)->resize($height,$width)->save(storage_path('app/' . $fileName));
+		$fileName =  'posts/' . time() . '-'.$height.'x'.$width. $imageName;
+		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
 		return $fileName;
 		
         // $filenameWithExt = $imageUrl->getClientOriginalName();

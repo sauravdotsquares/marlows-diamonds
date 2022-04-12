@@ -157,21 +157,8 @@ class PostController extends Controller
             //foreach ($request->file('image') as $image) {
                 
                 $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
-
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'post_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
+                $image = single_storage_image_upload($request->file('image'),'Post','500','300');
+				$image = single_storage_image_upload($request->file('image'),'Post','1200','600');
             //}
         }
 

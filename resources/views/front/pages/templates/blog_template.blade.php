@@ -1,44 +1,79 @@
 @extends('layouts.front.app')
 @section('content')
 
-{{$data->title}}
 
-<!-- Blog Listing -->
-<div class="bloglist-wraper">
+<style type="text/css">
+  		.ajax-load{
+  			background: #e1e1e1;
+		    padding: 10px 0px;
+		    width: 100%;
+  		}
+  	</style>
+<!-- header banner start -->
+<div class="category-banner" style="background-image:url({{asset('storage/'.$data->image)}})">
 	<div class="container">
-		<div class="row">
-		@foreach($showdata as $key=>$value)
-			<div class="col-lg-4 col-sm-6">
-				<div class="blos-listbox">
-					<div class="blos-listbox-img">
-						<a href="{{$value->slug}}"><img src="{{asset('storage/app/'.$value->image)}}" /></a>
-					</div>
-					<div class="blos-listbox-text">
-						<div class="blos-list-date">
-							<span><i class="fa fa-user" aria-hidden="true"></i> MarlowsDiamonds at </span>
-							<span><i class="fa fa-clock-o" aria-hidden="true"></i> December 13, 2021</span>
-						</div>
-						<div class="blos-list-title">
-							<a href="#">{{isset($value->title)?$value->title:""}}</a>
-						</div>
-						<div class="blos-list-desc">
-							<p>{{isset($value->short_description)?$value->short_description:""}}</p>
-						</div>
-						<div class="blog-readmore">
-							<a class="btn-bg-small" href="#">Read More</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			@endforeach
-			
-			
-
+		<div class="category-banner-text">
+			<h1>{{$data->title}}</h1>
+			<h2>{{$data->subtitle}}</h2>
+			<p><?php echo html_entity_decode($data->short_description);?></p>
 		</div>
 	</div>
 </div>
+<!-- header banner end -->
+<!-- Blog Listing -->
+<div class="bloglist-wraper">
+	<div class="container">
+	<div class="row" id="post-data">	
+		
+	</div>
+	</div>
+</div>		
 
+<div class="ajax-load text-center" style="display:none">
+	<p><img src="https://www.marlows-diamonds.co.uk/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif">Loading More post</p>
+</div>
 
+<script type="text/javascript">
+	var page = 1;
+	$( document ).ready(function() {
+	    loadMoreData(page);
+	});
+	$(window).scroll(function() {
+	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+			
+	        page++;
+	        loadMoreData(page);
+	    }
+	});
 
+	function loadMoreData(page){
+	  $.ajax(
+	        {
+	            url: '{{url("post/get-data")}}',
+	            type: "post",
+				data: {
+                        '_token': "{{csrf_token()}}",
+                        'page':page,
+                    },
+	            beforeSend: function()
+	            {
+	                $('.ajax-load').show();
+	            }
+	        })
+	        .done(function(data)
+	        {
+	            if(data.html == ""){
+	                $('.ajax-load').html("No more records found");
+	                return;
+	            }
+	            $('.ajax-load').hide();
+	            $("#post-data").append(data.html);
+	        })
+	        .fail(function(jqXHR, ajaxOptions, thrownError)
+	        {
+	              alert('server not responding...');
+	        });
+	}
+</script>
 
 @endsection
