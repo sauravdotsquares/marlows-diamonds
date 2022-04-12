@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Pages;
+use App\Models\Pages;
 use App\Http\Controllers\Controller;
 use File;
 
@@ -77,21 +77,7 @@ class PageController extends Controller
             //foreach ($request->file('image') as $image) {
                 
                 $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
-
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
+                $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
             //}
         }
 		
@@ -124,6 +110,14 @@ class PageController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
 		
+		$templates = [];
+        $files = File::allFiles(resource_path('views/front/pages/templates'));
+        foreach ($files as $key => $value) {
+             $explode = explode('.',$value->getfileName());
+             $templates[$key]['value'] = $explode[0];
+             $templates[$key]['name'] = ucwords(str_replace('_',' ',$explode[0]));
+        }
+		
 		$id = base64_decode($pageid);
 		if ($id == '') {
             return 'URL NOT FOUND';
@@ -135,7 +129,7 @@ class PageController extends Controller
         }
         $pages = Pages::find($id);
 		//dd($pages );
-        return view('admin.pages.edit',compact('pages'));
+        return view('admin.pages.edit',compact('pages','templates'));
 	}
 
     /**
@@ -174,21 +168,7 @@ class PageController extends Controller
             //foreach ($request->file('image') as $image) {
                 
                 $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
-
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'page_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
+                $image = single_storage_image_upload($request->file('image'),'pages','1200','600');
             //}
         }
 

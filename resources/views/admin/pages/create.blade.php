@@ -90,7 +90,7 @@
                      <div class="form-group">
                         <div class="form-label-group">
                            
-                           <select id="status" name="status" class="form-control">
+                           <select id="template" name="template" class="form-control">
                               @foreach($templates as $template)
                                  <option value="{{$template['value']}}" {{$template['value']=='default_template'?'selected':''}}>{{$template['name']}}</option>
                               @endforeach
