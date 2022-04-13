@@ -10,6 +10,9 @@
   		}
   	</style>
 <!-- header banner start -->
+@if(isset($blog_details) && $blog_details != 1 )
+	
+
 <div class="category-banner" style="background-image:url({{asset('storage/'.$data->image)}})">
 	<div class="container">
 		<div class="category-banner-text">
@@ -19,6 +22,8 @@
 		</div>
 	</div>
 </div>
+
+@endif
 <!-- header banner end -->
 <!-- Blog Listing -->
 <div class="bloglist-wraper">
@@ -28,6 +33,17 @@
 	</div>
 	</div>
 </div>		
+
+<!-- Section Reviews -->
+<div class="container">
+<div class="rating-review-block">
+	<div class="owl-carousel owl-theme slider-review">
+	    @include('front.pages.reviews')
+	</div>	
+</div>
+</div>			
+
+
 
 <div class="ajax-load text-center" style="display:none">
 	<p><img src="https://www.marlows-diamonds.co.uk/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif">Loading More post</p>
@@ -39,7 +55,7 @@
 	    loadMoreData(page);
 	});
 	$(window).scroll(function() {
-	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+	    if($(window).scrollTop() + $(window).height() == $(document).height()) {
 			
 	        page++;
 	        loadMoreData(page);
