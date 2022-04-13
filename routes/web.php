@@ -157,6 +157,7 @@ Route::namespace('Front')->group(function () {
 	Route::post('post/get-data','PageController@myPost');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 	
+	Route::get('repnetapi','ProductController@getNewRepNetFunction');
 });
 
 /*

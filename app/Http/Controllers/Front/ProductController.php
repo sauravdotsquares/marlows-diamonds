@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Products;
+use SoapClient;
+use Rapnet;
+use App\Repnet\nusoap;
 
 class ProductController extends Controller
 {
@@ -82,7 +85,7 @@ class ProductController extends Controller
 
     public function getProductList(Request $request)
     {
-        $getParentData = Category::where('status',1)->where('id',20)->select('id','parent_id')->first()->toArray();
+        $getParentData = Category::where('status',1)->where('id',$request->cate_id)->select('id','parent_id')->first()->toArray();
 
         $blankArray = [];
         foreach($getParentData as $key1 => $valueArray1){
@@ -109,7 +112,6 @@ class ProductController extends Controller
             }
         }
        
-
         $getCateProductId = array();
 
         if(count($blankArray)){
@@ -179,6 +181,92 @@ class ProductController extends Controller
         }
 
         return json_encode($blankArray);
+    }
+
+    public function getRepNetAPI(Request $request)
+    {
+        Rapnet::setDiamondParams(
+            // $request->input('diamond_shape'),
+            // $request->input('carat_weight'),
+            // $request->input('diamond_color'),
+            // $request->input('estimated_clarity')
+            'ROUND',
+            '0.3',
+            'D',
+            'IF'
+        );
+        // $getData = Rapnet::setDiamondParams(
+        //     $request->input('Round'),
+        //     $request->input('0.30'),
+        //     $request->input('I'),
+        //     $request->input('VVS2')
+        // );
+        
+        $price = Rapnet::getPrice();
+        
+        echo "Testing again ada da adsd <pre>";
+        print_r($price);
+        die;  
+        
+    }
+
+    public function getNewRepNetFunction(Type $var = null)
+    {
+
+        $client = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL",
+        array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
+        
+        $params = array('Username'=>'95503', 'Password'=>'@diamond1');
+        $client->__soapCall("Login", array($params), NULL, NULL, $output_headers);
+    
+        $ticket = $output_headers["AuthenticationTicketHeader"]->Ticket;
+    
+        $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
+    
+        $ns = "http://technet.rapaport.com/";
+        $headerBody = array("Ticket" => $ticket);
+        $header = new \SoapHeader($ns, 'AuthenticationTicketHeader', $headerBody);
+        $client1->__setSoapHeaders($header);
+    
+        $searchParams = array(
+            "ShapeCollection" => array("ROUND", "PEAR"),
+            "LabCollection" => array("GIA"),
+            "ColorFrom" => "D",
+            "ColorTo" => "J",
+            "ClarityFrom" => "IF",
+            "ClarityTo" => "I1",
+            "SizeFrom" => "0.3",
+            "SizeTo" => "1.5",
+            "CutFrom" => "EXCELLENT",
+            "CutTo" => "GOOD",
+            "GirdleSizeMin" => "EXTR_THICK",
+            "GirdleSizeMax" => "SLIGHTLY_THICK",
+            "TablePercentFrom" => "48.2",
+            "TablePercentTo" => "73.4",
+            "DepthPercentFrom" => "33.86",
+            "DepthPercentTo" => "73.8",
+            "MeasLengthFrom" => "3.7",
+            "MeasLengthTo" => "6.4",
+            "MeasWidthFrom" => "2.8",
+            "MeasWidthTo" => "7.9",
+            "MeasDepthFrom" => "2.7",
+            "MeasDepthTo" =>"3.86",
+            "PriceFrom" => "1",
+            "PriceTo" => "999999",
+            "PageNumber" => 1,
+            "PageSize" => 25,
+            "SortDirection" => "ASC",
+            "SortBy" => "PRICE"
+        );
+    
+    
+        $params1 = array("SearchParams" => $searchParams, "DiamondsFound" => 0);
+        $results=$client1->__soapCall("GetDiamonds", array($params1), NULL, NULL, $output_headers);
+    
+        //You can improve performance by making the first login request over HTTPS, like above, and the second request to get the diamonds over HTTP.
+    
+        echo '<h2>Result diamonds</h2><pre>';
+        print_r($results);
     }
 
 }
