@@ -155,6 +155,7 @@ Route::namespace('Front')->group(function () {
 	Route::get('product/{slug?}','ProductController@productDetails');
 	Route::post('post/get-data','PageController@myPost');
     Route::get('/blog-resources/{slug}', 'PageController@show');
+	Route::post('/visit-us', 'ContactUsFormController@ContactUsForm')->name('contact');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 	
 });

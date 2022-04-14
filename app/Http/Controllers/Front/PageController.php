@@ -40,7 +40,7 @@ class PageController
     {
     	$posts = Posts::orderBy('id','DESC')->where('status', 1)->paginate(6);
     	if ($request->ajax()) {
-    		$view = view('front.pages.templates.data',compact('posts'))->render();
+    		$view = view('front.pages.blog-data',compact('posts'))->render();
             return response()->json(['html'=>$view]);
         }
     	return response()->json(['html'=>'']);

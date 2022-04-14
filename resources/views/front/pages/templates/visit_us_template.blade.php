@@ -26,27 +26,55 @@
 				</div>
 			</div>
 			<div class="col-lg-4">
+			<!-- Success message -->
+			@if(Session::has('success'))
+				<div class="alert alert-success">
+					{{Session::get('success')}}
+				</div>
+			@endif
 				<div class="visit-form">
 					<h3>NEED ASSISTANCE?</h3>
 					<p>We're here to help...<br>Complete the contact form below and we will be in touch.</p>
-					<form>
+					<form action="" method="post" action="{{ route('contact') }}">
+					@csrf
 						<div class="form-controls">
-							<input type="text" placeholder="Your Name">
+							<input type="text" name="name" id="name" class="{{ $errors->has('name') ? 'error' : '' }}" placeholder="Your Name">
+							<!-- Error -->
+							@if ($errors->has('name'))
+							<div class="error">
+								{{ $errors->first('name') }}
+							</div>
+							@endif
 						</div>
 						<div class="form-controls">
-							<input type="text" placeholder="Your Email Address">
+							<input type="email" name="email" id="email" class="{{ $errors->has('email') ? 'error' : '' }}" placeholder="Your Email Address">
+							@if ($errors->has('email'))
+							<div class="error">
+								{{ $errors->first('email') }}
+							</div>
+							@endif
 						</div>
 						<div class="form-controls">
-							<input type="text" placeholder="Your Contact No.">
+							<input type="text" name="phone" id="phone" class="{{ $errors->has('phone') ? 'error' : '' }}" placeholder="Your Contact No.">
+							@if ($errors->has('phone'))
+							<div class="error">
+								{{ $errors->first('phone') }}
+							</div>
+							@endif
 						</div>
 						<div class="form-controls">
-							<textarea placeholder="Your Message"></textarea>
+							<textarea name="message" id="message" class="{{ $errors->has('message') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
+							@if ($errors->has('message'))
+							<div class="error">
+								{{ $errors->first('message') }}
+							</div>
+							@endif
 						</div>
 						<div class="google-capatcha">
 
 						</div>
 						<div class="action-submit">
-							<button type="submit">Send Message</button>
+							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
 					</form>
 					<div class="visitform-text">

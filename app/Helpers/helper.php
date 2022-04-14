@@ -263,4 +263,12 @@ if (!function_exists('validate_breadcrumb')) {
 			return ($recentposts);
 		}	
 	}
+	if (!function_exists("getRelatedPosts")) {
+    function getRelatedPosts()
+		{
+			$relatedposts = Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
+			return ($relatedposts);
+		}	
+	}
+	
 }

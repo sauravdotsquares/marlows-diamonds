@@ -89,10 +89,14 @@
 		</div>
 		<div class="related-post-slider">
 			<div class="owl-carousel owl-theme related-post st-arrows">
-			    <div class="item">
+				@php
+					$getRelatedPosts = getRelatedPosts();
+				@endphp
+				@foreach($getRelatedPosts as $post)
+				<div class="item">
 			    	<div class="blos-listbox">
 						<div class="blos-listbox-img">
-							<a href="#"><img src="assets/images/shutterstock_1730457079.jpg" alt="blog1"></a>
+							<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}"><img src="{{asset('storage/'.$post->image)}}" alt="1"></a>
 						</div>
 						<div class="blos-listbox-text">
 							<div class="blos-list-date">
@@ -100,83 +104,21 @@
 								<span><i class="fa fa-clock-o" aria-hidden="true"></i> December 13, 2021</span>
 							</div>
 							<div class="blos-list-title">
-								<a href="#">Why round shape diamond is preferred choice for engagement rings?</a>
+								<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}">{{isset($post->title)?$post->title:""}}</a>
 							</div>
 							<div class="blos-list-desc">
-								<p>When you think of engagement rings, what shape comes to your mind first? Round cut, right? Well, the popularity of round cut diamond is so much</p>
+								{{isset($post->short_description)?$post->short_description:""}}
 							</div>
 							<div class="blog-readmore">
-								<a class="btn-bg-small" href="#">Read More</a>
+								<a class="btn-bg-small" href="/blog-resources/{{isset($post->slug)?$post->slug:""}}">Read More</a>
 							</div>
 						</div>
 					</div>
 			    </div>
-			    <div class="item">
-			    	<div class="blos-listbox">
-						<div class="blos-listbox-img">
-							<a href="#"><img src="assets/images/Untitled-design-18.png" alt="blog5"></a>
-						</div>
-						<div class="blos-listbox-text">
-							<div class="blos-list-date">
-								<span><i class="fa fa-user" aria-hidden="true"></i> MarlowsDiamonds at </span>
-								<span><i class="fa fa-clock-o" aria-hidden="true"></i> December 13, 2021</span>
-							</div>
-							<div class="blos-list-title">
-								<a href="#">Astrological Benefits of Diamond You Didn’t Know About</a>
-							</div>
-							<div class="blos-list-desc">
-								<p>“Diamonds are a girl’s best friend”. Indeed! But did you know that diamonds are not just about beauty and fashion? If you are planning to surprise</p>
-							</div>
-							<div class="blog-readmore">
-								<a class="btn-bg-small" href="#">Read More</a>
-							</div>
-						</div>
-					</div>
-			    </div>
-			    <div class="item">
-			    	<div class="blos-listbox">
-						<div class="blos-listbox-img">
-							<a href="#"><img src="assets/images/shutterstock_1700507515-scaled.jpg" alt="blog4"></a>
-						</div>
-						<div class="blos-listbox-text">
-							<div class="blos-list-date">
-								<span><i class="fa fa-user" aria-hidden="true"></i> MarlowsDiamonds at </span>
-								<span><i class="fa fa-clock-o" aria-hidden="true"></i> December 13, 2021</span>
-							</div>
-							<div class="blos-list-title">
-								<a href="#">Oval Engagement Rings Are Trending – Here’s Why?</a>
-							</div>
-							<div class="blos-list-desc">
-								<p>Ariana Grande, Kourtney Kardashian, Hailey Bieber, Serena Williams, Blake Lively (just to name a few) are famous celebrities who rocked the Oval-cut engagement rings and made this</p>
-							</div>
-							<div class="blog-readmore">
-								<a class="btn-bg-small" href="#">Read More</a>
-							</div>
-						</div>
-					</div>
-			    </div>
-			    <div class="item">
-			    	<div class="blos-listbox">
-						<div class="blos-listbox-img">
-							<a href="#"><img src="assets/images/shutterstock_1700507515-scaled.jpg" alt="blog4"></a>
-						</div>
-						<div class="blos-listbox-text">
-							<div class="blos-list-date">
-								<span><i class="fa fa-user" aria-hidden="true"></i> MarlowsDiamonds at </span>
-								<span><i class="fa fa-clock-o" aria-hidden="true"></i> December 13, 2021</span>
-							</div>
-							<div class="blos-list-title">
-								<a href="#">Oval Engagement Rings Are Trending – Here’s Why?</a>
-							</div>
-							<div class="blos-list-desc">
-								<p>Ariana Grande, Kourtney Kardashian, Hailey Bieber, Serena Williams, Blake Lively (just to name a few) are famous celebrities who rocked the Oval-cut engagement rings and made this</p>
-							</div>
-							<div class="blog-readmore">
-								<a class="btn-bg-small" href="#">Read More</a>
-							</div>
-						</div>
-					</div>
-			    </div>
+				@endforeach
+			
+			    
+			    
 			</div>
 		</div>
 	</div>
