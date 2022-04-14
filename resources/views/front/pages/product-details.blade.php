@@ -23,8 +23,8 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
-				<div class="product-type-variations">
-					<div class="diamond-type">
+				<div class="product-type-variations" id="filterDataDesign">
+					<!-- <div class="diamond-type">
 						<label>Diamond Type</label>
 						<div class="d-type-input">
 							<input type="radio" name="diamond_type" value="">
@@ -34,9 +34,9 @@
 							<input type="radio" name="diamond_type">
 							<span>Lab Grow Diamond</span>
 						</div>
-					</div>
+					</div> -->
 					<div class="type-variations-row">
-						<div class="type-variations-col">
+						<!-- <div class="type-variations-col">
 							<label class="label">Metal Type<span class="required">*</span></label>
 							<select class="select-control">
 								<option>Choose an option</option>
@@ -71,32 +71,43 @@
 								<option>Y</option>
 								<option>Z</option>
 							</select>
-						</div>
+						</div> -->
 					</div>
+				</div>
+				<div id="apiCustomDesign">
 					<div class="type-variations-row">
 						<div class="type-variations-col">
 							<label class="label"> Carat </label>
-							<select class="select-control">
-								<option>Choose an option</option>
-								<option>0.30-0.39</option>
-								<option>0.40-0.49</option>
-								<option>0.50-0.59</option>
-								<option>0.60-0.69</option>
-								<option>0.60-0.69</option>
+							<select class="form-control" name="carat" id="carat">
+								<option value="">Choose an option</option>
+								<option value="0.30" selected="selected">0.30-0.39</option>
+								<option value="0.40">0.40-0.49</option>
+								<option value="0.50">0.50-0.59</option>
+								<option value="0.60">0.60-0.69</option>
+								<option value="0.70">0.70-0.79</option>
+								<option value="0.80">0.80-0.89</option>
+								<option value="0.90">0.90-0.99</option>
+								<option value="1">1.00-1.19</option>
+								<option value="1.2">1.20-1.49</option>
+								<option value="1.50">1.50-1.69</option>
+								<option value="1.70">1.70-1.99</option>
+								<option value="2">2.00-2.49</option>
+								<option value="2.5">2.50-2.99</option>
+								<option value="3">3.00-3.99</option>
 							</select>
 						</div>
 						<div class="type-variations-col">
 							<label class="label"> Colour </label>
-							<select class="select-control">
-								<option>Choose an option</option>
-								<option>D - Exceptional White +</option>
-								<option>E - Exceptional White</option>
-								<option>F - Rare White +</option>
-								<option>G - Rare White</option>
-								<option>H - White</option>
-								<option>I - Slightly Tinted White</option>
-								<option>J - Slightly Tinted White</option>
-								<option>K - Tinted White</option>
+							<select class="form-control" name="diamond-colour" id="diamond-colour">
+                    			<option value="">Choose an option</option>
+								<option value="D" selected="selected">D - Exceptional White +</option>
+								<option value="E">E - Exceptional White</option>
+								<option value="F">F - Rare White +</option>
+								<option value="G">G - Rare White</option>
+								<option value="H">H - White</option>
+								<option value="I">I - Slightly Tinted White</option>
+								<option value="J">J - Slightly Tinted White</option>
+								<option value="K">K - Tinted White</option>
 							</select>
 						</div>
 					</div>
@@ -104,35 +115,34 @@
 					<div class="type-variations-row">
 						<div class="type-variations-col">
 							<label class="label"> Clarity </label>
-							<select class="select-control">
-								<option>Choose an option</option>
-								<option>IF - Internally Flawless</option>
-								<option>VVS1 - Minute Inclusions</option>
-								<option>VVS2 - Minute Inclusions</option>
-								<option>VS1 - Very Small Inclusions</option>
-								<option>VS2 - Very Small Inclusions</option>
-								<option>SI1 - Small Inclusions</option>
-								<option>SI2 - Small Inclusions</option>
+							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
+                    			<option value="">Choose an option</option>
+								<option value="IF">IF - Internally Flawless</option>
+								<option value="VVS1">VVS1 - Minute Inclusions</option>
+								<option value="VVS2">VVS2 - Minute Inclusions</option>
+								<option value="VS1">VS1 - Very Small Inclusions</option>
+								<option value="VS2">VS2 - Very Small Inclusions</option>
+								<option value="SI1">SI1 - Small Inclusions</option>
+								<option value="SI2" selected="selected">SI2 - Small Inclusions</option>
 							</select>
 						</div>
 						<div class="type-variations-col">
 							<label class="label"> Cut Grade </label>
-							<select class="select-control">
-								<option>Choose an option</option>
-								<option>Excellent</option>
-								<option>Very Good</option>
-								<option>Good</option>
+							<select class="form-control" name="diamond-grade" id="diamond-grade">
+                    			<option value="">Choose an option</option>
+								<option value="EX" selected="selected">Excellent</option>
+								<option value="VG">Very Good</option>
+								<option value="GD">Good</option>
 							</select>
 						</div>
 					</div>
 					<div class="type-variations-row">
 						<div class="type-variations-col-one">
 							<label class="label"> Certificate </label>
-							<select class="select-control">
-								<option>Choose an option</option>
-								<option>GIA</option>
-								<option>IGI</option>
-
+							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
+                    			<option value="">Choose an option</option>
+								<option value="GIA" selected="selected">GIA</option>
+								<option value="IGI">IGI</option>
 							</select>
 						</div>
 					</div>
@@ -608,4 +618,79 @@
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('js')
+	<script>
+		$(document).ready(function(){
+			console.log("checking");
+			getCustomFilter();
+
+			$(".viewdiamond-btn").click(function(){
+				$(".diamond-table").toggle();
+			});
+
+			getSelectedAttributePrice();
+
+			$('#carat').on('change',function(){
+				getSelectedAttributePrice();
+			});
+			$('#diamond-colour').on('change',function(){
+				getSelectedAttributePrice();
+			});
+			$('#diamond-clarity').on('change',function(){
+				getSelectedAttributePrice();
+			});
+			$('#diamond-grade').on('change',function(){
+				getSelectedAttributePrice();
+			});
+			$('#diamond-certificate').on('change',function(){
+				getSelectedAttributePrice();
+			});
+		})
+
+		function getCustomFilter(){
+			console.log("getCustomFilter");
+			$.ajax({
+                type: 'POST',
+                url: '{{route("custom-filter")}}',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'slug' : '{{$data->slug}}',
+                },
+                success: function (res) {
+                    console.log(res);
+					$('#filterDataDesign').html(res);
+                    return false;
+                }
+            });
+		}
+
+		function getSelectedAttributePrice(){
+			// console.log("getCustomFilter");
+			var caratVal = $('#carat').val();
+			var diamondColor = $('#diamond-colour').val();
+			var diamondClarity = $('#diamond-clarity').val();
+			var diamondGrade = $('#diamond-grade').val();
+			var diamondCertificate = $('#diamond-certificate').val();
+			$.ajax({
+                type: 'POST',
+                url: '{{route("custom-api-filter-data")}}',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'carat' : caratVal,
+					'color' : diamondColor,
+					'clarity' : diamondClarity,
+					'grade' : diamondGrade,
+					'certificate' : diamondCertificate,
+                },
+                success: function (res) {
+                    console.log(res);
+					// $('#filterDataDesign').html(res);
+                    return false;
+                }
+            });
+		}
+
+	</script>
 @endsection

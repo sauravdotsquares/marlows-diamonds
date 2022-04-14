@@ -6,9 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Products;
+use App\Models\RepnetData;
+use App\Models\ProductVariationAttributes;
+use App\Models\Attributes;
+use App\Models\DiamondStock;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
+use App\Http\Controllers\Front\ApiController;
 
 class ProductController extends Controller
 {
@@ -85,45 +90,57 @@ class ProductController extends Controller
 
     public function getProductList(Request $request)
     {
-        $getParentData = Category::where('status',1)->where('id',$request->cate_id)->select('id','parent_id')->first()->toArray();
+        $getParentData = Category::with('grandchildren')->where('status',1)->where('id',$request->cate_id)->select('id','parent_id')->first()->toArray();
 
-        $blankArray = [];
-        foreach($getParentData as $key1 => $valueArray1){
-            if($key1 == 'id'){
-                array_push($blankArray,$valueArray1);
-            }
-            if($key1 == 'parent_cate'){
-                if(is_array($valueArray1)){
-                    foreach($valueArray1 as $key2 => $valueArray2){
-                        if($key2 == 'id'){
-                            array_push($blankArray,$valueArray2);
-                        }
-                        if($key2 == 'parent_cate'){
-                            if(is_array($valueArray2)){
-                                foreach($valueArray2 as $key3 => $valueArray3){
-                                    if($key3 == 'id'){
-                                        array_push($blankArray,$valueArray3);
-                                    }
-                                }
-                            }
-                        }
-                    }
+        $getParentHierarchy = array($getParentData['id']);
+        foreach($getParentData['grandchildren'] as $keyName => $childId){
+            array_push($getParentHierarchy,$childId['id']);
+            if(is_array($childId['grandchildren'])){
+                foreach($childId['grandchildren'] as $keyName1 => $childId1){
+                    array_push($getParentHierarchy,$childId1['id']);
                 }
             }
         }
+
+        // return response()->json($getParentHierarchy);
+
+        // $blankArray = [];
+        // foreach($getParentData as $key1 => $valueArray1){
+        //     if($key1 == 'id'){
+        //         array_push($blankArray,$valueArray1);
+        //     }
+        //     if($key1 == 'parent_cate'){
+        //         if(is_array($valueArray1)){
+        //             foreach($valueArray1 as $key2 => $valueArray2){
+        //                 if($key2 == 'id'){
+        //                     array_push($blankArray,$valueArray2);
+        //                 }
+        //                 if($key2 == 'parent_cate'){
+        //                     if(is_array($valueArray2)){
+        //                         foreach($valueArray2 as $key3 => $valueArray3){
+        //                             if($key3 == 'id'){
+        //                                 array_push($blankArray,$valueArray3);
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
        
         $getCateProductId = array();
 
-        if(count($blankArray)){
-            foreach($blankArray as $prKey => $proVal){
+        if(count($getParentHierarchy)){
+            foreach($getParentHierarchy as $prKey => $proVal){
                 $getProductList = Products::whereRaw("find_in_set('".$proVal."',categories)")
                 ->pluck('id')->toArray();
-               
                 array_push($getCateProductId,$getProductList);
             }
         }
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
-
+        
+        // return response()->json($getCateProductId);
 
         $getProductListFinal = Products::with('getProductImages')->whereIn('id',$output)->simplePaginate(4);
 
@@ -212,61 +229,91 @@ class ProductController extends Controller
 
     public function getNewRepNetFunction(Type $var = null)
     {
+        $getArray = [
+            'caret' => 'DI',
+            'Color' => 'D',
+        ];
 
-        $client = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL",
-        array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
+        $getApiController = new ApiController;
+        $getActualData = $getApiController->getRepnetApiFunction($getArray);        
         
-        $params = array('Username'=>'95503', 'Password'=>'@diamond1');
-        $client->__soapCall("Login", array($params), NULL, NULL, $output_headers);
-    
-        $ticket = $output_headers["AuthenticationTicketHeader"]->Ticket;
-    
-        $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
-    
-        $ns = "http://technet.rapaport.com/";
-        $headerBody = array("Ticket" => $ticket);
-        $header = new \SoapHeader($ns, 'AuthenticationTicketHeader', $headerBody);
-        $client1->__setSoapHeaders($header);
-    
-        $searchParams = array(
-            "ShapeCollection" => array("ROUND", "PEAR"),
-            "LabCollection" => array("GIA"),
-            "ColorFrom" => "D",
-            "ColorTo" => "J",
-            "ClarityFrom" => "IF",
-            "ClarityTo" => "I1",
-            "SizeFrom" => "0.3",
-            "SizeTo" => "1.5",
-            "CutFrom" => "EXCELLENT",
-            "CutTo" => "GOOD",
-            "GirdleSizeMin" => "EXTR_THICK",
-            "GirdleSizeMax" => "SLIGHTLY_THICK",
-            "TablePercentFrom" => "48.2",
-            "TablePercentTo" => "73.4",
-            "DepthPercentFrom" => "33.86",
-            "DepthPercentTo" => "73.8",
-            "MeasLengthFrom" => "3.7",
-            "MeasLengthTo" => "6.4",
-            "MeasWidthFrom" => "2.8",
-            "MeasWidthTo" => "7.9",
-            "MeasDepthFrom" => "2.7",
-            "MeasDepthTo" =>"3.86",
-            "PriceFrom" => "1",
-            "PriceTo" => "999999",
-            "PageNumber" => 1,
-            "PageSize" => 25,
-            "SortDirection" => "ASC",
-            "SortBy" => "PRICE"
-        );
-    
-    
-        $params1 = array("SearchParams" => $searchParams, "DiamondsFound" => 0);
-        $results=$client1->__soapCall("GetDiamonds", array($params1), NULL, NULL, $output_headers);
-    
-        //You can improve performance by making the first login request over HTTPS, like above, and the second request to get the diamonds over HTTP.
-    
-        echo '<h2>Result diamonds</h2><pre>';
-        print_r($results);
+        RepnetData::truncate();
+
+        foreach($getActualData as $key => $val){
+            RepnetData::create([
+                'diamond_id'=> $val->DiamondID,
+                'shape_title'=> $val->ShapeTitle,
+                'weight'=> $val->Weight,
+                'color_title'=> $val->ColorTitle,
+                'lab_title'=> $val->LabTitle,
+                'repnet_price'=> $val->RapNetPrice,
+                'final_price'=> $val->FinalPrice,
+                'certificate_number'=> $val->CertificateNumber,
+                'vendor_stock_number'=> $val->VendorStockNumber,
+                'symmetry_title'=> $val->SymmetryTitle,
+                'polish_title'=> $val->PolishTitle,
+                'depth_percentage'=> $val->DepthPercent,
+                'table_percentage'=> $val->TablePercent,
+                'meas_length'=> $val->MeasLength,
+                'meas_width'=> $val->MeasWidth,
+                'meas_depth'=> $val->MeasDepth,
+                'girdle_size_min'=> isset($val->GirdleSizeMin)?$val->GirdleSizeMin:'',// $val->GirdleSizeMin,
+                'girdle_size_max'=> isset($val->GirdleSizeMax)?$val->GirdleSizeMax:'',// $val->GirdleSizeMax,
+                'culet_size_title'=> isset($val->CuletSizeTitle)?$val->CuletSizeTitle:'',
+                'fluorescence_intensity_title'=> $val->FluorescenceIntensityTitle,
+                'fancy_color_overtones'=> isset($val->FancyColorOvertones)?json_encode($val->FancyColorOvertones):'',
+                'has_cert_file'=> $val->HasCertFile,
+                'currency_short_title'=> $val->CurrencyShortTitle,
+                'currency_symbol'=> $val->CurrencySymbol,
+                'total_sales_price_in_currency'=> $val->TotalSalesPriceInCurrency,
+                'eye_clean_title'=> isset($val->EyeCleanTitle)?$val->EyeCleanTitle:'',
+                'has_image_file'=> $val->HasImageFile,
+                'image_video_type_id'=> $val->ImageVideoTypeID,
+                'has_video'=>isset($val->HasVideo)?$val->HasVideo:'',
+            ]);
+        }
+        return true;
     }
+
+    public function getCustomFilter(Request $request)
+    {
+        $getProduct = Products::where('slug',$request->slug)->select('id')->first();
+
+        $getProductSelectedAttribute = ProductVariationAttributes::where('product_id',$getProduct->id)->first();
+        $getProductSelectedAttribute = str_replace('attri_', '', explode(',',$getProductSelectedAttribute->attr_values));
+
+        if(count($getProductSelectedAttribute)){
+            $selectedDesign = '';
+            foreach($getProductSelectedAttribute as $key => $value){
+                $getAttributeValues = Attributes::where('slug',$value)->select('name','slug','values')->first();
+                $selectedDesign .= '<label for="diamond-colour"> '.$getAttributeValues->name.' </label><select name="'.trim($value).'" id="'.trim($value).'" class="form-control"><option value="">Select Any</option>';
+                $getData = explode('|',$getAttributeValues->values);
+                foreach($getData as $keyNew => $sepValue){
+                    if($keyNew == 0){
+                        $selectedVariable = 'selected';
+                    }else{
+                        $selectedVariable = '';
+                    }
+                    $selectedDesign .= '<option '.$selectedVariable.' value="'.trim($sepValue).'">'.trim($sepValue).'</option>';
+                }
+                $selectedDesign .= '</select> <br>';
+            }
+        }
+        return response()->json($selectedDesign);
+    }
+
+    public function getCustomApiFilterData(Request $request)
+    {
+       
+
+        $getHariKrishnaData = DiamondStock::where('Carat',$request->carat)->where('Color',$request->color)->where('Clarity',$request->clarity)->where('Cut',$request->grade)->where('Lab',$request->certificate)->get();
+
+        echo "<pre>";
+        print_r($request->all());
+        print_r($getHariKrishnaData);
+        die;
+
+    }
+    
 
 }
