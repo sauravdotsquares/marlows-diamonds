@@ -10,6 +10,9 @@
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use App\Models\Reviews;
+use App\Models\PostCategory;
+use App\Models\Posts;
 
 if (!function_exists("helper_test")) {
     function helper_test()
@@ -235,4 +238,37 @@ if (!function_exists('validate_breadcrumb')) {
             return preg_match('/"'.preg_quote($item, '/').'"/i' , json_encode($array));
         }
     }
+	
+	
+	if (!function_exists("getReviews")) {
+    function getReviews()
+		{
+			$reviews = Reviews::all();
+			return ($reviews);
+		}	
+	}
+	
+	if (!function_exists("getCategories")) {
+    function getCategories()
+		{
+			$postcategories = PostCategory::all();
+			return ($postcategories);
+		}	
+	}
+	
+	if (!function_exists("getRecentPosts")) {
+    function getRecentPosts()
+		{
+			$recentposts = Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
+			return ($recentposts);
+		}	
+	}
+	if (!function_exists("getRelatedPosts")) {
+    function getRelatedPosts()
+		{
+			$relatedposts = Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
+			return ($relatedposts);
+		}	
+	}
+	
 }

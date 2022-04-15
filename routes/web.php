@@ -158,6 +158,8 @@ Route::namespace('Front')->group(function () {
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
 	Route::post('post/get-data','PageController@myPost');
+    Route::get('/blog-resources/{slug}', 'PageController@show');
+	Route::post('/visit-us', 'ContactUsFormController@ContactUsForm')->name('contact');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 	
 });
