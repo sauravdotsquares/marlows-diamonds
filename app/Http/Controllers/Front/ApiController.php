@@ -10,6 +10,12 @@ class ApiController extends Controller
 {
     public function getRepnetApiFunction($filterArray)
     {
+
+        // echo "asdads<pre>";
+        // print_r($filterArray);
+        // print_r($filterArray['carat']);
+        // die;
+
         $client = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL",
         array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
         
@@ -26,18 +32,33 @@ class ApiController extends Controller
         $headerBody = array("Ticket" => $ticket);
         $header = new \SoapHeader($ns, 'AuthenticationTicketHeader', $headerBody);
         $client1->__setSoapHeaders($header);
-    
+        
+        if(isset($filterArray['grade'])){
+            if($filterArray['grade'] == 'EX'){
+                $filterTo = 'EXCELLENT';
+            }elseif($filterArray['grade'] == 'VG'){
+                $filterTo = 'VERYGOOD';
+            }elseif($filterArray['grade'] == 'GD'){
+                $filterTo = 'GOOD';
+            }else{
+                $filterTo = 'EXCELLENT';
+            }
+        }
+
+        // $ColorFrom = $filterArray['color'];
+		// $ColorTo = $filterArray['color'];
+
         $searchParams = array(
             "ShapeCollection" => 'ROUND',
-            "LabCollection" => array("GIA"),
-            "ColorFrom" => "D",
-            "ColorTo" => "J",
-            "ClarityFrom" => "IF",
-            "ClarityTo" => "I1",
-            "SizeFrom" => "0.3",
-            "SizeTo" => "1.5",
-            "CutFrom" => "EXCELLENT",
-            "CutTo" => "GOOD",
+            "LabCollection" => $filterArray['certificate'],
+            "ColorFrom" => isset($filterArray['color'])?$filterArray['color']:"D",
+            "ColorTo" => isset($filterArray['color'])?$filterArray['color']:"J",
+            "ClarityFrom" => isset($filterArray['clarity'])?$filterArray['clarity']:"IF",
+            "ClarityTo" => isset($filterArray['clarity'])?$filterArray['clarity']:"I1",
+            "SizeFrom" => isset($filterArray['carat'])?$filterArray['carat']:"0.3",
+            "SizeTo" => isset($filterArray['carat'])?$filterArray['carat']:"1.5",
+            "CutFrom" => isset($filterTo)?$filterTo:"EXCELLENT",
+            "CutTo" => isset($filterTo)?$filterTo:"GOOD",
             "GirdleSizeMin" => "EXTR_THICK",
             "GirdleSizeMax" => "SLIGHTLY_THICK",
             "TablePercentFrom" => "48.2",
@@ -60,13 +81,19 @@ class ApiController extends Controller
     
     
         $params1 = array("SearchParams" => $searchParams, "DiamondsFound" => 0);
+
+       
+
         $results=$client1->__soapCall("GetDiamonds", array($params1), NULL, NULL, $output_headers);
+
+        if(isset($results->GetDiamondsResult) && !empty($results->GetDiamondsResult->any)){
+            $apiXmlResponse = simplexml_load_string($results->GetDiamondsResult->any);
+            $object = json_decode(json_encode($apiXmlResponse->NewDataSet));
+        }else{
+            $object = new \stdclass;
+            $object->Table1 = '';
+        }
         
-
-        $apiXmlResponse = simplexml_load_string($results->GetDiamondsResult->any);
-				
-		$object = json_decode(json_encode($apiXmlResponse->NewDataSet));
-
         if(is_object($object->Table1)){
             $allData[]=$object->Table1;
         }else{

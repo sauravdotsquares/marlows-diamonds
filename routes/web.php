@@ -161,6 +161,12 @@ Route::namespace('Front')->group(function () {
     Route::get('/blog-resources/{slug}', 'PageController@show');
 	Route::post('/visit-us', 'ContactUsFormController@ContactUsForm')->name('contact');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
+
+
+	Route::get('products/cart', 'AddToCartController@index')->name('product.cart');
+	Route::get('product/add-to-cart/{id}', 'AddToCartController@addToCart')->name('add.to.cart');
+	Route::patch('product/update-cart', 'AddToCartController@updateCart')->name('update.cart');
+	Route::delete('product/remove-from-cart', 'AddToCartController@removeCart')->name('remove.from.cart');
 	
 });
 

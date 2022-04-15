@@ -1,4 +1,83 @@
 @extends('layouts.front.app')
+
+@section('css')
+	<style>
+		.thumbnail {
+			position: relative;
+			padding: 0px;
+			margin-bottom: 20px;
+		}
+		.thumbnail img {
+			width: 80%;
+		}
+		.thumbnail .caption{
+			margin: 7px;
+		}
+		.main-section{
+			background-color: #F8F8F8;
+		}
+		.dropdown{
+			float:right;
+			padding-right: 30px;
+		}
+		.btn{
+			border:0px;
+			margin:10px 0px;
+			box-shadow:none !important;
+		}
+		.dropdown .dropdown-menu{
+			padding:20px;
+			top:30px !important;
+			width:350px !important;
+			left:-110px !important;
+			box-shadow:0px 5px 30px black;
+		}
+		.total-header-section{
+			border-bottom:1px solid #d2d2d2;
+		}
+		.total-section p{
+			margin-bottom:20px;
+		}
+		.cart-detail{
+			padding:15px 0px;
+		}
+		.cart-detail-img img{
+			width:100%;
+			height:100%;
+			padding-left:15px;
+		}
+		.cart-detail-product p{
+			margin:0px;
+			color:#000;
+			font-weight:500;
+		}
+		.cart-detail .price{
+			font-size:12px;
+			margin-right:10px;
+			font-weight:500;
+		}
+		.cart-detail .count{
+			color:#C2C2DC;
+		}
+		.checkout{
+			border-top:1px solid #d2d2d2;
+			padding-top: 15px;
+		}
+		.checkout .btn-primary{
+			border-radius:50px;
+			height:50px;
+		}
+		.dropdown-menu:before{
+			content: " ";
+			position:absolute;
+			top:-20px;
+			right:50px;
+			border:10px solid transparent;
+			border-bottom-color:#fff;
+		}
+	</style>
+@endsection
+
 @section('content')
 
 <?php 
@@ -14,8 +93,7 @@
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
 				<video style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
-					<source src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/R1-143-White_Square-.mp4"
-						type="video/mp4" type="video/mp4" />
+					<source src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/R1-143-White_Square-.mp4" type="video/mp4" type="video/mp4" />
 				</video>
 
 			</div>
@@ -24,54 +102,8 @@
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
 				<div class="product-type-variations" id="filterDataDesign">
-					<!-- <div class="diamond-type">
-						<label>Diamond Type</label>
-						<div class="d-type-input">
-							<input type="radio" name="diamond_type" value="">
-							<span>Mined Diamond</span>
-						</div>
-						<div class="d-type-input">
-							<input type="radio" name="diamond_type">
-							<span>Lab Grow Diamond</span>
-						</div>
-					</div> -->
 					<div class="type-variations-row">
-						<!-- <div class="type-variations-col">
-							<label class="label">Metal Type<span class="required">*</span></label>
-							<select class="select-control">
-								<option>Choose an option</option>
-								<option>18ct White Gold</option>
-								<option>18ct Yellow Gold</option>
-								<option>18ct Rose Gold</option>
-								<option>Platinum</option>
-							</select>
-						</div>
-						<div class="type-variations-col">
-							<label class="label">Finger Size<span class="required">*</span></label>
-							<select class="select-control">
-								<option>Choose an option</option>
-								<option>G</option>
-								<option>H</option>
-								<option>I</option>
-								<option>J</option>
-								<option>K</option>
-								<option>L</option>
-								<option>M</option>
-								<option>N</option>
-								<option>O</option>
-								<option>P</option>
-								<option>Q</option>
-								<option>R</option>
-								<option>S</option>
-								<option>T</option>
-								<option>U</option>
-								<option>V</option>
-								<option>W</option>
-								<option>X</option>
-								<option>Y</option>
-								<option>Z</option>
-							</select>
-						</div> -->
+
 					</div>
 				</div>
 				<div id="apiCustomDesign">
@@ -167,109 +199,7 @@
 											<th>Select</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>ROUND</td>
-											<td>0.30</td>
-											<td>D</td>
-											<td>SI2</td>
-											<td>EX</td>
-											<td>
-												<a href="#" target="_blank" class="certificate-link">GIA</a>
-											</td>
-											<td>£522.92</td>
-											<td>
-												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
-											</td>
-											<td>
-												<a href="#" target="_blank" class="table-btn image-link">View
-													Diamond</a>
-											</td>
-											<td>
-												<input type="radio" checked="checked">
-											</td>
-										</tr>
-										<tr>
-											<td>Round</td>
-											<td>0.31</td>
-											<td>D</td>
-											<td>SI2</td>
-											<td>Excellent</td>
-											<td>
-												<a href="#" target="_blank" class="certificate-link">GIA</a>
-											</td>
-											<td>£476.92</td>
-											<td>
-												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
-											</td>
-											<td>
-
-											</td>
-											<td>
-												<input type="radio">
-											</td>
-										</tr>
-										<tr>
-											<td>Round</td>
-											<td>0.34</td>
-											<td>D</td>
-											<td>SI2</td>
-											<td>Excellent</td>
-											<td>
-												<a href="#" target="_blank" class="certificate-link">GIA</a>
-											</td>
-											<td>£500.92</td>
-											<td>
-												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
-											</td>
-											<td>
-
-											</td>
-											<td>
-												<input type="radio">
-											</td>
-										</tr>
-										<tr>
-											<td>Round</td>
-											<td>0.34</td>
-											<td>D</td>
-											<td>SI2</td>
-											<td>Excellent</td>
-											<td>
-												<a href="#" target="_blank" class="certificate-link">GIA</a>
-											</td>
-											<td>£500.92</td>
-											<td>
-												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
-											</td>
-											<td>
-
-											</td>
-											<td>
-												<input type="radio">
-											</td>
-										</tr>
-										<tr>
-											<td>Round</td>
-											<td>0.34</td>
-											<td>D</td>
-											<td>SI2</td>
-											<td>Excellent</td>
-											<td>
-												<a href="#" target="_blank" class="certificate-link">GIA</a>
-											</td>
-											<td>£500.92</td>
-											<td>
-												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
-											</td>
-											<td>
-
-											</td>
-											<td>
-												<input type="radio">
-											</td>
-										</tr>
-
+									<tbody id="refineSearchData">
 									</tbody>
 								</table>
 							</div>
@@ -281,17 +211,18 @@
 						claw setting, allowing maximum passage of light - R1-143</p>
 				</div>
 				<div class="product-finder-price">
-					<span class="price">£ 1,126.00</span>
+					<span class="price">£ <span id="finaldiamondprice">1,126.00</span> </span>
 				</div>
 				<div class="product-add-cart">
 					<div class="product-to-wishlist">
 						<a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 					</div>
 					<div class="product-to-basket">
-						<a class="btn-bg-small" href="#">Add to basket</a>
+						<!-- <a class="btn-bg-small" href="#">Add to basket</a> -->
+						<a href="{{ route('add.to.cart', $data->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p>
 					</div>
 					<div class="product-req-appointment">
-						<a class="btn-bg-small" href="#">Request an Appointment</a>
+						<a class="btn-bg-small" href="javascript:void(0);" data-toggle="modal" data-target="#requestAppointment">Request an Appointment</a>
 					</div>
 				</div>
 				<div class="product-postactions">
@@ -315,7 +246,6 @@
 		</div>
 	</div>
 </div>
-
 
 <!-- Related Product start heRe -->
 <div class="related-products-section">
@@ -618,6 +548,28 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="requestAppointment" tabindex="-1" role="dialog" aria-labelledby="requestAppointmentLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="requestAppointmentLabel">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 @endsection
 
 @section('js')
@@ -647,7 +599,16 @@
 			$('#diamond-certificate').on('change',function(){
 				getSelectedAttributePrice();
 			});
+
+			$(document).on('change', "[id^=selectrefinedata]", function () {
+      			// var index = parseInt($(this).attr("id").replace("selectrefinedata", ''));
+				getCustomPrice();
+			});
 		})
+
+		function getCustomPrice(){
+			$('#finaldiamondprice').text($("body input[type='radio'].refinedata:checked").data('price'));
+		}
 
 		function getCustomFilter(){
 			console.log("getCustomFilter");
@@ -667,7 +628,6 @@
 		}
 
 		function getSelectedAttributePrice(){
-			// console.log("getCustomFilter");
 			var caratVal = $('#carat').val();
 			var diamondColor = $('#diamond-colour').val();
 			var diamondClarity = $('#diamond-clarity').val();
@@ -685,9 +645,13 @@
 					'certificate' : diamondCertificate,
                 },
                 success: function (res) {
-                    console.log(res);
-					// $('#filterDataDesign').html(res);
-                    return false;
+					$('#refineSearchData').html("");
+					if(res.html != ''){
+						$('#refineSearchData').html(res.html);
+						getCustomPrice();
+					}else{
+						$('#refineSearchData').html("No Data Found");
+					}
                 }
             });
 		}
