@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{!! $data->meta_title !!}</title>
-    <meta name="description" content="{!! $data->meta_description !!}" />
+    <title>{!! isset($data->meta_title)?$data->meta_title:'' !!}</title>
+    <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
 
     <link rel="canonical" href="{{url()->current()}}" />
 
     <meta property="og:locale" content="en_GB" />
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="{!! $data->meta_title !!}" />
-    <meta property="og:description" content="{!! $data->meta_description !!}" />
+    <meta property="og:title" content="{!! isset($data->meta_title)?$data->meta_title:'' !!}" />
+    <meta property="og:description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
     <meta property="og:url" content="{{url()->current()}}" />
     <meta property="og:site_name" content="{!! config('app.name') !!}" />
     <meta property="og:image" content="" />
