@@ -150,9 +150,13 @@ Auth::routes();
 
 Route::namespace('Front')->group(function () {
     Route::get('/', 'PageController@page')->name('home');
+	Route::get('repnetapi','ProductController@getNewRepNetFunction');
     Route::get('{page}', 'PageController@page')->name('page');
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
 	Route::get('product/{slug?}','ProductController@productDetails');
+	Route::post('product/get-product-list','ProductController@getProductList');
+	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
+	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
 	Route::post('post/get-data','PageController@myPost');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 	
@@ -163,7 +167,7 @@ Route::namespace('Front')->group(function () {
 */
 
 Route::group(['prefix' => 'api/v1'], function() {
- 
- 
+
+	
 });
 

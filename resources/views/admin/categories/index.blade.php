@@ -56,7 +56,7 @@
                               <td>{{$value->name}}</td>
                               <td><img src="{{ asset('storage/'.$value->image_url) }}" alt=""></td>
                               <td>{{$value->slug}}</td>
-                              <td>Parent</td>
+                              <td>{{$value->parent_details}}</td>
                               <td>{!!$value->description!!}</td>
                               <td>{{$value->created_at}}</td>
                               <td>

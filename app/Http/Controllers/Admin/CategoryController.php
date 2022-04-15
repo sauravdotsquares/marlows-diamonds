@@ -22,9 +22,11 @@ class CategoryController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
         $getData = Category::latest()->get();
+
         $result = [
             'getData'=> $getData,
         ];
+        
         return view('admin.categories.index',$result);
     }
 
@@ -36,7 +38,12 @@ class CategoryController extends Controller
             $getCatId = $getCategory->categories;
             $getCatId_arr = explode(",",$getCategory->categories);
         }
-        // dd($getCatId_arr);
+        if(isset($request->cate_id)){
+            $getCategory = Category::find($request->cate_id);
+            $getCatId = $getCategory->parent_id;
+            
+            $getCatId_arr = explode(",",$getCatId);
+        }
 
         $getParentData = Category::where('status',1)->where('parent_id',0)->get()->toArray();
         $dataArray = $child1 = array();
@@ -144,9 +151,11 @@ class CategoryController extends Controller
             if(isset($request->table_id) && !empty($request->table_id)){
                 $insertedData = Category::updateOrCreate(['id'=>$request->table_id],[
                     'name'=> $request->name,
+                    'title'=> isset($request->title)?$request->title:'',
                     'slug'=> strtolower($newCustomSlug),
                     'status'=> isset($request->status)?$request->status:0,
                     'parent_id'=>isset($request->parent_id)?$request->parent_id:0,
+                    'short_description'=> isset($request->short_description)?$request->short_description:'',
                     'description'=> $request->description,
                     'meta_title'=> $request->meta_title,
                     'meta_keyword'=> $request->meta_keyword,
@@ -159,9 +168,11 @@ class CategoryController extends Controller
         }else{
             $insertedData = Category::updateOrCreate(['id'=>$request->table_id],[
                 'name'=> $request->name,
+                'title'=> isset($request->title)?$request->title:'',
                 'slug'=> strtolower($newCustomSlug),
                 'status'=> isset($request->status)?$request->status:0,
                 'parent_id'=>isset($request->parent_id)?$request->parent_id:0,
+                'short_description'=> isset($request->short_description)?$request->short_description:'',
                 'description'=> $request->description,
                 'meta_title'=> $request->meta_title,
                 'meta_keyword'=> $request->meta_keyword,

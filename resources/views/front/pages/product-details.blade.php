@@ -1,21 +1,337 @@
 @extends('layouts.front.app')
 @section('content')
 
+<?php 
+	// echo "<pre>";
+	// print_r($data->title);
+	// die;
+?>
+
+<!-- product info and media -->
+
+<div class="product-detail-wraper">
+	<div class="container">
+		<div class="product-detail-row flexed flex-flex-wrap">
+			<div class="product-info-media">
+				<video style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
+					<source src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/R1-143-White_Square-.mp4"
+						type="video/mp4" type="video/mp4" />
+				</video>
+
+			</div>
+			<div class="product-info-main">
+				<div class="product-title-name">
+					<h1>{{isset($data->title)?$data->title:''}}</h1>
+				</div>
+				<div class="product-type-variations" id="filterDataDesign">
+					<!-- <div class="diamond-type">
+						<label>Diamond Type</label>
+						<div class="d-type-input">
+							<input type="radio" name="diamond_type" value="">
+							<span>Mined Diamond</span>
+						</div>
+						<div class="d-type-input">
+							<input type="radio" name="diamond_type">
+							<span>Lab Grow Diamond</span>
+						</div>
+					</div> -->
+					<div class="type-variations-row">
+						<!-- <div class="type-variations-col">
+							<label class="label">Metal Type<span class="required">*</span></label>
+							<select class="select-control">
+								<option>Choose an option</option>
+								<option>18ct White Gold</option>
+								<option>18ct Yellow Gold</option>
+								<option>18ct Rose Gold</option>
+								<option>Platinum</option>
+							</select>
+						</div>
+						<div class="type-variations-col">
+							<label class="label">Finger Size<span class="required">*</span></label>
+							<select class="select-control">
+								<option>Choose an option</option>
+								<option>G</option>
+								<option>H</option>
+								<option>I</option>
+								<option>J</option>
+								<option>K</option>
+								<option>L</option>
+								<option>M</option>
+								<option>N</option>
+								<option>O</option>
+								<option>P</option>
+								<option>Q</option>
+								<option>R</option>
+								<option>S</option>
+								<option>T</option>
+								<option>U</option>
+								<option>V</option>
+								<option>W</option>
+								<option>X</option>
+								<option>Y</option>
+								<option>Z</option>
+							</select>
+						</div> -->
+					</div>
+				</div>
+				<div id="apiCustomDesign">
+					<div class="type-variations-row">
+						<div class="type-variations-col">
+							<label class="label"> Carat </label>
+							<select class="form-control" name="carat" id="carat">
+								<option value="">Choose an option</option>
+								<option value="0.30" selected="selected">0.30-0.39</option>
+								<option value="0.40">0.40-0.49</option>
+								<option value="0.50">0.50-0.59</option>
+								<option value="0.60">0.60-0.69</option>
+								<option value="0.70">0.70-0.79</option>
+								<option value="0.80">0.80-0.89</option>
+								<option value="0.90">0.90-0.99</option>
+								<option value="1">1.00-1.19</option>
+								<option value="1.2">1.20-1.49</option>
+								<option value="1.50">1.50-1.69</option>
+								<option value="1.70">1.70-1.99</option>
+								<option value="2">2.00-2.49</option>
+								<option value="2.5">2.50-2.99</option>
+								<option value="3">3.00-3.99</option>
+							</select>
+						</div>
+						<div class="type-variations-col">
+							<label class="label"> Colour </label>
+							<select class="form-control" name="diamond-colour" id="diamond-colour">
+                    			<option value="">Choose an option</option>
+								<option value="D" selected="selected">D - Exceptional White +</option>
+								<option value="E">E - Exceptional White</option>
+								<option value="F">F - Rare White +</option>
+								<option value="G">G - Rare White</option>
+								<option value="H">H - White</option>
+								<option value="I">I - Slightly Tinted White</option>
+								<option value="J">J - Slightly Tinted White</option>
+								<option value="K">K - Tinted White</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="type-variations-row">
+						<div class="type-variations-col">
+							<label class="label"> Clarity </label>
+							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
+                    			<option value="">Choose an option</option>
+								<option value="IF">IF - Internally Flawless</option>
+								<option value="VVS1">VVS1 - Minute Inclusions</option>
+								<option value="VVS2">VVS2 - Minute Inclusions</option>
+								<option value="VS1">VS1 - Very Small Inclusions</option>
+								<option value="VS2">VS2 - Very Small Inclusions</option>
+								<option value="SI1">SI1 - Small Inclusions</option>
+								<option value="SI2" selected="selected">SI2 - Small Inclusions</option>
+							</select>
+						</div>
+						<div class="type-variations-col">
+							<label class="label"> Cut Grade </label>
+							<select class="form-control" name="diamond-grade" id="diamond-grade">
+                    			<option value="">Choose an option</option>
+								<option value="EX" selected="selected">Excellent</option>
+								<option value="VG">Very Good</option>
+								<option value="GD">Good</option>
+							</select>
+						</div>
+					</div>
+					<div class="type-variations-row">
+						<div class="type-variations-col-one">
+							<label class="label"> Certificate </label>
+							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
+                    			<option value="">Choose an option</option>
+								<option value="GIA" selected="selected">GIA</option>
+								<option value="IGI">IGI</option>
+							</select>
+						</div>
+					</div>
+					<div class="view-diamond-sec">
+						<div class="viewall-diamond-btn"><a class="btn-bg-large viewdiamond-btn"
+								href="javascript:void(0)">View Available Diamonds</a></div>
+						<div class="diamond-table">
+							<div class="refine-heading">Refine Your Search</div>
+							<div class="diamond-table-outer">
+								<table width="100%" class="diamond-table-items">
+									<thead>
+										<tr>
+											<th>Shape</th>
+											<th>Carat</th>
+											<th>Colour</th>
+											<th>Clarity</th>
+											<th class="cut_grade_th" style="display: block;">Cut</th>
+											<th>Cert</th>
+											<th>Price</th>
+											<th>Certificate</th>
+											<th>Image</th>
+											<th>Select</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>ROUND</td>
+											<td>0.30</td>
+											<td>D</td>
+											<td>SI2</td>
+											<td>EX</td>
+											<td>
+												<a href="#" target="_blank" class="certificate-link">GIA</a>
+											</td>
+											<td>£522.92</td>
+											<td>
+												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
+											</td>
+											<td>
+												<a href="#" target="_blank" class="table-btn image-link">View
+													Diamond</a>
+											</td>
+											<td>
+												<input type="radio" checked="checked">
+											</td>
+										</tr>
+										<tr>
+											<td>Round</td>
+											<td>0.31</td>
+											<td>D</td>
+											<td>SI2</td>
+											<td>Excellent</td>
+											<td>
+												<a href="#" target="_blank" class="certificate-link">GIA</a>
+											</td>
+											<td>£476.92</td>
+											<td>
+												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
+											</td>
+											<td>
+
+											</td>
+											<td>
+												<input type="radio">
+											</td>
+										</tr>
+										<tr>
+											<td>Round</td>
+											<td>0.34</td>
+											<td>D</td>
+											<td>SI2</td>
+											<td>Excellent</td>
+											<td>
+												<a href="#" target="_blank" class="certificate-link">GIA</a>
+											</td>
+											<td>£500.92</td>
+											<td>
+												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
+											</td>
+											<td>
+
+											</td>
+											<td>
+												<input type="radio">
+											</td>
+										</tr>
+										<tr>
+											<td>Round</td>
+											<td>0.34</td>
+											<td>D</td>
+											<td>SI2</td>
+											<td>Excellent</td>
+											<td>
+												<a href="#" target="_blank" class="certificate-link">GIA</a>
+											</td>
+											<td>£500.92</td>
+											<td>
+												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
+											</td>
+											<td>
+
+											</td>
+											<td>
+												<input type="radio">
+											</td>
+										</tr>
+										<tr>
+											<td>Round</td>
+											<td>0.34</td>
+											<td>D</td>
+											<td>SI2</td>
+											<td>Excellent</td>
+											<td>
+												<a href="#" target="_blank" class="certificate-link">GIA</a>
+											</td>
+											<td>£500.92</td>
+											<td>
+												<a href="#" target="_blank" class="table-btn certificate-link">View</a>
+											</td>
+											<td>
+
+											</td>
+											<td>
+												<input type="radio">
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="product-decriptions">
+					<p>A unique style for Aaliyah. The round brilliant cut diamond is held elegantly in a fluted four
+						claw setting, allowing maximum passage of light - R1-143</p>
+				</div>
+				<div class="product-finder-price">
+					<span class="price">£ 1,126.00</span>
+				</div>
+				<div class="product-add-cart">
+					<div class="product-to-wishlist">
+						<a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+					</div>
+					<div class="product-to-basket">
+						<a class="btn-bg-small" href="#">Add to basket</a>
+					</div>
+					<div class="product-req-appointment">
+						<a class="btn-bg-small" href="#">Request an Appointment</a>
+					</div>
+				</div>
+				<div class="product-postactions">
+					<a target="_blank" class="review-action" href="#">Reviews</a>
+					<a class="store-locator" href="#">Store Locator</a>
+					<a target="_blank" class="view-certificate" href="#">View Certificate</a>
+				</div>
+				<div class="finance-available">
+					<a href="#">
+						<i class="fa fa-credit-card" aria-hidden="true"></i>
+						<p>Finance Available
+							<span>see options</span>
+						</p>
+					</a>
+					<div class="doko-img">
+						<img src="assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <!-- Related Product start heRe -->
 <div class="related-products-section">
 	<div class="container">
 		<div class="head-para-three">
 			<div class="heading-h-three">
 				Related products
-			</div>			
+			</div>
 		</div>
 		<div class="related-products-list">
 			<div class="owl-carousel owl-theme related-product st-arrows">
-			    <div class="item">
-			    	<div class="product-grid-item">
+				<div class="item">
+					<div class="product-grid-item">
 						<div class="product-items-item-info">
 							<div class="product-items-item-image">
-								<a href="#"><img src="{{asset('')}}assets/images/R1-143_0003-225x225.jpg" alt="image"></a>
+								<a href="#"><img src="assets/images/R1-143_0003-225x225.jpg" alt="image"></a>
 							</div>
 							<div class="product-items-item-details">
 								<div class="product-items-item-name">
@@ -24,12 +340,12 @@
 							</div>
 						</div>
 					</div>
-			    </div>
-			      <div class="item">
-			    	<div class="product-grid-item">
+				</div>
+				<div class="item">
+					<div class="product-grid-item">
 						<div class="product-items-item-info">
 							<div class="product-items-item-image">
-								<a href="#"><img src="{{asset('')}}assets/images/MTSS-707_00003-225x225.jpg" alt="image"></a>
+								<a href="#"><img src="assets/images/MTSS-707_00003-225x225.jpg" alt="image"></a>
 							</div>
 							<div class="product-items-item-details">
 								<div class="product-items-item-name">
@@ -38,12 +354,12 @@
 							</div>
 						</div>
 					</div>
-			    </div>
-			     <div class="item">
-			    	<div class="product-grid-item">
+				</div>
+				<div class="item">
+					<div class="product-grid-item">
 						<div class="product-items-item-info">
 							<div class="product-items-item-image">
-								<a href="#"><img src="{{asset('')}}assets/images/R1-1027_0003-225x225.jpg" alt="image"></a>
+								<a href="#"><img src="assets/images/R1-1027_0003-225x225.jpg" alt="image"></a>
 							</div>
 							<div class="product-items-item-details">
 								<div class="product-items-item-name">
@@ -52,12 +368,12 @@
 							</div>
 						</div>
 					</div>
-			    </div>
-			     <div class="item">
-			    	<div class="product-grid-item">
+				</div>
+				<div class="item">
+					<div class="product-grid-item">
 						<div class="product-items-item-info">
 							<div class="product-items-item-image">
-								<a href="#"><img src="{{asset('')}}assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
+								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
 							</div>
 							<div class="product-items-item-details">
 								<div class="product-items-item-name">
@@ -66,12 +382,12 @@
 							</div>
 						</div>
 					</div>
-			    </div>
-			     <div class="item">
-			    	<div class="product-grid-item">
+				</div>
+				<div class="item">
+					<div class="product-grid-item">
 						<div class="product-items-item-info">
 							<div class="product-items-item-image">
-								<a href="#"><img src="{{asset('')}}assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
+								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
 							</div>
 							<div class="product-items-item-details">
 								<div class="product-items-item-name">
@@ -80,12 +396,12 @@
 							</div>
 						</div>
 					</div>
-			    </div>
-			     <div class="item">
-			    	<div class="product-grid-item">
+				</div>
+				<div class="item">
+					<div class="product-grid-item">
 						<div class="product-items-item-info">
 							<div class="product-items-item-image">
-								<a href="#"><img src="{{asset('')}}assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
+								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
 							</div>
 							<div class="product-items-item-details">
 								<div class="product-items-item-name">
@@ -94,7 +410,7 @@
 							</div>
 						</div>
 					</div>
-			    </div>
+				</div>
 			</div>
 
 		</div>
@@ -114,66 +430,84 @@
 		</div>
 		<div class="faq-list">
 			<div class="accordion" id="accordionExample">
-			  <div class="accordion-item">
-			    <h2 class="accordion-header" id="headingOne">
-			      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-			        How Much Should I Spend On An Engagement Ring?
-			      </button>
-			    </h2>
-			    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-			      <div class="accordion-body">
-			        Traditionally its said the people spend roughly 3 months salary on an engagement ring. Ignore that. Go with what you can afford, and what you feel is right to spend. The ring is a symbol of your love. It's not about the cost of the ring. The last thing your partner would want is to see you struggle and delay holidays or even the wedding!
-			      </div>
-			    </div>
-			  </div>
-			  <div class="accordion-item">
-			    <h2 class="accordion-header" id="headingTwo">
-			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-			        What If The Ring Doesn't Fit?
-			      </button>
-			    </h2>
-			    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-			      <div class="accordion-body">
-			        We offer a free resizing service if it turns out the ring is either too tight or too loose, just contact us to arrange a time to come into store for a consultation.
-			      </div>
-			    </div>
-			  </div>
-			  <div class="accordion-item">
-			    <h2 class="accordion-header" id="headingThree">
-			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-			        Do You Offer Finance Options?
-			      </button>
-			    </h2>
-			    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-			      <div class="accordion-body">
-			        At Marlow's we don't like compromise, everyone should be able to afford their perfect engagement ring! Which is why we offer a range of options to allow you to spread the cost of your engagement ring from 6 months up to 48 months!
-			      </div>
-			    </div>
-			  </div>
-			  <div class="accordion-item">
-			    <h2 class="accordion-header" id="headingFour">
-			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-			        Do You Offer Delivery & Returns?
-			      </button>
-			    </h2>
-			    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-			      <div class="accordion-body">
-			        We provide speedy and secure delivery to a range of countries worldwide.<br>
-					Provided goods can be returned as sold within 30 days of receipt, we can exchange any goods, or send replacements. We provide the option of a full refund, again within 30 days, if the goods are deemed ’faulty’, or different from those ordered. The 30-day refund period may be extended if prior consent is obtained from J.E.Marlow &amp; Sons Limited.<br>
-					Refund procedure: Please email hello@marlows-diamonds.co.uk or call 0121-236-4415 for assistance with refund options. We will deal with any complaints in a fair, confidential, effective way that is available online and easy to use, should you have any complaints please contact us on 0121-236-4415 or email on hello@marlows-diamonds.co.uk
-					<div class="vew-tc-btn">
-						<a class="btn-bg-small" href="#">View T&C's</a>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="headingOne">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse"
+							data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							How Much Should I Spend On An Engagement Ring?
+						</button>
+					</h2>
+					<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+						data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							Traditionally its said the people spend roughly 3 months salary on an engagement ring.
+							Ignore that. Go with what you can afford, and what you feel is right to spend. The ring is a
+							symbol of your love. It's not about the cost of the ring. The last thing your partner would
+							want is to see you struggle and delay holidays or even the wedding!
+						</div>
 					</div>
-			      </div>
-			    </div>
-			  </div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="headingTwo">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+							data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							What If The Ring Doesn't Fit?
+						</button>
+					</h2>
+					<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+						data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							We offer a free resizing service if it turns out the ring is either too tight or too loose,
+							just contact us to arrange a time to come into store for a consultation.
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="headingThree">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+							data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							Do You Offer Finance Options?
+						</button>
+					</h2>
+					<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+						data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							At Marlow's we don't like compromise, everyone should be able to afford their perfect
+							engagement ring! Which is why we offer a range of options to allow you to spread the cost of
+							your engagement ring from 6 months up to 48 months!
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="headingFour">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+							data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+							Do You Offer Delivery & Returns?
+						</button>
+					</h2>
+					<div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+						data-bs-parent="#accordionExample">
+						<div class="accordion-body">
+							We provide speedy and secure delivery to a range of countries worldwide.<br>
+							Provided goods can be returned as sold within 30 days of receipt, we can exchange any goods,
+							or send replacements. We provide the option of a full refund, again within 30 days, if the
+							goods are deemed ’faulty’, or different from those ordered. The 30-day refund period may be
+							extended if prior consent is obtained from J.E.Marlow &amp; Sons Limited.<br>
+							Refund procedure: Please email hello@marlows-diamonds.co.uk or call 0121-236-4415 for
+							assistance with refund options. We will deal with any complaints in a fair, confidential,
+							effective way that is available online and easy to use, should you have any complaints
+							please contact us on 0121-236-4415 or email on hello@marlows-diamonds.co.uk
+							<div class="vew-tc-btn">
+								<a class="btn-bg-small" href="#">View T&C's</a>
+							</div>
+						</div>
+					</div>
+				</div>
 
 			</div>
 		</div>
 	</div>
 </div>
-
-
 <!-- FAQ Section end here -->
 
 <!-- image and text start here -->
@@ -184,14 +518,16 @@
 				<div class="leftright-imt-col leftright-text">
 					<div class="leftright-heading heading-h-three">
 						Choose Your Diamond with Marlow’s Terminology Guide
-					</div>		
-					<p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond guide, you can better understand the different types of diamonds and what shapes are the perfect fit for you. Download your free guide today!</p>
+					</div>
+					<p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond
+						guide, you can better understand the different types of diamonds and what shapes are the perfect
+						fit for you. Download your free guide today!</p>
 					<div class="viewguide-btn">
-							<a class="btn-bg-small" href="#">View Guide</a>
+						<a class="btn-bg-small" href="#">View Guide</a>
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
-					<img src="{{asset('')}}assets/images/perfect-ring.jpg" alt="perfect-ring">
+					<img src="assets/images/perfect-ring.jpg" alt="perfect-ring">
 				</div>
 
 			</div>
@@ -202,75 +538,159 @@
 
 <!-- Section Reviews -->
 <div class="container">
-<div class="rating-review-block">
-	<div class="owl-carousel owl-theme slider-review">
-	    <div class="item">
-	    	<div class="reviews-cont">
-	    		<div class="reviewr-name">
-	    			Sana Anwar
-	    		</div>
-	    		<div class="reviewr-star">
-	    			<img src="{{asset('')}}assets/images/stars.png" alt="star">
-	    		</div>
-	    		<div class="reviewr-review-text">
-	    			I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div class="item">
-	    	<div class="reviews-cont">
-	    		<div class="reviewr-name">
-	    			Sana Anwar
-	    		</div>
-	    		<div class="reviewr-star">
-	    			<img src="{{asset('')}}assets/images/stars.png" alt="star">
-	    		</div>
-	    		<div class="reviewr-review-text">
-	    			I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div class="item">
-	    	<div class="reviews-cont">
-	    		<div class="reviewr-name">
-	    			Sana Anwar
-	    		</div>
-	    		<div class="reviewr-star">
-	    			<img src="{{asset('')}}assets/images/stars.png" alt="star">
-	    		</div>
-	    		<div class="reviewr-review-text">
-	    			I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div class="item">
-	    	<div class="reviews-cont">
-	    		<div class="reviewr-name">
-	    			Sana Anwar
-	    		</div>
-	    		<div class="reviewr-star">
-	    			<img src="{{asset('')}}assets/images/stars.png" alt="star">
-	    		</div>
-	    		<div class="reviewr-review-text">
-	    			I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div class="item">
-	    	<div class="reviews-cont">
-	    		<div class="reviewr-name">
-	    			Sana Anwar
-	    		</div>
-	    		<div class="reviewr-star">
-	    			<img src="{{asset('')}}assets/images/stars.png" alt="star">
-	    		</div>
-	    		<div class="reviewr-review-text">
-	    			I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-	    		</div>
-	    	</div>
-	    </div>
-
-    </div>	
+	<div class="rating-review-block">
+		<div class="owl-carousel owl-theme slider-review">
+			<div class="item">
+				<div class="reviews-cont">
+					<div class="reviewr-name">
+						Sana Anwar
+					</div>
+					<div class="reviewr-star">
+						<img src="assets/images/stars.png" alt="star">
+					</div>
+					<div class="reviewr-review-text">
+						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
+						The staff are friendly and...<a href="#">Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="reviews-cont">
+					<div class="reviewr-name">
+						Sana Anwar
+					</div>
+					<div class="reviewr-star">
+						<img src="assets/images/stars.png" alt="star">
+					</div>
+					<div class="reviewr-review-text">
+						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
+						The staff are friendly and...<a href="#">Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="reviews-cont">
+					<div class="reviewr-name">
+						Sana Anwar
+					</div>
+					<div class="reviewr-star">
+						<img src="assets/images/stars.png" alt="star">
+					</div>
+					<div class="reviewr-review-text">
+						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
+						The staff are friendly and...<a href="#">Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="reviews-cont">
+					<div class="reviewr-name">
+						Sana Anwar
+					</div>
+					<div class="reviewr-star">
+						<img src="assets/images/stars.png" alt="star">
+					</div>
+					<div class="reviewr-review-text">
+						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
+						The staff are friendly and...<a href="#">Read More</a>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="reviews-cont">
+					<div class="reviewr-name">
+						Sana Anwar
+					</div>
+					<div class="reviewr-star">
+						<img src="assets/images/stars.png" alt="star">
+					</div>
+					<div class="reviewr-review-text">
+						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
+						The staff are friendly and...<a href="#">Read More</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-</div>	
+@endsection
+
+@section('js')
+	<script>
+		$(document).ready(function(){
+			console.log("checking");
+			getCustomFilter();
+
+			$(".viewdiamond-btn").click(function(){
+				$(".diamond-table").toggle();
+			});
+
+			getSelectedAttributePrice();
+
+			$('#carat').on('change',function(){
+				getSelectedAttributePrice();
+			});
+			$('#diamond-colour').on('change',function(){
+				getSelectedAttributePrice();
+			});
+			$('#diamond-clarity').on('change',function(){
+				getSelectedAttributePrice();
+			});
+			$('#diamond-grade').on('change',function(){
+				getSelectedAttributePrice();
+			});
+			$('#diamond-certificate').on('change',function(){
+				getSelectedAttributePrice();
+			});
+		})
+
+		function getCustomFilter(){
+			console.log("getCustomFilter");
+			$.ajax({
+                type: 'POST',
+                url: '{{route("custom-filter")}}',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'slug' : '{{$data->slug}}',
+                },
+                success: function (res) {
+                    console.log(res);
+					$('#filterDataDesign').html(res);
+                    return false;
+                }
+            });
+		}
+
+		function getSelectedAttributePrice(){
+			// console.log("getCustomFilter");
+			var caratVal = $('#carat').val();
+			var diamondColor = $('#diamond-colour').val();
+			var diamondClarity = $('#diamond-clarity').val();
+			var diamondGrade = $('#diamond-grade').val();
+			var diamondCertificate = $('#diamond-certificate').val();
+			$.ajax({
+                type: 'POST',
+                url: '{{route("custom-api-filter-data")}}',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'carat' : caratVal,
+					'color' : diamondColor,
+					'clarity' : diamondClarity,
+					'grade' : diamondGrade,
+					'certificate' : diamondCertificate,
+                },
+                success: function (res) {
+                    console.log(res);
+					// $('#filterDataDesign').html(res);
+                    return false;
+                }
+            });
+		}
+
+	</script>
 @endsection
