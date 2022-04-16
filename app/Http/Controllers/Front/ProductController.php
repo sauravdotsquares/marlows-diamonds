@@ -304,14 +304,17 @@ class ProductController extends Controller
 
     public function getCustomApiFilterData(Request $request)
     {
-       
+        $getApiController = new ApiController;
+        $getActualData = $getApiController->getRepnetApiFunction($request->all());  
 
-        $getHariKrishnaData = DiamondStock::where('Carat',$request->carat)->where('Color',$request->color)->where('Clarity',$request->clarity)->where('Cut',$request->grade)->where('Lab',$request->certificate)->get();
+        if(count($getActualData)){
+            $view = view('front.ajax.product_refinesearch',compact('getActualData'))->render();
+            return response()->json(['html'=> $view]);
+        }
+        
+        
+        return response()->json(['html'=> '']);
 
-        echo "<pre>";
-        print_r($request->all());
-        print_r($getHariKrishnaData);
-        die;
 
     }
     

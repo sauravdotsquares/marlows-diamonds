@@ -174,7 +174,7 @@
                   url:'{{asset("admin/get-categories")}}',
                   data:{
                      '_token':"{{csrf_token()}}",
-                     'cate_id':'{{$getData->id}}',
+                     'cate_id':'{{isset($getData->id)?$getData->id:''}}',
                   },
                   success:function(res){
                         if(res){
