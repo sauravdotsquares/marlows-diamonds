@@ -13,6 +13,7 @@ use Intervention\Image\Facades\Image;
 use App\Models\Reviews;
 use App\Models\PostCategory;
 use App\Models\Posts;
+use App\Models\Faqs;
 
 if (!function_exists("helper_test")) {
     function helper_test()
@@ -270,5 +271,11 @@ if (!function_exists('validate_breadcrumb')) {
 			return ($relatedposts);
 		}	
 	}
-	
+	if (!function_exists("getFaqs")) {
+    function getFaqs()
+		{
+			$faqs = Faqs::take(5)->orderBy('id','DESC')->where('status', 1)->get();
+			return ($faqs);
+		}	
+	}
 }
