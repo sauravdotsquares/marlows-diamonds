@@ -312,76 +312,11 @@
                 <img src="assets/images/top3.png" alt="rating star">
             </div>
 
-            <div class="rating-review-block">
-                <div class="owl-carousel owl-theme slider-review">
-                    <div class="item">
-                        <div class="reviews-cont">
-                            <div class="reviewr-name">
-                                Sana Anwar
-                            </div>
-                            <div class="reviewr-star">
-                                <img src="assets/images/stars.png" alt="star">
-                            </div>
-                            <div class="reviewr-review-text">
-                                I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="reviews-cont">
-                            <div class="reviewr-name">
-                                Sana Anwar
-                            </div>
-                            <div class="reviewr-star">
-                                <img src="assets/images/stars.png" alt="star">
-                            </div>
-                            <div class="reviewr-review-text">
-                                I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="reviews-cont">
-                            <div class="reviewr-name">
-                                Sana Anwar
-                            </div>
-                            <div class="reviewr-star">
-                                <img src="assets/images/stars.png" alt="star">
-                            </div>
-                            <div class="reviewr-review-text">
-                                I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="reviews-cont">
-                            <div class="reviewr-name">
-                                Sana Anwar
-                            </div>
-                            <div class="reviewr-star">
-                                <img src="assets/images/stars.png" alt="star">
-                            </div>
-                            <div class="reviewr-review-text">
-                                I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="reviews-cont">
-                            <div class="reviewr-name">
-                                Sana Anwar
-                            </div>
-                            <div class="reviewr-star">
-                                <img src="assets/images/stars.png" alt="star">
-                            </div>
-                            <div class="reviewr-review-text">
-                                I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I bought a white gold diamond necklace and earrings set and am still delighted with my purchase. The staff are friendly and...<a href="#">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>  
-            </div>
+			<div class="rating-review-block">
+				<div class="owl-carousel owl-theme slider-review">
+				@include('front.pages.reviews')
+				</div>	
+			</div>
         </div>
 </div>
 <!--Shop from Marlow’s GIA Certified Diamond Rings end -->
@@ -439,21 +374,34 @@
                 <p>Join our world full of diamonds and we’ll sparkle your inbox by keeping you up-to-date.</p>
             </div>
             <div class="joinour-mailing-form">
-                <form>
-                    <div class="form-rows flexed flex-flex-wrap">
+                <form action="" method="post" action="{{ route('maillist') }}">
+                    @csrf
+					<div class="form-rows flexed flex-flex-wrap">
                         <div class="form-col width-50">
                             <label>Yor Name<sup>*</sup></label>
-                            <input class="input-control" type="text" name="name" placeholder="Your Name">
+                            <input class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text" name="title" placeholder="Your Name">
+							<!-- Error -->
+							@if ($errors->has('title'))
+							<div class="error">
+								{{ $errors->first('title') }}
+							</div>
+							@endif
                         </div>
                         <div class="form-col width-50">
                             <label>Email<sup>*</sup></label>
-                            <input class="input-control" type="text" name="email" placeholder="Email Address">
+                            <input class="input-control {{ $errors->has('email') ? 'error' : '' }}" type="text" name="email" placeholder="Email Address">
+							@if ($errors->has('email'))
+							<div class="error">
+								{{ $errors->first('email') }}
+							</div>
+							@endif
                         </div>
                     </div>
                     <div class="form-rows flexed flex-flex-wrap">
                         <div class="form-col">
                             <label>Message</label>
-                            <textarea class="input-control" placeholder="Message"></textarea>
+                            <textarea name="description" class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
+							
                         </div>
                     </div>
                     <div class="action-btn">
@@ -463,6 +411,11 @@
                 </form>
 
             </div>
+			@if(Session::has('success'))
+				<div class="alert alert-success">
+					{{Session::get('success')}}
+				</div>
+			@endif
         </div>
     </div>
 </div>
