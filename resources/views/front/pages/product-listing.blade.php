@@ -280,10 +280,10 @@
                             </div>
                             <div class="side-cart-quantity">
                                 1 ×
-                                <span class="side-cart-amount">£1,979.00</span>
+                                <span class="side-cart-amount">{{MY_CURRENCY_SYMBOL}}1,979.00</span>
                             </div>
                             <div class="side-cart-total">
-                                <strong>Suntotal: </strong> £1,979.00 (incl. VAT)
+                                <strong>Suntotal: </strong> {{MY_CURRENCY_SYMBOL}}1,979.00 (incl. VAT)
                             </div>
                             <div class="side-cart-actions">
                                 <a class="view-basket btn-bg-small" href="#">View Basket</a>

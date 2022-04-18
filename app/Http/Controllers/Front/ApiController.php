@@ -50,7 +50,7 @@ class ApiController extends Controller
 
         $searchParams = array(
             "ShapeCollection" => 'ROUND',
-            "LabCollection" => $filterArray['certificate'],
+            "LabCollection" => isset($filterArray['certificate'])?$filterArray['certificate']:'GIA',
             "ColorFrom" => isset($filterArray['color'])?$filterArray['color']:"D",
             "ColorTo" => isset($filterArray['color'])?$filterArray['color']:"J",
             "ClarityFrom" => isset($filterArray['clarity'])?$filterArray['clarity']:"IF",
@@ -82,8 +82,6 @@ class ApiController extends Controller
     
         $params1 = array("SearchParams" => $searchParams, "DiamondsFound" => 0);
 
-       
-
         $results=$client1->__soapCall("GetDiamonds", array($params1), NULL, NULL, $output_headers);
 
         if(isset($results->GetDiamondsResult) && !empty($results->GetDiamondsResult->any)){
@@ -104,7 +102,37 @@ class ApiController extends Controller
             $rapnetAllData = array_merge($rapnetData,$allData);
         }
 
-        return $rapnetAllData;
+        // $i = 0;
+        foreach($rapnetAllData as $key => $value){
+            $data[$key]['Stock_NO'] = isset($value->DiamondID)?$value->DiamondID:'';
+            $data[$key]['Shape'] = isset($value->ShapeTitle)?$value->ShapeTitle:'';
+            $data[$key]['Carat']= isset($value->Weight)?$value->Weight:'';
+            $data[$key]['Clarity']= isset($value->ClarityTitle)?$value->ClarityTitle:'';
+            $data[$key]['Color']= isset($value->ColorTitle)?$value->ColorTitle:'';
+            $data[$key]['Symble']= isset($value->CurrencySymbol)?$value->CurrencySymbol:'';
+            $data[$key]['Amount']= isset($value->FinalPrice)?$value->FinalPrice:'';
+            $data[$key]['CERT_NO']= isset($value->CertificateNumber)?$value->CertificateNumber:'';
+            $data[$key]['Lab']= isset($value->LabTitle)?$value->LabTitle:'';
+            $data[$key]['Cut']= isset($value->CutLongTitle)?$value->CutLongTitle:'';
+            $data[$key]['FancyColorDescription']= '';
+            $data[$key]['ImageLink']= '';
+            $data[$key]['CertificateLink']= '';
+            
+            if($value->LabTitle=='GIA'){
+                $data[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$value->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
+            }else if($value->LabTitle=='IGI'){
+                // $data['CertificateLink']= 'https://www.igiworldwide.com/search_report.aspx?PrintNo='.$value->CertificateNumber.'&weight='.$value->Weight;
+                $data[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$value->CertificateNumber;
+            }else if($value->LabTitle=='HRD'){
+                $data[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$value->CertificateNumber.'&weight='.$value->Weight;
+            }else{
+                $data[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$value->DiamondID;	
+            }
+            $data[$key]['data_fetch']= 'Rapnet';
+
+        }
+
+        return $data;
 
     }
 

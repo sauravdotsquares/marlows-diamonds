@@ -312,10 +312,7 @@ class ProductController extends Controller
             return response()->json(['html'=> $view]);
         }
         
-        
         return response()->json(['html'=> '']);
-
-
     }
     
 
