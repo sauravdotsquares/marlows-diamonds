@@ -197,7 +197,7 @@
                     <form>
                         <div class="formgroup">
                             <input type="text" name="search" placeholder="Search for product..">
-                            <button class="seach-btn" type="button"><img src="assets/images/search.png" alt="search"></button>
+                            <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
                     </form>
                 </div>

@@ -727,5 +727,36 @@
             });
 		}
 
+		function getSelectedAttributePrice(){
+			var caratVal = $('#carat').val();
+			var diamondColor = $('#diamond-colour').val();
+			var diamondClarity = $('#diamond-clarity').val();
+			var diamondGrade = $('#diamond-grade').val();
+			var diamondCertificate = $('#diamond-certificate').val();
+			$.ajax({
+                type: 'POST',
+                url: '{{route("custom-api-filter-data")}}',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'carat' : caratVal,
+					'color' : diamondColor,
+					'clarity' : diamondClarity,
+					'grade' : diamondGrade,
+					'certificate' : diamondCertificate,
+					'slug': '{{$data->slug}}'
+                },
+                success: function (res) {
+					console.log(res);
+					$('#refineSearchData').html("");
+					if(res.html != ''){
+						$('#refineSearchData').html(res.html);
+						getCustomPrice();
+					}else{
+						$('#refineSearchData').html("No Data Found");
+					}
+                }
+            });
+		}
+
 	</script>
 @endsection
