@@ -16,10 +16,14 @@ h3,.heading-h-three{font-size:30px;line-height:1.2;color:#2b2b2b}
 button,input,textarea,select{font-family:"Lato"}
 ul{padding:0;margin:0}
 button:focus,input:focus{box-shadow:none;outline:0}
+a.grey-btn-large{color:#fff;}
+.grey-btn-large{background-color:#101010;color:#fff);font-size:15px;padding:14px 26px;text-transform:uppercase;text-decoration:none;font-weight:700;display:inline-block; border: 1px solid #101010; text-align:center}
 a.btn-bg-large,.btn-bg-small{color:#fff}
-.btn-bg-large{background-color:#8e2e65;color:#fff;font-size:15px;padding:14px 26px;text-transform:uppercase;text-decoration:none;font-weight:700;display:inline-block}
+
+.btn-bg-large{background-color:#8e2e65;color:#fff;font-size:15px;padding:14px 26px;text-transform:uppercase;text-decoration:none;font-weight:700;display:inline-block; border: 1px solid #8e2e65}
+
 .btn-bg-large:hover{box-shadow:5px 5px 0 rgba(0,0,0,0.8); color: #fff}
-.btn-bg-small{background-color:#8e2e65;color:#fff;font-size:12px;padding:11px 20px;text-transform:uppercase;text-decoration:none;display:inline-block;font-weight:700}
+.btn-bg-small{background-color:#8e2e65;color:#fff;font-size:12px;padding:11px 20px;text-transform:uppercase;text-decoration:none;display:inline-block;font-weight:700; border: 1px solid #8e2e65;}
 .btn-bg-small:hover{box-shadow:5px 5px 0 rgba(0,0,0,0.8); color: #fff}
 .owl-carousel .owl-item img{width:auto}
 .white-text{color:#fff}
@@ -31,7 +35,9 @@ textarea:focus{outline:0}
 label {color: #000;font-size: 14px;}
 .select-control {width: 100%;height: 40px;border-radius: 0; border:1px solid #D0D0D0;background-color: #FCFCFC;padding: 0 8px;font-size: 14px;color: #404040;}
 .accordion-button:focus{ box-shadow: none; }
-	
+.form-control:focus{box-shadow: none;}
+.btn-check:focus + .btn-info, .btn-info:focus{box-shadow: none;}
+
 /** Loader Settings Css */
 .loader.body-loader {position: fixed;top: 50%;left: 0;right: 0;margin: auto;transform: translateY(-50%);padding: 30px 0;}
 .loader {padding: 30px 0;}
@@ -498,6 +504,36 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-values-in ul li a {text-decoration: none;border: 1px solid #EBEBEB;padding: 0 4px;height: 38px;display: block;line-height: 38px;background: #f9f9f9;color: #9a9a9a;font-size: 11px;margin: 0 3px 0 0;}
 .diamond-values-in ul li a:hover, .diamond-values-in ul li.selected-this a{ color: #fff; background: #8e2e65 }
 .m-quote-pop::after {content: "";width: 0;height: 0;border-style: solid;border-width: 8px 6px 0 6px;border-color: #fff transparent transparent transparent;position: absolute;right: 60px;bottom: -8px;}
+/** **/
+.middle-topbar-right li.dropdown a button {background: none;border: none;padding: 0;color: #878787;font-size: 14px; margin: 0;}
+.middle-topbar-right li.dropdown a button img {max-width: 18px;vertical-align: top;display: inline-block;margin: 2px 8px 0 0;}
+.middle-topbar-right li.dropdown a button .badge.badge-pill {color: #878787; padding: 0 3px; font-size: 13px; top: 0;}
+/** cart page **/
+.cart-page-main {margin: 50px 0 50px 0;}
+.cart-image-item {width: 19%;display: inline-block;vertical-align: top;}
+.cart-nameitem {width: 80%;display: inline-block;vertical-align: top; padding: 0 0 0 14px;}
+.cart-table-wraper .cart-table {border: 1px solid rgba(0,0,0,.1);border-radius: 5px; width: 100%;}
+.cart-table-wraper .cart-table tr th {box-shadow: inset 0px 4px 3px -2px rgba(0,0,0,.04);border-width: 0 1px 1px 0;padding: 16px 20px;font-size: 15px;color: #404040;font-weight: bold;}
+.cart-table-wraper .cart-table tr td {border-width: 0 1px 1px 0;padding: 13px 20px;font-size: 14px;color: #404040;}
+.cartproduct-title a {font-size: 16px;text-decoration: none;color: #902f66;font-weight: bold;}
+.cartproduct-title {margin: 0 0 4px 0;}
+.cart-nameitem dl {margin: 0;}
+.cart-nameitem dl dt, .cart-nameitem dl dd {font-weight: normal;font-size: 14px; margin: 0;}
+
+.cart-nameitem dl dt {float: left;clear: none;width: auto;}
+.cart-nameitem dl dd p {color: #707070;margin: 0 0 3px 0;}
+.cart-table-wraper .cart-table tr th:not(:first-child) {text-align: center;}
+.cart-table-wraper .cart-table tr td:not(:first-child){ text-align: center;}
+.cart-table-wraper .cart-table tr td.product-quantity-col .form-control {width: 80px;box-shadow: inset 0 0 2px 2px rgba(0,0,0,0.02); margin: auto;}
+.cart-table-wraper .cart-table tr td.product-action-col button {border: none;width: 35px;height: 35px;font-size: 17px;line-height: 26px;padding: 0;background-color: #902f66;}
+.cart-sidebar-box {background: #f5f5ff;padding: 22px 18px;border-radius: 5px;}
+.cart-sidebar-heading {font-size: 18px;font-weight: bold;color: #8e2e65;margin: 0 0 11px 0;}
+.cart-side-wrap table tr th, .cart-side-wrap table tr td {font-size: 16px;padding: 10px 0;color: #404040;border-top: 1px solid #D8D8D8;border-bottom: 1px solid #D8D8D8;}
+.cart-actions {padding: 16px 0 0 0;margin: 40px 0 0 0;}
+.cart-actions a, .cart-actions button {width: 100%;margin: 0 0 12px 0;text-align: center;}
+.cart-table-wraper {margin-bottom: 20px;}
+
+
 /** mega menuhover for desktop **/
 @media(min-width:767px){
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
