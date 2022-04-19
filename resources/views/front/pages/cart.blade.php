@@ -9,6 +9,7 @@
             <div class="category-banner-text">
                 <h1>CART</h1>
             </div>
+            
         </div>
     </div>
     <div class="cart-page-main">

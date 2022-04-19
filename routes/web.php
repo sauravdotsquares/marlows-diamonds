@@ -165,9 +165,12 @@ Route::namespace('Front')->group(function () {
 
 
 	Route::get('products/cart', 'AddToCartController@index')->name('product.cart');
-	Route::get('product/add-to-cart/{id}', 'AddToCartController@addToCart')->name('add.to.cart');
+	Route::post('product/add-to-cart/{id?}', 'AddToCartController@addToCart')->name('add.to.cart');
 	Route::patch('product/update-cart', 'AddToCartController@updateCart')->name('update.cart');
 	Route::delete('product/remove-from-cart', 'AddToCartController@removeCart')->name('remove.from.cart');
+	
+	Route::get('products/checkout', 'AddToCartController@checkoutOrder')->name('product.checkout');
+	Route::get('products/wishlist', 'WishlistController@index')->name('product.wishlist');
 	
 });
 

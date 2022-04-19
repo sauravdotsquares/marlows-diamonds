@@ -76,6 +76,9 @@
 			border-bottom-color:#fff;
 		}
 	</style>
+
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 @endsection
 
 @section('content')
@@ -211,7 +214,7 @@
 						claw setting, allowing maximum passage of light - R1-143</p>
 				</div>
 				<div class="product-finder-price">
-					<span class="price">£ <span id="finaldiamondprice">1,126.00</span> </span>
+					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
 				</div>
 				<div class="product-add-cart">
 					<div class="product-to-wishlist">
@@ -219,7 +222,8 @@
 					</div>
 					<div class="product-to-basket">
 						<!-- <a class="btn-bg-small" href="#">Add to basket</a> -->
-						<a href="{{ route('add.to.cart', $data->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p>
+						<!-- <a id="addtobasket" href="{{ route('add.to.cart', $data->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p> -->
+						<a id="addtobasket" href="javascript:void(0);" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p>
 					</div>
 					<div class="product-req-appointment">
 						<a class="btn-bg-small" href="javascript:void(0);" data-toggle="modal" data-target="#requestAppointment">Request an Appointment</a>
@@ -573,6 +577,10 @@
 @endsection
 
 @section('js')
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 	<script>
 		$(document).ready(function(){
 			console.log("checking");
@@ -604,6 +612,12 @@
       			// var index = parseInt($(this).attr("id").replace("selectrefinedata", ''));
 				getCustomPrice();
 			});
+
+			$('#addtobasket').on('click',function(){
+				addtobasketFunction();
+				return false;
+			});
+
 		})
 
 		function getCustomPrice(){
@@ -627,6 +641,61 @@
             });
 		}
 
+		function addtobasketFunction(){
+
+			// toastr.options = {
+			// 	"closeButton": true,
+			// 	"newestOnTop": true,
+			// 	"positionClass": "toast-top-right"
+			// };
+
+			var fingerSize = $('#finger-size').val();
+			var metalColor = $('#metal-colour').val();
+			var caratVal = $('#carat').val();
+			var diamondColor = $('#diamond-colour').val();
+			var diamondClarity = $('#diamond-clarity').val();
+			var diamondGrade = $('#diamond-grade').val();
+			var diamondCertificate = $('#diamond-certificate').val();
+			$.ajax({
+                type: 'POST',
+                url: '{{route("add.to.cart")}}',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'carat' : caratVal,
+					'color' : diamondColor,
+					'clarity' : diamondClarity,
+					'grade' : diamondGrade,
+					'fingersize' : fingerSize,
+					'metalcolor' : metalColor,
+					'certificate' : diamondCertificate,
+					'slug' : '{{$data->slug}}',
+					'price': parseFloat($('#finaldiamondprice').text()) || 0, //parseFloat($('#price').val()) || 0;
+                },
+                success: function (res) {
+					console.log(res);
+					if(res.success != ''){
+						toastr.success(res.success);
+						// Swal.fire({
+						// 	position: 'top-end',
+						// 	icon: 'success',
+						// 	title: res.success,
+						// 	showConfirmButton: false,
+						// 	timer: 3000
+						// });
+						location.reload();
+					}else{
+						Swal.fire({
+							position: 'top-end',
+							icon: 'danger',
+							title: res.success,
+							showConfirmButton: false,
+							timer: 3000
+						});
+					}
+                }
+            });
+		}
+
 		function getSelectedAttributePrice(){
 			var caratVal = $('#carat').val();
 			var diamondColor = $('#diamond-colour').val();
@@ -643,8 +712,10 @@
 					'clarity' : diamondClarity,
 					'grade' : diamondGrade,
 					'certificate' : diamondCertificate,
+					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
+					console.log(res);
 					$('#refineSearchData').html("");
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);

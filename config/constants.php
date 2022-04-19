@@ -8,5 +8,6 @@ define('LONDON_LOCATION_TITLE', 'London Details');
 define('MY_ACCOUNT_TITLE', 'MY ACCOUNT');
 define('MY_WISHLIST_TITLE', 'MY WISHLIST');
 define('MY_CART_TITLE', 'MY CART');
+define('MY_CURRENCY_SYMBOL', '£');
 
 ?>

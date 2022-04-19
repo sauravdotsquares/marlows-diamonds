@@ -25,6 +25,10 @@ class Products extends Model
         return $this->hasMany(ProductImages::class,'product_id','id');
     }
 
+    public function getProductVariation(){
+        return $this->hasMany(ProductVariations::class,'product_id','id');
+    }
+
     public function getCatDetailsAttribute()
     {
         $ids = explode(',',$this->categories);
