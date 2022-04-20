@@ -66,6 +66,22 @@ h2,.heading-h-two{font-size:26px}
 .diamond-search-table table {width: 800px;}
 .m-quote-pop{ right: 0; }
 .m-quote-pop::after{ right: 11px; }
+.wishlist-action-buttons {text-align: left;}
+.wishlist-action-buttons {text-align: left;margin: 20px 0 0 0;}
+.wishlist-action select {width: 100%;max-width: 140px;}
+.wishlist-action-buttons button {margin: 0 6px 0 0px;}
+.share-social-buttons ul li {margin: 0 0 0 15px;}
+.share-social-buttons {justify-content: start;}
+.wishlist-items-list .wishlist-table tr th.wish-product-name {width: 100%;display: block; text-align: center;}
+.wishlist-items-list .wishlist-table tr th:not(.wish-product-name) {display: none;}
+.wishlist-items-list .wishlist-table tr td {display: block;width: 100%;text-align: center;}
+.wishlist-items-list .wishlist-table tr td.wish-product-name-col dl dd {word-break: break-all;}
+.wishlist-items-list .wishlist-table tr td.wish-product-name-col dl dt{float: none;}
+.wishlist-items-list .wishlist-table tr th.wish-product-name::after {content: "Product"; font-size: 15px;}
+.wishlist-items-list .wishlist-table tr th.wish-product-name { font-size: 0;}
+.wishlist-table-wraper {overflow-x: auto;}
+
+
 }
 
 @media(max-width: 500px){
@@ -105,6 +121,12 @@ h2,.heading-h-two{font-size:32px}
 .product-info-main {flex: 0 0 100%;-ms-flex: 0 0 100%;max-width: 100%;padding: 0;}
 .product-info-media {flex: 0 0 100%;-ms-flex: 0 0 100%;max-width: 100%;}
 .product-detail-wraper {padding: 26px 0 20px 0;}
+.wishlist-table-wraper{ overflow-x: auto;}
+.wishlist-items-list .wishlist-table {
+	width: 1180px;
+}
+
+
 }
 
 
