@@ -85,7 +85,7 @@
 
 <?php 
 	// echo "<pre>";
-	// print_r($data->title);
+	// print_r($data->getProductVariation);
 	// die;
 ?>
 
@@ -95,8 +95,8 @@
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
-				<video style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
-					<source src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/R1-143-White_Square-.mp4" type="video/mp4" type="video/mp4" />
+				<video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
+					<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
 				</video>
 
 			</div>
@@ -218,7 +218,7 @@
 				</div>
 				<div class="product-add-cart">
 					<div class="product-to-wishlist">
-						<a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" id="productWishList"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 					</div>
 					<div class="product-to-basket">
 						<!-- <a class="btn-bg-small" href="#">Add to basket</a> -->
@@ -617,6 +617,44 @@
 				addtobasketFunction();
 				return false;
 			});
+
+			$(document).on('change','#metal-colour',function(){
+				$.ajax({
+					type: 'POST',
+					url: '{{route("get-product-video")}}',
+					data: {
+						'_token': "{{csrf_token()}}",
+						'slug' : '{{$data->slug}}',
+						'metal_color' : $(this).val(),
+					},
+					success: function (res) {
+						if(res.vari_video){
+							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+							$('#variationVideo').attr('src', videoUrl);
+							$("#variationVideo")[0].load();
+						}
+					}
+				});
+			});
+
+			$("#productWishList").on('click',function()){
+				$.ajax({
+					type: 'POST',
+					url: '{{route("get-product-video")}}',
+					data: {
+						'_token': "{{csrf_token()}}",
+						'slug' : '{{$data->slug}}',
+						'metal_color' : $(this).val(),
+					},
+					success: function (res) {
+						if(res.vari_video){
+							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+							$('#variationVideo').attr('src', videoUrl);
+							$("#variationVideo")[0].load();
+						}
+					}
+				});
+			}
 
 		})
 

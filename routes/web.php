@@ -159,6 +159,7 @@ Route::namespace('Front')->group(function () {
 	Route::get('product/{slug?}','ProductController@productDetails');
 	Route::post('product/get-product-list','ProductController@getProductList');
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
+	Route::post('product/get-products-video','ProductController@getProductVideo')->name('get-product-video');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
 	Route::post('post/get-data','PageController@myPost');
     Route::get('/blog-resources/{slug}', 'PageController@show');
@@ -173,7 +174,7 @@ Route::namespace('Front')->group(function () {
 	Route::delete('product/remove-from-cart', 'AddToCartController@removeCart')->name('remove.from.cart');
 	
 	Route::get('products/checkout', 'AddToCartController@checkoutOrder')->name('product.checkout');
-	Route::get('products/wishlist', 'WishlistController@index')->name('product.wishlist');
+	Route::get('products/wishlist', 'WishlistController@index')->name('products.wishlist');
 	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
 	
 });

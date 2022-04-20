@@ -72,11 +72,14 @@ if (!function_exists("single_image_upload")) {
 if (!function_exists("single_storage_image_upload")) {
     function single_storage_image_upload($imageUrl,$folderName,$height,$width)
     {
+        if (!file_exists(storage_path('app/public/' . $folderName))) {
+            mkdir(storage_path('app/public/' . $folderName), 0777);
+        }
 		// $height = 200;
 		// $width = 200;
 		$image = $imageUrl;
 		$imageName = $imageUrl->getClientOriginalName();
-		$fileName =  'posts/' . time() . '-'.$height.'x'.$width. $imageName;
+		$fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
 		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
 		return $fileName;
 		

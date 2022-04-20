@@ -10,6 +10,8 @@ use App\Models\RepnetData;
 use App\Models\ProductVariationAttributes;
 use App\Models\Attributes;
 use App\Models\DiamondStock;
+use App\Models\ProductVariations;
+use App\Models\ProductVariationDetails;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -65,7 +67,7 @@ class ProductController extends Controller
        
 
         if($productSlug !=null){
-            $getProduct = Products::where('slug',$productSlug)->first();
+            $getProduct = Products::with('getProductVariation')->where('slug',$productSlug)->first();
             // echo "<pre>";
             // print_r($getProduct);
             // die;
@@ -300,6 +302,26 @@ class ProductController extends Controller
             }
         }
         return response()->json($selectedDesign);
+    }
+
+    public function getProductVideo(Request $request)
+    {
+        $getProduct = Products::where('slug',$request->slug)->select('id')->first();
+
+        if(isset($getProduct) && !empty($getProduct->id)){
+            $getProductVariationId = ProductVariations::where('product_id',$getProduct->id)->pluck('id')->toArray();
+
+            if(isset($getProductVariationId) && !empty($getProductVariationId)){
+                $getVariDetails = ProductVariationDetails::whereIn('variation_id',$getProductVariationId)->where('value',$request->metal_color)->select('id','variation_id','value')->first();
+            }
+
+            if(isset($getVariDetails) && !empty($getVariDetails)){
+                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails->variation_id)->select('vari_image','vari_video')->first();
+                
+                return response()->json($getSelectedVariationVideoImages);
+            }
+        }
+        return response()->json($getProductVariationId);
     }
 
     public function getCustomApiFilterData(Request $request)
