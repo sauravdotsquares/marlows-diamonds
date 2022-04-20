@@ -80,8 +80,8 @@ h2,.heading-h-two{font-size:26px}
 .wishlist-items-list .wishlist-table tr th.wish-product-name::after {content: "Product"; font-size: 15px;}
 .wishlist-items-list .wishlist-table tr th.wish-product-name { font-size: 0;}
 .wishlist-table-wraper {overflow-x: auto;}
-
-
+.scrollable-table{ overflow-x: auto;}
+.account-order-page table {width: 740px;}
 }
 
 @media(max-width: 500px){
