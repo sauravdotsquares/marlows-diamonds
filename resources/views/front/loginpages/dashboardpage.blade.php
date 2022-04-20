@@ -119,6 +119,120 @@
                                             </div>
 
                                         </div>
+
+                                        <!-- Edit Address box-->
+                                        <div class="editaddress-box">
+                                              <h2>Edit Address</h2>      
+                                              <form>    
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-group">
+                                                            <label class="input-label">First Name <abbr class="required">*</abbr></label>
+                                                            <input type="text" class="form-control" value="sketch">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-group">
+                                                            <label class="input-label">Last Name <abbr class="required">*</abbr></label>
+                                                            <input type="text" class="form-control" value="Creative">
+                                                        </div>
+                                                    </div>
+                                                </div>   
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Company name<span class="optional">(Optional)</span></label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Country/Region <abbr class="required">*</abbr></label>
+                                                    <select class="form-control">
+                                                        <option>India</option>
+                                                        <option>UK</option>
+                                                    </select>
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Street address  <abbr class="required">*</abbr></label>
+                                                    <input type="text" class="form-control" value="Pacific House">
+                                                    <input type="text" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Town / City  <abbr class="required">*</abbr></label>
+                                                    <input type="text" class="form-control" value="Wilnecote">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">County <span class="optional">(Optional)</span></label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Postcode <abbr class="required">*</abbr></label>
+                                                    <input type="text" class="form-control" value="B77 5PA">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Phone  <abbr class="required">*</abbr></label>
+                                                    <input type="text" class="form-control" value="0121 517 0374">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Email address   <abbr class="required">*</abbr></label>
+                                                    <input type="text" class="form-control" value="development@sketch-creative.com">
+                                                </div>
+                                                <div class="save-changes">
+                                                    <button class="btn-bg-small">Save address</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="editaddress-box">
+                                              <h2>Shipping address</h2>      
+                                              <form>    
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-group">
+                                                            <label class="input-label">First Name <abbr class="required">*</abbr></label>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="checkout-form-group">
+                                                            <label class="input-label">Last Name <abbr class="required">*</abbr></label>
+                                                            <input type="text" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>   
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Company name<span class="optional">(Optional)</span></label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Country/Region <abbr class="required">*</abbr></label>
+                                                    <select class="form-control">
+                                                        <option>India</option>
+                                                        <option>UK</option>
+                                                    </select>
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Street address  <abbr class="required">*</abbr></label>
+                                                    <input type="text" class="form-control" placeholder="House number and street name">
+                                                    <input type="text" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Town / City  <abbr class="required">*</abbr></label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">County <span class="optional">(Optional)</span></label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="checkout-form-group">
+                                                    <label class="input-label">Postcode <abbr class="required">*</abbr></label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                
+                                                <div class="save-changes">
+                                                    <button class="btn-bg-small">Save address</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="accountd" role="tabpanel" aria-labelledby="accountd-tab">
@@ -186,12 +300,6 @@
             </div>
         </div>
     </div>                                               
-
-
-
-
-
-
 
 
 
