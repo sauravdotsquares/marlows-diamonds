@@ -629,6 +629,41 @@ label.label {display: block;margin: 0 0 5px 0;}
 .share-social-buttons ul li {display: inline-block;vertical-align: middle; margin: 0 0 0 25px;}
 .share-social-buttons ul li a {font-size: 21px;color: #8e2e65;}
 
+/** login page**/
+.login-register-page {padding: 40px 0 42px 0;}
+.accounts-heading h1 {font-size: 22px;font-family: "Lato";color: #8e2e65;margin: 0;}
+.accounts-heading h2 {font-size: 18px;color: #67686a;font-weight: bold;font-family: "Lato";margin: 15px 0 0 0;}
+.heading-div-lock {font-size: 25px;color: #8e2e65;font-weight: bold;margin: 0 0 22px 0;}
+.login-reg-wraper {padding: 34px 0 0 0;}
+.login-reg-box {background: #fff;border: 1px solid #D0D0D0;border-radius: 5px;padding: 20px 20px; min-height: 430px;}
+.log-privacy-policy-text p a {color: #8e2e65;text-decoration: none;}
+
+/** account dashboard **/
+.my-account-wrap {padding: 50px 0 50px 0;}
+.account-dashboard {padding: 50px 0 0 0;}
+.account-sidebar ul {display: block;border: none;}
+.account-dashboard .account-sidebar ul li a {text-decoration: none;border: 1px solid #B0B0B0 !important;padding: 11px 15px;margin: 0 0 8px 0;display: block;border-radius: 0;color: #505050;}
+.account-dashboard .account-sidebar ul li a.active, 
+.account-dashboard .account-sidebar ul li a:hover { color: #fff; background-color:#8e2e65 ;}
+.account-dashboard-page p {font-size: 16px;color: #404040;}
+.account-dashboard-page p a {text-decoration: none;color: #8e2e65;}
+
+.account-main-content table {border: 1px solid rgba(0,0,0,.1);border-radius: 5px;width: 100%;}
+.account-main-content table tr th {box-shadow: inset 0px 4px 3px -2px rgba(0,0,0,.04);border-width: 0 1px 1px 0;padding: 12px 18px;font-size: 15px;color: #404040;font-weight: bold;}
+.account-main-content table tr td {border-width: 0 1px 1px 0;padding: 10px 18px;font-size: 14px;color: #404040;}
+.orderid-accoount a {text-decoration: none;color: #8e2e65;}
+.addresbox-head h3 {font-size: 20px;margin: 0;font-family: "Lato";}
+.addresbox-head a {text-decoration: none;color: #8e2e65;font-size: 15px;}
+.addresbox-head {display: flex;justify-content: space-between;align-items: center;margin: 0 0 15px 0;}
+.addresbox-block {background: #EEEEEE;padding: 20px 20px;color: #303030;font-size: 15px;line-height: 25px; margin: 0 0 40px 0;}
+.addresbox-block address {margin: 0;}
+.save-btn {margin: 24px 0 0 0;}
+.getmail label {margin: 0 0 0 10px;}
+.getmail{ display: flex;}
+.account-sidebar {margin: 0 0 30px 0;}
+.checkout-form-group .form-control {margin: 0 0 10px 0;}
+
+
 /** mega menuhover for desktop **/
 @media(min-width:767px){
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
