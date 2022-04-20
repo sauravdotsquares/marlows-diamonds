@@ -150,6 +150,9 @@ Auth::routes();
 
 Route::namespace('Front')->group(function () {
     Route::get('/', 'PageController@page')->name('home');
+
+    Route::get('/my-account', 'LoginController@index')->name('my-account');
+	
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
     Route::get('{page}', 'PageController@page')->name('page');
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
