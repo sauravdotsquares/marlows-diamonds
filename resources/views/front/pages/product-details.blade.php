@@ -223,7 +223,7 @@
 					<div class="product-to-basket">
 						<!-- <a class="btn-bg-small" href="#">Add to basket</a> -->
 						<!-- <a id="addtobasket" href="{{ route('add.to.cart', $data->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p> -->
-						<a id="addtobasket" href="javascript:void(0);" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p>
+						<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a> </p>
 					</div>
 					<div class="product-req-appointment">
 						<a class="btn-bg-small" href="javascript:void(0);" data-toggle="modal" data-target="#requestAppointment">Request an Appointment</a>
