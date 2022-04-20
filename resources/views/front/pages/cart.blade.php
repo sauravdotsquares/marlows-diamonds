@@ -1,135 +1,93 @@
 @extends('layouts.front.app')
 
-@section('css')
-    <style>
-        .thumbnail {
-            position: relative;
-            padding: 0px;
-            margin-bottom: 20px;
-        }
-        .thumbnail img {
-            width: 80%;
-        }
-        .thumbnail .caption{
-            margin: 7px;
-        }
-        .main-section{
-            background-color: #F8F8F8;
-        }
-        .dropdown{
-            float:right;
-            padding-right: 30px;
-        }
-        .btn{
-            border:0px;
-            margin:10px 0px;
-            box-shadow:none !important;
-        }
-        .dropdown .dropdown-menu{
-            padding:20px;
-            top:30px !important;
-            width:350px !important;
-            left:-110px !important;
-            box-shadow:0px 5px 30px black;
-        }
-        .total-header-section{
-            border-bottom:1px solid #d2d2d2;
-        }
-        .total-section p{
-            margin-bottom:20px;
-        }
-        .cart-detail{
-            padding:15px 0px;
-        }
-        .cart-detail-img img{
-            width:100%;
-            height:100%;
-            padding-left:15px;
-        }
-        .cart-detail-product p{
-            margin:0px;
-            color:#000;
-            font-weight:500;
-        }
-        .cart-detail .price{
-            font-size:12px;
-            margin-right:10px;
-            font-weight:500;
-        }
-        .cart-detail .count{
-            color:#C2C2DC;
-        }
-        .checkout{
-            border-top:1px solid #d2d2d2;
-            padding-top: 15px;
-        }
-        .checkout .btn-primary{
-            border-radius:50px;
-            height:50px;
-        }
-        .dropdown-menu:before{
-            content: " ";
-            position:absolute;
-            top:-20px;
-            right:50px;
-            border:10px solid transparent;
-            border-bottom-color:#fff;
-        }
-    </style>
-@endsection
+
 
 @section('content')
-    <table id="cart" class="table table-hover table-condensed">
-        <thead>
-            <tr>
-                <th style="width:50%">Product</th>
-                <th style="width:10%">Price</th>
-                <th style="width:8%">Quantity</th>
-                <th style="width:22%" class="text-center">Subtotal</th>
-                <th style="width:10%"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @php $total = 0 @endphp
-            @if(session('cart'))
-                @foreach(session('cart') as $id => $details)
-                    @php $total += $details['price'] * $details['quantity'] @endphp
-                    <tr data-id="{{ $id }}">
-                        <td data-th="Product">
-                            <div class="row">
-                                <div class="col-sm-3 hidden-xs"><img src="{{ asset('storage/'.$details['image']) }}" width="100" height="100" class="img-responsive"/></div>
-                                <div class="col-sm-9">
-                                    <h4 class="nomargin">{!! $details['name'] !!}</h4>
-                                </div>
-                            </div>
-                        </td>
-                        <td data-th="Price">{{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}</td>
-                        <td data-th="Quantity">
-                            <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
-                        </td>
-                        <td data-th="Subtotal" class="text-center">{{MY_CURRENCY_SYMBOL}}{{ $details['price'] * $details['quantity'] }}</td>
-                        <td class="actions" data-th="">
-                            <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
-                        </td>
-                    </tr>
-                @endforeach
-            @endif
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5" class="text-right"><h3><strong>Sub Total {{MY_CURRENCY_SYMBOL}}{{ $total }}</strong></h3></td>
-            </tr>
-            <tr>
-                <td colspan="5" class="text-right"><h3><strong>Total {{MY_CURRENCY_SYMBOL}}{{ $total }}</strong></h3></td>
-            </tr>
-            <tr>
-                <td colspan="5" class="text-right">
-                    <a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
-                    <a href="{{route('product.checkout')}}"><button class="btn btn-success">Checkout</button></a>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+
+    <div class="category-banner" style="background-image:url(../assets/images/cart-bg.jpg)">
+        <div class="container">
+            <div class="category-banner-text">
+                <h1>CART</h1>
+            </div>
+            
+        </div>
+    </div>
+    <div class="cart-page-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="cart-table-wraper">
+                        <table id="cart" class="cart-table">
+                            <thead>
+                                <tr>
+                                    <th class="product-th" style="width:45%">Product</th>
+                                    <th class="price-th">Price</th>
+                                    <th class="quantity-th">Quantity</th>
+                                    <th class="subtotal-th">Subtotal</th>
+                                    <th class="action-th"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $total = 0 @endphp
+                                @if(session('cart'))
+                                    @foreach(session('cart') as $id => $details)
+                                        @php $total += $details['price'] * $details['quantity'] @endphp
+                                        <tr data-id="{{ $id }}">
+                                            <td class="product-info-col" data-th="Product">
+                                                <div class="cart-item-name">
+                                                    <div class="cart-image-item"><img src="{{ $details['image'] }}" width="100" height="100" class="img-responsive"/></div>
+                                                    <div class="cart-nameitem">
+                                                        <div class="cartproduct-title"><a href="#"> {{ $details['name'] }}</a></div>
+                                                        <dl class="variation">
+                                                            <dt class="variation-Colour">Metal Colour:</dt>
+                                                            <dd class="variation-Colour"><p>18ct White Gold</p></dd>
+                                                            <dt class="variation-FingerSize">Finger Size:</dt>
+                                                            <dd class="variation-FingerSize"><p>I</p></dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td  class="product-price-col" data-th="Price">${{ $details['price'] }}</td>
+                                            <td  class="product-quantity-col" data-th="Quantity">
+                                                <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
+                                            </td>
+                                            <td  class="product-subtotal-col" data-th="Subtotal">${{ $details['price'] * $details['quantity'] }}</td>
+                                            <td  class="product-action-col" class="actions" data-th="">
+                                                <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div> 
+                </div>   
+                <div class="col-lg-4">
+                    <div class="cart-sidebar-box">                            
+                        <div class="cart-sidebar-heading">Basket totals</div>
+                        <div class="cart-side-wrap">
+                            <table border-collapse="collapse" style="width:100%">
+                                <tbody>
+                                    <tr class="box-cart-subtotal">
+                                        <th>Subtotal</th>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="box-cart-total">
+                                        <th>Total</th>
+                                        <td> ${{ $total }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="cart-actions">
+                            <a href="{{ url('/') }}" class="grey-btn-large"> Continue Shopping</a>
+                            <button class="btn-bg-large">Proceed To Checkout</button>
+                            </div>                    
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div>
 @endsection
   
 @section('js')
