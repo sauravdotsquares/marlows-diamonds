@@ -62,10 +62,18 @@
                 <div class="middle-topbar-right">
                     <ul>
                         <li class="my-account-blk">
-                            <a href="#"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
+                            <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
                         </li>
                         <li class="my-whishlist-blk">
-                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i>{{MY_WISHLIST_TITLE}}</a>
+                            <?php  
+                                // echo "Check in Header Page";
+                                // print_r(session('wishlist'));
+                                // die;
+
+                            ?>
+
+
+                                <a href="{{route('products.wishlist')}}"><i class="fa @if(count((array) session('cart')))fa-heart-o @else fa-heart @endif wishcount" aria-hidden="true"></i>{{MY_WISHLIST_TITLE}}</a>
                         </li>
                         <!-- <li class="my-cart-blk">
                             <a href="#"><img src="assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}}<span class="cart-number">(0)</span></a>
@@ -73,7 +81,7 @@
                         <li class="dropdown">
                             <a href="{{ route('product.cart') }}">
                                 <button type="button" class="btn btn-info" data-toggle="dropdown">
-                                    <img src="{{asset('')}}assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                    <img src="{{asset('')}}assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
                                 </button>
                             </a>
                             <div class="dropdown-menu">

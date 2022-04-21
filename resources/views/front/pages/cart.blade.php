@@ -80,7 +80,7 @@
                             </table>
                             <div class="cart-actions">
                             <a href="{{ url('/') }}" class="grey-btn-large"> Continue Shopping</a>
-                            <button class="btn-bg-large">Proceed To Checkout</button>
+                            <a href="{{route('product.checkout')}}"><button class="btn-bg-large">Proceed To Checkout</button></a>
                             </div>                    
                         </div>
                     </div>

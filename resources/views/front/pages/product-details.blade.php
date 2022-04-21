@@ -218,7 +218,20 @@
 				</div>
 				<div class="product-add-cart">
 					<div class="product-to-wishlist">
-						<a href="javascript:void(0);" id="productWishList"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+						@php
+							//echo "checking a ".$data->id;
+							//die;
+							$wishlist = session()->get('wishlist', []);
+							//echo "<pre>";
+							//print_r($wishlist);
+							//die;
+
+							$wishListClass = "fa-heart-o";
+							if(array_key_exists($data->id,$wishlist)){
+								$wishListClass = "fa-heart";
+							}						
+						@endphp
+						<a href="javascript:void(0);" id="productWishList"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
 					</div>
 					<div class="product-to-basket">
 						<!-- <a class="btn-bg-small" href="#">Add to basket</a> -->
@@ -614,8 +627,11 @@
 			});
 
 			$('#addtobasket').on('click',function(){
-				addtobasketFunction();
-				return false;
+				addtobasketFunction('{{route("add.to.cart")}}');
+			});
+
+			$("#productWishList").on('click',function(){
+				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
 
 			$(document).on('change','#metal-colour',function(){
@@ -636,26 +652,6 @@
 					}
 				});
 			});
-
-			$("#productWishList").on('click',function()){
-				$.ajax({
-					type: 'POST',
-					url: '{{route("get-product-video")}}',
-					data: {
-						'_token': "{{csrf_token()}}",
-						'slug' : '{{$data->slug}}',
-						'metal_color' : $(this).val(),
-					},
-					success: function (res) {
-						if(res.vari_video){
-							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
-							$('#variationVideo').attr('src', videoUrl);
-							$("#variationVideo")[0].load();
-						}
-					}
-				});
-			}
-
 		})
 
 		function getCustomPrice(){
@@ -679,56 +675,35 @@
             });
 		}
 
-		function addtobasketFunction(){
-
-			// toastr.options = {
-			// 	"closeButton": true,
-			// 	"newestOnTop": true,
-			// 	"positionClass": "toast-top-right"
-			// };
-
-			var fingerSize = $('#finger-size').val();
-			var metalColor = $('#metal-colour').val();
-			var caratVal = $('#carat').val();
-			var diamondColor = $('#diamond-colour').val();
-			var diamondClarity = $('#diamond-clarity').val();
-			var diamondGrade = $('#diamond-grade').val();
-			var diamondCertificate = $('#diamond-certificate').val();
+		function addtobasketFunction(getUrl){
 			$.ajax({
                 type: 'POST',
-                url: '{{route("add.to.cart")}}',
+                url: getUrl,
                 data: {
                     '_token': "{{csrf_token()}}",
-					'carat' : caratVal,
-					'color' : diamondColor,
-					'clarity' : diamondClarity,
-					'grade' : diamondGrade,
-					'fingersize' : fingerSize,
-					'metalcolor' : metalColor,
-					'certificate' : diamondCertificate,
+					'carat' : $('#carat').val(),
+					'color' : $('#diamond-colour').val(),
+					'clarity' : $('#diamond-clarity').val(),
+					'grade' : $('#diamond-grade').val(),
+					'fingersize' : $('#finger-size').val(),
+					'metalcolor' : $('#metal-colour').val(),
+					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
 					'price': parseFloat($('#finaldiamondprice').text()) || 0, //parseFloat($('#price').val()) || 0;
                 },
                 success: function (res) {
 					console.log(res);
-					if(res.success != ''){
+					if(res.success != '' && typeof res.success !== "undefined"){
+						if(res.cartcount){
+							$(".cartcount").text(res.cartcount);
+						}
+						if(res.wishcount){
+							$(".wishcount").removeClass('fa-heart-o');
+							$(".wishcount").addClass('fa-heart');
+						}
 						toastr.success(res.success);
-						// Swal.fire({
-						// 	position: 'top-end',
-						// 	icon: 'success',
-						// 	title: res.success,
-						// 	showConfirmButton: false,
-						// 	timer: 3000
-						// });
-						location.reload();
 					}else{
-						Swal.fire({
-							position: 'top-end',
-							icon: 'danger',
-							title: res.success,
-							showConfirmButton: false,
-							timer: 3000
-						});
+						toastr.info(res.error);
 					}
                 }
             });
