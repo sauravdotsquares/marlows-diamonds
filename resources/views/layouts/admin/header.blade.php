@@ -1,7 +1,7 @@
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+ <!--  <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__wobble" src="{{ asset('admin/dist/img/MarlowsDiamonds-Logo.png')}}" alt="Marlow's Diamond" >
-  </div>
+  </div> -->
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
