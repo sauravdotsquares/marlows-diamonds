@@ -16,6 +16,7 @@
                         <tr>
                            <th>Title</th>
                            <th>Slug</th>
+                           <th>Category</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
@@ -27,6 +28,7 @@
                         <tr>
                            <td>{{$post->title}}</td>
                            <td>{{$post->slug}}</td>
+						    <td>{{isset($post->cat_details)?$post->cat_details:''}}</td>
                            <td>{{$post->created_at}}</td>
                            <td>
                               @if($post->status == 1) 
@@ -46,6 +48,7 @@
                         <tr>
                            <th>Title</th>
                            <th>Slug</th>
+                           <th>Category</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
