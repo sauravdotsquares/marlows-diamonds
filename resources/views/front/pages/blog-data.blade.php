@@ -3,7 +3,12 @@
 <div class="col-lg-4 col-sm-6">
 				<div class="blos-listbox">
 					<div class="blos-listbox-img">
-						<a href="{{url('/blog-resources/'.$post->slug)}}"><img src="{{asset('storage/'.$post->image)}}"  alt="blog1"></a>
+						<a href="{{url('/blog-resources/'.$post->slug)}}">
+						 @if(!empty(($post->image)))
+                           <img src="{{asset('storage/'.$post->image)}}"  alt="blog1">
+                         @else <img src="{{url('/images/marlowsdiamonds-logo.png')}}"  alt="blog1">
+						 @endif
+						</a>
 					</div>
 					<div class="blos-listbox-text">
 						<div class="blos-list-date">
