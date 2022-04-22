@@ -63,16 +63,15 @@ class ProductController extends Controller
 
     public function productDetails($productSlug = null)
     {   
-
-       
-
         if($productSlug !=null){
-            $getProduct = Products::with('getProductVariation')->where('slug',$productSlug)->first();
-            // echo "<pre>";
-            // print_r($getProduct);
-            // die;
+            $getProduct = Products::with('getProductVariation','getProductImages')->where('slug',$productSlug)->first();
+            
             if(isset($getProduct) && !empty($getProduct)){
-                return view('front.pages.product-details',['data'=>$getProduct]);
+                if($getProduct->dfinder_status == 1){
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct]);
+                }else{
+                    return view('front.pages.product-details-dno',['data'=>$getProduct]);
+                }
             }else{
                 return view('layouts.errors.404');
             }
@@ -286,7 +285,12 @@ class ProductController extends Controller
 
         if(count($getProductSelectedAttribute)){
             $selectedDesign = '';
-            foreach($getProductSelectedAttribute as $key => $value){
+            foreach(array_reverse($getProductSelectedAttribute) as $key => $value){
+
+                // echo "<pre>";
+                // print_r($value);
+                // die;
+
                 $getAttributeValues = Attributes::where('slug',$value)->select('name','slug','values')->first();
                 $selectedDesign .= '<label for="diamond-colour"> '.$getAttributeValues->name.' </label><select name="'.trim($value).'" id="'.trim($value).'" class="form-control"><option value="">Select Any</option>';
                 $getData = explode('|',$getAttributeValues->values);
@@ -316,7 +320,7 @@ class ProductController extends Controller
             }
 
             if(isset($getVariDetails) && !empty($getVariDetails)){
-                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails->variation_id)->select('vari_image','vari_video')->first();
+                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails->variation_id)->select('vari_image','vari_video','regular_price')->first();
                 
                 return response()->json($getSelectedVariationVideoImages);
             }

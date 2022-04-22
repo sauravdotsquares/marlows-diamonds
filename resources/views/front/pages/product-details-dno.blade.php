@@ -85,7 +85,7 @@
 
 <?php 
 	// echo "<pre>";
-	// print_r($data->getProductVariation);
+	// print_r($data->getProductImages->image_url);
 	// die;
 ?>
 
@@ -95,14 +95,25 @@
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
-				<video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
+				<!-- <video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
 					<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
-				</video>
-
+				</video> -->
+				<img id="productFeatureImage" src="{{ asset('storage/'.$data->getProductImages->image_url) }}" alt="">
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
+				</div>
+				<div class="diamond-type">
+					<label>Diamond Type</label>
+					<div class="d-type-input">
+						<input type="radio" name="attribute_choose-your-diamond" checked value="Mined Diamond">
+						<span>Mined Diamond</span>
+					</div>
+					<div class="d-type-input">
+						<input type="radio" name="attribute_choose-your-diamond" value="Lab Grown Diamonds">
+						<span>Lab Grow Diamond</span>
+					</div>
 				</div>
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
@@ -110,7 +121,7 @@
 					</div>
 				</div>
 				<div id="apiCustomDesign">
-					<div class="type-variations-row">
+					<!-- <div class="type-variations-row">
 						<div class="type-variations-col">
 							<label class="label"> Carat </label>
 							<select class="form-control" name="carat" id="carat">
@@ -207,7 +218,7 @@
 								</table>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 				<div class="product-decriptions">
 					<p>A unique style for Aaliyah. The round brilliant cut diamond is held elegantly in a fluted four
@@ -644,10 +655,14 @@
 						'metal_color' : $(this).val(),
 					},
 					success: function (res) {
-						if(res.vari_video){
-							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
-							$('#variationVideo').attr('src', videoUrl);
-							$("#variationVideo")[0].load();
+						// if(res.vari_video){
+						// 	var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+						// 	$('#variationVideo').attr('src', videoUrl);
+						// 	$("#variationVideo")[0].play();
+						// }
+						if(res.vari_image){
+							var imageUrl = "{{ asset('storage/')}}/"+res.vari_image;
+							$('#productFeatureImage').attr('src', imageUrl);
 						}
 					}
 				});
