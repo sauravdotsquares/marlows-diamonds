@@ -25,8 +25,8 @@ if (!function_exists("helper_test")) {
 if (!function_exists("single_image_upload")) {
     function single_image_upload($imageUrl,$folderName)
     {
-        if (!file_exists('images/'.$folderName)) {
-            mkdir('images/'.$folderName, 0777);
+        if (!file_exists(storage_path('app/public/' . $folderName))) {
+            mkdir(storage_path('app/public/' . $folderName), 0777);
         }
         $uploadpath = public_path().'\images\\'.$folderName;
         if(is_array($imageUrl)){

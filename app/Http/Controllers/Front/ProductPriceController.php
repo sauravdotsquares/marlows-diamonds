@@ -9,19 +9,13 @@ class ProductPriceController extends Controller
 {
     public function getProductFinalPrice(Request $request){
         
-        $disValue = 10;
-        
-        $catId = $request->cat_id;
-        $displayPrice = $request->display_price;
-        $diamondPrice = $request->diamond_price;
-        $vatValue = $request->cat_id;
+        // $variationPrice = $CurrentVariationPrice * 1.3;
 
-        $settingPrice = $displayPrice * 1.3;
-        $diamondPrice = $diamondPrice * 1.2;
+        $settingPrice = $request->variation_price * 1.2;
 
-        $disPrice = round($settingPrice/$disValue);
+        $diamondPrice = $request->diamond_price * 1.2;
 
-        $remainingTotal = $displayPrice - $disPrice;
-         
+        $finalPrice = $settingPrice + $diamondPrice;
+        return $finalPrice;
     }
 }
