@@ -46,6 +46,8 @@
 
     @include('layouts.front.footer')
 
+<script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.js"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
