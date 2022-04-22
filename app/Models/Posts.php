@@ -18,13 +18,16 @@ class Posts extends Authenticatable
     protected $fillable = [
         'title', 'subtitle', 'slug', 'categories', 'short_description', 'description', 'status', 'image', 'meta_title', 'meta_description', 'meta_keyword', 'deleted_at', 'created_at','updated_at'
     ];
+	
+	protected $appends = ['cat_details'];
+    
+	public function getCatDetailsAttribute()
+    {
+        $ids = explode(',',$this->categories);
+		// print_r($ids);
+		// die;
+        $user = PostCategory::whereIn('id',$ids)->pluck('name')->toArray();
+        return implode(',',$user);
+    }
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    // protected $hidden = [
-        // 'password', 'remember_token',
-    // ];
 }
