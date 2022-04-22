@@ -39,27 +39,29 @@ class AddToCartController extends Controller
 
         if(isset($productData) && !empty($productData->title)){
             $titleHtml = $productData->title.'<br>Metal Colour:-'.$request->metalcolor.'<br>Finger Size:- '.$request->fingersize.'<br>DiamondShape:-'.$request->color.'<br>Diamond Carat:-'.$request->carat.'<br>Diamond Colour:- '.$request->color.'<br>Diamond Cut Grade:- '.$request->grade.'<br>Diamond Clarity:- '.$request->clarity.' <br> Certificate:- '.$request->certificate.'<br>Certificate Link:- <a href="'.$request->color.'" >View Certificate</a><br>Image:-<a href="'.$request->color.'" >ViewDiamond</a><br>Certificate:- '.$request->color.'';
+        
+
+            // return response()->json($productData);
+
+            $cart = session()->get('cart', []);
+    
+            if(isset($cart[$productData->id])) {
+                $cart[$productData->id]['quantity']++;
+            } else {
+                $cart[$productData->id] = [
+                    "name" => $titleHtml,
+                    "quantity" => 1,
+                    "price" => $request->price,
+                    "image" => $productData->getProductImages->image_url
+                ];
+            }
+            session()->put('cart', $cart);
+
+            return response()->json(['cartcount'=>count((array) session('cart')),'success'=>'Product added to cart successfully!']);
+            // return redirect()->back()->with('success', 'Product added to cart successfully!');
         }else{
-            $titleHtml = '';
+            return response()->json(['error'=>'Not Match']);
         }
-
-        // return response()->json($productData);
-
-        $cart = session()->get('cart', []);
-  
-        if(isset($cart[$productData->id])) {
-            $cart[$productData->id]['quantity']++;
-        } else {
-            $cart[$productData->id] = [
-                "name" => $titleHtml,
-                "quantity" => 1,
-                "price" => $request->price,
-                "image" => $productData->getProductImages->image_url
-            ];
-        }
-        session()->put('cart', $cart);
-        return response()->json(['success'=>'Product added to cart successfully!']);
-        // return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
     /**

@@ -175,6 +175,8 @@ Route::namespace('Front')->group(function () {
 	
 	Route::get('products/checkout', 'AddToCartController@checkoutOrder')->name('product.checkout');
 	Route::get('products/wishlist', 'WishlistController@index')->name('products.wishlist');
+	Route::post('product/set-product-wishlist/{slug}', 'WishlistController@addToWishlist')->name('set-product-wishlist');
+
 	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
 	
 });
