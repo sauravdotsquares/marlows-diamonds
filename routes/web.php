@@ -27,6 +27,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 	Route::namespace('Admin')->group(function () {
 		//Route::group(['middleware' => ['role:superadmin|admin']], function () {
 			Route::get('/', 'DashboardController@index')->name('dashboard');
+			Route::any('/uploadEditorImage', 'PostController@uploadEditorImage');
 			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 			// Change Password Routes
 			Route::get('/change-password', 'PasswordController@index')->name('change-password');
@@ -50,6 +51,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/posts/edit/{id}', 'PostController@edit');
 			Route::get('/delete-post/{id}', 'PostController@delete');
 			Route::get('/posts/status/{id}/{status}', 'PostController@status');	
+			
 			// Post Category Routes
 			Route::get('/posts/categories','PostCategoryController@index')->name('postcategories');
 			Route::get('/posts/categories/create/{catslug?}','PostCategoryController@createForm')->name('create');
