@@ -18,7 +18,7 @@ class AddToCartController extends Controller
         $cart = session()->get('cart');
         // echo "<pre>";
         // print_r();
-        // die;
+        // die;ssfsdf 
 
         return view('front.pages.cart');
     }
