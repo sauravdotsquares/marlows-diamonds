@@ -126,13 +126,13 @@ class ProductController extends Controller
         }
 
         if($request->hasFile('gallery_image')) {
-            $imagegallery_image = single_storage_image_upload($request->file('gallery_image'),'Products');
+            $imagegallery_image = single_storage_image_upload($request->file('gallery_image'),'Products','600','600');
         }else{
             $imagegallery_image = [];
         }
 
         if($request->hasFile('featured_image')) {
-            $imagefeatured_image = single_storage_image_upload($request->file('featured_image'),'Products');
+            $imagefeatured_image = single_storage_image_upload($request->file('featured_image'),'Products','600','600');
         }else{
             $imagefeatured_image = [];
         }
