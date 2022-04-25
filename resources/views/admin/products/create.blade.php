@@ -173,6 +173,24 @@
                            </select>
                         </div>
                      </div>
+					 <div class="form-group">
+                        <div class="form-label-group">
+						<label>Diamond Finder Status</label>
+                           <select id="dfinder_status" name="dfinder_status" class="form-control">
+                              <option value="">Select Diamond Finder Status</option>
+                              @if(isset($getData->dfinder_status) && $getData->dfinder_status == 1)
+                              <option value="1" selected>Yes</option>
+                              <option value="0">No</option>
+                              @elseif(isset($getData->dfinder_status) && $getData->dfinder_status == 0)
+                              <option value="1">Yes</option>
+                              <option value="0" selected>No</option>
+                              @else
+                              <option value="1" selected>Yes</option>
+                              <option value="0">No</option>
+                              @endif
+                           </select>
+                        </div>
+                     </div>
                      <div class="form-group">
                         <div class="form-label-group">
                            <select id="is_featured" name="is_featured" class="form-control">

@@ -12,7 +12,7 @@ class Products extends Model
     protected $table = 'products';
 
     protected $fillable = [
-        'title','slug','tags','short_description','description','categories','sale_price','regular_price','meta_title','meta_keyword','meta_description','status','is_featured','is_taxable'
+        'title','slug','tags','short_description','description','categories','sale_price','regular_price','meta_title','meta_keyword','meta_description','status','dfinder_status','is_featured','is_taxable'
     ];
 
     protected $appends = ['cat_details'];
