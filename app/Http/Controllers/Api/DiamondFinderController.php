@@ -17,7 +17,6 @@ class DiamondFinderController
     {
 
         $data = HKDiamondStock::paginate(10);
-
         dd($data);
     }
 }
