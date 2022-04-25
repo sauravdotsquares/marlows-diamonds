@@ -1,4 +1,4 @@
-var MarlowsAPP = angular.module('MarlowsAPP', ['ngRoute', 'ngSanitize'], function($interpolateProvider) {
+var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSanitize'], function($interpolateProvider) {
 $interpolateProvider.startSymbol('<%');
 $interpolateProvider.endSymbol('%>');
 
@@ -115,27 +115,37 @@ MarlowsAPP.controller("commonController",function($scope, $http,$mdDialog,$compi
 });
 
 MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,$window,$sce, $timeout,diamondSearchService) {
-    //Get news by category
+    
     $scope.getDiamondResults=function(){
         $scope.limit= 10;
-        $scope.currentPage = 1,
-        $scope.shape = $("input[name='shape']:checked").val();
-        $scope.carat = [];
-        //$scope.filterdata = [];
-        console.log($scope.shape);
-        getData();
-        function getData(){
-            $scope.fromService = diamondSearchService.diamondSearch($scope.limit,$scope.currentPage,$scope.next_page_url,$scope.filterdata).then(function(result) {
+        $scope.totalPages = 0;
+        $scope.currentPage = 1;
+        $scope.range = [];
 
+        $scope.shape = $("input[name='shape']:checked").val();
+        setTimeout(function() {
+            $scope.carat_min = $("#input-carat-min").val();
+            $scope.carat_max = $("#input-carat-max").val();
+            getData();
+        }, 0);
+       
+        
+        function getData(){
+            
+            $scope.fromService = diamondSearchService.diamondSearch($scope.limit,$scope.currentPage,$scope.next_page_url,$scope.shape,$scope.carat_min,$scope.carat_max).then(function(result) {
+               
                 $scope.data = result.data.data;
                 $scope.paging = result.data;
-                $scope.currentPage = $scope.paging.current_page,
-                $scope.numPerPage = $scope.paging.per_page,
-                $scope.maxSize = 5;
+                $scope.currentPage = $scope.paging.current_page;
+                $scope.numPerPage = $scope.paging.per_page;
+                $scope.maxSize = 10;
                 $scope.totalItems = $scope.paging.total;
                 $scope.next_page_url = $scope.paging.next_page_url;
                 $scope.prev_page_url = $scope.paging.prev_page_url;
+                $scope.totalPages = $scope.paging.last_page;
             });
+
+
         }
         $scope.pageChanged = function() {
             getData();
@@ -150,13 +160,13 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
 
 MarlowsAPP.service('diamondSearchService', function($http, $location){
 var apiUrl = base_url;
-this.diamondSearch= function(limit,currentPage, nextpage,filterdata){
+this.diamondSearch= function(limit,currentPage, nextpage,shape,carat_min,carat_max){
     
     var apiUrls = '';
     if(nextpage == ''){
-        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+1+filterdata;
+        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+1+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max;
     } else {
-        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+currentPage+filterdata;
+        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+currentPage+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max;
     }
     return $http({
         method: 'GET',
@@ -164,3 +174,4 @@ this.diamondSearch= function(limit,currentPage, nextpage,filterdata){
     });
 };
 });
+

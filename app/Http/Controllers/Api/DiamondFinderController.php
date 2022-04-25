@@ -13,10 +13,21 @@ class DiamondFinderController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function diamondSearch()
+    public function diamondSearch(Request $request)
     {
+    	
+        $results = HKDiamondStock::
+        		where('Shape','LIKE',$request->shape)
+        		->whereBetween('Carat', [$request->carat_min, $request->carat_max])
+        		->orderBy('id','ASC')
+        		->paginate(5);
+        $array=$results->toArray();
+       /* foreach ($array['data'] as $key => $result) {
+        	$array['data'][$key]['shape'] = $result['Shape'];
+        	$array['data'][$key]['carat'] = $result['Carat'];
+        }*/
 
-        $data = HKDiamondStock::paginate(10);
-        dd($data);
+		return response($array);
+         //echo '<pre>'; echo $results->current_page; die;
     }
 }

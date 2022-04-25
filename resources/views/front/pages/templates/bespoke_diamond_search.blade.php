@@ -1,6 +1,8 @@
 @extends('layouts.front.app')
 @section('content')
-
+@section('css')
+<link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" type="text/css">
+@endsection
 <div class="perfect-certified-wrap" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()">
 	<div class="container">
 		<div class="perfect-certified-head">
@@ -28,7 +30,7 @@
 											<button type="button" class="btn active-diamond  shape_btn">
 												<img src="assets/images/round-1.png" alt="">
 												<span>Round</span>
-												<input checked="checked" value="Round Brilliant" class="" type="radio" name="shape">
+												<input checked="checked" value="Round" class="" type="radio" name="shape">
 											</button>
 										</li>
 										<li>
@@ -105,11 +107,16 @@
 							</div>
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
-									<div class="diamond-fil-cols">
+									<!-- <div class="diamond-fil-cols">
 										<div class="diamond-filter-in">
-											<input type="range">
+											<input type="range" id="carat" name="carat" min="0.30" max="5">
 										</div>
-									</div>
+									</div> -->
+									<div class="range_carat_wap"  style="width: 83%;">
+										<div id="range-slider"></div>
+										<input type="hidden" id="input-carat-min" name="carat">
+										<input type="hidden" id="input-carat-max" name="carat-max">
+									 </div>
 									<div class="diamond-filter-quote">
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
@@ -484,37 +491,12 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="pagination-navs">
-							<ul>
-								<li class="page-prev active-item">
-									<a href="#">Prev</a>
-								</li>
-								<li class="active-item">
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li>
-									<a href="#">...</a>
-								</li>
-								<li>
-									<a href="#">9</a>
-								</li>
-								<li>
-									<a href="#">10</a>
-								</li>
-								<li class="page-next">
-									<a href="#">Next</a>
-								</li>
-							</ul>
-						</div>
+						<div data-pagination=""
+				             data-num-pages="totalPages" 
+				             data-current-page="currentPage"
+				             data-max-size="maxSize" 
+				             data-boundary-links="true" ng-click="pageChanged()">
+				      </div>
 					</div>
 					<div class="table-bottom-content">
 						<div class="diamond-total-subtotal">
@@ -532,5 +514,33 @@
 	</div>
 </div>
 
+@section('js')
+<script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+		var stepsSlider = document.getElementById('range-slider');
+		var input0 = document.getElementById('input-carat-min');
+		var input1 = document.getElementById('input-carat-max');
+		var inputs = [input0, input1];
+
+		noUiSlider.create(stepsSlider, {
+		    start: [0.3, 2.5],
+		    connect: true,
+		    tooltips: [true, wNumb({decimals: 0})],
+		    range: {
+		        'min': [0.3],
+		        'max': [5]
+		    },
+		});
+
+		stepsSlider.noUiSlider.on('update', function (values, handle) {
+		    inputs[handle].value = values[handle];
+			//jQuery(".search-button button").trigger('click');
+		});
+
+  });
+</script>
+@endsection
 
 @endsection

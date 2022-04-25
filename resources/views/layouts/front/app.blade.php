@@ -51,6 +51,7 @@
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
+<script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>
 @yield('js')
 
