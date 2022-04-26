@@ -2,8 +2,9 @@
 @section('content')
 @section('css')
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet" type="text/css">
 @endsection
-<div class="perfect-certified-wrap" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()">
+<div class="perfect-certified-wrap" id="diamondMainController" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()">
 	<div class="container">
 		<div class="perfect-certified-head">
 			<h1>{!!$data->subtitle!!}</h1>
@@ -30,70 +31,70 @@
 											<button type="button" class="btn active-diamond  shape_btn">
 												<img src="assets/images/round-1.png" alt="">
 												<span>Round</span>
-												<input checked="checked" value="Round" class="" type="radio" name="shape">
+												<input checked="checked" value="ROUND" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/pear-1.png" alt="pearl">
 												<span>Pear</span>
-												<input value="PEAR" class="" type="radio" name="shape">
+												<input value="PEAR" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/marquee-1.png" alt="marquise">
 												<span>Marquise </span>
-												<input value="MARQUISE" class="" type="radio" name="shape">
+												<input value="MARQUISE" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/heart-1.png" alt="heart">
 												<span>Heart</span>
-												<input value="HEART" class="" type="radio" name="shape">
+												<input value="HEART" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/asscher.png" alt="Asscher">
 												<span>Asscher</span>
-												<input value="ASSCHER" class="" type="radio" name="shape">
+												<input value="ASSCHER" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/priceless-1.png" alt="priceless">
 												<span>Princess</span>
-												<input value="PRINCESS" class="" type="radio" name="shape">
+												<input value="PRINCESS" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/radiant.png" alt="radiant">
 												<span>Radiant</span>
-												<input value="RADIANT" class="" type="radio" name="shape">
+												<input value="RADIANT" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/emerald-1.png" alt="Emerald">
 												<span>Emerald</span>
-												<input value="EMERALD" class="" type="radio" name="shape">
+												<input value="EMERALD" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/oval-1.png" alt="Oval">
 												<span>Oval</span>
-												<input value="OVAL" class="" type="radio" name="shape">
+												<input value="OVAL" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/cushion.png" alt="cushion">
 												<span>Cushion</span>
-												<input value="CUSHION" class="" type="radio" name="shape">
+												<input value="CUSHION" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 									</ul>
@@ -419,7 +420,7 @@
 										<th>Carat</th>
 										<th>Colour</th>
 										<th>Clarity</th>
-										<th>Cut</th>
+										<th ng-if="shape=='ROUND'">Cut</th>
 										<th>Cert</th>
 										<th>Diamond Price inc VAT</th>
 										<th>Certificate</th>
@@ -428,68 +429,37 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td></td>
-										<td><input type="radio"></td>
+									<tr ng-if="data.length>0 && loader==false" ng-repeat="records in data">
+										<td><%records.Shape%></td>
+										<td><%records.Carat%></td>
+										<td><%records.Color%></td>
+										<td><%records.Clarity%></td>
+										<td ng-if="shape=='ROUND'"><%records.Cut%></td>
+										<td><%records.Lab%></td>
+										<td><%records.Amount*VAT | number : 2 %></td>
+
+										<td> <a target="_block" class="table-view-btn" href="<%records.CertificateLink%>">View</a> </td>
+
+										<td><img ng-if="records.ImageLink" src="<%records.ImageLink%>" class="diamond_image" alt="<%records.Shape%>"></td>
+
+										<td><input type="radio" name="selectedDiamond" value="<%records.Amount%>" ng-checked="$index==0" ng-click="updateDiamondPrice(records.Amount)" ng-model="selectedDiamond"></td>
 									</tr>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td></td>
-										<td><input type="radio"></td>
+
+									<tr ng-if="data.length==0">
+										<td colspan="10">No Record Found.</td>
+										
 									</tr>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td><a class="table-view-diamond" href="#">View Diamond</a></td>
-										<td><input type="radio"></td>
-									</tr>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td></td>
-										<td><input type="radio"></td>
-									</tr>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td><a class="table-view-diamond" href="#">View Diamond</a></td>
-										<td><input type="radio"></td>
-									</tr>
+									
 								</tbody>
 							</table>
+						<div class="timeline-wrapper" ng-if="loader">
+						    <div class="timeline-item">
+						    	@for($i=1;$i<=5;$i++)
+						        <div class="animated-background">
+						            <div class="background-masker content-first-end"></div>
+						        </div>
+						        @endfor
+						    </div>
 						</div>
 						<div data-pagination=""
 				             data-num-pages="totalPages" 
@@ -500,8 +470,8 @@
 					</div>
 					<div class="table-bottom-content">
 						<div class="diamond-total-subtotal">
-							<p> <strong>Diamond Price:</strong> £ 278.11</p>
-							<div class="total-diamond-price">£ 278.00 </div>
+							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount*VAT | number : 2 %></p>
+							<div class="total-diamond-price" ng-if="firstDiamondAmount">£ <%firstDiamondAmount*VAT | number : 0 %> </div>
 						</div>
 						<div class="addbasket-req-btns">
 							<a class="white-bg-btn" href="#">Add To Basket</a>
@@ -537,6 +507,9 @@
 		stepsSlider.noUiSlider.on('update', function (values, handle) {
 		    inputs[handle].value = values[handle];
 			//jQuery(".search-button button").trigger('click');
+		});
+		stepsSlider.noUiSlider.on('change', function (values, handle) {
+		    angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
 		});
 
   });

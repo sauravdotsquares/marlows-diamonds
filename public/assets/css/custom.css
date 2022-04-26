@@ -664,7 +664,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .getmail{ display: flex;}
 .account-sidebar {margin: 0 0 30px 0;}
 .checkout-form-group .form-control {margin: 0 0 10px 0;}
-
+.diamond_image{width: 80px;}
 
 /** mega menuhover for desktop **/
 @media(min-width:767px){
