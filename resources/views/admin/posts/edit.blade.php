@@ -85,10 +85,10 @@
                      <div class="form-group">
                         <label for="exampleInputFile">Banner</label>
                         <div class="input-group">
+						@if(isset($posts->image) && !empty($posts->image))
+                              <img src="{{asset('storage').'/'.$posts->image}}" width="50px;">
+                        @endif
                            <div class="custom-file">
-                              @if($posts->image!='') 
-                              <img src="{{url('/').'/images/'.$posts->image}}" width="150px;">
-                              @endif
                               <input type="file" id="image" name="image" value="{{ $posts->image }}" class="custom-file-input" accept="image/*">
                               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                            </div>
