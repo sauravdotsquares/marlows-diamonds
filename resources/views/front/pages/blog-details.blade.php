@@ -36,7 +36,9 @@
 							<span><i class="fa fa-clock-o" aria-hidden="true"></i> {{isset($data->created_at)?$data->created_at->format('M d, Y'):""}}</span>
 						</div>
 					<div class="blog-main-img">
-						<img src="{{asset('storage/'.$data->image)}}" alt="1">
+						@if(!empty(($data->image)))
+                           <img src="{{asset('storage/'.$data->image)}}" alt="1">
+                        @endif
 					</div>
 					<div class="blogdetail-desc">
 						<?php echo html_entity_decode($data->description);?>
