@@ -92,7 +92,20 @@ class PostController extends Controller
 
         return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Added Successfully');
     }
-
+	
+	public function uploadEditorImage(Request $request) {
+        if ($files = $request->file('file')) {
+            $image = single_storage_image_upload($request->file('file'),'PostsNew','500','300');
+			// echo $image;
+			// die;
+            $file_path = \Storage::url($image);
+            $url = asset($file_path);
+            $imgURL = '<img src="'.$url.'" />';
+            echo '/storage/'.$image;
+            exit();
+        }
+    }
+	
     /**
      * Display the specified resource.
      *
