@@ -181,11 +181,12 @@
         var form_data = new FormData();
 		   //var uploadUrl = $('#uploadUrl').attr('url');
          // var uploadUrl = '{{ asset("/posts/uploadEditorImage") }}';
+		 var SITEURL = '/admin/uploadEditorImage';
         form_data.append('file', file);
 		form_data.append('_token', '{{csrf_token()}}');
         $.ajax({
             type: "POST",
-            url: "http://dev.marlows-diamond.com/admin/uploadEditorImage",
+            url: SITEURL,
 			data: form_data,
             cache: false,
             contentType: false,
