@@ -152,6 +152,7 @@ Route::namespace('Front')->group(function () {
     Route::get('/', 'PageController@page')->name('home');
 
     Route::get('/my-account', 'LoginController@index')->name('my-account');
+    Route::post('/login-customer-account', 'LoginController@getLoginRegisterAccount')->name('login.customer.account');
 	
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
     Route::get('{page}', 'PageController@page')->name('page');

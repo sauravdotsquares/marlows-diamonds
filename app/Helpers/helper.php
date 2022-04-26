@@ -78,7 +78,7 @@ if (!function_exists("single_storage_image_upload")) {
 		// $height = 200;
 		// $width = 200;
 		$image = $imageUrl;
-		$imageName = $imageUrl->getClientOriginalName();
+		$imageName = $image->getClientOriginalName();
 		$fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
 		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
 		return $fileName;

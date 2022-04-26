@@ -75,6 +75,11 @@
 			border:10px solid transparent;
 			border-bottom-color:#fff;
 		}
+		.disabledAnchor a{
+			pointer-events: none !important;
+			cursor: default;
+			color:white;
+		}
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -104,7 +109,7 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
-				<div class="diamond-type">
+				<!-- <div class="diamond-type">
 					<label>Diamond Type</label>
 					<div class="d-type-input">
 						<input type="radio" name="attribute_choose-your-diamond" checked value="Mined Diamond">
@@ -114,7 +119,7 @@
 						<input type="radio" name="attribute_choose-your-diamond" value="Lab Grown Diamonds">
 						<span>Lab Grow Diamond</span>
 					</div>
-				</div>
+				</div> -->
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
 
@@ -229,6 +234,7 @@
 				</div>
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
+				<input type="hidden" name="selected_final_price" id="selected_final_price" value="0.00">
 
 				<div class="product-add-cart">
 					<div class="product-to-wishlist">
@@ -731,6 +737,8 @@
 		}
 
 		function getSelectedAttributePrice(){
+			$('#finaldiamondprice').text("Pending...");
+			$('#addtobasket').addClass('disabledAnchor');
 			var caratVal = $('#carat').val();
 			var diamondColor = $('#diamond-colour').val();
 			var diamondClarity = $('#diamond-clarity').val();
@@ -762,6 +770,7 @@
 		}
 
 		function getFinalPrice(){
+			$('#addtobasket').addClass('disabledAnchor');
 			$.ajax({
                 type: 'POST',
                 url: '{{route("products-final-price")}}',
@@ -775,6 +784,8 @@
 					$('#finaldiamondprice').html("");
 					if(res != ''){
 						$('#finaldiamondprice').text(res);
+						$('#selected_final_price').val(res);
+						$('#addtobasket').removeClass('disabledAnchor');
 					}else{
 						$('#finaldiamondprice').text("");
 					}

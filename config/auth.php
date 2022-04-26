@@ -45,6 +45,11 @@ return [
             'provider' => 'users',
         ],
 
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customer',
+        ],
+
         'employee' => [
             'driver' => 'session',
             'provider' => 'employee',
@@ -80,10 +85,15 @@ return [
             'model' => App\Shop\Employees\User::class,
         ],
 
-         'employee' => [
-             'driver' => 'eloquent',
-             'model' => App\Shop\Employees\User::class,
-         ],
+        'employee' => [
+            'driver' => 'eloquent',
+            'model' => App\Shop\Employees\User::class,
+        ],
+
+        'customer' => [
+            'driver' => 'eloquent',
+            'model' => App\Shop\Employees\User::class,
+        ],
     ],
 
     /*

@@ -1,39 +1,48 @@
 @extends('layouts.front.app')
+@section('css')
+<style>
+    .error {
+        color: #e74c3c;
+    }
+</style>
+@endsection
 
 @section('content')
     <div class="checkout-wraper">
         <div class="container">
             <div class="checkout-container">
-                <div class="not-logedin-block alert alert-dismissible fade show" role="alert">
-                    <div class="alert_icon">
-                        <i class="fa fa-question" aria-hidden="true"></i>
-                    </div>
-                    <div class="alert_wraper">
-                        Returning customer? 
-                        <a class="showlogin" href="#">Click here to login</a>
-                    </div>
-                    <div class="alert_close">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                    
-                    </div>
-                </div>  
-                <!-- login form start-->
+                @guest
+                    <?php //echo "check"; die; ?>
+                    <div class="not-logedin-block alert alert-dismissible fade show" role="alert">
+                        <div class="alert_icon">
+                            <i class="fa fa-question" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="alert_wraper">
+                            Returning customer? 
+                            <a class="showlogin" href="javascript:void(0);">Click here to login</a>
+                        </div>
+                        <div class="alert_close">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                    
+                        </div>
+                    </div>  
+                    <!-- login form start-->
                     <div class="checkout-login-form">
-                        <form>
+                        <form id="loginRegisterForm">
                             <p>If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.</p>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="checkout-form-group">
-                                        <label class="input-label">Username or email <abbr class="required">*</abbr></label>
-                                        <input type="text" class="form-control">
+                                        <label class="input-label">Email <abbr class="required">*</abbr></label>
+                                        <input type="text" name="email" id="email" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkout-form-group">
                                         <label class="input-label">Password  <abbr class="required">*</abbr></label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" name="password" id="password" class="form-control">
                                     </div>
                                 </div>
-
                             </div>
                             <div class="action-login">
                                 <button class="btn-bg-small" type="submit">Login</button>
@@ -47,6 +56,7 @@
                             </div>
                         </form>
                     </div>
+                @endguest
                 <!-- login form end-->
                 <div class="checkout-main-wrap">
                     <form>
@@ -421,13 +431,16 @@
                                     <a href="#" target="_blank">Privacy Policy</a> 
                                 </div>
                                 <div class="cc_place_order_btn">
-                                    <button class="btn-bg-large" type="submit">Place Order</button>        
+                                    @guest
+                                        <a id="placeOrderDetails" href="javascript:void(0);" class="btn-bg-large">Place Order </a>   
+                                    @endguest
+                                    @auth
+                                        <button class="btn-bg-large" type="submit">Place Order</button> 
+                                    @endauth
                                 </div>
                             </div>
-
                         </div>
-                        <!-- Checkout order section END -->    
-
+                        <!-- Checkout order section END -->  
                     </form>
                 </div>
             </div>
@@ -437,4 +450,47 @@
 @endsection
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.showlogin').on('click',function(){
+                $(".checkout-login-form").toggle(200);
+            });
+        });
+
+        $('form#loginRegisterForm').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                }
+            },
+            messages: {
+                email: "Please specify a valid email address",
+                password: "Please enter password"
+            },
+            submitHandler: function() {
+                // return true;
+                $.ajax({
+                    url: "{{ route('login.customer.account') }}",
+                    method: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}', 
+                        email: $('#email').val(),
+                        password: $('#password').val(),
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        return false;
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+
+    </script>
+
 @endsection
