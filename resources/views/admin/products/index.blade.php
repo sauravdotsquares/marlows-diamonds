@@ -49,9 +49,7 @@
                            <th>Sr No</th>
                            <th><span class="wc-image tips">Image</span></th>
                            <th>Title</th>
-                           <th>SKU</th>
                            <th>Stock</th>
-                           <th>Price</th>
                            <th>Category</th>
                            <th>Tags</th>
                            <th>Created</th>
@@ -74,9 +72,7 @@
                                     @endif
                                  </td>
                                  <td>{{isset($value->title)?$value->title:''}}</td>
-                                 <td>{{isset($value->sku)?$value->sku:''}}</td>
                                  <td>In Stock</td>
-                                 <td>{{isset($value->sale_price)?$value->sale_price:''}}</td>
                                  <td>{{isset($value->cat_details)?$value->cat_details:''}}</td>
                                  <td>--</td>
                                  <td>{{$value->created_at}}</td>
@@ -104,9 +100,7 @@
                            <th>Sr No</th>
                            <th><span class="wc-image tips">Image</span></th>
                            <th>Title</th>
-                           <th>SKU</th>
                            <th>Stock</th>
-                           <th>Price</th>
                            <th>Category</th>
                            <th>Tags</th>
                            <th>Created</th>
