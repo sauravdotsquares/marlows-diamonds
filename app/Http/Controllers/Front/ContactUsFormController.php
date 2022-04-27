@@ -31,7 +31,7 @@ class ContactUsFormController extends Controller {
             'phone' => $request->get('phone'),
             'user_query' => $request->get('message'),
         ), function($message) use ($request){
-            $message->from($request->email);
+            $message->from('ds19@24livehost.com');
             $message->to('marlowstesting@getnada.com', 'Admin')->subject('test subj');
         });
         return back()->with('success', 'We have received your message and would like to thank you for writing to us.');

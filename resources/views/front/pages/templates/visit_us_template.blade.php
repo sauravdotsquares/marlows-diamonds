@@ -35,7 +35,7 @@
 				<div class="visit-form">
 					<h3>NEED ASSISTANCE?</h3>
 					<p>We're here to help...<br>Complete the contact form below and we will be in touch.</p>
-					<form action="" method="post" action="{{ route('contact') }}">
+					<form method="post" action="{{ route('contact') }}">
 					@csrf
 						<div class="form-controls">
 							<input type="text" name="name" id="name" class="{{ $errors->has('name') ? 'error' : '' }}" placeholder="Your Name">
