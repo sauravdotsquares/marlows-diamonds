@@ -1,6 +1,10 @@
 @extends('layouts.front.app')
 @section('content')
 
+    @if(Session::has('error'))
+    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('error') }}</p>
+    @endif
+
     <div class="login-register-page">
         <div class="container">
             <div class="accounts-heading text-center">
@@ -15,14 +19,15 @@
                                 Login
                             </div>
                             <div class="login-reg-box">
-                                <form>
+                                <form id="loginCustomers" action="{{route('login-customers')}}" method="POST">
+                                    @csrf
                                     <div class="checkout-form-group">
-                                        <label class="input-label">Username or email address <abbr class="required">*</abbr></label>
-                                        <input type="text" class="form-control">
+                                        <label class="input-label">Email address <abbr class="required">*</abbr></label>
+                                        <input type="text" required="required" name="email" id="email" class="form-control">
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Password  <abbr class="required">*</abbr></label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" required="required" name="password" id="password" class="form-control">
                                     </div>
                                     <div class="action-login">
                                         <button class="btn-bg-small" type="submit">Login</button>
@@ -45,18 +50,19 @@
                                 Register
                             </div>
                             <div class="login-reg-box">
-                                <form>
+                                <form id="registerCustomers" action="{{route('register-customers')}}" method="POST">
+                                    @csrf
                                     <div class="checkout-form-group">
                                         <label class="input-label">Username <abbr class="required">*</abbr></label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="username" id="username" required="required" class="form-control">
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Email address <abbr class="required">*</abbr></label>
-                                        <input type="email" class="form-control">
+                                        <input type="email" name="email" id="email" required="required" class="form-control">
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Password <abbr class="required">*</abbr></label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" name="password" id="password" required="required" class="form-control">
                                     </div>
                                     <div class="log-privacy-policy-text">
                                         <p>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our 

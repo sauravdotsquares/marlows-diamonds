@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\Models\Country;
 
 class AddToCartController extends Controller
 {
@@ -110,7 +111,8 @@ class AddToCartController extends Controller
     
     public function checkoutOrder(Request $request)
     {
-        return view('front.pages.checkout');
+        $getContries = Country::get();
+        return view('front.pages.checkout',compact('getContries'));
     }
 
     

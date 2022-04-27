@@ -150,14 +150,25 @@ Auth::routes();
 *** Frontend Routes
 */
 
+Route::group(['middleware' => ['customer']], function () {
+	Route::namespace('Front')->group(function() {
+		Route::get('/my-accounts', 'LoginController@dashboardPage')->name('my_accounts');
+		Route::get('/logout-customer', 'LoginController@logout')->name('logout-customer');
+		Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
+	});
+});
+
 Route::namespace('Front')->group(function () {
     Route::get('/', 'PageController@page')->name('home');
-
+	
     Route::get('/my-account', 'LoginController@index')->name('my-account');
+    Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
+    Route::post('/login-customers', 'LoginController@loginCustomer')->name('login-customers');
+
     Route::post('/login-customer-account', 'LoginController@getLoginRegisterAccount')->name('login.customer.account');
 	
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
-    Route::get('{page}', 'PageController@page')->name('page');
+    // Route::get('{page}', 'PageController@page')->name('page');
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
 	Route::get('product/{slug?}','ProductController@productDetails');
 	Route::post('product/get-product-list','ProductController@getProductList');
