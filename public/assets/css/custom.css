@@ -479,10 +479,12 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-search-table table tbody tr td a {color: #8e2e65;text-decoration: none;}
 .diamond-search-table table tbody tr:hover td{ background: #8e2e65; color: #fff; }
 .diamond-search-table table tbody tr:hover td a{ color: #fff; }
-.pagination-navs ul li {display: inline-block;vertical-align: middle;margin: 0;}
-.pagination-navs ul li a {box-shadow: 0 1px 2px rgba(0,0,0,0.2);display: block;border: 1px solid #902f66;text-decoration: none;margin: 0 5px 0 0;padding: 0 7px;min-width: 14px;color: #902f66;background: #fff;border-radius: 3px;}
-.pagination-navs ul li.active-item a, .pagination-navs ul li:hover a {background: #902f66;color: #fff;}
-.pagination-navs {text-align: center;margin: 20px 0 0 0;}
+.pagination ul li {display: inline-block;vertical-align: middle;margin: 0;}
+.pagination ul li a {cursor: pointer;box-shadow: 0 1px 2px rgba(0,0,0,0.2);display: block;border: 1px solid #902f66;text-decoration: none;margin: 0 5px 0 0;padding: 0 7px;min-width: 14px;color: #902f66;background: #fff;border-radius: 3px;}
+.pagination ul li.active a, .pagination ul li:hover a {background: #902f66;color: #fff;}
+.pagination {text-align: center;margin: 20px 0 0 0;display: block;}
+.pagination .disabled a { background: #80808070; color: #fff;border: 1px solid #fff;}
+.pagination ul li.disabled:hover a {background: #80808070;color: #fff;}
 .addbasket-req-btns .white-bg-btn {margin: 0 10px 0 0;}
 .table-bottom-content {text-align: right;margin: 22px 0 0 0;}
 .addbasket-req-btns {margin: 20px 0 0 0;}
@@ -501,12 +503,12 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-field-inner-bar .diamond-fil-cols {width: 100%;flex: 0 0 84%;max-width: 84%;-ms-flex: 0 0 84%;}
 .diamond-field-inner-bar .diamond-filter-quote {width: 100%;flex: 0 0 16%;max-width: 16%;-ms-flex: 0 0 16%; padding: 0 0 0 8px; position: relative;}
 .diamond-filter-in input {width: 100%;}
-.quote-icon-pop .ma-info-icon img {max-width: 32px;}
+.quote-icon-pop .ma-info-icon img {max-width: 25px;}
 .quote-icon-pop {text-align: right; position: relative;}
 .m-quote-pop {position: absolute;background: #fff;text-align: left;box-shadow: 0 0 10px 6px rgba(0,0,0,.1);border-radius: 6px;width: 300px;right: -50px;padding: 12px 13px;bottom: 50px; display: none;}
 .diamond-values-in ul {display: flex;list-style: none;}
-.diamond-values-in ul li a {text-decoration: none;border: 1px solid #EBEBEB;padding: 0 4px;height: 38px;display: block;line-height: 38px;background: #f9f9f9;color: #9a9a9a;font-size: 11px;margin: 0 3px 0 0;}
-.diamond-values-in ul li a:hover, .diamond-values-in ul li.selected-this a{ color: #fff; background: #8e2e65 }
+.diamond-values-in ul li button {text-decoration: none;border: 1px solid #EBEBEB;padding: 0 4px;height: 38px;display: block;line-height: 38px;background: #f9f9f9;color: #9a9a9a;font-size: 11px;margin: 0 3px 0 0;}
+.diamond-values-in ul li button:hover{ color: #fff; background: #8e2e65 }
 .m-quote-pop::after {content: "";width: 0;height: 0;border-style: solid;border-width: 8px 6px 0 6px;border-color: #fff transparent transparent transparent;position: absolute;right: 60px;bottom: -8px;}
 /** **/
 .middle-topbar-right li.dropdown a button {background: none;border: none;padding: 0;color: #878787;font-size: 14px; margin: 0;}
@@ -662,7 +664,8 @@ label.label {display: block;margin: 0 0 5px 0;}
 .getmail{ display: flex;}
 .account-sidebar {margin: 0 0 30px 0;}
 .checkout-form-group .form-control {margin: 0 0 10px 0;}
-
+.diamond_image{width: 80px;}
+.range_carat_wap{width: 83%}
 
 /** mega menuhover for desktop **/
 @media(min-width:767px){

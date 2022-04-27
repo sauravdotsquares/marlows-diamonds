@@ -1,7 +1,10 @@
 @extends('layouts.front.app')
 @section('content')
-
-<div class="perfect-certified-wrap" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()">
+@section('css')
+<link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet" type="text/css">
+@endsection
+<div class="perfect-certified-wrap" id="diamondMainController" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()">
 	<div class="container">
 		<div class="perfect-certified-head">
 			<h1>{!!$data->subtitle!!}</h1>
@@ -28,70 +31,70 @@
 											<button type="button" class="btn active-diamond  shape_btn">
 												<img src="assets/images/round-1.png" alt="">
 												<span>Round</span>
-												<input checked="checked" value="Round Brilliant" class="" type="radio" name="shape">
+												<input checked="checked" value="ROUND" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/pear-1.png" alt="pearl">
 												<span>Pear</span>
-												<input value="PEAR" class="" type="radio" name="shape">
+												<input value="PEAR" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/marquee-1.png" alt="marquise">
 												<span>Marquise </span>
-												<input value="MARQUISE" class="" type="radio" name="shape">
+												<input value="MARQUISE" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/heart-1.png" alt="heart">
 												<span>Heart</span>
-												<input value="HEART" class="" type="radio" name="shape">
+												<input value="HEART" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/asscher.png" alt="Asscher">
 												<span>Asscher</span>
-												<input value="ASSCHER" class="" type="radio" name="shape">
+												<input value="ASSCHER" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/priceless-1.png" alt="priceless">
 												<span>Princess</span>
-												<input value="PRINCESS" class="" type="radio" name="shape">
+												<input value="PRINCESS" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/radiant.png" alt="radiant">
 												<span>Radiant</span>
-												<input value="RADIANT" class="" type="radio" name="shape">
+												<input value="RADIANT" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/emerald-1.png" alt="Emerald">
 												<span>Emerald</span>
-												<input value="EMERALD" class="" type="radio" name="shape">
+												<input value="EMERALD" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/oval-1.png" alt="Oval">
 												<span>Oval</span>
-												<input value="OVAL" class="" type="radio" name="shape">
+												<input value="OVAL" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 										<li>
 											<button type="button" class="btn  shape_btn">
 												<img src="assets/images/cushion.png" alt="cushion">
 												<span>Cushion</span>
-												<input value="CUSHION" class="" type="radio" name="shape">
+												<input value="CUSHION" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 											</button>
 										</li>
 									</ul>
@@ -99,22 +102,22 @@
 							</div>
 						</div>
 
-						<div class="choose-diaond-fields row">
+						<div class="choose-diaond-fields row diamond-carat">
 							<div class="diamond-field-labels col-lg-3">
 								Carat
 							</div>
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
-									<div class="diamond-fil-cols">
-										<div class="diamond-filter-in">
-											<input type="range">
-										</div>
-									</div>
+									<div class="range_carat_wap">
+										<div id="range-slider"></div>
+										<input type="hidden" id="input-carat-min" name="carat">
+										<input type="hidden" id="input-carat-max" name="carat-max">
+									 </div>
 									<div class="diamond-filter-quote">
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
-												THIS IS THE WEIGHT OF THE CENTRAL MAIN STONE OF YOUR ENGAGEMENT RING.ONE CARTA IS EQUAL TO 1/5 OF A GRAM MAKING DIAMONDS THE MOST EXPENSIVE MINERAL FOUND ON EARTH
+												{{CARAT_TOOLTIP}}
 											</div>
 										</div>
 									</div>
@@ -122,7 +125,7 @@
 							</div>
 						</div>
 
-						<div class="choose-diaond-fields row">
+						<div class="choose-diaond-fields row diamond-colour">
 							<div class="diamond-field-labels col-lg-3">
 								Colour
 							</div>
@@ -131,30 +134,15 @@
 									<div class="diamond-fil-cols">
 										<div class="diamond-values-in">
 											<ul>
+												@foreach (range('D', 'K') as $alphabet)
 												<li class="selected-this">
-													<a href="#">D</a>
+													<button type="button" class="btn">
+									                    {{$alphabet}} 
+									                    <input value="{{$alphabet}}" class="diamond-colour" name="colour[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
-												<li>
-													<a href="#">E</a>
-												</li>
-												<li>
-													<a href="#">F</a>
-												</li>
-												<li>
-													<a href="#">G</a>
-												</li>
-												<li>
-													<a href="#">H</a>
-												</li>
-												<li>
-													<a href="#">I</a>
-												</li>
-												<li>
-													<a href="#">J</a>
-												</li>
-												<li>
-													<a href="#">K</a>
-												</li>
+												@endforeach
+												
 											</ul>
 										</div>
 									</div>
@@ -162,7 +150,7 @@
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
-												THIS IS THE WEIGHT OF THE CENTRAL MAIN STONE OF YOUR ENGAGEMENT RING.ONE CARTA IS EQUAL TO 1/5 OF A GRAM MAKING DIAMONDS THE MOST EXPENSIVE MINERAL FOUND ON EARTH
+												{{COLOUR_TOOLTIP}}
 											</div>
 										</div>
 									</div>
@@ -171,7 +159,7 @@
 						</div>
 
 
-						<div class="choose-diaond-fields row">
+						<div class="choose-diaond-fields row diamond-clarity">
 							<div class="diamond-field-labels col-lg-3">
 								Clarity
 							</div>
@@ -181,25 +169,52 @@
 										<div class="diamond-values-in">
 											<ul>
 												<li>
-													<a href="#">IF</a>
+													<button type="button" class="btn">
+									                    IF 
+									                    <input value="IF" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">VVS1</a>
+													
+													<button type="button" class="btn">
+									                    VVS1 
+									                    <input value="VVS1" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">VVS2</a>
+													
+													<button type="button" class="btn">
+									                    VVS2 
+									                    <input value="VVS2" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">VS1</a>
+													
+													<button type="button" class="btn">
+									                    VS1 
+									                    <input value="VS1" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">VS2</a>
+													
+													<button type="button" class="btn">
+									                    VS2 
+									                    <input value="VS2" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">SI1</a>
+													
+													<button type="button" class="btn">
+									                    SI1 
+									                    <input value="SI1" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">SI2</a>
+													
+													<button type="button" class="btn">
+									                    SI2 
+									                    <input value="SI2" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 											</ul>
 										</div>
@@ -208,7 +223,7 @@
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
-												THIS IS THE WEIGHT OF THE CENTRAL MAIN STONE OF YOUR ENGAGEMENT RING.ONE CARTA IS EQUAL TO 1/5 OF A GRAM MAKING DIAMONDS THE MOST EXPENSIVE MINERAL FOUND ON EARTH
+												{{CLARITY_TOOLTIP}}
 											</div>
 										</div>
 									</div>
@@ -217,7 +232,7 @@
 						</div>
 
 
-						<div class="choose-diaond-fields row">
+						<div class="choose-diaond-fields row diamond-cut-grade">
 							<div class="diamond-field-labels col-lg-3">
 								 Cut Grade 
 							</div>
@@ -227,13 +242,22 @@
 										<div class="diamond-values-in">
 											<ul>
 												<li>
-													<a href="#">Excellent</a>
+													<button type="button" class="btn">
+									                    Excellent 
+									                    <input value="EX" class="diamond-grade" name="grade[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Very Good</a>
+													<button type="button" class="btn">
+									                    Very Good 
+									                    <input value="VG" class="diamond-grade" name="grade[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Good</a>
+													<button type="button" class="btn">
+									                    Good 
+									                    <input value="GD" class="diamond-grade" name="grade[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 
 											</ul>
@@ -243,7 +267,7 @@
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
-												THIS IS THE WEIGHT OF THE CENTRAL MAIN STONE OF YOUR ENGAGEMENT RING.ONE CARTA IS EQUAL TO 1/5 OF A GRAM MAKING DIAMONDS THE MOST EXPENSIVE MINERAL FOUND ON EARTH
+												{{CUT_GRADE_TOOLTIP}}
 											</div>
 										</div>
 									</div>
@@ -251,7 +275,7 @@
 							</div>
 						</div>
 
-						<div class="choose-diaond-fields row">
+						<div class="choose-diaond-fields row diamond-polish">
 							<div class="diamond-field-labels col-lg-3">
 								 Polish 
 							</div>
@@ -261,13 +285,22 @@
 										<div class="diamond-values-in">
 											<ul>
 												<li>
-													<a href="#">Excellent</a>
+													<button type="button" class="btn">
+									                    Excellent 
+									                    <input value="EX" class="diamond-polish" name="polish[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Very Good</a>
+													<button type="button" class="btn">
+									                    Very Good 
+									                    <input value="VG" class="diamond-polish" name="polish[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Good</a>
+													<button type="button" class="btn">
+									                    Good 
+									                    <input value="GD" class="diamond-polish" name="polish[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 
 											</ul>
@@ -277,7 +310,7 @@
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
-												THIS IS THE WEIGHT OF THE CENTRAL MAIN STONE OF YOUR ENGAGEMENT RING.ONE CARTA IS EQUAL TO 1/5 OF A GRAM MAKING DIAMONDS THE MOST EXPENSIVE MINERAL FOUND ON EARTH
+												{{POLISH_TOOLTIP}}
 											</div>
 										</div>
 									</div>
@@ -285,7 +318,7 @@
 							</div>
 						</div>
 
-						<div class="choose-diaond-fields row">
+						<div class="choose-diaond-fields row diamond-symmetry">
 							<div class="diamond-field-labels col-lg-3">
 								 Symmetry  
 							</div>
@@ -295,13 +328,22 @@
 										<div class="diamond-values-in">
 											<ul>
 												<li>
-													<a href="#">Excellent</a>
+													<button type="button" class="btn">
+									                    Excellent 
+									                    <input value="EX" class="diamond-symmetry" name="symmetry[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Very Good</a>
+													<button type="button" class="btn">
+									                    Very Good 
+									                    <input value="VG" class="diamond-symmetry" name="symmetry[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Good</a>
+													<button type="button" class="btn">
+									                    Good 
+									                    <input value="GD" class="diamond-symmetry" name="symmetry[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 
 											</ul>
@@ -311,7 +353,7 @@
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
-												THIS IS THE WEIGHT OF THE CENTRAL MAIN STONE OF YOUR ENGAGEMENT RING.ONE CARTA IS EQUAL TO 1/5 OF A GRAM MAKING DIAMONDS THE MOST EXPENSIVE MINERAL FOUND ON EARTH
+												{{SYMMETRY_TOOLTIP}}
 											</div>
 										</div>
 									</div>
@@ -320,7 +362,7 @@
 						</div>
 
 
-						<div class="choose-diaond-fields row">
+						<div class="choose-diaond-fields row diamond-fluorescence">
 							<div class="diamond-field-labels col-lg-3">
 								 Fluorescence   
 							</div>
@@ -330,19 +372,34 @@
 										<div class="diamond-values-in">
 											<ul>
 												<li>
-													<a href="#">None</a>
+													<button type="button" class="btn">
+									                    None 
+									                    <input value="N" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Faint</a>
+													<button type="button" class="btn">
+									                    Faint 
+									                    <input value="F" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Medium</a>
+													<button type="button" class="btn">
+									                    Medium 
+									                    <input value="M" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Strong</a>
+													<button type="button" class="btn">
+									                    Strong 
+									                    <input value="ST" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">Very Strong</a>
+													<button type="button" class="btn">
+									                    V Strong 
+									                    <input value="VS" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 
 											</ul>
@@ -352,7 +409,7 @@
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
-												THIS IS THE WEIGHT OF THE CENTRAL MAIN STONE OF YOUR ENGAGEMENT RING.ONE CARTA IS EQUAL TO 1/5 OF A GRAM MAKING DIAMONDS THE MOST EXPENSIVE MINERAL FOUND ON EARTH
+												{{FLUORESCENCE_TOOLTIP}}
 											</div>
 										</div>
 									</div>
@@ -370,10 +427,16 @@
 										<div class="diamond-values-in">
 											<ul>
 												<li>
-													<a href="#">GIA</a>
+													<button type="button" class="btn">
+									                    GIA 
+									                    <input value="GIA" class="diamond-certificate" name="certificate[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 												<li>
-													<a href="#">IGI</a>
+													<button type="button" class="btn">
+									                    IGI 
+									                    <input value="IGI" class="diamond-certificate" name="certificate[]" type="checkbox" ng-click="getDiamondResults()">
+									                </button>
 												</li>
 											</ul>
 										</div>
@@ -382,7 +445,7 @@
 										<div class="quote-icon-pop">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
-												THIS IS THE WEIGHT OF THE CENTRAL MAIN STONE OF YOUR ENGAGEMENT RING.ONE CARTA IS EQUAL TO 1/5 OF A GRAM MAKING DIAMONDS THE MOST EXPENSIVE MINERAL FOUND ON EARTH
+												{{CERTIFICATE_TOOLTIP}}
 											</div>
 										</div>
 									</div>
@@ -390,9 +453,9 @@
 							</div>
 						</div>
 
-						<div class="chooseshop-btn text-center">
+						<!-- <div class="chooseshop-btn text-center">
 							<a class="btn-bg-small" href="#">Search</a>
-						</div>
+						</div> -->
 					</div>
 
 					</form>
@@ -412,7 +475,7 @@
 										<th>Carat</th>
 										<th>Colour</th>
 										<th>Clarity</th>
-										<th>Cut</th>
+										<th ng-if="shape=='ROUND'">Cut</th>
 										<th>Cert</th>
 										<th>Diamond Price inc VAT</th>
 										<th>Certificate</th>
@@ -421,105 +484,49 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td></td>
-										<td><input type="radio"></td>
+									<tr ng-if="data.length>0 && loader==false" ng-repeat="records in data">
+										<td><%records.Shape%></td>
+										<td><%records.Carat%></td>
+										<td><%records.Color%></td>
+										<td><%records.Clarity%></td>
+										<td ng-if="shape=='ROUND'"><%records.Cut%></td>
+										<td><%records.Lab%></td>
+										<td><%records.Amount*VAT | number : 2 %></td>
+
+										<td> <a target="_block" class="table-view-btn" href="<%records.CertificateLink%>">View</a> </td>
+
+										<td><img ng-if="records.ImageLink" src="<%records.ImageLink%>" class="diamond_image" alt="<%records.Shape%>"></td>
+
+										<td><input type="radio" name="selectedDiamond" value="<%records.Amount%>" ng-checked="$index==0" ng-click="updateDiamondPrice(records.Amount)" ng-model="selectedDiamond"></td>
 									</tr>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td></td>
-										<td><input type="radio"></td>
+
+									<tr ng-if="data.length==0">
+										<td colspan="10">No Record Found.</td>
+										
 									</tr>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td><a class="table-view-diamond" href="#">View Diamond</a></td>
-										<td><input type="radio"></td>
-									</tr>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td></td>
-										<td><input type="radio"></td>
-									</tr>
-									<tr>
-										<td>ROUND</td>
-										<td>0.30</td>
-										<td>K</td>
-										<td>SI1</td>
-										<td>GD</td>
-										<td>GIA</td>
-										<td>£278.11</td>
-										<td> <a class="table-view-btn" href="#">View</a> </td>
-										<td><a class="table-view-diamond" href="#">View Diamond</a></td>
-										<td><input type="radio"></td>
-									</tr>
+									
 								</tbody>
 							</table>
+						<div class="timeline-wrapper" ng-if="loader">
+						    <div class="timeline-item">
+						    	@for($i=1;$i<=5;$i++)
+						        <div class="animated-background">
+						            <div class="background-masker content-first-end"></div>
+						        </div>
+						        @endfor
+						    </div>
 						</div>
-						<div class="pagination-navs">
-							<ul>
-								<li class="page-prev active-item">
-									<a href="#">Prev</a>
-								</li>
-								<li class="active-item">
-									<a href="#">1</a>
-								</li>
-								<li>
-									<a href="#">2</a>
-								</li>
-								<li>
-									<a href="#">3</a>
-								</li>
-								<li>
-									<a href="#">5</a>
-								</li>
-								<li>
-									<a href="#">...</a>
-								</li>
-								<li>
-									<a href="#">9</a>
-								</li>
-								<li>
-									<a href="#">10</a>
-								</li>
-								<li class="page-next">
-									<a href="#">Next</a>
-								</li>
-							</ul>
-						</div>
+						<div data-pagination=""
+				             data-num-pages="totalPages" 
+				             data-current-page="currentPage"
+				             data-max-size="maxSize" 
+				             data-boundary-links="true" ng-click="pageChanged()">
+				      </div>
 					</div>
 					<div class="table-bottom-content">
 						<div class="diamond-total-subtotal">
-							<p> <strong>Diamond Price:</strong> £ 278.11</p>
-							<div class="total-diamond-price">£ 278.00 </div>
+							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount*VAT | number : 2 %></p>
+							<div class="total-diamond-price" ng-if="firstDiamondAmount">£ <%firstDiamondAmount*VAT | number : 0 %> </div>
 						</div>
 						<div class="addbasket-req-btns">
 							<a class="white-bg-btn" href="#">Add To Basket</a>
@@ -532,5 +539,36 @@
 	</div>
 </div>
 
+@section('js')
+<script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($){
+		var stepsSlider = document.getElementById('range-slider');
+		var input0 = document.getElementById('input-carat-min');
+		var input1 = document.getElementById('input-carat-max');
+		var inputs = [input0, input1];
+
+		noUiSlider.create(stepsSlider, {
+		    start: [0.3, 2.5],
+		    connect: true,
+		    tooltips: [true, wNumb({decimals: 0})],
+		    range: {
+		        'min': [0.3],
+		        'max': [5]
+		    },
+		});
+
+		stepsSlider.noUiSlider.on('update', function (values, handle) {
+		    inputs[handle].value = values[handle];
+			//jQuery(".search-button button").trigger('click');
+		});
+		stepsSlider.noUiSlider.on('change', function (values, handle) {
+		    angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
+		});
+
+  });
+</script>
+@endsection
 
 @endsection
