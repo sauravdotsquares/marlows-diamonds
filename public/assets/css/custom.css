@@ -503,12 +503,12 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-field-inner-bar .diamond-fil-cols {width: 100%;flex: 0 0 84%;max-width: 84%;-ms-flex: 0 0 84%;}
 .diamond-field-inner-bar .diamond-filter-quote {width: 100%;flex: 0 0 16%;max-width: 16%;-ms-flex: 0 0 16%; padding: 0 0 0 8px; position: relative;}
 .diamond-filter-in input {width: 100%;}
-.quote-icon-pop .ma-info-icon img {max-width: 32px;}
+.quote-icon-pop .ma-info-icon img {max-width: 25px;}
 .quote-icon-pop {text-align: right; position: relative;}
 .m-quote-pop {position: absolute;background: #fff;text-align: left;box-shadow: 0 0 10px 6px rgba(0,0,0,.1);border-radius: 6px;width: 300px;right: -50px;padding: 12px 13px;bottom: 50px; display: none;}
 .diamond-values-in ul {display: flex;list-style: none;}
-.diamond-values-in ul li a {text-decoration: none;border: 1px solid #EBEBEB;padding: 0 4px;height: 38px;display: block;line-height: 38px;background: #f9f9f9;color: #9a9a9a;font-size: 11px;margin: 0 3px 0 0;}
-.diamond-values-in ul li a:hover, .diamond-values-in ul li.selected-this a{ color: #fff; background: #8e2e65 }
+.diamond-values-in ul li button {text-decoration: none;border: 1px solid #EBEBEB;padding: 0 4px;height: 38px;display: block;line-height: 38px;background: #f9f9f9;color: #9a9a9a;font-size: 11px;margin: 0 3px 0 0;}
+.diamond-values-in ul li button:hover{ color: #fff; background: #8e2e65 }
 .m-quote-pop::after {content: "";width: 0;height: 0;border-style: solid;border-width: 8px 6px 0 6px;border-color: #fff transparent transparent transparent;position: absolute;right: 60px;bottom: -8px;}
 /** **/
 .middle-topbar-right li.dropdown a button {background: none;border: none;padding: 0;color: #878787;font-size: 14px; margin: 0;}
@@ -665,6 +665,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .account-sidebar {margin: 0 0 30px 0;}
 .checkout-form-group .form-control {margin: 0 0 10px 0;}
 .diamond_image{width: 80px;}
+.range_carat_wap{width: 83%}
 
 /** mega menuhover for desktop **/
 @media(min-width:767px){

@@ -17,10 +17,13 @@ class DiamondFinderController
      */
     public function diamondSearch(Request $request)
     {
-    	
-        
-       
-        $data = array('shape'=>$request->shape,'grade'=>'EX','certificate'=>'GIA','colorFrom'=>'D','colorTo'=>'K','clarityFrom'=>'IF','clarityTo'=>'SI2','caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'paging'=>5);
+    	$colorFrom = 'D'; $colorTo = 'K';
+    	if($request->colour!=''){
+        	$colour = explode(',',$request->colour);
+			$colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
+       	}
+
+        $data = array('shape'=>$request->shape,'grade'=>'EX','certificate'=>'GIA','colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'clarityFrom'=>'IF','clarityTo'=>'SI2','caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'paging'=>5);
         //echo '<pre>'; print_r($data); die;
 
         $hkData = getHKApiRecords($data);

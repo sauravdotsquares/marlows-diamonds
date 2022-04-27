@@ -18,17 +18,48 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
         $scope.currentPage = 1;
         $scope.range = [];
 
-        $scope.shape = $("input[name='shape']:checked").val();
-        setTimeout(function() {
+        $scope.shape = $("input[name='shape']:checked").val(); // Shape
+
+        setTimeout(function() { // Carat
             $scope.carat_min = $("#input-carat-min").val();
             $scope.carat_max = $("#input-carat-max").val();
             getData();
         }, 0);
-       
+        
+        $scope.colour = [];
+        $("input[name='colour[]']:checked").each(function () { // Colour
+            $scope.colour.push($(this).val());
+        });
+        $scope.clarity = [];
+        $("input[name='clarity[]']:checked").each(function () { // Clarity
+            $scope.clarity.push($(this).val());
+        });
+        $scope.grade = [];
+        $("input[name='grade[]']:checked").each(function () { // Cut grade
+            $scope.grade.push($(this).val());
+        });
+
+        $scope.polish = [];
+        $("input[name='polish[]']:checked").each(function () { // Polish
+            $scope.polish.push($(this).val());
+        });
+        $scope.symmetry = [];
+        $("input[name='symmetry[]']:checked").each(function () { // Symmetry
+            $scope.symmetry.push($(this).val());
+        });
+        $scope.fluorescence = [];
+        $("input[name='fluorescence[]']:checked").each(function () { // Fluorescence
+            $scope.fluorescence.push($(this).val());
+        });
+
+        $scope.certificate = [];
+        $("input[name='certificate[]']:checked").each(function () { // Certificate
+            $scope.certificate.push($(this).val());
+        });
         
         function getData(){
             
-            $scope.fromService = diamondSearchService.diamondSearch($scope.limit,$scope.currentPage,$scope.next_page_url,$scope.shape,$scope.carat_min,$scope.carat_max).then(function(result) {
+            $scope.fromService = diamondSearchService.diamondSearch($scope.limit,$scope.currentPage,$scope.next_page_url,$scope.shape,$scope.carat_min,$scope.carat_max,$scope.colour,$scope.clarity,$scope.grade,$scope.polish,$scope.symmetry,$scope.fluorescence,$scope.certificate).then(function(result) {
                
                 $scope.data = result.data.data;
                 
@@ -66,13 +97,13 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
 
 MarlowsAPP.service('diamondSearchService', function($http, $location){
 var apiUrl = base_url;
-this.diamondSearch= function(limit,currentPage, nextpage,shape,carat_min,carat_max){
+this.diamondSearch= function(limit,currentPage, nextpage,shape,carat_min,carat_max,colour,clarity,grade,polish,symmetry,fluorescence,certificate){
     
     var apiUrls = '';
     if(nextpage == ''){
-        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+1+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max;
+        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+1+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
     } else {
-        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+currentPage+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max;
+        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+currentPage+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
     }
     return $http({
         method: 'GET',
