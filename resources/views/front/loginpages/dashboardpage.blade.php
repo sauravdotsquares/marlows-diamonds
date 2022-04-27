@@ -34,7 +34,7 @@
                                     <a href="javascript:void(0)" class="nav-link" id="auctions-tab" data-bs-toggle="tab" data-bs-target="#auctions" type="button" role="tab" aria-controls="auctions" aria-selected="false">Auctions settings</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#">Logout</a>
+                                    <a href="{{route('logout-customer')}}">Logout</a>
                                 </li>
                                 
                             </ul>  
@@ -45,7 +45,7 @@
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                                     <div class="account-dashboard-page">
-                                        <p>Hello <strong>MarlowsDiamonds</strong> (not <strong>MarlowsDiamonds</strong>? <a href="#">Log out</a>)</p>
+                                        <p>Hello <strong>MarlowsDiamonds</strong> (not <strong>MarlowsDiamonds</strong>? <a href="{{route('logout-customer')}}">Log out</a>)</p>
                                         <p>From your account dashboard you can view your <a href="#">recent orders</a>, manage your <a href="#">edit your password and account details</a>.</p>
                                     </div>
                                 </div>                                    

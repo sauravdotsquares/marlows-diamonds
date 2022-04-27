@@ -85,7 +85,7 @@
 
 <?php 
 	// echo "<pre>";
-	// print_r($data->getProductImages->image_url);
+	// print_r($data->getProductVariation[0]->regular_price);
 	// die;
 ?>
 
@@ -104,7 +104,7 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
-				<div class="diamond-type">
+				<!-- <div class="diamond-type">
 					<label>Diamond Type</label>
 					<div class="d-type-input">
 						<input type="radio" name="attribute_choose-your-diamond" checked value="Mined Diamond">
@@ -114,111 +114,14 @@
 						<input type="radio" name="attribute_choose-your-diamond" value="Lab Grown Diamonds">
 						<span>Lab Grow Diamond</span>
 					</div>
-				</div>
+				</div> -->
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
 
 					</div>
 				</div>
 				<div id="apiCustomDesign">
-					<!-- <div class="type-variations-row">
-						<div class="type-variations-col">
-							<label class="label"> Carat </label>
-							<select class="form-control" name="carat" id="carat">
-								<option value="">Choose an option</option>
-								<option value="0.30" selected="selected">0.30-0.39</option>
-								<option value="0.40">0.40-0.49</option>
-								<option value="0.50">0.50-0.59</option>
-								<option value="0.60">0.60-0.69</option>
-								<option value="0.70">0.70-0.79</option>
-								<option value="0.80">0.80-0.89</option>
-								<option value="0.90">0.90-0.99</option>
-								<option value="1">1.00-1.19</option>
-								<option value="1.2">1.20-1.49</option>
-								<option value="1.50">1.50-1.69</option>
-								<option value="1.70">1.70-1.99</option>
-								<option value="2">2.00-2.49</option>
-								<option value="2.5">2.50-2.99</option>
-								<option value="3">3.00-3.99</option>
-							</select>
-						</div>
-						<div class="type-variations-col">
-							<label class="label"> Colour </label>
-							<select class="form-control" name="diamond-colour" id="diamond-colour">
-                    			<option value="">Choose an option</option>
-								<option value="D" selected="selected">D - Exceptional White +</option>
-								<option value="E">E - Exceptional White</option>
-								<option value="F">F - Rare White +</option>
-								<option value="G">G - Rare White</option>
-								<option value="H">H - White</option>
-								<option value="I">I - Slightly Tinted White</option>
-								<option value="J">J - Slightly Tinted White</option>
-								<option value="K">K - Tinted White</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="type-variations-row">
-						<div class="type-variations-col">
-							<label class="label"> Clarity </label>
-							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
-                    			<option value="">Choose an option</option>
-								<option value="IF">IF - Internally Flawless</option>
-								<option value="VVS1">VVS1 - Minute Inclusions</option>
-								<option value="VVS2">VVS2 - Minute Inclusions</option>
-								<option value="VS1">VS1 - Very Small Inclusions</option>
-								<option value="VS2">VS2 - Very Small Inclusions</option>
-								<option value="SI1">SI1 - Small Inclusions</option>
-								<option value="SI2" selected="selected">SI2 - Small Inclusions</option>
-							</select>
-						</div>
-						<div class="type-variations-col">
-							<label class="label"> Cut Grade </label>
-							<select class="form-control" name="diamond-grade" id="diamond-grade">
-                    			<option value="">Choose an option</option>
-								<option value="EX" selected="selected">Excellent</option>
-								<option value="VG">Very Good</option>
-								<option value="GD">Good</option>
-							</select>
-						</div>
-					</div>
-					<div class="type-variations-row">
-						<div class="type-variations-col-one">
-							<label class="label"> Certificate </label>
-							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
-                    			<option value="">Choose an option</option>
-								<option value="GIA" selected="selected">GIA</option>
-								<option value="IGI">IGI</option>
-							</select>
-						</div>
-					</div>
-					<div class="view-diamond-sec">
-						<div class="viewall-diamond-btn"><a class="btn-bg-large viewdiamond-btn"
-								href="javascript:void(0)">View Available Diamonds</a></div>
-						<div class="diamond-table">
-							<div class="refine-heading">Refine Your Search</div>
-							<div class="diamond-table-outer">
-								<table width="100%" class="diamond-table-items">
-									<thead>
-										<tr>
-											<th>Shape</th>
-											<th>Carat</th>
-											<th>Colour</th>
-											<th>Clarity</th>
-											<th class="cut_grade_th" style="display: block;">Cut</th>
-											<th>Cert</th>
-											<th>Price</th>
-											<th>Certificate</th>
-											<th>Image</th>
-											<th>Select</th>
-										</tr>
-									</thead>
-									<tbody id="refineSearchData">
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div> -->
+					
 				</div>
 				<div class="product-decriptions">
 					<p>A unique style for Aaliyah. The round brilliant cut diamond is held elegantly in a fluted four
@@ -227,16 +130,15 @@
 				<div class="product-finder-price">
 					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
 				</div>
+
+				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
+				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
+				<input type="hidden" name="selected_final_price" id="selected_final_price" value="0.00">
+
 				<div class="product-add-cart">
 					<div class="product-to-wishlist">
 						@php
-							//echo "checking a ".$data->id;
-							//die;
 							$wishlist = session()->get('wishlist', []);
-							//echo "<pre>";
-							//print_r($wishlist);
-							//die;
-
 							$wishListClass = "fa-heart-o";
 							if(array_key_exists($data->id,$wishlist)){
 								$wishListClass = "fa-heart";
@@ -244,6 +146,7 @@
 						@endphp
 						<a href="javascript:void(0);" id="productWishList"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
 					</div>
+
 					<div class="product-to-basket">
 						<!-- <a class="btn-bg-small" href="#">Add to basket</a> -->
 						<!-- <a id="addtobasket" href="{{ route('add.to.cart', $data->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p> -->
@@ -613,29 +516,7 @@
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
 			});
-
-			getSelectedAttributePrice();
-
-			$('#carat').on('change',function(){
-				getSelectedAttributePrice();
-			});
-			$('#diamond-colour').on('change',function(){
-				getSelectedAttributePrice();
-			});
-			$('#diamond-clarity').on('change',function(){
-				getSelectedAttributePrice();
-			});
-			$('#diamond-grade').on('change',function(){
-				getSelectedAttributePrice();
-			});
-			$('#diamond-certificate').on('change',function(){
-				getSelectedAttributePrice();
-			});
-
-			$(document).on('change', "[id^=selectrefinedata]", function () {
-      			// var index = parseInt($(this).attr("id").replace("selectrefinedata", ''));
-				getCustomPrice();
-			});
+			getFinalPrice();
 
 			$('#addtobasket').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}');
@@ -646,6 +527,7 @@
 			});
 
 			$(document).on('change','#metal-colour',function(){
+				$('#finaldiamondprice').text("Pending...");
 				$.ajax({
 					type: 'POST',
 					url: '{{route("get-product-video")}}',
@@ -655,23 +537,15 @@
 						'metal_color' : $(this).val(),
 					},
 					success: function (res) {
-						// if(res.vari_video){
-						// 	var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
-						// 	$('#variationVideo').attr('src', videoUrl);
-						// 	$("#variationVideo")[0].play();
-						// }
 						if(res.vari_image){
 							var imageUrl = "{{ asset('storage/')}}/"+res.vari_image;
 							$('#productFeatureImage').attr('src', imageUrl);
+							getFinalPrice();
 						}
 					}
 				});
 			});
 		})
-
-		function getCustomPrice(){
-			$('#finaldiamondprice').text($("body input[type='radio'].refinedata:checked").data('price'));
-		}
 
 		function getCustomFilter(){
 			console.log("getCustomFilter");
@@ -724,63 +598,24 @@
             });
 		}
 
-		function getSelectedAttributePrice(){
-			var caratVal = $('#carat').val();
-			var diamondColor = $('#diamond-colour').val();
-			var diamondClarity = $('#diamond-clarity').val();
-			var diamondGrade = $('#diamond-grade').val();
-			var diamondCertificate = $('#diamond-certificate').val();
+		function getFinalPrice(){
+			$('#addtobasket').addClass('disabledAnchor');
 			$.ajax({
                 type: 'POST',
-                url: '{{route("custom-api-filter-data")}}',
+                url: '{{route("products-final-price")}}',
                 data: {
                     '_token': "{{csrf_token()}}",
-					'carat' : caratVal,
-					'color' : diamondColor,
-					'clarity' : diamondClarity,
-					'grade' : diamondGrade,
-					'certificate' : diamondCertificate,
+					'variation_price' : parseFloat($('#selected_variation_price').val()),
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
-					console.log(res);
-					$('#refineSearchData').html("");
-					if(res.html != ''){
-						$('#refineSearchData').html(res.html);
-						getCustomPrice();
+					$('#finaldiamondprice').html("");
+					if(res != ''){
+						$('#finaldiamondprice').text(res);
+						$('#selected_final_price').val(res);
+						$('#addtobasket').removeClass('disabledAnchor');
 					}else{
-						$('#refineSearchData').html("No Data Found");
-					}
-                }
-            });
-		}
-
-		function getSelectedAttributePrice(){
-			var caratVal = $('#carat').val();
-			var diamondColor = $('#diamond-colour').val();
-			var diamondClarity = $('#diamond-clarity').val();
-			var diamondGrade = $('#diamond-grade').val();
-			var diamondCertificate = $('#diamond-certificate').val();
-			$.ajax({
-                type: 'POST',
-                url: '{{route("custom-api-filter-data")}}',
-                data: {
-                    '_token': "{{csrf_token()}}",
-					'carat' : caratVal,
-					'color' : diamondColor,
-					'clarity' : diamondClarity,
-					'grade' : diamondGrade,
-					'certificate' : diamondCertificate,
-					'slug': '{{$data->slug}}'
-                },
-                success: function (res) {
-					console.log(res);
-					$('#refineSearchData').html("");
-					if(res.html != ''){
-						$('#refineSearchData').html(res.html);
-						getCustomPrice();
-					}else{
-						$('#refineSearchData').html("No Data Found");
+						$('#finaldiamondprice').text("");
 					}
                 }
             });

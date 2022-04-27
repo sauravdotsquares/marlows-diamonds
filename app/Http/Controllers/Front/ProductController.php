@@ -281,31 +281,35 @@ class ProductController extends Controller
         $getProduct = Products::where('slug',$request->slug)->select('id')->first();
 
         $getProductSelectedAttribute = ProductVariationAttributes::where('product_id',$getProduct->id)->first();
-        $getProductSelectedAttribute = str_replace('attri_', '', explode(',',$getProductSelectedAttribute->attr_values));
 
-        if(count($getProductSelectedAttribute)){
-            $selectedDesign = '';
-            foreach(array_reverse($getProductSelectedAttribute) as $key => $value){
+        if(isset($getProductSelectedAttribute) && !empty($getProductSelectedAttribute->attr_values)){
+            $getProductSelectedAttribute = str_replace('attri_', '', explode(',',$getProductSelectedAttribute->attr_values));
+            
+            if(count($getProductSelectedAttribute)){
+                $selectedDesign = '';
+                foreach(array_reverse($getProductSelectedAttribute) as $key => $value){
 
-                // echo "<pre>";
-                // print_r($value);
-                // die;
+                    // echo "<pre>";
+                    // print_r($value);
+                    // die;
 
-                $getAttributeValues = Attributes::where('slug',$value)->select('name','slug','values')->first();
-                $selectedDesign .= '<label for="diamond-colour"> '.$getAttributeValues->name.' </label><select name="'.trim($value).'" id="'.trim($value).'" class="form-control"><option value="">Select Any</option>';
-                $getData = explode('|',$getAttributeValues->values);
-                foreach($getData as $keyNew => $sepValue){
-                    if($keyNew == 0){
-                        $selectedVariable = 'selected';
-                    }else{
-                        $selectedVariable = '';
+                    $getAttributeValues = Attributes::where('slug',$value)->select('name','slug','values')->first();
+                    $selectedDesign .= '<label for="diamond-colour"> '.$getAttributeValues->name.' </label><select name="'.trim($value).'" id="'.trim($value).'" class="form-control"><option value="">Select Any</option>';
+                    $getData = explode('|',$getAttributeValues->values);
+                    foreach($getData as $keyNew => $sepValue){
+                        if($keyNew == 0){
+                            $selectedVariable = 'selected';
+                        }else{
+                            $selectedVariable = '';
+                        }
+                        $selectedDesign .= '<option '.$selectedVariable.' value="'.trim($sepValue).'">'.trim($sepValue).'</option>';
                     }
-                    $selectedDesign .= '<option '.$selectedVariable.' value="'.trim($sepValue).'">'.trim($sepValue).'</option>';
+                    $selectedDesign .= '</select> <br>';
                 }
-                $selectedDesign .= '</select> <br>';
             }
+            return response()->json($selectedDesign);
         }
-        return response()->json($selectedDesign);
+        return response()->json(['status'=>'Not attribute selected']);
     }
 
     public function getProductVideo(Request $request)

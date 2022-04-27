@@ -16,6 +16,6 @@ class ProductPriceController extends Controller
         $diamondPrice = $request->diamond_price * 1.2;
 
         $finalPrice = $settingPrice + $diamondPrice;
-        return $finalPrice;
+        return number_format($finalPrice,2);
     }
 }

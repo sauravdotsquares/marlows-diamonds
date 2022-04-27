@@ -35,23 +35,23 @@
                                         <tr data-id="{{ $id }}">
                                             <td class="product-info-col" data-th="Product">
                                                 <div class="cart-item-name">
-                                                    <div class="cart-image-item"><img src="{{ $details['image'] }}" width="100" height="100" class="img-responsive"/></div>
+                                                    <div class="cart-image-item"><img src="{{asset('storage/'.$details['image'])}}" width="100" height="100" class="img-responsive"/></div>
                                                     <div class="cart-nameitem">
-                                                        <div class="cartproduct-title"><a href="#"> {{ $details['name'] }}</a></div>
+                                                        <div class="cartproduct-title"><a href="#"> {!! $details['name'] !!}</a></div>
                                                         <dl class="variation">
-                                                            <dt class="variation-Colour">Metal Colour:</dt>
+                                                            <!-- <dt class="variation-Colour">Metal Colour:</dt>
                                                             <dd class="variation-Colour"><p>18ct White Gold</p></dd>
                                                             <dt class="variation-FingerSize">Finger Size:</dt>
-                                                            <dd class="variation-FingerSize"><p>I</p></dd>
+                                                            <dd class="variation-FingerSize"><p>I</p></dd> -->
                                                         </dl>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td  class="product-price-col" data-th="Price">${{ $details['price'] }}</td>
+                                            <td  class="product-price-col" data-th="Price">{{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}</td>
                                             <td  class="product-quantity-col" data-th="Quantity">
                                                 <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
                                             </td>
-                                            <td  class="product-subtotal-col" data-th="Subtotal">${{ $details['price'] * $details['quantity'] }}</td>
+                                            <td  class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}}{{ $details['price'] * $details['quantity'] }}</td>
                                             <td  class="product-action-col" class="actions" data-th="">
                                                 <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
                                             </td>
@@ -64,17 +64,17 @@
                 </div>   
                 <div class="col-lg-4">
                     <div class="cart-sidebar-box">                            
-                        <div class="cart-sidebar-heading">Basket totals</div>
+                        <div class="cart-sidebar-heading">Basket Totals</div>
                         <div class="cart-side-wrap">
                             <table border-collapse="collapse" style="width:100%">
                                 <tbody>
-                                    <tr class="box-cart-subtotal">
+                                    <!-- <tr class="box-cart-subtotal">
                                         <th>Subtotal</th>
-                                        <td></td>
-                                    </tr>
+                                        <td>{{MY_CURRENCY_SYMBOL}}{{ $total }}</td>
+                                    </tr> -->
                                     <tr class="box-cart-total">
                                         <th>Total</th>
-                                        <td> ${{ $total }}</td>
+                                        <td> {{MY_CURRENCY_SYMBOL}}{{ $total }}</td>
                                     </tr>
                                 </tbody>
                             </table>

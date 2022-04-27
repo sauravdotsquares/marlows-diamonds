@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
-                              <textarea id="description" name="description" class="form-control ckeditor" placeholder="Post Description" >{{ $posts->description }}</textarea>
+                              <textarea id="description" name="description" class="form-control ckeditor description" placeholder="Post Description" >{{ $posts->description }}</textarea>
                            </div>
                         </div>
                      </div>
@@ -143,13 +143,65 @@
 		$(this).next('.custom-file-label').html(event.target.files[0].name);
 	})
 	$('.select2').select2();
-   $(function () {
-     // Summernote
-     $('#description').summernote({
-		 height:250
-	 })
    
-   })
+   
+   $(document).ready(function() {
+
+		$('.description').summernote({
+			height:500,
+			codeviewFilter: true,
+			codeviewIframeFilter: true,
+			focus: false,
+			callbacks: {
+				onImageUpload: function(files, editor, welEditable) {
+					for (var i = files.length - 1; i >= 0; i--) {
+						sendEditorFile(files[i], this);
+					}
+				}
+			},
+			dialogsFade: true,
+			fontNames: ['Roboto Light', 'Roboto Regular', 'Roboto Bold'],
+			toolbar: [
+				['fontname', ['fontname']],
+				['fontsize', ['fontsize']],
+				['font', ['style','bold', 'italic', 'underline', 'clear']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['height', ['height']],
+				['table', ['table']],
+				['insert', ['picture','link']],
+				['view', ['fullscreen', 'codeview']],
+				['misc', ['undo','redo']]
+			]
+		});
+
+	});
+
+	function sendEditorFile(file, el) {
+		console.log("checking");
+        var form_data = new FormData();
+		   //var uploadUrl = $('#uploadUrl').attr('url');
+         // var uploadUrl = '{{ asset("/posts/uploadEditorImage") }}';
+		 var SITEURL = '/admin/uploadEditorImage';
+        form_data.append('file', file);
+		form_data.append('_token', '{{csrf_token()}}');
+        $.ajax({
+            type: "POST",
+            url: SITEURL,
+			data: form_data,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function(url) {
+				// return false;
+				console.log(url);
+               $(el).summernote('editor.insertImage', url);
+            }
+        });
+    }
+   
+   
    var selectedCategoryData = '{{$selectedParentId}}';
 
    getParentCategory(selectedCategoryData);

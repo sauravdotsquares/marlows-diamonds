@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\Models\Country;
 
 class AddToCartController extends Controller
 {
@@ -30,37 +31,48 @@ class AddToCartController extends Controller
      */
     public function addToCart(Request $request)
     {
-        $productData = Products::with('getProductImages','getProductVariation')->where('slug',$request->slug)->first();
+        if(isset($request['price']) && !empty($request['price'])){
+
+            $productData = Products::with('getProductImages','getProductVariation')->where('slug',$request->slug)->first();
+            
+            $input = $request->all('');
+            unset($request['slug']);
+            unset($request['price']);
+            unset($request['_token']);
+
+            $titleHtml = '';
+
+            if(isset($productData) && !empty($productData->title)){
+                $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
+
+                foreach($request->all('') as $key => $finalVal){
+                    $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                    $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
+                }
+                $titleHtml .= ' </dl>';
+
+                $cart = session()->get('cart', []);
         
-        // echo "sfa<pre>";
-        // print_r($request->all());
-        // print_r($productData);
-        // die;
+                if(isset($cart[$productData->id])) {
+                    $cart[$productData->id]['quantity']++;
+                } else {
+                    $cart[$productData->id] = [
+                        "name" => $titleHtml,
+                        "selected_parameter"=> [],
+                        "quantity" => 1,
+                        "price" => $input['price'],
+                        "image" => $productData->getProductImages->image_url
+                    ];
+                }
+                session()->put('cart', $cart);
 
-        if(isset($productData) && !empty($productData->title)){
-            $titleHtml = $productData->title.'<br>Metal Colour:-'.$request->metalcolor.'<br>Finger Size:- '.$request->fingersize.'<br>DiamondShape:-'.$request->color.'<br>Diamond Carat:-'.$request->carat.'<br>Diamond Colour:- '.$request->color.'<br>Diamond Cut Grade:- '.$request->grade.'<br>Diamond Clarity:- '.$request->clarity.' <br> Certificate:- '.$request->certificate.'<br>Certificate Link:- <a href="'.$request->color.'" >View Certificate</a><br>Image:-<a href="'.$request->color.'" >ViewDiamond</a><br>Certificate:- '.$request->color.'';
-        
-
-            // return response()->json($productData);
-
-            $cart = session()->get('cart', []);
-    
-            if(isset($cart[$productData->id])) {
-                $cart[$productData->id]['quantity']++;
-            } else {
-                $cart[$productData->id] = [
-                    "name" => $titleHtml,
-                    "quantity" => 1,
-                    "price" => $request->price,
-                    "image" => $productData->getProductImages->image_url
-                ];
+                return response()->json(['cartcount'=>count((array) session('cart')),'success'=>'Product added to cart successfully!']);
+                // return redirect()->back()->with('success', 'Product added to cart successfully!');
+            }else{
+                return response()->json(['error'=>'Not Match']);
             }
-            session()->put('cart', $cart);
-
-            return response()->json(['cartcount'=>count((array) session('cart')),'success'=>'Product added to cart successfully!']);
-            // return redirect()->back()->with('success', 'Product added to cart successfully!');
         }else{
-            return response()->json(['error'=>'Not Match']);
+            return response()->json(['error'=>'Please Wait...']);
         }
     }
 
@@ -99,7 +111,8 @@ class AddToCartController extends Controller
     
     public function checkoutOrder(Request $request)
     {
-        return view('front.pages.checkout');
+        $getContries = Country::get();
+        return view('front.pages.checkout',compact('getContries'));
     }
 
     
