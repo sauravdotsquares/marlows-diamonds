@@ -66,14 +66,14 @@
                         </li>
                         <li class="my-whishlist-blk">
                             <?php  
-                                // echo "Check in Header Page";
-                                // print_r(session('wishlist'));
-                                // die;
-
+                                $getArray = session('wishlist');
+                                if(isset($getArray) && count($getArray)){
+                                    $wishlistIcon = 'fa-heart';
+                                }else{
+                                    $wishlistIcon = 'fa-heart-o';
+                                }
                             ?>
-
-
-                                <a href="{{route('products.wishlist')}}"><i class="fa @if(count((array) session('cart')))fa-heart-o @else fa-heart @endif wishcount" aria-hidden="true"></i>{{MY_WISHLIST_TITLE}}</a>
+                                <a href="{{route('products.wishlist')}}"><i class="fa {{$wishlistIcon}} wishcount" aria-hidden="true"></i>{{MY_WISHLIST_TITLE}}</a>
                         </li>
                         <!-- <li class="my-cart-blk">
                             <a href="#"><img src="assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}}<span class="cart-number">(0)</span></a>
@@ -90,9 +90,6 @@
                                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                                     </div>
                                     @php $total = 0 @endphp
-                                    @foreach((array) session('cart') as $id => $details)
-                                        @php $total += $details['price'] * $details['quantity'] @endphp
-                                    @endforeach
                                     <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
                                         <p>Total: <span class="text-info">$ {{ $total }}</span></p>
                                     </div>

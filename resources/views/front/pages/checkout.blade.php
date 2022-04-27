@@ -71,7 +71,7 @@
             @endguest
             <!-- login form end-->
             <div class="checkout-main-wrap">
-                <form id="finalPlaceOrderPage" action="{{route('place.order')}}" method="POST">
+                <form id="finalPlaceOrderPage">
                     @csrf
                     <div class="customer-details-check">
                         <div class="row">
@@ -171,10 +171,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <div class="checkout-form-group">
+                                                    <div id="emailCheck" class="checkout-form-group">
                                                         <label class="input-label">Email address<abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="email" name="email" required="required" class="form-control">
+                                                        <input type="text" id="cust_email" name="cust_email" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -190,12 +190,12 @@
                                             <div class="checkout-form-group">
                                                 <label class="input-label">Account username<abbr
                                                         class="required">*</abbr></label>
-                                                <input type="text" id="username" name="username" required="required" class="form-control">
+                                                <input type="text" id="cust_username" name="cust_username" required="required" class="form-control">
                                             </div>
                                             <div class="checkout-form-group">
                                                 <label class="input-label">Create account password<abbr
                                                         class="required">*</abbr></label>
-                                                <input type="password" id="password" name="password" required="required" class="form-control">
+                                                <input type="password" id="cust_password" name="cust_password" required="required" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -422,11 +422,11 @@
                             </div>
                             <div class="cc_place_order_btn">
                                 @guest
-                                    <a id="placeOrderDetails" href="javascript:void(0);" class="btn-bg-large">Place Order </a>
+                                    <!-- <a id="placeOrderDetails" href="javascript:void(0);" class="btn-bg-large">Place Order </a> -->
                                 @endguest
                                 @auth
-                                    <button class="btn-bg-large" type="submit">Place Order</button>
                                 @endauth
+                                <button class="btn-bg-large" type="submit">Place Order</button>
                             </div>
                         </div>
                     </div>
@@ -461,7 +461,40 @@
             }
         });
 
+        $('#cust_email').on('blur',function(){
+            if($(this).val() != ''){
+                getEmailCheck(); 
+            }
+        });
+
     });
+
+    function getEmailCheck(){
+        if($('#cust_email').val() != ''){
+            $.ajax({
+                url: "{{ route('check.email.id') }}",
+                method: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    email: $('#cust_email').val(),
+                },
+                success: function (response) {
+                    // console.log(response);
+                    if(response){
+                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist</label>');
+                        // $('#cust_email-error').css('display','block');
+                        // toastr.success('Already exists please login');
+                        // window.location.reload();
+                        return response;
+                    }else{
+                        $('#emailCheck').children('.error').remove();
+                        // toastr.info('not exist do continue');
+                        return response;
+                    }
+                }
+            });
+        }
+    }
 
     $('form#loginRegisterForm').validate({
         rules: {
@@ -474,7 +507,7 @@
             }
         },
         messages: {
-            email: "Please specify a valid email address",
+            email: "Please Enter valid email address",
             password: "Please enter password"
         },
         submitHandler: function () {
@@ -487,6 +520,143 @@
                     password: $('#password').val(),
                 },
                 success: function (response) {
+                    if(response.status == 200){
+                        toastr.success(response.success);
+                        window.location.reload();
+                    }else{
+                        toastr.info(response.error);
+                    }
+                }
+            });
+        }
+    });
+
+    $('form#finalPlaceOrderPage').validate({
+        rules: {
+            first_name: {
+                required: true,
+            },
+            last_name: {
+                required: true,
+            },
+            company_name: {
+                required: true,
+            },
+            country_id: {
+                required: true,
+            },
+            street_address_l1: {
+                required: true,
+            },
+            street_address_l2: {
+                required: true,
+            },
+            town_city: {
+                required: true,
+            },
+            state: {
+                required: true,
+            },
+            pin_code: {
+                required: true,
+            },
+            mobile: {
+                required: true,
+            },
+            cust_email: {
+                required: true,
+                email:true,
+            },
+            cust_username: {
+                required: true,
+            },
+            cust_password: {
+                required: true,
+            },
+            order_notes: {
+                required: true,
+            },
+            payment_type: {
+                required: true,
+            },
+            paymentccdetails: {
+                required: true,
+            },
+            depositepercentage: {
+                required: true,
+            },
+        },
+        messages: {
+            first_name: {
+                required: "First name is required",
+            },
+            last_name:{ 
+                required: "Last name is required",
+            },
+            company_name: {
+                required: "Company name is required",
+            },
+            country_id:{ 
+                required: "Country is required",
+            },
+            street_address_l1: {
+                required: "Street Address is required",
+            },
+            street_address_l2:{ 
+                required: "Street Address 2 is required", 
+            },
+            town_city: {
+                required: "Town/City is required",
+            },
+            state:{ 
+                required: "State is required",
+            },
+            pin_code: {
+                required: "Pin Code is required",
+            },
+            mobile:{ 
+                required: "Mobile Number is required", 
+            },
+            cust_email: {
+                required: "Email is required",
+                email:"Email id is valid format",
+            },
+            cust_username:{ 
+                required: "Username is required", 
+            },
+            cust_password: {
+                required: "Password is required",
+            },
+            order_notes:{ 
+                required: "Order Notes is required", 
+            },
+            payment_type: {
+                required: "Payment type is required",
+            },
+            paymentccdetails:{ 
+                required: "Payment details is required", 
+            },
+            depositepercentage: {
+                required: "Deposit percentage is required",
+            },
+        },
+        submitHandler: function (form) {
+            var form_data = new FormData(form);
+            $.ajax({
+                url: "{{ route('place.order') }}",
+                method: "POST",
+                cache:false,
+                contentType:false,
+                processData: false,
+                data: form_data,
+                success: function (response) {
+                    console.log(response);
+                    if(response.status == 500){
+                        // getEmailCheck();
+                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist</label>');
+                        toastr.info(response.msg);
+                    }
+                    return false;
                     if(response.status == 200){
                         toastr.success(response.success);
                         window.location.reload();

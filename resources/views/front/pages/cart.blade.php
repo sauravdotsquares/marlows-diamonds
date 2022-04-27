@@ -47,11 +47,11 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td  class="product-price-col" data-th="Price">{{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}</td>
+                                            <td  class="product-price-col" data-th="Price">{{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'],2) }}</td>
                                             <td  class="product-quantity-col" data-th="Quantity">
                                                 <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
                                             </td>
-                                            <td  class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}}{{ $details['price'] * $details['quantity'] }}</td>
+                                            <td  class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'] * $details['quantity'],2) }}</td>
                                             <td  class="product-action-col" class="actions" data-th="">
                                                 <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
                                             </td>
@@ -74,7 +74,7 @@
                                     </tr> -->
                                     <tr class="box-cart-total">
                                         <th>Total</th>
-                                        <td> {{MY_CURRENCY_SYMBOL}}{{ $total }}</td>
+                                        <td> {{MY_CURRENCY_SYMBOL}}{{ number_format($total,2) }}</td>
                                     </tr>
                                 </tbody>
                             </table>

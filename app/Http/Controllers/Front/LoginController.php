@@ -97,6 +97,19 @@ class LoginController extends Controller
         return redirect(route('my-account'));
     }
 
+    public function registerCheckoutCustomer($userDetails)
+    {
+        $getRegisterResponse = $this->register($userDetails);
+
+        if(isset($getRegisterResponse) && $getRegisterResponse == 1){
+            $getLoginResponse = $this->login($userDetails);
+            if(isset($getLoginResponse) && $getLoginResponse == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function loginCustomer(Request $request)
     {
         unset($request['_token']);
@@ -135,6 +148,13 @@ class LoginController extends Controller
     public function dashboardPage(Request $request)
     {
         return view('front.loginpages.dashboardpage');
+    }
+
+    public function checkEmailId(Request $request)
+    {
+        $checkEmail = User::where('email',$request->email)->count();
+
+        return response()->json($checkEmail);
     }
 
 }
