@@ -20,23 +20,29 @@ class LoginController extends Controller
 
     public function getLoginRegisterAccount(Request $request)
     {
+        
         $getUserExists = User::where('email',$request->email)->first();
         $details = $request->only('email', 'password');
         $details['is_active'] = 1;
-
-        echo "<pre>";
-        print_r($getUserExists);
-        die;
         
         if(isset($getUserExists) && !empty($getUserExists)){
             $getLoginResponse = $this->login($details);
-            return response()->json(['error'=>'Email id is found please login']);
+            if(isset($getLoginResponse) && $getLoginResponse){
+                return response()->json(['status'=>200,'success'=>'success']);
+            }else{
+                return response()->json(['status'=>500,'error'=>'email or password not matched']);
+            }
         }
 
         if(isset($request->email) && isset($request->password)){
             $getRegisterResponse = $this->register($details);
-            if(isset($getRegisterResponse) && !empty($getRegisterResponse)){
+            if(isset($getRegisterResponse) && $getRegisterResponse){
                 $getLoginResponse = $this->login($details);
+                if(isset($getLoginResponse) && $getLoginResponse){
+                    return response()->json(['status'=>200,'success'=>'success']);
+                }else{
+                    return response()->json(['status'=>500,'error'=>'email or password not matched']);
+                }
             }
         }
         return response()->json(['error'=>'Email and password is required']);

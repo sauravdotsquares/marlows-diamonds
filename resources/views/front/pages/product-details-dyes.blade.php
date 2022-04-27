@@ -702,6 +702,10 @@
             });
 		}
 
+		function getNumberFromCurrency(currency) {
+			return Number(currency.replace(/[$,]/g,''))
+		}
+
 		function addtobasketFunction(getUrl){
 			$.ajax({
                 type: 'POST',
@@ -716,7 +720,7 @@
 					'metalcolor' : $('#metal-colour').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
-					'price': parseFloat($('#selected_diamond_price').val()) || 0, //parseFloat($('#price').val()) || 0;
+					'price': getNumberFromCurrency($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;
                 },
                 success: function (res) {
 					console.log(res);

@@ -5,17 +5,11 @@
         color: #e74c3c;
     }
 </style>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
 
 @section('content')
 
-@if (\Session::has('success'))
-    <!-- <div class="alert alert-success">
-        <ul>
-            <li>{!! \Session::get('success') !!}</li>
-        </ul>
-    </div> -->
-@endif
 
 @if (\Session::has('error'))
     <div class="alert alert-danger">
@@ -447,6 +441,7 @@
 
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
         $('.showlogin').on('click', function () {
@@ -456,7 +451,6 @@
         $('input[type=radio][name=payment_type]').on('change', function() {
             switch ($(this).val()) {
                 case 'paypal':
-                    // alert("paypal Thai Gayo Bhai");
                     $(".paypal-pay-box").show();
                     $(".deko-pay-box").hide();
                     break;
@@ -484,7 +478,6 @@
             password: "Please enter password"
         },
         submitHandler: function () {
-            // return true;
             $.ajax({
                 url: "{{ route('login.customer.account') }}",
                 method: "POST",
@@ -494,9 +487,12 @@
                     password: $('#password').val(),
                 },
                 success: function (response) {
-                    console.log(response);
-                    return false;
-                    window.location.reload();
+                    if(response.status == 200){
+                        toastr.success(response.success);
+                        window.location.reload();
+                    }else{
+                        toastr.info(response.error);
+                    }
                 }
             });
         }

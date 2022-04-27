@@ -14,6 +14,10 @@ class PlaceOrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
+        echo "<pre>";
+        print_r($request->all(''));
+        die;
+
         if(auth()->guard('customer')->check()){
             $getCustomerAddress = CustomerAddress::where('user_id',Auth::user()->id)->first();
             if($getCustomerAddress){

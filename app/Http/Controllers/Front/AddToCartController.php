@@ -31,7 +31,6 @@ class AddToCartController extends Controller
      */
     public function addToCart(Request $request)
     {
-
         if(isset($request['price']) && !empty($request['price'])){
 
             $productData = Products::with('getProductImages','getProductVariation')->where('slug',$request->slug)->first();
@@ -59,6 +58,7 @@ class AddToCartController extends Controller
                 } else {
                     $cart[$productData->id] = [
                         "name" => $titleHtml,
+                        "selected_parameter"=> [],
                         "quantity" => 1,
                         "price" => $input['price'],
                         "image" => $productData->getProductImages->image_url
