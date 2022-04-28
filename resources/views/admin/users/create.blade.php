@@ -23,6 +23,16 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('is_active') }}
    </div>
    @endif
+   @if ($errors->has('password'))
+   <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('password') }}
+   </div>
+   @endif
+   @if ($errors->has('confirm_password'))
+   <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('confirm_password') }}
+   </div>
+   @endif
    <!-- DataTables Example -->
    <section class="content">
       <div class="container-fluid">
