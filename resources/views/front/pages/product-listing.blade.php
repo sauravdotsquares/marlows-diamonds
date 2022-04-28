@@ -50,7 +50,7 @@
                         <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags">
                             <div class="filter-tags-col <%subSubCat.active_status%>"  ng-repeat="subSubCat in subSubCats">
                                 <div class="category-product-filter-icon">
-                                    <a href="<%subSubCat.url%>"><img src="{{asset('storage')}}<%subCat.hover_icon%>" alt="icon"></a>
+                                    <a href="<%subSubCat.url%>"><img src="{{asset('storage')}}<%subSubCat.hover_icon%>" alt="icon"></a>
                                 </div>
                                 <div class="category-product-filter-text">
                                     <a href="<%subSubCat.url%>"><%subSubCat.name%> </a>
