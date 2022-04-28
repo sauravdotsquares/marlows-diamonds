@@ -82,7 +82,7 @@ class BannerController extends Controller
 					// die;
 					$image_array = [];
 					$image = '';
-					$uploadpath = public_path().'\images\banners';   
+					$uploadpath = public_path('storage').'\banners'; 
 					$original_name = $request->file('image.'.$key)->getClientOriginalName();
 					$image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
 					$ext = $request->file('image.'.$key)->getClientOriginalExtension();
@@ -183,7 +183,7 @@ class BannerController extends Controller
 					
 						$image_array = [];
 						$image = '';
-						$uploadpath = public_path().'\images\banners';   
+						$uploadpath = public_path('storage').'\banners';   
 						$original_name = $request->file('image.'.$key)->getClientOriginalName();
 						$image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
 						$ext = $request->file('image.'.$key)->getClientOriginalExtension();
