@@ -200,6 +200,11 @@ Route::namespace('Front')->group(function () {
 
 	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
 	
+	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
+	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
+	Route::get('products/payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
+
+
 });
 
 /*
