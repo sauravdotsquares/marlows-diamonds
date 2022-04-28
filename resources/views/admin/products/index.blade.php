@@ -23,24 +23,9 @@
       <div class="row">
          <div class="col-12">
             <div class="card">
-               <div class="row">
-                  <div class="col-6">
-                     <div class="card-header">
-                        <h3 class="card-title">Products</h3>
-                     </div>
-                  </div>
-                  <div class="col-6">
-                     <div class="card-header1">
-                        <!-- <button><a href="javascript:void()" id="addForm">Add</a></button> -->
-                        <a href="{{route('admin.products-createform')}}">
-                           <button type="button" class="btn btn-primary">
-                              Add
-                           </button>
-                        </a>
-                     </div>
-                  </div>
-               </div>
-
+			 <div class="card-header">
+                  <a href="{{route('admin.products-createform')}}"><button type="button" class="btn btn-primary add-button">Add New Product</button></a>
+             </div>
                <!-- /.card-header -->
                <div class="card-body">
                   <table id="example2" class="table table-bordered table-hover">
@@ -74,7 +59,7 @@
                                  <td>{{isset($value->title)?$value->title:''}}</td>
                                  <td>In Stock</td>
                                  <td>{{isset($value->cat_details)?$value->cat_details:''}}</td>
-                                 <td>--</td>
+                                 <td>{{isset($value->tags)?$value->tags:''}}</td>
                                  <td>{{$value->created_at}}</td>
                                  <td>
                                     @if($value->status == 1)
@@ -84,7 +69,7 @@
                                     @else
                                        <a title="Change Status"
                                        href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="1"><i
-                                          class="fa fa-times" aria-hidden="true"></i></a>
+                                          class="fa fa-edit" aria-hidden="true"></i></a>
                                     @endif
                                     <a title="Edit" href="{{route('admin.products-updateform',[$value->id])}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
                                     <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$value}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
