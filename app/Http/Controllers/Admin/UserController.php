@@ -61,12 +61,13 @@ class UserController extends Controller
 		$request->validate([
             'name' => 'required|max:255',
             'username' => 'required',
+			'is_active' => 'required',
             
 			
         ]);
 		
 		$input['user_role'] = 3;
-		
+		$input['password'] = bcrypt($request->password);
 		$users = User::create($input);
 
         return redirect()->action('Admin\UserController@index')->with('alert-success', 'User Added Successfully');
