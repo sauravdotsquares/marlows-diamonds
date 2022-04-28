@@ -28,7 +28,7 @@
             <div class="category-list-wrap">
                 <div class="category-product-filter flexed flex-flex-wrap <%showsubCatOnly%>">
                     <div class="product-filter-col" ng-if="subCats.length>0">
-                        <div class="pr-filter-title">
+                        <div class="pr-filter-title" ng-if="parent_cat=='engagement-rings'">
                             Ring Style
                         </div>
                         <div class="filter-tags-row flexed flex-flex-wrap ">
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                     <div class="product-filter-col"  ng-if="subSubCats.length>0">
-                        <div class="pr-filter-title">
+                        <div class="pr-filter-title" ng-if="parent_cat=='engagement-rings'">
                             Diamond Cut
                         </div>
                         <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags">

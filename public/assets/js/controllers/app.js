@@ -104,6 +104,7 @@ MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
 
         }).success(function(data) {
             
+            $scope.parent_cat = data.parent_cat;
             $scope.subCats = data.subCats;
 
             $scope.subSubCats = data.subSubCats;
