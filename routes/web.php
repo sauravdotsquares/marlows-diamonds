@@ -154,18 +154,23 @@ Route::group(['middleware' => ['customer']], function () {
 	Route::namespace('Front')->group(function() {
 		Route::get('/my-accounts', 'LoginController@dashboardPage')->name('my_accounts');
 		Route::get('/logout-customer', 'LoginController@logout')->name('logout-customer');
-		Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
+		// Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
 	});
 });
 
 Route::namespace('Front')->group(function () {
+
     Route::get('/', 'PageController@page')->name('home');
 	
+	Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
+
     Route::get('/my-account', 'LoginController@index')->name('my-account');
     Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
     Route::post('/login-customers', 'LoginController@loginCustomer')->name('login-customers');
 
     Route::post('/login-customer-account', 'LoginController@getLoginRegisterAccount')->name('login.customer.account');
+
+    Route::post('/check-email-id', 'LoginController@checkEmailId')->name('check.email.id');
 	
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
     Route::get('{page}', 'PageController@page')->name('page');

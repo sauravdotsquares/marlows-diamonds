@@ -20,9 +20,9 @@
             </td>
             <td>
                 @if($key == 0)
-                    <input type="radio" id="selectrefinedata{{$key}}" class="refinedata" data-price="{{isset($refineData['Amount'])?number_format($refineData['Amount'],2):''}}" name="selectrefinedata" checked>
+                    <input type="radio" id="selectrefinedata{{$key}}" class="refinedata" data-price="{{isset($refineData['Amount'])?number_format($refineData['Amount'],2):''}}" data-certurl="{{isset($refineData['CertificateLink'])?$refineData['CertificateLink']:''}}" data-certno="{{isset($refineData['CERT_NO'])?$refineData['CERT_NO']:''}}" data-shape="{{isset($refineData['Shape'])?$refineData['Shape']:''}}" name="selectrefinedata" checked>
                 @else
-                    <input type="radio" id="selectrefinedata{{$key}}" class="refinedata" data-price="{{isset($refineData['Amount'])?number_format($refineData['Amount'],2):''}}" name="selectrefinedata">
+                    <input type="radio" id="selectrefinedata{{$key}}" class="refinedata" data-price="{{isset($refineData['Amount'])?number_format($refineData['Amount'],2):''}}" data-certurl="{{isset($refineData['CertificateLink'])?$refineData['CertificateLink']:''}}" data-certno="{{isset($refineData['CERT_NO'])?$refineData['CERT_NO']:''}}" data-shape="{{isset($refineData['Shape'])?$refineData['Shape']:''}}" name="selectrefinedata">
                 @endif
             </td>
         </tr>

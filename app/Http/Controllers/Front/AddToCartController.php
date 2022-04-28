@@ -17,10 +17,6 @@ class AddToCartController extends Controller
     public function index()
     {
         $cart = session()->get('cart');
-        // echo "<pre>";
-        // print_r();
-        // die;
-
         return view('front.pages.cart');
     }
 
@@ -44,10 +40,16 @@ class AddToCartController extends Controller
 
             if(isset($productData) && !empty($productData->title)){
                 $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
-
+                $selectedAttributes = [];
                 foreach($request->all('') as $key => $finalVal){
-                    $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                    $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
+                    $selectedAttributes[$key] = $finalVal;
+                    if($key == 'certificatelink'){
+                        $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                        $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
+                    }else{
+                        $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                        $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
+                    }
                 }
                 $titleHtml .= ' </dl>';
 
@@ -58,7 +60,7 @@ class AddToCartController extends Controller
                 } else {
                     $cart[$productData->id] = [
                         "name" => $titleHtml,
-                        "selected_parameter"=> [],
+                        "selected_parameter"=> $selectedAttributes,
                         "quantity" => 1,
                         "price" => $input['price'],
                         "image" => $productData->getProductImages->image_url

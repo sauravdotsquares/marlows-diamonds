@@ -232,19 +232,17 @@
 				<div class="product-finder-price">
 					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
 				</div>
+				<input type="hidden" id="certificate_url" name="certificate_url" value="">
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
 				<input type="hidden" name="selected_final_price" id="selected_final_price" value="0.00">
+				<input type="hidden" name="selected_diamond_shape" id="selected_diamond_shape" value="">
+				<input type="hidden" name="selected_diamond_certno" id="selected_diamond_certno" value="">
 
 				<div class="product-add-cart">
 					<div class="product-to-wishlist">
 						@php
-							//echo "checking a ".$data->id;
-							//die;
 							$wishlist = session()->get('wishlist', []);
-							//echo "<pre>";
-							//print_r($wishlist);
-							//die;
 
 							$wishListClass = "fa-heart-o";
 							if(array_key_exists($data->id,$wishlist)){
@@ -676,7 +674,6 @@
 
 			getCustomFilter();
 			
-
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
 			});
@@ -739,6 +736,9 @@
 
 		function getCustomPrice(){
 			$('#selected_diamond_price').val($("body input[type='radio'].refinedata:checked").data('price'));
+			$('#certificate_url').val($("body input[type='radio'].refinedata:checked").data('certurl'));
+			$('#selected_diamond_shape').val($("body input[type='radio'].refinedata:checked").data('shape'));
+			$('#selected_diamond_certno').val($("body input[type='radio'].refinedata:checked").data('certno'));
 			getFinalPrice();
 		}
 
@@ -778,6 +778,9 @@
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
 					'price': getNumberFromCurrency($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;
+					'certificatelink': $('#certificate_url').val() || '',
+					'shape': $('#selected_diamond_shape').val() || '',
+					'certificate': $('#selected_diamond_certno').val() || '',
                 },
                 success: function (res) {
 					console.log(res);

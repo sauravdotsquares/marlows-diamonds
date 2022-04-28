@@ -254,44 +254,39 @@
 
             <!-- Category SIdebar start -->
             <div class="category-sidebar-wrap">
+                @if(session('cart'))
                 <div class="sidebar-main-cart">
                     <div class="sidebar-title">
                         Shopping Cart
                     </div>
                     <div class="side-cart-row">
-                        <div class="side-cart-item">
-                            <div class="side-cart-pr-name">
-                                <a href="#">BRIE | Marquise shape Halo and shoulder channel set Engagement Ring</a>
+                        @php $total = 0 @endphp
+                        @foreach(session('cart') as $id => $details)
+                            @php $total += $details['price'] * $details['quantity'] @endphp
+                            <div class="side-cart-item">
+                                <div class="side-cart-delete">
+                                    <a href="javascript:void(0);" data-id="{{ $id }}" class="remove-from-cart">x</a>
+                                </div>
+
+                                <div class="side-cart-pr-name">
+                                    {!! $details['name'] !!}
+                                </div>
+                                <div class="side-cart-quantity">
+                                    {{ $details['quantity'] }} ×
+                                    <span class="side-cart-amount">{{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'],2) }}</span>
+                                </div>
+                                <div class="side-cart-total">
+                                    <strong>Subtotal: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'] * $details['quantity'],2) }} (incl. VAT)
+                                </div>
+                                <div class="side-cart-actions">
+                                    <a class="view-basket btn-bg-small" href="{{route('product.cart')}}">View Basket</a>
+                                    <a class="btn-bg-small" href="{{route('product.checkout')}}">Checkout</a>
+                                </div>
                             </div>
-                            <div class="side-cart-delete">
-                                <a href="#">x</a>
-                            </div>
-                            <div class="side-cart-varition">
-                                <span>Metal Colour: 18ct Yellow Gold</span>
-                                <span>Finger Size: T</span>
-                                <span>Diamond Shape: MARQUISE</span>
-                                <span>Diamond Carat: 0.30</span>
-                                <span>Diamond Colour: D</span>
-                                <span>Diamond Clarity: SI2</span>
-                                <span>Certificate: GIA</span>
-                                <span>Certificate Link: <a href="#">View Certificate</a> </span>
-                                <span>Image: <a href="#">View Diamond</a></span>
-                                <span>Certificate No: 5413157001</span>
-                            </div>
-                            <div class="side-cart-quantity">
-                                1 ×
-                                <span class="side-cart-amount">{{MY_CURRENCY_SYMBOL}}1,979.00</span>
-                            </div>
-                            <div class="side-cart-total">
-                                <strong>Suntotal: </strong> {{MY_CURRENCY_SYMBOL}}1,979.00 (incl. VAT)
-                            </div>
-                            <div class="side-cart-actions">
-                                <a class="view-basket btn-bg-small" href="#">View Basket</a>
-                                <a class="btn-bg-small" href="#">Checkout</a>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
+                @endif
                 <div class="side-recentlyview">
                     <div class="sidebar-title">
                         Recently Viewed
@@ -458,6 +453,27 @@
                         alert('server not responding...');
                 });
         }
+
+        $(".remove-from-cart").click(function (e) {
+            e.preventDefault();
+    
+            var ele = $(this);
+    
+            if(confirm("Are you sure want to remove?")) {
+                $.ajax({
+                    url: '{{ route('remove.from.cart') }}',
+                    method: "DELETE",
+                    data: {
+                        _token: '{{ csrf_token() }}', 
+                        id: $(this).attr("data-id")
+                    },
+                    success: function (response) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+
     </script>
 
     <script>
