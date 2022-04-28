@@ -12,9 +12,9 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('title') }}
    </div>
    @endif
-   @if ($errors->has('description'))
+   @if ($errors->has('description[]'))
    <div class="alert alert-danger">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('description') }}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('description[]') }}
    </div>
    @endif
    @if ($errors->has('status'))
@@ -46,7 +46,7 @@
 					 <div class="col-md-5">
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Title</label>
+                              <label for="product_name">Title*</label>
                               <input type="text" id="title" name="title" class="form-control" value="{{ $banners->title }}" placeholder="Title" >
                            </div>
                         </div>
@@ -67,7 +67,7 @@
 					 <div class="col-md-2">
 					 <div class="form-group">
                         <div class="form-label-group">
-						<label for="product_name">Status</label>
+						<label for="product_name">Status*</label>
                            <select id="status" name="status" class="form-control">
                               <option value="">Select Status</option>
                               <option value="1" {{ $banners->status=='1' ? 'selected' : '' }} >Enable</option>
@@ -82,7 +82,7 @@
 					 <div class="col-md-5">
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Description</label>
+                              <label for="product_name">Description*</label>
                                <textarea id="description" name="description[]" class="form-control ckeditor description" placeholder="Banner Description" >{!! $banners->getBannerDetails[0]->description !!}</textarea>                    
                            </div>
                         </div>
@@ -92,10 +92,10 @@
 							<label for="exampleInputFile">Banner Image</label>
 							<input type="hidden" name="ids[]" value="{{$banners->getBannerDetails[0]->id}}">
 							<div class="input-group">
-							   <div class="custom-file">
-                              @if($banners->getBannerDetails[0]->image!='') 
-								<img src="{{url('/').'/images/banners/'.$banners->getBannerDetails[0]->image}}" width="150px;">
+							@if($banners->getBannerDetails[0]->image!='') 
+								<img src="{{url('/').'/images/banners/'.$banners->getBannerDetails[0]->image}}" width="50px;">
                               @endif
+							   <div class="custom-file">
                               <input type="file" id="image" name="image[]" value="{{ $banners->getBannerDetails[0]->image }}" class="custom-file-input" accept="image/*">
                               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                            </div>
