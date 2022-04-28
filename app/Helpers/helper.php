@@ -299,15 +299,46 @@ if (!function_exists('validate_breadcrumb')) {
         {
             $results = HKDiamondStock::
                 where('Shape','LIKE',$data['shape'])
-                ->whereBetween('Carat', [$data['caratFrom'], $data['caratTo']])
-                ->orderBy('id','ASC');
+                ->whereBetween('Carat', [$data['caratFrom'], $data['caratTo']]);
+
+            if(!empty($data['colour'])){
+                $results = $results->whereIn('Color', $data['colour']);
+            }
+
+            if(!empty($data['clarity'])){
+                $results = $results->whereIn('Clarity', $data['clarity']);
+            }
+
+            if(!empty($data['grade'])){
+                $results = $results->whereIn('Cut', $data['grade']);
+            }
+
+            if(!empty($data['polish'])){
+                $results = $results->whereIn('Polish', $data['polish']);
+            }
+
+            if(!empty($data['symmetry'])){
+                $results = $results->whereIn('Symmetry', $data['symmetry']);
+            }
+
+            if(!empty($data['fluorescence'])){
+                $results = $results->whereIn('Flourescent', $data['fluorescence']);
+            }
+
+            if(!empty($data['certificate'])){
+                $results = $results->whereIn('Lab', $data['certificate']);
+            }
+
+            $results = $results->orderBy('id','ASC');
+            //echo $results->toSql(); die;
             if(isset($data['paging']))
                 $results = $results->paginate($data['paging']);
+                //$results = $results->get(); 
             else if(isset($data['num_of_row']))
                 $results = $results->take($data['num_of_row'])->get();
             else
                $results = $results->get(); 
-
+            //echo '<pre>'; print_r($results->toArray()); die;
             return $results->toArray();
         }
 
@@ -336,35 +367,60 @@ if (!function_exists('validate_breadcrumb')) {
             $header = new \SoapHeader($ns, 'AuthenticationTicketHeader', $headerBody);
             $client->__setSoapHeaders($header);
             
-            if(isset($data['grade'])){
-                if($data['grade'] == 'EX'){
-                    $filterTo = 'EXCELLENT';
-                }elseif($data['grade'] == 'VG'){
-                    $filterTo = 'VERYGOOD';
-                }elseif($data['grade'] == 'GD'){
-                    $filterTo = 'GOOD';
-                }else{
-                    $filterTo = 'EXCELLENT';
+            if(isset($data['gradeFrom'])){
+                if($data['gradeFrom'] == 'EX'){ $gradeFrom = 'EXCELLENT';
+                } elseif($data['gradeFrom'] == 'VG'){ $gradeFrom = 'VERY_GOOD';
+                } elseif($data['gradeFrom'] == 'GD'){ $gradeFrom = 'GOOD';
+                }
+            }
+            if(isset($data['gradeTo'])){
+                if($data['gradeTo'] == 'EX'){ $gradeTo = 'EXCELLENT';
+                } elseif($data['gradeTo'] == 'VG'){ $gradeTo = 'VERY_GOOD';
+                } elseif($data['gradeTo'] == 'GD'){ $gradeTo = 'GOOD';
+                }
+            }
+            if(isset($data['symmetryFrom'])){
+                if($data['symmetryFrom'] == 'EX'){ $symmetryFrom = 'Excellent';
+                } elseif($data['symmetryFrom'] == 'VG'){ $symmetryFrom = 'Very_Good';
+                } elseif($data['symmetryFrom'] == 'GD'){ $symmetryFrom = 'Good';
+                }
+            }
+            if(isset($data['symmetryTo'])){
+                if($data['symmetryTo'] == 'EX'){ $symmetryTo = 'Excellent';
+                } elseif($data['symmetryTo'] == 'VG'){ $symmetryTo = 'Very_Good';
+                } elseif($data['symmetryTo'] == 'GD'){ $symmetryTo = 'Good';
+                }
+            }
+            if(isset($data['polishFrom'])){
+                if($data['polishFrom'] == 'EX'){ $polishFrom = 'Excellent';
+                } elseif($data['polishFrom'] == 'VG'){ $polishFrom = 'Very_Good';
+                } elseif($data['polishFrom'] == 'GD'){ $polishFrom = 'Good';
+                }
+            }
+            if(isset($data['polishTo'])){
+                if($data['polishTo'] == 'EX'){ $polishTo = 'Excellent';
+                } elseif($data['polishTo'] == 'VG'){ $polishTo = 'Very_Good';
+                } elseif($data['polishTo'] == 'GD'){ $polishTo = 'Good';
                 }
             }
             
-
+            
             $searchParams = array(
                 "ShapeCollection" => array($data['shape']),
-                "LabCollection" => isset($data['certificate'])?$data['certificate']:'GIA',
-                "ColorFrom" => isset($data['colorFrom'])?$data['colorFrom']:"D",
-                "ColorTo" => isset($data['colorTo'])?$data['colorTo']:"J",
-                "ClarityFrom" => isset($data['clarityFrom'])?$data['clarityFrom']:"IF",
-                "ClarityTo" => isset($data['clarityTo'])?$data['clarityTo']:"I1",
-                "SizeFrom" => isset($data['caratFrom'])?$data['caratFrom']:"0.3",
-                "SizeTo" => isset($data['caratTo'])?$data['caratTo']:"1.5",
-                "CutFrom" => isset($filterTo)?$filterTo:"EXCELLENT",
-                "CutTo" => isset($filterTo)?$filterTo:"GOOD",
-                "SymmetryFrom" =>'Excellent',
-                "SymmetryTo" =>'Good',
-                "PolishFrom" =>'Excellent',
-                "PolishTo" =>'Good',
-                //"FluorescenceIntensityCollection" =>$fluorescence,
+                "LabCollection" => $data['certificate'],
+                "ColorFrom" => $data['colorFrom'],
+                "ColorTo" => $data['colorTo'],
+                "ClarityFrom" => $data['clarityFrom'],
+                "ClarityTo" => $data['clarityTo'],
+                "SizeFrom" => $data['caratFrom'],
+                "SizeTo" => $data['caratTo'],
+                "CutFrom" => $gradeFrom,
+                "CutTo" => $gradeTo,
+                "SymmetryFrom" =>$symmetryFrom,
+                "SymmetryTo" =>$symmetryTo,
+                "PolishFrom" =>$polishFrom,
+                "PolishTo" =>$polishTo,
+                "FluorescenceIntensityCollection" =>$data['fluorescence'],
                 "PriceFrom" => "1",
                 "PriceTo" => "999999",
                 "PageNumber" => $pageNumber,
