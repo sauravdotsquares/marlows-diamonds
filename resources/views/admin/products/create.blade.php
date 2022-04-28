@@ -63,7 +63,7 @@
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="title">Title</label>
-                              <input type="text" id="title" name="title" class="form-control" placeholder="Title"
+                              <input required type="text" id="title" name="title" class="form-control" placeholder="Title"
                                  value="{{isset($getData->title)?$getData->title:''}}">
                            </div>
                         </div>
