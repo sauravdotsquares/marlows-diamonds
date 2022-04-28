@@ -74,7 +74,7 @@
 					 <div class="col-md-5">
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Description*</label>
+                              <label for="product_name">Description</label>
                               <textarea id="description" name="description[]" rows="20" class="form-control description"></textarea>                    
                            </div>
                         </div>

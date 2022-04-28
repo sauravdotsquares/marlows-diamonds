@@ -82,7 +82,7 @@
 					 <div class="col-md-5">
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Description*</label>
+                              <label for="product_name">Description</label>
                                <textarea id="description" name="description[]" class="form-control ckeditor description" placeholder="Banner Description" >{!! $banners->getBannerDetails[0]->description !!}</textarea>                    
                            </div>
                         </div>

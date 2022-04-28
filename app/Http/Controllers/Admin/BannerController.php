@@ -60,7 +60,7 @@ class BannerController extends Controller
 		
 		 $request->validate([
             'title' => 'required|max:255',
-            'description[]' => 'required',
+            // 'description[]' => 'required',
             'status' => 'required',
 			
         ]);
@@ -152,7 +152,7 @@ class BannerController extends Controller
         $data = $request->all();
 		$request->validate([
             'title' => 'required|max:255',
-            'description[]' => 'required',
+            // 'description[]' => 'required',
             'status' => 'required',
 			
         ]);
