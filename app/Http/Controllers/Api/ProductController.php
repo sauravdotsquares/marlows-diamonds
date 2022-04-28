@@ -73,7 +73,7 @@ class ProductController
     					$subCategories[$key]['active_status'] = '';
     				}
     			}
-    			$subSubCats = Category::where('parent_cat'=>$category_one,'parent_id',$checkSub['id'])->where('status',1)->orderBy('sort_order','ASC')->get();
+    			$subSubCats = Category::where('parent_id',$checkSub['id'])->where('status',1)->orderBy('sort_order','ASC')->get();
 
     			
     			foreach ($subSubCats as $key => $subSubCat) {
@@ -86,7 +86,7 @@ class ProductController
     			}
     			
     		}
-    		return json_encode(array('subCats'=>$subCategories,'subSubCats'=>$subSubCategories));
+    		return json_encode(array('parent_cat'=>$category_one,'subCats'=>$subCategories,'subSubCats'=>$subSubCategories));
     	}
     	if($category_one!=''){
     		$checkMain = Category::where('slug',$category_one)->where('parent_id',0)->where('enable_filter',1)->where('status',1)->first();
