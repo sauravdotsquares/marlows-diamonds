@@ -17,17 +17,54 @@ class DiamondFinderController
      */
     public function diamondSearch(Request $request)
     {
-    	$colorFrom = 'D'; $colorTo = 'K';
+    	$colorFrom = 'D'; $colorTo = 'K'; $colour=array();
     	if($request->colour!=''){
         	$colour = explode(',',$request->colour);
 			$colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
        	}
 
-        $data = array('shape'=>$request->shape,'grade'=>'EX','certificate'=>'GIA','colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'clarityFrom'=>'IF','clarityTo'=>'SI2','caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'paging'=>5);
+       	$clarityFrom = 'IF'; $clarityTo = 'SI2'; $clarity=array();
+    	if($request->clarity!=''){
+        	$clarity = explode(',',$request->clarity);
+			$clarityFrom = $clarity[0]; $clarityTo = $clarity[count($clarity)-1];
+       	}
+
+       	$gradeFrom = 'EX'; $gradeTo = 'GD'; $grade=array();
+    	if($request->grade!=''){
+        	$grade = explode(',',$request->grade);
+			$gradeFrom = $grade[0]; $gradeTo = $grade[count($grade)-1];
+       	}
+
+       	$polishFrom = 'EX'; $polishTo = 'GD'; $polish=array();
+    	if($request->polish!=''){
+        	$polish = explode(',',$request->polish);
+			$polishFrom = $polish[0]; $polishTo = $polish[count($polish)-1];
+       	}
+
+       	$symmetryFrom = 'EX'; $symmetryTo = 'GD'; $symmetry=array();
+    	if($request->symmetry!=''){
+        	$symmetry = explode(',',$request->symmetry);
+			$symmetryFrom = $symmetry[0]; $symmetryTo = $symmetry[count($symmetry)-1];
+       	}
+
+       	$fluorescence = array();
+    	if($request->fluorescence!=''){
+        	$fluorescence = explode(',',$request->fluorescence);
+       	}
+       	$certificate = array();
+    	if($request->certificate!=''){
+        	$certificate = explode(',',$request->certificate);
+       	}
+
+        $data = array('shape'=>$request->shape,'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'paging'=>5);
         //echo '<pre>'; print_r($data); die;
 
         $hkData = getHKApiRecords($data);
         if(empty($hkData['data'])){
+        	$hkData['to']=5;
+        	$hkData['last_page']=10;
+        	$hkData['total']=100;
+        }else if(!empty($hkData['data']) && $hkData['total']<50){
         	$hkData['to']=5;
         	$hkData['last_page']=10;
         	$hkData['total']=100;
