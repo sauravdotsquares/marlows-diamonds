@@ -5,6 +5,11 @@
    <div class="container-fluid">
       <div class="row">
          <div class="col-12">
+		 @if(session()->has('alert-success'))
+            <div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session()->get('alert-success') }}
+            </div>
+          @endif
             <div class="card">
                <div class="card-header">
                   <a href="{{ url('admin/pages/create')}}"><button type="button" class="btn btn-primary add-button">Add New Page</button></a>

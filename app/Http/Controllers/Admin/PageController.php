@@ -168,7 +168,7 @@ class PageController extends Controller
             //foreach ($request->file('image') as $image) {
                 
                 $image = '';
-                $image = single_storage_image_upload($request->file('image'),'pages','1200','600');
+                $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
             //}
         }
 
