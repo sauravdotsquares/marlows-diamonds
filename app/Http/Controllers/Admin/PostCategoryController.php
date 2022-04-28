@@ -118,7 +118,7 @@ class PostCategoryController extends Controller
         ]);
         if($request->hasFile('image')) {
             $image = '';
-            $uploadpath = public_path().'\images';
+            $uploadpath = public_path('storage').'\categories';
             $original_name = $request->file('image')->getClientOriginalName();
             if (!empty($request->file('image'))) {
                 $image_prefix = 'category_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
