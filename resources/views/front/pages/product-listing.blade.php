@@ -22,11 +22,11 @@
 <!-- category header banner end -->
 
 <!-- Category Listing Wrap Start -->
-<div class="category-listing-wrap" ng-controller="ProductController">
+<div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
     <div class="container"  ng-init="productCatFilters('{{$cat1}}','{{$cat2}}','{{$cat3}}')">
         <div class="category-listing-row">
             <div class="category-list-wrap">
-                <div class="category-product-filter flexed flex-flex-wrap <%showsubCatOnly%>">
+                <div class="category-product-filter flexed flex-flex-wrap <%showsubCatOnly%>" ng-if="display_filter">
                     <div class="product-filter-col" ng-if="subCats.length>0">
                         <div class="pr-filter-title" ng-if="parent_cat=='engagement-rings'">
                             Ring Style
