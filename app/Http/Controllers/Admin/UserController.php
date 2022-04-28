@@ -62,6 +62,8 @@ class UserController extends Controller
             'name' => 'required|max:255',
             'username' => 'required',
 			'is_active' => 'required',
+			'password' => 'min:6|required_with:confirm_password|same:confirm_password',
+			'confirm_password' => 'min:6',
             
 			
         ]);
