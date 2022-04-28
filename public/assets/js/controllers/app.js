@@ -95,7 +95,7 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
 MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
     
     $scope.productCatFilters = function(cat1,cat2,cat3){
-        
+        $scope.display_filter = false;
         var url  = base_url+"getProductCatFilter";
         $http({
             method  : 'POST',
@@ -103,7 +103,7 @@ MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
             data    : {cat1:cat1,cat2:cat2,cat3:cat3}
 
         }).success(function(data) {
-            
+            $scope.display_filter = true;
             $scope.parent_cat = data.parent_cat;
             $scope.subCats = data.subCats;
 

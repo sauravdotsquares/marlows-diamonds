@@ -4,7 +4,7 @@
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet" type="text/css">
 @endsection
-<div class="perfect-certified-wrap" id="diamondMainController" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()">
+<div class="perfect-certified-wrap" id="diamondMainController" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()"  ng-cloak>
 	<div class="container">
 		<div class="perfect-certified-head">
 			<h1>{!!$data->subtitle!!}</h1>
