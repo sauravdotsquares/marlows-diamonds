@@ -168,7 +168,7 @@ Route::namespace('Front')->group(function () {
     Route::post('/login-customer-account', 'LoginController@getLoginRegisterAccount')->name('login.customer.account');
 	
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
-    // Route::get('{page}', 'PageController@page')->name('page');
+    Route::get('{page}', 'PageController@page')->name('page');
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
 	Route::get('product/{slug?}','ProductController@productDetails');
 	//Route::post('product/{slug?}','ContactUsFormController@ContactUsForm')->name('contact');
