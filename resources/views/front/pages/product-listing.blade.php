@@ -22,119 +22,41 @@
 <!-- category header banner end -->
 
 <!-- Category Listing Wrap Start -->
-<div class="category-listing-wrap">
-    <div class="container">
+<div class="category-listing-wrap" ng-controller="ProductController">
+    <div class="container"  ng-init="productCatFilters('{{$cat1}}','{{$cat2}}','{{$cat3}}')">
         <div class="category-listing-row">
             <div class="category-list-wrap">
-                <div class="category-product-filter flexed flex-flex-wrap">
-                    <div class="product-filter-col">
+                <div class="category-product-filter flexed flex-flex-wrap <%showsubCatOnly%>">
+                    <div class="product-filter-col" ng-if="subCats.length>0">
                         <div class="pr-filter-title">
                             Ring Style
                         </div>
-                        <div class="filter-tags-row flexed flex-flex-wrap">
-                            <div class="filter-tags-col is-active">
+                        <div class="filter-tags-row flexed flex-flex-wrap ">
+                            <div class="filter-tags-col <%subCat.active_status%>" ng-repeat="subCat in subCats">
                                 <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/multi-stone-1.png" alt="icon"></a>
+                                    <a href="<%subCat.url%>"><img src="{{asset('storage')}}<%subCat.hover_icon%>" alt="icon"></a>
                                 </div>
                                 <div class="category-product-filter-text">
-                                    <a href="#">Solitaire </a>
+                                    <a href="<%subCat.url%>"><%subCat.name%></a>
                                 </div>
                             </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/halo.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Halo </a>
-                                </div>
-                            </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/shoulder-1.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Soulder </a>
-                                </div>
-                            </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/plain-1.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Multi-stone </a>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
-                    <div class="product-filter-col">
+                    <div class="product-filter-col"  ng-if="subSubCats.length>0">
                         <div class="pr-filter-title">
                             Diamond Cut
                         </div>
                         <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags">
-                            <div class="filter-tags-col">
+                            <div class="filter-tags-col <%subSubCat.active_status%>"  ng-repeat="subSubCat in subSubCats">
                                 <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/round-1.png" alt="icon"></a>
+                                    <a href="<%subSubCat.url%>"><img src="{{asset('storage')}}<%subCat.hover_icon%>" alt="icon"></a>
                                 </div>
                                 <div class="category-product-filter-text">
-                                    <a href="#">Round </a>
+                                    <a href="<%subSubCat.url%>"><%subSubCat.name%> </a>
                                 </div>
                             </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/priceless-1.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Princess </a>
-                                </div>
-                            </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/emerald-1.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Emerald </a>
-                                </div>
-                            </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/oval-1.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Oval </a>
-                                </div>
-                            </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/marquee-1.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Marquise </a>
-                                </div>
-                            </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/pear-1.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Pear </a>
-                                </div>
-                            </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/heart-1.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Heart </a>
-                                </div>
-                            </div>
-                            <div class="filter-tags-col">
-                                <div class="category-product-filter-icon">
-                                    <a href="#"><img src="{{asset('')}}assets/images/cushionmodifiedhybird.png" alt="icon"></a>
-                                </div>
-                                <div class="category-product-filter-text">
-                                    <a href="#">Cushion </a>
-                                </div>
-                            </div>
+                            
 
 
                         </div>
