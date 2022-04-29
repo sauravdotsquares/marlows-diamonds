@@ -12,9 +12,9 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('title') }}
    </div>
    @endif
-   @if ($errors->has('description'))
+   @if ($errors->has('description[]'))
    <div class="alert alert-danger">
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('description') }}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('description[]') }}
    </div>
    @endif
    @if ($errors->has('status'))
@@ -38,7 +38,7 @@
 					 <div class="col-md-5">
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Title</label>
+                              <label for="product_name">Title*</label>
                               <input type="text" id="title" name="title" class="form-control" placeholder="Title" >
                            </div>
                         </div>
@@ -59,7 +59,7 @@
 					 <div class="col-md-2">
 					 <div class="form-group">
                         <div class="form-label-group">
-						<label for="product_name">Status</label>
+						<label for="product_name">Status*</label>
                            <select id="status" name="status" class="form-control">
                               <option value="">Select Status</option>
                               <option value="1">Enable</option>

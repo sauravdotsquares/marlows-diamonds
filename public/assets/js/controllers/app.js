@@ -90,6 +90,32 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
 
 });
 
+/******** Define the Product controller  ***************/
+
+MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
+    
+    $scope.productCatFilters = function(cat1,cat2,cat3){
+        $scope.display_filter = false;
+        var url  = base_url+"getProductCatFilter";
+        $http({
+            method  : 'POST',
+            url     : url,
+            data    : {cat1:cat1,cat2:cat2,cat3:cat3}
+
+        }).success(function(data) {
+            $scope.display_filter = true;
+            $scope.parent_cat = data.parent_cat;
+            $scope.subCats = data.subCats;
+
+            $scope.subSubCats = data.subSubCats;
+            if(data.subSubCats.length==0){
+                $scope.showsubCatOnly = 'display_first_filter';
+            }else{
+                $scope.showsubCatOnly = '';
+            }
+        });
+    }
+});
 
 /*
 *** Angular JS Services

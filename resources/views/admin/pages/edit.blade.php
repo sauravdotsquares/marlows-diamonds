@@ -1,6 +1,15 @@
 @extends('layouts.admin.app')
 @section('content')
 <div class="content">
+
+	<?php 
+		// echo "<pre>";
+		// print_r($pages->image);
+		// die;
+	
+	
+	?>
+
    <!-- Breadcrumbs-->
    @if(session()->has('alert-danger'))
    <div class="alert alert-danger">
@@ -69,12 +78,12 @@
                <div class="col-md-4">
                   <div class="card card-header">
                      <div class="form-group">
-                        <label for="exampleInputFile">Banner</label>
+                        <label for="exampleInputFile">Page Banner</label>
                         <div class="input-group">
+							@if(isset($pages->image) && !empty($pages->image))
+								<img src="{{asset('storage').'/'.$pages->image}}" width="50px">
+							@endif
                            <div class="custom-file">
-                              @if($pages->image!='') 
-                              <img src="{{url('/').'/images/'.$pages->image}}" width="150px;">
-                              @endif
                               <input type="file" id="image" name="image" value="{{ $pages->image }}" class="custom-file-input" accept="image/*">
                               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                            </div>
