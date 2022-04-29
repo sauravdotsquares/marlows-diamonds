@@ -1,0 +1,15 @@
+/** admin custom css**/
+.card-header1 {
+	padding: 10px 0 0 0;
+}
+.btn-group-sm > .btn, .btn-sm {
+	padding: 2px 4px !important;
+	font-size: 11px;
+    margin: 4px 0;
+}
+.table td, .table th {
+	padding: 9px;
+}
+.statusSwitch {
+	font-size: 13px;
+}
