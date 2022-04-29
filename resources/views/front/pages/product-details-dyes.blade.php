@@ -101,7 +101,11 @@
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
 				<video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
-					<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
+					@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
+						<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
+					@else
+						<source src="" type="video/mp4" type="video/mp4" />
+					@endif
 				</video>
 
 			</div>
