@@ -47,6 +47,7 @@
 
 <!-- Bootstrap -->
 <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
