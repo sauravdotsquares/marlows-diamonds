@@ -20,4 +20,11 @@ class OrderDetail extends Model
         'total_price',
         'status',
     ];
+
+    protected $appends = ['product_details'];
+
+    public function getProductDetailsAttribute()
+    {
+        return Products::where('id',$this->product_id)->first();
+    }
 }

@@ -81,7 +81,7 @@
                <div class="col-md-4">
                   <div class="card card-header">
                      <div class="form-group">
-                        <label for="exampleInputFile">Banner Image</label>
+                        <label for="exampleInputFile">Category Image</label>
                         <div class="input-group">
 						@if(isset($getData->image_url) && !empty($getData->image_url))
                            <img src="{{url('storage').'/categories/'.$getData->image_url}}" alt="" width="50px">

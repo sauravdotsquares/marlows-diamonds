@@ -198,6 +198,7 @@ class ProductController extends Controller
                 $newKey = explode("_",$key1);
                 if(isset($newKey[0]) && $newKey[0] === 'attri'){
                     ProductVariationDetails::create([
+                        'product_id' => $productId,
                         'variation_id'=>$getProductDataVariation->id,
                         'key' =>$key1,
                         'value' =>$variData,

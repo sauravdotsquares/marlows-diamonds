@@ -114,6 +114,13 @@
                               </select>
                            </div>
                         </div>
+						<div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Short Description</label>
+                              <textarea id="short_description" name="short_description"
+                                 class="form-control ckeditor">{{isset($getProductData->short_description)?$getProductData->short_description:''}}</textarea>
+                           </div>
+                        </div>
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Description</label>
@@ -427,7 +434,8 @@
    $(function () {
       // Summernote
       $('#description').summernote()
-
+      $('#short_description').summernote()
+		
    });
 
    //validation and form submission function here

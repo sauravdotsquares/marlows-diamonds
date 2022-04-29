@@ -87,14 +87,14 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">First Name <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="first_name" name="first_name" required="required" class="form-control">
+                                                        <input type="text" id="first_name" name="first_name" required="required" value="gajendra" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Last Name <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="last_name" name="last_name" required="required" class="form-control">
+                                                        <input type="text" id="last_name" name="last_name" required="required" value="gajendra" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Company Name <span
                                                                 class="optional">(Optional)</span></label>
-                                                        <input type="text" id="company_name" name="company_name" class="form-control">
+                                                        <input type="text" id="company_name" value="gajendra" name="company_name" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -111,7 +111,7 @@
                                                         <label class="input-label">Country/Region <abbr
                                                                 class="required">*</abbr></label>
                                                         <select id="country_id" name="country_id" required="required" class="form-control">
-                                                            <option>Select Option</option>
+                                                            <option value="">Select Option</option>
                                                             @foreach($getContries as $key => $country)
                                                                 <option value="{{$country->shortname}}">{{$country->name}}</option>
                                                             @endforeach
@@ -124,11 +124,11 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Street address <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="street_address_l1" name="street_address_l1" required="required" class="form-control"
+                                                        <input type="text" id="street_address_l1" name="street_address_l1" value="gajendra" required="required" class="form-control"
                                                             placeholder="House number and street name">
                                                     </div>
                                                     <div class="checkout-form-group">
-                                                        <input type="text" id="street_address_l2" name="street_address_l2" class="form-control"
+                                                        <input type="text" value="gajendra" id="street_address_l2" name="street_address_l2" class="form-control"
                                                             placeholder="Apartment, suite, unit, etc. (optional)">
                                                     </div>
                                                 </div>
@@ -138,14 +138,14 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Town / City <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="town_city" name="town_city" required="required" class="form-control">
+                                                        <input type="text" value="gajendra" id="town_city" name="town_city" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">State/Region<abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="state" name="state" required="required" class="form-control">
+                                                        <input type="text" value="gajendra" id="state" name="state" required="required" class="form-control">
                                                         <!-- <select id="state" name="state" required="required" class="form-control">
                                                             <option>Select Option</option>
                                                             <option>Rajasthan</option>
@@ -158,14 +158,14 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">PIN <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="pin_code" name="pin_code" required="required" class="form-control">
+                                                        <input type="text" value="gajendra" id="pin_code" name="pin_code" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Phone<abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="mobile" name="mobile" required="required" class="form-control">
+                                                        <input type="text" value="gajendra" id="mobile" name="mobile" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -174,7 +174,7 @@
                                                     <div id="emailCheck" class="checkout-form-group">
                                                         <label class="input-label">Email address<abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="cust_email" name="cust_email" required="required" class="form-control">
+                                                        <input type="text" id="cust_email" name="cust_email" required="required" value="{{isset(auth()->user()->email)?auth()->user()->email:''}}" @if(isset(auth()->user()->email)) readonly disable @endif class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -270,6 +270,7 @@
                             </table>
                         </div>
                         <input type="hidden" id="final_price" name="final_price" value="{{ $total }}">
+                        <input type="hidden" id="selected_payment_type" name="selected_payment_type" value="paypal">
                         <div class="checkout-payment-options">
                             <ul class="cc_payment_methods_options">
                                 <li class="cc_payment_methods paypal_payment">
@@ -449,6 +450,7 @@
         });
 
         $('input[type=radio][name=payment_type]').on('change', function() {
+            $('#selected_payment_type').val($(this).val());
             switch ($(this).val()) {
                 case 'paypal':
                     $(".paypal-pay-box").show();
@@ -462,8 +464,13 @@
         });
 
         $('#cust_email').on('blur',function(){
-            if($(this).val() != ''){
-                getEmailCheck(); 
+            var data = '{!! isset(auth()->user()->email)?auth()->user()->email:'' !!}';
+            if(data){
+                //console.log("if");
+            }else{
+                if($(this).val() != ''){
+                    getEmailCheck(); 
+                }
             }
         });
 
@@ -471,6 +478,8 @@
 
     function getEmailCheck(){
         if($('#cust_email').val() != ''){
+            console.log("if");
+            var customeremail = $('#cust_email').val();
             $.ajax({
                 url: "{{ route('check.email.id') }}",
                 method: "POST",
@@ -479,20 +488,25 @@
                     email: $('#cust_email').val(),
                 },
                 success: function (response) {
+                    $('#cust_email-error').remove();
                     // console.log(response);
                     if(response){
-                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist</label>');
+                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email('+customeremail+') is already exist Please Logged in </label>');
+                        $('#cust_email').val(" ");
                         // $('#cust_email-error').css('display','block');
                         // toastr.success('Already exists please login');
                         // window.location.reload();
                         return response;
-                    }else{
-                        $('#emailCheck').children('.error').remove();
-                        // toastr.info('not exist do continue');
-                        return response;
                     }
+                    // else{
+                    //     $('#cust_email-error').remove();
+                    //     // toastr.info('not exist do continue');
+                    //     return response;
+                    // }
                 }
             });
+        }else{
+            console.log("else");
         }
     }
 
@@ -650,16 +664,18 @@
                 processData: false,
                 data: form_data,
                 success: function (response) {
-                    console.log(response);
                     if(response.status == 500){
-                        // getEmailCheck();
                         $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist</label>');
                         toastr.info(response.msg);
                     }
-                    return false;
                     if(response.status == 200){
-                        toastr.success(response.success);
-                        window.location.reload();
+                        // toastr.success(response.msg);
+                        // window.location.reload();
+                        if($('#selected_payment_type').val() == 'paypal'){
+                            window.location.href = "{{route('make.payment')}}/"+response.order_dt;
+                        }else{
+                            console.log("dekopay");
+                        }
                     }else{
                         toastr.info(response.error);
                     }
