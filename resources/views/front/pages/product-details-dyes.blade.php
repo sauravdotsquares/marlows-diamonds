@@ -257,7 +257,9 @@
 						<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
 					</div>
 					<div class="product-req-appointment">
-						<a class="btn-bg-small" href="javascript:void(0);" data-toggle="modal" data-target="#requestAppointment">Request an Appointment</a>
+						<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+						Request an Appointment
+						</a>
 					</div>
 				</div> 
 				<div class="product-postactions">
@@ -584,17 +586,15 @@
 	</div>
 </div>
 
+
 <!-- Modal -->
-<div class="modal fade" id="requestAppointment" tabindex="-1" role="dialog" aria-labelledby="requestAppointmentLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="requestAppointmentLabel">Request an appointment</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			
+<div class="modal fade" id="requestAppointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
       <div class="modal-body">
         <div class="col-lg-12">
 			<!-- Success message -->
@@ -652,14 +652,8 @@
 		</div>
       </div>
       
-    
-			
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-	</div>
+    </div>
+  </div>
 </div>
 
 @endsection
