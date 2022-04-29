@@ -69,6 +69,13 @@
                     </form>
                 </div>
             @endguest
+
+            <?php 
+                // echo "<pre>";
+                // print_r($getUsersDetails->getCustomerAddressFunction->country_id);
+                // die;
+            ?>
+
             <!-- login form end-->
             <div class="checkout-main-wrap">
                 <form id="finalPlaceOrderPage">
@@ -87,14 +94,14 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">First Name <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="first_name" name="first_name" required="required" value="gajendra" class="form-control">
+                                                        <input type="text" id="first_name" name="first_name" required="required" value="{{isset($getUsersDetails->getCustomerAddressFunction->first_name)?$getUsersDetails->getCustomerAddressFunction->first_name:''}}" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Last Name <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="last_name" name="last_name" required="required" value="gajendra" class="form-control">
+                                                        <input type="text" id="last_name" name="last_name" required="required" value="{{isset($getUsersDetails->getCustomerAddressFunction->last_name)?$getUsersDetails->getCustomerAddressFunction->last_name:''}}" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -103,7 +110,7 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Company Name <span
                                                                 class="optional">(Optional)</span></label>
-                                                        <input type="text" id="company_name" value="gajendra" name="company_name" class="form-control">
+                                                        <input type="text" id="company_name" value="{{isset($getUserDetails->getCustomerAddressFunction->company_name)?$getUserDetails->getCustomerAddressFunction->company_name:''}}" name="company_name" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -112,8 +119,12 @@
                                                                 class="required">*</abbr></label>
                                                         <select id="country_id" name="country_id" required="required" class="form-control">
                                                             <option value="">Select Option</option>
-                                                            @foreach($getContries as $key => $country)
-                                                                <option value="{{$country->shortname}}">{{$country->name}}</option>
+                                                            @foreach($getCountries as $key => $country)
+                                                                @if(isset($getUsersDetails->getCustomerAddressFunction->country_id) && $getUsersDetails->getCustomerAddressFunction->country_id == $country->shortname)
+                                                                    <option value="{{$country->shortname}}" selected>{{$country->name}}</option>
+                                                                @else
+                                                                    <option value="{{$country->shortname}}">{{$country->name}}</option>
+                                                                @endif
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -124,11 +135,11 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Street address <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" id="street_address_l1" name="street_address_l1" value="gajendra" required="required" class="form-control"
+                                                        <input type="text" id="street_address_l1" name="street_address_l1" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l1)?$getUsersDetails->getCustomerAddressFunction->street_address_l1:''}}" required="required" class="form-control"
                                                             placeholder="House number and street name">
                                                     </div>
                                                     <div class="checkout-form-group">
-                                                        <input type="text" value="gajendra" id="street_address_l2" name="street_address_l2" class="form-control"
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l2)?$getUsersDetails->getCustomerAddressFunction->street_address_l2:''}}" id="street_address_l2" name="street_address_l2" class="form-control"
                                                             placeholder="Apartment, suite, unit, etc. (optional)">
                                                     </div>
                                                 </div>
@@ -138,14 +149,14 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Town / City <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" value="gajendra" id="town_city" name="town_city" required="required" class="form-control">
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->town_city)?$getUsersDetails->getCustomerAddressFunction->town_city:''}}" id="town_city" name="town_city" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">State/Region<abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" value="gajendra" id="state" name="state" required="required" class="form-control">
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->state)?$getUsersDetails->getCustomerAddressFunction->state:''}}" id="state" name="state" required="required" class="form-control">
                                                         <!-- <select id="state" name="state" required="required" class="form-control">
                                                             <option>Select Option</option>
                                                             <option>Rajasthan</option>
@@ -158,14 +169,14 @@
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">PIN <abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" value="gajendra" id="pin_code" name="pin_code" required="required" class="form-control">
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->pin_code)?$getUsersDetails->getCustomerAddressFunction->pin_code:''}}" id="pin_code" name="pin_code" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Phone<abbr
                                                                 class="required">*</abbr></label>
-                                                        <input type="text" value="gajendra" id="mobile" name="mobile" required="required" class="form-control">
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->mobile)?$getUsersDetails->getCustomerAddressFunction->mobile:''}}" id="mobile" name="mobile" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -212,7 +223,7 @@
                                             <div class="checkout-form-group">
                                                 <label class="input-label">Order notes<span
                                                         class="optional">(Optional)</span></label>
-                                                <textarea id="order_notes" name="order_notes" required="required" class="form-control" placeholder="Notes about your order, e.g. special notes for delivery.">
+                                                <textarea id="order_notes" name="order_notes" required="required" class="form-control" placeholder="Notes about your order, e.g. special notes for delivery."> {{isset($getUsersDetails->getCustomerAddressFunction->order_notes)?$getUsersDetails->getCustomerAddressFunction->order_notes:''}}
                                                 </textarea>
                                             </div>
                                         </div>
@@ -305,7 +316,7 @@
                                                     Price :
                                                 </div>
                                                 <div class="payment-cc-details-values">
-                                                    {{MY_CURRENCY_SYMBOL}}{{ $total }}
+                                                    {{MY_CURRENCY_SYMBOL}} <span id="totalP">389.00</span>
                                                 </div>
                                             </div>
                                             <div class="payment-cc-details-inner">
@@ -313,13 +324,20 @@
                                                     Term :
                                                 </div>
                                                 <div class="payment-cc-details-values">
-                                                    <select id="paymentccdetails" name="paymentccdetails">
+                                                <select id="terms" name="term">
+                                                    <option value="ONIB12-16.9" selected=""> 12  Months Credit 16.9%</option>
+                                                    <option value="ONIB18-16.9"> 18  Months Credit 16.9%</option>
+                                                    <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
+                                                    <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
+                                                    <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
+                                                </select>
+                                                    <!-- <select id="paymentccdetails" name="paymentccdetails">
                                                         <option value="12"> 12 Months Credit 16.9%</option>
                                                         <option value="18"> 18 Months Credit 16.9%</option>
                                                         <option value="24"> 24 Months Credit 16.9%</option>
                                                         <option value="36"> 36 Months Credit 16.9%</option>
                                                         <option value="48"> 48 Months Credit 16.9%</option>
-                                                    </select>
+                                                    </select> -->
                                                 </div>
                                             </div>
                                             <div class="payment-cc-details-inner">
@@ -327,8 +345,15 @@
                                                     Deposit :
                                                 </div>
                                                 <div class="payment-cc-details-values">
-                                                    <select id="depositepercentage" name="depositepercentage">
+                                                    <!-- <select id="depositepercentage" name="depositepercentage">
                                                         <option value="10">10%</option>
+                                                        <option value="20">20%</option>
+                                                        <option value="30">30%</option>
+                                                        <option value="40">40%</option>
+                                                        <option value="50">50%</option>
+                                                    </select> -->
+                                                    <select id="payed" name="percentage">
+                                                        <option value="10" selected="">10%</option>
                                                         <option value="20">20%</option>
                                                         <option value="30">30%</option>
                                                         <option value="40">40%</option>
@@ -343,7 +368,7 @@
                                                     Monthly Payment
                                                 </div>
                                                 <div class="cc_pay_details_values">
-                                                    £ 70.45
+                                                    £ <span id="perMonths">  </span>
                                                 </div>
                                             </div>
                                             <div class="cc_pay_details_inner">
@@ -351,7 +376,7 @@
                                                     Cash Price
                                                 </div>
                                                 <div class="cc_pay_details_values">
-                                                    £ 864.00
+                                                    £ <span id="cashPrices"> </span>
                                                 </div>
                                             </div>
                                             <div class="cc_pay_details_inner">
@@ -359,7 +384,7 @@
                                                     Deposit to Pay
                                                 </div>
                                                 <div class="cc_pay_details_values">
-                                                    £ 86.40
+                                                    £ <span id="Deposited"> </span>
                                                 </div>
                                             </div>
                                             <div class="cc_pay_details_inner">
@@ -367,7 +392,7 @@
                                                     Loan Amount
                                                 </div>
                                                 <div class="cc_pay_details_values">
-                                                    £ 777.60
+                                                    £ <span id="loanAmt"> </span>
                                                 </div>
                                             </div>
                                             <div class="cc_pay_details_inner">
@@ -375,7 +400,7 @@
                                                     Loan Repayment
                                                 </div>
                                                 <div class="cc_pay_details_values">
-                                                    £ 845.39
+                                                    £ <span id="loanRepay"> </span>
                                                 </div>
                                             </div>
                                             <div class="cc_pay_details_inner">
@@ -383,7 +408,7 @@
                                                     Cost of Loan
                                                 </div>
                                                 <div class="cc_pay_details_values">
-                                                    £ 67.79
+                                                    £ <span id="costLoan"> </span>
                                                 </div>
                                             </div>
                                             <div class="cc_pay_details_inner">
@@ -391,7 +416,7 @@
                                                     Total Amount Payable
                                                 </div>
                                                 <div class="cc_pay_details_values">
-                                                    £ 931.79
+                                                    £ <span id="totalAmt"> </span>
                                                 </div>
                                             </div>
                                             <div class="cc_pay_details_inner">
@@ -399,10 +424,11 @@
                                                     Number of Monthly Payments
                                                 </div>
                                                 <div class="cc_pay_details_values">
-                                                    12
+                                                    <span id="noTerm"> </span>
                                                 </div>
                                             </div>
                                         </div>
+                                        <input type="hidden" id="enableId" value="OCFDefault">
                                         <div class="cc_how_apply">
                                             <strong>HOW TO APPLY</strong>
                                             <span>Choose Dekopay as your payment method and place your order.</span>
@@ -684,6 +710,98 @@
         }
     });
 
+
+    
+
+</script>
+
+<script>
+    var api = $("#myapi").val();
+    
+    var dekoFilters = null;
+    if(undefined !== window.dekofilters){
+        dekoFilters = window.dekofilters;
+    }
+        function alterMinOption(){
+        var payedVal = $('select[name="percentage"]').val();
+        var update = false;
+        $('select[name="percentage"] option').each(function(){	
+            if($(this).val() == payedVal){
+                if($(this).prop('disabled')){
+                    update = true;	
+                }
+            }
+        });	   
+        if(update || payedVal == null){
+            $('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first'));
+            $('select[name="percentage"] option:not([disabled]):first').prop('selected','selected');
+        }
+    }
+
+
+    function alterFilters(){
+            if(null != dekoFilters){
+            var term = $('select[name="term"]').val(); 
+            if(dekoFilters.hasOwnProperty(term)){
+                termProp = parseInt(dekoFilters[term]);
+                $('select[name="percentage"] option').attr('disabled', 'disabled'); 
+                $('select[name="percentage"] option').each(function(){
+                    var valInt = parseInt($(this).val());
+                    if(valInt >= termProp){
+                        $(this).removeAttr('disabled'); 
+                    }
+                });
+
+            }else{
+                $('select[name="percentage"] option').removeAttr('disabled'); 
+            }
+    }
+    }
+
+    var url="https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=b884fefd2e03ec4c921c184fcc4273f0";	
+
+    function get_deko_data(){
+        $.getScript( url, function() {
+            alterFilters(); 
+            alterMinOption();
+            var values = $("#final_price").val();
+            var code =$("#terms").val();
+            var percentage = parseInt($("#payed").val());
+            var deposit = parseFloat((percentage/100)*values);
+            var my_fd_obj = new FinanceDetails(code,values,percentage,deposit);
+            $("#perMonth").html(my_fd_obj.m_inst.toFixed(2)+" per month");
+            $("#perMonths").html(my_fd_obj.m_inst.toFixed(2));
+            $("#cashPrices").html(my_fd_obj.goods_val);
+            $("#Deposited").html(my_fd_obj.d_amount);
+            $("#loanAmt").html(my_fd_obj.l_amount);
+            $("#loanRepay").html(my_fd_obj.l_repay);
+            $("#costLoan").html(my_fd_obj.l_cost);
+            $("#totalAmt").html(my_fd_obj.total);
+            $("#noTerm").html(my_fd_obj.term); 
+            $("#totalP").html(my_fd_obj.goods_val);
+
+            $("#payPro").val(code);
+            $("#payPer").val(percentage);
+        });
+    }
+    get_deko_data(); 
+
+    $(document).ready(function(){
+        $("#terms").on("change", function(){
+            alterFilters(); 
+            alterMinOption();
+            $('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first'));
+            $('select[name="percentage"] option:not([disabled]):first').prop('selected','selected');
+
+            get_deko_data(); 
+        });
+        $("#payed").on("change", function(){
+            alterFilters(); 
+            alterMinOption();
+            get_deko_data(); 
+        });
+        
+    });
 </script>
 
 @endsection

@@ -25,7 +25,7 @@ class Order extends Model
         'status',
     ];
 
-    protected $appends = ['user_details','order_address'];
+    protected $appends = ['user_details','order_address','status_details','total_quantity'];
 
     public function getOrderDetailsFunction()
     {
@@ -39,6 +39,32 @@ class Order extends Model
     public function getOrderAddressAttribute()
     {
         return CustomerAddress::where('order_id',$this->id)->first();
+    }
+    public function getTotalQuantityAttribute()
+    {
+        return OrderDetail::where('order_id',$this->id)->sum('quantity');
+    }
+    public function getStatusDetailsAttribute()
+    {
+        if($this->status == 0){
+            return "Pending";
+        }elseif($this->status == 1){
+            return "Processing";
+        }elseif($this->status == 2){
+            return "Payment Done";
+        }elseif($this->status == 3){
+            return "Payment Failed/Cancelled";
+        }elseif($this->status == 4){
+            return "Shipped";
+        }elseif($this->status == 5){
+            return "Delievered";
+        }elseif($this->stauts == 6){
+            return "Return";
+        }elseif($this->status == 7){
+            return "Cancelled";
+        }else{
+            return "Pending";
+        }
     }
 
 }

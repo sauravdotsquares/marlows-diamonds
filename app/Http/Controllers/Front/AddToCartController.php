@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Country;
+use App\Models\User;
+use Auth;
 
 class AddToCartController extends Controller
 {
@@ -113,9 +115,15 @@ class AddToCartController extends Controller
     
     public function checkoutOrder(Request $request)
     {
-        $getContries = Country::get();
-        return view('front.pages.checkout',compact('getContries'));
+        $cart = session()->get('cart');
+        if(isset($cart) && !empty($cart)){
+            $getCountries = Country::get();
+            $getUsersDetails = [];
+            if(auth()->guard('customer')->check()){
+                $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::user()->id)->first();
+            }
+            return view('front.pages.checkout',compact('getCountries','getUsersDetails'));
+        }
+        return redirect()->route('home');
     }
-
-    
 }

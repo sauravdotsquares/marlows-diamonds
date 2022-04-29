@@ -16,6 +16,7 @@ class CustomerAddress extends Model
         'order_id',
         'first_name',
         'last_name',
+        'company_name',
         'country_id',
         'street_address_l1',
         'street_address_l2',
@@ -26,4 +27,15 @@ class CustomerAddress extends Model
         'email',
         'order_notes',
     ];
+
+    protected $appends = ['country_name'];
+
+    public function getCountryNameAttribute()
+    {
+        if($this->country_id){
+            return Country::where('shortname',$this->country_id)->pluck('name')->first();
+        }else{
+            return "Not Selected";
+        }
+    }
 }

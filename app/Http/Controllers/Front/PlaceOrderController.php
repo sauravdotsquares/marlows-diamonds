@@ -45,6 +45,7 @@ class PlaceOrderController extends Controller
                 $getCustomerAddress->order_id = 1;
                 $getCustomerAddress->first_name = $request->first_name;
                 $getCustomerAddress->last_name = $request->last_name;
+                $getCustomerAddress->company_name = $request->company_name;
                 $getCustomerAddress->country_id = $request->country_id;
                 $getCustomerAddress->street_address_l1 = $request->street_address_l1;
                 $getCustomerAddress->street_address_l2 = $request->street_address_l2;
@@ -61,6 +62,7 @@ class PlaceOrderController extends Controller
                 $getCustomerAddress->order_id = 1;
                 $getCustomerAddress->first_name = $request->first_name;
                 $getCustomerAddress->last_name = $request->last_name;
+                $getCustomerAddress->company_name = $request->company_name;
                 $getCustomerAddress->country_id = $request->country_id;
                 $getCustomerAddress->street_address_l1 = $request->street_address_l1;
                 $getCustomerAddress->street_address_l2 = $request->street_address_l2;

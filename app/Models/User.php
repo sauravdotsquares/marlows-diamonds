@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -39,4 +40,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // protected $appends = ['customer_details'];
+
+    // public function getCustomerDetailsAttribute(Type $var = null)
+    // {
+    //     # code...
+    // }
+
+    public function getCustomerAddressFunction()
+    {
+        return $this->hasOne(CustomerAddress::class);
+    }
 }

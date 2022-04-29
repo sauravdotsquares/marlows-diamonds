@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\Country;
+use App\Models\CustomerAddress;
+use App\Models\Order;
 use Session;
+use Hash;
 
 class LoginController extends Controller
 {
@@ -147,7 +151,10 @@ class LoginController extends Controller
 
     public function dashboardPage(Request $request)
     {
-        return view('front.loginpages.dashboardpage');
+        $getUserDetails = $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::user()->id)->first();
+        $getCountries = Country::get();
+
+        return view('front.loginpages.dashboardpage',compact('getUserDetails','getCountries'));
     }
 
     public function checkEmailId(Request $request)
@@ -155,6 +162,110 @@ class LoginController extends Controller
         $checkEmail = User::where('email',$request->email)->count();
 
         return response()->json($checkEmail);
+    }
+
+    public function changeCustomerUserAddress(Request $request)
+    {
+        if(auth()->guard('customer')->check()){
+            $getCustomerAddress = CustomerAddress::where('user_id',Auth::user()->id)->first();
+            if($getCustomerAddress){
+                $getCustomerAddress->user_id = Auth::user()->id;
+                $getCustomerAddress->order_id = 1;
+                $getCustomerAddress->first_name = $request->first_name;
+                $getCustomerAddress->last_name = $request->last_name;
+                $getCustomerAddress->company_name = $request->company_name;
+                $getCustomerAddress->country_id = $request->country_id;
+                $getCustomerAddress->street_address_l1 = $request->street_address_l1;
+                $getCustomerAddress->street_address_l2 = $request->street_address_l2;
+                $getCustomerAddress->town_city = $request->town_city;
+                $getCustomerAddress->state = $request->state;
+                $getCustomerAddress->pin_code = $request->pin_code;
+                $getCustomerAddress->mobile = $request->mobile;
+                $getCustomerAddress->email = $request->email;
+                $getCustomerAddress->order_notes = $request->order_notes;
+                $getCustomerAddress->save();
+            }else{
+                $getCustomerAddress = new CustomerAddress;
+                $getCustomerAddress->user_id = Auth::user()->id;
+                $getCustomerAddress->order_id = 1;
+                $getCustomerAddress->first_name = $request->first_name;
+                $getCustomerAddress->last_name = $request->last_name;
+                $getCustomerAddress->company_name = $request->company_name;
+                $getCustomerAddress->country_id = $request->country_id;
+                $getCustomerAddress->street_address_l1 = $request->street_address_l1;
+                $getCustomerAddress->street_address_l2 = $request->street_address_l2;
+                $getCustomerAddress->town_city = $request->town_city;
+                $getCustomerAddress->state = $request->state;
+                $getCustomerAddress->pin_code = $request->pin_code;
+                $getCustomerAddress->mobile = $request->mobile;
+                $getCustomerAddress->email = $request->email;
+                $getCustomerAddress->order_notes = $request->order_notes;
+                $getCustomerAddress->save();
+            }
+        }
+
+        $request->session()->flash('success', "Successfully submitted...");
+        return redirect()->back();
+    }
+
+
+    public function changeCustomerAccountDetails(Request $request)
+    {
+        if(isset($request->old_password) && isset($request->new_password) && isset($request->confirm_password)){
+            $this->validate($request, [
+                // 'username'     => 'required|unique:users',
+                'old_password'     => 'required',
+                'new_password'     => 'required|min:6',
+                'confirm_password' => 'required|same:new_password',
+            ]);
+
+            $data = $request->all();
+
+            if(!\Hash::check($data['old_password'], auth()->user()->password)){
+
+                return back()->with('error','You have entered wrong password');
+
+            }else{
+                User::where('email', auth()->user()->email)->update([
+                    'name'=> $request->name,
+                    'nicename'=> $request->nicename,
+                    // 'username'=> $request->username,
+                    'password' => Hash::make($request->new_password),
+                ]);
+                // here you will write password update code
+                return back()->with('success','You have successfully updated account details');
+            }
+        }elseif(isset($request->username) && !empty($request->username) && empty($request->old_password) && empty($request->new_password) && empty($request->confirm_password)){
+
+            $this->validate($request, [
+                'username'     => 'required|unique:users',
+            ]);
+
+            User::where('email', auth()->user()->email)->update([
+                'name'=> $request->name,
+                'nicename'=> $request->nicename,
+                'username'=> $request->username,
+            ]);
+            // here you will write password update code
+            return back()->with('success','You have successfully updated account details');
+        }else{
+            User::where('email', auth()->user()->email)->update([
+                'name'=> $request->name,
+                'nicename'=> $request->nicename,
+            ]);
+            // here you will write password update code
+            return back()->with('success','You have successfully updated account details');
+        }
+    }
+
+    public function getOrderDetails(Request $request)
+    {
+        $getOrderDetails = Order::with('getOrderDetailsFunction')->latest()->where('user_id',Auth::user()->id)->get();
+        
+        if(count($getOrderDetails)){
+            $view = view('front.ajax.user-order-list',compact('getOrderDetails'))->render();
+            return response()->json(['html'=> $view]);
+        }
     }
 
 }

@@ -1,15 +1,10 @@
 @extends('layouts.front.app')
-
-
-
 @section('content')
-
     <div class="category-banner" style="background-image:url(../assets/images/cart-bg.jpg)">
         <div class="container">
             <div class="category-banner-text">
                 <h1>CART</h1>
             </div>
-            
         </div>
     </div>
     <div class="cart-page-main">
@@ -80,7 +75,9 @@
                             </table>
                             <div class="cart-actions">
                             <a href="{{ url('/') }}" class="grey-btn-large"> Continue Shopping</a>
-                            <a href="{{route('product.checkout')}}"><button class="btn-bg-large">Proceed To Checkout</button></a>
+                            @if(session('cart'))
+                                <a href="{{route('product.checkout')}}"><button class="btn-bg-large">Proceed To Checkout</button></a>
+                            @endif
                             </div>                    
                         </div>
                     </div>
