@@ -296,6 +296,10 @@ input.input-control{height:38px}
 .category-product-filter{
 	margin: 0 -15px 15px;
 }
+.display_first_filter .product-filter-col { margin: auto;}
+.display_first_filter .product-filter-col:first-child {
+    border: 0;
+}
 .cols-ryt-tags .filter-tags-col {max-width: 12%;flex: 0 0 12%;-ms-flex: 0 0 12%;}
 .product-filter-col:first-child {border-right: 2px solid #EFEFEF;max-width: 45%;flex: 0 0 45%;-ms-flex: 0 0 45%;}
 .category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top; background: #f2f2f7; padding: 12px 18px 20px;}

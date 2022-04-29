@@ -753,7 +753,7 @@
                 },
                 success: function (res) {
                     console.log(res);
-					$('#filterDataDesign').html(res);
+					$('#filterDataDesign .type-variations-row').html(res);
                     return false;
                 }
             });

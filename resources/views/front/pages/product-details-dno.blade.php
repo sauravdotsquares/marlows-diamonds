@@ -98,7 +98,9 @@
 				<!-- <video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
 					<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
 				</video> -->
+				@if(isset($data->getProductImages->image_url))
 				<img id="productFeatureImage" src="{{ asset('storage/'.$data->getProductImages->image_url) }}" alt="">
+				@endif
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">

@@ -70,7 +70,7 @@
                <div class="col-md-4">
                   <div class="card card-header">
                      <div class="form-group">
-                        <label for="exampleInputFile">Banner Image</label>
+                        <label for="exampleInputFile">Page Banner</label>
                         <div class="input-group">
                            <div class="custom-file">
                               <input type="file" id="image" name="image" class="custom-file-input" accept="image/*">
