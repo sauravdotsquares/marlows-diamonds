@@ -418,7 +418,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .blog-main-img img{ width: 100%; }
 .blog-main-img:hover img{ transform: scale(1.1); }
 .blog-main-img {overflow: hidden;}
-.blogdetail-desc p {margin: 0 0 14px 0;}
+.blogdetail-desc p {margin: 0 0 14px 0;font-size: 15px;line-height: 27px;}
 .blogdetail-desc {margin: 19px 0 0 0;}
 .blogbold-heading {font-size: 16px;font-weight: bold;margin: 24px 0 5px 0;color: #464646;}
 .blogdetails-sidebar {background: #f2f2f7;padding: 12px 18px 20px;}
@@ -696,7 +696,16 @@ label.label {display: block;margin: 0 0 5px 0;}
 .checkout-form-group .form-control {margin: 0 0 10px 0;}
 .diamond_image{width: 80px;}
 .range_carat_wap{width: 83%}
-
+.blogdetail-desc ol {padding: 0px 0 0 13px;margin: 20px 0 10px 0;}
+.blogdetail-desc ol li {font-size: 18px;color: #303030;}
+.blogdetail-desc p a {color: #8e2e65; text-decoration: underline;}
+.blogdetail-desc ul {margin: 0 0 0 12px;}
+.blogdetail-desc img {margin: 20px 0 20px 0;}
+.blogdetail-desc h3, .blogdetail-desc h2 {font-size: 25px;font-family: "LaTO";color: #8e2e65;}
+.blogdetail-desc h6 {font-family: "Lato";font-size: 15px;line-height: 26px;color: #8e2e65;}
+.blogdetail-desc h6 a {color: #8e2e65;}
+.reviewr-review-text *{ transition: none;}
+.reviewr-review-text.show-text-col .show-more-content {display: block !important;}
 /** mega menuhover for desktop **/
 @media(min-width:767px){
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
