@@ -81,11 +81,11 @@
                <div class="col-md-4">
                   <div class="card card-header">
                      <div class="form-group">
-                        <label for="exampleInputFile">Banner Image</label>
-                        @if(isset($getData->image_url) && !empty($getData->image_url))
-                           <img src="{{asset('images').'/'.$getData->image_url}}" alt="" height="50px" width="50px">
-                        @endif
+                        <label for="exampleInputFile">Category Image</label>
                         <div class="input-group">
+						@if(isset($getData->image_url) && !empty($getData->image_url))
+                           <img src="{{url('storage').'/categories/'.$getData->image_url}}" alt="" width="50px">
+                        @endif
                            <div class="custom-file">
                               <input type="file" id="image" name="image" class="custom-file-input" accept="image/*">
                               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
@@ -143,6 +143,10 @@
 
 @section('js')
     <script>
+		$(document).on('change', '.custom-file-input', function (event) {
+		$(this).next('.custom-file-label').html(event.target.files[0].name);
+		})	
+	
          $(function () {
                // Summernote
                $('#description').summernote({
