@@ -208,6 +208,13 @@ Route::namespace('Front')->group(function () {
 	Route::post('users/update-customer-account-details','LoginController@changeCustomerAccountDetails')->name('update.customer.account.details');
 
 	Route::post('users/get-order-details','LoginController@getOrderDetails')->name('get.order.details');
+/*
+*** Reset Password
+*/
+	Route::get('/users/forget-password', 'ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
+	Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
+	Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
+	Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
 });
 
 /*

@@ -93,7 +93,7 @@
 							<input type="hidden" name="ids[]" value="{{$banners->getBannerDetails[0]->id}}">
 							<div class="input-group">
 							@if($banners->getBannerDetails[0]->image!='') 
-								<img src="{{url('storage').'/banners/'.$banners->getBannerDetails[0]->image}}" width="50px;">
+								<img src="{{asset('storage').'/banners/'.$banners->getBannerDetails[0]->image}}" width="50px;">
                               @endif
 							   <div class="custom-file">
                               <input type="file" id="image" name="image[]" value="{{ $banners->getBannerDetails[0]->image }}" class="custom-file-input" accept="image/*">

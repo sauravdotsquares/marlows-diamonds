@@ -84,7 +84,7 @@
                         <label for="exampleInputFile">Category Image</label>
                         <div class="input-group">
 						@if(isset($getData->image_url) && !empty($getData->image_url))
-                           <img src="{{url('storage').'/categories/'.$getData->image_url}}" alt="" width="50px">
+                           <img src="{{asset('storage').'/categories/'.$getData->image_url}}" alt="" width="50px">
                         @endif
                            <div class="custom-file">
                               <input type="file" id="image" name="image" class="custom-file-input" accept="image/*">
