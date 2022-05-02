@@ -37,7 +37,7 @@
                                             </label>
                                         </div>
                                     <div class="lostpassword">
-                                        <a href="javascript:void(0)">Lost your password</a>
+                                        <a href="/users/forget-password">Lost your password</a>
                                     </div>
                                 </form>
                             </div>
