@@ -579,7 +579,7 @@
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
 
-			$(document).on('change','#metal-colour',function(){
+			$(document).on('change','#metal-type',function(){
 				$('#finaldiamondprice').text("Pending...");
 				$.ajax({
 					type: 'POST',

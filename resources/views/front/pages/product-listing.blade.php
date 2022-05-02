@@ -209,7 +209,7 @@
                     </div>
                 </div>
                 @endif
-                <div class="side-recentlyview">
+                <!-- <div class="side-recentlyview">
                     <div class="sidebar-title">
                         Recently Viewed
                     </div>
@@ -232,16 +232,13 @@
                                     alt="image"></a>
                         </div>
                     </div>
-                </div>
-
+                </div> -->
             </div>
             <!-- Category SIdebar end -->
         </div>
-
     </div>
 </div>
 <!-- Category Listing Wrap end -->
-
 
 <!-- Section Reviews -->
 <div class="container">
@@ -322,11 +319,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-
 
 <input type="hidden" id="pagescroll" value="1">
 
