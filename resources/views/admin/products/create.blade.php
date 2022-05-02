@@ -53,64 +53,57 @@
       <div class="container-fluid">
          <form id="addForm" action="{{route('admin.submit-product')}}" enctype="multipart/form-data" method="POST">
             @csrf
-            <div class="row">
+            
                <div class="col-md-12">
                   <div class="card card-primary">
                      <div class="card-header">
-                        <h3 class="card-title">Add Products</h3>
+                        <h3 class="card-title">Product Details</h3>
                      </div>
                      <div class="card-body">
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="title">Title</label>
-                              <input required type="text" id="title" name="title" class="form-control" placeholder="Title"
-                                 value="{{isset($getData->title)?$getData->title:''}}">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <div class="form-label-group">
+                                    <label for="title">Title</label>
+                                    <input required type="text" id="title" name="title" class="form-control" placeholder="Title"
+                                       value="{{isset($getData->title)?$getData->title:''}}">
+                                 </div> 
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <div class="form-label-group">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" id="slug" name="slug" class="form-control" placeholder="Slug"
+                                       value="{{isset($getData->slug)?$getData->slug:''}}">
+                                 </div>
+                              </div>
                            </div>
                         </div>
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="slug">Slug</label>
-                              <input type="text" id="slug" name="slug" class="form-control" placeholder="Slug"
-                                 value="{{isset($getData->slug)?$getData->slug:''}}">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <div class="form-label-group">
+                                    <label for="tags">Tags (Separate tags with commas)</label>
+                                    <input type="text" id="tags" name="tags" class="form-control" placeholder="Tags" data-role="tagsinput" value="{{isset($getData->tags)?$getData->tags:''}}">
+                                 </div>
+                              </div>
                            </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="tags">Tags (Separate tags with commas)</label>
-                              <input type="text" id="tags" name="tags" class="form-control" placeholder="Tags"
-                                 data-role="tagsinput" value="{{isset($getData->tags)?$getData->tags:''}}">
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="categories">Categories</label>
-                              <select name="categories[]" id="categories" class="select2 select2-hidden-accessible"
-                                 multiple="" data-dropdown-css-class="select2-purple" style="width: 100%;"
-                                 data-select2-id="7" tabindex="-1" aria-hidden="true">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <div class="form-label-group">
+                                    <label for="categories">Categories</label>
+                                    <select name="categories[]" id="categories" class="select2 select2-hidden-accessible"
+                                       multiple="" data-dropdown-css-class="select2-purple" style="width: 100%;"
+                                       data-select2-id="7" tabindex="-1" aria-hidden="true">
 
-                              </select>
+                                    </select>
+                                 </div>
+                              </div>
                            </div>
                         </div>
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="is_variation">Variation</label>
-                              <select name="is_variation" id="is_variation" class="form-control">
-                                 <option value=""> Select Any</option>
-                                 <option value="0" selected> No</option>
-                                 <option value="1"> Yes</option>
-                              </select>
-                           </div>
-                        </div>
-                        <div class="form-group" style="display:none;">
-                           <div class="form-label-group">
-                              <label for="is_quantity">Manage Quantity</label>
-                              <select name="is_quantity" id="is_quantity" class="form-control">
-                                 <option value=""> Select Any</option>
-                                 <option value="0"> Out Stock</option>
-                                 <option value="1" selected> In Stock</option>
-                              </select>
-                           </div>
-                        </div>
+                       
+                       
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="short_description">Short Description</label>
@@ -131,7 +124,7 @@
                <div class="col-md-12">
                   <div class="card card-header">
                      <div class="form-group">
-                        <label for="featured_image">Product Image</label>
+                        <label for="featured_image">Featured Image</label>
                         @if(isset($getData->image_url) && !empty($getData->image_url))
                         <img src="{{asset('images').'/'.$getData->image_url}}" alt="" height="50px" width="50px">
                         @endif
@@ -156,53 +149,78 @@
                            </div>
                         </div>
                      </div>
-                     <div class="form-group">
-                        <div class="form-label-group">
-                           <select id="status" name="status" class="form-control">
-                              <option value="">Select Status</option>
-                              @if(isset($getData->status) && $getData->status == 1)
-                              <option value="1" selected>Published</option>
-                              <option value="0">Not Published</option>
-                              @elseif(isset($getData->status) && $getData->status == 0)
-                              <option value="1">Published</option>
-                              <option value="0" selected>Not Published</option>
-                              @else
-                              <option value="1" selected>Published</option>
-                              <option value="0">Not Published</option>
-                              @endif
-                           </select>
+                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                              <div class="form-label-group">
+                                 <label for="is_variation">Variable Product</label>
+                                 <select name="is_variation" id="is_variation" class="form-control">
+                                    <option value="0"> No</option>
+                                    <option value="1" selected> Yes</option>
+                                 </select>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <div class="form-label-group">
+                                 <label for="status">Product Status</label>
+                                 <select id="status" name="status" class="form-control">
+                                    <option value="">Select Status</option>
+                                   
+                                    <option value="1" selected>Published</option>
+                                    <option value="0">Not Published</option>
+                                 
+                                 </select>
+                              </div>
+                           </div>
                         </div>
                      </div>
-					 <div class="form-group">
-                        <div class="form-label-group">
-						<label>Diamond Finder Status</label>
-                           <select id="dfinder_status" name="dfinder_status" class="form-control">
-                              <option value="">Select Diamond Finder Status</option>
-                              @if(isset($getData->dfinder_status) && $getData->dfinder_status == 1)
-                              <option value="1" selected>Yes</option>
-                              <option value="0">No</option>
-                              @elseif(isset($getData->dfinder_status) && $getData->dfinder_status == 0)
-                              <option value="1">Yes</option>
-                              <option value="0" selected>No</option>
-                              @else
-                              <option value="1" selected>Yes</option>
-                              <option value="0">No</option>
-                              @endif
-                           </select>
+                     <div class="row">
+                        <div class="col-md-6">
+            					 <div class="form-group">
+                                 <div class="form-label-group">
+         						         <label>Enable Diamond Finder</label>
+                                    <select id="dfinder_status" name="dfinder_status" class="form-control">
+                                       <option value="">Select Diamond Finder Status</option>
+                                       <option value="1" selected>Yes</option>
+                                       <option value="0">No</option>
+                                      
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6" id="diamond_shape_field">
+                            <div class="form-group">
+                                 <div class="form-label-group">
+                                    <label>Diamond Shape</label>
+                                    <select id="diamond_shape" name="diamond_shape" class="form-control">
+                                       <option value="">Select Diamond Shape</option>
+                                       @foreach($diamondShapes as $diamondShape)
+                                          <option value="{{$diamondShape->value}}">{{$diamondShape->name}}</option>
+                                       @endforeach
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
-                     </div>
-                     <div class="form-group">
-                        <div class="form-label-group">
-                           <select id="is_featured" name="is_featured" class="form-control">
-                              <option value="">Select Featured</option>
-                              @if(isset($getData->is_featured) && $getData->is_featured == 1)
-                              <option value="1" selected>Featured</option>
-                              @else
-                              <option value="1">Featured</option>
-                              @endif
-                           </select>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="form-group">
+                                 <div class="form-label-group">
+                                    <label>Featured Status</label>
+                                    <select id="is_featured" name="is_featured" class="form-control">
+                                       <option value="">Select Featured</option>
+                                       @if(isset($getData->is_featured) && $getData->is_featured == 1)
+                                       <option value="1" selected>Featured</option>
+                                       @else
+                                       <option value="1">Featured</option>
+                                       @endif
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
-                     </div>
                      <div class="form-group">
                         <div class="form-label-group">
                            <label for="meta_title">Meta Title</label>
@@ -228,11 +246,15 @@
 
                   </div>
                </div>
-               <div class="col-md-12">
+               <div class="col-md-12 ">
+                  <div class="card card-primary">
+                  <div class="card-header">
+                     <h3 class="card-title">Product Data</h3>
+                  </div>
                   <div class="card-body">
-                     <h4>Product Data</h4>
+                     
                      <div class="row">
-                        <div class="col-5 col-sm-3">
+                        <div class="col-5 col-sm-3 prod-data-left-section">
                            <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist"
                               aria-orientation="vertical">
                               <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill"
@@ -249,44 +271,64 @@
                                  aria-selected="false">Settings</a> -->
                            </div>
                         </div>
-                        <div class="col-7 col-sm-9">
+                        <div class="col-7 col-sm-9 prod-data-right-section">
                            <div class="tab-content" id="vert-tabs-tabContent">
                               <div class="tab-pane text-left fade active show" id="vert-tabs-home" role="tabpanel"
                                  aria-labelledby="vert-tabs-home-tab">
                                  <div class="card-body">
-                                    <div class="form-group">
-                                       <div class="form-label-group">
-                                          <label for="sale_price">Sale Price</label>
-                                          <input type="text" id="sale_price" name="sale_price" class="form-control"
-                                             placeholder="Sale Price" value="{{isset($getData->sale_price)?$getData->sale_price:''}}">
+                                    <div class="row">
+                                       <div class="col-md-6">
+                                          <div class="form-group">
+                                             <div class="form-label-group">
+                                                <label for="sale_price">Sale Price</label>
+                                                <input type="text" id="sale_price" name="sale_price" class="form-control"
+                                                   placeholder="Sale Price" value="{{isset($getData->sale_price)?$getData->sale_price:''}}">
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-6">
+                                          <div class="form-group">
+                                             <div class="form-label-group">
+                                                <label for="regular_price">Regular Price</label>
+                                                <input type="text" id="regular_price" name="regular_price" class="form-control"
+                                                   placeholder="Regular Price" value="{{isset($getData->regular_price)?$getData->regular_price:''}}">
+                                             </div>
+                                          </div>
                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                       <div class="form-label-group">
-                                          <label for="regular_price">Regular Price</label>
-                                          <input type="text" id="regular_price" name="regular_price" class="form-control"
-                                             placeholder="Regular Price" value="{{isset($getData->regular_price)?$getData->regular_price:''}}">
+                                    <div class="row">
+                                       <div class="col-md-6">
+                                          <div class="form-group">
+                                             <div class="form-label-group">
+                                                <label for="is_taxable">Taxable</label>
+                                                <select name="is_taxable" id="is_taxable" class="form-control">
+                                                   <option value=""> Select Any</option>
+                                                   <option value="0"> Non Taxable</option>
+                                                   <option value="1" selected> Taxable</option>
+                                                </select>
+                                             </div>
+                                          </div>
                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                       <div class="form-label-group">
-                                          <label for="is_taxable">Taxable</label>
-                                          <select name="is_taxable" id="is_taxable" class="form-control">
-                                             <option value=""> Select Any</option>
-                                             <option value="0"> Non Taxable</option>
-                                             <option value="1"> Taxable</option>
-                                          </select>
+                                       <div class="col-md-6">
+                                          <div class="form-group">
+                                             <div class="form-label-group">
+                                                <label for="in_stock">Stock Status</label>
+                                                <select name="in_stock" id="in_stock" class="form-control">
+                                                   <option value=""> Select Any</option>
+                                                   <option value="0"> Out Stock</option>
+                                                   <option value="1" selected="selected"> In Stock</option>
+                                                </select>
+                                             </div>
+                                          </div>
                                        </div>
                                     </div>
                                  </div>
-
-
                               </div>
                               <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel"
                                  aria-labelledby="vert-tabs-profile-tab">
                                  <div class="card-body">
                                     <div class="row">
-                                       <div class="col-md-2">
+                                       <div class="col-md-4">
                                           <div class="form-group">
                                              <div class="form-label-group">
                                                 <label for="attribute_name">Name</label>
@@ -296,7 +338,7 @@
                                              </div>
                                           </div>
                                        </div>
-                                       <div class="col-md-3">
+                                       <div class="col-md-6">
                                           <div class="form-group">
                                              <div class="form-label-group">
                                                 <label for="attribute_value">Value</label>
@@ -308,30 +350,32 @@
                                        </div>
                                        <div class="col-md-2">
                                           <div class="form-group">
-                                             <button class="btn btn-primary" id="addAttributeAdd">Add</button>
+                                             <div class="form-label-group">
+                                                <label for="addAttributeAdd">&nbsp;</label>
+                                                <button class="btn btn-primary" id="addAttributeAdd">Add</button>
+                                             </div>
                                           </div>
                                        </div>
+                                          <div class="col-md-12">
+                                             <label for="show_attributes">Choose your existing attributes</label>
+                                             <div id="show_attributes">
+
+                                             </div>
+                                          </div>
                                     </div>
                                  </div>
 
-                                 <div class="row">
-                                    <div class="col-md-12">
-                                       <div id="show_attributes">
-
-                                       </div>
-                                    </div>
-                                 </div>
+                                 
 
                               </div>
                               <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel"
                                  aria-labelledby="vert-tabs-messages-tab">
 
                                  <div id="show_variation">
-                                    <p style="margin:0px 0px 0px 0px;"> <a href="javascript:void(0)" name="add_item" id="add_item" style="font-weight:bold;font-size:16px;">Add Variation</a>
-                                    </p>
+                                    
 
                                     <div class="accordion" id="accordionExample">
-                                       <div id="item_details" class="card">
+                                       <div id="item_details" class="">
                                           <div class="card-header" id="headingOne">
                                              <div id="dropdownVariation">
 
@@ -342,79 +386,91 @@
                                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                                              data-parent="#accordionExample">
                                              <div class="card-body">
-                                                <div class="card-body">
-                                                   <div class="row">
-                                                      <div class="col-md-6">
-                                                         <div class="form-group">
-                                                            <div class="form-label-group">
-                                                               <label for="vari_image">Image</label>
-                                                               <input data-field="vari_image" type="file" id="vari_image" name="data[0][vari_image]"
-                                                                  class="form-control">
-                                                            </div>
-                                                         </div>
-                                                         <!-- <div class="form-group">
-                                                            <div class="form-label-group">
-                                                               <label for="vari_sku">SKU</label>
-                                                               <input type="text" id="vari_sku" name="vari_sku[]"
-                                                                  class="form-control" placeholder="SKU">
-                                                            </div>
-                                                         </div> -->
-                                                         <div class="form-group">
-                                                            <div class="form-label-group">
-                                                               <label for="vari_sale_price">Sale Price</label>
-                                                               <input data-field="vari_sale_price" type="text" id="vari_sale_price" name="data[0][vari_sale_price]"
-                                                                  class="form-control" placeholder="Sale Price">
-                                                            </div>
+                                                <div class="row">
+                                                   <div class="col-md-6">
+                                                      <div class="form-group">
+                                                         <div class="form-label-group">
+                                                            <label for="vari_sale_price">Sale Price</label>
+                                                            <input data-field="vari_sale_price" type="text" id="vari_sale_price" name="data[0][vari_sale_price]"
+                                                               class="form-control" placeholder="Sale Price">
                                                          </div>
                                                       </div>
-                                                      <div class="col-md-6">
-                                                         <div class="form-group">
-                                                            <div class="form-label-group">
-                                                               <label for="vari_video">Video</label>
-                                                               <input data-field="vari_video" type="file" id="vari_video" name="data[0][vari_video]"
-                                                                  class="form-control">
-                                                            </div>
+                                                   </div>
+                                                   <div class="col-md-6">
+                                                      <div class="form-group">
+                                                         <div class="form-label-group">
+                                                            <label for="vari_regular_price">Regular Price</label>
+                                                            <input data-field="vari_regular_price" type="text" id="vari_regular_price"
+                                                               name="data[0][vari_regular_price]" class="form-control"
+                                                               placeholder="Regular Price">
                                                          </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="col-md-6">
+                                                      <div class="form-group">
+                                                         <div class="form-label-group">
+                                                            <label for="vari_image">Image</label>
+                                                            <input data-field="vari_image" type="file" id="vari_image" name="data[0][vari_image]"
+                                                               class="form-control">
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-md-6">
+                                                      <div class="form-group">
+                                                         <div class="form-label-group">
+                                                            <label for="vari_video">Video</label>
+                                                            <input data-field="vari_video" type="file" id="vari_video" name="data[0][vari_video]"
+                                                               class="form-control">
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="col-md-6">
                                                          <div class="form-group">
                                                             <div class="form-label-group">
                                                                <label for="vari_stock_status">Stock Status</label>
                                                                <select data-field="vari_stock_status" name="data[0][vari_stock_status]" id="vari_stock_status"
                                                                   class="form-control">
                                                                   <option value=""> Select Any</option>
-                                                                  <option value="1"> In Stock</option>
+                                                                  <option value="1" selected="selected"> In Stock</option>
                                                                   <option value="0"> Out Stock</option>
                                                                </select>
                                                             </div>
                                                          </div>
-                                                         <div class="form-group">
-                                                            <div class="form-label-group">
-                                                               <label for="vari_regular_price">Regular Price</label>
-                                                               <input data-field="vari_regular_price" type="text" id="vari_regular_price"
-                                                                  name="data[0][vari_regular_price]" class="form-control"
-                                                                  placeholder="Regular Price">
-                                                            </div>
-                                                         </div>
+                                                      </div>
+                                                </div>
+                                                <div class="row variation-btn-row">
+                                                   <div class="col-md-12">
+                                                      <div class="form-group">
+                                                         <button type="button" name="add_item" id="add_item" class="btn btn-success float-right">Add More</button>
+                                                         <button type="button" name="remove_item" id="remove_item" class="btn btn-danger float-right remove">Remove</button>
                                                       </div>
                                                    </div>
                                                 </div>
-                                             </div>
-                                          </div>
-
-                                          <p style="margin:-16px 0px 0px 600px;">
-                                             <a href="javascript:void(0)" name="remove_item" class='remove' id="remove_item" style="font-weight:bold;color:red;font-size:16px;">Remove Variation</a></p>
                                        </div>
-                                       <div id="new_item_details" class="new_item_details"></div>
+                                       
                                     </div>
                                  </div>
+                                 <div id="new_item_details" class="new_item_details"></div>
                               </div>
                            </div>
                         </div>
                      </div>
                   </div>
-                  <div class="form-group">
-                     <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
+                  
                </div>
+            </div>
+         </div>
+      </div>
+            <div class=" prod-button">
+               <div class="col-md-12">
+               <div class="form-group">
+                     <button type="submit" class="btn btn-primary float-right">Submit</button>
+               </div>
+            </div>
             </div>
          </form>
       </div>
@@ -439,8 +495,12 @@
 
    $(function () {
       // Summernote
-      $('#short_description').summernote()
-      $('#description').summernote()
+      $('#short_description').summernote({
+         height: 100,
+      })
+      $('#description').summernote({
+         height: 200,
+      })
 
    });
 
@@ -480,8 +540,8 @@
             if (res) {
                $('#show_attributes').empty();
                $("#show_attributes").append(res.getAttributeDesign);
-               $('#attribute_name').va("");
-               $('#attribute_value').va("");
+               $('#attribute_name').val("");
+               $('#attribute_value').val("");
                getDropdownDesign(res.getData);
             }
             return false;
@@ -593,6 +653,13 @@
       });
    });
 
+$("#dfinder_status").on('change',function(){
+   if($(this).find(":selected").val()==1){
+      $("#diamond_shape_field").show();
+   }else{
+      $("#diamond_shape_field").hide();
+   }
+})
 
 </script>
 @endsection

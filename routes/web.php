@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 /**
  * Admin routes
  */
-
+Route::get('/phpinfo', function() {
+    return phpinfo();
+});
 Route::namespace('Admin')->group(function () {
     Route::get('admin/login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('admin/login', 'LoginController@login')->name('admin.login');

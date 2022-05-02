@@ -14,6 +14,8 @@ use App\Models\ProductVariationAttributes;
 use App\Models\ProductVariationDetails;
 use App\Models\Attributes;
 use Illuminate\Support\Arr;
+use App\Models\DiamondShapes;
+use View;  
 
 class ProductController extends Controller
 {
@@ -34,23 +36,25 @@ class ProductController extends Controller
     public function create()
     {
         $breadcrumb = [
+            ["name" => "Add New Product", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
-            ["name" => "Product Form", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
         ];
         populate_breadcrumb($breadcrumb);
+
+        $diamondShapes = DiamondShapes::all();
 
         // $result = [
         //     'getCategoryData' => $getCategoryData,
         // ];
 
-        return view('admin.products.create');
+        return view('admin.products.create',compact('diamondShapes'));
     }
 
     public function updatePage($productId = null)
     {
         $breadcrumb = [
+            ["name" => "Edit Product", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
-            ["name" => "Product Form", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
         ];
         populate_breadcrumb($breadcrumb);
 
@@ -59,16 +63,9 @@ class ProductController extends Controller
         if ($productId == '' && !isset($getProductData) && empty($getProductData)){
             return 'URL NOT FOUND';
         }
-
-        // echo "asfs<pre>";
-        // print_r($getProductData);
-        // die;
-
-        $result = [
-            'getProductData' => $getProductData,
-        ];
-
-        return view('admin.products.update',$result);
+        $diamondShapes = DiamondShapes::all();
+        
+        return view('admin.products.update',compact('getProductData','diamondShapes'));
     }
 
     public function submitProduct(Request $request)
@@ -110,8 +107,12 @@ class ProductController extends Controller
                 'slug'=> strtolower($newCustomSlug),
                 'tags'=> $request->tags,
                 'status'=> isset($request->status)?$request->status:0,
+                'dfinder_status'=> isset($request->dfinder_status)?$request->dfinder_status:0,
+                'diamond_shape'=> isset($request->diamond_shape)?$request->diamond_shape:'',
+                'is_variable'=> isset($request->is_variation)?$request->is_variation:1,
                 'is_featured'=> isset($request->is_featured)?$request->is_featured:0,
                 'is_taxable'=> isset($request->is_taxable)?$request->is_taxable:0,
+                'stock_status'=> isset($request->in_stock)?$request->in_stock:1,
                 'categories'=>isset($request->categories)?implode(",",$request->categories):0,
                 'short_description'=> $request->short_description,
                 'description'=> $request->description,
@@ -125,23 +126,26 @@ class ProductController extends Controller
             $msg = 'Successfully submitted!!!';
         }
 
-        if($request->hasFile('gallery_image')) {
-            $imagegallery_image = single_storage_image_upload($request->file('gallery_image'),'Products','600','600');
-        }else{
-            $imagegallery_image = [];
-        }
+       
 
         if($request->hasFile('featured_image')) {
-            $imagefeatured_image = single_storage_image_upload($request->file('featured_image'),'Products','600','600');
+            $imagefeatured_image = single_image_upload($request->file('featured_image'),'Products','600','600');
         }else{
             $imagefeatured_image = [];
         }
-        
+        //print_r($imagefeatured_image); die;
+         if($request->hasFile('gallery_image')) {
+            $imagegallery_image = single_image_upload($request->file('gallery_image'),'Products','600','600');
+        }else{
+            $imagegallery_image = [];
+        }
+        //print_r($imagefeatured_image); die;
         if(count($imagegallery_image) || count($imagefeatured_image)){
             $finalArrayImages = array_merge($imagegallery_image,$imagefeatured_image);
         }else{
             $finalArrayImages = [];
         }
+
         if(isset($finalArrayImages) && !empty($finalArrayImages) && count($finalArrayImages)){
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
         }
@@ -346,15 +350,19 @@ class ProductController extends Controller
 
     public function getProductDetailsVariation(Request $request)
     {
-        $getVariationId = ProductVariations::where('product_id',$request->id)->pluck('id');
+        $getVariations = ProductVariations::where('product_id',$request->id)->get()->toArray();
+        
+        $variationHtml = ''; $variationArray = [];
+        if(!empty($getVariations)){
+            foreach ($getVariations as $key => $variation) {
+                $variationArray[] = View::make('admin.products.variation',['variation'=>$variation])->render();
+            }
+        }
+        return $variationArray;
+        /*$getVariationId = ProductVariations::where('product_id',$request->id)->pluck('id');
         $getVariationData = ProductVariations::where('product_id',$request->id)->select('id','product_id','sale_price','regular_price','stock_status','vari_image','vari_video')->get();
         $getVariationDetails = ProductVariationDetails::select('variation_id','key','value')->whereIn('variation_id',$getVariationId)->get()->toArray();
-        // $getVariationDetailsFinal = ProductVariationDetails::select('variation_id','key','value')->whereIn('variation_id',$getVariationId)->pluck('key')->toArray();
-
-        // return response()->json($getVariationDetails);
-        // echo "<pre>";
-        // print_r($getVariationData);
-        // die;
+       
 
         $getAttrId_arr = [];
         if(isset($request->id)){
@@ -384,13 +392,13 @@ class ProductController extends Controller
                     }
                     $getHtml .= '</select>';
                     
-                    // print_r($getValues);
+                   
                 }
                 $i = $i+1;
             }
         }
 
-        // $breedlist = $this->getBreedList($species_id);
-        return view('admin.ajax.product-variation',compact('getVariationId','getVariationDetails','getData','getAttrId_arr','getVariationData'));
+
+        return view('admin.ajax.product-variation',compact('getVariationId','getVariationDetails','getData','getAttrId_arr','getVariationData'));*/
     }
 }

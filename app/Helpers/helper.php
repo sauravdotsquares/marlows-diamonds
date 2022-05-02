@@ -31,7 +31,7 @@ if (!function_exists("getVAT")) {
 }
 
 if (!function_exists("single_image_upload")) {
-    function single_image_upload($imageUrl,$folderName)
+    function single_image_upload($imageUrl,$folderName,$height=null,$width=null)
     {
         if (!file_exists(storage_path('app/public/' . $folderName))) {
             mkdir(storage_path('app/public/' . $folderName), 0777);
@@ -86,6 +86,7 @@ if (!function_exists("single_storage_image_upload")) {
 		// $height = 200;
 		// $width = 200;
 		$image = $imageUrl;
+        echo '<pre>';print_r($image); die;
 		$imageName = $image->getClientOriginalName();
 		$fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
 		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
@@ -455,5 +456,6 @@ if (!function_exists('validate_breadcrumb')) {
             return $rapnetAllData;
         }
     }
+
 }
 
