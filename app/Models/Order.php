@@ -25,7 +25,7 @@ class Order extends Model
         'status',
     ];
 
-    protected $appends = ['user_details','order_address','status_details','total_quantity'];
+    protected $appends = ['user_details','order_address','status_details','total_quantity','status_details_designs'];
 
     public function getOrderDetailsFunction()
     {
@@ -64,6 +64,28 @@ class Order extends Model
             return "Cancelled";
         }else{
             return "Pending";
+        }
+    }
+    public function getStatusDetailsDesignsAttribute()
+    {
+        if($this->status == 0){
+            return '<span class="badge badge-warning">Pending</span>';
+        }elseif($this->status == 1){
+            return '<span class="badge badge-info">Processing</span>';
+        }elseif($this->status == 2){
+            return '<span class="badge badge-success">Payment Done</span>';
+        }elseif($this->status == 3){
+            return '<span class="badge badge-danger">Payment Failed/Cancelled</span>';
+        }elseif($this->status == 4){
+            return '<span class="badge badge-success">Shipped</span>';
+        }elseif($this->status == 5){
+            return '<span class="badge badge-danger">Delievered</span>';
+        }elseif($this->stauts == 6){
+            return '<span class="badge badge-warning">Return</span>';
+        }elseif($this->status == 7){
+            return '<span class="badge badge-warning">Cancelled</span>';
+        }else{
+            return '<span class="badge badge-warning">Processing</span>';
         }
     }
 

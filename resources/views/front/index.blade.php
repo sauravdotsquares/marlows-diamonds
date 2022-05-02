@@ -8,7 +8,7 @@
                 <h1>Find the Perfect Diamond Rings from Marlow’s</h1>               
                 <p>A diamond is forever, so should be yours.</p>
                 <div class="shop-engage-btn">
-                    <a class="btn-bg-large" href="#">SHOP ENGAGEMENT RINGS</a>
+                    <a class="btn-bg-large" href="{{asset('engagement-rings')}}">SHOP ENGAGEMENT RINGS</a>
                 </div>
             </div>
         </div>

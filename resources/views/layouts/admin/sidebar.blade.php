@@ -196,8 +196,26 @@
               </li>              
             </ul>
           </li>
-         
-          <li class="nav-item">
+
+          <li class="nav-item @if(request()->segment(2) == 'orders') menu-is-opening menu-open @endif">
+            <a href="{{route('admin.order.details.page')}}" class="nav-link @if(request()->segment(2) == 'orders') active @endif">
+              <i class="nav-icon fa fa-users"></i>
+              <p>
+                Orders 
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.order.details.page')}}" class="nav-link @if(request()->segment(3) == 'orders-details-page') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Orders Lists</p>
+                </a>
+              </li>              
+            </ul>
+          </li>
+
+          <!-- <li class="nav-item">
             <a href="pages/calendar.html" class="nav-link">
               <i class="nav-icon fas fa-shopping-cart"></i>
               <p>
@@ -205,7 +223,7 @@
                 <span class="badge badge-info right">2</span>
               </p>
             </a>
-          </li>
+          </li> -->
           
          
           <li class="nav-item @if(request()->segment(2) == 'reviews') menu-is-opening menu-open @endif">
