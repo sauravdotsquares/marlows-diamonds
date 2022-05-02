@@ -253,9 +253,17 @@
                         <img src="{{asset('')}}assets/images/stars.png" alt="star">
                     </div>
                     <div class="reviewr-review-text">
-                        I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and...<a href="#">Read More</a>
+                        The staff are friendly and</div>
+                        
+                        <div class="show-more-content">
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
+                            
+                        </div>
+                        <a class="show-more" href="javascript:void(0)">Read more</a>
+                        
                     </div>
                 </div>
             </div>
@@ -268,9 +276,17 @@
                         <img src="{{asset('')}}assets/images/stars.png" alt="star">
                     </div>
                     <div class="reviewr-review-text">
-                        I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and...<a href="#">Read More</a>
+                        The staff are friendly and</div>
+                        
+                        <div class="show-more-content">
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
+                            
+                        </div>
+                        <a class="show-more" href="javascript:void(0)">Read more</a>
+                        
                     </div>
                 </div>
             </div>
@@ -283,9 +299,17 @@
                         <img src="{{asset('')}}assets/images/stars.png" alt="star">
                     </div>
                     <div class="reviewr-review-text">
-                        I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and...<a href="#">Read More</a>
+                        The staff are friendly and</div>
+                        
+                        <div class="show-more-content">
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
+                            
+                        </div>
+                        <a class="show-more" href="javascript:void(0)">Read more</a>
+                        
                     </div>
                 </div>
             </div>
@@ -298,9 +322,15 @@
                         <img src="{{asset('')}}assets/images/stars.png" alt="star">
                     </div>
                     <div class="reviewr-review-text">
-                        I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and...<a href="#">Read More</a>
+                        The staff are friendly and</div>
+                        
+                        <div class="show-more-content">
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
+                        </div>
+                        <a class="show-more" href="javascript:void(0)">Read more</a>
                     </div>
                 </div>
             </div>
@@ -313,9 +343,16 @@
                         <img src="{{asset('')}}assets/images/stars.png" alt="star">
                     </div>
                     <div class="reviewr-review-text">
-                        I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
+                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and...<a href="#">Read More</a>
+                        The staff are friendly and</div>
+                        
+                        <div class="show-more-content">
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
+                        </div>
+                        <a class="show-more" href="javascript:void(0)">Read more</a>
+                        
                     </div>
                 </div>
             </div>
@@ -417,4 +454,16 @@
         // }
 
     </script>
+
+<script>
+
+$(document).ready(function(){
+    $('.show-more-content').hide();
+    $('.show-more').click(function(){
+        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");       
+    });
+});
+
+</script>
+
 @endsection
