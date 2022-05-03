@@ -47,7 +47,7 @@
    @endforeach
 </div>
 @endif
-<div class="content">
+<div class="content products_section">
    <!-- DataTables Example -->
    <section class="content">
       <div class="container-fluid">
@@ -128,10 +128,12 @@
                </div>
                <div class="col-md-12">
                   <div class="card card-header">
+                     <div class="row">
+                        <div class="col-md-6">
                      <div class="form-group">
-                        <label for="exampleInputFile">Product Image</label>
+                        <label for="exampleInputFile">Featured Image</label>
                         @if(isset($getProductData->getProductImages) && !empty($getProductData->getProductImages))
-                            <img src="{{ asset('storage/'.$getProductData->getProductImages->image_url) }}" alt="" height="50px" width="50px">
+                            <img src="{{ asset('storage/'.$getProductData->getProductImages->image_url) }}" alt="" class="featured_image">
                         @endif
                         <div class="input-group">
                            <div class="custom-file">
@@ -141,11 +143,13 @@
                            </div>
                         </div>
                      </div>
+                     </div>
+                  <div class="col-md-6">
                      <div class="form-group">
                         <label for="exampleInputFile">Product Gallery</label>
                         @if(isset($getProductData->getProductGallery) && !empty($getProductData->getProductGallery))
                             @foreach($getProductData->getProductGallery as $key => $gallery)
-                                <img src="{{ asset('storage/'.$gallery->image_url) }}" alt="" height="50px" width="50px">
+                                <img src="{{ asset('storage/'.$gallery->image_url) }}" alt=""  class="gallery_image">
                             @endforeach
                         @endif
                         <div class="input-group">
@@ -155,6 +159,8 @@
                               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                            </div>
                         </div>
+                     </div>
+                     </div>
                      </div>
                      <div class="row">
                         <div class="col-md-6">
@@ -384,8 +390,9 @@
                                  <div id="show_variation">
                                     
 
-                                    <div class="accordion" id="accordionExample">
-                                       <div id="item_details" class="">
+                                    <div class="accordion variation_section" id="accordionExample">
+                                       <div id="item_details" class="attr_section" data-attr-key="0">
+                                          <input type="hidden" class="vari_add_update" id="is_add_0" name="data[0][is_add]" value="">
 
                                           <div class="card-header" id="headingOne">
                                              <div id="dropdownVariation" class="dropdownVariation"></div>
@@ -462,8 +469,9 @@
                                        
                                     </div>
                                  </div>
-                                 <div id="new_item_details" class="new_item_details"></div>
+                                 
                               </div>
+                              <div id="new_item_details" class="new_item_details"></div>
                            </div>
                         </div>
                            </div>
@@ -664,9 +672,9 @@
          success: function (res) {
            
             if(res.length>0){
-               $( "#item_details").html("");
+               $( ".variation_section").html("");
                $.each( res, function( i ,val) {
-                 $( "#item_details").append(val);
+                 $( ".variation_section").append(val);
                });
             }
             
@@ -675,27 +683,64 @@
       })
    });
 
+   $(document).on('click','.removeVariation',function () {
+      var checkstr =  confirm('Are you sure you want to delete this?');
+      if(checkstr == true){
+         var var_id = $(this).data('var-id');
+         if(var_id==''){
+            $("#item_details"+key).remove();
+            return false;
+         }
+         var key = $(this).data('attr-key');
+         $.ajax({
+            type: 'POST',
+            url: '{{asset("admin/delete-product-variation")}}',
+            data: {
+               '_token': "{{csrf_token()}}",
+               'var_id': var_id,
+            },
+            success: function (res) {
+              
+              $("#item_details"+key).remove();
+            }
+         })
+      }else{
+         return false;
+      }
+   });
 
-   var id = 11;
+
+
    $(document).ready(function () {
       var max = 10;
-      $('#add_item').click(function () {
-         var button = $('#item_details0').clone(true);
-         id++;
+
+      $(document).on('click','#add_item',function () {
+         var button = $('#item_details').clone(true);
+         var is_update = 'is_update';
+         var attr_key = $( ".attr_section:last-child" ).data( "attr-key" );
+         attr_key++;
          button.find('input').val('');
-         button.removeAttr('id');
-         button.insertBefore('.new_item_details');
-         button.attr('id', 'item_details' + id);
-         button.attr('id', 'item_details' + id);
-
+         button.find('select').val('');
+         button.find('.variation_image').remove();
+         button.find('.variation_video').remove();
+         button.find('.vari_add_update').removeAttr('name');
+         button.appendTo('.variation_section');
+         button.attr('id', 'item_details' + attr_key);
+         button.attr('data-attr-key', attr_key);
+         
+         button.find('.vari_add_update').attr('id','is_update_'+attr_key);
          button.find('input').each(function() {
-            const fieldname = $(this).attr('data-field');
-            $(this).attr('name', 'data[' + id + '][' + fieldname + ']');
+               const fieldname = $(this).attr('data-field');
+               $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
          });
+         button.find('.vari_add_update').attr('name','data[' + attr_key + '][' + is_update + ']');
 
+         button.find('.removeVariation').attr('data-var-id','');
+         button.find('.removeVariation').attr('data-attr-key',attr_key);
+         button.find('.removeVariation').attr('id','remove_item'+attr_key);
          button.find('select').each(function() {
                const fieldname = $(this).attr('data-field');
-               $(this).attr('name', 'data[' + id + '][' + fieldname + ']');
+               $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
          });
       });
 
@@ -708,7 +753,7 @@
       });
       $(document).on('click','.remove',function(e){
          $(this).remove();
-         id--;
+         
          e.preventDefault();
       });
    });

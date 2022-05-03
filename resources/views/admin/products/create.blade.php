@@ -47,7 +47,7 @@
    @endforeach
 </div>
 @endif
-<div class="content">
+<div class="content products_section">
    <!-- DataTables Example -->
    <section class="content">
       <div class="container-fluid">
@@ -123,6 +123,8 @@
                </div>
                <div class="col-md-12">
                   <div class="card card-header">
+                     <div class="row">
+                        <div class="col-md-6">
                      <div class="form-group">
                         <label for="featured_image">Featured Image</label>
                         @if(isset($getData->image_url) && !empty($getData->image_url))
@@ -136,6 +138,8 @@
                            </div>
                         </div>
                      </div>
+                  </div>
+                  <div class="col-md-6">
                      <div class="form-group">
                         <label for="gallery_image">Product Gallery</label>
                         @if(isset($getData->image_url) && !empty($getData->image_url))
@@ -149,6 +153,8 @@
                            </div>
                         </div>
                      </div>
+                  </div>
+               </div>
                      <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -374,8 +380,11 @@
                                  <div id="show_variation">
                                     
 
-                                    <div class="accordion" id="accordionExample">
-                                       <div id="item_details" class="">
+                                    <div class="accordion variation_section" id="accordionExample">
+                                       <div id="item_details"  class="attr_section" data-attr-key="0">
+
+                                          <input type="hidden" class="vari_add_update" id="is_add_0" name="data[0][is_update]" value="">
+
                                           <div class="card-header" id="headingOne">
                                              <div id="dropdownVariation">
 
@@ -454,7 +463,7 @@
                                        
                                     </div>
                                  </div>
-                                 <div id="new_item_details" class="new_item_details"></div>
+                                 
                               </div>
                            </div>
                         </div>
@@ -564,7 +573,7 @@
          let changeTextArray = $(document).find('#attributevari'+value.id).data('value').split('|');
          let changeTextName = $(document).find('#attributevari'+value.id).data('name');
          if ($(document).find('#attributevari'+value.id).prop('checked') == true) {
-            $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
+            $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class='form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
             $.each(changeTextArray, function (key, value) {
                $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
             });
@@ -584,7 +593,7 @@
 
 
       if ($(this).prop('checked') == true) {
-         $("#dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + $(this).data('name') + "</option></select> ");
+         $("#dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class='form-control'><option value=''>Select Any " + $(this).data('name') + "</option></select> ");
          $.each($(this).data('value').split('|'), function (key, value) {
             console.log(value);
             $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
@@ -627,20 +636,23 @@
 
       $('#add_item').click(function () {
          var button = $('#item_details').clone(true);
-         id++;
+         var attr_key = $( ".attr_section:last-child" ).data( "attr-key" );
+         attr_key++;
+         var is_update = 'is_update';
          button.find('input').val('');
          button.removeAttr('id');
-         button.insertBefore('.new_item_details');
-         button.attr('id', 'new_' + id);
-
+         button.appendTo('.variation_section');
+         button.attr('id', 'item_details' + attr_key);
+         button.attr('data-attr-key', attr_key);
+         button.find('.vari_add_update').attr('id','is_update_'+attr_key);
          button.find('input').each(function() {
                const fieldname = $(this).attr('data-field');
-               $(this).attr('name', 'data[' + id + '][' + fieldname + ']');
+               $(this).attr('name', 'data[' + item_details + '][' + fieldname + ']');
          });
-
+         button.find('.vari_add_update').attr('name','data[' + attr_key + '][' + is_update + ']');
          button.find('select').each(function() {
                const fieldname = $(this).attr('data-field');
-               $(this).attr('name', 'data[' + id + '][' + fieldname + ']');
+               $(this).attr('name', 'data[' + item_details + '][' + fieldname + ']');
          });
 
 
