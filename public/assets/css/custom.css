@@ -709,7 +709,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 
 /** search suggestion **/
 .head-mini-search{ position: relative;}
-.search-suggestion {position: absolute;right: 0;width: 300px;background: #EAEAEA;border: 1px solid #D0D0D0;top: 44px;}
+.search-suggestion {position: absolute;right: 0;width: 300px;background: #EAEAEA;border: 1px solid #D0D0D0;top: 44px; display: none;}
 .search-suggestion-list a {display: flex;align-items: center;color: #000;text-decoration: none;padding: 12px 10px;background: #fff;margin:14px 0 14px 0;}
 .search-suggestion-list .search-suggestion-img {width: 121px;border: 1px solid #B0B0B0;}
 .search-suggestion-text {padding: 0 9px;}
