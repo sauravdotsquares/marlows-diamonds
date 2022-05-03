@@ -204,7 +204,86 @@
                             <input type="text" name="search" placeholder="Search for product..">
                             <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
+                        <div class="search-suggestion">
+                            <div class="search-suggestion-list">
+                                <a href="#">
+                                    <div class="search-suggestion-img">
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                    </div>
+                                    <div class="search-suggestion-text">
+                                        <div class="search-suggestion-title">
+                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                        </div>
+                                        <div class="search-suggestion-price">
+                                            <span>£ 1,088.10</span>
+                                                -
+                                            <span>£ 1,674.00</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="search-suggestion-list">
+                                <a href="#">
+                                    <div class="search-suggestion-img">
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                    </div>
+                                    <div class="search-suggestion-text">
+                                        <div class="search-suggestion-title">
+                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                        </div>
+                                        <div class="search-suggestion-price">
+                                            <span>£ 1,088.10</span>
+                                                -
+                                            <span>£ 1,674.00</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="search-suggestion-list">
+                                <a href="#">
+                                    <div class="search-suggestion-img">
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                    </div>
+                                    <div class="search-suggestion-text">
+                                        <div class="search-suggestion-title">
+                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                        </div>
+                                        <div class="search-suggestion-price">
+                                            <span>£ 1,088.10</span>
+                                                -
+                                            <span>£ 1,674.00</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="search-suggestion-list">
+                                <a href="#">
+                                    <div class="search-suggestion-img">
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                    </div>
+                                    <div class="search-suggestion-text">
+                                        <div class="search-suggestion-title">
+                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                        </div>
+                                        <div class="search-suggestion-price">
+                                            <span>£ 1,088.10</span>
+                                                -
+                                            <span>£ 1,674.00</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>
