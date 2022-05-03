@@ -80,9 +80,9 @@
                         </li> -->
                         <li class="dropdown">
                             <a href="{{ route('product.cart') }}">
-                                <button type="button" class="btn btn-info" data-toggle="dropdown">
+                               
                                     <img src="{{asset('')}}assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
-                                </button>
+                            
                             </a>
                             <div class="dropdown-menu">
                                 <div class="row total-header-section">
