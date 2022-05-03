@@ -58,8 +58,11 @@ textarea#attribute_value {
     padding: 5px;
 }
 #dropdownVariation select {
-    padding: 5px;
-    margin-bottom: 5px;max-width: 220px;
+	padding: 5px;
+    max-width: 180px;
+    float: left;
+    margin-right: 3px;
+    margin-left: 3px;
 }
 .prod-button {
     margin-bottom: 65px;
@@ -74,10 +77,25 @@ textarea#attribute_value {
     width: 50px;
     float: left;
 }
-#item_details label {
+.variation_section label {
     width: 100%;
     float: left;
 }
 .variation_image {
     width: 50px;
+}
+.products_section label{width: 100%}
+.featured_image {
+    float: left;
+    width: 95px;
+    border: 1px solid #8080804a;
+    margin: 3px;
+    height: 95px;
+}
+.gallery_image {
+    float: left;
+    width: 95px;
+    border: 1px solid #8080804a;
+    margin: 3px;
+    height: 95px;
 }

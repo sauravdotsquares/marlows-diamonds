@@ -1,7 +1,21 @@
-
+<div id="{{$section}}" class="attr_section" data-attr-key="{{$index}}">
+	<input type="hidden" class="vari_add_update" id="is_update_{{$index}}" name="data[{{$index}}][is_update]" value="{{$variation['id']}}">
+	<input type="hidden" name="data[{{$index}}][vari_image_exist]" value="{{$variation['vari_image']}}">
+	<input type="hidden" name="data[{{$index}}][vari_video_exist]" value="{{$variation['vari_video']}}">
 <div class="card-header" id="headingOne">
          <div id="dropdownVariation">
+         	@if(!empty($all_attrs))
 
+         		@foreach($all_attrs as $key=>$attr)
+         			<select data-field="{{$attr['key']}}" id="{{$attr['key']}}" name="data[{{$index}}][{{$attr['key']}}]" class="form-control">
+         				<option value="">Select Any {{$attr['name']}}</option>
+         				@foreach($attr['value'] as $attr_val)
+         					<option value="{{trim($attr_val,' ')}}" @if($prod_varitn[$attr['key']]==trim($attr_val,' ')) selected @endif>{{trim($attr_val,' ')}}</option>
+         				@endforeach
+         			</select>
+         		@endforeach
+
+         	@endif
 
          </div>
       </div>
@@ -14,7 +28,7 @@
                   <div class="form-group">
                      <div class="form-label-group">
                         <label for="vari_sale_price">Sale Price</label>
-                        <input data-field="vari_sale_price" type="text" id="vari_sale_price" name="data[0][vari_sale_price]" class="form-control" placeholder="Sale Price" value="{{$variation['sale_price']}}">
+                        <input data-field="vari_sale_price" type="text" id="vari_sale_price" name="data[{{$index}}][vari_sale_price]" class="form-control" placeholder="Sale Price" value="{{$variation['sale_price']}}">
                      </div>
                   </div>
                </div>
@@ -23,7 +37,7 @@
                      <div class="form-label-group">
                         <label for="vari_regular_price">Regular Price</label>
                         <input data-field="vari_regular_price" type="text" id="vari_regular_price"
-                           name="data[0][vari_regular_price]" class="form-control"
+                           name="data[{{$index}}][vari_regular_price]" class="form-control"
                            placeholder="Regular Price" value="{{$variation['regular_price']}}">
                      </div>
                   </div>
@@ -39,7 +53,7 @@
                         @else
                         	<img class="variation_image" src="{{asset('assets/images/no-image.png')}}"/>
                         @endif
-                        <input data-field="vari_image" type="file" id="vari_image" name="data[0][vari_image]"
+                        <input data-field="vari_image" type="file" id="vari_image" name="data[{{$index}}][vari_image]"
                            class="form-control">
                      </div>
                   </div>
@@ -54,7 +68,7 @@
                     	<img class="variation_image" src="{{asset('assets/images/no-video.png')}}"/>
                         
                         @endif
-                        <input data-field="vari_video" type="file" id="vari_video" name="data[0][vari_video]"
+                        <input data-field="vari_video" type="file" id="vari_video" name="data[{{$index}}][vari_video]"
                            class="form-control">
                      </div>
                   </div>
@@ -65,7 +79,7 @@
                      <div class="form-group">
                         <div class="form-label-group">
                            <label for="vari_stock_status">Stock Status</label>
-                           <select data-field="vari_stock_status" name="data[0][vari_stock_status]" id="vari_stock_status"
+                           <select data-field="vari_stock_status" name="data[{{$index}}][vari_stock_status]" id="vari_stock_status"
                               class="form-control">
                               <option value=""> Select Any</option>
                               <option value="1" @if($variation["stock_status"]==1) selected @endif> In Stock</option>
@@ -79,10 +93,11 @@
                <div class="col-md-12">
                   <div class="form-group">
                      <button type="button" name="add_item" id="add_item" class="btn btn-success float-right">Add More</button>
-                     <button type="button" name="remove_item" id="remove_item" class="btn btn-danger float-right remove">Remove</button>
+                     <button type="button" name="remove_item" id="remove_item{{$index}}" class="btn btn-danger float-right removeVariation" data-var-id="{{$variation['id']}}" data-attr-key="{{$index}}">Remove</button>
                   </div>
                </div>
             </div>
    </div>
    
+</div>
 </div>

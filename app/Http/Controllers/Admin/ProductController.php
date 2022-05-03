@@ -171,25 +171,30 @@ class ProductController extends Controller
     {
 
         $getProductVariation = ProductVariations::where('product_id',$productId)->pluck('id');
-        ProductVariationDetails::whereIn('variation_id',$getProductVariation)->delete();
-        ProductVariations::where('product_id',$productId)->delete();
+        //ProductVariationDetails::whereIn('variation_id',$getProductVariation)->delete();
+        //ProductVariations::where('product_id',$productId)->delete();
+        //echo '<pre>'; print_r($getVariationArray['variationData']); die;
         foreach($getVariationArray['variationData'] as $key => $value){
 
             if(isset($value['vari_image']) && $value['vari_image']) {
                 $imageVariImage = product_image_upload($value['vari_image'],'ProductsVariImages');
+            }else if(isset($value['vari_image_exist']) && $value['vari_image_exist']){
+                $imageVariImage = $value['vari_image_exist'];
             }else{
                 $imageVariImage = null;
             }
+            
 
             if(isset($value['vari_video']) && $value['vari_video']) {
                 $imageVariVideo = product_video_upload($value['vari_video'],'ProductsVariVideos');
+            }else if(isset($value['vari_video_exist']) && $value['vari_video_exist']) {
+                $imageVariVideo = $value['vari_video_exist'];
             }else{
                 $imageVariVideo = null;
             }
 
-
-
-            $getProductDataVariation = ProductVariations::create([
+           
+            $getProductDataVariation = ProductVariations::updateOrCreate(['id'=>$value['is_update']],[
                 'product_id'=>$productId,
                 'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                 'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
@@ -197,19 +202,36 @@ class ProductController extends Controller
                 'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
                 'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
             ]);
-
+            
+            //echo '<pre>'; print_r($value); die;
             foreach($value as $key1 => $variData){
                 $newKey = explode("_",$key1);
                 if(isset($newKey[0]) && $newKey[0] === 'attri'){
-                    ProductVariationDetails::create([
-                        'product_id' => $productId,
-                        'variation_id'=>$getProductDataVariation->id,
-                        'key' =>$key1,
-                        'value' =>$variData,
-                    ]);
+                    if($value['is_update']!=''){
+                       ProductVariationDetails::where('variation_id',$getProductDataVariation->id)->where('key',$key1)->update([
+                            'value' =>$variData,
+                        ]); 
+                   }else{
+                        ProductVariationDetails::create([
+                            'product_id' => $productId,
+                            'variation_id'=>$getProductDataVariation->id,
+                            'key' =>$key1,
+                            'value' =>$variData,
+                        ]);
+                   }
+                    
                 }
             }
         }
+        return true;
+    }
+
+    public function deleteProductVariation(Request $request){
+       
+        ProductVariations::where('id',$request->var_id)->delete();
+
+        ProductVariationDetails::where('variation_id',$request->var_id)->delete();
+        
         return true;
     }
 
@@ -351,11 +373,42 @@ class ProductController extends Controller
     public function getProductDetailsVariation(Request $request)
     {
         $getVariations = ProductVariations::where('product_id',$request->id)->get()->toArray();
+
+        // Get Product Attributes
+
+        $attributes_val = ProductVariationAttributes::where('product_id',$request->id)->value('attr_values');
+
+        if($attributes_val!=''){
+
+            $attributes = explode(',', $attributes_val);
+            $all_attrs = [];
+            foreach ($attributes as $key => $attribute) {
+
+                $attr_key = explode('_', $attribute);
+                $attr = Attributes::where('slug',$attr_key[1])->first();
+                $attr_val = explode('|',$attr->values);
+                $all_attrs[$key]['name'] = $attr->name; 
+                $all_attrs[$key]['key'] = $attribute; 
+                $all_attrs[$key]['value'] = $attr_val; 
+            }
+
+        }
         
-        $variationHtml = ''; $variationArray = [];
+        //echo '<pre>';print_r($all_attrs); die;
+
+        $variationArray = [];
         if(!empty($getVariations)){
             foreach ($getVariations as $key => $variation) {
-                $variationArray[] = View::make('admin.products.variation',['variation'=>$variation])->render();
+                if($key==0) $section = 'item_details'; else $section = 'item_details'.$key;
+                // Get Product Variations
+                
+                $prod_variations = ProductVariationDetails::where('variation_id',$variation['id'])->get();
+                $prod_varitn = [];
+                foreach ($prod_variations as $key1 => $prod_variation) {
+                    $prod_varitn[$prod_variation->key]=$prod_variation->value;
+                }
+                //echo '<pre>'; print_r($prod_varitn); die;
+                $variationArray[] = View::make('admin.products.variation',['index'=>$key,'section'=>$section,'variation'=>$variation,'all_attrs'=>$all_attrs,'prod_varitn'=>$prod_varitn])->render();
             }
         }
         return $variationArray;

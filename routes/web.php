@@ -88,6 +88,8 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/products/delete-product-records','ProductController@delete')->name('delete-product-records');
 			Route::post('/get-product-details-variation','ProductController@getProductDetailsVariation')->name('get-product-details-variation');
 
+			Route::post('/delete-product-variation','ProductController@deleteProductVariation')->name('delete-product-variation');
+
 			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
 			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
 			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
