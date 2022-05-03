@@ -29,7 +29,7 @@ class WishlistController extends Controller
             if(isset($productData) && !empty($productData->title)){
                 // $titleHtml = $productData->title.'<br>Metal Colour:-'.$request->metalcolor.'<br>Finger Size:- '.$request->fingersize.'<br>DiamondShape:-'.$request->color.'<br>Diamond Carat:-'.$request->carat.'<br>Diamond Colour:- '.$request->color.'<br>Diamond Cut Grade:- '.$request->grade.'<br>Diamond Clarity:- '.$request->clarity.' <br> Certificate:- '.$request->certificate.'<br>Certificate Link:- <a href="'.$request->color.'" >View Certificate</a><br>Image:-<a href="'.$request->color.'" >ViewDiamond</a><br>Certificate:- '.$request->color.'';
                 
-                $titleName = `<a href="{{route('product/')}}">/`.$request->slug.$productData->title.`</a>
+                $titleName = `<a href="{{route('product/')}}/`.$request->slug.`">`.$productData->title.`</a>
                 <dl class="variation">
                     <dt class="variation-MetalColour">Metal Colour :
                     </dt>

@@ -326,6 +326,17 @@ class ProductController extends Controller
         
         return response()->json(['html'=> '']);
     }
+
+    public function autocomplete(Request $request)
+    {
+        $getSearchedData = Products::with(['getProductImages'])->select("title",'id','slug')
+                ->where("title","LIKE","%{$request['query']}%")
+                ->get();
+        
+        $view = view('front.ajax.search_suggesion',compact('getSearchedData'))->render();
+        return response()->json(['html'=> $view]);
+
+    }
     
 
 }

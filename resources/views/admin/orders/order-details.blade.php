@@ -1,5 +1,8 @@
 @extends('layouts.admin.app')
 @section('content')
+@section('css')
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+@endsection
 <!-- Main content -->
 <section class="content">
     
@@ -18,7 +21,7 @@
                         <p>
                             Order #<mark class="order-number">{{isset($getOrderDetails->token)?$getOrderDetails->token:''}}</mark> was placed on <mark class="order-date">{{isset($getOrderDetails->created_at)?$getOrderDetails->created_at->format('M d, Y'):''}}</mark> and is currently 
                             <!-- <mark class="order-status">Cancelled</mark>  -->
-                            {!!isset($getOrderDetails->status_details_designs)?$getOrderDetails->status_details_designs:''!!}.
+                            <a href="javascript:void(0);" type="button" class="" data-bs-toggle="modal" id="orderSelectedStatus" data-status="{{isset($getOrderDetails->status)?$getOrderDetails->status:''}}" data-bs-target="#exampleModal">{!!isset($getOrderDetails->status_details_designs)?$getOrderDetails->status_details_designs:''!!}</a>.
                         </p>
 
                         <section class="woocommerce-order-details">
@@ -115,4 +118,75 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+        <select name="status_change" class="form-control" id="status_change">
+            <option value="">Choose Any</option>
+            <option value="0">Payment Pending</option>
+            <option value="1">Payment Processing</option>
+            <option value="2">Payment Success</option>
+            <option value="3">Payment Cancelled</option>
+            <option value="4">Order Shipped</option>
+            <option value="5">Order Delivered</option>
+            <option value="6">Order Return</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            $('#orderSelectedStatus').on('click',function(){
+                // console.log($(this).data('status'));
+                $('#status_change').val($(this).data('status'));
+            });
+            
+
+            $('#status_change').on('change',function(){
+                if(confirm("Are you sure want to Change Status?")) {
+                    $.ajax({
+                        url: "{{ route('admin.order.change.order.status') }}",
+                        method: "POST",
+                        data: {
+                            _token: '{{ csrf_token() }}', 
+                            order_token: '{{$getOrderDetails->token}}',
+                            order_status: $(this).val()
+                        },
+                        success: function (response) {
+                            // 
+                            if(response.status == 200){
+                                toastr.success(response.msg);
+                            }else{
+                                toastr.info("Not Updated...");
+                            }
+                            window.location.reload();
+                        }
+                    });
+                }
+                // console.log($(this).val());
+            });
+
+        });
+    </script>
+@endsection
+
 @endsection

@@ -201,7 +201,7 @@
                     </div>
                     <form>
                         <div class="formgroup">
-                            <input type="text" name="search" placeholder="Search for product..">
+                            <input type="text" name="search" class="typeahead" placeholder="Search for product..">
                             <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
                         <div class="search-suggestion">

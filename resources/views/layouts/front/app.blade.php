@@ -52,7 +52,6 @@
 <script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
-<script src="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css"></script>
 <script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>
 @yield('js')
 
@@ -85,6 +84,36 @@ $(document).ready(function(){
     $('.accordian-toggle').click(function() {        
      $(".footer-title").siblings('.footerlinks-col').toggle('show');
         });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        $('input.typeahead').focusout(function() {
+          $(this).val(" ");
+          $('.search-suggestion').html(" ");
+          $('.search-suggestion').hide();
+        });
+    });
+
+    $("input.typeahead").on('keyup',function(e){
+        $('.search-suggestion').html(" ");
+        if (e.target.value.length >= 3) {
+          $.ajax({
+              url: '{{ route("autocomplete") }}',
+              method: "get",
+              data: {
+                  _token: '{{ csrf_token() }}', 
+                  query: $(this).val();,
+              },
+              success: function (response) {
+                  if(response.html){
+                    $('.search-suggestion').append(response.html);
+                    $('.search-suggestion').css('display','block');
+                  }
+              }
+          });
+        }        
     });
 </script>
 </body>

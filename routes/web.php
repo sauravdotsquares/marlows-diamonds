@@ -144,6 +144,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/banners/status/{id}/{status}', 'BannerController@status');
 
 			Route::get('orders/orders-details-page','OrderController@index')->name('order.details.page');
+			Route::post('orders/change-order-status','OrderController@changeOrderStatus')->name('order.change.order.status');
 			Route::get('orders/order-product-details/{orderId}','OrderController@orderProductDetails')->name('order.product.details');
 		//});
 	});
@@ -220,6 +221,8 @@ Route::namespace('Front')->group(function () {
 	Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
 	Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
 	Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
+	
+	Route::get('search/autocomplete','ProductController@autocomplete')->name('autocomplete');
 });
 
 /*
