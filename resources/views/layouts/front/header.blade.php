@@ -44,7 +44,7 @@
                         </a>
                     </div>
                     <div class="location-top-h">
-                        <a href="#">
+                        <a href="{{asset('visit-us')}}">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>{{LOCATION_TITLE}}
                             <div class="location-drop">
                                 <div class="location-drop-inner">

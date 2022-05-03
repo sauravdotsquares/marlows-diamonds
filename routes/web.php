@@ -140,6 +140,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/delete-banner/{id}', 'BannerController@delete');
 			Route::delete('/delete-banner-image/{id}', 'BannerController@deleteBannerImage');
 			Route::get('/banners/status/{id}/{status}', 'BannerController@status');
+
+			Route::get('orders/orders-details-page','OrderController@index')->name('order.details.page');
+			Route::get('orders/order-product-details/{orderId}','OrderController@orderProductDetails')->name('order.product.details');
 		//});
 	});
 });
@@ -208,9 +211,9 @@ Route::namespace('Front')->group(function () {
 	Route::post('users/update-customer-account-details','LoginController@changeCustomerAccountDetails')->name('update.customer.account.details');
 
 	Route::post('users/get-order-details','LoginController@getOrderDetails')->name('get.order.details');
-/*
-*** Reset Password
-*/
+	/*
+	*** Reset Password
+	*/
 	Route::get('/users/forget-password', 'ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
 	Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
 	Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');

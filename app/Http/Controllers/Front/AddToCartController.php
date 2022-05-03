@@ -44,6 +44,7 @@ class AddToCartController extends Controller
                 $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
                 $selectedAttributes = [];
                 foreach($request->all('') as $key => $finalVal){
+                    $selectedAttributes['title'] = $productData->title;
                     $selectedAttributes[$key] = $finalVal;
                     if($key == 'certificatelink'){
                         $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
@@ -120,8 +121,16 @@ class AddToCartController extends Controller
             $getCountries = Country::get();
             $getUsersDetails = [];
             if(auth()->guard('customer')->check()){
+                // echo "if check ";
+                // die;
                 $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::user()->id)->first();
             }
+            // if(Auth::user()->id){
+            //     echo "Check if".Auth::user()->id;
+            // }else{
+            //     echo "Check else";
+            // }
+            // die;
             return view('front.pages.checkout',compact('getCountries','getUsersDetails'));
         }
         return redirect()->route('home');

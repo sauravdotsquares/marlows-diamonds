@@ -267,19 +267,22 @@
 					</div>
 				</div> 
 				<div class="product-postactions">
-					<a target="_blank" class="review-action" href="#">Reviews</a>
-					<a class="store-locator" href="#">Store Locator</a>
-					<a target="_blank" class="view-certificate" href="#">View Certificate</a>
+					<a href="https://www.google.com/search?q=marlows+diamond+google+review&amp;oq=marlows+diamond+google+review&amp;aqs=chrome..69i57.8073j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x4870bcedd24f2c3d:0x1dc68827b10987fa,1,,," class="review-action" target="_blank">
+						Reviews
+					</a>
+					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
+					<a class="store-locator" href="{{asset('visit-us')}}">Store Locator</a>
+					<a target="_blank" id="productCertificateLink" class="view-certificate" href="#">View Certificate</a>
 				</div>
 				<div class="finance-available">
-					<a href="#">
+					<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
 							<span>see options</span>
 						</p>
 					</a>
 					<div class="doko-img">
-						<img src="assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
+						<img src="{{asset('')}}assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
 					</div>
 				</div>
 
@@ -660,6 +663,90 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12">
+			<!-- Success message -->
+			@if(Session::has('success'))
+				<div class="alert alert-success">
+					{{Session::get('success')}}
+				</div>
+			@endif
+			<div class="visit-form">
+				
+			<div class="paymentDetail" id="detailed" style="display: block;"> 
+									<ul class="payments"> 
+                                                        <li> <p> Price : </p><p>
+                         
+                            <input type="hidden" min="10" interval="0.01" value="1026" id="totalOrder">
+                            £<span id="totalOrderText" data-val="324.00">1026.00</span>
+                         
+                        </p>
+                     </li>
+							
+
+                             
+                                        <li>
+                                        <p> Finance Type : </p>
+                                        <p>
+											<select id="terms" name="term">
+												                  <option value="ONIB12-16.9" selected=""> 12  Months Credit 16.9%</option>
+                                 <option value="ONIB18-16.9"> 18  Months Credit 16.9%</option>
+                                 <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
+                                 <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
+                                 <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
+                                                            </select> 
+                </p>
+                                        </li>
+                                        
+
+                  		
+                     										 <li> <p>Deposit : 	</p><p>
+											<select id="payed" name="percentage">
+													                   <option value="10" selected="">10%</option>
+                                    <option value="20">20%</option>
+                                    <option value="30">30%</option>
+                                    <option value="40">40%</option>
+                                    <option value="50">50%</option>
+                                                             </select>  
+                                        </p>
+										</li>
+                                    </ul>
+                                    <p class="deko-calculate">
+                                        <button id="calculatebutton" class="btn">Calculate</button>
+                                    </p>
+									<ul class="pay_details" id="OCFDefault">
+										<li class="clearfix"> <p> Monthly Payment </p><p class="priced">  £   <span id="perMonths">83.66</span>  </p> </li>
+										<li class="clearfix"> <p> Cash Price </p> <p class="priced">   £  <span id="cashPrices">1026.00</span> </p> </li>
+										<li class="clearfix"> <p> Deposit to Pay</p><p class="priced">  £   <span id="Deposited">102.60</span>   </p> </li>
+										<li class="clearfix"> <p> Loan Amount </p><p class="priced">  £    <span id="loanAmt">923.40</span></p> </li>
+										<li class="clearfix"> <p> Loan Repayment </p><p class="priced">£  <span id="loanRepay">1003.90</span>  </p> </li>
+										<li class="clearfix"> <p> Cost of Loan</p> <p class="priced">   £  <span id="costLoan">80.50</span>  </p> </li>
+										<li class="clearfix"> <p> Total Amount Payable </p> <p class="priced"> £   <span id="totalAmt">1106.50</span>    </p> </li>
+										<li class="clearfix"> <p> Number of Monthly Payments </p> <p class="priced"> <span id="noTerm">12</span>  </p></li>
+									</ul> 
+                                    <p class="finance_options_provided">Finance options powered by <img src="https://www.marlows-diamonds.co.uk/wp-content/themes/betheme-child//images/Deko_landscape_colour_whiteBG200px_wide.png" style="height:25px;" class="nolazy" alt="DEKO"></p>
+
+									<input type="hidden" id="enableId" value="OCFDefault"> <br>
+									<div>
+											
+									</div>
+											
+								</div>
+			</div>
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @section('js')
@@ -737,6 +824,7 @@
 			$('#certificate_url').val($("body input[type='radio'].refinedata:checked").data('certurl'));
 			$('#selected_diamond_shape').val($("body input[type='radio'].refinedata:checked").data('shape'));
 			$('#selected_diamond_certno').val($("body input[type='radio'].refinedata:checked").data('certno'));
+			$('#productCertificateLink').attr('href',$("body input[type='radio'].refinedata:checked").data('certurl'));
 			getFinalPrice();
 		}
 
@@ -750,9 +838,11 @@
 					'slug' : '{{$data->slug}}',
                 },
                 success: function (res) {
-                    console.log(res);
-					$('#filterDataDesign .type-variations-row').html(res);
-                    return false;
+                    // console.log(res);
+					if(res){
+						$('#filterDataDesign .type-variations-row').html(res);
+					}
+                    // return false;
                 }
             });
 		}
@@ -781,7 +871,7 @@
 					'certificate': $('#selected_diamond_certno').val() || '',
                 },
                 success: function (res) {
-					console.log(res);
+					// console.log(res);
 					if(res.success != '' && typeof res.success !== "undefined"){
 						if(res.cartcount){
 							$(".cartcount").text(res.cartcount);
@@ -819,7 +909,7 @@
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
-					console.log(res);
+					// console.log(res);
 					$('#refineSearchData').html("");
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);

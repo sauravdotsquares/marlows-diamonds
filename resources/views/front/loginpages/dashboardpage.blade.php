@@ -73,7 +73,7 @@
                                 <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                     <div class="account-order-page">
                                         <div class="scrollable-table">
-                                            <table border-collapse="collapse">
+                                            <table id="orderDataTable" border-collapse="collapse">
                                                 <thead>
                                                     <tr>
                                                         <th>Order</th>
@@ -340,8 +340,13 @@
 @endsection
   
 @section('js')
+<!-- <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script> -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
+        
+       
+
         $('#showBillingAddress').on('click',function(){
             $('.addresbox-block').hide();
             $(this).hide();
@@ -370,6 +375,7 @@
             success: function (res) {
                 // console.log(res);
                 $('#updateOrderDesign').append(res.html);
+                $('#orderDataTable').DataTable();
                 // return false;
                 // if (res) {
                 //     $("#categories").append('<option value="">Select Category</option>' + res);
