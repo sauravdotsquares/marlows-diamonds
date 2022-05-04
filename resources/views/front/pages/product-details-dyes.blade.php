@@ -88,7 +88,7 @@
 
 @section('content')
 
-<?php 
+<?php
 	// echo "<pre>";
 	// print_r($data->getProductVariation[0]->regular_price);
 	// die;
@@ -251,7 +251,7 @@
 							$wishListClass = "fa-heart-o";
 							if(array_key_exists($data->id,$wishlist)){
 								$wishListClass = "fa-heart";
-							}						
+							}
 						@endphp
 						<a href="javascript:void(0);" id="productWishList"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
 					</div>
@@ -265,7 +265,7 @@
 						Request an Appointment
 						</a>
 					</div>
-				</div> 
+				</div>
 				<div class="product-postactions">
 					<a href="https://www.google.com/search?q=marlows+diamond+google+review&amp;oq=marlows+diamond+google+review&amp;aqs=chrome..69i57.8073j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x4870bcedd24f2c3d:0x1dc68827b10987fa,1,,," class="review-action" target="_blank">
 						Reviews
@@ -300,8 +300,8 @@
 			</div>
 		</div>
 		<div class="related-products-list">
-			<div class="owl-carousel owl-theme related-product st-arrows">
-				<div class="item">
+			<div id="relatedProductData" class="owl-carousel owl-theme related-product st-arrows">
+				{{-- <div class="item">
 					<div class="product-grid-item">
 						<div class="product-items-item-info">
 							<div class="product-items-item-image">
@@ -384,7 +384,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 
 		</div>
@@ -611,7 +611,7 @@
 				</div>
 			@endif
 				<div class="visit-form">
-					
+
 					<form method="post" action="{{ route('contact') }}">
 					@csrf
 						<div class="form-controls">
@@ -654,11 +654,11 @@
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
 					</form>
-					
+
 				</div>
 		</div>
       </div>
-      
+
     </div>
   </div>
 </div>
@@ -680,19 +680,19 @@
 				</div>
 			@endif
 			<div class="visit-form">
-				
-			<div class="paymentDetail" id="detailed" style="display: block;"> 
-									<ul class="payments"> 
+
+			<div class="paymentDetail" id="detailed" style="display: block;">
+									<ul class="payments">
                                                         <li> <p> Price : </p><p>
-                         
+
                             <input type="hidden" min="10" interval="0.01" value="1026" id="totalOrder">
                             £<span id="totalOrderText" data-val="324.00">1026.00</span>
-                         
+
                         </p>
                      </li>
-							
 
-                             
+
+
                                         <li>
                                         <p> Finance Type : </p>
                                         <p>
@@ -702,12 +702,12 @@
                                  <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
                                  <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
                                  <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
-                                                            </select> 
+                                                            </select>
                 </p>
                                         </li>
-                                        
 
-                  		
+
+
                      										 <li> <p>Deposit : 	</p><p>
 											<select id="payed" name="percentage">
 													                   <option value="10" selected="">10%</option>
@@ -715,7 +715,7 @@
                                     <option value="30">30%</option>
                                     <option value="40">40%</option>
                                     <option value="50">50%</option>
-                                                             </select>  
+                                                             </select>
                                         </p>
 										</li>
                                     </ul>
@@ -731,14 +731,14 @@
 										<li class="clearfix"> <p> Cost of Loan</p> <p class="priced">   £  <span id="costLoan">80.50</span>  </p> </li>
 										<li class="clearfix"> <p> Total Amount Payable </p> <p class="priced"> £   <span id="totalAmt">1106.50</span>    </p> </li>
 										<li class="clearfix"> <p> Number of Monthly Payments </p> <p class="priced"> <span id="noTerm">12</span>  </p></li>
-									</ul> 
+									</ul>
                                     <p class="finance_options_provided">Finance options powered by <img src="https://www.marlows-diamonds.co.uk/wp-content/themes/betheme-child//images/Deko_landscape_colour_whiteBG200px_wide.png" style="height:25px;" class="nolazy" alt="DEKO"></p>
 
 									<input type="hidden" id="enableId" value="OCFDefault"> <br>
 									<div>
-											
+
 									</div>
-											
+
 								</div>
 			</div>
 		</div>
@@ -756,9 +756,10 @@
 
 	<script>
 		$(document).ready(function(){
+            getRelatedProduct();
 
 			getCustomFilter(); getProdVideo();
-			
+
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
 			});
@@ -810,7 +811,7 @@
 		}
 
 		function getCustomFilter(){
-			
+
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -942,6 +943,26 @@
                 }
             });
 		}
+
+        function getRelatedProduct(){
+            $.ajax({
+                url: "{{ route('get.related.product.list') }}",
+                method: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    catid: '{{$data->categories}}',
+                },
+                success: function (response) {
+                    // console.log(response.html);
+                    $('#relatedProductData').html(" ");
+                    if(response.html){
+                        $('#relatedProductData').append(response.html);
+                    }
+                    // return false;
+                    // window.location.reload();
+                }
+            });
+        }
 
 	</script>
 @endsection

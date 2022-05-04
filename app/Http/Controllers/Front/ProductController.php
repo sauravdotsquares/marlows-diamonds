@@ -25,30 +25,30 @@ class ProductController extends Controller
         if($cat3 != null){
             // echo "cat3";
             $getCatId = Category::where('slug', $cat3)->first();
-           
+
         }elseif($cat2 != null){
             // echo "cat2";
             $getCatId = Category::where('slug', $cat2)->first();
-           
+
         }elseif($cat1 !=null){
             // echo "cat1<pre>";
             $getCatId = Category::where('slug', $cat1)->first();
-           
+
         }else{
             return view('layouts.errors.404');
         }
         if(!$getCatId){
             return view('layouts.errors.404');
-         
+
         }
         return view('front.pages.product-listing',['data'=>$getCatId,'cat1'=>$cat1,'cat2'=>$cat2,'cat3'=>$cat3]);
     }
 
     public function productDetails($productSlug = null)
-    {   
+    {
         if($productSlug !=null){
             $getProduct = Products::with('getProductVariation','getProductImages')->where('slug',$productSlug)->first();
-            
+
             if(isset($getProduct) && !empty($getProduct)){
                 if($getProduct->dfinder_status == 1){
                     return view('front.pages.product-details-dyes',['data'=>$getProduct]);
@@ -112,7 +112,7 @@ class ProductController extends Controller
         //         }
         //     }
         // }
-       
+
         $getCateProductId = array();
 
         if(count($getParentHierarchy)){
@@ -123,7 +123,7 @@ class ProductController extends Controller
             }
         }
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
-        
+
         // return response()->json($getCateProductId);
 
         $getProductListFinal = Products::with('getProductImages')->whereIn('id',$output)->simplePaginate(12);
@@ -166,7 +166,7 @@ class ProductController extends Controller
     }
 
     public function getSingleArray($blankArray,$cateArray,$level=0)
-    {   
+    {
         $level++;
         if(count($cateArray)){
             foreach($cateArray as $key => $val){
@@ -202,13 +202,13 @@ class ProductController extends Controller
         //     $request->input('I'),
         //     $request->input('VVS2')
         // );
-        
+
         $price = Rapnet::getPrice();
-        
+
         echo "Testing again ada da adsd <pre>";
         print_r($price);
-        die;  
-        
+        die;
+
     }
 
     public function getNewRepNetFunction(Type $var = null)
@@ -219,8 +219,8 @@ class ProductController extends Controller
         ];
 
         $getApiController = new ApiController;
-        $getActualData = $getApiController->getRepnetApiFunction($getArray);        
-        
+        $getActualData = $getApiController->getRepnetApiFunction($getArray);
+
         RepnetData::truncate();
 
         foreach($getActualData as $key => $val){
@@ -270,8 +270,8 @@ class ProductController extends Controller
 
                 // Get Attributes
                 $attributes = Attributes::whereIn('slug',$productSelectedAttribute)->get()->toArray();
-            
-                
+
+
                 if(!empty($attributes)){
 
                     $variation_ids = ProductVariations::where('product_id',$product_id)->pluck('id')->toArray();
@@ -284,33 +284,33 @@ class ProductController extends Controller
                         $explode_attr = explode('|', $attribute['values']);
 
                         $getAttrVals = ProductVariationDetails::whereIn('variation_id',$variation_ids)->where('key','attri_'.$attribute['slug'])->pluck('value')->toArray();
-                        
-                        
+
+
                         $found = [];
                         foreach($explode_attr as $num) {
                             if (in_array(trim($num),$getAttrVals)) {
                                 $found[] = $num;
-                            } 
+                            }
                         }
 
                         $is_empty = true;
                         foreach ($getAttrVals as $value) {
                             if ($value != ''){
                                 $is_empty = false;
-                                
+
                             }
                         }
-                        
+
                         if ($is_empty)
                             $final_attr['attri_'.$attribute['slug']] = $explode_attr;
                         else
                             $final_attr['attri_'.$attribute['slug']] = $found;
 
-                    
-                        
+
+
                         $variationArray[] = View::make('front.includes.show_variations',['final_attr'=>$final_attr])->render();
                     }
-                   
+
                 }
                 return $variationArray;
             }
@@ -331,7 +331,7 @@ class ProductController extends Controller
 
             if(isset($getVariDetails) && !empty($getVariDetails)){
                 $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails->variation_id)->select('vari_image','vari_video','regular_price')->first();
-                
+
                 return response()->json($getSelectedVariationVideoImages);
             }
         }
@@ -341,13 +341,13 @@ class ProductController extends Controller
     public function getCustomApiFilterData(Request $request)
     {
         $getApiController = new ApiController;
-        $getActualData = $getApiController->getRepnetApiFunction($request->all());  
+        $getActualData = $getApiController->getRepnetApiFunction($request->all());
 
         if(count($getActualData)){
             $view = view('front.ajax.product_refinesearch',compact('getActualData'))->render();
             return response()->json(['html'=> $view]);
         }
-        
+
         return response()->json(['html'=> '']);
     }
 
@@ -356,11 +356,38 @@ class ProductController extends Controller
         $getSearchedData = Products::with(['getProductImages'])->select("title",'id','slug')
                 ->where("title","LIKE","%{$request['query']}%")
                 ->get();
-        
+
         $view = view('front.ajax.search_suggesion',compact('getSearchedData'))->render();
         return response()->json(['html'=> $view]);
 
     }
-    
+
+
+    public function getRelatedProductList(Request $request)
+    {
+        $getCatIdArray = explode(',',$request->catid);
+
+        $getCateProductId = array();
+        foreach($getCatIdArray as $prKey => $proVal){
+            $getProductList = Products::whereRaw("find_in_set('".$proVal."',categories)")
+            ->pluck('id')->toArray();
+            array_push($getCateProductId,$getProductList);
+        }
+
+        $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
+
+        $getProductListFinal = Products::with('getProductImages')->whereIn('id',$output)->simplePaginate(12);
+
+        if(isset($getProductListFinal) && !empty($getProductListFinal)){
+            $view = view('front.ajax.productlistajax',compact('getProductListFinal'))->render();
+        }else{
+            $view = '';
+            $getProductListFinal = '';
+        }
+
+        return response()->json(['page'=> $getProductListFinal,'html'=>$view]);
+
+    }
+
 
 }
