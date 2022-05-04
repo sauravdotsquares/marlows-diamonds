@@ -20,7 +20,8 @@
     <meta property="og:image:type" content="image/jpeg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@marlowsdiamonds" />
-
+	<link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     
