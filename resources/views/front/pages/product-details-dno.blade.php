@@ -169,7 +169,7 @@
 					<a target="_blank" class="view-certificate" href="#">View Certificate</a>
 				</div>
 				<div class="finance-available">
-					<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
+					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
 							<span>see options</span>

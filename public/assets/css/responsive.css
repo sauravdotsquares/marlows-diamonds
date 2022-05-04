@@ -48,8 +48,9 @@ h2,.heading-h-two{font-size:26px}
 .product-info-main{flex: 0 0 100%;-ms-flex: 0 0 100%;max-width: 100%; padding: 0;}
 .product-title-name h1{ font-size: 19px; line-height: 28px; }
 .related-products-list {padding: 0 10px;}
-.owl-theme.st-arrows .owl-nav .owl-next {right: -10px;}
-.owl-theme.st-arrows .owl-nav .owl-prev {left: -10px;}
+.owl-theme.st-arrows .owl-nav .owl-next {right: -52px;}
+.owl-theme.st-arrows .owl-nav .owl-prev {left: -52px;}
+
 .faq-list .accordion-item .accordion-body{ font-size: 13px; }
 .faq-list .accordion-item .accordion-button{ font-size: 14px;  padding: 11px 8px;}
 .rating-review-block {padding: 20px 32px 30px;}
@@ -82,6 +83,14 @@ h2,.heading-h-two{font-size:26px}
 .wishlist-table-wraper {overflow-x: auto;}
 .scrollable-table{ overflow-x: auto;}
 .account-order-page table {width: 740px;}
+.takeonlab {padding: 20px 0 40px 0;}
+.takeon-right {padding: 40px 0 0 0;}
+.chepaest-lab-left {padding: 30px 20px;}
+.chepaest-lab-left h3 {font-size: 20px;margin: 0 0 15px 0;}
+.laboratory-grown {padding: 40px 0;}
+.vieworderd-table {overflow-x: scroll;}
+.account-main-content #orderDataTable_filter, .account-main-content #orderDataTable_paginate {float: none;margin: 20px 0 0 0;}
+
 }
 
 @media(max-width: 500px){
@@ -97,12 +106,13 @@ h2,.heading-h-two{font-size:26px}
 
 
 @media(min-width:768px) and (max-width:1024px){
+.product-info {padding: 0 15px 20px;}
 h1,.heading-h-one{font-size:30px;line-height:1.2}
 .btn-bg-large{font-size:14px;padding:11px 19px}
 .main-banner-left-text p{font-size:16px;line-height:1.6;margin:0 0 12px 0}
 .main-banner-ryt-img img{max-width:280px}
 h3,.heading-h-three{font-size:22px}
-.product-titles{font-size:20px}
+.product-titles{font-size:18px}
 .marlows-diamond{padding:100px 0}
 h2,.heading-h-two{font-size:32px}
 .leftright-imt-col.leftright-text{padding:0 20px 0 20px}
@@ -133,7 +143,8 @@ h2,.heading-h-two{font-size:32px}
 @media(min-width:768px) and (max-width:991px){
 	.m-quote-pop{ right: 0; }
  	.m-quote-pop::after{ right: 11px; }
- 
+	 .takeon-right {padding: 40px 0 0 0;text-align: center;}
+	 .chepaest-lab-left {padding: 40px 20px; max-width: 100%;}
 }
 
 
@@ -185,4 +196,17 @@ h3,.heading-h-three{font-size:28px}
 @media(min-width: 992px) and (max-width: 1199px){
 	.diamond-search-table {overflow-x: auto;}
 	.diamond-search-table table {width: 800px;}
+	.takeon-right {padding: 0 0 0;}
+	.chepaest-lab-left h3 {font-size: 20px;margin: 0 0 14px 0;}
+	.chepaest-lab-left {padding: 20px 20px;}
+	.chepaest-lab-left p {
+		font-size: 13px;
+		line-height: 27px;
+		margin: 0 0 10px 0;
+	}
+}
+@media(min-width: 1200px) and (max-width: 1400px){
+	.chepaest-lab-left {max-width: 640px;padding: 18px 38px;}
+	.chepaest-lab-left p {font-size: 14px;line-height: 23px;margin: 0 0 15px 0;}
+	.chepaest-lab-left h3 {font-size: 23px;margin: 0 0 19px 0;}
 }
