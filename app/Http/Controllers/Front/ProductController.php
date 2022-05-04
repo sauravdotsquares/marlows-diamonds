@@ -340,6 +340,7 @@ class ProductController extends Controller
 
     public function getCustomApiFilterData(Request $request)
     {
+        //echo '<pre>'; print_r($request->all()); die;
         $getApiController = new ApiController;
         $getActualData = $getApiController->getRepnetApiFunction($request->all());  
 
