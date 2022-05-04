@@ -193,36 +193,52 @@ class ProductController extends Controller
                 $imageVariVideo = null;
             }
 
-           
-            $getProductDataVariation = ProductVariations::updateOrCreate(['id'=>$value['is_update']],[
-                'product_id'=>$productId,
-                'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
-                'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
-                'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
-                'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
-                'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
-            ]);
-            
-            //echo '<pre>'; print_r($value); die;
+           if(isset($value['is_update']) && $value['is_update']!=''){
+                $getProductDataVariation = ProductVariations::where('id',$value['is_update'])->update([
+                    'product_id'=>$productId,
+                    'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
+                    'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
+                    'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
+                    'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
+                    'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
+                ]);
+           }else{
+                $getProductDataVariation = ProductVariations::create([
+                    'product_id'=>$productId,
+                    'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
+                    'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
+                    'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
+                    'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
+                    'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
+                ]);
+            }
+            /*echo $value['attri_carat']; die;
+            echo '<pre>'; print_r($value); die;*/
             foreach($value as $key1 => $variData){
                 $newKey = explode("_",$key1);
                 if(isset($newKey[0]) && $newKey[0] === 'attri'){
-                    if($value['is_update']!=''){
-                       ProductVariationDetails::where('variation_id',$getProductDataVariation->id)->where('key',$key1)->update([
+
+                    if(isset($value['is_update']) && $value['is_update']!=''){
+                        echo 'dfsdfsfdsf'; die;
+                       ProductVariationDetails::where('variation_id',$value['is_update'])->where('key',$key1)->update([
                             'value' =>$variData,
                         ]); 
                    }else{
+                    
                         ProductVariationDetails::create([
                             'product_id' => $productId,
                             'variation_id'=>$getProductDataVariation->id,
                             'key' =>$key1,
                             'value' =>$variData,
                         ]);
+                       
                    }
                     
                 }
             }
+            
         }
+      
         return true;
     }
 

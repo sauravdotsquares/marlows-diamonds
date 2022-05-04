@@ -104,7 +104,7 @@ $(document).ready(function(){
               method: "get",
               data: {
                   _token: '{{ csrf_token() }}', 
-                  query: $(this).val();,
+                  query: $(this).val(),
               },
               success: function (response) {
                   if(response.html){
