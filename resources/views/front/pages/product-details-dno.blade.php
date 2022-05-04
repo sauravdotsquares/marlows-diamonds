@@ -670,7 +670,7 @@
 		})
 
 		function getCustomFilter(){
-			console.log("getCustomFilter");
+			
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -679,7 +679,7 @@
 					'slug' : '{{$data->slug}}',
                 },
                 success: function (res) {
-                    console.log(res);
+                    
 					$('#filterDataDesign').html(res);
                     return false;
                 }

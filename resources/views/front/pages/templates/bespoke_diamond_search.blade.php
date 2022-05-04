@@ -484,7 +484,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-if="data.length>0 && loader==false" ng-repeat="records in data">
+									<tr ng-if="data.length>0 && loader==false" ng-repeat="records in data" class="<%$index%>">
 										<td><%records.Shape%></td>
 										<td><%records.Carat%></td>
 										<td><%records.Color%></td>

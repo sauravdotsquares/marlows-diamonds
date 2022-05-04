@@ -757,7 +757,7 @@
 	<script>
 		$(document).ready(function(){
 
-			getCustomFilter();
+			getCustomFilter(); getProdVideo();
 			
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
@@ -795,27 +795,8 @@
 			});
 
 			$(document).on('change','#metal-colour',function(){
-				$.ajax({
-					type: 'POST',
-					url: '{{route("get-product-video")}}',
-					data: {
-						'_token': "{{csrf_token()}}",
-						'slug' : '{{$data->slug}}',
-						'metal_color' : $(this).val(),
-					},
-					success: function (res) {
-						if(res.vari_video){
-							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
-							$('#variationVideo').attr('src', videoUrl);
-							$("#variationVideo")[0].play();
-
-							$('#selected_variation_price').val(res.regular_price);
-
-							getFinalPrice();
-						}
-						
-					}
-				});
+				getProdVideo();
+				getFinalPrice();
 			});
 		})
 
@@ -829,7 +810,7 @@
 		}
 
 		function getCustomFilter(){
-			console.log("getCustomFilter");
+			
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -838,15 +819,33 @@
 					'slug' : '{{$data->slug}}',
                 },
                 success: function (res) {
-                    // console.log(res);
-					if(res){
-						$('#filterDataDesign .type-variations-row').html(res);
-					}
-                    // return false;
+
+					$('#filterDataDesign .type-variations-row').html(res);
+                    return false;
+
                 }
             });
 		}
-
+		function getProdVideo(){
+			var metal_type = $('#metal-colour :selected').val();
+			$.ajax({
+				type: 'POST',
+				url: '{{route("get-product-video")}}',
+				data: {
+					'_token': "{{csrf_token()}}",
+					'slug' : '{{$data->slug}}',
+					'metal_color' : metal_type,
+				},
+				success: function (res) {
+					if(res.vari_video){
+						var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+						$('#variationVideo').attr('src', videoUrl);
+						$("#variationVideo")[0].play();
+						$('#selected_variation_price').val(res.regular_price);
+					}
+				}
+			});
+		}
 		function getNumberFromCurrency(currency) {
 			return Number(currency.replace(/[$,]/g,''))
 		}
@@ -909,7 +908,6 @@
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
-					// console.log(res);
 					$('#refineSearchData').html("");
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);
