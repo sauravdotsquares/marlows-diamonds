@@ -19,9 +19,9 @@ class DiamondFinderController
     {
     	$colorFrom = 'D'; $colorTo = 'K'; $colour=array();
     	if($request->colour!=''){
-        	$colour = explode(',',$request->colour);
-			$colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
-       	}
+         $colour = explode(',',$request->colour);
+			   $colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
+      }
 
        	$clarityFrom = 'IF'; $clarityTo = 'SI2'; $clarity=array();
     	if($request->clarity!=''){
@@ -56,7 +56,7 @@ class DiamondFinderController
         	$certificate = explode(',',$request->certificate);
        	}
 
-        $data = array('shape'=>$request->shape,'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'paging'=>5);
+        $data = array('shape'=>$request->shape,'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'paging'=>5,'PageSize'=>5);
         //echo '<pre>'; print_r($data); die;
 
         $hkData = getHKApiRecords($data);
@@ -90,20 +90,20 @@ class DiamondFinderController
 
 
 	        	if($result->LabTitle=='GIA'){
-					$rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$result->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
-				}
-				else if($result->LabTitle=='IGI'){
-					$rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$result->CertificateNumber;
-				}
-				else if($result->LabTitle=='HRD'){
-					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$result->CertificateNumber.'&weight='.$result->Weight;
-				}
-				else {
-					$rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID;	
-				}
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$result->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
+    				}
+    				else if($result->LabTitle=='IGI'){
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$result->CertificateNumber;
+    				}
+    				else if($result->LabTitle=='HRD'){
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$result->CertificateNumber.'&weight='.$result->Weight;
+    				}
+    				else {
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID;	
+    				}
 
 	        }
-    	}
+    	  }
         //echo '<pre>'; print_r($rapnetRecords); die;
 
         $hkData['data'] = Arr::collapse([$hkData['data'], $rapnetRecords]);

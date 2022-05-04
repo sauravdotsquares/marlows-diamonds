@@ -383,7 +383,7 @@
                                     <div class="accordion variation_section" id="accordionExample">
                                        <div id="item_details"  class="attr_section" data-attr-key="0">
 
-                                          <input type="hidden" class="vari_add_update" id="is_add_0" name="data[0][is_update]" value="">
+                                          <input type="hidden" class="vari_add_update" id="is_update_0" name="data[0][is_update]" value="">
 
                                           <div class="card-header" id="headingOne">
                                              <div id="dropdownVariation">
@@ -634,7 +634,7 @@
    $(document).ready(function () {
       var max = 10;
 
-      $('#add_item').click(function () {
+      $(document).on('click','#add_item',function () {
          var button = $('#item_details').clone(true);
          var attr_key = $( ".attr_section:last-child" ).data( "attr-key" );
          attr_key++;
@@ -647,12 +647,12 @@
          button.find('.vari_add_update').attr('id','is_update_'+attr_key);
          button.find('input').each(function() {
                const fieldname = $(this).attr('data-field');
-               $(this).attr('name', 'data[' + item_details + '][' + fieldname + ']');
+               $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
          });
          button.find('.vari_add_update').attr('name','data[' + attr_key + '][' + is_update + ']');
          button.find('select').each(function() {
                const fieldname = $(this).attr('data-field');
-               $(this).attr('name', 'data[' + item_details + '][' + fieldname + ']');
+               $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
          });
 
 

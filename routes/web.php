@@ -102,6 +102,13 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/faqs/edit/{id}', 'FaqController@edit');
 			Route::get('/delete-faq/{id}', 'FaqController@delete');
 			Route::get('/faqs/status/{id}/{status}', 'FaqController@status');
+			// Faq Category Routes
+			Route::get('/faqs/categories','FaqCategoryController@index')->name('faqcategories');
+			Route::get('/faqs/categories/create/{catslug?}','FaqCategoryController@createForm')->name('create');
+			Route::post('/faqs/categories/add','FaqCategoryController@add')->name('add');
+			Route::post('/get-faqcategories','FaqCategoryController@getFaqCategory')->name('get-faqcategories');
+			Route::post('/change-faqcategories','FaqCategoryController@status');
+			Route::post('/delete-faqcategories','FaqCategoryController@delete');
 			// Reviews Route
 			Route::get('/reviews', 'ReviewController@index')->name('faqs');
 			Route::get('/reviews/create', 'ReviewController@create')->name('create');
@@ -209,6 +216,8 @@ Route::namespace('Front')->group(function () {
 	Route::delete('product/remove-from-wishlist', 'WishlistController@removeWishlist')->name('remove.from.wishlist');
 
 	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
+
+	Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
 
 	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');

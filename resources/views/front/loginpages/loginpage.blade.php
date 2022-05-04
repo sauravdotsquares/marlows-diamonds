@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="log-privacy-policy-text">
                                         <p>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our 
-                                            <a href="#" target="_blank">privacy policy</a>.</p>
+                                            <a href="/privacy-policy" target="_blank">privacy policy</a>.</p>
                                     </div>
                                     <div class="action-login">
                                         <button class="btn-bg-small" type="submit">Register</button>
