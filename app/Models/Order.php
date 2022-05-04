@@ -58,7 +58,7 @@ class Order extends Model
             return "Shipped";
         }elseif($this->status == 5){
             return "Delievered";
-        }elseif($this->stauts == 6){
+        }elseif($this->status == 6){
             return "Return";
         }elseif($this->status == 7){
             return "Cancelled";
@@ -80,7 +80,7 @@ class Order extends Model
             return '<span class="badge badge-success">Shipped</span>';
         }elseif($this->status == 5){
             return '<span class="badge badge-danger">Delievered</span>';
-        }elseif($this->stauts == 6){
+        }elseif($this->status == 6){
             return '<span class="badge badge-warning">Return</span>';
         }elseif($this->status == 7){
             return '<span class="badge badge-warning">Cancelled</span>';

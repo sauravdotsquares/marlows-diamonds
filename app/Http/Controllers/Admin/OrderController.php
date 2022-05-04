@@ -43,4 +43,10 @@ class OrderController extends Controller
         // die;
     }
 
+    public function changeOrderStatus(Request $request)
+    {
+        $getOrderDetails = Order::where('token',$request->order_token)->update(['status'=>$request->order_status]);
+        return response()->json(['status'=>200,'msg'=>'Successfully Updated...']);
+    }
+
 }
