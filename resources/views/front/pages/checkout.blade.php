@@ -579,9 +579,9 @@
             last_name: {
                 required: true,
             },
-            company_name: {
-                required: true,
-            },
+            // company_name: {
+                // required: true,
+            // },
             country_id: {
                 required: true,
             },
