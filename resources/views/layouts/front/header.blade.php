@@ -145,7 +145,7 @@
                         </div>
                     <div class="mobile-cart">
                         <a href="#"> <img src="assets/images/cart-color-black.png" alt="cart">
-                        <span class="mob-cart-number">0</span>
+                        <span class="mob-cart-number">{{ count((array) session('cart')) }}</span>
                         </a>
                     </div>
 
