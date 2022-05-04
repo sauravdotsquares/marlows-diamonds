@@ -392,7 +392,7 @@
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
-					<img src="assets/images/perfect-ring.jpg" alt="perfect-ring">
+					<img src="/assets/images/perfect-ring.jpg" alt="perfect-ring">
 				</div>
 
 			</div>
@@ -404,83 +404,9 @@
 <!-- Section Reviews -->
 <div class="container">
 	<div class="rating-review-block">
-		<div class="owl-carousel owl-theme slider-review">
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-		</div>
+					<div class="owl-carousel owl-theme slider-review">
+					@include('front.pages.reviews')
+					</div>	
 	</div>
 </div>
 
