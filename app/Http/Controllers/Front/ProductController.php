@@ -17,6 +17,7 @@ use Rapnet;
 use App\Repnet\nusoap;
 use App\Http\Controllers\Front\ApiController;
 use View;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
@@ -48,10 +49,22 @@ class ProductController extends Controller
     {   
         if($productSlug !=null){
             $getProduct = Products::with('getProductVariation','getProductImages')->where('slug',$productSlug)->first();
-            
+            //dd($getProduct);
             if(isset($getProduct) && !empty($getProduct)){
                 if($getProduct->dfinder_status == 1){
-                    return view('front.pages.product-details-dyes',['data'=>$getProduct]);
+
+                    $productVariationId = ProductVariations::where('product_id',$getProduct->id)->pluck('id')->toArray();
+                    //print_r($getProductVariationId); die;
+                    if(isset($productVariationId) && !empty($productVariationId)){
+                        $variDetails = ProductVariationDetails::whereIn('variation_id',$productVariationId)->where('value','Platinum')->select('id','variation_id','value')->first();
+                        if(empty($variDetails)){
+                            $variDetails = ProductVariationDetails::whereIn('variation_id',$productVariationId)->select('id','variation_id','value')->first();
+                        }
+                    }
+                    $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
+                   
+                    //echo '<pre>';print_r($variationDetails); die;
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails]);
                 }else{
                     return view('front.pages.product-details-dno',['data'=>$getProduct]);
                 }
@@ -330,7 +343,7 @@ class ProductController extends Controller
             }
 
             if(isset($getVariDetails) && !empty($getVariDetails)){
-                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails->variation_id)->select('vari_image','vari_video','regular_price')->first();
+                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
                 
                 return response()->json($getSelectedVariationVideoImages);
             }
@@ -340,7 +353,93 @@ class ProductController extends Controller
 
     public function getCustomApiFilterData(Request $request)
     {
+
         //echo '<pre>'; print_r($request->all()); die;
+
+        $caratFrom = '0.30'; $caratTo = '0.39';
+        if($request->carat!=''){
+            $carat = explode('-',$request->carat);
+            $caratFrom = $carat[0]; $caratTo = $carat[1];
+        }
+
+        $colorFrom = $colorTo = 'D'; $colour = array();
+        if($request->color!=''){
+            $colour = explode(',',$request->color);
+            $colorFrom = $colorTo = $request->color;
+        }
+
+        $clarityFrom = $clarityTo = 'SI2'; $clarity=array();
+        if($request->clarity!=''){
+            $clarity = explode(',',$request->clarity);
+            $clarityFrom = $clarityTo = $request->clarity;
+        }
+
+        $gradeFrom = $gradeTo = 'EX'; $grade=array();
+        if($request->grade!=''){
+            $grade = explode(',',$request->grade);
+            $gradeFrom = $gradeTo = $request->grade;
+        }
+
+        $polishFrom = 'EX'; $polishTo = 'GD'; $polish=array();
+        $symmetryFrom = 'EX'; $symmetryTo = 'GD'; $symmetry=array();
+        $fluorescence = array();
+
+        $certificate = array();
+        if($request->certificate!=''){
+            $certificate = explode(',',$request->certificate);
+        }
+
+        $data = array('shape'=>$request->shape,'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$caratFrom,'caratTo'=>$caratTo,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'num_of_row'=>1,'PageSize'=>2);
+
+        //echo '<pre>'; print_r($data); die;
+
+        $hkData = getHKApiRecords($data);
+        $rapnetData = getRapnetApiRecords($data,1);
+
+        //echo '<pre>'; print_r($rapnetData); die;
+        $rapnetRecords = [];
+        if(!empty($rapnetData)){
+            foreach ($rapnetData as $key => $result) {
+                $rapnetRecords[$key]['Shape'] = $result->ShapeTitle;;
+                $rapnetRecords[$key]['Carat'] = $result->Weight;
+                $rapnetRecords[$key]['Color'] = $result->ColorTitle;
+                $rapnetRecords[$key]['Clarity'] = $result->ClarityTitle;
+                if(isset($result->CutLongTitle))
+                    $rapnetRecords[$key]['Cut'] = $result->CutLongTitle;
+
+                $rapnetRecords[$key]['Lab'] = $result->LabTitle;
+                $rapnetRecords[$key]['Amount'] = $result->FinalPrice;
+                $rapnetRecords[$key]['Stock_NO'] = $result->DiamondID;
+
+
+                if($result->LabTitle=='GIA'){
+                        $rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$result->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
+                    }
+                    else if($result->LabTitle=='IGI'){
+                        $rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$result->CertificateNumber;
+                    }
+                    else if($result->LabTitle=='HRD'){
+                        $rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$result->CertificateNumber.'&weight='.$result->Weight;
+                    }
+                    else {
+                        $rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID; 
+                    }
+
+            }
+          }
+         //echo '<pre>'; print_r($rapnetRecords); die;
+          $apiData['data'] = Arr::collapse([$hkData, $rapnetRecords]);
+
+          $apiData['VAT'] = getVAT();
+          //echo '<pre>'; print_r($apiData); die; 
+
+          if(!empty($apiData['data'])){ 
+            $dataArray = [];
+            foreach ($apiData['data'] as $key => $data) {
+                $dataArray[] = View::make('front.includes.product_detail_diamonds',['key'=>$key,'apiRecords'=>$data,'VAT'=>$apiData['VAT']])->render();
+            }
+          }
+          return response()->json(['html'=> $dataArray]);
         $getApiController = new ApiController;
         $getActualData = $getApiController->getRepnetApiFunction($request->all());  
 

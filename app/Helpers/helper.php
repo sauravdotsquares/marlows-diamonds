@@ -425,7 +425,7 @@ if (!function_exists('validate_breadcrumb')) {
                 "PriceFrom" => "1",
                 "PriceTo" => "999999",
                 "PageNumber" => $pageNumber,
-                "PageSize" => 5,
+                "PageSize" => $data['PageSize'],
                 "SortDirection" => "ASC",
                 "SortBy" => "PRICE"
             );
