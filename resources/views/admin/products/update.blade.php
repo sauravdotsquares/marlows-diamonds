@@ -756,6 +756,13 @@
          
          e.preventDefault();
       });
+      $("#dfinder_status").on('change',function(){
+         if($(this).find(":selected").val()==1){
+            $("#diamond_shape_field").show();
+         }else{
+            $("#diamond_shape_field").hide();
+         }
+      })
    });
 
 
