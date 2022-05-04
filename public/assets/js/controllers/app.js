@@ -115,6 +115,8 @@ MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
             }
         });
     }
+
+   
 });
 
 /*

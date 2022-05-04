@@ -16,6 +16,7 @@ use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
 use App\Http\Controllers\Front\ApiController;
+use View;
 
 class ProductController extends Controller
 {
@@ -260,36 +261,59 @@ class ProductController extends Controller
 
     public function getCustomFilter(Request $request)
     {
-        $getProduct = Products::where('slug',$request->slug)->select('id')->first();
+        $product_id = Products::where('slug',$request->slug)->value('id');
+        if($product_id!=''){
+            $productSelectedAttribute = ProductVariationAttributes::where('product_id',$product_id)->value('attr_values');
 
-        $getProductSelectedAttribute = ProductVariationAttributes::where('product_id',$getProduct->id)->first();
+            if($productSelectedAttribute!=''){
+                $productSelectedAttribute = str_replace('attri_', '', explode(',',$productSelectedAttribute));
 
-        if(isset($getProductSelectedAttribute) && !empty($getProductSelectedAttribute->attr_values)){
-            $getProductSelectedAttribute = str_replace('attri_', '', explode(',',$getProductSelectedAttribute->attr_values));
+                // Get Attributes
+                $attributes = Attributes::whereIn('slug',$productSelectedAttribute)->get()->toArray();
             
-            if(count($getProductSelectedAttribute)){
-                $selectedDesign = '';
-                foreach(array_reverse($getProductSelectedAttribute) as $key => $value){
+                
+                if(!empty($attributes)){
 
-                    // echo "<pre>";
-                    // print_r($value);
-                    // die;
+                    $variation_ids = ProductVariations::where('product_id',$product_id)->pluck('id')->toArray();
 
-                    $getAttributeValues = Attributes::where('slug',$value)->select('name','slug','values')->first();
-                    $selectedDesign .= '<div class="type-variations-col"><label for="diamond-colour"> '.$getAttributeValues->name.' </label><select name="'.trim($value).'" id="'.trim($value).'" class="form-control"><option value="">Select Any</option>';
-                    $getData = explode('|',$getAttributeValues->values);
-                    foreach($getData as $keyNew => $sepValue){
-                        if($keyNew == 0){
-                            $selectedVariable = 'selected';
-                        }else{
-                            $selectedVariable = '';
+                    $variationArray = $final_attr = [];
+                    foreach ($attributes as $key => $attribute) {
+                        $final_attr['name'] = $attribute['name'];
+                        $final_attr['slug'] = $attribute['slug'];
+
+                        $explode_attr = explode('|', $attribute['values']);
+
+                        $getAttrVals = ProductVariationDetails::whereIn('variation_id',$variation_ids)->where('key','attri_'.$attribute['slug'])->pluck('value')->toArray();
+                        
+                        
+                        $found = [];
+                        foreach($explode_attr as $num) {
+                            if (in_array(trim($num),$getAttrVals)) {
+                                $found[] = $num;
+                            } 
                         }
-                        $selectedDesign .= '<option '.$selectedVariable.' value="'.trim($sepValue).'">'.trim($sepValue).'</option>';
+
+                        $is_empty = true;
+                        foreach ($getAttrVals as $value) {
+                            if ($value != ''){
+                                $is_empty = false;
+                                
+                            }
+                        }
+                        
+                        if ($is_empty)
+                            $final_attr['attri_'.$attribute['slug']] = $explode_attr;
+                        else
+                            $final_attr['attri_'.$attribute['slug']] = $found;
+
+                    
+                        
+                        $variationArray[] = View::make('front.includes.show_variations',['final_attr'=>$final_attr])->render();
                     }
-                    $selectedDesign .= '</select></div>';
+                   
                 }
+                return $variationArray;
             }
-            return response()->json($selectedDesign);
         }
         return response()->json(['status'=>'Not attribute selected']);
     }
@@ -316,6 +340,7 @@ class ProductController extends Controller
 
     public function getCustomApiFilterData(Request $request)
     {
+        //echo '<pre>'; print_r($request->all()); die;
         $getApiController = new ApiController;
         $getActualData = $getApiController->getRepnetApiFunction($request->all());  
 
@@ -325,6 +350,17 @@ class ProductController extends Controller
         }
         
         return response()->json(['html'=> '']);
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $getSearchedData = Products::with(['getProductImages'])->select("title",'id','slug')
+                ->where("title","LIKE","%{$request['query']}%")
+                ->get();
+        
+        $view = view('front.ajax.search_suggesion',compact('getSearchedData'))->render();
+        return response()->json(['html'=> $view]);
+
     }
     
 

@@ -13,3 +13,89 @@
 .statusSwitch {
 	font-size: 13px;
 }
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background: #973e71d9 !important;
+    font-size: 14px !important;
+}
+.bootstrap-tagsinput .tag {
+    background-color: #973e71d9!important;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    cursor: default;
+    float: left;
+    margin-right: 5px;
+
+    padding: 0 5px;
+}
+.bootstrap-tagsinput{width: 100%!important; padding: 0.375rem 0.75rem!important;}
+.prod-data-left-section{background: #343a40;padding: 0;}
+.prod-data-left-section .active {
+    border-radius: 0;
+    border: 0!important;
+    border-bottom-left-radius: 0!important;
+    background-color: #963d71!important;
+    margin-right: 0!important;
+    border-bottom: 1px solid #fff6!important;
+    color: #fff!important;
+}
+.prod-data-left-section a {
+    border-bottom: 1px solid #fff6!important;
+    border-bottom-left-radius: 0!important;
+    color: #fff;
+}
+.prod-data-left-section a:hover {
+    border: 0;
+}
+.prod-data-right-section .tab-pane {
+    border: 1px solid #80808036;
+}
+textarea#attribute_value {
+    width: 100%;
+    height: 70px;
+}
+#addAttributeAdd{width: 100%}
+#headingOne {
+    padding: 5px;
+}
+#dropdownVariation select {
+	padding: 5px;
+    max-width: 180px;
+    float: left;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+.prod-button {
+    margin-bottom: 65px;
+}
+#show_attributes input {
+    margin-right: 5px;
+}
+.remove {
+    margin-right: 10px;
+}
+.variation_video {
+    width: 50px;
+    float: left;
+}
+.variation_section label {
+    width: 100%;
+    float: left;
+}
+.variation_image {
+    width: 50px;
+}
+.products_section label{width: 100%}
+.featured_image {
+    float: left;
+    width: 95px;
+    border: 1px solid #8080804a;
+    margin: 3px;
+    height: 95px;
+}
+.gallery_image {
+    float: left;
+    width: 95px;
+    border: 1px solid #8080804a;
+    margin: 3px;
+    height: 95px;
+}

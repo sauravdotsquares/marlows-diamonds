@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 /**
  * Admin routes
  */
-
+Route::get('/phpinfo', function() {
+    return phpinfo();
+});
 Route::namespace('Admin')->group(function () {
     Route::get('admin/login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('admin/login', 'LoginController@login')->name('admin.login');
@@ -86,6 +88,8 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/products/delete-product-records','ProductController@delete')->name('delete-product-records');
 			Route::post('/get-product-details-variation','ProductController@getProductDetailsVariation')->name('get-product-details-variation');
 
+			Route::post('/delete-product-variation','ProductController@deleteProductVariation')->name('delete-product-variation');
+
 			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
 			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
 			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
@@ -147,6 +151,10 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/delete-banner/{id}', 'BannerController@delete');
 			Route::delete('/delete-banner-image/{id}', 'BannerController@deleteBannerImage');
 			Route::get('/banners/status/{id}/{status}', 'BannerController@status');
+
+			Route::get('orders/orders-details-page','OrderController@index')->name('order.details.page');
+			Route::post('orders/change-order-status','OrderController@changeOrderStatus')->name('order.change.order.status');
+			Route::get('orders/order-product-details/{orderId}','OrderController@orderProductDetails')->name('order.product.details');
 		//});
 	});
 });
@@ -215,13 +223,15 @@ Route::namespace('Front')->group(function () {
 	Route::post('users/update-customer-account-details','LoginController@changeCustomerAccountDetails')->name('update.customer.account.details');
 
 	Route::post('users/get-order-details','LoginController@getOrderDetails')->name('get.order.details');
-/*
-*** Reset Password
-*/
+	/*
+	*** Reset Password
+	*/
 	Route::get('/users/forget-password', 'ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
 	Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
 	Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
 	Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
+	
+	Route::get('search/autocomplete','ProductController@autocomplete')->name('autocomplete');
 });
 
 /*

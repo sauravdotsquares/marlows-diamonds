@@ -86,5 +86,35 @@ $(document).ready(function(){
         });
     });
 </script>
+
+<script type="text/javascript">
+    $(function() {
+        $('input.typeahead').focusout(function() {
+          $(this).val(" ");
+          $('.search-suggestion').html(" ");
+          $('.search-suggestion').hide();
+        });
+    });
+
+    $("input.typeahead").on('keyup',function(e){
+        $('.search-suggestion').html(" ");
+        if (e.target.value.length >= 3) {
+          $.ajax({
+              url: '{{ route("autocomplete") }}',
+              method: "get",
+              data: {
+                  _token: '{{ csrf_token() }}', 
+                  query: $(this).val();,
+              },
+              success: function (response) {
+                  if(response.html){
+                    $('.search-suggestion').append(response.html);
+                    $('.search-suggestion').css('display','block');
+                  }
+              }
+          });
+        }        
+    });
+</script>
 </body>
 </html>

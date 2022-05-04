@@ -22,13 +22,12 @@
 <div class="checkout-wraper">
     <div class="container">
         <div class="checkout-container">
-            @guest
-                <?php //echo "check"; die; ?>
+            @if(!Auth::guard('customer')->check())
+                <?php // echo "check"; die; ?>
                 <div class="not-logedin-block alert alert-dismissible fade show" role="alert">
                     <div class="alert_icon">
                         <i class="fa fa-question" aria-hidden="true"></i>
                     </div>
-
                     <div class="alert_wraper">
                         Returning customer?
                         <a class="showlogin" href="javascript:void(0);">Click here to login</a>
@@ -68,7 +67,7 @@
                         </div>
                     </form>
                 </div>
-            @endguest
+            @endif
 
             <?php 
                 // echo "<pre>";

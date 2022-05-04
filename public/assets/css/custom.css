@@ -15,7 +15,11 @@ h2,.heading-h-two{font-size:40px;line-height:1.2;color:#2b2b2b}
 h3,.heading-h-three{font-size:30px;line-height:1.2;color:#2b2b2b}
 button,input,textarea,select{font-family:"Lato"}
 ul{padding:0;margin:0}
-button:focus,input:focus{box-shadow:none;outline:0}
+button:focus,input:focus, button, button:focus-within, a:focus, a:focus-within{box-shadow:none;outline:none !important}
+.btn-check:focus + .btn, .btn:focus {
+	outline: 0;
+	box-shadow: none;
+}
 a.grey-btn-large{color:#fff;}
 .grey-btn-large{background-color:#101010;color:#fff);font-size:15px;padding:14px 26px;text-transform:uppercase;text-decoration:none;font-weight:700;display:inline-block; border: 1px solid #101010; text-align:center}
 a.btn-bg-large,.btn-bg-small{color:#fff}
@@ -193,7 +197,7 @@ textarea.input-control{height:100px}
 /** Home banner  end here**/
 
 /** Shop from best section start **/
-.head-para-three{text-align:center;margin:0 0 16px 0}
+.head-para-three{text-align:center;margin:0 0 26px 0}
 .shopfrom-best{padding:63px 0 50px}
 .product-info{text-align:center;padding:0 25px 20px}
 .product-item-details{padding-top:10px}
@@ -346,7 +350,7 @@ input.input-control{height:38px}
 .related-products-list .product-items-item-info {min-height: 330px;}
 .related-products-section {padding: 50px 0 50px 0;}
 .related-products-section .head-para-three {margin: 0 0 40px 0;}
-.product-info-media{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%;}
+.product-info-media{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%;    position: relative;}
 .product-info-main{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%; padding: 0 0 0 50px}
 .product-detail-wraper {padding: 46px 0 20px 0;}
 .product-title-name h1 {font-family: "Lato";font-size: 26px;letter-spacing: 0;font-weight: bold;}
@@ -370,8 +374,8 @@ label.label {display: block;margin: 0 0 5px 0;}
 .product-postactions {margin: 30px 0 30px 0;}
 .store-locator {border-left: 1px solid #B0B0B0;padding: 12px 13px;margin: 0 16px 0 16px;border-right: 1px solid #B0B0B0;}
 .finance-available {border: 1px solid #8e2e65;border-radius: 4px; position: relative; padding-right: 65px;}
-.finance-available a {display: block; color:#8e2e65; text-decoration: none; padding: 9px 13px }
-.finance-available a:hover{ background: #8e2e65; color: #fff; }
+.finance-available a {display: block; color:#8e2e65 !important; text-decoration: none; padding: 9px 13px }
+.finance-available a:hover{ background: #8e2e65; color: #fff !important; }
 .finance-available a .fa {font-size: 30px;display: inline-block;vertical-align: middle;}
 .finance-available a p {font-size: 15px;text-transform: uppercase;font-weight: bold;display: inline-block;vertical-align: middle;margin: 0 0 0 15px;}
 .finance-available a p span {display: block;text-transform: capitalize;font-weight: normal;font-size: 14px;}
@@ -383,12 +387,12 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-table {margin: 20px 0 0; display: none;}
 .refine-heading {font-size: 19px;margin: 0 0 11px 0;color: #8e2e65;}
 .faq-list .accordion-item .accordion-button:not(.collapsed) {background: #8e2e65;color: #fff;}
-.faq-list .accordion-item .accordion-button{ font-size: 17px; }
+.faq-list .accordion-item .accordion-button {font-size: 16px;line-height: 28px;}
 .faq-list .accordion-button:not(.collapsed)::after { filter: brightness(0) invert(1); -webkit-filter:brightness(0) invert(1) }
 .faq-list .accordion-item .accordion-body {font-size: 15px;color: #404040;line-height: 28px;}
 .vew-tc-btn {margin: 15px 0 0 0;}
 .category-product-filter-text {margin-top: 10px;}
-
+.joinour-mailing-form .error {color: #fff;}
 /** Blog Listing page **/
 .category-banner-text p {color: #fff;font-size: 15px;margin: 12px 0 0 0; line-height: 27px;}
 .blos-listbox {background: #fff;box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);height: 100%;border-radius: 2px;overflow: hidden;}
@@ -517,15 +521,15 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-field-labels {font-weight: bold;}
 .choose-diaond-fields {margin-top: 14px;margin-bottom: 14px;}
 .diamond-field-inner-bar {display: flex;flex-wrap: wrap; align-items: center;}
-.diamond-field-inner-bar .diamond-fil-cols {width: 100%;flex: 0 0 84%;max-width: 84%;-ms-flex: 0 0 84%;}
-.diamond-field-inner-bar .diamond-filter-quote {width: 100%;flex: 0 0 16%;max-width: 16%;-ms-flex: 0 0 16%; padding: 0 0 0 8px; position: relative;}
+.diamond-field-inner-bar .diamond-fil-cols {width: 100%;flex: 0 0 86%;max-width: 86%;-ms-flex: 0 0 86%;}
+.diamond-field-inner-bar .diamond-filter-quote {width: 100%;flex: 0 0 14%;max-width: 14%;-ms-flex: 0 0 14%; padding: 0 0 0 8px; position: relative;}
 .diamond-filter-in input {width: 100%;}
 .quote-icon-pop .ma-info-icon img {max-width: 25px;}
 .quote-icon-pop {text-align: right; position: relative;}
 .m-quote-pop {position: absolute;background: #fff;text-align: left;box-shadow: 0 0 10px 6px rgba(0,0,0,.1);border-radius: 6px;width: 300px;right: -50px;padding: 12px 13px;bottom: 50px; display: none;}
 .diamond-values-in ul {display: flex;list-style: none;}
-.diamond-values-in ul li{padding: 2px 2px;}
-.diamond-values-in ul li button {width:100%;text-decoration: none;border: 1px solid #EBEBEB;padding: 0 6px;height: 38px;display: block;line-height: 38px;background: #f9f9f9;color: #9a9a9a;font-size: 11px;margin: 0 3px 0 0; position: relative;}
+.diamond-values-in ul li{padding: 2px 1px;}
+.diamond-values-in ul li button {width:100%;text-decoration: none;border: 1px solid #EBEBEB;padding: 0 2px;height: 38px;display: block;line-height: 38px;background: #f9f9f9;color: #9a9a9a;font-size: 11px;margin: 0 3px 0 0; position: relative;}
 .diamond-values-in ul li button:hover, .diamond-values-in ul li.active-diamond button{ color: #fff; background: #8e2e65 }
 .m-quote-pop::after {content: "";width: 0;height: 0;border-style: solid;border-width: 8px 6px 0 6px;border-color: #fff transparent transparent transparent;position: absolute;right: 60px;bottom: -8px;}
 .diamond-values-in ul li button input {
@@ -542,8 +546,8 @@ label.label {display: block;margin: 0 0 5px 0;}
 
 /** **/
 .middle-topbar-right li.dropdown a button {background: none;border: none;padding: 0;color: #878787;font-size: 14px; margin: 0;}
-.middle-topbar-right li.dropdown a button img {max-width: 18px;vertical-align: top;display: inline-block;margin: 2px 8px 0 0;}
-.middle-topbar-right li.dropdown a button .badge.badge-pill {color: #878787; padding: 0 3px; font-size: 13px; top: 0;}
+.middle-topbar-right li.dropdown a img {max-width: 18px;vertical-align: top;display: inline-block;margin: 2px 8px 0 0;}
+.middle-topbar-right li.dropdown a .badge.badge-pill {color: #878787; padding: 0 3px; font-size: 13px; top: 0;}
 /** cart page **/
 .cart-page-main {margin: 50px 0 50px 0;}
 .cart-image-item {width: 19%;display: inline-block;vertical-align: top;}
@@ -695,7 +699,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .account-sidebar {margin: 0 0 30px 0;}
 .checkout-form-group .form-control {margin: 0 0 10px 0;}
 .diamond_image{width: 80px;}
-.range_carat_wap{width: 83%}
+.range_carat_wap{width: 100%;flex: 0 0 86%;max-width: 86%;-ms-flex: 0 0 86%;}
 .blogdetail-desc ol {padding: 0px 0 0 13px;margin: 20px 0 10px 0;}
 .blogdetail-desc ol li {font-size: 18px;color: #303030;}
 .blogdetail-desc p a {color: #8e2e65; text-decoration: underline;}
@@ -706,6 +710,95 @@ label.label {display: block;margin: 0 0 5px 0;}
 .blogdetail-desc h6 a {color: #8e2e65;}
 .reviewr-review-text *{ transition: none;}
 .reviewr-review-text.show-text-col .show-more-content {display: block !important;}
+
+<<<<<<< HEAD
+#variationVideo {
+    width: 100%;
+    position: absolute;
+    top: -50px;
+}
+=======
+/** search suggestion **/
+.head-mini-search{ position: relative;}
+.search-suggestion {position: absolute;right: 0;width: 300px;background: #EAEAEA;border: 1px solid #D0D0D0;top: 44px; display: none;}
+.search-suggestion-list a {display: flex;align-items: center;color: #000;text-decoration: none;padding: 12px 10px;background: #fff;margin:14px 0 14px 0;}
+.search-suggestion-list .search-suggestion-img {width: 121px;border: 1px solid #B0B0B0;}
+.search-suggestion-text {padding: 0 9px;}
+.search-suggestion-title {font-size: 14px;color: #404040;line-height: 17px; margin: 0 0 6px 0;}
+.search-suggestion-price span {color: #8e2e65;font-weight: bold;}
+
+/** lab-grown-diamond-engagement-rings **/
+.takeon-left p {font-size: 15px;line-height: 27px;margin: 0 0 22px 0;}
+.takeon-right {padding: 0 0 0 90px;}
+.takeonlab {padding: 50px 0 80px 0;}
+.cheapest-lab {background: #903C6C;}
+.chepaest-lab-left {max-width: 620px;margin: auto;color: #fff;padding:20px 50px;}
+.chepaest-lab-left h3 {font-family: "Lato";font-size: 27px;color: #fff;margin: 0 0 25px 0;}
+.chepaest-lab-left p {font-size: 16px;line-height: 28px; margin: 0 0 20px 0;}
+.outline-btn {color: #fff;border: 2px solid #fff;text-decoration: none;padding: 10px 22px;display: inline-block;text-transform: uppercase;font-size: 13px;}
+.outline-btn:hover{ color: #903C6C; background: #fff;}
+.cheapest-lab .row {align-items: center;}
+.labo-textblock p {font-size: 15px;line-height: 28px;margin: 0 0 20px 0;}
+.laboratory-grown {padding: 70px 0;}
+.laboratory-grown .head-para-three {margin: 0 0 50px 0;}
+.labo-textblock {padding: 10px 10px;}
+
+/** FAQ **/
+.category-banner-text p a {color: #fff;}
+.faqin-head {font-weight: bold;letter-spacing: 1px;font-size: 17px;margin: 0 0 10px 0; color: #000;}
+.faq-main-list .row {margin-bottom: 50px;}
+.faq-list-inner {background: #FBFBFB;padding: 20px 20px;height: 100%;}
+.faq-main-list {padding: 40px 0 40px 0;}
+
+/** order cancel and success page **/
+
+.orders-warp {text-align: center;padding: 30px 0 70px 0;}
+.orders-warp .grey-btn-large {margin-top: 40px;}
+.order-cancel-page .order-data {color: #6F6F6F;}
+.order-success-page .order-data {color: #8e2e65;}
+.order-data {font-size: 30px;}
+.account-main-content #orderDataTable_length select {height: 33px;width: 90px;background-color: transparent;border: 1px solid #909090;}
+
+
+/** my account orders page **/
+.account-main-content #orderDataTable_filter input {height: 33px;margin:0 0 0 10px;border: 1px solid #909090;}
+.account-main-content #orderDataTable_length {display: inline-block;}
+.account-main-content #orderDataTable_filter {float: right;}
+.account-main-content table {margin-top: 22px; margin-bottom: 20px;}
+.account-main-content #orderDataTable_info {display: inline-block;}
+.account-main-content #orderDataTable_paginate a {color: #000;text-decoration: none;margin: 0 0 0 12px; cursor: pointer;}
+.account-main-content #orderDataTable_paginate {float: right;}
+.vieworderd-table table tr td .order-pr-name {text-decoration: none;color: #8E2E65;font-size: 15px;}
+.vieworderd-table table tr td .wc-item-meta {margin: 10px 0 0 10px;list-style: none;}
+.vieworderd-table table tr td .wc-item-meta li {margin: 0 0 10px 0;display: flex;column-gap: 3px;}
+.vieworderd-table table tr td .wc-item-meta li p {margin: 0;color: #707070;}
+.vieworderd-list {margin: 30px 0 0 0;}
+.view-order-details h4, .view-order-billing-details h4 {color: #000;}
+.vieworderd-list p {color: #404040;font-size: 16px;}
+.view-order-details {margin: 30px 0 35px 0;}
+.view-order-billing-details .woocommerce-customer-details {background: #F0F0F0;border: 1px solid #D0D0D0;padding: 16px 18px;}
+.view-order-billing-details .woocommerce-customer-details address {margin: 0;color: #303030;font-size: 16px;line-height: 30px;}
+.view-order-billing-details .woocommerce-customer-details address p {margin: 0;}
+
+/** buying-engagement-ring-online-guide **/
+.main-guide-blok {text-align: center;background: #f7f7f7;padding: 50px 0 120px 0;}
+.buying-engagementguide-page h1 {font-family: "Lato";color: #8e2e65;font-size: 35px;font-weight: bold;}
+.buying-engagementguide-page h2 {font-family: "Lato";color: #8e2e65;font-size: 30px;font-weight: bold;}
+.buying-engagementguide-page h3 {font-family: "Lato";color: #8e2e65;font-size: 25px;font-weight: bold;}
+.buying-engagementguide-page p {font-size: 17px;line-height: 29px;}
+.joinour-mailing {max-width: 90%;margin: auto;}
+.buying-guuides-newsletter {margin: -105px 0 0 0;}
+.should-buy-wraper {padding: 50px 0 40px 0;}
+
+.buying-guide-listss .row {align-items: center;}
+.buying-guidelist-text {padding: 14px 30px;}
+.buying-guidelist-img img {width: 100%; height: 100%; object-fit: cover;}
+.buying-guidelist-img {height: 100%;}
+.buying-guide-listss {margin: 0 0 24px 0;}
+.buying-guide-listss:nth-child(2n) {background: #8E2E65;color: #fff;}
+.buying-guide-listss:nth-child(2n+1){background: #F9F9F9;}
+.buying-guide-listss:nth-child(2n) h3 {color: #fff;}
+>>>>>>> a43a84cc08cb82b2704577b04b676e9eedcd5a46
 /** mega menuhover for desktop **/
 @media(min-width:767px){
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}

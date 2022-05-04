@@ -76,8 +76,14 @@
 <script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
 <script src="{{ asset('admin/dist/js/pages/dashboard2.js')}}"></script>
 
+<script>
+$(function () {
+  bsCustomFileInput.init();
+});
+</script>
 <!-- Page specific script -->
 <script>
   $(function () {
