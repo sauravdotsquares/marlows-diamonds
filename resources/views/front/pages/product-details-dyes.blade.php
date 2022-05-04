@@ -240,7 +240,7 @@
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
 				<input type="hidden" name="selected_final_price" id="selected_final_price" value="0.00">
-				<input type="hidden" name="selected_diamond_shape" id="selected_diamond_shape" value="">
+				<input type="hidden" name="selected_diamond_shape" id="selected_diamond_shape" value="{{$data->diamond_shape}}">
 				<input type="hidden" name="selected_diamond_certno" id="selected_diamond_certno" value="">
 
 				<div class="product-add-cart">

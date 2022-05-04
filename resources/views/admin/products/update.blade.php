@@ -392,7 +392,7 @@
 
                                     <div class="accordion variation_section" id="accordionExample">
                                        <div id="item_details" class="attr_section" data-attr-key="0">
-                                          <input type="hidden" class="vari_add_update" id="is_add_0" name="data[0][is_add]" value="">
+                                          <input type="hidden" class="vari_add_update" id="is_update_0" name="data[0][is_update]" value="">
 
                                           <div class="card-header" id="headingOne">
                                              <div id="dropdownVariation" class="dropdownVariation"></div>
