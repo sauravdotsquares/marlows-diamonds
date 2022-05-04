@@ -73,7 +73,7 @@
                                 <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                     <div class="account-order-page">
                                         <div class="scrollable-table">
-                                            <table border-collapse="collapse">
+                                            <table id="orderDataTable" border-collapse="collapse">
                                                 <thead>
                                                     <tr>
                                                         <th>Order</th>
@@ -108,6 +108,65 @@
                                                 </tbody>
                                             </table>
                                         </div>
+
+                                        <!-- order view-->
+                                        <div class="vieworderd-list ">
+                                            <p> Order <strong>#29526</strong> was placed on <strong>May 2, 2022</strong> and is currently <strong>Cancelled.</strong></p>
+                                            <div class="view-order-details">
+                                                <h4>Order details</h4>
+                                                <div class="vieworderd-table">
+                                                    <table border-collapse="collapse">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Product</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>  
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <a class="order-pr-name" href="#">ABBIE | Marquise shape solitaire Diamond Engagement Ring</a>
+                                                                    <strong class="product-quantity">×1</strong>
+                                                                    <ul class="wc-item-meta">
+                                                                        <li><strong class="wc-item-meta-label">Metal Colour:</strong> <p>18ct White Gold</p></li>
+                                                                        <li><strong class="wc-item-meta-label">Finger Size:</strong> <p>I</p></li>
+                                                                    </ul>
+                                                                </td>
+                                                                <td> £388.80</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                        <th scope="row">Subtotal:</th>
+                                                        <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">£</span>388.80</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                        <th scope="row">Payment method:</th>
+                                                        <td>PayPal</td>
+                                                        </tr>
+                                                        <tr>
+                                                        <th scope="row">Total:</th>
+                                                        <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">£</span>389.00</span> <small class="includes_tax">(includes <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">£</span>64.80</span> VAT)</small></td>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <div class="view-order-billing-details">
+                                                <h4>Billing address</h4>
+                                                <div class="woocommerce-customer-details">
+                                                    <address>
+                                                        sketch creative<br>Pacific House<br>Wilnecote<br>B77 5PA
+                                                                <p class="woocommerce-customer-details--phone">0121 517 0374</p>
+                                                    
+                                                                <p class="woocommerce-customer-details--email">development@sketch-creative.com</p>
+                                                        </address>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="downloads" role="tabpanel" aria-labelledby="downloads-tab">                        
@@ -340,8 +399,13 @@
 @endsection
   
 @section('js')
+<!-- <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script> -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
+        
+       
+
         $('#showBillingAddress').on('click',function(){
             $('.addresbox-block').hide();
             $(this).hide();
@@ -370,6 +434,7 @@
             success: function (res) {
                 // console.log(res);
                 $('#updateOrderDesign').append(res.html);
+                $('#orderDataTable').DataTable();
                 // return false;
                 // if (res) {
                 //     $("#categories").append('<option value="">Select Category</option>' + res);

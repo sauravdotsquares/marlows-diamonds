@@ -44,7 +44,7 @@
                         </a>
                     </div>
                     <div class="location-top-h">
-                        <a href="#">
+                        <a href="{{asset('visit-us')}}">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>{{LOCATION_TITLE}}
                             <div class="location-drop">
                                 <div class="location-drop-inner">
@@ -80,9 +80,9 @@
                         </li> -->
                         <li class="dropdown">
                             <a href="{{ route('product.cart') }}">
-                                <button type="button" class="btn btn-info" data-toggle="dropdown">
+                               
                                     <img src="{{asset('')}}assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
-                                </button>
+                            
                             </a>
                             <div class="dropdown-menu">
                                 <div class="row total-header-section">
@@ -201,10 +201,89 @@
                     </div>
                     <form>
                         <div class="formgroup">
-                            <input type="text" name="search" placeholder="Search for product..">
+                            <input type="text" name="search" class="typeahead" placeholder="Search for product..">
                             <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
+                        <div class="search-suggestion">
+                            <div class="search-suggestion-list">
+                                <a href="#">
+                                    <div class="search-suggestion-img">
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                    </div>
+                                    <div class="search-suggestion-text">
+                                        <div class="search-suggestion-title">
+                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                        </div>
+                                        <div class="search-suggestion-price">
+                                            <span>£ 1,088.10</span>
+                                                -
+                                            <span>£ 1,674.00</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="search-suggestion-list">
+                                <a href="#">
+                                    <div class="search-suggestion-img">
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                    </div>
+                                    <div class="search-suggestion-text">
+                                        <div class="search-suggestion-title">
+                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                        </div>
+                                        <div class="search-suggestion-price">
+                                            <span>£ 1,088.10</span>
+                                                -
+                                            <span>£ 1,674.00</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="search-suggestion-list">
+                                <a href="#">
+                                    <div class="search-suggestion-img">
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                    </div>
+                                    <div class="search-suggestion-text">
+                                        <div class="search-suggestion-title">
+                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                        </div>
+                                        <div class="search-suggestion-price">
+                                            <span>£ 1,088.10</span>
+                                                -
+                                            <span>£ 1,674.00</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="search-suggestion-list">
+                                <a href="#">
+                                    <div class="search-suggestion-img">
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                    </div>
+                                    <div class="search-suggestion-text">
+                                        <div class="search-suggestion-title">
+                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                        </div>
+                                        <div class="search-suggestion-price">
+                                            <span>£ 1,088.10</span>
+                                                -
+                                            <span>£ 1,674.00</span>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
                     </form>
+
                 </div>
             </div>
         </div>

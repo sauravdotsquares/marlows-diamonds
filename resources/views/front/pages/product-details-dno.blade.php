@@ -161,19 +161,22 @@
 					</div>
 				</div> 
 				<div class="product-postactions">
-					<a target="_blank" class="review-action" href="#">Reviews</a>
-					<a class="store-locator" href="#">Store Locator</a>
+					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
+					<a href="https://www.google.com/search?q=marlows+diamond+google+review&amp;oq=marlows+diamond+google+review&amp;aqs=chrome..69i57.8073j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x4870bcedd24f2c3d:0x1dc68827b10987fa,1,,," class="review-action" target="_blank">
+						Reviews
+					</a>
+					<a class="store-locator" href="{{asset('visit-us')}}">Store Locator</a>
 					<a target="_blank" class="view-certificate" href="#">View Certificate</a>
 				</div>
 				<div class="finance-available">
-					<a href="#">
+					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
 							<span>see options</span>
 						</p>
 					</a>
 					<div class="doko-img">
-						<img src="assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
+						<img src="{{asset('')}}assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
 					</div>
 				</div>
 
@@ -485,7 +488,6 @@
 </div>
 
 <!-- Modal -->
-<!-- Modal -->
 <div class="modal fade" id="requestAppointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -550,6 +552,73 @@
 		</div>
       </div>
       
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12">
+			<!-- Success message -->
+			@if(Session::has('success'))
+				<div class="alert alert-success">
+					{{Session::get('success')}}
+				</div>
+			@endif
+			<div class="visit-form">
+				
+				<form method="post" action="{{ route('contact') }}">
+				@csrf
+					<div class="form-controls">
+						<input type="text" name="name" id="name" class="{{ $errors->has('name') ? 'error' : '' }}" placeholder="Your Name">
+						<!-- Error -->
+						@if ($errors->has('name'))
+						<div class="error">
+							{{ $errors->first('name') }}
+						</div>
+						@endif
+					</div>
+					<div class="form-controls">
+						<input type="email" name="email" id="email" class="{{ $errors->has('email') ? 'error' : '' }}" placeholder="Your Email Address">
+						@if ($errors->has('email'))
+						<div class="error">
+							{{ $errors->first('email') }}
+						</div>
+						@endif
+					</div>
+					<div class="form-controls">
+						<input type="text" name="phone" id="phone" class="{{ $errors->has('phone') ? 'error' : '' }}" placeholder="Your Contact No.">
+						@if ($errors->has('phone'))
+						<div class="error">
+							{{ $errors->first('phone') }}
+						</div>
+						@endif
+					</div>
+					<div class="form-controls">
+						<textarea name="message" id="message" class="{{ $errors->has('message') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
+						@if ($errors->has('message'))
+						<div class="error">
+							{{ $errors->first('message') }}
+						</div>
+						@endif
+					</div>
+					<div class="google-capatcha">
+
+					</div>
+					<div class="action-submit">
+						<button type="submit" name="send" value="Submit">Send Message</button>
+					</div>
+				</form>		
+			</div>
+		</div>
+      </div>
     </div>
   </div>
 </div>

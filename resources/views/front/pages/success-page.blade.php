@@ -10,11 +10,14 @@
            
         </div>
     </div>
-    <div>
+    <div class="orders-warp order-success-page">
+        <div class="container">
         <!-- Your Order number(22545875412) has been cancelled  -->
-        {{$response}}
+        <div class="order-data">{{$response}}</div>
+        <a href="{{ url('/') }}" class="grey-btn-large"> Continue Shopping</a>
     </div>
-    <a href="{{ url('/') }}" class="grey-btn-large"> Continue Shopping</a>
+    </div>
+    
 @endsection
   
 @section('js')

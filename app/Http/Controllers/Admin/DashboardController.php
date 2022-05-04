@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class DashboardController extends Controller
 {
@@ -15,6 +16,11 @@ class DashboardController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-        return view('admin.dashboard');
+
+        $getOrderDetails = Order::with(['getOrderDetailsFunction'])->latest()->where('status','<',4)->limit(10)->get();
+
+        // return response()->json($getOrder);
+
+        return view('admin.dashboard',compact('getOrderDetails'));
     }
 }
