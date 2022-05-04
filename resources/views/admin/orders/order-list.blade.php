@@ -5,7 +5,7 @@
 @endsection
 <!-- Main content -->
 <section class="content">
-   <div class="container-fluid">
+   <div class="container-fluid orderlist-dash">
       <div class="row">
          <div class="col-12">
 		 @if(session()->has('alert-success'))

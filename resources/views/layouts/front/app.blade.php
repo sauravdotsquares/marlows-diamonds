@@ -79,13 +79,29 @@ $(document).ready(function(){
 });
 </script>
 
+<!-- footer collapse -->
 <script type="text/javascript">
-  $(document).ready(function() {
-    $('.accordian-toggle').click(function() {        
-     $(".footer-title").siblings('.footerlinks-col').toggle('show');
-        });
-    });
+  if($(window).innerWidth() <= 767) {
+    $(document).ready(function() {
+      $('.accordian-toggle').click(function() {        
+      $(this).parents('.column-one-fifth').toggleClass('show-collapse');
+          });
+      });
+  }
 </script>
+
+<!-- header dropdown menu level collapse -->
+<script type="text/javascript">
+  if($(window).innerWidth() <= 1024) {
+    $(document).ready(function() {
+      $('.main-navigaiton .nav-navbars li i').click(function() {        
+      $(this).parents('.level-zero').toggleClass('show-menus');
+          });
+      });
+  }
+</script>
+
+
 
 <script type="text/javascript">
     $(function() {
