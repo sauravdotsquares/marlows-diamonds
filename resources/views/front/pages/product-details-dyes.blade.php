@@ -908,11 +908,6 @@
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
-<<<<<<< HEAD
-					
-=======
-					// console.log(res);
->>>>>>> a43a84cc08cb82b2704577b04b676e9eedcd5a46
 					$('#refineSearchData').html("");
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);
