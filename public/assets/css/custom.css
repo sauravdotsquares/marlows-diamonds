@@ -127,7 +127,10 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .logo-menu-bar-wrap{align-items:center;position:relative}
 .main-navigaiton .nav-navbars .level-zero{display:inline-block;vertical-align:top;position:relative}
 .main-navigaiton .nav-navbars .level-zero a{text-decoration:none;color:#444;font-weight:bold;text-transform:uppercase;font-size:12px}
-.main-navigaiton .nav-navbars .level-zero>a{padding:15px 7px}
+.main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: 0px;top: 5px;}
+.main-navigaiton .nav-navbars .level-zero span {position: relative;display: block;}
+
+.main-navigaiton .nav-navbars .level-zero > span > a{padding:15px 11px}
 .nav-navbars .level-zero.submenu .inner-submenu{display:none}
 .nav-navbars .static-megamenu{text-align:center}
 .nav-navbars .static-megamenu *{text-align:left}
@@ -136,6 +139,8 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li a{padding:12px 20px;display:block;position:relative}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li a i{float:right;font-size:15px;position:relative}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one .inner-submenu{right:-100%;top:0}
+.main-navigaiton .nav-navbars .level-zero .inner-submenu li .fa-angle-right {position: absolute;right: 13px;top: 13px;z-index: 11;}
+
 
 @keyframes fadeIn{from{opacity:0;transform:translate3d(0,-7%,0)}
 to{opacity:1;transform:translate3d(0,0,0)}
@@ -719,7 +724,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 }
 /** search suggestion **/
 .head-mini-search{ position: relative;}
-.search-suggestion {position: absolute;right: 0;width: 300px;background: #EAEAEA;border: 1px solid #D0D0D0;top: 44px; display: none;}
+.search-suggestion {position: absolute;right: 10px;width: 300px;background: #EAEAEA;border: 1px solid #D0D0D0;top: 44px; display: none;}
 .search-suggestion-list a {display: flex;align-items: center;color: #000;text-decoration: none;padding: 12px 10px;background: #fff;margin:14px 0 14px 0;}
 .search-suggestion-list .search-suggestion-img {width: 121px;border: 1px solid #B0B0B0;}
 .search-suggestion-text {padding: 0 9px;}
@@ -835,7 +840,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .btnsubfor {margin-top: 20px;}
 .forgotpasss .form-control:focus{ border-color: #000;}
 .forgotpasss .card-header {font-size: 19px;}
-.product-type-variations {display: flex;flex-wrap: wrap;margin: 0 -9px;}
+/**.product-type-variations {display: flex;flex-wrap: wrap;margin: 0 -9px;}**/
 
 /** Default pages **/
 .defaultpages-wrap {padding: 40px 0; font-size: 16px; line-height: 30px;}
@@ -843,13 +848,29 @@ label.label {display: block;margin: 0 0 5px 0;}
 
 .defaultpages-cols a {text-decoration: none;color: #8E2E65;}
 .defaultpages-cols .vc_custom_heading {text-align: left !important;}
-.tinv-message .cart-empty {margin: 10px 0 20px;font-size: 16px;}
-.tinv-message {text-align: center;}
+.cart-empty {background: #f7f6f7;padding: 14px 20px;position: relative;border-top: 2px solid #8e2e65;color: #303030; font-size: 16px;}
+.tinv-header h2 {font-size: 32px;}
+.tinv-header {margin: 0 0 20px 0;}
 a[type="button"] {-webkit-appearance: none !important;}
 
 .doko-img img {max-width: 60px;}
+.form-control:focus {border-color: #000;}
+/** **/
+.certified-diamond-form {background: #f5f5f5;padding: 30px 30px;}
+.certified-diamond-form h4 {font-size: 20px;text-transform: uppercase;color: #8e2e65;font-family: "Lato";font-weight: bold;}
+.certified-diamond-form h2 {font-size: 32px;text-transform: uppercase;color: #8e2e65;font-family: "Lato";font-weight: bold;}
+.certified-diamond-form p {font-size: 15px;color: #202020;}
+.guidehere-form {margin: 60px 0 0 0;}
+.guidehere-form span {display: block;font-size: 16px;color: #8e2e65;margin: 0 0 20px 0;}
+.guidehere-form .form-group {margin: 0 0 14px;}
+.guidehere-form .capatch-box {margin: 20px 0 20px 0;}
+.info-privacy {color: #8e2e65;margin: 41px 0 20px 0;}
+.certified-diamond-ring .container {max-width: 1250px;}
+.certified-diamond-img {padding: 0 50px 0 0;}
+.certified-diamond-ring {padding: 30px 0 60px 0;}
+
 /** mega menuhover for desktop **/
-@media(min-width:767px){
+@media(min-width:1024px){
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
 }

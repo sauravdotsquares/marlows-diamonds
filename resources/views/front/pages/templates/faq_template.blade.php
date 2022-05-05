@@ -53,12 +53,18 @@
                   </div>
                </div>
             </div>
-         </div>
+         
       
       @endforeach
    </div>
+   </div>
 </div>
 </div>
+
+
+
+
+
 <!-- Section Reviews -->
 <div class="container">
    <div class="rating-review-block">
