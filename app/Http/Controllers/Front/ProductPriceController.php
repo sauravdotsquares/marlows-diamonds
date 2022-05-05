@@ -63,7 +63,7 @@ class ProductPriceController extends Controller
         //echo '<pre>'; print_r($hkData); die;
         if(!empty($hkData)){
         	$diamondPrice = number_format($hkData[0]['Amount']*$vat,2);
-        	$finalPrice = round($settingPrice + $diamondPrice);
+        	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
         
         	return json_encode(array('finalPrice'=>$finalPrice,'diamondPrice'=>$diamondPrice,'Stock_NO'=>$hkData[0]['Stock_NO'],'CertificateLink'=>$hkData[0]['CertificateLink']));
         }else{
