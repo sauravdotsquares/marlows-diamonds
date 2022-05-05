@@ -83,7 +83,7 @@
 
 @section('content')
 
-<?php 
+<?php
 	// echo "<pre>";
 	// print_r($data->getProductVariation[0]->regular_price);
 	// die;
@@ -123,7 +123,7 @@
 					</div>
 				</div>
 				<div id="apiCustomDesign">
-					
+
 				</div>
 				<div class="product-decriptions">
 					{!!$data->description!!}
@@ -143,7 +143,7 @@
 							$wishListClass = "fa-heart-o";
 							if(array_key_exists($data->id,$wishlist)){
 								$wishListClass = "fa-heart";
-							}						
+							}
 						@endphp
 						<a href="javascript:void(0);" id="productWishList"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
 					</div>
@@ -158,7 +158,7 @@
 						Request an Appointment
 						</a>
 					</div>
-				</div> 
+				</div>
 				<div class="product-postactions">
 					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
 					<a href="https://www.google.com/search?q=marlows+diamond+google+review&amp;oq=marlows+diamond+google+review&amp;aqs=chrome..69i57.8073j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x4870bcedd24f2c3d:0x1dc68827b10987fa,1,,," class="review-action" target="_blank">
@@ -193,7 +193,7 @@
 			</div>
 		</div>
 		<div class="related-products-list">
-			<div class="owl-carousel owl-theme related-product st-arrows">
+			<div id="relatedProductData" class="owl-carousel owl-theme related-product st-arrows">
 				<div class="item">
 					<div class="product-grid-item">
 						<div class="product-items-item-info">
@@ -394,7 +394,7 @@
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
-					<img src="assets/images/perfect-ring.jpg" alt="perfect-ring">
+					<img src="/assets/images/perfect-ring.jpg" alt="perfect-ring">
 				</div>
 
 			</div>
@@ -406,83 +406,9 @@
 <!-- Section Reviews -->
 <div class="container">
 	<div class="rating-review-block">
-		<div class="owl-carousel owl-theme slider-review">
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-		</div>
+					<div class="owl-carousel owl-theme slider-review">
+					@include('front.pages.reviews')
+					</div>	
 	</div>
 </div>
 
@@ -503,7 +429,7 @@
 				</div>
 			@endif
 				<div class="visit-form">
-					
+
 					<form method="post" action="{{ route('contact') }}">
 					@csrf
 						<div class="form-controls">
@@ -546,11 +472,11 @@
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
 					</form>
-					
+
 				</div>
 		</div>
       </div>
-      
+
     </div>
   </div>
 </div>
@@ -572,7 +498,7 @@
 				</div>
 			@endif
 			<div class="visit-form">
-				
+
 				<form method="post" action="{{ route('contact') }}">
 				@csrf
 					<div class="form-controls">
@@ -614,7 +540,7 @@
 					<div class="action-submit">
 						<button type="submit" name="send" value="Submit">Send Message</button>
 					</div>
-				</form>		
+				</form>
 			</div>
 		</div>
       </div>
@@ -633,6 +559,8 @@
 		$(document).ready(function(){
 			console.log("checking");
 			getCustomFilter();
+
+            getRelatedProduct();
 
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
@@ -677,6 +605,10 @@
 			});
 		}
 		function getCustomFilter(){
+<<<<<<< HEAD
+=======
+
+>>>>>>> f6a5c0d75231440728db7c9b40506b3508e3eb53
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -685,8 +617,13 @@
 					'slug' : '{{$data->slug}}',
                 },
                 success: function (res) {
+<<<<<<< HEAD
 					$('#filterDataDesign .type-variations-row').html(res);
 					getSelectedVariationsData();
+=======
+
+					$('#filterDataDesign').html(res);
+>>>>>>> f6a5c0d75231440728db7c9b40506b3508e3eb53
                     return false;
                 }
             });
@@ -748,6 +685,26 @@
                 }
             });
 		}
+
+        function getRelatedProduct(){
+            $.ajax({
+                url: "{{ route('get.related.product.list') }}",
+                method: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    catid: '{{$data->categories}}',
+                },
+                success: function (response) {
+                    // console.log(response.html);
+                    $('#relatedProductData').html(" ");
+                    if(response.html){
+                        $('#relatedProductData').append(response.html);
+                    }
+                    // return false;
+                    // window.location.reload();
+                }
+            });
+        }
 
 	</script>
 @endsection

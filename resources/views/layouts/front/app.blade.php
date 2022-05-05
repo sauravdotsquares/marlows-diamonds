@@ -20,10 +20,11 @@
     <meta property="og:image:type" content="image/jpeg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@marlowsdiamonds" />
-
+	<link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
-    
+
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/responsive.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
@@ -39,7 +40,7 @@
     @if(session('success'))
         <div class="alert alert-success">
           {{ session('success') }}
-        </div> 
+        </div>
     @endif
 
     @yield('content')
@@ -79,13 +80,29 @@ $(document).ready(function(){
 });
 </script>
 
+<!-- footer collapse -->
 <script type="text/javascript">
-  $(document).ready(function() {
-    $('.accordian-toggle').click(function() {        
-     $(".footer-title").siblings('.footerlinks-col').toggle('show');
-        });
-    });
+  if($(window).innerWidth() <= 767) {
+    $(document).ready(function() {
+      $('.accordian-toggle').click(function() {        
+      $(this).parents('.column-one-fifth').toggleClass('show-collapse');
+          });
+      });
+  }
 </script>
+
+<!-- header dropdown menu level collapse -->
+<script type="text/javascript">
+  if($(window).innerWidth() <= 1024) {
+    $(document).ready(function() {
+      $('.main-navigaiton .nav-navbars li i').click(function() {        
+      $(this).parents('.level-zero').toggleClass('show-menus');
+          });
+      });
+  }
+</script>
+
+
 
 <script type="text/javascript">
     $(function() {
@@ -103,7 +120,7 @@ $(document).ready(function(){
               url: '{{ route("autocomplete") }}',
               method: "get",
               data: {
-                  _token: '{{ csrf_token() }}', 
+                  _token: '{{ csrf_token() }}',
                   query: $(this).val(),
               },
               success: function (response) {
@@ -113,7 +130,7 @@ $(document).ready(function(){
                   }
               }
           });
-        }        
+        }
     });
 </script>
 </body>

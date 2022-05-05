@@ -20,7 +20,7 @@ class Products extends Model
     public function getProductImages(){
         return $this->hasOne(ProductImages::class,'product_id','id')->where('is_featured',1);
     }
-    
+
     public function getProductGallery(){
         return $this->hasMany(ProductImages::class,'product_id','id');
     }
@@ -28,7 +28,7 @@ class Products extends Model
     public function getProductVariation(){
         return $this->hasMany(ProductVariations::class,'product_id','id');
     }
-    
+
     public function getProductVariationMinMaxPriceAttribute(){
         return ProductVariations::select(\DB::raw('MIN(regular_price) AS MinPrice, MAX(regular_price) AS MaxPrice'))->where('product_id',$this->id)->first();
         // return $this->hasOne(ProductVariations::class,'product_id','id')->select(\DB::raw('MIN(regular_price) AS minPrice, MAX(regular_price) AS MaxPrice'));

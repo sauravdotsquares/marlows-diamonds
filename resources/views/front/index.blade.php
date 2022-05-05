@@ -1,11 +1,12 @@
 @extends('layouts.front.app')
 @section('content')
+
 <!-- home main-banner start -->
 <div class="home-main-banner">
     <div class="main-banner-wraper flex-flex-wrap flexed">
         <div class="main-banner-col banner-left-col">
             <div class="main-banner-left-text">
-                <h1>Find the Perfect Diamond Rings from Marlow’s</h1>               
+                <h1>Find the Perfect Diamond Rings from Marlow’s</h1>
                 <p>A diamond is forever, so should be yours.</p>
                 <div class="shop-engage-btn">
                     <a class="btn-bg-large" href="{{asset('engagement-rings')}}">SHOP ENGAGEMENT RINGS</a>
@@ -182,7 +183,7 @@
             Marlow's Diamonds: Inspiring a Generation of Love.
         </div>
     </div>
-    
+
 </div>
 
 
@@ -190,7 +191,7 @@
 
 
 <!-- Best Selling Marlow's Diamond Jewellery start here -->
-
+@if(count($product_data))
 <div class="best-selling-marlows">
     <div class="container">
         <div class="head-para-three">
@@ -198,114 +199,56 @@
         </div>
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
-                <div class="item">
-                    <div class="product-info">
-                        <div class="product-image">
-                            <a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
-                        </div>
-                        <div class="product-item-details">
-                            <div class="product-titles-small">
-                                <a href="#"> SADIE | Eternity Style Ring</a>
-                            </div>
-                            <div class="product-price">
-                                 £ 1,068.60
-                            </div>
-                            <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Select Options</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="product-info">
-                        <div class="product-image">
-                            <a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
-                        </div>
-                        <div class="product-item-details">
-                            <div class="product-titles-small">
-                                <a href="#"> SADIE | Eternity Style Ring</a>
-                            </div>
-                            <div class="product-price">
-                                 £ 1,068.60
-                            </div>
-                            <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Select Options</a>
+                @foreach($product_data as $key => $product)
+                    @if($product->ProductVariationMinMaxPrice->MaxPrice > 0)
+                        <div class="item">
+                            <div class="product-info">
+                                <div class="product-image">
+                                    <a href="{{asset('product/'.$product->slug)}}">
+                                        @if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
+                                            <img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="image">
+                                        @endif
+                                    </a>
+                                </div>
+                                <div class="product-item-details">
+                                    <div class="product-titles-small">
+                                        <a href="{{asset('product/'.$product->slug)}}"> {{$product->title}}</a>
+                                    </div>
+                                    <div class="product-price">
+                                        {{MY_CURRENCY_SYMBOL}}
+                                        @if($product->ProductVariationMinMaxPrice->MinPrice == $product->ProductVariationMinMaxPrice->MaxPrice)
+                                        {{isset($product->ProductVariationMinMaxPrice->MinPrice)?$product->ProductVariationMinMaxPrice->MinPrice:0.00}}
+                                        @else
+                                        {{isset($product->ProductVariationMinMaxPrice->MinPrice)?$product->ProductVariationMinMaxPrice->MinPrice:0.00}}-
+                                            {{isset($product->ProductVariationMinMaxPrice->MaxPrice)?$product->ProductVariationMinMaxPrice->MaxPrice:0.00}}
+                                        @endif
+                                    </div>
+                                    <div class="product-action-btn">
+                                        <a class="btn-bg-small" href="{{asset('product/'.$product->slug)}}">Select Options</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="product-info">
-                        <div class="product-image">
-                            <a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
-                        </div>
-                        <div class="product-item-details">
-                            <div class="product-titles-small">
-                                <a href="#"> SADIE | Eternity Style Ring</a>
-                            </div>
-                            <div class="product-price">
-                                 £ 1,068.60
-                            </div>
-                            <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Select Options</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="product-info">
-                        <div class="product-image">
-                            <a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
-                        </div>
-                        <div class="product-item-details">
-                            <div class="product-titles-small">
-                                <a href="#"> SADIE | Eternity Style Ring</a>
-                            </div>
-                            <div class="product-price">
-                                 £ 1,068.60
-                            </div>
-                            <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Select Options</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 <div class="item">
-                    <div class="product-info">
-                        <div class="product-image">
-                            <a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
-                        </div>
-                        <div class="product-item-details">
-                            <div class="product-titles-small">
-                                <a href="#"> SADIE | Eternity Style Ring</a>
-                            </div>
-                            <div class="product-price">
-                                 £ 1,068.60
-                            </div>
-                            <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Select Options</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>
 </div>
+@endif
 <!-- Best Selling Marlow's Diamond Jewellery end here -->
 
 
 <!--Shop from Marlow’s GIA Certified Diamond Rings start -->
 <div class="shopfrom-block">
-    <div class="container"> 
+    <div class="container">
         <div class="head-para-three">
                 <h3 class="heading-h-three">
                     Shop from Marlow’s GIA Certified Diamond Rings
                 </h3>
                 <p>Diamond rings are more than just jewellery. We understand the symbolism that they represent. So that they can witstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality and longevity.</p>
                 <div class="explore-btn">
-                    <a class="btn-bg-small" href="#">EXPLORE ENGAGEMENT RINGS</a>
+                    <a class="btn-bg-small" href="/product-category/engagement-rings">EXPLORE ENGAGEMENT RINGS</a>
                 </div>
             </div>
             <div class="rating-img">
@@ -315,7 +258,7 @@
 			<div class="rating-review-block">
 				<div class="owl-carousel owl-theme slider-review">
 				@include('front.pages.reviews')
-				</div>	
+				</div>
 			</div>
         </div>
 </div>
@@ -332,7 +275,7 @@
                 <div class="leftright-imt-col leftright-text">
                     <div class="leftright-heading heading-h-three">
                         Buy the Perfect Diamond Ring
-                    </div>      
+                    </div>
                     <p>Planning to propose? Don’t know where to start? Fret not, we have diamond experts who can help you in finding the perfect engagement ring to best represent the promise you vow to that special someone.</p>
                     <div class="viewguide-btn">
                             <a class="btn-bg-small" href="#">View Guide</a>
@@ -346,7 +289,7 @@
                 <div class="leftright-imt-col leftright-text">
                     <div class="leftright-heading heading-h-three">
                         Choose Your Diamond with Marlow’s Terminology Guide
-                    </div>      
+                    </div>
                     <p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond guide, you can better understand the different types of diamonds and what shapes are the perfect fit for you. Download your free guide today!</p>
                     <div class="viewguide-btn">
                             <a class="btn-bg-small" href="#">View Guide</a>
@@ -360,7 +303,7 @@
         </div>
 
     </div>
-    
+
 </div>
 
 <!-- Join our mailing list section start -->
@@ -401,7 +344,7 @@
                         <div class="form-col">
                             <label>Message</label>
                             <textarea name="description" class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
-							
+
                         </div>
                     </div>
                     <div class="action-btn">
@@ -432,7 +375,7 @@
                         <img src="assets/images/insta-img-one.jpg" alt="insta photo">
                     </div>
                     <div class="insta-link">
-                        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -442,7 +385,7 @@
                         <img src="assets/images/insta-img-two.jpg" alt="insta photo">
                     </div>
                     <div class="insta-link">
-                        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -452,7 +395,7 @@
                         <img src="assets/images/insta-img-three.jpg" alt="insta photo">
                     </div>
                     <div class="insta-link">
-                        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -462,7 +405,7 @@
                         <img src="assets/images/insta-img-four.jpg" alt="insta photo">
                     </div>
                     <div class="insta-link">
-                        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
@@ -472,15 +415,15 @@
                         <img src="assets/images/insta-img-five.jpg" alt="insta photo">
                     </div>
                     <div class="insta-link">
-                        <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <div class="insta-btn">
-        <a class="btn-bg-small" href="#"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
+        <a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
     </div>
 </div>
 
