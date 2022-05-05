@@ -12,12 +12,14 @@ use App\Models\Attributes;
 use App\Models\DiamondStock;
 use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
+use App\Models\ProductImages;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
 use App\Http\Controllers\Front\ApiController;
 use View;
 use Illuminate\Support\Arr;
+use DB;
 
 class ProductController extends Controller
 {
@@ -48,9 +50,11 @@ class ProductController extends Controller
     public function productDetails($productSlug = null)
     {
         if($productSlug !=null){
-            $getProduct = Products::with('getProductVariation','getProductImages')->where('slug',$productSlug)->first();
-            //dd($getProduct);
+            $getProduct = Products::with('getProductVariation')->where('slug',$productSlug)->first();
+            
             if(isset($getProduct) && !empty($getProduct)){
+                // Product Images
+                $prodImages = ProductImages::where('product_id',$getProduct->id)->get();
                 if($getProduct->dfinder_status == 1){
 
                     $productVariationId = ProductVariations::where('product_id',$getProduct->id)->pluck('id')->toArray();
@@ -64,9 +68,9 @@ class ProductController extends Controller
                     $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
 
                     //echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails]);
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages]);
                 }else{
-                    return view('front.pages.product-details-dno',['data'=>$getProduct]);
+                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages]);
                 }
             }else{
                 return view('layouts.errors.404');
@@ -470,12 +474,12 @@ class ProductController extends Controller
             $getProductVariationId = ProductVariations::where('product_id',$product_id)->pluck('id')->toArray();
             
             if(!empty($getProductVariationId)){
-                $getVariDetails = ProductVariationDetails::whereIn('variation_id',$getProductVariationId)->whereIn('value',$request->variations)->get()->toArray();
-                echo '<pre>';print_r($getVariDetails); die;
+                $getVariDetails = ProductVariationDetails::groupBy('value')->whereIn('variation_id',$getProductVariationId)->whereIn('value',$request->variations)->get()->toArray();
+                //echo '<pre>'; print_r($getVariDetails); die;
             }
-
+            $vat = getVAT();
             if(isset($getVariDetails) && !empty($getVariDetails)){
-                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
+                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails[0]['variation_id'])->select(DB::raw('(regular_price*"'.$vat.'") as regular_price_with_vat'),DB::raw('(sale_price*"'.$vat.'") as sale_price_with_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
                 
                 return response()->json($getSelectedVariationVideoImages);
             }
@@ -496,16 +500,16 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        $getProductListFinal = Products::with('getProductImages')->whereIn('id',$output)->simplePaginate(12);
-
+        $getProductListFinal = Products::with('getProductImages')->whereIn('id',$output)->take(4)->get();
+        //dd($getProductListFinal);
         if(isset($getProductListFinal) && !empty($getProductListFinal)){
             $view = view('front.ajax.productlistajax',compact('getProductListFinal'))->render();
         }else{
             $view = '';
-            $getProductListFinal = '';
+            
         }
 
-        return response()->json(['page'=> $getProductListFinal,'html'=>$view]);
+        return response()->json(['html'=>$view]);
 
     }
 
