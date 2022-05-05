@@ -1,4 +1,4 @@
-@inject('header_settings', 'App\Models\Settings') 
+@inject('header_settings', 'App\Models\Settings')
 
 <!-- Header Start here -->
 <header class="header-main">
@@ -20,7 +20,7 @@
                 <div class="item">
                     {!!$header_settings->get_options('field4')!!}
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
     <!-- Mobile Top end here -->
@@ -31,7 +31,7 @@
             <p>{{$header_settings->get_options('top-bar-desktop')}}</p>
         </div>
     </div>
-    <!--Top bar end --> 
+    <!--Top bar end -->
 
     <!--middle Top bar start -->
     <div class="middle-topbar">
@@ -65,7 +65,7 @@
                             <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
                         </li>
                         <li class="my-whishlist-blk">
-                            <?php  
+                            <?php
                                 $getArray = session('wishlist');
                                 if(isset($getArray) && count($getArray)){
                                     $wishlistIcon = 'fa-heart';
@@ -80,9 +80,9 @@
                         </li> -->
                         <li class="dropdown">
                             <a href="{{ route('product.cart') }}">
-                               
+
                                     <img src="{{asset('')}}assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
-                            
+
                             </a>
                             <div class="dropdown-menu">
                                 <div class="row total-header-section">
@@ -178,11 +178,15 @@
 
                                 @foreach($navbars as $navbarItem)
                                     <li class="level-zero submenu {{$navbarItem['class_level']}}">
+                                        <span>
                                         <a href="{{url($navbarItem['href'])}}">{{$navbarItem['text']}}
-                                            @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
-                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                            @endif
+                                            
                                         </a>
+                                        @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
+                                            <i class="fa fa-angle-down {{$navbarItem['class_level']}}" aria-hidden="true"></i>
+                                        @endif
+                                            
+                                        </span>
                                         @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
                                             @include('layouts.front.menus-sub', ['subs' => $navbarItem['children']])
                                         @endif
@@ -297,13 +301,13 @@
             <div class="post-bar-wraper flexed flex-justify-between flex-items-center">
                 <div class="post-bar-left">
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
-                </div>  
+                </div>
                 <div class="post-bar-center">
                     {!!$header_settings->get_options('header-center')!!}
-                </div>  
+                </div>
                 <div class="post-bar-right">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
-                </div>  
+                </div>
             </div>
         </div>
     </div>

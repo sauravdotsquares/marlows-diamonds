@@ -92,7 +92,7 @@ $(document).ready(function(){
 <script type="text/javascript">
   if($(window).innerWidth() <= 767) {
     $(document).ready(function() {
-      $('.accordian-toggle').click(function() {        
+      $('.accordian-toggle').click(function() {
       $(this).parents('.column-one-fifth').toggleClass('show-collapse');
           });
       });
@@ -103,10 +103,13 @@ $(document).ready(function(){
 <script type="text/javascript">
   if($(window).innerWidth() <= 1024) {
     $(document).ready(function() {
-      $('.main-navigaiton .nav-navbars li i').click(function() {        
-      $(this).parents('.level-zero').toggleClass('show-menus');
-          });
-      });
+        $('.main-navigaiton .nav-navbars .level-zero .fa-angle-down').on('click',function() {
+            $(this).parents('.level-0').toggleClass('show-menus');
+        });
+        $('.main-navigaiton .nav-navbars .level-zero .fa-angle-right').on('click',function() {
+            $(this).parents('.level-1').toggleClass('show-menus');
+        });        
+    });
   }
 </script>
 
