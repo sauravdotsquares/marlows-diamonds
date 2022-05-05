@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\Pages;
 use App\Models\Posts;
 use App\Models\PostCategory;
+use App\Models\Products;
 //use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class PageController
@@ -21,21 +22,24 @@ class PageController
             $pageData = Pages::where('slug',$slug)->first();
             $pageCategory = PostCategory::where('slug',$slug)->first();
 			//$blogdata= Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
-			
+
             if($pageData){
                 return view('front.pages.templates.'.$pageData->template.'',['data'=>$pageData]);//,'showdata'=>$blogdata]);
             }elseif($pageCategory){
 				return view('front.pages.templates.blog_template',['data'=>$pageCategory, 'blog_details' => 1]);//,'showdata'=>$blogdata]);
 			}
-			
-			
+
+
             return view('layouts.errors.404');
         }else{
+
+            $getProducts = Products::with(['getProductImages'])->where('is_featured',1)->limit(10)->get();
+
             $pageData = Pages::where('slug','home')->first();
-            return view('front.index',['data'=>$pageData]);  
+            return view('front.index',['data'=>$pageData,'product_data'=>$getProducts]);
         }
     }
-	
+
 	public function myPost(Request $request)
     {
     	$posts = Posts::orderBy('id','DESC')->where('status', 1)->paginate(6);
@@ -45,7 +49,7 @@ class PageController
         }
     	return response()->json(['html'=>'']);
     }
-	
+
 	// For single blog post
 	public function show(Request $request,$slug)
     {

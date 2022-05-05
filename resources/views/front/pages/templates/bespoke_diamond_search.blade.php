@@ -3,6 +3,7 @@
 @section('css')
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
 <div class="perfect-certified-wrap" id="diamondMainController" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()"  ng-cloak>
 	<div class="container">
@@ -13,7 +14,7 @@
 		<div class="row">
 			<div class="col-lg-4">
 				<div class="chooseyour-diamond-side">
-					<div class="diamond-heaing-two">		
+					<div class="diamond-heaing-two">
 						Choose your Diamond
 					</div>
 					<form class="cart my-cart-form" name="search" action="" method="post" encytype="mulipart/form-data">
@@ -137,12 +138,12 @@
 												@foreach (range('D', 'K') as $alphabet)
 												<li class="selected-this">
 													<button type="button" class="btn">
-									                    {{$alphabet}} 
+									                    {{$alphabet}}
 									                    <input value="{{$alphabet}}" class="diamond-colour" name="colour[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												@endforeach
-												
+
 											</ul>
 										</div>
 									</div>
@@ -170,49 +171,49 @@
 											<ul>
 												<li>
 													<button type="button" class="btn">
-									                    IF 
+									                    IF
 									                    <input value="IF" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
-													
+
 													<button type="button" class="btn">
-									                    VVS1 
+									                    VVS1
 									                    <input value="VVS1" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
-													
+
 													<button type="button" class="btn">
-									                    VVS2 
+									                    VVS2
 									                    <input value="VVS2" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
-													
+
 													<button type="button" class="btn">
-									                    VS1 
+									                    VS1
 									                    <input value="VS1" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
-													
+
 													<button type="button" class="btn">
-									                    VS2 
+									                    VS2
 									                    <input value="VS2" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
-													
+
 													<button type="button" class="btn">
-									                    SI1 
+									                    SI1
 									                    <input value="SI1" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
-													
+
 													<button type="button" class="btn">
-									                    SI2 
+									                    SI2
 									                    <input value="SI2" class="diamond-clarity" name="clarity[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
@@ -234,7 +235,7 @@
 
 						<div class="choose-diaond-fields row diamond-cut-grade">
 							<div class="diamond-field-labels col-lg-3">
-								 Cut Grade 
+								 Cut Grade
 							</div>
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
@@ -243,19 +244,19 @@
 											<ul>
 												<li>
 													<button type="button" class="btn">
-									                    Excellent 
+									                    Excellent
 									                    <input value="EX" class="diamond-grade" name="grade[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Very Good 
+									                    Very Good
 									                    <input value="VG" class="diamond-grade" name="grade[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Good 
+									                    Good
 									                    <input value="GD" class="diamond-grade" name="grade[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
@@ -277,7 +278,7 @@
 
 						<div class="choose-diaond-fields row diamond-polish">
 							<div class="diamond-field-labels col-lg-3">
-								 Polish 
+								 Polish
 							</div>
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
@@ -286,19 +287,19 @@
 											<ul>
 												<li>
 													<button type="button" class="btn">
-									                    Excellent 
+									                    Excellent
 									                    <input value="EX" class="diamond-polish" name="polish[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Very Good 
+									                    Very Good
 									                    <input value="VG" class="diamond-polish" name="polish[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Good 
+									                    Good
 									                    <input value="GD" class="diamond-polish" name="polish[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
@@ -320,7 +321,7 @@
 
 						<div class="choose-diaond-fields row diamond-symmetry">
 							<div class="diamond-field-labels col-lg-3">
-								 Symmetry  
+								 Symmetry
 							</div>
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
@@ -329,19 +330,19 @@
 											<ul>
 												<li>
 													<button type="button" class="btn">
-									                    Excellent 
+									                    Excellent
 									                    <input value="EX" class="diamond-symmetry" name="symmetry[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Very Good 
+									                    Very Good
 									                    <input value="VG" class="diamond-symmetry" name="symmetry[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Good 
+									                    Good
 									                    <input value="GD" class="diamond-symmetry" name="symmetry[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
@@ -364,7 +365,7 @@
 
 						<div class="choose-diaond-fields row diamond-fluorescence">
 							<div class="diamond-field-labels col-lg-3">
-								 Fluorescence   
+								 Fluorescence
 							</div>
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
@@ -373,31 +374,31 @@
 											<ul>
 												<li>
 													<button type="button" class="btn">
-									                    None 
+									                    None
 									                    <input value="N" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Faint 
+									                    Faint
 									                    <input value="F" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Medium 
+									                    Medium
 									                    <input value="M" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    Strong 
+									                    Strong
 									                    <input value="ST" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    V Strong 
+									                    V Strong
 									                    <input value="VS" class="diamond-fluorescence" name="fluorescence[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
@@ -419,7 +420,7 @@
 
 						<div class="choose-diaond-fields row">
 							<div class="diamond-field-labels col-lg-3">
-								 Certificate   
+								 Certificate
 							</div>
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
@@ -428,13 +429,13 @@
 											<ul>
 												<li>
 													<button type="button" class="btn">
-									                    GIA 
+									                    GIA
 									                    <input value="GIA" class="diamond-certificate" name="certificate[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												<li>
 													<button type="button" class="btn">
-									                    IGI 
+									                    IGI
 									                    <input value="IGI" class="diamond-certificate" name="certificate[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
@@ -463,9 +464,9 @@
 			</div>
 			<div class="col-lg-8">
 				<div class="live-diamond-search">
-					<div class="diamond-heaing-two">		
+					<div class="diamond-heaing-two">
 						{!!$data->description!!}
-					</div>	
+					</div>
 					<div class="diamond-search-tb-wrap">
 						<div class="diamond-search-table">
 							<table cellpadding="0" cellpadding="0" border="0">
@@ -484,27 +485,26 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-if="data.length>0 && loader==false" ng-repeat="records in data">
-										<td><%records.Shape%></td>
-										<td><%records.Carat%></td>
-										<td><%records.Color%></td>
-										<td><%records.Clarity%></td>
-										<td ng-if="shape=='ROUND'"><%records.Cut%></td>
-										<td><%records.Lab%></td>
-										<td><%records.Amount*VAT | number : 2 %></td>
+									<tr ng-if="data.length>0 && loader==false" ng-repeat="records in data" class="<%$index%>" id="selectedDiamondRow<%$index%>">
+										<td id="tdShape<%$index%>"><%records.Shape%></td>
+										<td id="tdCarat<%$index%>"><%records.Carat%></td>
+										<td id="tdColor<%$index%>"><%records.Color%></td>
+										<td id="tdClarity<%$index%>"><%records.Clarity%></td>
+										<td id="tdCut<%$index%>" ng-if="shape=='ROUND'"><%records.Cut%></td>
+										<td id="tdLab<%$index%>"><%records.Lab%></td>
+										<td id="tdAmount<%$index%>"><%records.Amount*VAT | number : 2 %></td>
 
-										<td> <a target="_block" class="table-view-btn" href="<%records.CertificateLink%>">View</a> </td>
+										<td id="tdCertiLink<%$index%>"> <a target="_block" class="table-view-btn" href="<%records.CertificateLink%>">View</a> </td>
 
-										<td><img ng-if="records.ImageLink" src="<%records.ImageLink%>" class="diamond_image" alt="<%records.Shape%>"></td>
+										<td id="tdImgLink<%$index%>"><img ng-if="records.ImageLink" src="<%records.ImageLink%>" class="diamond_image" alt="<%records.Shape%>"></td>
 
-										<td><input type="radio" name="selectedDiamond" value="<%records.Amount%>" ng-checked="$index==0" ng-click="updateDiamondPrice(records.Amount)" ng-model="selectedDiamond"></td>
+										<td><input id="selectedDiamondCheckBox<%$index%>" data-certno="<%records.CERT_NO%>" data-stockno="<%records.Stock_NO%>" type="radio" name="selectedDiamond" value="<%records.Amount%>" ng-checked="$index==0" ng-click="updateDiamondPrice(records.Amount)" ng-model="selectedDiamond"></td>
 									</tr>
 
 									<tr ng-if="data.length==0">
 										<td colspan="10">No Record Found.</td>
-										
 									</tr>
-									
+
 								</tbody>
 							</table>
 						<div class="timeline-wrapper" ng-if="loader">
@@ -517,19 +517,23 @@
 						    </div>
 						</div>
 						<div data-pagination=""
-				             data-num-pages="totalPages" 
+				             data-num-pages="totalPages"
 				             data-current-page="currentPage"
-				             data-max-size="maxSize" 
+				             data-max-size="maxSize"
 				             data-boundary-links="true" ng-click="pageChanged()">
 				      </div>
 					</div>
+                    <input type="hidden" id="addtobasketselectedrowid" value="0">
+                    <input type="hidden" id="addCertificateNo" value="0">
+                    <input type="hidden" id="addStockNumber" value="0">
 					<div class="table-bottom-content">
 						<div class="diamond-total-subtotal">
 							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount*VAT | number : 2 %></p>
 							<div class="total-diamond-price" ng-if="firstDiamondAmount">£ <%firstDiamondAmount*VAT | number : 0 %> </div>
 						</div>
 						<div class="addbasket-req-btns">
-							<a class="white-bg-btn" href="#">Add To Basket</a>
+							{{-- <a class="white-bg-btn" href="#">Add To Basket</a> --}}
+                            <a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
 							<a class="btn-bg-small" href="#">Request an Appointment</a>
 						</div>
 					</div>
@@ -541,6 +545,7 @@
 
 @section('js')
 <script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script type="text/javascript">
     jQuery(document).ready(function($){
@@ -567,7 +572,130 @@
 		    angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
 		});
 
-  });
+        $(document).on('change', "[id^=selectedDiamondCheckBox]", function () {
+            var index = parseInt($(this).attr("id").replace("selectedDiamondCheckBox",''));
+            $('#addtobasketselectedrowid').val(index);
+        });
+
+        $('#addtobasket').on('click',function(){
+            // alert($('#addtobasketselectedrowid').val());
+            addtobasketFunction($('#addtobasketselectedrowid').val());
+        });
+    });
+
+    function getNumberFromCurrency(currency) {
+        return Number(currency.replace(/[$,]/g,''))
+    }
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function isNullAndUndef(variable) {
+        return (variable !== null && variable !== undefined);
+    }
+
+    function addtobasketFunction(index){
+        var cert_number = $('#tdCertiLink'+index).find('a').attr('href');
+        console.log(cert_number);
+        // var filename = cert_number.replace( /^.*?([^\/]+)\..+?$/, '$1' );
+        // var fileName_new = cert_number.replace(/[\#\?].*$/,'');
+        // var src= $('#tdCertiLink'+index).find('a').attr('href');
+
+        // var name = src.match(/static\/images\/banner\/(.*)\.jpg/);
+
+        var reportno = getParameterByName('reportno',cert_number);
+        var certNumber;
+        if(reportno !== null && reportno !== undefined){
+            // console.log("Not Null");
+            certNumber = reportno;
+
+        }else{
+            var reportno = getParameterByName('r',cert_number);
+            if(reportno !== null && reportno !== undefined){
+                // console.log("Not Null");
+                certNumber = reportno;
+            }else{
+                // console.log("Null");
+                var tarr = cert_number.replace(/^.*\/\/[^\/]+/, '').split('/');
+                certNumber = tarr[2].replace(/\.[^/.]+$/, "");
+            }
+        }
+
+
+        var certificatenumber = $('#selectedDiamondCheckBox'+index).data('certno');
+        var stockno = $('#selectedDiamondCheckBox'+index).data('stockno');
+
+        // console.log(certificatenumber);
+        // console.log(stockno);
+
+        if(certificatenumber != '' && certificatenumber !== null && certificatenumber !== undefined){
+            // console.log("certificatenumber");
+            certNumber = certificatenumber;
+        }else if(stockno != '' && stockno !== null && stockno !== undefined){
+            // console.log("stockno");
+            certNumber = stockno;
+        }else{
+            // console.log("else");
+            certNumber = 0;
+        }
+
+
+
+        console.log(certNumber);
+        // return false;
+
+        // console.log(cert_number.replace(/^.*\/\/[^\/]+/, ''));
+
+
+
+        // console.log(fileName_new);
+        // console.log(name);
+        // console.log(cert_number);
+        // console.log(filename);
+        // return false;
+
+        $.ajax({
+            type: 'POST',
+            url: '{{route("add.to.cart.diamond")}}',
+            data: {
+                '_token': "{{csrf_token()}}",
+                'carat' : $('#tdCarat'+index).text(),
+                'color' : $('#tdColor'+index).text(),
+                'clarity' : $('#tdClarity'+index).text(),
+                'grade' : $('#tdCut'+index).text(),
+                'certificate' : $('#tdLab'+index).text(),
+                'certificate_number' : certNumber,
+                'price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, //parseFloat($('#price').val()) || 0;
+                'certificatelink': $('#tdCertiLink'+index).find('a').attr('href') || '',
+                'shape': $('#tdShape'+index).text() || '',
+                'imagelink': $('#tdImgLink'+index).find('img').attr('src') || '',
+            },
+            success: function (res) {
+                // console.log(res);
+                if(res.success != '' && typeof res.success !== "undefined"){
+                    if(res.cartcount){
+                        $(".cartcount").text(res.cartcount);
+                    }
+                    if(res.wishcount){
+                        $(".wishcount").removeClass('fa-heart-o');
+                        $(".wishcount").addClass('fa-heart');
+                    }
+                    toastr.success(res.success);
+                }else{
+                    toastr.info(res.error);
+                }
+            }
+        });
+    }
+
+
 </script>
 @endsection
 

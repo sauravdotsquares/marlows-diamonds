@@ -88,7 +88,7 @@
 
 @section('content')
 
-<?php 
+<?php
 	// echo "<pre>";
 	// print_r($data->getProductVariation[0]->regular_price);
 	// die;
@@ -135,20 +135,20 @@
 							<label class="label"> Carat </label>
 							<select class="form-control" name="carat" id="carat">
 								<option value="">Choose an option</option>
-								<option value="0.30" selected="selected">0.30-0.39</option>
-								<option value="0.40">0.40-0.49</option>
-								<option value="0.50">0.50-0.59</option>
-								<option value="0.60">0.60-0.69</option>
-								<option value="0.70">0.70-0.79</option>
-								<option value="0.80">0.80-0.89</option>
-								<option value="0.90">0.90-0.99</option>
-								<option value="1">1.00-1.19</option>
-								<option value="1.2">1.20-1.49</option>
-								<option value="1.50">1.50-1.69</option>
-								<option value="1.70">1.70-1.99</option>
-								<option value="2">2.00-2.49</option>
-								<option value="2.5">2.50-2.99</option>
-								<option value="3">3.00-3.99</option>
+								<option value="0.30-0.39" selected="selected">0.30-0.39</option>
+								<option value="0.40-0.49">0.40-0.49</option>
+								<option value="0.50-0.59">0.50-0.59</option>
+								<option value="0.60-0.69">0.60-0.69</option>
+								<option value="0.70-0.79">0.70-0.79</option>
+								<option value="0.80-0.89">0.80-0.89</option>
+								<option value="0.90-0.99">0.90-0.99</option>
+								<option value="1.00-1.19">1.00-1.19</option>
+								<option value="1.20-1.49">1.20-1.49</option>
+								<option value="1.50-1.69">1.50-1.69</option>
+								<option value="1.70-1.99">1.70-1.99</option>
+								<option value="2.00-2.49">2.00-2.49</option>
+								<option value="2.50-2.99">2.50-2.99</option>
+								<option value="3.00-3.99">3.00-3.99</option>
 							</select>
 						</div>
 						<div class="type-variations-col">
@@ -237,10 +237,10 @@
 					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
 				</div>
 				<input type="hidden" id="certificate_url" name="certificate_url" value="">
-				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
+				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($variationDetails->regular_price)?$variationDetails->regular_price:$variationDetails->sale_price}}">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
 				<input type="hidden" name="selected_final_price" id="selected_final_price" value="0.00">
-				<input type="hidden" name="selected_diamond_shape" id="selected_diamond_shape" value="">
+				<input type="hidden" name="selected_diamond_shape" id="selected_diamond_shape" value="{{$data->diamond_shape}}">
 				<input type="hidden" name="selected_diamond_certno" id="selected_diamond_certno" value="">
 
 				<div class="product-add-cart">
@@ -251,7 +251,7 @@
 							$wishListClass = "fa-heart-o";
 							if(array_key_exists($data->id,$wishlist)){
 								$wishListClass = "fa-heart";
-							}						
+							}
 						@endphp
 						<a href="javascript:void(0);" id="productWishList"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
 					</div>
@@ -265,7 +265,7 @@
 						Request an Appointment
 						</a>
 					</div>
-				</div> 
+				</div>
 				<div class="product-postactions">
 					<a href="https://www.google.com/search?q=marlows+diamond+google+review&amp;oq=marlows+diamond+google+review&amp;aqs=chrome..69i57.8073j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x4870bcedd24f2c3d:0x1dc68827b10987fa,1,,," class="review-action" target="_blank">
 						Reviews
@@ -300,8 +300,8 @@
 			</div>
 		</div>
 		<div class="related-products-list">
-			<div class="owl-carousel owl-theme related-product st-arrows">
-				<div class="item">
+			<div id="relatedProductData" class="owl-carousel owl-theme related-product st-arrows">
+				{{-- <div class="item">
 					<div class="product-grid-item">
 						<div class="product-items-item-info">
 							<div class="product-items-item-image">
@@ -384,7 +384,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 
 		</div>
@@ -501,7 +501,7 @@
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
-					<img src="assets/images/perfect-ring.jpg" alt="perfect-ring">
+					<img src="/assets/images/perfect-ring.jpg" alt="perfect-ring">
 				</div>
 
 			</div>
@@ -513,84 +513,10 @@
 <!-- Section Reviews -->
 <div class="container">
 	<div class="rating-review-block">
-		<div class="owl-carousel owl-theme slider-review">
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="reviews-cont">
-					<div class="reviewr-name">
-						Sana Anwar
-					</div>
-					<div class="reviewr-star">
-						<img src="assets/images/stars.png" alt="star">
-					</div>
-					<div class="reviewr-review-text">
-						I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-						bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-						The staff are friendly and...<a href="#">Read More</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+					<div class="owl-carousel owl-theme slider-review">
+					@include('front.pages.reviews')
+					</div>	
+	</div>	
 </div>
 
 
@@ -611,7 +537,7 @@
 				</div>
 			@endif
 				<div class="visit-form">
-					
+
 					<form method="post" action="{{ route('contact') }}">
 					@csrf
 						<div class="form-controls">
@@ -654,11 +580,11 @@
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
 					</form>
-					
+
 				</div>
 		</div>
       </div>
-      
+
     </div>
   </div>
 </div>
@@ -680,19 +606,19 @@
 				</div>
 			@endif
 			<div class="visit-form">
-				
-			<div class="paymentDetail" id="detailed" style="display: block;"> 
-									<ul class="payments"> 
+
+			<div class="paymentDetail" id="detailed" style="display: block;">
+									<ul class="payments">
                                                         <li> <p> Price : </p><p>
-                         
+
                             <input type="hidden" min="10" interval="0.01" value="1026" id="totalOrder">
                             £<span id="totalOrderText" data-val="324.00">1026.00</span>
-                         
+
                         </p>
                      </li>
-							
 
-                             
+
+
                                         <li>
                                         <p> Finance Type : </p>
                                         <p>
@@ -702,12 +628,12 @@
                                  <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
                                  <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
                                  <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
-                                                            </select> 
+                                                            </select>
                 </p>
                                         </li>
-                                        
 
-                  		
+
+
                      										 <li> <p>Deposit : 	</p><p>
 											<select id="payed" name="percentage">
 													                   <option value="10" selected="">10%</option>
@@ -715,7 +641,7 @@
                                     <option value="30">30%</option>
                                     <option value="40">40%</option>
                                     <option value="50">50%</option>
-                                                             </select>  
+                                                             </select>
                                         </p>
 										</li>
                                     </ul>
@@ -731,14 +657,14 @@
 										<li class="clearfix"> <p> Cost of Loan</p> <p class="priced">   £  <span id="costLoan">80.50</span>  </p> </li>
 										<li class="clearfix"> <p> Total Amount Payable </p> <p class="priced"> £   <span id="totalAmt">1106.50</span>    </p> </li>
 										<li class="clearfix"> <p> Number of Monthly Payments </p> <p class="priced"> <span id="noTerm">12</span>  </p></li>
-									</ul> 
+									</ul>
                                     <p class="finance_options_provided">Finance options powered by <img src="https://www.marlows-diamonds.co.uk/wp-content/themes/betheme-child//images/Deko_landscape_colour_whiteBG200px_wide.png" style="height:25px;" class="nolazy" alt="DEKO"></p>
 
 									<input type="hidden" id="enableId" value="OCFDefault"> <br>
 									<div>
-											
+
 									</div>
-											
+
 								</div>
 			</div>
 		</div>
@@ -756,9 +682,10 @@
 
 	<script>
 		$(document).ready(function(){
+            getRelatedProduct();
 
-			getCustomFilter();
-			
+			getCustomFilter(); getProdVideo();
+
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
 			});
@@ -781,10 +708,7 @@
 				getSelectedAttributePrice();
 			});
 
-			$(document).on('change', "[id^=selectrefinedata]", function () {
-      			// var index = parseInt($(this).attr("id").replace("selectrefinedata", ''));
-				getCustomPrice();
-			});
+			
 
 			$('#addtobasket').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}');
@@ -795,41 +719,24 @@
 			});
 
 			$(document).on('change','#metal-colour',function(){
-				$.ajax({
-					type: 'POST',
-					url: '{{route("get-product-video")}}',
-					data: {
-						'_token': "{{csrf_token()}}",
-						'slug' : '{{$data->slug}}',
-						'metal_color' : $(this).val(),
-					},
-					success: function (res) {
-						if(res.vari_video){
-							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
-							$('#variationVideo').attr('src', videoUrl);
-							$("#variationVideo")[0].play();
+				getProdVideo('onChange');
+				
+			});
+			$(document).on('click','.refinedata',function(){
 
-							$('#selected_variation_price').val(res.regular_price);
+				$("#selected_diamond_price").val($(this).data('price'));
+				$("#certificate_url").val($(this).data('certurl'));
+				$("#productCertificateLink").attr('href',$(this).data('certurl'));
 
-							getFinalPrice();
-						}
-						
-					}
-				});
+				getFinalPrice();
+				
 			});
 		})
 
-		function getCustomPrice(){
-			$('#selected_diamond_price').val($("body input[type='radio'].refinedata:checked").data('price'));
-			$('#certificate_url').val($("body input[type='radio'].refinedata:checked").data('certurl'));
-			$('#selected_diamond_shape').val($("body input[type='radio'].refinedata:checked").data('shape'));
-			$('#selected_diamond_certno').val($("body input[type='radio'].refinedata:checked").data('certno'));
-			$('#productCertificateLink').attr('href',$("body input[type='radio'].refinedata:checked").data('certurl'));
-			getFinalPrice();
-		}
+		
 
 		function getCustomFilter(){
-			console.log("getCustomFilter");
+
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -838,15 +745,39 @@
 					'slug' : '{{$data->slug}}',
                 },
                 success: function (res) {
-                    // console.log(res);
-					if(res){
-						$('#filterDataDesign .type-variations-row').html(res);
-					}
-                    // return false;
+
+					$('#filterDataDesign .type-variations-row').html(res);
+                    return false;
+
                 }
             });
 		}
-
+		function getProdVideo(action=null){
+			var metal_type = $('#metal-colour :selected').val();
+			
+			$.ajax({
+				type: 'POST',
+				url: '{{route("get-product-video")}}',
+				data: {
+					'_token': "{{csrf_token()}}",
+					'slug' : '{{$data->slug}}',
+					'metal_color' : metal_type,
+				},
+				success: function (res) {
+					if(res.vari_video){
+						var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+						$('#variationVideo').attr('src', videoUrl);
+						$("#variationVideo")[0].play();
+					}
+					if(res.regular_price!='' || res.regular_price!='0.00')
+						$('#selected_variation_price').val(res.regular_price);
+					else
+						$('#selected_variation_price').val(res.sales_price);
+					if(action!=null && action=='onChange')
+						getFinalPrice();
+				}
+			});
+		}
 		function getNumberFromCurrency(currency) {
 			return Number(currency.replace(/[$,]/g,''))
 		}
@@ -891,11 +822,45 @@
 		function getSelectedAttributePrice(){
 			$('#finaldiamondprice').text("Pending...");
 			$('#addtobasket').addClass('disabledAnchor');
+			
 			var caratVal = $('#carat').val();
 			var diamondColor = $('#diamond-colour').val();
 			var diamondClarity = $('#diamond-clarity').val();
 			var diamondGrade = $('#diamond-grade').val();
 			var diamondCertificate = $('#diamond-certificate').val();
+			var diamondShape = $('#selected_diamond_shape').val();
+			var variation_price = $('#selected_variation_price').val(); 
+			$.ajax({
+                type: 'POST',
+                url: '{{route("products-final-price-with-diamond")}}',
+                dataType: 'json',
+                data: {
+                    '_token': "{{csrf_token()}}",
+                    'variation_price' : variation_price,
+					'carat' : caratVal,
+					'color' : diamondColor,
+					'clarity' : diamondClarity,
+					'grade' : diamondGrade,
+					'certificate' : diamondCertificate,
+					'shape' : diamondShape,
+					'slug': '{{$data->slug}}'
+                },
+                success: function (res) {
+					$('#finaldiamondprice').html("");
+					
+					if(res){
+						$('#finaldiamondprice').text(res.finalPrice);
+						$('#selected_final_price').val(res.finalPrice);
+						$('#selected_diamond_price').val(res.diamondPrice);
+						$('#selected_diamond_certno').val(res.Stock_NO);
+						$('#certificate_url').val(res.CertificateLink);
+						$('#productCertificateLink').attr('href',res.CertificateLink);
+						$('#addtobasket').removeClass('disabledAnchor');
+					}
+                }
+                
+            });
+
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-api-filter-data")}}',
@@ -906,14 +871,14 @@
 					'clarity' : diamondClarity,
 					'grade' : diamondGrade,
 					'certificate' : diamondCertificate,
+					'shape' : diamondShape,
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
-					// console.log(res);
 					$('#refineSearchData').html("");
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);
-						getCustomPrice();
+						//getCustomPrice();
 					}else{
 						$('#refineSearchData').html("No Data Found");
 					}
@@ -944,6 +909,26 @@
                 }
             });
 		}
+
+        function getRelatedProduct(){
+            $.ajax({
+                url: "{{ route('get.related.product.list') }}",
+                method: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    catid: '{{$data->categories}}',
+                },
+                success: function (response) {
+                    // console.log(response.html);
+                    $('#relatedProductData').html(" ");
+                    if(response.html){
+                        $('#relatedProductData').append(response.html);
+                    }
+                    // return false;
+                    // window.location.reload();
+                }
+            });
+        }
 
 	</script>
 @endsection

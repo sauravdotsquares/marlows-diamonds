@@ -26,13 +26,25 @@
                                 @php $total = 0 @endphp
                                 @if(session('cart'))
                                     @foreach(session('cart') as $id => $details)
+                                        <?php
+                                            // echo "<pre>";
+                                            // print_r($details['selected_parameter']['title']);
+                                            // die;
+                                        ?>
                                         @php $total += $details['price'] * $details['quantity'] @endphp
                                         <tr data-id="{{ $id }}">
                                             <td class="product-info-col" data-th="Product">
                                                 <div class="cart-item-name">
-                                                    <div class="cart-image-item"><img src="{{asset('storage/'.$details['image'])}}" width="100" height="100" class="img-responsive"/></div>
+                                                    <div class="cart-image-item">
+                                                        @if($details['selected_parameter']['title'] == "Custom Diamond")
+                                                        <img src="{{$details['image']}}" width="100" height="100" class="img-responsive"/>
+                                                        @else
+                                                        <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100" class="img-responsive"/>
+
+                                                        @endif
+                                                    </div>
                                                     <div class="cart-nameitem">
-                                                        <div class="cartproduct-title"><a href="#"> {!! $details['name'] !!}</a></div>
+                                                        <div class="cartproduct-title">{!! $details['name'] !!}</div>
                                                         <dl class="variation">
                                                             <!-- <dt class="variation-Colour">Metal Colour:</dt>
                                                             <dd class="variation-Colour"><p>18ct White Gold</p></dd>
@@ -55,10 +67,10 @@
                                 @endif
                             </tbody>
                         </table>
-                    </div> 
-                </div>   
+                    </div>
+                </div>
                 <div class="col-lg-4">
-                    <div class="cart-sidebar-box">                            
+                    <div class="cart-sidebar-box">
                         <div class="cart-sidebar-heading">Basket Totals</div>
                         <div class="cart-side-wrap">
                             <table border-collapse="collapse" style="width:100%">
@@ -78,29 +90,29 @@
                             @if(session('cart'))
                                 <a href="{{route('product.checkout')}}"><button class="btn-bg-large">Proceed To Checkout</button></a>
                             @endif
-                            </div>                    
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>   
+            </div>
         </div>
     </div>
 @endsection
-  
+
 @section('js')
     <script type="text/javascript">
-    
+
         $(".update-cart").change(function (e) {
             e.preventDefault();
-    
+
             var ele = $(this);
-    
+
             $.ajax({
                 url: '{{ route('update.cart') }}',
                 method: "patch",
                 data: {
-                    _token: '{{ csrf_token() }}', 
-                    id: ele.parents("tr").attr("data-id"), 
+                    _token: '{{ csrf_token() }}',
+                    id: ele.parents("tr").attr("data-id"),
                     quantity: ele.parents("tr").find(".quantity").val()
                 },
                 success: function (response) {
@@ -108,18 +120,18 @@
                 }
             });
         });
-    
+
         $(".remove-from-cart").click(function (e) {
             e.preventDefault();
-    
+
             var ele = $(this);
-    
+
             if(confirm("Are you sure want to remove?")) {
                 $.ajax({
                     url: '{{ route('remove.from.cart') }}',
                     method: "DELETE",
                     data: {
-                        _token: '{{ csrf_token() }}', 
+                        _token: '{{ csrf_token() }}',
                         id: ele.parents("tr").attr("data-id")
                     },
                     success: function (response) {
@@ -128,6 +140,6 @@
                 });
             }
         });
-    
+
     </script>
 @endsection

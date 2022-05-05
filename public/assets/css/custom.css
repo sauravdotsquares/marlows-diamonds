@@ -350,7 +350,7 @@ input.input-control{height:38px}
 .related-products-list .product-items-item-info {min-height: 330px;}
 .related-products-section {padding: 50px 0 50px 0;}
 .related-products-section .head-para-three {margin: 0 0 40px 0;}
-.product-info-media{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%;}
+.product-info-media{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%;    position: relative;}
 .product-info-main{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%; padding: 0 0 0 50px}
 .product-detail-wraper {padding: 46px 0 20px 0;}
 .product-title-name h1 {font-family: "Lato";font-size: 26px;letter-spacing: 0;font-weight: bold;}
@@ -712,6 +712,11 @@ label.label {display: block;margin: 0 0 5px 0;}
 .reviewr-review-text *{ transition: none;}
 .reviewr-review-text.show-text-col .show-more-content {display: block !important;}
 
+#variationVideo {
+    width: 100%;
+    position: absolute;
+    top: -50px;
+}
 /** search suggestion **/
 .head-mini-search{ position: relative;}
 .search-suggestion {position: absolute;right: 0;width: 300px;background: #EAEAEA;border: 1px solid #D0D0D0;top: 44px; display: none;}

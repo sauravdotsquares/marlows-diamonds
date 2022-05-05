@@ -14,6 +14,7 @@ use App\Models\Reviews;
 use App\Models\PostCategory;
 use App\Models\Posts;
 use App\Models\Faqs;
+use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
 //use SoapClient;
 
@@ -286,7 +287,7 @@ if (!function_exists('validate_breadcrumb')) {
 	if (!function_exists("getFaqs")) {
     function getFaqs()
 		{
-			$faqs = Faqs::take(5)->orderBy('id','DESC')->where('status', 1)->get();
+			$faqs = FaqCategory::with('getFAQData')->take(5)->get();
 			return ($faqs);
 		}	
 	}
@@ -425,7 +426,7 @@ if (!function_exists('validate_breadcrumb')) {
                 "PriceFrom" => "1",
                 "PriceTo" => "999999",
                 "PageNumber" => $pageNumber,
-                "PageSize" => 5,
+                "PageSize" => $data['PageSize'],
                 "SortDirection" => "ASC",
                 "SortBy" => "PRICE"
             );
