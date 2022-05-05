@@ -106,17 +106,17 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
-				<!-- <div class="diamond-type">
-					<label>Diamond Type</label>
+				<div class="diamond-type">
+					<label>Choose Your Diamond</label>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" checked value="Mined Diamond">
+						<input type="radio" name="attribute_choose-your-diamond" checked value="mined">
 						<span>Mined Diamond</span>
 					</div>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" value="Lab Grown Diamonds">
+						<input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
 						<span>Lab Grow Diamond</span>
 					</div>
-				</div> -->
+				</div>
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
 
@@ -126,8 +126,7 @@
 					
 				</div>
 				<div class="product-decriptions">
-					<p>A unique style for Aaliyah. The round brilliant cut diamond is held elegantly in a fluted four
-						claw setting, allowing maximum passage of light - R1-143</p>
+					{!!$data->description!!}
 				</div>
 				<div class="product-finder-price">
 					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
@@ -647,30 +646,37 @@
 			$("#productWishList").on('click',function(){
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
-
-			$(document).on('change','#metal-type',function(){
-				$('#finaldiamondprice').text("Pending...");
-				$.ajax({
-					type: 'POST',
-					url: '{{route("get-product-video")}}',
-					data: {
-						'_token': "{{csrf_token()}}",
-						'slug' : '{{$data->slug}}',
-						'metal_color' : $(this).val(),
-					},
-					success: function (res) {
-						if(res.vari_image){
-							var imageUrl = "{{ asset('storage/')}}/"+res.vari_image;
-							$('#productFeatureImage').attr('src', imageUrl);
-							getFinalPrice();
-						}
-					}
-				});
+			$(document).on('change','#metal-colour',function(){
+				//getProdVideo('onChange');
+				
 			});
-		})
 
+		})
+		function getSelectedVariationsData(action=null){
+			$('#finaldiamondprice').text("Pending...");
+			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
+			var variations = [];
+			$('.type-variations-row select').each(function(i, sel){ 
+				//variations[$(sel).attr('id')]=$(sel).val();
+				variations.push($(sel).val());
+			});
+			//console.log(variations);
+			$.ajax({
+				type: 'POST',
+				url: '{{route("get-variations-data")}}',
+				dataType: 'JSON',
+				data: {
+					'_token': "{{csrf_token()}}",
+					'slug' : '{{$data->slug}}',
+					'diamond_type' : diamond_type,
+					'variations' : variations,
+				},
+				success: function (res) {
+					
+				}
+			});
+		}
 		function getCustomFilter(){
-			
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -679,8 +685,8 @@
 					'slug' : '{{$data->slug}}',
                 },
                 success: function (res) {
-                    
-					$('#filterDataDesign').html(res);
+					$('#filterDataDesign .type-variations-row').html(res);
+					getSelectedVariationsData();
                     return false;
                 }
             });

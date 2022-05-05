@@ -461,6 +461,25 @@ class ProductController extends Controller
         return response()->json(['html'=> $view]);
 
     }
+
+    public function getSelectedVariationsData(Request $request){
+        $product_id = Products::where('slug',$request->slug)->value('id');
+        //print_r($request->variations); die; 
+        if($product_id!=''){
+            $getProductVariationId = ProductVariations::where('product_id',$product_id)->pluck('id')->toArray();
+            
+            if(!empty($getProductVariationId)){
+                $getVariDetails = ProductVariationDetails::whereIn('variation_id',$getProductVariationId)->whereIn('value',$request->variations)->get()->toArray();
+                echo '<pre>';print_r($getVariDetails); die;
+            }
+
+            if(isset($getVariDetails) && !empty($getVariDetails)){
+                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
+                
+                return response()->json($getSelectedVariationVideoImages);
+            }
+        }
+    }
     
 
 }

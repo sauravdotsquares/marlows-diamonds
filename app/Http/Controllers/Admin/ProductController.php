@@ -219,7 +219,7 @@ class ProductController extends Controller
                 if(isset($newKey[0]) && $newKey[0] === 'attri'){
 
                     if(isset($value['is_update']) && $value['is_update']!=''){
-                        echo 'dfsdfsfdsf'; die;
+                        
                        ProductVariationDetails::where('variation_id',$value['is_update'])->where('key',$key1)->update([
                             'value' =>$variData,
                         ]); 
