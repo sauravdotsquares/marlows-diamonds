@@ -1,7 +1,7 @@
 @extends('layouts.front.app')
 @section('content')
 
-<?php 
+<?php
 
     // echo "checking<pre>";
     // print_r($getProduct);
@@ -40,7 +40,7 @@
                                     <a href="<%subCat.url%>"><%subCat.name%></a>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="product-filter-col"  ng-if="subSubCats.length>0">
@@ -56,7 +56,7 @@
                                     <a href="<%subSubCat.url%>"><%subSubCat.name%> </a>
                                 </div>
                             </div>
-                            
+
 
 
                         </div>
@@ -256,14 +256,14 @@
                         <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
                         The staff are friendly and</div>
-                        
+
                         <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
                             I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                            
+
                         </div>
                         <a class="show-more" href="javascript:void(0)">Read more</a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -279,14 +279,14 @@
                         <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
                         The staff are friendly and</div>
-                        
+
                         <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
                             I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                            
+
                         </div>
                         <a class="show-more" href="javascript:void(0)">Read more</a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -302,14 +302,14 @@
                         <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
                         The staff are friendly and</div>
-                        
+
                         <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
                             I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                            
+
                         </div>
                         <a class="show-more" href="javascript:void(0)">Read more</a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -325,9 +325,9 @@
                         <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
                         The staff are friendly and</div>
-                        
+
                         <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
                             I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
                         </div>
                         <a class="show-more" href="javascript:void(0)">Read more</a>
@@ -346,13 +346,13 @@
                         <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
                         bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
                         The staff are friendly and</div>
-                        
+
                         <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
+                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
                             I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
                         </div>
                         <a class="show-more" href="javascript:void(0)">Read more</a>
-                        
+
                     </div>
                 </div>
             </div>
@@ -410,15 +410,15 @@
 
         $(".remove-from-cart").click(function (e) {
             e.preventDefault();
-    
+
             var ele = $(this);
-    
+
             if(confirm("Are you sure want to remove?")) {
                 $.ajax({
                     url: '{{ route('remove.from.cart') }}',
                     method: "DELETE",
                     data: {
-                        _token: '{{ csrf_token() }}', 
+                        _token: '{{ csrf_token() }}',
                         id: $(this).attr("data-id")
                     },
                     success: function (response) {
@@ -427,6 +427,8 @@
                 });
             }
         });
+
+
 
     </script>
 
@@ -460,7 +462,7 @@
 $(document).ready(function(){
     $('.show-more-content').hide();
     $('.show-more').click(function(){
-        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");       
+        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
     });
 });
 

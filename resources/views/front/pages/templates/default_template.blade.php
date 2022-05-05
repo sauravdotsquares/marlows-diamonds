@@ -8,23 +8,16 @@
 		</div>
 	</div>
 </div>
-<div class="blogdetails-wrap">
+
+<div class="defaultpages-wrap">
 
 	<div class="container">
-		<div class="row">
+
+	<div class="defaultpages-cols">
+		
+			{!!$data->description!!}
 		
 		
-		
-			<div class="col-lg-12">
-				<div class="blogdetails-left">
-					
-					<div class="blogdetail-desc">
-						{!!$data->description!!}
-					</div>
-				</div>	
-			</div>
-			
-			
 		</div>
 	</div>
 </div>

@@ -32,7 +32,7 @@ class AddToCartController extends Controller
         if(isset($request['price']) && !empty($request['price'])){
 
             $productData = Products::with('getProductImages','getProductVariation')->where('slug',$request->slug)->first();
-            
+
             $input = $request->all('');
             unset($request['slug']);
             unset($request['price']);
@@ -57,7 +57,7 @@ class AddToCartController extends Controller
                 $titleHtml .= ' </dl>';
 
                 $cart = session()->get('cart', []);
-        
+
                 if(isset($cart[$productData->id])) {
                     $cart[$productData->id]['quantity']++;
                 } else {
@@ -78,6 +78,61 @@ class AddToCartController extends Controller
             }
         }else{
             return response()->json(['error'=>'Please Wait...']);
+        }
+    }
+
+    public function addToCartDiamond(Request $request)
+    {
+        if(isset($request->certificate_number) && !empty($request->certificate_number) && $request->certificate_number > 0){
+
+            $input = $request->all('');
+            unset($request['slug']);
+            unset($request['price']);
+            unset($request['_token']);
+
+            $titleHtml = '';
+
+            $titleHtml .= '<div class="cartproduct-title">Custom Diamond</div> <dl class="variation">';
+            $selectedAttributes = [];
+            foreach($request->all('') as $key => $finalVal){
+                $selectedAttributes['title'] = 'Custom Diamond';
+                if(isset($finalVal) && !empty($finalVal)){
+                    $selectedAttributes[$key] = $finalVal;
+                    if($key == 'certificatelink'){
+                        $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                        $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
+                    }else{
+                        $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                        $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
+                    }
+                }
+            }
+            $titleHtml .= ' </dl>';
+
+            // echo "<pre>";
+            // print_r($selectedAttributes);
+            // die;
+
+            $cart = session()->get('cart', []);
+
+            if(isset($cart[$request->certificate_number])) {
+                $cart[$request->certificate_number]['quantity']++;
+            } else {
+                $cart[$request->certificate_number] = [
+                    "name" => $titleHtml,
+                    "selected_parameter"=> $selectedAttributes,
+                    "quantity" => 1,
+                    "price" => $input['price'],
+                    "image" => 'https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/MarlowsDiamonds-Logo-225x107.png'
+                ];
+            }
+            session()->put('cart', $cart);
+
+            return response()->json(['cartcount'=>count((array) session('cart')),'success'=>'Product added to cart successfully!']);
+            // return redirect()->back()->with('success', 'Product added to cart successfully!');
+
+        }else{
+            return response()->json(['error'=>'Not Added...']);
         }
     }
 
@@ -113,7 +168,7 @@ class AddToCartController extends Controller
         }
     }
 
-    
+
     public function checkoutOrder(Request $request)
     {
         $cart = session()->get('cart');

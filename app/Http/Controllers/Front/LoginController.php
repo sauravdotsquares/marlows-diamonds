@@ -15,7 +15,7 @@ use Hash;
 class LoginController extends Controller
 {
     public function index()
-    {   
+    {
         if(auth()->guard('customer')->check()){
             return redirect(route('my_accounts'));
         }
@@ -24,11 +24,11 @@ class LoginController extends Controller
 
     public function getLoginRegisterAccount(Request $request)
     {
-        
+
         $getUserExists = User::where('email',$request->email)->first();
         $details = $request->only('email', 'password');
         $details['is_active'] = 1;
-        
+
         if(isset($getUserExists) && !empty($getUserExists)){
             $getLoginResponse = $this->login($details);
             if(isset($getLoginResponse) && $getLoginResponse){
@@ -143,7 +143,7 @@ class LoginController extends Controller
         $request->session()->flash('error', 'You have successfully logout');
 
         Session::flush();
-        
+
         Auth::logout();
 
         return redirect(route('my-account'));
@@ -229,25 +229,11 @@ class LoginController extends Controller
                 User::where('email', auth()->user()->email)->update([
                     'name'=> $request->name,
                     'nicename'=> $request->nicename,
-                    // 'username'=> $request->username,
                     'password' => Hash::make($request->new_password),
                 ]);
                 // here you will write password update code
                 return back()->with('success','You have successfully updated account details');
             }
-        }elseif(isset($request->username) && !empty($request->username) && empty($request->old_password) && empty($request->new_password) && empty($request->confirm_password)){
-
-            $this->validate($request, [
-                'username'     => 'required|unique:users',
-            ]);
-
-            User::where('email', auth()->user()->email)->update([
-                'name'=> $request->name,
-                'nicename'=> $request->nicename,
-                'username'=> $request->username,
-            ]);
-            // here you will write password update code
-            return back()->with('success','You have successfully updated account details');
         }else{
             User::where('email', auth()->user()->email)->update([
                 'name'=> $request->name,
@@ -261,7 +247,7 @@ class LoginController extends Controller
     public function getOrderDetails(Request $request)
     {
         $getOrderDetails = Order::with('getOrderDetailsFunction')->latest()->where('user_id',Auth::user()->id)->get();
-        
+
         if(count($getOrderDetails)){
             $view = view('front.ajax.user-order-list',compact('getOrderDetails'))->render();
             return response()->json(['html'=> $view]);
