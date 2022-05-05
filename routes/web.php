@@ -52,8 +52,8 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/posts/update/{id}', 'PostController@update')->name('create');
 			Route::post('/posts/edit/{id}', 'PostController@edit');
 			Route::get('/delete-post/{id}', 'PostController@delete');
-			Route::get('/posts/status/{id}/{status}', 'PostController@status');	
-			
+			Route::get('/posts/status/{id}/{status}', 'PostController@status');
+
 			// Post Category Routes
 			Route::get('/posts/categories','PostCategoryController@index')->name('postcategories');
 			Route::get('/posts/categories/create/{catslug?}','PostCategoryController@createForm')->name('create');
@@ -93,7 +93,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
 			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
 			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
-			
+
 			// Faqs Route
 			Route::get('/faqs', 'FaqController@index')->name('faqs');
 			Route::get('/faqs/create', 'FaqController@create')->name('create');
@@ -135,7 +135,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/popups/edit/{id}', 'PopupController@edit');
 			Route::get('/delete-popup/{id}', 'PopupController@delete');
 			Route::get('/popups/status/{id}/{status}', 'PopupController@status');
-			
+
 			// Header Settings Route
 			Route::get('/header-settings', 'SettingsController@headerSetting')->name('header-settings');
 			Route::post('/header-settings-update', 'SettingsController@headerSettingUpdate');
@@ -176,7 +176,7 @@ Route::group(['middleware' => ['customer']], function () {
 Route::namespace('Front')->group(function () {
 
     Route::get('/', 'PageController@page')->name('home');
-	
+
 	Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
 
     Route::get('/my-account', 'LoginController@index')->name('my-account');
@@ -186,13 +186,14 @@ Route::namespace('Front')->group(function () {
     Route::post('/login-customer-account', 'LoginController@getLoginRegisterAccount')->name('login.customer.account');
 
     Route::post('/check-email-id', 'LoginController@checkEmailId')->name('check.email.id');
-	
+
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
     Route::get('{page}', 'PageController@page')->name('page');
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
 	Route::get('product/{slug?}','ProductController@productDetails');
 	//Route::post('product/{slug?}','ContactUsFormController@ContactUsForm')->name('contact');
 	Route::post('product/get-product-list','ProductController@getProductList');
+	Route::post('product/get-related-product-list','ProductController@getRelatedProductList')->name('get.related.product.list');
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 	Route::post('product/get-products-video','ProductController@getProductVideo')->name('get-product-video');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
@@ -204,10 +205,11 @@ Route::namespace('Front')->group(function () {
 
 
 	Route::get('products/cart', 'AddToCartController@index')->name('product.cart');
-	Route::post('product/add-to-cart/{id?}', 'AddToCartController@addToCart')->name('add.to.cart');
+	Route::post('product/add-to-cart', 'AddToCartController@addToCart')->name('add.to.cart');
+	Route::post('product/add-to-cart-diamond', 'AddToCartController@addToCartDiamond')->name('add.to.cart.diamond');
 	Route::patch('product/update-cart', 'AddToCartController@updateCart')->name('update.cart');
 	Route::delete('product/remove-from-cart', 'AddToCartController@removeCart')->name('remove.from.cart');
-	
+
 	Route::get('products/checkout', 'AddToCartController@checkoutOrder')->name('product.checkout');
 	Route::get('products/wishlist', 'WishlistController@index')->name('products.wishlist');
 	Route::post('product/set-product-wishlist/{slug?}', 'WishlistController@addToWishlist')->name('set-product-wishlist');
@@ -216,7 +218,7 @@ Route::namespace('Front')->group(function () {
 	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
 
 	Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
-	
+
 	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
 	Route::get('products/payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
@@ -229,10 +231,10 @@ Route::namespace('Front')->group(function () {
 	*** Reset Password
 	*/
 	Route::get('/users/forget-password', 'ForgotPasswordController@showForgetPasswordForm')->name('forget.password.get');
-	Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post'); 
+	Route::post('forget-password', 'ForgotPasswordController@submitForgetPasswordForm')->name('forget.password.post');
 	Route::get('reset-password/{token}', 'ForgotPasswordController@showResetPasswordForm')->name('reset.password.get');
 	Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
-	
+
 	Route::get('search/autocomplete','ProductController@autocomplete')->name('autocomplete');
 });
 

@@ -1,7 +1,7 @@
 @extends('layouts.front.app')
 
 @section('content')
-    <?php 
+    <?php
         // echo "<pre>";
         // print_r($getUserDetails->getCustomerAddressFunction->first_name);
         // // print_r($getUserDetails->getCustomerAddressFunction->last_name);
@@ -57,8 +57,8 @@
                                 <li class="nav-item">
                                     <a href="{{route('logout-customer')}}">Logout</a>
                                 </li>
-                                
-                            </ul>  
+
+                            </ul>
                         </div>
                     </div>
                     <div class="col-lg-9">
@@ -69,7 +69,7 @@
                                         <p>Hello <strong>{{$fullName}}</strong> (not <strong>{{$fullName}}</strong>? <a href="{{route('logout-customer')}}">Log out</a>)</p>
                                         <!-- <p>From your account dashboard you can view your <a href="javascript:void(0);" >recent orders</a>, manage your <a href="javascript:void(0);">edit your password and account details</a>.</p> -->
                                     </div>
-                                </div>                                    
+                                </div>
                                 <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                     <div class="account-order-page">
                                         <div class="scrollable-table">
@@ -121,7 +121,7 @@
                                                                 <th>Product</th>
                                                                 <th>Total</th>
                                                             </tr>
-                                                        </thead>  
+                                                        </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td>
@@ -159,7 +159,7 @@
                                                     <address>
                                                         sketch creative<br>Pacific House<br>Wilnecote<br>B77 5PA
                                                                 <p class="woocommerce-customer-details--phone">0121 517 0374</p>
-                                                    
+
                                                                 <p class="woocommerce-customer-details--email">development@sketch-creative.com</p>
                                                         </address>
                                                 </div>
@@ -169,7 +169,7 @@
 
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="downloads" role="tabpanel" aria-labelledby="downloads-tab">                        
+                                <div class="tab-pane fade" id="downloads" role="tabpanel" aria-labelledby="downloads-tab">
                                     <div class="account-downloads-page">
                                         <p>No downloads available yet. </p>
                                         <a class="btn-bg-small" href="#">Browse Products</a>
@@ -181,9 +181,9 @@
                                         <div class="addresbox row">
                                             <div class="col-md-12">
                                                 <div class="addresbox-head">
-                                                   
-                                                     <a href="javascript:void(0);" id="showBillingAddress">Edit</a>   
-                                                     <a href="javascript:void(0);" id="hideBillingAddress" style="display:none;">Show</a>   
+
+                                                     <a href="javascript:void(0);" id="showBillingAddress">Edit</a>
+                                                     <a href="javascript:void(0);" id="hideBillingAddress" style="display:none;">Show</a>
                                                 </div>
                                                 <div class="addresbox-block">
                                                     <h3>Billing Address</h3>
@@ -193,7 +193,7 @@
                                             <!-- <div class="col-md-6">
                                                 <div class="addresbox-head">
                                                     <h3>Shipping Address</h3>
-                                                     <a href="#">Add</a>   
+                                                     <a href="#">Add</a>
                                                 </div>
                                                 <div class="addresbox-block">
                                                     <p> You have not set up this type of address yet. </p>
@@ -203,8 +203,8 @@
 
                                         <!-- Edit Address box-->
                                         <div class="editaddress-box" style="display:none;">
-                                              <h2>Edit Address</h2>      
-                                              <form action="{{route('users.customer.address')}}" method="POST">    
+                                              <h2>Edit Address</h2>
+                                              <form action="{{route('users.customer.address')}}" method="POST">
                                                   @csrf
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -219,7 +219,7 @@
                                                             <input type="text" name="last_name" class="form-control" value="{{isset($getUserDetails->getCustomerAddressFunction->first_name)?$getUserDetails->getCustomerAddressFunction->first_name:''}}">
                                                         </div>
                                                     </div>
-                                                </div>   
+                                                </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Company name<span class="optional">(Optional)</span></label>
                                                     <input type="text" name="company_name" class="form-control" value="{{isset($getUserDetails->getCustomerAddressFunction->company_name)?$getUserDetails->getCustomerAddressFunction->company_name:''}}">
@@ -272,8 +272,8 @@
                                         </div>
 
                                         <!-- <div class="editaddress-box">
-                                              <h2>Shipping address</h2>      
-                                              <form>    
+                                              <h2>Shipping address</h2>
+                                              <form>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="checkout-form-group">
@@ -287,7 +287,7 @@
                                                             <input type="text" class="form-control">
                                                         </div>
                                                     </div>
-                                                </div>   
+                                                </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Company name<span class="optional">(Optional)</span></label>
                                                     <input type="text" class="form-control">
@@ -316,7 +316,7 @@
                                                     <label class="input-label">Postcode <abbr class="required">*</abbr></label>
                                                     <input type="text" class="form-control">
                                                 </div>
-                                                
+
                                                 <div class="save-changes">
                                                     <button class="btn-bg-small">Save address</button>
                                                 </div>
@@ -327,8 +327,8 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="accountd" role="tabpanel" aria-labelledby="accountd-tab">
-                                    <div class="account-accountd-page"> 
-                                        <form action="{{route('update.customer.account.details')}}" method="POST">    
+                                    <div class="account-accountd-page">
+                                        <form action="{{route('update.customer.account.details')}}" method="POST">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -355,7 +355,7 @@
                                             </div>
                                             <div class="checkout-form-group">
                                                 <label class="input-label">Username<abbr class="required">*</abbr></label>
-                                                <input type="text" class="form-control" name="username" value="{{isset($getUserDetails->username)?$getUserDetails->username:''}}">
+                                                <input type="text" readonly="readonly" disabled class="form-control" name="username" value="{{isset($getUserDetails->username)?$getUserDetails->username:''}}">
                                             </div>
                                             <div class="checkout-form-group">
                                                 <label class="input-label">Password change</label>
@@ -377,7 +377,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="auctions" role="tabpanel" aria-labelledby="auctions-tab">
-                                    <div class="account-aacutions-page"> 
+                                    <div class="account-aacutions-page">
                                         <div class="getmail">
                                             <input type="checkbox"><label>Get email notification for my auctions ending soon (optional)</label>
                                         </div>
@@ -386,25 +386,25 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>                                               
+    </div>
 
 
 
 @endsection
-  
+
 @section('js')
 <!-- <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script> -->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
-        
-       
+
+
 
         $('#showBillingAddress').on('click',function(){
             $('.addresbox-block').hide();

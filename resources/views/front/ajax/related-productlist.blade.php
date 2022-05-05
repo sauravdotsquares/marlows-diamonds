@@ -1,0 +1,20 @@
+@foreach($getProductListFinal as $product)
+<div class="item">
+    <div class="product-grid-item">
+        <div class="product-items-item-info">
+            <div class="product-items-item-image">
+                <a href="{{asset('product/'.$product->slug)}}">
+                    @if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
+                        <img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="image">
+                    @endif
+                </a>
+            </div>
+            <div class="product-items-item-details">
+                <div class="product-items-item-name">
+                    <a href="{{asset('product/'.$product->slug)}}">{{isset($product->title)?$product->title:''}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
