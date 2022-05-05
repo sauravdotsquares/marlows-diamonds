@@ -135,20 +135,20 @@
 							<label class="label"> Carat </label>
 							<select class="form-control" name="carat" id="carat">
 								<option value="">Choose an option</option>
-								<option value="0.30" selected="selected">0.30-0.39</option>
-								<option value="0.40">0.40-0.49</option>
-								<option value="0.50">0.50-0.59</option>
-								<option value="0.60">0.60-0.69</option>
-								<option value="0.70">0.70-0.79</option>
-								<option value="0.80">0.80-0.89</option>
-								<option value="0.90">0.90-0.99</option>
-								<option value="1">1.00-1.19</option>
-								<option value="1.2">1.20-1.49</option>
-								<option value="1.50">1.50-1.69</option>
-								<option value="1.70">1.70-1.99</option>
-								<option value="2">2.00-2.49</option>
-								<option value="2.5">2.50-2.99</option>
-								<option value="3">3.00-3.99</option>
+								<option value="0.30-0.39" selected="selected">0.30-0.39</option>
+								<option value="0.40-0.49">0.40-0.49</option>
+								<option value="0.50-0.59">0.50-0.59</option>
+								<option value="0.60-0.69">0.60-0.69</option>
+								<option value="0.70-0.79">0.70-0.79</option>
+								<option value="0.80-0.89">0.80-0.89</option>
+								<option value="0.90-0.99">0.90-0.99</option>
+								<option value="1.00-1.19">1.00-1.19</option>
+								<option value="1.20-1.49">1.20-1.49</option>
+								<option value="1.50-1.69">1.50-1.69</option>
+								<option value="1.70-1.99">1.70-1.99</option>
+								<option value="2.00-2.49">2.00-2.49</option>
+								<option value="2.50-2.99">2.50-2.99</option>
+								<option value="3.00-3.99">3.00-3.99</option>
 							</select>
 						</div>
 						<div class="type-variations-col">
@@ -237,7 +237,7 @@
 					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
 				</div>
 				<input type="hidden" id="certificate_url" name="certificate_url" value="">
-				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
+				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($variationDetails->regular_price)?$variationDetails->regular_price:$variationDetails->sale_price}}">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
 				<input type="hidden" name="selected_final_price" id="selected_final_price" value="0.00">
 				<input type="hidden" name="selected_diamond_shape" id="selected_diamond_shape" value="{{$data->diamond_shape}}">
@@ -707,10 +707,7 @@
 				getSelectedAttributePrice();
 			});
 
-			$(document).on('change', "[id^=selectrefinedata]", function () {
-      			// var index = parseInt($(this).attr("id").replace("selectrefinedata", ''));
-				getCustomPrice();
-			});
+			
 
 			$('#addtobasket').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}');
@@ -721,19 +718,21 @@
 			});
 
 			$(document).on('change','#metal-colour',function(){
-				getProdVideo();
+				getProdVideo('onChange');
+				
+			});
+			$(document).on('click','.refinedata',function(){
+
+				$("#selected_diamond_price").val($(this).data('price'));
+				$("#certificate_url").val($(this).data('certurl'));
+				$("#productCertificateLink").attr('href',$(this).data('certurl'));
+
 				getFinalPrice();
+				
 			});
 		})
 
-		function getCustomPrice(){
-			$('#selected_diamond_price').val($("body input[type='radio'].refinedata:checked").data('price'));
-			$('#certificate_url').val($("body input[type='radio'].refinedata:checked").data('certurl'));
-			$('#selected_diamond_shape').val($("body input[type='radio'].refinedata:checked").data('shape'));
-			$('#selected_diamond_certno').val($("body input[type='radio'].refinedata:checked").data('certno'));
-			$('#productCertificateLink').attr('href',$("body input[type='radio'].refinedata:checked").data('certurl'));
-			getFinalPrice();
-		}
+		
 
 		function getCustomFilter(){
 			
@@ -752,8 +751,9 @@
                 }
             });
 		}
-		function getProdVideo(){
+		function getProdVideo(action=null){
 			var metal_type = $('#metal-colour :selected').val();
+			
 			$.ajax({
 				type: 'POST',
 				url: '{{route("get-product-video")}}',
@@ -767,8 +767,13 @@
 						var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
 						$('#variationVideo').attr('src', videoUrl);
 						$("#variationVideo")[0].play();
-						$('#selected_variation_price').val(res.regular_price);
 					}
+					if(res.regular_price!='' || res.regular_price!='0.00')
+						$('#selected_variation_price').val(res.regular_price);
+					else
+						$('#selected_variation_price').val(res.sales_price);
+					if(action!=null && action=='onChange')
+						getFinalPrice();
 				}
 			});
 		}
@@ -816,11 +821,45 @@
 		function getSelectedAttributePrice(){
 			$('#finaldiamondprice').text("Pending...");
 			$('#addtobasket').addClass('disabledAnchor');
+			
 			var caratVal = $('#carat').val();
 			var diamondColor = $('#diamond-colour').val();
 			var diamondClarity = $('#diamond-clarity').val();
 			var diamondGrade = $('#diamond-grade').val();
 			var diamondCertificate = $('#diamond-certificate').val();
+			var diamondShape = $('#selected_diamond_shape').val();
+			var variation_price = $('#selected_variation_price').val(); 
+			$.ajax({
+                type: 'POST',
+                url: '{{route("products-final-price-with-diamond")}}',
+                dataType: 'json',
+                data: {
+                    '_token': "{{csrf_token()}}",
+                    'variation_price' : variation_price,
+					'carat' : caratVal,
+					'color' : diamondColor,
+					'clarity' : diamondClarity,
+					'grade' : diamondGrade,
+					'certificate' : diamondCertificate,
+					'shape' : diamondShape,
+					'slug': '{{$data->slug}}'
+                },
+                success: function (res) {
+					$('#finaldiamondprice').html("");
+					
+					if(res){
+						$('#finaldiamondprice').text(res.finalPrice);
+						$('#selected_final_price').val(res.finalPrice);
+						$('#selected_diamond_price').val(res.diamondPrice);
+						$('#selected_diamond_certno').val(res.Stock_NO);
+						$('#certificate_url').val(res.CertificateLink);
+						$('#productCertificateLink').attr('href',res.CertificateLink);
+						$('#addtobasket').removeClass('disabledAnchor');
+					}
+                }
+                
+            });
+
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-api-filter-data")}}',
@@ -831,13 +870,14 @@
 					'clarity' : diamondClarity,
 					'grade' : diamondGrade,
 					'certificate' : diamondCertificate,
+					'shape' : diamondShape,
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
 					$('#refineSearchData').html("");
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);
-						getCustomPrice();
+						//getCustomPrice();
 					}else{
 						$('#refineSearchData').html("No Data Found");
 					}

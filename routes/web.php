@@ -214,6 +214,8 @@ Route::namespace('Front')->group(function () {
 	Route::delete('product/remove-from-wishlist', 'WishlistController@removeWishlist')->name('remove.from.wishlist');
 
 	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
+
+	Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
 	
 	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
