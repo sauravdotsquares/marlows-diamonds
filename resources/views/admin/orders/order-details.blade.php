@@ -6,7 +6,7 @@
 <!-- Main content -->
 <section class="content">
     
-    <div class="container-fluid">
+    <div class="container-fluid order-details-dash">
         <div class="row">
             <div class="col-12">
                 @if(session()->has('alert-success'))
@@ -29,7 +29,7 @@
                             <table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
                                 <thead>
                                     <tr>
-                                        <th class="woocommerce-table__product-name product-name">Product</th>
+                                        <th style="width:65%;" class="woocommerce-table__product-name product-name">Product</th>
                                         <th class="woocommerce-table__product-table product-total">Total</th>
                                     </tr>
                                 </thead>
@@ -44,23 +44,30 @@
                                         ?>
                                         <tr class="woocommerce-table__line-item order_item">
                                             <td class="woocommerce-table__product-name product-name">
-                                                <a href="{{asset('product/'.$orderDetails->product_details->slug)}}" target="_blank">
-                                                    {{isset($orderDetails->product_details->title)?$orderDetails->product_details->title:''}}</a> <strong
-                                                    class="product-quantity">×&nbsp;{{$orderDetails->quantity}}</strong>
-                                                <ul class="wc-item-meta">
-                                                    @foreach($orderProductDetails as $key1 => $orderProductDetails)
-                                                        @if($key1 == 'certificatelink')
-                                                            <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
-                                                                <a href="{{$orderProductDetails}}" target="_blank">
-                                                                view </a>
-                                                            </li> 
-                                                        @else
-                                                            <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
-                                                                <p>{{$orderProductDetails}}</p>
-                                                            </li>
-                                                        @endif
-                                                    @endforeach
-                                                </ul>
+                                                <div class="pr-desc-text">
+                                                    <div class="pr-desc-text-img">
+                                                        <img src="images/Marlows-03.jpg" alt="ffimg">
+                                                    </div>
+                                                    <div class="pr-desc-text-content">
+                                                        <a href="{{asset('product/'.$orderDetails->product_details->slug)}}" target="_blank">
+                                                            {{isset($orderDetails->product_details->title)?$orderDetails->product_details->title:''}}</a> <strong
+                                                            class="product-quantity">×&nbsp;{{$orderDetails->quantity}}</strong>
+                                                        <ul class="wc-item-meta">
+                                                            @foreach($orderProductDetails as $key1 => $orderProductDetails)
+                                                                @if($key1 == 'certificatelink')
+                                                                    <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
+                                                                        <a href="{{$orderProductDetails}}" target="_blank">
+                                                                        view </a>
+                                                                    </li> 
+                                                                @else
+                                                                    <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
+                                                                        <p>{{$orderProductDetails}}</p>
+                                                                    </li>
+                                                                @endif
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td class="woocommerce-table__product-total product-total">
                                                 <span class="woocommerce-Price-amount amount"><bdi><span
