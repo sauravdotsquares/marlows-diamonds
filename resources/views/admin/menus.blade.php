@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <label for="text">Text</label>
                             <div class="input-group">
-                                <input type="text" class="form-control item-menu" name="text" id="text" placeholder="Text">
+                                <input required="required" type="text" class="form-control item-menu" name="text" id="text" placeholder="Text">
                                 <div class="input-group-append">
                                     <button type="button" id="myEditor_icon" class="btn btn-outline-secondary"></button>
                                 </div>
@@ -40,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label for="href">URL</label>
-                            <input type="text" class="form-control item-menu" id="href" name="href" placeholder="URL">
+                            <input required="required" type="text" class="form-control item-menu" id="href" name="href" placeholder="URL">
                         </div>
                         <div class="form-group">
                             <label for="target">Target</label>
@@ -65,7 +65,7 @@
         <form action="{{url('admin/menus/save')}}" id="menu_form" method="post">
         	{{ csrf_field() }}
         	<input type="hidden" name="out" id="out" value="">
-        	
+
         </form>
     </div>
 </div>
@@ -103,7 +103,7 @@
 	          //setTimeout(function () {
                  $('#menu_form').submit();
               // }, 2500);
-	          
+
 	      });
 
 	      $("#btnUpdate").click(function(){

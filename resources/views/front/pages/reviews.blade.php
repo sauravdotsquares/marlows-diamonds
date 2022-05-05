@@ -18,6 +18,7 @@
 </div>
 @endforeach
 
+
 @section('js')
 <script>
 	$(document).ready(function(){
@@ -28,3 +29,5 @@
 	});
 </script>
 @endsection
+
+
