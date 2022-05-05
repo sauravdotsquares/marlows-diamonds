@@ -58,19 +58,20 @@ class ProductPriceController extends Controller
 
         //echo '<pre>'; print_r($data); die;
         $vat = getVAT();
-        $settingPrice = number_format($request->variation_price * $vat,2);
+        $settingPrice = sprintf('%0.2f', $request->variation_price * $vat); 
         $hkData = getHKApiRecords($data);
         //echo '<pre>'; print_r($hkData); die;
         if(!empty($hkData)){
-        	$diamondPrice = number_format($hkData[0]['Amount']*$vat,2);
+        	$diamondPrice = sprintf('%0.2f', $hkData[0]['Amount']*$vat);
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
-        
+        	//echo $settingPrice; die;
         	return json_encode(array('finalPrice'=>$finalPrice,'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$hkData[0]['Stock_NO'],'CertificateLink'=>$hkData[0]['CertificateLink']));
         }else{
         	$rapnetData = getRapnetApiRecords($data,1);
         	//echo '<pre>'; print_r($rapnetData); die;
 
-        	$diamondPrice = number_format($rapnetData[0]->FinalPrice*$vat,2);
+        	
+        	$diamondPrice = sprintf('%0.2f', $rapnetData[0]->FinalPrice*$vat);
         	$rapnetCertificateLink = '';
         	if($rapnetData[0]->LabTitle=='GIA'){
 				$rapnetCertificateLink= 'https://www.gia.edu/cs/Satellite?reportno='.$rapnetData[0]->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';

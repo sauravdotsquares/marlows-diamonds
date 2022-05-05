@@ -194,8 +194,8 @@ class ProductController extends Controller
             }
 
            if(isset($value['is_update']) && $value['is_update']!=''){
+
                 $getProductDataVariation = ProductVariations::where('id',$value['is_update'])->update([
-                    'product_id'=>$productId,
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                     'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
                     'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
