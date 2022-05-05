@@ -193,11 +193,9 @@ Route::namespace('Front')->group(function () {
 	Route::get('product/{slug?}','ProductController@productDetails');
 	//Route::post('product/{slug?}','ContactUsFormController@ContactUsForm')->name('contact');
 	Route::post('product/get-product-list','ProductController@getProductList');
-<<<<<<< HEAD
-	
-=======
+
 	Route::post('product/get-related-product-list','ProductController@getRelatedProductList')->name('get.related.product.list');
->>>>>>> f6a5c0d75231440728db7c9b40506b3508e3eb53
+
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 	Route::post('product/get-variations-data','ProductController@getSelectedVariationsData')->name('get-variations-data');
 
