@@ -717,7 +717,7 @@
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
 
-			$(document).on('change','#metal-colour',function(){
+			$(document).on('change','#metal-type',function(){
 				getProdVideo('onChange');
 				
 			});
@@ -752,7 +752,7 @@
             });
 		}
 		function getProdVideo(action=null){
-			var metal_type = $('#metal-colour :selected').val();
+			var metal_type = $('#metal-type :selected').val();
 			
 			$.ajax({
 				type: 'POST',
@@ -792,7 +792,7 @@
 					'clarity' : $('#diamond-clarity').val(),
 					'grade' : $('#diamond-grade').val(),
 					'fingersize' : $('#finger-size').val(),
-					'metalcolor' : $('#metal-colour').val(),
+					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
 					'price': getNumberFromCurrency($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;

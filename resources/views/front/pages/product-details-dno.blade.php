@@ -557,7 +557,7 @@
 
 	<script>
 		$(document).ready(function(){
-			console.log("checking");
+			
 			getCustomFilter();
 
             getRelatedProduct();
@@ -574,7 +574,7 @@
 			$("#productWishList").on('click',function(){
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
-			$(document).on('change','#metal-colour',function(){
+			$(document).on('change','#metal-type',function(){
 				//getProdVideo('onChange');
 				
 			});
@@ -605,10 +605,6 @@
 			});
 		}
 		function getCustomFilter(){
-<<<<<<< HEAD
-=======
-
->>>>>>> f6a5c0d75231440728db7c9b40506b3508e3eb53
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -617,13 +613,11 @@
 					'slug' : '{{$data->slug}}',
                 },
                 success: function (res) {
-<<<<<<< HEAD
+
 					$('#filterDataDesign .type-variations-row').html(res);
 					getSelectedVariationsData();
-=======
-
 					$('#filterDataDesign').html(res);
->>>>>>> f6a5c0d75231440728db7c9b40506b3508e3eb53
+
                     return false;
                 }
             });
@@ -640,7 +634,7 @@
 					'clarity' : $('#diamond-clarity').val(),
 					'grade' : $('#diamond-grade').val(),
 					'fingersize' : $('#finger-size').val(),
-					'metalcolor' : $('#metal-colour').val(),
+					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
 					'price': parseFloat($('#finaldiamondprice').text()) || 0, //parseFloat($('#price').val()) || 0;
