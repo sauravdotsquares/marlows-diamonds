@@ -15,7 +15,7 @@
         </div>
         <div class="main-banner-col banner-ryt-col">
             <div class="main-banner-ryt-img">
-                <img src="assets/images/ring-img.png" alt="ring img">
+                <img src="{{asset('assets/images/ring-img.png')}}" alt="ring img">
             </div>
         </div>
 
@@ -46,7 +46,7 @@
                                 Select your favourite diamond jewellery from a range of GIA certified diamonds for your most special moments.
                             </div>
                             <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Shop Now</a>
+                                <a class="btn-bg-small" href="{{asset('product-category/diamond-jewellery')}}">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                                 Choose from an exotic range of diamond Rings or have your very own bespoke design made for your special day.
                             </div>
                             <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Shop Now</a>
+                                <a class="btn-bg-small" href="{{asset('engagement-rings')}}">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                                 Something everlasting and as special as the marriage itself. Shop bespoke wedding rings from our collection.
                             </div>
                             <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Shop Now</a>
+                                <a class="btn-bg-small" href="{{asset('product-category/wedding-rings')}}">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                                 Why stick to classic solitaires when you can have a stunning multi-stone ring in a unique arrangement?
                             </div>
                             <div class="product-action-btn">
-                                <a class="btn-bg-small" href="#">Shop Now</a>
+                                <a class="btn-bg-small" href="{{asset('engagement-rings')}}">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -278,7 +278,7 @@
                     </div>
                     <p>Planning to propose? Don’t know where to start? Fret not, we have diamond experts who can help you in finding the perfect engagement ring to best represent the promise you vow to that special someone.</p>
                     <div class="viewguide-btn">
-                            <a class="btn-bg-small" href="#">View Guide</a>
+                            <a class="btn-bg-small" href="https://www.marlows-diamonds.co.uk/wp-content/uploads/2020/03/MarlowsDiamonds-PremiumContent-Guide-3.pdf" target="_blank">View Guide</a>
                     </div>
                 </div>
             </div>
@@ -321,8 +321,8 @@
                     @csrf
 					<div class="form-rows flexed flex-flex-wrap">
                         <div class="form-col width-50">
-                            <label>Yor Name<sup>*</sup></label>
-                            <input class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text" name="title" placeholder="Your Name">
+                            <label>Your Name<sup>*</sup></label>
+                            <input required="required" class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text" name="title" placeholder="Your Name">
 							<!-- Error -->
 							@if ($errors->has('title'))
 							<div class="error">
@@ -332,7 +332,7 @@
                         </div>
                         <div class="form-col width-50">
                             <label>Email<sup>*</sup></label>
-                            <input class="input-control {{ $errors->has('email') ? 'error' : '' }}" type="text" name="email" placeholder="Email Address">
+                            <input required="required" class="input-control {{ $errors->has('email') ? 'error' : '' }}" type="text" name="email" placeholder="Email Address">
 							@if ($errors->has('email'))
 							<div class="error">
 								{{ $errors->first('email') }}
@@ -343,7 +343,7 @@
                     <div class="form-rows flexed flex-flex-wrap">
                         <div class="form-col">
                             <label>Message</label>
-                            <textarea name="description" class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
+                            <textarea required="required" name="description" class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
 
                         </div>
                     </div>
