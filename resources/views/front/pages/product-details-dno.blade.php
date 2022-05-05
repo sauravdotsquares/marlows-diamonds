@@ -557,7 +557,7 @@
 
 	<script>
 		$(document).ready(function(){
-			console.log("checking");
+			
 			getCustomFilter();
 
             getRelatedProduct();
@@ -605,10 +605,6 @@
 			});
 		}
 		function getCustomFilter(){
-<<<<<<< HEAD
-=======
-
->>>>>>> f6a5c0d75231440728db7c9b40506b3508e3eb53
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -617,13 +613,11 @@
 					'slug' : '{{$data->slug}}',
                 },
                 success: function (res) {
-<<<<<<< HEAD
+
 					$('#filterDataDesign .type-variations-row').html(res);
 					getSelectedVariationsData();
-=======
-
 					$('#filterDataDesign').html(res);
->>>>>>> f6a5c0d75231440728db7c9b40506b3508e3eb53
+
                     return false;
                 }
             });

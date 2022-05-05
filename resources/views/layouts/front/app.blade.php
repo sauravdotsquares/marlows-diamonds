@@ -55,7 +55,15 @@
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>
 @yield('js')
+<script>
+  $(document).ready(function(){
+      $('.show-more-content').hide();
+      $('.show-more').click(function(){
+          $(this).parents('.reviewr-review-text').toggleClass("show-text-col");       
+      });
+  });
 
+</script>
 <script>
     $(window).scroll(function(){
         if ($(this).scrollTop() > 50) {
