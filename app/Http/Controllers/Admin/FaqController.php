@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Faqs;
+use App\Models\FaqCategory;
 
 use URL;
 class FaqController extends Controller
@@ -40,8 +41,9 @@ class FaqController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-        $faqs = Faqs::all();
-        return view('admin.faqs.create',compact('faqs'));
+        // $faqs = Faqs::all();
+		$faqcategories = FaqCategory::get();
+        return view('admin.faqs.create',compact('faqcategories'));
 	}
 	
     /**
@@ -60,38 +62,7 @@ class FaqController extends Controller
             'status' => 'required',
 			
         ]);
-        if($request->hasFile('image')) {
-
-            //$image_array = [];
-
-            //foreach ($request->file('image') as $image) {
-                
-                $image = '';
-                $uploadpath = public_path().'\images';
-                //$original_name = $input['image']->getClientOriginalName();
-				$original_name = $request->file('image')->getClientOriginalName();
-
-                /*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-                    return $image;
-                }*/
-				//dd($input['image']);
-                if (!empty($request->file('image'))) {
-                    $image_prefix = 'banner_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-                    $ext = $request->file('image')->getClientOriginalExtension();
-                    $image = $image_prefix . '.' . $ext;
-                    //$image_array[] = $image;
-                    $request->file('image')->move($uploadpath, $image);
-                }
-            //}
-        }
-		
-		if(empty($image)){
-			$input['image'] = '';
-		}
-		else{
-			
-			$input['image'] = $image;
-		}
+       
 		
 		//dd($input);
 		// echo "<pre>";

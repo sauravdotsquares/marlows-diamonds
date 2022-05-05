@@ -11,6 +11,10 @@ class FaqCategory extends Model
 
     protected $table = 'faq_categories';
     
-    protected $fillable = ['name'];
-
+    protected $fillable = ['title'];
+	
+	public function getFAQData(){
+		return $this->hasMany(Faqs::class,'categories','id');
+	}
+	
 }

@@ -1,37 +1,23 @@
 @extends('layouts.admin.app')
-
 @section('content')
-
-
-@if (\Session::has('success'))
-    <div class="alert alert-success">
-        <ul>
-            <li>{!! \Session::get('success') !!}</li>
-        </ul>
-    </div>
-@endif
-@if (\Session::has('error'))
-    <div class="alert alert-error">
-        <ul>
-            <li>{!! \Session::get('error') !!}</li>
-        </ul>
-    </div>
-@endif
-@if ($errors->any())
-   <div class="alert alert-danger">
-      @foreach ($errors->all() as $error)
-         {{$error}}
-      @endforeach
-   </div>
-@endif
 <div class="content">
+   <!-- Breadcrumbs-->
+   @if(session()->has('alert-danger'))
+   <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session()->get('alert-danger') }}
+   </div>
+   @endif
+   @if ($errors->has('title'))
+   <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('title') }}
+   </div>
+   @endif
+   
    <!-- DataTables Example -->
    <section class="content">
       <div class="container-fluid">
-         <form id="addForm" action="{{ asset('admin/faqs/categories/add') }}" enctype="multipart/form-data" method="POST">
+         <form id="cmsForm" action="{{ url('admin/faqcategories/add') }}" enctype="multipart/form-data" method="post" >
             @csrf
-            <input type="hidden" name="table_id" id="table_id" value="{{isset($getData->id)?$getData->id:''}}">
-           
             <div class="row">
                <div class="col-md-8">
                   <div class="card card-primary">
@@ -41,17 +27,18 @@
                      <div class="card-body">
                         <div class="form-group">
                            <div class="form-label-group">
-                              <label for="product_name">Name</label>
-                              <input type="text" id="name" name="name" class="form-control" placeholder="Name" value="{{isset($getData->name)?$getData->name:''}}">
+                              <label for="product_name">Catgory</label>
+                              <input type="text" id="title" name="title" class="form-control" placeholder="Title" >
                            </div>
                         </div>
-                        
                         
                      </div>
                   </div>
                </div>
                <div class="col-md-4">
                   <div class="card card-header">
+                     
+                     
                      <div class="form-group">
                         <button type="submit" class="btn btn-primary">Submit</button>
                      </div>
@@ -65,5 +52,3 @@
 <!-- Sticky Footer -->
 
 @endsection
-
-
