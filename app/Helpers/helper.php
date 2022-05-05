@@ -295,7 +295,7 @@ if (!function_exists('validate_breadcrumb')) {
 	if (!function_exists("getEngagementFaqs")) {
     function getEngagementFaqs()
 		{
-			$getengagementfaqs = Faqs::take(5)->orderBy('id','DESC')->where('categories', 0)->get();
+			$getengagementfaqs = Faqs::take(50)->orderBy('id','DESC')->where('categories', 0)->get();
 			return ($getengagementfaqs);
 		}	
 	}
