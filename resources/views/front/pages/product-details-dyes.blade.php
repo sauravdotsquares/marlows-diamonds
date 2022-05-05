@@ -230,8 +230,7 @@
 					</div>
 				</div>
 				<div class="product-decriptions">
-					<p>A unique style for Aaliyah. The round brilliant cut diamond is held elegantly in a fluted four
-						claw setting, allowing maximum passage of light - R1-143</p>
+					{!!$data->description!!}
 				</div>
 				<div class="product-finder-price">
 					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
