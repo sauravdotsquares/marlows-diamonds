@@ -238,134 +238,22 @@
         </div>
     </div>
 </div>
-<!-- Category Listing Wrap end -->
-
-<!-- Section Reviews -->
-<div class="container">
-    <div class="rating-review-block">
-        <div class="owl-carousel owl-theme slider-review">
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <input type="hidden" id="pagescroll" value="1">
 
-@endsection
-
 @section('js')
+
+<script>
+$(document).ready(function(){
+    $('.show-more-content').hide();
+    $('.show-more').click(function(){
+        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");       
+    });
+});
+
+</script>
     <script type="text/javascript">
+		
+
         loadMoreData(page);
         var page = $('#pagescroll').val();
         $(window).scroll(function() {
@@ -427,45 +315,18 @@
                 });
             }
         });
-
-
-
     </script>
-
-    <script>
-        // $(document).ready(function(){
-        //     getProductList();
-        // });
-
-        // function getProductList(){
-        //     console.log("Checking list");
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '',
-        //         data: {
-        //             '_token': "{{csrf_token()}}",
-        //         },
-        //         success: function (res) {
-        //             console.log(res);
-        //             return false;
-        //             // if (res) {
-        //             //     $("#categories").append('<option value="">Select Category</option>' + res);
-        //             // }
-        //         }
-        //     });
-        // }
-
-    </script>
-
-<script>
-
-$(document).ready(function(){
-    $('.show-more-content').hide();
-    $('.show-more').click(function(){
-        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
-    });
-});
-
-</script>
+@endsection
+<!-- Category Listing Wrap end -->
+<!-- Section Reviews -->
+<div class="container">
+	<div class="rating-review-block">
+		<div class="owl-carousel owl-theme slider-review">
+		@include('front.pages.reviews')
+		</div>	
+	</div>
+</div>
 
 @endsection
+
+

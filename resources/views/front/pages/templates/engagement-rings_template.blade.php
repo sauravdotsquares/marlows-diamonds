@@ -23,7 +23,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/CR10-SE45_0003.jpg" alt="ring"></a>
+							<a href="/product-category/engagement-rings/solitaire/"><img src="assets/images/CR10-SE45_0003.jpg" alt="ring"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -33,7 +33,7 @@
 								<p>Solitaire rings are classics for a reason. Their single stone setting exudes beauty like no other with a jaw-dropping centrepiece. This is the best of all diamond engagement rings if you want a flashy simple design.</p>
 							</div>
 							<div class="ring-pr-shop-btn">
-								<a class="btn-bg-small" href="#">Shop Now</a>
+								<a class="btn-bg-small" href="/product-category/engagement-rings/solitaire/">Shop Now</a>
 							</div>
 						</div>
 					</div>
@@ -41,7 +41,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/DSR21-Images_0003.jpg" alt="ring"></a>
+							<a href="/product-category/engagement-rings/halo/"><img src="assets/images/DSR21-Images_0003.jpg" alt="ring"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -51,7 +51,7 @@
 								<p>Halo rings are solitaires made better! Complimented by a halo of smaller diamonds, the centre stone looks gorgeous in every way. If you love solitaires but want something extra, then this is the diamond ring for you.</p>
 							</div>
 							<div class="ring-pr-shop-btn">
-								<a class="btn-bg-small" href="#">Shop Now</a>
+								<a class="btn-bg-small" href="/product-category/engagement-rings/halo/">Shop Now</a>
 							</div>
 						</div>
 					</div>
@@ -59,7 +59,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="ring"></a>
+							<a href="/product-category/engagement-rings/shoulder-set/"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="ring"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -69,7 +69,7 @@
 								<p>Want more sparkle? Go for shoulder set rings with a band of encrusted diamonds that make your ring all the more special. A dazzling solitaire with little diamonds along the way can make all the difference.</p>
 							</div>
 							<div class="ring-pr-shop-btn">
-								<a class="btn-bg-small" href="#">Shop Now</a>
+								<a class="btn-bg-small" href="/product-category/engagement-rings/shoulder-set/">Shop Now</a>
 							</div>
 						</div>
 					</div>
@@ -77,7 +77,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/R3-143_0003.jpg" alt="ring"></a>
+							<a href="/product-category/engagement-rings/multi-stone/"><img src="assets/images/R3-143_0003.jpg" alt="ring"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -87,7 +87,7 @@
 								<p>Why stop at one when you can have many? Make a statement with diamond engagement rings in multi-stone settings. Unique styles and combinations are waiting for you.</p>
 							</div>
 							<div class="ring-pr-shop-btn">
-								<a class="btn-bg-small" href="#">Shop Now</a>
+								<a class="btn-bg-small" href="/product-category/engagement-rings/multi-stone/">Shop Now</a>
 							</div>
 						</div>
 					</div>
@@ -117,7 +117,7 @@
 					<p>You found your perfect match so the engagement ring you propose with should also be a perfect match for your partner. Marlow’s Diamonds brings to you a curated assortment of diamond engagement rings in the most beautiful designs, stone settings, diamonds shapes, and ring sizes.</p>
 					<p>Why us? Because our diamonds are as special as your relationship. Our engagement rings are made only with ethically sourced diamonds. With us, you can be assured of quality because our diamonds are graded by the GIA. Adorning our sparkling stones will bring you joy and warmth for the rest of your lives.</p>
 					<div class="viewguide-btn">
-							<a class="btn-bg-small" href="#">Shop Now</a>
+							<a class="btn-bg-small" href="/product-category/engagement-rings/shoulder-set/">Shop Now</a>
 					</div>
 				</div>
 			</div>
@@ -257,10 +257,10 @@
 			<div class="accordion" id="accordionExample">
 			  
 				@php
-				$getFaqs = getFaqs();
+				$getEngagementFaqs = getEngagementFaqs();
 				@endphp
 
-				@foreach($getFaqs as $key => $faq)
+				@foreach($getEngagementFaqs as $key => $faq)
 					<div class="accordion-item">
 						<h2 class="accordion-header" id="{{$faq->id}}">
 							@if($key == 0)
@@ -312,7 +312,7 @@
 		    			<img src="assets/images/insta-img-one.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -322,7 +322,7 @@
 		    			<img src="assets/images/insta-img-two.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -332,7 +332,7 @@
 		    			<img src="assets/images/insta-img-three.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -342,7 +342,7 @@
 		    			<img src="assets/images/insta-img-four.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -352,7 +352,7 @@
 		    			<img src="assets/images/insta-img-five.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -360,7 +360,7 @@
 		</div>
 	</div>
 	<div class="insta-btn">
-		<a class="btn-bg-small" href="#"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
+		<a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
 	</div>
 </div>
 
