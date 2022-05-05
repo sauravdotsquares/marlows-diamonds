@@ -291,6 +291,15 @@ if (!function_exists('validate_breadcrumb')) {
 			return ($faqs);
 		}	
 	}
+	
+	if (!function_exists("getEngagementFaqs")) {
+    function getEngagementFaqs()
+		{
+			$getengagementfaqs = Faqs::take(5)->orderBy('id','DESC')->where('categories', 0)->get();
+			return ($getengagementfaqs);
+		}	
+	}
+
     /*
     ** Hari Krishna API function
     * @params : data as array

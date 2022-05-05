@@ -257,10 +257,10 @@
 			<div class="accordion" id="accordionExample">
 			  
 				@php
-				$getFaqs = getFaqs();
+				$getEngagementFaqs = getEngagementFaqs();
 				@endphp
 
-				@foreach($getFaqs as $key => $faq)
+				@foreach($getEngagementFaqs as $key => $faq)
 					<div class="accordion-item">
 						<h2 class="accordion-header" id="{{$faq->id}}">
 							@if($key == 0)
@@ -312,7 +312,7 @@
 		    			<img src="assets/images/insta-img-one.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -322,7 +322,7 @@
 		    			<img src="assets/images/insta-img-two.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -332,7 +332,7 @@
 		    			<img src="assets/images/insta-img-three.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -342,7 +342,7 @@
 		    			<img src="assets/images/insta-img-four.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -352,7 +352,7 @@
 		    			<img src="assets/images/insta-img-five.jpg" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
 		    		</div>
 		    	</div>
 		    </div>
@@ -360,7 +360,7 @@
 		</div>
 	</div>
 	<div class="insta-btn">
-		<a class="btn-bg-small" href="#"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
+		<a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
 	</div>
 </div>
 
