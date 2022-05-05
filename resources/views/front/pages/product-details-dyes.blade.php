@@ -540,7 +540,7 @@
 					<form method="post" action="{{ route('contact') }}">
 					@csrf
 						<div class="form-controls">
-							<input type="text" name="name" id="name" class="{{ $errors->has('name') ? 'error' : '' }}" placeholder="Your Name">
+							<input type="text" name="title" id="title" class="{{ $errors->has('title') ? 'error' : '' }}" placeholder="Your Name">
 							<!-- Error -->
 							@if ($errors->has('name'))
 							<div class="error">
@@ -565,10 +565,10 @@
 							@endif
 						</div>
 						<div class="form-controls">
-							<textarea name="message" id="message" class="{{ $errors->has('message') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
-							@if ($errors->has('message'))
+							<textarea name="description" id="description" class="{{ $errors->has('description') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
+							@if ($errors->has('description'))
 							<div class="error">
-								{{ $errors->first('message') }}
+								{{ $errors->first('description') }}
 							</div>
 							@endif
 						</div>
