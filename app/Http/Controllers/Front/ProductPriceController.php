@@ -65,7 +65,7 @@ class ProductPriceController extends Controller
         	$diamondPrice = number_format($hkData[0]['Amount']*$vat,2);
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
         
-        	return json_encode(array('finalPrice'=>$finalPrice,'diamondPrice'=>$diamondPrice,'Stock_NO'=>$hkData[0]['Stock_NO'],'CertificateLink'=>$hkData[0]['CertificateLink']));
+        	return json_encode(array('finalPrice'=>$finalPrice,'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$hkData[0]['Stock_NO'],'CertificateLink'=>$hkData[0]['CertificateLink']));
         }else{
         	$rapnetData = getRapnetApiRecords($data,1);
         	//echo '<pre>'; print_r($rapnetData); die;
@@ -80,7 +80,7 @@ class ProductPriceController extends Controller
 			}
         	//echo $settingPrice; die;
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
-        	return json_encode(array('finalPrice'=>$finalPrice,'diamondPrice'=>$diamondPrice,'Stock_NO'=>$rapnetData[0]->DiamondID,'CertificateLink'=>$rapnetCertificateLink));
+        	return json_encode(array('finalPrice'=>$finalPrice,'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$rapnetData[0]->DiamondID,'CertificateLink'=>$rapnetCertificateLink));
         }
     }
 }
