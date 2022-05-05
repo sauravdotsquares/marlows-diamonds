@@ -11,6 +11,7 @@
 </div>
 
 <div class="wishlist-wraper">
+    @if(session('wishlist'))
     <div class="container">
         <div class="wishlist-heading">
             Wishlist
@@ -33,9 +34,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(session('wishlist'))
+
                                 @foreach(session('wishlist') as $id => $details)
-                                    
+
                                     <tr data-id="{{ $id }}">
                                         <!-- <td class="wish-product-cb-col"><input type="checkbox" class="product-cb"></td> -->
                                         <!-- <td class="wish-product-remove-col">
@@ -120,7 +121,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            @endif
+
                             <!-- <tr>
                                     <td class="wish-product-cb-col"><input type="checkbox" class="product-cb"></td>
                                     <td class="wish-product-remove-col">
@@ -247,6 +248,19 @@
             </div> -->
         </div>
     </div>
+    @else
+    <div class="container">
+        <div class="tinv-message ">
+            <div class="tinv-header">
+                <h2>Wishlist</h2>
+            </div>
+            <p class="cart-empty woocommerce-info"> Your Wishlist is currently empty.</p>
+            <div class="return-to-shop">
+                <a class="btn-bg-small" href="{{ url('/') }}">Return To Shop</a>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
 
 
@@ -265,7 +279,7 @@
                 url: '{{ route("remove.from.wishlist") }}',
                 method: "DELETE",
                 data: {
-                    _token: '{{ csrf_token() }}', 
+                    _token: '{{ csrf_token() }}',
                     id: ele.parents("tr").attr("data-id")
                 },
                 success: function (response) {

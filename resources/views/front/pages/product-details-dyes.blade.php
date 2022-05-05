@@ -83,6 +83,7 @@
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.css" rel="stylesheet" />
 
 @endsection
 
@@ -100,6 +101,25 @@
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
+				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
+				
+					<div id="carousel" class="owl-carousel">
+						
+						@if($prodImages)
+
+							@foreach($prodImages as $key=>$images)
+								@php
+									$explode = explode('/',$images->image_url);
+									$explode1 = explode('.',$explode[1]);
+								@endphp
+								<div class="item @if($key==0) active @endif">
+									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"></a>
+								</div>
+							@endforeach
+						@endif
+						
+					</div>
+
 				<video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
 					@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 						<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
@@ -108,6 +128,7 @@
 					@endif
 				</video>
 
+				
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -299,91 +320,8 @@
 			</div>
 		</div>
 		<div class="related-products-list">
-			<div id="relatedProductData" class="owl-carousel owl-theme related-product st-arrows">
-				{{-- <div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-143_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">AALIYAH | Four Claw split shoulder Solitaire Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/MTSS-707_00003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ABBIE | Marquise shape solitaire Diamond Engagement Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-1027_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ADDISON | Slim Twist Set Diamond Engagement Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> --}}
+			<div id="relatedProductData" class="related-product">
+				
 			</div>
 
 		</div>
@@ -678,7 +616,7 @@
 
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
 	<script>
 		$(document).ready(function(){
             getRelatedProduct();
@@ -771,7 +709,7 @@
 					if(res.regular_price!='' || res.regular_price!='0.00')
 						$('#selected_variation_price').val(res.regular_price);
 					else
-						$('#selected_variation_price').val(res.sales_price);
+						$('#selected_variation_price').val(res.sale_price);
 					if(action!=null && action=='onChange')
 						getFinalPrice();
 				}
@@ -928,6 +866,9 @@
                 }
             });
         }
-
+        $(document).on('click','.product-gallery__trigger',function(e){
+	      		e.preventDefault();
+	      		$('#carousel .item.active a').click();
+	      });
 	</script>
 @endsection
