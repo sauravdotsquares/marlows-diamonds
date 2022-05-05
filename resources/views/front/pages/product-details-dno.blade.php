@@ -574,7 +574,7 @@
 			$("#productWishList").on('click',function(){
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
-			$(document).on('change','#metal-colour',function(){
+			$(document).on('change','#metal-type',function(){
 				//getProdVideo('onChange');
 				
 			});
@@ -634,7 +634,7 @@
 					'clarity' : $('#diamond-clarity').val(),
 					'grade' : $('#diamond-grade').val(),
 					'fingersize' : $('#finger-size').val(),
-					'metalcolor' : $('#metal-colour').val(),
+					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
 					'price': parseFloat($('#finaldiamondprice').text()) || 0, //parseFloat($('#price').val()) || 0;
