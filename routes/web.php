@@ -103,12 +103,12 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('/delete-faq/{id}', 'FaqController@delete');
 			Route::get('/faqs/status/{id}/{status}', 'FaqController@status');
 			// Faq Category Routes
-			Route::get('/faqs/categories','FaqCategoryController@index')->name('faqcategories');
-			Route::get('/faqs/categories/create/{catslug?}','FaqCategoryController@createForm')->name('create');
-			Route::post('/faqs/categories/add','FaqCategoryController@add')->name('add');
-			Route::post('/get-faqcategories','FaqCategoryController@getFaqCategory')->name('get-faqcategories');
-			Route::post('/change-faqcategories','FaqCategoryController@status');
-			Route::post('/delete-faqcategories','FaqCategoryController@delete');
+			Route::get('/faqcategories', 'FaqCategoryController@index')->name('faqcategories');
+			Route::get('/faqcategories/create', 'FaqCategoryController@create')->name('createfaqcategories');
+			Route::post('/faqcategories/add', 'FaqCategoryController@add')->name('add');
+			Route::get('/faqcategories/update/{id}', 'FaqCategoryController@update')->name('create');
+			Route::post('/faqcategories/edit/{id}', 'FaqCategoryController@edit');
+			Route::get('/delete-faqcategories/{id}', 'FaqCategoryController@delete');
 			// Reviews Route
 			Route::get('/reviews', 'ReviewController@index')->name('faqs');
 			Route::get('/reviews/create', 'ReviewController@create')->name('create');
