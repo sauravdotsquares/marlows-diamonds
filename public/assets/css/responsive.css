@@ -117,6 +117,8 @@ h2,.heading-h-two{font-size:22px}
 .certified-diamond-form h2 {font-size: 24px;}
 .certified-diamond-img {padding: 0 0 20px 0;}
 .shopfrom-block {padding: 30px 0 20px 0;}
+.container {padding-left: 15px;padding-right: 15px;}
+.mob-cart-number {right: -5px;}
 }
 
 @media(max-width: 500px){
@@ -246,7 +248,7 @@ h3,.heading-h-three{font-size:28px}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one.show-menus .inner-submenu{
 	display: block;
 }
-
+.search-suggestion {width: 98%;margin: auto;}
 }
 
 @media(max-width:767px){

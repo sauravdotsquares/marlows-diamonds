@@ -117,6 +117,7 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .middle-topbar-right li a:hover{color:#8e2e65}
 .middle-topbar-right li a i{color:#000;font-size:18px;padding:0 11px 0 0;position:relative;top:1px}
 .middle-topbar-right li.my-cart-blk .fa-shopping-bag{color:#8e2e65}
+.middle-topbar-right li a i.fa-shopping-bag {color: #8e2e65;}
 /** middle top bar css end **/
 
 /** logo and menus css start **/
@@ -297,7 +298,7 @@ input.input-control{height:38px}
 .category-banner-text h1 {font-family: 'Lato';font-size: 24px;line-height: 30px;margin: 0 0 10px 0; color: #fff;}
 .category-banner-text h2 {font-family: 'Lato';font-size: 18px;line-height: 34px;margin: 0; color: #fff; font-weight: 300;}
 .filter-tags-col {padding: 0 15px; text-align: center;width: 100%;max-width: 25%;flex: 0 0 25%;-ms-flex: 0 0 25%}
-.filter-tags-row {margin: 0 -15px; align-items: center;}
+.filter-tags-row {margin: 0 -15px; align-items: center; justify-content: center;}
 .pr-filter-title {text-align: center;font-size: 16px;color: #404040;margin: 0 0 25px 0;}
 .category-product-filter-text a {color: #8e2e65;text-decoration: none;font-size: 13px;}
 .category-product-filter-icon {height: 55px;display: flex;align-items: center;justify-content: center;}
@@ -333,8 +334,15 @@ input.input-control{height:38px}
 .side-cart-total {border-top: 1px solid #ccc;padding: 10px 0 0 9px;margin: 20px 0 0 0;}
 .side-cart-pr-name a {color: #8e2e65;text-decoration: none;display: block;font-size: 13px;}
 .side-cart-pr-name {padding: 0 23px 0 0;}
-.side-cart-delete {float: right;margin: -35px 0 0 0;}
-.side-cart-delete a {text-decoration: none;font-size: 20px; color: #8e2e65;}
+.side-cart-delete {float: right;margin: 20px 0 0 0;}
+.side-cart-delete a {text-decoration: none;font-size: 20px; color: #8e2e65; padding: 6px 6px;}
+.side-cart-item {margin: 0 0 20px 0;}
+
+.side-cart-pr-name dl dt {float: left;clear: none;width: auto;}
+.side-cart-pr-name dl dt, .side-cart-pr-name dl dd {font-weight: normal;font-size: 14px;margin: 0;}
+.side-cart-pr-name dl dd p {color: #707070;margin: 0 0 12	px 0;}
+.side-cart-pr-name dd a {text-decoration: none;color: #902f66; margin: 0 0 12px 0;}
+.side-cart-pr-name dl dd {position: relative;left: 2px;}
 .side-cart-varition {margin: 12px 0 15px 0;}
 .side-cart-varition span {display: block;margin: 0 0 8px 0;}
 .side-cart-varition span a {text-decoration: none;color: #8e2e65;}
@@ -727,13 +735,14 @@ label.label {display: block;margin: 0 0 5px 0;}
 /**#variationVideo {width: 100%;position: absolute;top: -50px;}**/
 /** search suggestion **/
 .head-mini-search{ position: relative;}
-.search-suggestion {position: absolute;right: 10px;width: 300px;background: #EAEAEA;border: 1px solid #D0D0D0;top: 44px;}
-.search-suggestion-list a {display: flex;align-items: center;color: #000;text-decoration: none;padding: 12px 10px;background: #fff;margin:14px 0 14px 0;}
-.search-suggestion-list .search-suggestion-img {width: 121px;border: 1px solid #B0B0B0;}
+.search-suggestion {position: absolute;right: 0;width: 300px;background: #EAEAEA;border: 1px solid #D0D0D0;top: 44px;max-height: 640px;overflow-y: auto;}
+.search-suggestion-list a {display: flex;align-items: center;color: #000;text-decoration: none;padding: 12px 10px;background: #fff;margin:0;}
+.search-suggestion-list .search-suggestion-img {border: 1px solid #B0B0B0;}
+.search-suggestion-list .search-suggestion-img img {max-width: 50px;}
 .search-suggestion-text {padding: 0 9px;}
 .search-suggestion-title {font-size: 14px;color: #404040;line-height: 17px; margin: 0 0 6px 0;}
 .search-suggestion-price span {color: #8e2e65;font-weight: bold;}
-
+.search-suggestion p {padding: 10px 14px;margin: 0;}
 /** lab-grown-diamond-engagement-rings **/
 .takeon-left p {font-size: 15px;line-height: 27px;margin: 0 0 22px 0;}
 .takeon-right {padding: 0 0 0 90px;}
