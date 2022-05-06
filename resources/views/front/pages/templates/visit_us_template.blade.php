@@ -78,7 +78,7 @@
 						</div>
 					</form>
 					<div class="visitform-text">
-						<a href="#">Your information will <b>NOT</b> be used by third-parties for marketing. Please see our <u>privacy policy</u> for more information.</a>
+						Your information will <b>NOT</b> be used by third-parties for marketing. Please see our <u><a href="/privacy-policy">privacy policy</a></u> for more information.
 					</div>
 				</div>
 			</div>
