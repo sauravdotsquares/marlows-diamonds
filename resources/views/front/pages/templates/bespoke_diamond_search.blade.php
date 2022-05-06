@@ -542,6 +542,7 @@
 		</div>
 	</div>
 </div>
+</div>
 
 @section('js')
 <script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script>
