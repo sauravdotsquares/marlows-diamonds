@@ -72,7 +72,7 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 
 
 /** Customized container size of bootstrap **/
-.container{width:100%;max-width:1470px;padding-left:25px;padding-right:25px;margin-left:auto;margin-right:auto}
+.container{width:100%;max-width:1470px;padding-left:20px;padding-right:20px;margin-left:auto;margin-right:auto}
 /** FLex Property **/
 .flexed{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
 .flex-justify-between{-webkit-justify-content:space-between;justify-content:space-between}
@@ -310,7 +310,8 @@ input.input-control{height:38px}
 .display_first_filter .product-filter-col:first-child {
     border: 0;
 }
-.cols-ryt-tags .filter-tags-col {max-width: 12%;flex: 0 0 12%;-ms-flex: 0 0 12%;}
+.cols-ryt-tags:not(.wedding-rings, .diamond-jewellery) .filter-tags-col {max-width: 12%;flex: 0 0 12%;-ms-flex: 0 0 12%;}
+
 .product-filter-col:first-child {border-right: 2px solid #EFEFEF;max-width: 45%;flex: 0 0 45%;-ms-flex: 0 0 45%;}
 .category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top; background: #f2f2f7; padding: 12px 18px 20px;}
 .category-list-wrap {width: 76%;display: inline-block;vertical-align: top;padding-right: 30px;}
@@ -340,7 +341,8 @@ input.input-control{height:38px}
 
 .side-cart-pr-name dl dt {float: left;clear: none;width: auto;}
 .side-cart-pr-name dl dt, .side-cart-pr-name dl dd {font-weight: normal;font-size: 14px;margin: 0;}
-.side-cart-pr-name dl dd p {color: #707070;margin: 0 0 12	px 0;}
+.side-cart-pr-name dl dd p {color: #707070;margin: 0 0 12px 0;}
+.side-cart-pr-name .variation {margin-top: 14px;}
 .side-cart-pr-name dd a {text-decoration: none;color: #902f66; margin: 0 0 12px 0;}
 .side-cart-pr-name dl dd {position: relative;left: 2px;}
 .side-cart-varition {margin: 12px 0 15px 0;}
