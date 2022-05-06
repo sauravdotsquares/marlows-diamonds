@@ -294,8 +294,8 @@
 					<a class="store-locator" href="{{asset('visit-us')}}">Store Locator</a>
 					<a target="_blank" id="productCertificateLink" class="view-certificate" href="#">View Certificate</a>
 				</div>
-				<div class="finance-available">
-					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
+				<div class="finance-available" ng-controller="DekopayController">
+					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
 							<span>see options</span>
@@ -450,9 +450,9 @@
 <!-- Section Reviews -->
 <div class="container">
 	<div class="rating-review-block">
-					<div class="owl-carousel owl-theme slider-review">
-					@include('front.pages.reviews')
-					</div>	
+		<div class="owl-carousel owl-theme slider-review">
+		@include('front.pages.reviews')
+		</div>	
 	</div>	
 </div>
 
@@ -527,88 +527,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="col-lg-12">
-			<!-- Success message -->
-			@if(Session::has('success'))
-				<div class="alert alert-success">
-					{{Session::get('success')}}
-				</div>
-			@endif
-			<div class="visit-form">
-
-			<div class="paymentDetail" id="detailed" style="display: block;">
-									<ul class="payments">
-                                                        <li> <p> Price : </p><p>
-
-                            <input type="hidden" min="10" interval="0.01" value="1026" id="totalOrder">
-                            £<span id="totalOrderText" data-val="324.00">1026.00</span>
-
-                        </p>
-                     </li>
-
-
-
-                                        <li>
-                                        <p> Finance Type : </p>
-                                        <p>
-											<select id="terms" name="term">
-												                  <option value="ONIB12-16.9" selected=""> 12  Months Credit 16.9%</option>
-                                 <option value="ONIB18-16.9"> 18  Months Credit 16.9%</option>
-                                 <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
-                                 <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
-                                 <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
-                                                            </select>
-                </p>
-                                        </li>
-
-
-
-                     										 <li> <p>Deposit : 	</p><p>
-											<select id="payed" name="percentage">
-													                   <option value="10" selected="">10%</option>
-                                    <option value="20">20%</option>
-                                    <option value="30">30%</option>
-                                    <option value="40">40%</option>
-                                    <option value="50">50%</option>
-                                                             </select>
-                                        </p>
-										</li>
-                                    </ul>
-                                    <p class="deko-calculate">
-                                        <button id="calculatebutton" class="btn">Calculate</button>
-                                    </p>
-									<ul class="pay_details" id="OCFDefault">
-										<li class="clearfix"> <p> Monthly Payment </p><p class="priced">  £   <span id="perMonths">83.66</span>  </p> </li>
-										<li class="clearfix"> <p> Cash Price </p> <p class="priced">   £  <span id="cashPrices">1026.00</span> </p> </li>
-										<li class="clearfix"> <p> Deposit to Pay</p><p class="priced">  £   <span id="Deposited">102.60</span>   </p> </li>
-										<li class="clearfix"> <p> Loan Amount </p><p class="priced">  £    <span id="loanAmt">923.40</span></p> </li>
-										<li class="clearfix"> <p> Loan Repayment </p><p class="priced">£  <span id="loanRepay">1003.90</span>  </p> </li>
-										<li class="clearfix"> <p> Cost of Loan</p> <p class="priced">   £  <span id="costLoan">80.50</span>  </p> </li>
-										<li class="clearfix"> <p> Total Amount Payable </p> <p class="priced"> £   <span id="totalAmt">1106.50</span>    </p> </li>
-										<li class="clearfix"> <p> Number of Monthly Payments </p> <p class="priced"> <span id="noTerm">12</span>  </p></li>
-									</ul>
-                                    <p class="finance_options_provided">Finance options powered by <img src="https://www.marlows-diamonds.co.uk/wp-content/themes/betheme-child//images/Deko_landscape_colour_whiteBG200px_wide.png" style="height:25px;" class="nolazy" alt="DEKO"></p>
-
-									<input type="hidden" id="enableId" value="OCFDefault"> <br>
-									<div>
-
-									</div>
-
-								</div>
-			</div>
-		</div>
-      </div>
-    </div>
-  </div>
-</div>
+@include('front.includes.dekopay-finance-options')
 
 @endsection
 
