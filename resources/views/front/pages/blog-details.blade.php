@@ -8,7 +8,7 @@
 	<div class="breadcrumb-navs">
 		<ul>
 			<li>
-				<a href="#">Home</a>
+				<a href="{{env('APP_URL')}}">Home</a>
 			</li>
 			<li>
 				<a href="#">Custom Engagement Rings</a>

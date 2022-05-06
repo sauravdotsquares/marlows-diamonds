@@ -47,7 +47,7 @@
                         <div class="pr-filter-title" ng-if="parent_cat=='engagement-rings'">
                             Diamond Cut
                         </div>
-                        <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags">
+                        <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags <%parent_cat%>">
                             <div class="filter-tags-col <%subSubCat.active_status%>"  ng-repeat="subSubCat in subSubCats">
                                 <div class="category-product-filter-icon">
                                     <a href="<%subSubCat.url%>"><img src="{{asset('storage')}}<%subSubCat.hover_icon%>" alt="icon"></a>
