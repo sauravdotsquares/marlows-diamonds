@@ -429,71 +429,7 @@ Session::forget('recently_view');
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="col-lg-12">
-			<!-- Success message -->
-			@if(Session::has('success'))
-				<div class="alert alert-success">
-					{{Session::get('success')}}
-				</div>
-			@endif
-			<div class="visit-form">
-
-				<form method="post" action="{{ route('contact') }}">
-				@csrf
-					<div class="form-controls">
-						<input type="text" name="name" id="name" class="{{ $errors->has('name') ? 'error' : '' }}" placeholder="Your Name">
-						<!-- Error -->
-						@if ($errors->has('name'))
-						<div class="error">
-							{{ $errors->first('name') }}
-						</div>
-						@endif
-					</div>
-					<div class="form-controls">
-						<input type="email" name="email" id="email" class="{{ $errors->has('email') ? 'error' : '' }}" placeholder="Your Email Address">
-						@if ($errors->has('email'))
-						<div class="error">
-							{{ $errors->first('email') }}
-						</div>
-						@endif
-					</div>
-					<div class="form-controls">
-						<input type="text" name="phone" id="phone" class="{{ $errors->has('phone') ? 'error' : '' }}" placeholder="Your Contact No.">
-						@if ($errors->has('phone'))
-						<div class="error">
-							{{ $errors->first('phone') }}
-						</div>
-						@endif
-					</div>
-					<div class="form-controls">
-						<textarea name="message" id="message" class="{{ $errors->has('message') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
-						@if ($errors->has('message'))
-						<div class="error">
-							{{ $errors->first('message') }}
-						</div>
-						@endif
-					</div>
-					<div class="google-capatcha">
-
-					</div>
-					<div class="action-submit">
-						<button type="submit" name="send" value="Submit">Send Message</button>
-					</div>
-				</form>
-			</div>
-		</div>
-      </div>
-    </div>
-  </div>
-</div>
+@include('front.includes.dekopay-finance-options')
 
 @endsection
 
