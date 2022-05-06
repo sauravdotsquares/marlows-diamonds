@@ -6,7 +6,27 @@ $interpolateProvider.endSymbol('%>');
 
 var base_url = "/api/v1/";
 
+/******** Define the Common controller  ***************/
 
+MarlowsAPP.controller("CommonController",function($scope, $http,$compile) {
+    
+    $scope.searchProducts = function(){
+        //console.log($scope.search);
+        var url  = base_url+"searchProducts";
+        $http({
+            method  : 'POST',
+            url     : url,
+            data    : {name:$scope.search}
+
+        }).success(function(data) {
+           // console.log(data);
+            $scope.searchResults = data;
+            
+        });
+    }
+
+   
+});
 /******** Define the diamond search controller  ***************/
 
 MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,$window,$sce, $timeout,diamondSearchService) {

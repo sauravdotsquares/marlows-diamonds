@@ -31,6 +31,8 @@
 	<div class="row" id="post-data">	
 		
 	</div>
+	<input type="hidden" id="sectionHeight" value="">
+	<input type="hidden" id="scrollFlag" value="">
 	</div>
 </div>		
 
@@ -55,10 +57,11 @@
 	    loadMoreData(page);
 	});
 	$(window).scroll(function() {
-	    if($(window).scrollTop() + $(window).height() == $(document).height()) {
-			
+	    var scroll = $('#scrollFlag').val();
+            if (scroll==0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
 	        page++;
 	        loadMoreData(page);
+	        $('#scrollFlag').val(1);
 	    }
 	});
 
@@ -84,6 +87,8 @@
 	            }
 	            $('.ajax-load').hide();
 	            $("#post-data").append(data.html);
+	            $('#sectionHeight').val($( '#post-data' ).height());
+                $('#scrollFlag').val(0);
 	        })
 	        .fail(function(jqXHR, ajaxOptions, thrownError)
 	        {
