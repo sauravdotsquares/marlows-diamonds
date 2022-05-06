@@ -81,7 +81,9 @@
                         <li class="dropdown">
                             <a href="{{ route('product.cart') }}">
 
-                                    <img src="{{asset('')}}assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
+                                <img src="{{asset('')}}assets/images/cart-color.png" alt="cart">
+                                <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
+                                {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
 
                             </a>
                             <div class="dropdown-menu">
@@ -144,7 +146,9 @@
                             <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                         </div>
                     <div class="mobile-cart">
-                        <a href="{{ route('product.cart') }}"> <img src="/assets/images/cart-color-black.png" alt="cart">
+                        <a href="{{ route('product.cart') }}"> 
+                            <img src="/assets/images/cart-color-black.png" alt="cart">
+                            <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
                         <span class="mob-cart-number">{{ count((array) session('cart')) }}</span>
                         </a>
                     </div>
