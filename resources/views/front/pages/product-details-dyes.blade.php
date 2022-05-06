@@ -294,8 +294,8 @@
 					<a class="store-locator" href="{{asset('visit-us')}}">Store Locator</a>
 					<a target="_blank" id="productCertificateLink" class="view-certificate" href="#">View Certificate</a>
 				</div>
-				<div class="finance-available">
-					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
+				<div class="finance-available" ng-controller="DekopayController">
+					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
 							<span>see options</span>
@@ -450,9 +450,9 @@
 <!-- Section Reviews -->
 <div class="container">
 	<div class="rating-review-block">
-					<div class="owl-carousel owl-theme slider-review">
-					@include('front.pages.reviews')
-					</div>	
+		<div class="owl-carousel owl-theme slider-review">
+		@include('front.pages.reviews')
+		</div>	
 	</div>	
 </div>
 
