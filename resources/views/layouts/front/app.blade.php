@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{!! isset($data->meta_title)?$data->meta_title:'' !!}</title>
+    <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
 
     <link rel="canonical" href="{{url()->current()}}" />
