@@ -16,6 +16,7 @@ use App\Models\Posts;
 use App\Models\Faqs;
 use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
+use App\Models\Products;
 //use SoapClient;
 
 if (!function_exists("helper_test")) {
@@ -299,6 +300,14 @@ if (!function_exists('validate_breadcrumb')) {
 			return ($getengagementfaqs);
 		}	
 	}
+	
+	if (!function_exists("getFeaturedProducts")) {
+        function getFeaturedProducts()
+        {
+            $featured = Products::with(['getProductImages'])->where('is_featured',1)->limit(10)->get();
+            return $featured;
+        }
+    }
 
     /*
     ** Hari Krishna API function
