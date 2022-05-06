@@ -92,7 +92,29 @@
 ?>
 
 <!-- product info and media -->
-
+<!-- @php
+Session::forget('recently_view');
+	if(session('recently_view')){
+		//echo '<pre>';print_r(Session::get('recently_view')); die;
+		$arrayS = Session::get('recently_view');
+	}else
+		$arrayS = array();
+	
+	$title = isset($data->title)?$data->title:'';
+	if(!in_array(array('title'=>$title),$arrayS)){
+		$arr = array_merge($arrayS,array(['title'=>$title]));
+	}else{
+		$arr = $arrayS;
+	}
+	
+	//echo '<pre>';print_r($arr); die;
+	
+	
+	
+	//$product = collect([$unique]);
+	Session::push('recently_view', $arr);
+	//echo '<pre>';print_r(Session::get('recently_view')); die;
+@endphp -->
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
@@ -165,8 +187,7 @@
 					</div>
 
 					<div class="product-to-basket">
-						<!-- <a class="btn-bg-small" href="#">Add to basket</a> -->
-						<!-- <a id="addtobasket" href="{{ route('add.to.cart', $data->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p> -->
+						
 						<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
 					</div>
 					<div class="product-req-appointment">
@@ -175,14 +196,7 @@
 						</a>
 					</div>
 				</div>
-				<!-- <div class="product-postactions">
-					
-					<a href="https://www.google.com/search?q=marlows+diamond+google+review&amp;oq=marlows+diamond+google+review&amp;aqs=chrome..69i57.8073j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x4870bcedd24f2c3d:0x1dc68827b10987fa,1,,," class="review-action" target="_blank">
-						Reviews
-					</a>
-					<a class="store-locator" href="{{asset('visit-us')}}">Store Locator</a>
-					<a target="_blank" class="view-certificate" href="#">View Certificate</a>
-				</div> -->
+				
 				<div class="finance-available">
 					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>

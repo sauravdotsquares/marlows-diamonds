@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Products;
 use Illuminate\Support\Arr;
 
 
@@ -107,5 +108,14 @@ class ProductController
     		return json_encode(array('parent_cat'=>$category_one,'subCats'=>$subCategories,'subSubCats'=>''));
     	}
     	
+    }
+
+    public function searchProducts(Request $request){
+
+         $getSearchedData = Products::with('getProductImages')->select("title",'id','slug')
+                ->where("title","LIKE","%$request->name%")
+                ->get();
+        //echo '<pre>';print_r($getSearchedData[0]->getProductImages->image_url);   die; 
+        return json_encode($getSearchedData);
     }
 }

@@ -203,88 +203,28 @@
                     <div class="remve-mobile-serch-box">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     </div>
-                    <form>
+                    <form ng-controller="CommonController" >
                         <div class="formgroup">
-                            <input type="text" name="search" class="typeahead" placeholder="Search for product..">
+                            <input type="text" name="search" class="typeahead" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
                             <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
-                        <div class="search-suggestion">
-                            <div class="search-suggestion-list">
-                                <a href="#">
+                        <div class="search-suggestion" ng-if="searchResults.length>0" ng-cloak>
+                            <div class="search-suggestion-list" ng-repeat="result in searchResults">
+                                <a href="/product/<%result.slug%>">
                                     <div class="search-suggestion-img">
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                        <img src="{{asset('/storage')}}/<%result.get_product_images.image_url%>" alt="Marlow's Diamond">
                                     </div>
                                     <div class="search-suggestion-text">
                                         <div class="search-suggestion-title">
-                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                            <%result.title%>
                                         </div>
-                                        <div class="search-suggestion-price">
-                                            <span>£ 1,088.10</span>
-                                                -
-                                            <span>£ 1,674.00</span>
-                                        </div>
-
+                                      
                                     </div>
                                 </a>
                             </div>
-
-                            <div class="search-suggestion-list">
-                                <a href="#">
-                                    <div class="search-suggestion-img">
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
-                                    </div>
-                                    <div class="search-suggestion-text">
-                                        <div class="search-suggestion-title">
-                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
-                                        </div>
-                                        <div class="search-suggestion-price">
-                                            <span>£ 1,088.10</span>
-                                                -
-                                            <span>£ 1,674.00</span>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="search-suggestion-list">
-                                <a href="#">
-                                    <div class="search-suggestion-img">
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
-                                    </div>
-                                    <div class="search-suggestion-text">
-                                        <div class="search-suggestion-title">
-                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
-                                        </div>
-                                        <div class="search-suggestion-price">
-                                            <span>£ 1,088.10</span>
-                                                -
-                                            <span>£ 1,674.00</span>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="search-suggestion-list">
-                                <a href="#">
-                                    <div class="search-suggestion-img">
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
-                                    </div>
-                                    <div class="search-suggestion-text">
-                                        <div class="search-suggestion-title">
-                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
-                                        </div>
-                                        <div class="search-suggestion-price">
-                                            <span>£ 1,088.10</span>
-                                                -
-                                            <span>£ 1,674.00</span>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-
+                        </div>
+                        <div class="search-suggestion" ng-if="searchResults.length==0" ng-cloak>
+                            <p>No Product Found.</p>
                         </div>
                     </form>
 

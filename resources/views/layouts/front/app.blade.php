@@ -116,15 +116,15 @@ $(document).ready(function(){
 
 
 <script type="text/javascript">
-    $(function() {
+    /*$(function() {
         $('input.typeahead').focusout(function() {
           $(this).val(" ");
           $('.search-suggestion').html(" ");
           $('.search-suggestion').hide();
         });
-    });
+    });*/
 
-    $("input.typeahead").on('keyup',function(e){
+    /*$("input.typeahead").on('keyup',function(e){
         $('.search-suggestion').html(" ");
         if (e.target.value.length >= 3) {
           $.ajax({
@@ -142,7 +142,7 @@ $(document).ready(function(){
               }
           });
         }
-    });
+    });*/
 </script>
 </body>
 </html>
