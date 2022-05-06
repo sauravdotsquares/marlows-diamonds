@@ -35,7 +35,9 @@
 	<input type="hidden" id="scrollFlag" value="">
 	</div>
 </div>		
-
+<div class="ajax-load text-center" style="display:none">
+	<p><img src="https://www.marlows-diamonds.co.uk/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif">Loading More post</p>
+</div>
 <!-- Section Reviews -->
 <div class="container">
 <div class="rating-review-block">
@@ -47,9 +49,7 @@
 
 
 
-<div class="ajax-load text-center" style="display:none">
-	<p><img src="https://www.marlows-diamonds.co.uk/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif">Loading More post</p>
-</div>
+
 
 <script type="text/javascript">
 	var page = 1;
@@ -58,7 +58,7 @@
 	});
 	$(window).scroll(function() {
 	    var scroll = $('#scrollFlag').val();
-            if (scroll==0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
+            if (scroll==0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()-300))) {
 	        page++;
 	        loadMoreData(page);
 	        $('#scrollFlag').val(1);
