@@ -185,7 +185,7 @@
 		</div>
 	</div>
 </div>
-
+</div>
 
 <!-- FAQ Section end here -->
 
