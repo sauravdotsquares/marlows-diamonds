@@ -544,7 +544,7 @@
 		$(document).ready(function(){
             getRelatedProduct();
 
-			getCustomFilter(); getProdVideo();
+			getCustomFilter(); //getProdVideo();
 
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
@@ -607,7 +607,7 @@
                 success: function (res) {
 
 					$('#filterDataDesign .type-variations-row').html(res);
-                    return false;
+                    getProdVideo();
 
                 }
             });

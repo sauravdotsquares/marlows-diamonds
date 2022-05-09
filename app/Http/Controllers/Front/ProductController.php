@@ -475,11 +475,28 @@ class ProductController extends Controller
             
             if(!empty($getProductVariationId)){
                 $getVariDetails = ProductVariationDetails::groupBy('value')->whereIn('variation_id',$getProductVariationId)->whereIn('value',$request->variations)->get()->toArray();
+               $attributeCount = count($request->variations); 
+                foreach ($getProductVariationId as $key1 => $productVariationId) {
+                        $variationDetails = array();
+                        foreach ($request->variations as $key2 => $variations) {
+                            $getVariDetails = ProductVariationDetails::where('variation_id',$productVariationId)->where('value',$variations)->get()->toArray();
+
+                            if(!empty($getVariDetails))
+                                $variationDetails[] = $getVariDetails;
+                            //echo '<pre> '.$key1.'='.$key2; print_r($getVariDetails);
+                        }
+                        if($attributeCount == count($variationDetails))
+                            break;
+                        
+                    # code...
+                }
+                //echo '<pre>'; print_r($variationDetails);
+                //die;
                 //echo '<pre>'; print_r($getVariDetails); die;
             }
             $vat = getVAT();
             if(isset($getVariDetails) && !empty($getVariDetails)){
-                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails[0]['variation_id'])->select(DB::raw('(regular_price*"'.$vat.'") as regular_price_with_vat'),DB::raw('(sale_price*"'.$vat.'") as sale_price_with_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
+                $getSelectedVariationVideoImages = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select(DB::raw('(regular_price*"'.$vat.'") as regular_price_with_vat'),DB::raw('(sale_price*"'.$vat.'") as sale_price_with_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
                 
                 return response()->json($getSelectedVariationVideoImages);
             }
