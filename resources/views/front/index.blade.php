@@ -219,6 +219,7 @@
         </div>
 </div>
 <!--Shop from Marlow’s GIA Certified Diamond Rings end -->
+{!! isset($data->description)?$data->description:"" !!}
 <!-- Join our mailing list section start -->
 <div class="joinour-mailing">
     <div class="container">
