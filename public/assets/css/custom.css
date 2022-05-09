@@ -35,7 +35,7 @@ a.btn-bg-large,.btn-bg-small{color:#fff}
 .white-bg-btn:hover{box-shadow:5px 5px 0 rgba(0,0,0,0.8); color: #fff; background:#8e2e65; }
 .my-cart-blk img{max-width:18px;vertical-align:top;display:inline-block;margin:0 8px 0 0}
 textarea:focus{outline:0}
-.mobile-cart a>img{max-width:27px}
+.mobile-cart a>img{max-width:22px}
 label {color: #000;font-size: 14px;}
 .select-control {width: 100%;height: 40px;border-radius: 0; border:1px solid #D0D0D0;background-color: #FCFCFC;padding: 0 8px;font-size: 14px;color: #404040;}
 .accordion-button:focus{ box-shadow: none; }
@@ -98,8 +98,8 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .mobile-cart{position:relative}
 .navbar-toggler .togglebar-nav{cursor:pointer;color:#902f66;position:relative;height:30px;width:30px}
 .navbar-toggler .togglebar-nav span{cursor:pointer;color:#902f66;background:#902f66;width:33px;height:2px;display:block;position:relative;border-radius:4px;margin:7px 0}
-.mobile-wishlist{margin:0 17px 0 0}
-.mobile-wishlist a{color:#000;font-size:25px}
+.mobile-wishlist{margin:0 9px 0 0}
+.mobile-wishlist a{color:#000;font-size:20px}
 .middle-topbar-left .whatsapp-top-h,.middle-topbar-left .location-top-h{display:inline-block;vertical-align:middle;margin:0 30px 0 0}
 .middle-topbar-left a{color:#878787;text-decoration:none; display: inline-block;}
 .middle-topbar-left a:hover{color:#8e2e65}
@@ -906,6 +906,11 @@ a[type="button"] {-webkit-appearance: none !important;}
 .finance-available-options .pay_details li p + p {text-align: right;}
 .finance-available-options .pay_details li {border-bottom: 1px solid #EFEFEF;}
 .finance_options_provided {text-align: center;}
+.gia-diamond-page h3 {font-family: "Lato";font-size: 24px;margin: 0 0 30px 0;}
+.rowtwo-blocks {text-align: center;}
+.faq-main-list .col-lg-6 {padding-bottom: 30px;}
+.defaultpages-cols h6 {font-family: "Lato";}
+.defaultpages-cols h6 span {line-height: 30px;}
 
 /** mega menuhover for desktop **/
 @media(min-width:1024px){

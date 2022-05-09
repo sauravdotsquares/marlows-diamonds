@@ -142,9 +142,12 @@
                     </a>
                 </div>
                 <div class="mobile-cart-wishlist">
+                <div class="mobile-wishlist mobile-acc">
+                            <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
+                    </div>
                     <div class="mobile-wishlist">
                             <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                        </div>
+                    </div>
                     <div class="mobile-cart">
                         <a href="{{ route('product.cart') }}"> 
                             <img src="/assets/images/cart-color-black.png" alt="cart">
