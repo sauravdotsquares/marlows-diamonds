@@ -487,6 +487,7 @@ Session::forget('recently_view');
 				//variations[$(sel).attr('id')]=$(sel).val();
 				variations.push($(sel).val());
 			});
+			var data_slug = '{{url("/")}}';
 			//console.log(variations);
 			$.ajax({
 				type: 'POST',
@@ -539,7 +540,7 @@ Session::forget('recently_view');
 						$("#carousel .owl-stage .owl-item").removeClass('active');
 						$("#carousel .owl-stage .owl-item.variation_image").remove();
 			
-						$("#carousel .owl-stage").prepend('<div class="owl-item active variation_image" style="width: 654.5px;"><div class="item"><a data-fancybox="gallery2" href="http://dev.marlows-diamond.com/storage/'+res.vari_image+'" data-caption="DS013_90_W_1651666442"><img src="http://dev.marlows-diamond.com/storage/'+res.vari_image+'" alt="DS013_90_W_1651666442"></a></div></div>');
+						$("#carousel .owl-stage").prepend('<div class="owl-item active variation_image" style="width: 654.5px;"><div class="item"><a data-fancybox="gallery2" href="'+data_slug+'/storage/'+res.vari_image+'" data-caption="DS013_90_W_1651666442"><img src="'+data_slug+'/storage/'+res.vari_image+'" alt="DS013_90_W_1651666442"></a></div></div>');
 					}
 				}
 			});
