@@ -122,6 +122,22 @@ Session::forget('recently_view');
 			<div class="product-info-media">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 				
+					<div id="carousel-zoom">
+						
+						@if($prodImages)
+
+							@foreach($prodImages as $images)
+								@php
+									$explode = explode('/',$images->image_url);
+									$explode1 = explode('.',$explode[1]);
+								@endphp
+								<div class="item">
+									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"></a>
+								</div>
+							@endforeach
+						@endif
+						
+					</div>
 					<div id="carousel" class="owl-carousel">
 						
 						@if($prodImages)
@@ -132,7 +148,7 @@ Session::forget('recently_view');
 									$explode1 = explode('.',$explode[1]);
 								@endphp
 								<div class="item">
-									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"><img src="{{asset('/storage/'.$images->image_url)}}" alt="{{$explode1[0]}}"></a>
+									<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"><img src="{{asset('/storage/'.$images->image_url)}}" alt="{{$explode1[0]}}"></a>
 								</div>
 							@endforeach
 						@endif
@@ -517,6 +533,14 @@ Session::forget('recently_view');
 						$('#selected_final_price').val(Math.round(sale_p_final));
 						$('#finaldiamondprice').text(Math.round(sale_p_final));
 					}
+
+					if(res.vari_image!='' && res.vari_image!=null){
+						variation_image = res.vari_image;
+						$("#carousel .owl-stage .owl-item").removeClass('active');
+						$("#carousel .owl-stage .owl-item.variation_image").remove();
+			
+						$("#carousel .owl-stage").prepend('<div class="owl-item active variation_image" style="width: 654.5px;"><div class="item"><a data-fancybox="gallery2" href="http://dev.marlows-diamond.com/storage/'+res.vari_image+'" data-caption="DS013_90_W_1651666442"><img src="http://dev.marlows-diamond.com/storage/'+res.vari_image+'" alt="DS013_90_W_1651666442"></a></div></div>');
+					}
 				}
 			});
 		}
@@ -618,7 +642,7 @@ Session::forget('recently_view');
         $(document).ready(function() {
 	      
 	      jQuery("#carousel").owlCarousel({
-			  autoplay: true,
+			  //autoplay: true,
 			  rewind: true, /* use rewind if you don't want loop */
 			  /*margin: 20,*/
 			   /*
@@ -627,7 +651,7 @@ Session::forget('recently_view');
 			  */
 			  responsiveClass: true,
 			  //autoHeight: true,
-			  autoplayTimeout: 7000,
+			  //autoplayTimeout: 7000,
 			  smartSpeed: 800,
 			  nav: true,
 			  items : 1,
