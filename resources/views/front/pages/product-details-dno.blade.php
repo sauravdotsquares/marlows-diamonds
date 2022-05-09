@@ -535,13 +535,14 @@ Session::forget('recently_view');
 						$('#finaldiamondprice').text(Math.round(sale_p_final));
 					}
 
-					if(res.vari_image!='' && res.vari_image!=null){
+					/*if(res.vari_image!='' && res.vari_image!=null){
 						variation_image = res.vari_image;
 						$("#carousel .owl-stage .owl-item").removeClass('active');
 						$("#carousel .owl-stage .owl-item.variation_image").remove();
 			
 						$("#carousel .owl-stage").prepend('<div class="owl-item active variation_image" style="width: 654.5px;"><div class="item"><a data-fancybox="gallery2" href="'+data_slug+'/storage/'+res.vari_image+'" data-caption="DS013_90_W_1651666442"><img src="'+data_slug+'/storage/'+res.vari_image+'" alt="DS013_90_W_1651666442"></a></div></div>');
-					}
+						jQuery("#carousel").owlCarousel();
+					}*/
 				}
 			});
 		}
