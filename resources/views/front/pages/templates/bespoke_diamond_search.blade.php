@@ -133,17 +133,16 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in">
+										<div class="diamond-values-in colour-list">
 											<ul>
-												@foreach (range('D', 'K') as $alphabet)
-												<li class="selected-this">
+												@foreach (range('D', 'K') as $key => $alphabet)
+												<li class="selected-this @if($key == 0) active-diamond @endif">
 													<button type="button" class="btn">
 									                    {{$alphabet}}
 									                    <input value="{{$alphabet}}" class="diamond-colour" name="colour[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												@endforeach
-
 											</ul>
 										</div>
 									</div>
@@ -167,7 +166,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in">
+										<div class="diamond-values-in clarity-list">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -240,7 +239,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in">
+										<div class="diamond-values-in cut-grade-list">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -283,7 +282,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in">
+										<div class="diamond-values-in polish-list">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -326,7 +325,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in">
+										<div class="diamond-values-in symmetry-list">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -370,7 +369,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in">
+										<div class="diamond-values-in floure-list">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -425,7 +424,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in">
+										<div class="diamond-values-in certi-list">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -582,6 +581,79 @@
             // alert($('#addtobasketselectedrowid').val());
             addtobasketFunction($('#addtobasketselectedrowid').val());
         });
+
+        $('input[name=shape]').on('click', function() {
+            // $('.shape-list ul li').remove();
+            $('.shape-list ul li').each(function(){
+                $(this).removeClass('active-diamond');
+            });
+            if($(this).prop('checked')) {
+                $(this).parent().parent().addClass('active-diamond');
+            }
+        });
+
+        $('input[class=diamond-colour]').on('click', function() {
+            $('.colour-list ul li').each(function(){
+                $(this).removeClass('active-diamond');
+            });
+            if($(this).prop('checked')) {
+                $(this).parent().parent().addClass('active-diamond');
+            }
+        });
+
+        $('input[class=diamond-clarity]').on('click', function() {
+            $('.clarity-list ul li').each(function(){
+                $(this).removeClass('active-diamond');
+            });
+            if($(this).prop('checked')) {
+                $(this).parent().parent().addClass('active-diamond');
+            }
+        });
+
+        $('input[class=diamond-grade]').on('click', function() {
+            $('.cut-grade-list ul li').each(function(){
+                $(this).removeClass('active-diamond');
+            });
+            if($(this).prop('checked')) {
+                $(this).parent().parent().addClass('active-diamond');
+            }
+        });
+
+        $('input[class=diamond-polish]').on('click', function() {
+            $('.polish-list ul li').each(function(){
+                $(this).removeClass('active-diamond');
+            });
+            if($(this).prop('checked')) {
+                $(this).parent().parent().addClass('active-diamond');
+            }
+        });
+
+        $('input[class=diamond-symmetry]').on('click', function() {
+            $('.symmetry-list ul li').each(function(){
+                $(this).removeClass('active-diamond');
+            });
+            if($(this).prop('checked')) {
+                $(this).parent().parent().addClass('active-diamond');
+            }
+        });
+
+        $('input[class=diamond-fluorescence]').on('click', function() {
+            $('.floure-list ul li').each(function(){
+                $(this).removeClass('active-diamond');
+            });
+            if($(this).prop('checked')) {
+                $(this).parent().parent().addClass('active-diamond');
+            }
+        });
+        $('input[class=diamond-certificate]').on('click', function() {
+            $('.certi-list ul li').each(function(){
+                $(this).removeClass('active-diamond');
+            });
+            if($(this).prop('checked')) {
+                $(this).parent().parent().addClass('active-diamond');
+            }
+        });
+
     });
 
     function getNumberFromCurrency(currency) {
