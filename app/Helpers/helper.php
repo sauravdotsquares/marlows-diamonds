@@ -16,6 +16,7 @@ use App\Models\Posts;
 use App\Models\Faqs;
 use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
+use App\Models\Products;
 //use SoapClient;
 
 if (!function_exists("helper_test")) {
@@ -92,7 +93,7 @@ if (!function_exists("single_storage_image_upload")) {
 		$fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
 		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
 		return $fileName;
-		
+
         // $filenameWithExt = $imageUrl->getClientOriginalName();
         ////Get just filename
         // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -100,7 +101,7 @@ if (!function_exists("single_storage_image_upload")) {
         // $extension = $imageUrl->getClientOriginalExtension();
         ////Filename to store
         // $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
-		
+
 		// Image::make($imageUrl)->resize(600,300)->save(storage_path('app/' . $fileNameToStore));
         ////Upload Image
         ////$path = $imageUrl->storeAs('public',$fileNameToStore);
@@ -252,45 +253,53 @@ if (!function_exists('validate_breadcrumb')) {
             return preg_match('/"'.preg_quote($item, '/').'"/i' , json_encode($array));
         }
     }
-	
-	
+
+
 	if (!function_exists("getReviews")) {
     function getReviews()
 		{
 			$reviews = Reviews::all();
 			return ($reviews);
-		}	
+		}
 	}
-	
+
 	if (!function_exists("getCategories")) {
     function getCategories()
 		{
 			$postcategories = PostCategory::all();
 			return ($postcategories);
-		}	
+		}
 	}
-	
+
 	if (!function_exists("getRecentPosts")) {
     function getRecentPosts()
 		{
 			$recentposts = Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
 			return ($recentposts);
-		}	
+		}
 	}
 	if (!function_exists("getRelatedPosts")) {
     function getRelatedPosts()
 		{
 			$relatedposts = Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
 			return ($relatedposts);
-		}	
+		}
 	}
 	if (!function_exists("getFaqs")) {
     function getFaqs()
 		{
 			$faqs = FaqCategory::with('getFAQData')->take(5)->get();
 			return ($faqs);
-		}	
+		}
 	}
+
+    if (!function_exists("getFeaturedProducts")) {
+        function getFeaturedProducts()
+        {
+            $featured = Products::with(['getProductImages'])->where('is_featured',1)->limit(10)->get();
+            return $featured;
+        }
+    }
     /*
     ** Hari Krishna API function
     * @params : data as array
@@ -335,11 +344,11 @@ if (!function_exists('validate_breadcrumb')) {
             //echo $results->toSql(); die;
             if(isset($data['paging']))
                 $results = $results->paginate($data['paging']);
-                //$results = $results->get(); 
+                //$results = $results->get();
             else if(isset($data['num_of_row']))
                 $results = $results->take($data['num_of_row'])->get();
             else
-               $results = $results->get(); 
+               $results = $results->get();
             //echo '<pre>'; print_r($results->toArray()); die;
             return $results->toArray();
         }
@@ -354,21 +363,21 @@ if (!function_exists('validate_breadcrumb')) {
         function getRapnetApiRecords($data=array(),$pageNumber){
 
             $client = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
-            
+
             $params = array('Username'=>'95503', 'Password'=>'@diamond1');
             $client->__soapCall("Login", array($params), NULL, NULL, $output_headers);
-        
+
             $ticket = $output_headers["AuthenticationTicketHeader"]->Ticket;
-        
+
            // $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
-            
+
             $rapnetData = $rapnetAllData = array();
 
             $ns = "http://technet.rapaport.com/";
             $headerBody = array("Ticket" => $ticket);
             $header = new \SoapHeader($ns, 'AuthenticationTicketHeader', $headerBody);
             $client->__setSoapHeaders($header);
-            
+
             if(isset($data['gradeFrom'])){
                 if($data['gradeFrom'] == 'EX'){ $gradeFrom = 'EXCELLENT';
                 } elseif($data['gradeFrom'] == 'VG'){ $gradeFrom = 'VERY_GOOD';
@@ -405,8 +414,8 @@ if (!function_exists('validate_breadcrumb')) {
                 } elseif($data['polishTo'] == 'GD'){ $polishTo = 'Good';
                 }
             }
-            
-            
+
+
             $searchParams = array(
                 "ShapeCollection" => array($data['shape']),
                 "LabCollection" => $data['certificate'],
@@ -430,8 +439,8 @@ if (!function_exists('validate_breadcrumb')) {
                 "SortDirection" => "ASC",
                 "SortBy" => "PRICE"
             );
-        
-        
+
+
             $params1 = array("SearchParams" => $searchParams, "DiamondsFound" => 0);
 
             $results=$client->__soapCall("GetDiamonds", array($params1), NULL, NULL, $output_headers);
@@ -443,7 +452,7 @@ if (!function_exists('validate_breadcrumb')) {
                 $object = new \stdclass;
                 $object->Table1 = '';
             }
-            
+
             if(is_object($object->Table1)){
                 $allData[]=$object->Table1;
             }else{

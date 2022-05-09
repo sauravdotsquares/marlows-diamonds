@@ -2,10 +2,6 @@
 
 @section('content')
     <?php
-        // echo "<pre>";
-        // print_r($getUserDetails->getCustomerAddressFunction->first_name);
-        // // print_r($getUserDetails->getCustomerAddressFunction->last_name);
-        // die;
         if(isset($getUserDetails->getCustomerAddressFunction) && !empty($getUserDetails->getCustomerAddressFunction->first_name)){
             $firstName = $getUserDetails->getCustomerAddressFunction->first_name;
             $lastName = isset($getUserDetails->getCustomerAddressFunction->last_name)?$getUserDetails->getCustomerAddressFunction->last_name:'';
@@ -72,7 +68,8 @@
                                 </div>
                                 <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
                                     <div class="account-order-page">
-                                        <div class="scrollable-table">
+                                        <button id="backListingButton" style="display:none;" class="btn-bg-small">Back</button>
+                                        <div class="scrollable-table" id="orderDataTableSection">
                                             <table id="orderDataTable" border-collapse="collapse">
                                                 <thead>
                                                     <tr>
@@ -84,86 +81,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody id="updateOrderDesign">
-                                                    <!-- <tr>
-                                                        <td class="orderid-accoount"><a href="#">#29486</a></td>
-                                                        <td><span>April 18, 2022</span></td>
-                                                        <td>Cancelled</td>
-                                                        <td><span>£940.00</span> for 1 item</td>
-                                                        <td><a class="btn-bg-small" href="#">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="orderid-accoount"><a href="#">#29486</a></td>
-                                                        <td><span>April 18, 2022</span></td>
-                                                        <td>Cancelled</td>
-                                                        <td><span>£940.00</span> for 1 item</td>
-                                                        <td><a class="btn-bg-small" href="#">View</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="orderid-accoount"><a href="#">#29486</a></td>
-                                                        <td><span>April 18, 2022</span></td>
-                                                        <td>Cancelled</td>
-                                                        <td><span>£940.00</span> for 1 item</td>
-                                                        <td><a class="btn-bg-small" href="#">View</a></td>
-                                                    </tr> -->
+
                                                 </tbody>
                                             </table>
                                         </div>
 
                                         <!-- order view-->
-                                        <div class="vieworderd-list ">
-                                            <p> Order <strong>#29526</strong> was placed on <strong>May 2, 2022</strong> and is currently <strong>Cancelled.</strong></p>
-                                            <div class="view-order-details">
-                                                <h4>Order details</h4>
-                                                <div class="vieworderd-table">
-                                                    <table border-collapse="collapse">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Product</th>
-                                                                <th>Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <a class="order-pr-name" href="#">ABBIE | Marquise shape solitaire Diamond Engagement Ring</a>
-                                                                    <strong class="product-quantity">×1</strong>
-                                                                    <ul class="wc-item-meta">
-                                                                        <li><strong class="wc-item-meta-label">Metal Colour:</strong> <p>18ct White Gold</p></li>
-                                                                        <li><strong class="wc-item-meta-label">Finger Size:</strong> <p>I</p></li>
-                                                                    </ul>
-                                                                </td>
-                                                                <td> £388.80</td>
-                                                            </tr>
-                                                        </tbody>
-                                                        <tfoot>
-                                                        <tr>
-                                                        <th scope="row">Subtotal:</th>
-                                                        <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">£</span>388.80</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                        <th scope="row">Payment method:</th>
-                                                        <td>PayPal</td>
-                                                        </tr>
-                                                        <tr>
-                                                        <th scope="row">Total:</th>
-                                                        <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">£</span>389.00</span> <small class="includes_tax">(includes <span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">£</span>64.80</span> VAT)</small></td>
-                                                        </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                            <div class="view-order-billing-details">
-                                                <h4>Billing address</h4>
-                                                <div class="woocommerce-customer-details">
-                                                    <address>
-                                                        sketch creative<br>Pacific House<br>Wilnecote<br>B77 5PA
-                                                                <p class="woocommerce-customer-details--phone">0121 517 0374</p>
-
-                                                                <p class="woocommerce-customer-details--email">development@sketch-creative.com</p>
-                                                        </address>
-                                                </div>
-                                            </div>
+                                        <div id="showOrderDetailsPage">
 
                                         </div>
 
@@ -190,15 +114,6 @@
                                                     <address>{{isset($getUserDetails->getCustomerAddressFunction->street_address_l1)?$getUserDetails->getCustomerAddressFunction->street_address_l1:''}}<br>{{isset($getUserDetails->getCustomerAddressFunction->street_address_l2)?$getUserDetails->getCustomerAddressFunction->street_address_l2:''}}<br>{{isset($getUserDetails->getCustomerAddressFunction->state)?$getUserDetails->getCustomerAddressFunction->state:''}} {{isset($getUserDetails->getCustomerAddressFunction->state)?$getUserDetails->getCustomerAddressFunction->state:''}}<br>{{isset($getUserDetails->getCustomerAddressFunction->state)?$getUserDetails->getCustomerAddressFunction->state:''}} {{isset($getUserDetails->getCustomerAddressFunction->country_name)?$getUserDetails->getCustomerAddressFunction->country_name:''}} {{isset($getUserDetails->getCustomerAddressFunction->pin_code)?$getUserDetails->getCustomerAddressFunction->pin_code:''}}</address>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
-                                                <div class="addresbox-head">
-                                                    <h3>Shipping Address</h3>
-                                                     <a href="#">Add</a>
-                                                </div>
-                                                <div class="addresbox-block">
-                                                    <p> You have not set up this type of address yet. </p>
-                                                </div>
-                                            </div> -->
                                         </div>
 
                                         <!-- Edit Address box-->
@@ -270,60 +185,6 @@
                                                 </div>
                                             </form>
                                         </div>
-
-                                        <!-- <div class="editaddress-box">
-                                              <h2>Shipping address</h2>
-                                              <form>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="checkout-form-group">
-                                                            <label class="input-label">First Name <abbr class="required">*</abbr></label>
-                                                            <input type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="checkout-form-group">
-                                                            <label class="input-label">Last Name <abbr class="required">*</abbr></label>
-                                                            <input type="text" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="checkout-form-group">
-                                                    <label class="input-label">Company name<span class="optional">(Optional)</span></label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="checkout-form-group">
-                                                    <label class="input-label">Country/Region <abbr class="required">*</abbr></label>
-                                                    <select class="form-control">
-                                                        <option>India</option>
-                                                        <option>UK</option>
-                                                    </select>
-                                                </div>
-                                                <div class="checkout-form-group">
-                                                    <label class="input-label">Street address  <abbr class="required">*</abbr></label>
-                                                    <input type="text" class="form-control" placeholder="House number and street name">
-                                                    <input type="text" class="form-control" placeholder="Apartment, suite, unit, etc. (optional)">
-                                                </div>
-                                                <div class="checkout-form-group">
-                                                    <label class="input-label">Town / City  <abbr class="required">*</abbr></label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="checkout-form-group">
-                                                    <label class="input-label">County <span class="optional">(Optional)</span></label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="checkout-form-group">
-                                                    <label class="input-label">Postcode <abbr class="required">*</abbr></label>
-                                                    <input type="text" class="form-control">
-                                                </div>
-
-                                                <div class="save-changes">
-                                                    <button class="btn-bg-small">Save address</button>
-                                                </div>
-                                            </form>
-                                        </div> -->
-
-
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="accountd" role="tabpanel" aria-labelledby="accountd-tab">
@@ -399,12 +260,15 @@
 @endsection
 
 @section('js')
-<!-- <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script> -->
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function(){
 
 
+        $(document).on('click', "[id^=viewOrderDetails]", function () {
+            var index = parseInt($(this).attr("id").replace("viewOrderDetails",''));
+            getOrderDetailsPage($(this).data('token'));
+        });
 
         $('#showBillingAddress').on('click',function(){
             $('.addresbox-block').hide();
@@ -421,7 +285,31 @@
 
         getOrderList();
 
+        $('#backListingButton').on('click',function(){
+            $('#showOrderDetailsPage').html("");
+            $('#orderDataTableSection').show();
+            $('#backListingButton').hide();
+        });
     });
+
+    function getOrderDetailsPage(datatoken){
+        $('#showOrderDetailsPage').html("");
+        $.ajax({
+            type: 'POST',
+            url: '{{route("get.order.details.pages")}}',
+            data: {
+                '_token': "{{csrf_token()}}",
+                'token':datatoken,
+            },
+            success: function (res) {
+                if(res.html){
+                    $('#showOrderDetailsPage').append(res.html);
+                    $('#orderDataTableSection').hide();
+                    $('#backListingButton').show();
+                }
+            }
+        });
+    }
 
     function getOrderList(){
         console.log("Checking list");
@@ -432,13 +320,10 @@
                 '_token': "{{csrf_token()}}",
             },
             success: function (res) {
-                // console.log(res);
-                $('#updateOrderDesign').append(res.html);
-                $('#orderDataTable').DataTable();
-                // return false;
-                // if (res) {
-                //     $("#categories").append('<option value="">Select Category</option>' + res);
-                // }
+                if(res.html){
+                    $('#updateOrderDesign').append(res.html);
+                    $('#orderDataTable').DataTable();
+                }
             }
         });
     }

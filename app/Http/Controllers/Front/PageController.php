@@ -33,10 +33,9 @@ class PageController
             return view('layouts.errors.404');
         }else{
 
-            $getProducts = Products::with(['getProductImages'])->where('is_featured',1)->limit(10)->get();
 
             $pageData = Pages::where('slug','home')->first();
-            return view('front.index',['data'=>$pageData,'product_data'=>$getProducts]);
+            return view('front.index',['data'=>$pageData]);
         }
     }
 
