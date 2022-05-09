@@ -10,8 +10,6 @@
   		}
   	</style>
 <!-- header banner start -->
-@if(isset($blog_details) && $blog_details != 1 )
-	
 
 <div class="category-banner" style="background-image:url({{asset('storage/'.$data->image)}})">
 	<div class="container">
@@ -23,7 +21,6 @@
 	</div>
 </div>
 
-@endif
 <!-- header banner end -->
 <!-- Blog Listing -->
 <div class="bloglist-wraper">
