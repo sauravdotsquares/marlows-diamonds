@@ -2,7 +2,7 @@
 
 <div class="vieworderd-list ">
     <p> Order <strong>#{{$getOrderDetails->token}}</strong> was placed on <strong>{{$getOrderDetails->created_at->format('M d, Y')}}</strong> and is currently
-        <strong style="color:black !important;">{!!$getOrderDetails->status_details_designs!!}.</strong></p>
+        <strong>{{$getOrderDetails->status_details}}.</strong></p>
     <div class="view-order-details">
         <h4>Order details</h4>
         <div class="vieworderd-table">
@@ -35,9 +35,19 @@
                                 <ul class="wc-item-meta">
                                     @foreach($getDataProduct as $keyR => $valnew)
                                         @if($keyR != 0)
-                                            <li><strong class="wc-item-meta-label">{{ucfirst($keyR)}}:</strong>
-                                                <p>{{ucfirst($valnew)}}</p>
-                                            </li>
+                                            @if($keyR == "certificatelink")
+                                                <li><strong class="wc-item-meta-label">{{ucfirst($keyR)}}:</strong><a href="{{$valnew}}" target="_blank">View</a>
+                                                    {{-- <p>{{ucfirst($valnew)}}</p> --}}
+                                                </li>
+                                            @elseif($keyR == "imagelink")
+                                                <li><strong class="wc-item-meta-label">{{ucfirst($keyR)}}:</strong><a href="{{$valnew}}" target="_blank">View</a>
+                                                    {{-- <p>{{ucfirst($valnew)}}</p> --}}
+                                                </li>
+                                            @else
+                                                <li><strong class="wc-item-meta-label">{{ucfirst($keyR)}}:</strong>
+                                                    <p>{{ucfirst($valnew)}}</p>
+                                                </li>
+                                            @endif
                                         @endif
                                     @endforeach
                                 </ul>

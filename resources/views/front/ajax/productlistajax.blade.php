@@ -17,6 +17,9 @@
 						<a href="#">{{isset($product->title)?$product->title:''}}</a>
 					@endif
 				</div>
+                <div class="product-price">
+                    {{MY_CURRENCY_SYMBOL}} {{$product->ProductVariationMinMaxPrice->MaxPrice}}
+                </div>
 			</div>
 		</div>
 	</div>

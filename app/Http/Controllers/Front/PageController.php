@@ -29,10 +29,8 @@ class PageController
 				return view('front.pages.templates.blog_template',['data'=>$pageCategory, 'blog_details' => 1]);//,'showdata'=>$blogdata]);
 			}
 
-
             return view('layouts.errors.404');
         }else{
-
 
             $pageData = Pages::where('slug','home')->first();
             return view('front.index',['data'=>$pageData]);
@@ -41,8 +39,16 @@ class PageController
 
 	public function myPost(Request $request)
     {
-    	$posts = Posts::orderBy('id','DESC')->where('status', 1)->paginate(6);
-    	if ($request->ajax()) {
+
+    	$getPostCategory = PostCategory::where('slug',$request->slug)->pluck('id')->first();
+
+        if(isset($getPostCategory) && !empty($getPostCategory)){
+            $posts = Posts::orderBy('id','DESC')->where('status', 1)->whereRaw("find_in_set('".$getPostCategory."',categories)")->paginate(6);
+        }elseif(isset($request->slug) && $request->slug == 'blog-resources'){
+            $posts = Posts::orderBy('id','DESC')->where('status', 1)->paginate(6);
+        }
+
+    	if ($request->ajax() && isset($posts) && !empty($posts)) {
     		$view = view('front.pages.blog-data',compact('posts'))->render();
             return response()->json(['html'=>$view]);
         }

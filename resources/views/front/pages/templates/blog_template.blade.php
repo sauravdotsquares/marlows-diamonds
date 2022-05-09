@@ -25,13 +25,13 @@
 <!-- Blog Listing -->
 <div class="bloglist-wraper">
 	<div class="container">
-	<div class="row" id="post-data">	
-		
+	<div class="row" id="post-data">
+
 	</div>
 	<input type="hidden" id="sectionHeight" value="">
 	<input type="hidden" id="scrollFlag" value="">
 	</div>
-</div>		
+</div>
 <div class="ajax-load text-center" style="display:none">
 	<p><img src="https://www.marlows-diamonds.co.uk/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif">Loading More post</p>
 </div>
@@ -40,9 +40,9 @@
 <div class="rating-review-block">
 	<div class="owl-carousel owl-theme slider-review">
 	    @include('front.pages.reviews')
-	</div>	
+	</div>
 </div>
-</div>			
+</div>
 
 
 
@@ -70,6 +70,7 @@
 				data: {
                         '_token': "{{csrf_token()}}",
                         'page':page,
+                        'slug':'{{request()->segment(1)}}'
                     },
 	            beforeSend: function()
 	            {
