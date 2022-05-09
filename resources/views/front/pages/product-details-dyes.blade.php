@@ -90,8 +90,8 @@
 @section('content')
 
 <?php
-	// echo "<pre>";
-	// print_r($data->getProductVariation[0]->regular_price);
+	// echo "adsd<pre>";
+	// print_r($data);
 	// die;
 ?>
 
@@ -102,9 +102,9 @@
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
-				
+
 					<div id="carousel" class="owl-carousel">
-						
+
 						@if($prodImages)
 
 							@foreach($prodImages as $key=>$images)
@@ -117,7 +117,7 @@
 								</div>
 							@endforeach
 						@endif
-						
+
 					</div>
 
 				<video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
@@ -128,7 +128,7 @@
 					@endif
 				</video>
 
-				
+
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -189,7 +189,7 @@
 					</div>
 
 					<div class="type-variations-row">
-						<div class="type-variations-col">
+						<div class="type-variations-col{{($data->diamond_shape != 'ROUND')?'-one':''}}">
 							<label class="label"> Clarity </label>
 							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
                     			<option value="">Choose an option</option>
@@ -202,15 +202,17 @@
 								<option value="SI2" selected="selected">SI2 - Small Inclusions</option>
 							</select>
 						</div>
-						<div class="type-variations-col">
-							<label class="label"> Cut Grade </label>
-							<select class="form-control" name="diamond-grade" id="diamond-grade">
-                    			<option value="">Choose an option</option>
-								<option value="EX" selected="selected">Excellent</option>
-								<option value="VG">Very Good</option>
-								<option value="GD">Good</option>
-							</select>
-						</div>
+                        @if(isset($data->diamond_shape) && $data->diamond_shape == 'ROUND')
+                            <div class="type-variations-col">
+                                <label class="label"> Cut Grade </label>
+                                <select class="form-control" name="diamond-grade" id="diamond-grade">
+                                    <option value="">Choose an option</option>
+                                    <option value="EX" selected="selected">Excellent</option>
+                                    <option value="VG">Very Good</option>
+                                    <option value="GD">Good</option>
+                                </select>
+                            </div>
+                        @endif
 					</div>
 					<div class="type-variations-row">
 						<div class="type-variations-col-one">
@@ -235,7 +237,9 @@
 											<th>Carat</th>
 											<th>Colour</th>
 											<th>Clarity</th>
+                                            @if(isset($data->diamond_shape) && $data->diamond_shape == 'ROUND')
 											<th class="cut_grade_th" style="display: block;">Cut</th>
+                                            @endif
 											<th>Cert</th>
 											<th>Price</th>
 											<th>Certificate</th>
@@ -321,7 +325,7 @@
 		</div>
 		<div class="related-products-list">
 			<div id="relatedProductData" class="related-product">
-				
+
 			</div>
 
 		</div>
@@ -452,8 +456,8 @@
 	<div class="rating-review-block">
 		<div class="owl-carousel owl-theme slider-review">
 		@include('front.pages.reviews')
-		</div>	
-	</div>	
+		</div>
+	</div>
 </div>
 
 
@@ -540,7 +544,7 @@
 		$(document).ready(function(){
             getRelatedProduct();
 
-			getCustomFilter(); getProdVideo();
+			getCustomFilter(); //getProdVideo();
 
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
@@ -564,7 +568,7 @@
 				getSelectedAttributePrice();
 			});
 
-			
+
 
 			$('#addtobasket').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}');
@@ -576,7 +580,7 @@
 
 			$(document).on('change','#metal-type',function(){
 				getProdVideo('onChange');
-				
+
 			});
 			$(document).on('click','.refinedata',function(){
 
@@ -585,11 +589,11 @@
 				$("#productCertificateLink").attr('href',$(this).data('certurl'));
 
 				getFinalPrice();
-				
+
 			});
 		})
 
-		
+
 
 		function getCustomFilter(){
 
@@ -603,14 +607,14 @@
                 success: function (res) {
 
 					$('#filterDataDesign .type-variations-row').html(res);
-                    return false;
+                    getProdVideo();
 
                 }
             });
 		}
 		function getProdVideo(action=null){
 			var metal_type = $('#metal-type :selected').val();
-			
+
 			$.ajax({
 				type: 'POST',
 				url: '{{route("get-product-video")}}',
@@ -678,14 +682,14 @@
 		function getSelectedAttributePrice(){
 			$('#finaldiamondprice').text("Pending...");
 			$('#addtobasket').addClass('disabledAnchor');
-			
+
 			var caratVal = $('#carat').val();
 			var diamondColor = $('#diamond-colour').val();
 			var diamondClarity = $('#diamond-clarity').val();
 			var diamondGrade = $('#diamond-grade').val();
 			var diamondCertificate = $('#diamond-certificate').val();
 			var diamondShape = $('#selected_diamond_shape').val();
-			var variation_price = $('#selected_variation_price').val(); 
+			var variation_price = $('#selected_variation_price').val();
 			$.ajax({
                 type: 'POST',
                 url: '{{route("products-final-price-with-diamond")}}',
@@ -703,7 +707,7 @@
                 },
                 success: function (res) {
 					$('#finaldiamondprice').html("");
-					
+
 					if(res){
 						$('#finaldiamondprice').text(res.finalPrice);
 						$('#selected_final_price').val(res.finalPrice);
@@ -714,7 +718,7 @@
 						$('#addtobasket').removeClass('disabledAnchor');
 					}
                 }
-                
+
             });
 
 			$.ajax({
