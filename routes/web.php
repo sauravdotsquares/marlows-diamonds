@@ -231,6 +231,7 @@ Route::namespace('Front')->group(function () {
 	Route::post('users/update-customer-account-details','LoginController@changeCustomerAccountDetails')->name('update.customer.account.details');
 
 	Route::post('users/get-order-details','LoginController@getOrderDetails')->name('get.order.details');
+	Route::post('users/get-order-details-page','LoginController@getOrderDetailsPage')->name('get.order.details.pages');
 	/*
 	*** Reset Password
 	*/

@@ -100,7 +100,7 @@
                                 Why stick to classic solitaires when you can have a stunning multi-stone ring in a unique arrangement?
                             </div>
                             <div class="product-action-btn">
-                                <a class="btn-bg-small" href="{{asset('engagement-rings')}}">Shop Now</a>
+                                <a class="btn-bg-small" href="{{asset('product-category/engagement-rings/multi-stone')}}">Shop Now</a>
                             </div>
                         </div>
                     </div>

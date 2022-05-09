@@ -6,7 +6,9 @@
             <td>{{isset($refineData['Carat'])?$refineData['Carat']:''}}</td>
             <td>{{isset($refineData['Color'])?$refineData['Color']:''}}</td>
             <td>{{isset($refineData['Clarity'])?$refineData['Clarity']:''}}</td>
-            <td>{{isset($refineData['PolishTitle'])?$refineData['PolishTitle']:''}}</td>
+            @if(isset($refineData['Shape']) && $refineData['Shape'] == "ROUND")
+                <td>{{isset($refineData['PolishTitle'])?$refineData['PolishTitle']:''}}</td>
+            @endif
             <td>
                 <a href="#" target="_blank" class="certificate-link">{{isset($refineData['Lab'])?$refineData['Lab']:''}}</a>
             </td>
