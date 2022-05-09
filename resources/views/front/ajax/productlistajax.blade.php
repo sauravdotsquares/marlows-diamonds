@@ -3,12 +3,7 @@
 		<div class="product-items-item-info">
 			<div class="product-items-item-image">
 
-					@if(isset($product->slug) && !empty($product->slug))
-						<a href="{{asset('product/'.$product->slug)}}">
-					@else
-						<a href="#">
-					@endif
-
+				<a href="{{asset('product/'.$product->slug)}}">
 					@if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
 						<img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="image">
 					@endif

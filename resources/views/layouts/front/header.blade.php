@@ -1,4 +1,4 @@
-@inject('header_settings', 'App\Models\Settings') 
+@inject('header_settings', 'App\Models\Settings')
 
 <!-- Header Start here -->
 <header class="header-main">
@@ -20,7 +20,7 @@
                 <div class="item">
                     {!!$header_settings->get_options('field4')!!}
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
     <!-- Mobile Top end here -->
@@ -31,7 +31,7 @@
             <p>{{$header_settings->get_options('top-bar-desktop')}}</p>
         </div>
     </div>
-    <!--Top bar end --> 
+    <!--Top bar end -->
 
     <!--middle Top bar start -->
     <div class="middle-topbar">
@@ -65,7 +65,7 @@
                             <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
                         </li>
                         <li class="my-whishlist-blk">
-                            <?php  
+                            <?php
                                 $getArray = session('wishlist');
                                 if(isset($getArray) && count($getArray)){
                                     $wishlistIcon = 'fa-heart';
@@ -80,9 +80,11 @@
                         </li> -->
                         <li class="dropdown">
                             <a href="{{ route('product.cart') }}">
-                               
-                                    <img src="{{asset('')}}assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
-                            
+
+                                <img src="{{asset('')}}assets/images/cart-color.png" alt="cart">
+                                <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
+                                {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
+
                             </a>
                             <div class="dropdown-menu">
                                 <div class="row total-header-section">
@@ -144,7 +146,9 @@
                             <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                         </div>
                     <div class="mobile-cart">
-                        <a href="{{ route('product.cart') }}"> <img src="/assets/images/cart-color-black.png" alt="cart">
+                        <a href="{{ route('product.cart') }}"> 
+                            <img src="/assets/images/cart-color-black.png" alt="cart">
+                            <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
                         <span class="mob-cart-number">{{ count((array) session('cart')) }}</span>
                         </a>
                     </div>
@@ -178,11 +182,15 @@
 
                                 @foreach($navbars as $navbarItem)
                                     <li class="level-zero submenu {{$navbarItem['class_level']}}">
+                                        <span>
                                         <a href="{{url($navbarItem['href'])}}">{{$navbarItem['text']}}
-                                            @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
-                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                            @endif
+                                            
                                         </a>
+                                        @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
+                                            <i class="fa fa-angle-down {{$navbarItem['class_level']}}" aria-hidden="true"></i>
+                                        @endif
+                                            
+                                        </span>
                                         @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
                                             @include('layouts.front.menus-sub', ['subs' => $navbarItem['children']])
                                         @endif
@@ -199,88 +207,28 @@
                     <div class="remve-mobile-serch-box">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     </div>
-                    <form>
+                    <form ng-controller="CommonController" >
                         <div class="formgroup">
-                            <input type="text" name="search" class="typeahead" placeholder="Search for product..">
+                            <input type="text" name="search" class="typeahead" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
                             <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
-                        <div class="search-suggestion">
-                            <div class="search-suggestion-list">
-                                <a href="#">
+                        <div class="search-suggestion" ng-if="searchResults.length>0" ng-cloak>
+                            <div class="search-suggestion-list" ng-repeat="result in searchResults">
+                                <a href="/product/<%result.slug%>">
                                     <div class="search-suggestion-img">
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
+                                        <img src="{{asset('/storage')}}/<%result.get_product_images.image_url%>" alt="Marlow's Diamond">
                                     </div>
                                     <div class="search-suggestion-text">
                                         <div class="search-suggestion-title">
-                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
+                                            <%result.title%>
                                         </div>
-                                        <div class="search-suggestion-price">
-                                            <span>£ 1,088.10</span>
-                                                -
-                                            <span>£ 1,674.00</span>
-                                        </div>
-
+                                      
                                     </div>
                                 </a>
                             </div>
-
-                            <div class="search-suggestion-list">
-                                <a href="#">
-                                    <div class="search-suggestion-img">
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
-                                    </div>
-                                    <div class="search-suggestion-text">
-                                        <div class="search-suggestion-title">
-                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
-                                        </div>
-                                        <div class="search-suggestion-price">
-                                            <span>£ 1,088.10</span>
-                                                -
-                                            <span>£ 1,674.00</span>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="search-suggestion-list">
-                                <a href="#">
-                                    <div class="search-suggestion-img">
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
-                                    </div>
-                                    <div class="search-suggestion-text">
-                                        <div class="search-suggestion-title">
-                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
-                                        </div>
-                                        <div class="search-suggestion-price">
-                                            <span>£ 1,088.10</span>
-                                                -
-                                            <span>£ 1,674.00</span>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="search-suggestion-list">
-                                <a href="#">
-                                    <div class="search-suggestion-img">
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/09/RL113_00003.jpg" alt="img">
-                                    </div>
-                                    <div class="search-suggestion-text">
-                                        <div class="search-suggestion-title">
-                                            ELIZA | <strong>Enga</strong>gement and Eternity Style Band in One, an exclusive Bubble style ring
-                                        </div>
-                                        <div class="search-suggestion-price">
-                                            <span>£ 1,088.10</span>
-                                                -
-                                            <span>£ 1,674.00</span>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-
+                        </div>
+                        <div class="search-suggestion" ng-if="searchResults.length==0" ng-cloak>
+                            <p>No Product Found.</p>
                         </div>
                     </form>
 
@@ -297,13 +245,13 @@
             <div class="post-bar-wraper flexed flex-justify-between flex-items-center">
                 <div class="post-bar-left">
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
-                </div>  
+                </div>
                 <div class="post-bar-center">
                     {!!$header_settings->get_options('header-center')!!}
-                </div>  
+                </div>
                 <div class="post-bar-right">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
-                </div>  
+                </div>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
 	<div class="breadcrumb-navs">
 		<ul>
 			<li>
-				<a href="#">Home</a>
+				<a href="{{env('APP_URL')}}">Home</a>
 			</li>
 			<li>
 				<a href="#">Custom Engagement Rings</a>
@@ -32,7 +32,7 @@
 					</div>
 					<div class="blos-list-date">
 							<span>Published by</span>
-							<span><i class="fa fa-user" aria-hidden="true"></i>  <a href="#"> MarlowsDiamonds at</a> </span>
+							<span><i class="fa fa-user" aria-hidden="true"></i>   MarlowsDiamonds at </span>
 							<span><i class="fa fa-clock-o" aria-hidden="true"></i> {{isset($data->created_at)?$data->created_at->format('M d, Y'):""}}</span>
 						</div>
 					<div class="blog-main-img">

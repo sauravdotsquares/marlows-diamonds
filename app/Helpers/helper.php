@@ -293,7 +293,15 @@ if (!function_exists('validate_breadcrumb')) {
 		}
 	}
 
-    if (!function_exists("getFeaturedProducts")) {
+	if (!function_exists("getEngagementFaqs")) {
+    function getEngagementFaqs()
+		{
+			$getengagementfaqs = Faqs::take(50)->orderBy('id','DESC')->where('categories', 0)->get();
+			return ($getengagementfaqs);
+		}
+	}
+
+	if (!function_exists("getFeaturedProducts")) {
         function getFeaturedProducts()
         {
             $featured = Products::with(['getProductImages'])->where('is_featured',1)->limit(10)->get();

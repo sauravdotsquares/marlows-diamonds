@@ -83,6 +83,7 @@
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.css" rel="stylesheet" />
 
 @endsection
 
@@ -100,6 +101,25 @@
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
+				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
+				
+					<div id="carousel" class="owl-carousel">
+						
+						@if($prodImages)
+
+							@foreach($prodImages as $key=>$images)
+								@php
+									$explode = explode('/',$images->image_url);
+									$explode1 = explode('.',$explode[1]);
+								@endphp
+								<div class="item @if($key==0) active @endif">
+									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"></a>
+								</div>
+							@endforeach
+						@endif
+						
+					</div>
+
 				<video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
 					@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 						<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
@@ -108,6 +128,7 @@
 					@endif
 				</video>
 
+				
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -273,8 +294,8 @@
 					<a class="store-locator" href="{{asset('visit-us')}}">Store Locator</a>
 					<a target="_blank" id="productCertificateLink" class="view-certificate" href="#">View Certificate</a>
 				</div>
-				<div class="finance-available">
-					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
+				<div class="finance-available" ng-controller="DekopayController">
+					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
 							<span>see options</span>
@@ -299,91 +320,8 @@
 			</div>
 		</div>
 		<div class="related-products-list">
-			<div id="relatedProductData" class="owl-carousel owl-theme related-product st-arrows">
-				{{-- <div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-143_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">AALIYAH | Four Claw split shoulder Solitaire Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/MTSS-707_00003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ABBIE | Marquise shape solitaire Diamond Engagement Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-1027_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ADDISON | Slim Twist Set Diamond Engagement Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> --}}
+			<div id="relatedProductData" class="related-product">
+				
 			</div>
 
 		</div>
@@ -512,9 +450,9 @@
 <!-- Section Reviews -->
 <div class="container">
 	<div class="rating-review-block">
-					<div class="owl-carousel owl-theme slider-review">
-					@include('front.pages.reviews')
-					</div>	
+		<div class="owl-carousel owl-theme slider-review">
+		@include('front.pages.reviews')
+		</div>	
 	</div>	
 </div>
 
@@ -540,7 +478,7 @@
 					<form method="post" action="{{ route('contact') }}">
 					@csrf
 						<div class="form-controls">
-							<input type="text" name="name" id="name" class="{{ $errors->has('name') ? 'error' : '' }}" placeholder="Your Name">
+							<input type="text" name="title" id="title" class="{{ $errors->has('title') ? 'error' : '' }}" placeholder="Your Name">
 							<!-- Error -->
 							@if ($errors->has('name'))
 							<div class="error">
@@ -565,10 +503,10 @@
 							@endif
 						</div>
 						<div class="form-controls">
-							<textarea name="message" id="message" class="{{ $errors->has('message') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
-							@if ($errors->has('message'))
+							<textarea name="description" id="description" class="{{ $errors->has('description') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
+							@if ($errors->has('description'))
 							<div class="error">
-								{{ $errors->first('message') }}
+								{{ $errors->first('description') }}
 							</div>
 							@endif
 						</div>
@@ -589,88 +527,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="col-lg-12">
-			<!-- Success message -->
-			@if(Session::has('success'))
-				<div class="alert alert-success">
-					{{Session::get('success')}}
-				</div>
-			@endif
-			<div class="visit-form">
-
-			<div class="paymentDetail" id="detailed" style="display: block;">
-									<ul class="payments">
-                                                        <li> <p> Price : </p><p>
-
-                            <input type="hidden" min="10" interval="0.01" value="1026" id="totalOrder">
-                            £<span id="totalOrderText" data-val="324.00">1026.00</span>
-
-                        </p>
-                     </li>
-
-
-
-                                        <li>
-                                        <p> Finance Type : </p>
-                                        <p>
-											<select id="terms" name="term">
-												                  <option value="ONIB12-16.9" selected=""> 12  Months Credit 16.9%</option>
-                                 <option value="ONIB18-16.9"> 18  Months Credit 16.9%</option>
-                                 <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
-                                 <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
-                                 <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
-                                                            </select>
-                </p>
-                                        </li>
-
-
-
-                     										 <li> <p>Deposit : 	</p><p>
-											<select id="payed" name="percentage">
-													                   <option value="10" selected="">10%</option>
-                                    <option value="20">20%</option>
-                                    <option value="30">30%</option>
-                                    <option value="40">40%</option>
-                                    <option value="50">50%</option>
-                                                             </select>
-                                        </p>
-										</li>
-                                    </ul>
-                                    <p class="deko-calculate">
-                                        <button id="calculatebutton" class="btn">Calculate</button>
-                                    </p>
-									<ul class="pay_details" id="OCFDefault">
-										<li class="clearfix"> <p> Monthly Payment </p><p class="priced">  £   <span id="perMonths">83.66</span>  </p> </li>
-										<li class="clearfix"> <p> Cash Price </p> <p class="priced">   £  <span id="cashPrices">1026.00</span> </p> </li>
-										<li class="clearfix"> <p> Deposit to Pay</p><p class="priced">  £   <span id="Deposited">102.60</span>   </p> </li>
-										<li class="clearfix"> <p> Loan Amount </p><p class="priced">  £    <span id="loanAmt">923.40</span></p> </li>
-										<li class="clearfix"> <p> Loan Repayment </p><p class="priced">£  <span id="loanRepay">1003.90</span>  </p> </li>
-										<li class="clearfix"> <p> Cost of Loan</p> <p class="priced">   £  <span id="costLoan">80.50</span>  </p> </li>
-										<li class="clearfix"> <p> Total Amount Payable </p> <p class="priced"> £   <span id="totalAmt">1106.50</span>    </p> </li>
-										<li class="clearfix"> <p> Number of Monthly Payments </p> <p class="priced"> <span id="noTerm">12</span>  </p></li>
-									</ul>
-                                    <p class="finance_options_provided">Finance options powered by <img src="https://www.marlows-diamonds.co.uk/wp-content/themes/betheme-child//images/Deko_landscape_colour_whiteBG200px_wide.png" style="height:25px;" class="nolazy" alt="DEKO"></p>
-
-									<input type="hidden" id="enableId" value="OCFDefault"> <br>
-									<div>
-
-									</div>
-
-								</div>
-			</div>
-		</div>
-      </div>
-    </div>
-  </div>
-</div>
+@include('front.includes.dekopay-finance-options')
 
 @endsection
 
@@ -678,7 +535,7 @@
 
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
 	<script>
 		$(document).ready(function(){
             getRelatedProduct();
@@ -771,7 +628,7 @@
 					if(res.regular_price!='' || res.regular_price!='0.00')
 						$('#selected_variation_price').val(res.regular_price);
 					else
-						$('#selected_variation_price').val(res.sales_price);
+						$('#selected_variation_price').val(res.sale_price);
 					if(action!=null && action=='onChange')
 						getFinalPrice();
 				}
@@ -928,6 +785,9 @@
                 }
             });
         }
-
+        $(document).on('click','.product-gallery__trigger',function(e){
+	      		e.preventDefault();
+	      		$('#carousel .item.active a').click();
+	      });
 	</script>
 @endsection

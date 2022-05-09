@@ -6,7 +6,27 @@ $interpolateProvider.endSymbol('%>');
 
 var base_url = "/api/v1/";
 
+/******** Define the Common controller  ***************/
 
+MarlowsAPP.controller("CommonController",function($scope, $http,$compile) {
+    
+    $scope.searchProducts = function(){
+        //console.log($scope.search);
+        var url  = base_url+"searchProducts";
+        $http({
+            method  : 'POST',
+            url     : url,
+            data    : {name:$scope.search}
+
+        }).success(function(data) {
+           // console.log(data);
+            $scope.searchResults = data;
+            
+        });
+    }
+
+   
+});
 /******** Define the diamond search controller  ***************/
 
 MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,$window,$sce, $timeout,diamondSearchService) {
@@ -118,25 +138,50 @@ MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
 
    
 });
+/******** Define the Dekopay controller  ***************/
 
+MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
+    
+    $scope.financeOptions = function(){
+        $scope.productPrice = $("#finaldiamondprice").text();
+        $('#totalOrder').val($scope.productPrice);
+        $('#totalOrderText').text($scope.productPrice);
+        $('#totalOrderText').attr('data-val',$scope.productPrice);
+        $('#financeAvailableModal').modal('show');
+        //console.log($scope.search);
+        /*var url  = base_url+"searchProducts";
+        $http({
+            method  : 'POST',
+            url     : url,
+            data    : {name:$scope.search}
+
+        }).success(function(data) {
+           // console.log(data);
+            $scope.searchResults = data;
+            
+        });*/
+    }
+
+   
+});
 /*
 *** Angular JS Services
 */
 
 MarlowsAPP.service('diamondSearchService', function($http, $location){
-var apiUrl = base_url;
-this.diamondSearch= function(limit,currentPage, nextpage,shape,carat_min,carat_max,colour,clarity,grade,polish,symmetry,fluorescence,certificate){
-    
-    var apiUrls = '';
-    if(nextpage == ''){
-        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+1+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
-    } else {
-        apiUrls = apiUrl+'getDiamondDataFromAPI?page='+currentPage+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
-    }
-    return $http({
-        method: 'GET',
-        url: apiUrls
-    });
-};
+    var apiUrl = base_url;
+    this.diamondSearch= function(limit,currentPage, nextpage,shape,carat_min,carat_max,colour,clarity,grade,polish,symmetry,fluorescence,certificate){
+        
+        var apiUrls = '';
+        if(nextpage == ''){
+            apiUrls = apiUrl+'getDiamondDataFromAPI?page='+1+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
+        } else {
+            apiUrls = apiUrl+'getDiamondDataFromAPI?page='+currentPage+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
+        }
+        return $http({
+            method: 'GET',
+            url: apiUrls
+        });
+    };
 });
 

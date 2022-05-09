@@ -10,8 +10,6 @@
   		}
   	</style>
 <!-- header banner start -->
-@if(isset($blog_details) && $blog_details != 1 )
-	
 
 <div class="category-banner" style="background-image:url({{asset('storage/'.$data->image)}})">
 	<div class="container">
@@ -23,7 +21,6 @@
 	</div>
 </div>
 
-@endif
 <!-- header banner end -->
 <!-- Blog Listing -->
 <div class="bloglist-wraper">
@@ -31,9 +28,13 @@
 	<div class="row" id="post-data">	
 		
 	</div>
+	<input type="hidden" id="sectionHeight" value="">
+	<input type="hidden" id="scrollFlag" value="">
 	</div>
 </div>		
-
+<div class="ajax-load text-center" style="display:none">
+	<p><img src="https://www.marlows-diamonds.co.uk/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif">Loading More post</p>
+</div>
 <!-- Section Reviews -->
 <div class="container">
 <div class="rating-review-block">
@@ -45,9 +46,7 @@
 
 
 
-<div class="ajax-load text-center" style="display:none">
-	<p><img src="https://www.marlows-diamonds.co.uk/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif">Loading More post</p>
-</div>
+
 
 <script type="text/javascript">
 	var page = 1;
@@ -55,10 +54,11 @@
 	    loadMoreData(page);
 	});
 	$(window).scroll(function() {
-	    if($(window).scrollTop() + $(window).height() == $(document).height()) {
-			
+	    var scroll = $('#scrollFlag').val();
+            if (scroll==0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()-300))) {
 	        page++;
 	        loadMoreData(page);
+	        $('#scrollFlag').val(1);
 	    }
 	});
 
@@ -84,6 +84,8 @@
 	            }
 	            $('.ajax-load').hide();
 	            $("#post-data").append(data.html);
+	            $('#sectionHeight').val($( '#post-data' ).height());
+                $('#scrollFlag').val(0);
 	        })
 	        .fail(function(jqXHR, ajaxOptions, thrownError)
 	        {

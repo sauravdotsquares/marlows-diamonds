@@ -90,7 +90,7 @@ h2,.heading-h-two{font-size:22px}
 .laboratory-grown {padding: 40px 0;}
 .vieworderd-table {overflow-x: scroll;}
 .account-main-content #orderDataTable_filter, .account-main-content #orderDataTable_paginate {float: none;margin: 20px 0 0 0;}
-.joinour-mailing{ max-width: 100%;}
+.joinour-mailing{ max-width: 100%; padding: 30px 0;}
 .width-50 {flex: 0 0 100%;-ms-flex: 0 0 100%;max-width: 100%;}
 .buying-engagementguide-page h1{ font-size: 22px;}
 .buying-engagementguide-page p {font-size: 14px;line-height: 23px;}
@@ -114,6 +114,11 @@ h2,.heading-h-two{font-size:22px}
 .accounts-heading h2 {font-size: 15px;}
 .show-collapse .footerlinks-col {display: block;}
 .show-collapse .footer-title h4.accordian-toggle::before {display: none;}
+.certified-diamond-form h2 {font-size: 24px;}
+.certified-diamond-img {padding: 0 0 20px 0;}
+.shopfrom-block {padding: 30px 0 20px 0;}
+.container {padding-left: 15px;padding-right: 15px;}
+.mob-cart-number {right: -5px;}
 }
 
 @media(max-width: 500px){
@@ -123,8 +128,6 @@ h2,.heading-h-two{font-size:22px}
 	.product-to-wishlist, .product-to-basket {display: inline-block;vertical-align: middle;}
 	.product-req-appointment{ margin-top: 10px; }
 	.finance-available a p{font-size: 14px;}
-	
-
 }
 
 
@@ -147,7 +150,7 @@ h2,.heading-h-two{font-size:32px}
 .middle-topbar-left a i {font-size: 15px;padding: 0 7px 0 0;}
 .post-bar-wraper p {font-size: 11px;}
 .category-list-wrap {width: 100%;padding-right: 0;}
-.category-sidebar-wrap{ width: 100%; }
+.category-sidebar-wrap{ width: 100%; margin-top: 20px;}
 .product-filter-col:first-child{max-width: 100%;flex: 0 0 100%;-ms-flex: 0 0 100%; border-right: none;}
 .product-filter-col{max-width: 100%;flex: 0 0 100%;-ms-flex: 0 0 100%;}
 .product-items-item-name a{ font-size: 14px; }
@@ -165,8 +168,11 @@ h2,.heading-h-two{font-size:32px}
 .whatdimond-cols-text {font-size: 18px;}
 .lifestyle-heading {font-size: 22px;margin: 0 0 20px 0;}
 .whatdiamond-tables table tr td, .whatdiamond-tables table tr th {padding: 7px 6px;font-size: 13px;}
-.cols-ryt-tags .filter-tags-col {max-width: 16%;flex: 0 0 16%;-ms-flex: 0 0 16%;padding: 7px 15px;}
+.cols-ryt-tags:not(.wedding-rings, .diamond-jewellery) .filter-tags-col {max-width: 16%;flex: 0 0 16%;-ms-flex: 0 0 16%;padding: 7px 15px;}
 .filter-tags-row{ justify-content: center;}
+.certified-diamond-form h2 {font-size: 22px;}
+.certified-diamond-img {padding: 0;}
+.rating-review-block {padding: 30px 40px 40px;}
 }
 
 
@@ -175,6 +181,7 @@ h2,.heading-h-two{font-size:32px}
  	.m-quote-pop::after{ right: 11px; }
 	 .takeon-right {padding: 40px 0 0 0;text-align: center;}
 	 .chepaest-lab-left {padding: 40px 20px; max-width: 100%;}
+	 .product-grid-items-item {flex: 0 0 33%;max-width: 33%;-ms-flex: 0 0 33%;}
 }
 
 
@@ -199,14 +206,18 @@ h3,.heading-h-three{font-size:28px}
 	padding: 8px 5px;
 	display: inline-block;
 }
+.product-grid-items-item {
+	flex: 0 0 33%;
+	max-width: 33%;
+	-ms-flex: 0 0 33%;
+}
+.category-sidebar-wrap {width: 30%;}
+.category-list-wrap {width: 69%;}
 
 }
 
 /** media only for header responsive **/
-@media(max-width:767px){
-.post-bar{display:none}
-.menus-wraper{max-width: 290px;}
-}
+
 @media(max-width:1024px){
 .navbars-show{ overflow: hidden;}
 .top-bar{display:none}
@@ -228,15 +239,28 @@ h3,.heading-h-three{font-size:28px}
 .navbar-toggler{display:block; padding: 0;}
 .menus-wraper .navbar-toggler{padding:0 15px 0 16px}
 .main-navigaiton .nav-navbars .level-zero{display:block}
-.main-navigaiton .nav-navbars .level-zero>a{display:block}
-.main-navigaiton .nav-navbars .level-zero>a{display:block;color:#000;padding:10px 20px;text-transform:capitalize;font-size:14px}
-.main-navigaiton .nav-navbars .level-zero>a .fa-angle-down{float:right;font-size:18px;color:#000;width:30px;height:22px;text-align:center;position:relative;z-index:1}
+
+.main-navigaiton .nav-navbars .level-zero > span > a{display:block;color:#000;padding:10px 20px;text-transform:capitalize;font-size:14px}
+.main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: 25px;top: 12px;color: #000;font-size: 20px;z-index: 11; cursor: pointer; width: 22px; text-align: center;}
+
 .main-navigaiton .nav-navbars .level-zero .inner-submenu{position:relative;top:0;width:100%;box-shadow:none;padding:8px 0 10px 30px}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one .inner-submenu{right:0;top:0;padding-top:0;padding-left:17px}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li a{padding:9px 20px 9px 9px;text-transform:capitalize;color:#000;font-size:13px}
-.main-navigaiton .nav-navbars .level-zero .inner-submenu li a .fa-angle-right{font-size:17px;color:#000;width:30px;height:22px;text-align:center;position:relative;z-index:1}
+
 .mobile-serch-box{display:flex}
 .remve-mobile-serch-box{display:block;background:#ccc;width:45px;color:#fff;font-size:22px;text-align:center;padding:2px 10px;height:40px;line-height:33px;cursor:pointer}
+.main-navigaiton .nav-navbars .level-zero.show-menus > .inner-submenu{display:block;}
+.main-navigaiton .nav-navbars .level-zero .inner-submenu li .fa-angle-right {position: absolute;right: 25px;top: 9px;color: #000;font-size: 20px;cursor: pointer; text-align: center; width: 22px;}
+.main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one.show-menus .inner-submenu{display: block;}
+
+.search-suggestion {width: 98%;margin: auto;}
+.post-bar{display:none}
+
+}
+
+@media(max-width:767px){
+	
+	.menus-wraper{max-width: 290px;}
 }
 
 @media(min-width: 992px) and (max-width: 1199px){
@@ -245,14 +269,15 @@ h3,.heading-h-three{font-size:28px}
 	.takeon-right {padding: 0 0 0;}
 	.chepaest-lab-left h3 {font-size: 20px;margin: 0 0 14px 0;}
 	.chepaest-lab-left {padding: 20px 20px;}
-	.chepaest-lab-left p {
-		font-size: 13px;
-		line-height: 27px;
-		margin: 0 0 10px 0;
-	}
+	.chepaest-lab-left p {font-size: 13px;line-height: 27px;margin: 0 0 10px 0;}
+	.shape-list ul li {flex: 0 0 33%;-ms-flex: 0 0 33%;max-width: 33%;}
+	.diamond-field-labels {font-size: 12px;}
 }
-@media(min-width: 1200px) and (max-width: 1400px){
+
+@media(min-width: 1200px) and (max-width: 1420px){
 	.chepaest-lab-left {max-width: 640px;padding: 18px 38px;}
 	.chepaest-lab-left p {font-size: 14px;line-height: 23px;margin: 0 0 15px 0;}
 	.chepaest-lab-left h3 {font-size: 23px;margin: 0 0 19px 0;}
+	.main-navigaiton .nav-navbars .level-zero > span > a {padding: 15px 8px;}
+	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {right: -2px;}
 }

@@ -1,10 +1,11 @@
 <?php
+// This is Appointments controller 
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Mail;
-//use App\Models\Contact;
+use App\Models\Appointments;
 
 class ContactUsFormController extends Controller {
     
@@ -15,21 +16,21 @@ class ContactUsFormController extends Controller {
 		
         // Form validation
         $this->validate($request, [
-            'name' => 'required',
+            'title' => 'required',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'message' => 'required'
+            'description' => 'required'
          ]);
         //  Store data in database
-        //Contact::create($request->all());
+         Appointments::create($request->all());
         // 
 		//  Send mail to admin
 		
         Mail::send('mail', array(
-            'name' => $request->get('name'),
+            'title' => $request->get('title'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
-            'user_query' => $request->get('message'),
+            'user_query' => $request->get('description'),
         ), function($message) use ($request){
             $message->from('ds19@24livehost.com');
             $message->to('marlowstesting@getnada.com', 'Admin')->subject('test subj');

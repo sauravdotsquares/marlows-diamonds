@@ -78,6 +78,8 @@
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.css" rel="stylesheet" />
+
 
 @endsection
 
@@ -90,17 +92,53 @@
 ?>
 
 <!-- product info and media -->
-
+<!-- @php
+Session::forget('recently_view');
+	if(session('recently_view')){
+		//echo '<pre>';print_r(Session::get('recently_view')); die;
+		$arrayS = Session::get('recently_view');
+	}else
+		$arrayS = array();
+	
+	$title = isset($data->title)?$data->title:'';
+	if(!in_array(array('title'=>$title),$arrayS)){
+		$arr = array_merge($arrayS,array(['title'=>$title]));
+	}else{
+		$arr = $arrayS;
+	}
+	
+	//echo '<pre>';print_r($arr); die;
+	
+	
+	
+	//$product = collect([$unique]);
+	Session::push('recently_view', $arr);
+	//echo '<pre>';print_r(Session::get('recently_view')); die;
+@endphp -->
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
+
 			<div class="product-info-media">
-				<!-- <video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
-					<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
-				</video> -->
-				@if(isset($data->getProductImages->image_url))
-				<img id="productFeatureImage" src="{{ asset('storage/'.$data->getProductImages->image_url) }}" alt="">
-				@endif
+				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
+				
+					<div id="carousel" class="owl-carousel">
+						
+						@if($prodImages)
+
+							@foreach($prodImages as $images)
+								@php
+									$explode = explode('/',$images->image_url);
+									$explode1 = explode('.',$explode[1]);
+								@endphp
+								<div class="item">
+									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"><img src="{{asset('/storage/'.$images->image_url)}}" alt="{{$explode1[0]}}"></a>
+								</div>
+							@endforeach
+						@endif
+						
+					</div>
+				
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -149,8 +187,7 @@
 					</div>
 
 					<div class="product-to-basket">
-						<!-- <a class="btn-bg-small" href="#">Add to basket</a> -->
-						<!-- <a id="addtobasket" href="{{ route('add.to.cart', $data->id) }}" class="btn btn-warning btn-block text-center" role="button">Add to basket</a> </p> -->
+						
 						<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
 					</div>
 					<div class="product-req-appointment">
@@ -159,14 +196,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="product-postactions">
-					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
-					<a href="https://www.google.com/search?q=marlows+diamond+google+review&amp;oq=marlows+diamond+google+review&amp;aqs=chrome..69i57.8073j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x4870bcedd24f2c3d:0x1dc68827b10987fa,1,,," class="review-action" target="_blank">
-						Reviews
-					</a>
-					<a class="store-locator" href="{{asset('visit-us')}}">Store Locator</a>
-					<a target="_blank" class="view-certificate" href="#">View Certificate</a>
-				</div>
+				
 				<div class="finance-available">
 					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -193,91 +223,8 @@
 			</div>
 		</div>
 		<div class="related-products-list">
-			<div id="relatedProductData" class="owl-carousel owl-theme related-product st-arrows">
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-143_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">AALIYAH | Four Claw split shoulder Solitaire Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/MTSS-707_00003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ABBIE | Marquise shape solitaire Diamond Engagement Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-1027_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ADDISON | Slim Twist Set Diamond Engagement Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="product-grid-item">
-						<div class="product-items-item-info">
-							<div class="product-items-item-image">
-								<a href="#"><img src="assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-							</div>
-							<div class="product-items-item-details">
-								<div class="product-items-item-name">
-									<a href="#">ALEXA | Four Claw thin set Diamond Ring</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<div id="relatedProductData" class="related-product">
+				
 			</div>
 
 		</div>
@@ -433,7 +380,7 @@
 					<form method="post" action="{{ route('contact') }}">
 					@csrf
 						<div class="form-controls">
-							<input type="text" name="name" id="name" class="{{ $errors->has('name') ? 'error' : '' }}" placeholder="Your Name">
+							<input type="text" name="title" id="title" class="{{ $errors->has('title') ? 'error' : '' }}" placeholder="Your Name">
 							<!-- Error -->
 							@if ($errors->has('name'))
 							<div class="error">
@@ -458,10 +405,10 @@
 							@endif
 						</div>
 						<div class="form-controls">
-							<textarea name="message" id="message" class="{{ $errors->has('message') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
-							@if ($errors->has('message'))
+							<textarea name="description" id="description" class="{{ $errors->has('description') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
+							@if ($errors->has('description'))
 							<div class="error">
-								{{ $errors->first('message') }}
+								{{ $errors->first('description') }}
 							</div>
 							@endif
 						</div>
@@ -482,71 +429,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="col-lg-12">
-			<!-- Success message -->
-			@if(Session::has('success'))
-				<div class="alert alert-success">
-					{{Session::get('success')}}
-				</div>
-			@endif
-			<div class="visit-form">
-
-				<form method="post" action="{{ route('contact') }}">
-				@csrf
-					<div class="form-controls">
-						<input type="text" name="name" id="name" class="{{ $errors->has('name') ? 'error' : '' }}" placeholder="Your Name">
-						<!-- Error -->
-						@if ($errors->has('name'))
-						<div class="error">
-							{{ $errors->first('name') }}
-						</div>
-						@endif
-					</div>
-					<div class="form-controls">
-						<input type="email" name="email" id="email" class="{{ $errors->has('email') ? 'error' : '' }}" placeholder="Your Email Address">
-						@if ($errors->has('email'))
-						<div class="error">
-							{{ $errors->first('email') }}
-						</div>
-						@endif
-					</div>
-					<div class="form-controls">
-						<input type="text" name="phone" id="phone" class="{{ $errors->has('phone') ? 'error' : '' }}" placeholder="Your Contact No.">
-						@if ($errors->has('phone'))
-						<div class="error">
-							{{ $errors->first('phone') }}
-						</div>
-						@endif
-					</div>
-					<div class="form-controls">
-						<textarea name="message" id="message" class="{{ $errors->has('message') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
-						@if ($errors->has('message'))
-						<div class="error">
-							{{ $errors->first('message') }}
-						</div>
-						@endif
-					</div>
-					<div class="google-capatcha">
-
-					</div>
-					<div class="action-submit">
-						<button type="submit" name="send" value="Submit">Send Message</button>
-					</div>
-				</form>
-			</div>
-		</div>
-      </div>
-    </div>
-  </div>
-</div>
+@include('front.includes.dekopay-finance-options')
 
 @endsection
 
@@ -554,7 +437,7 @@
 
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
 	<script>
 		$(document).ready(function(){
 			
@@ -565,7 +448,7 @@
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
 			});
-			getFinalPrice();
+			//getFinalPrice();
 
 			$('#addtobasket').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}');
@@ -574,13 +457,13 @@
 			$("#productWishList").on('click',function(){
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
-			$(document).on('change','#metal-type',function(){
-				//getProdVideo('onChange');
+			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
+				getSelectedVariationsData();
 				
 			});
 
 		})
-		function getSelectedVariationsData(action=null){
+		function getSelectedVariationsData(){
 			$('#finaldiamondprice').text("Pending...");
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 			var variations = [];
@@ -600,11 +483,45 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-					
+					if(res.regular_price!='' || res.regular_price!='0.00'){
+						var regular_p = Math.round(res.regular_price_with_vat);
+						
+						if(diamond_type=='lab_grown' && regular_p<=3000){
+							regular_p_final = regular_p-(regular_p*0.3);
+							
+						}else if(diamond_type=='lab_grown' && regular_p>3000){
+							regular_p_final = regular_p-(regular_p*0.5); 
+							
+						}else{
+							regular_p_final = regular_p;
+							
+						}
+						$('#selected_variation_price').val(res.regular_price);
+						$('#selected_final_price').val(Math.round(regular_p_final));
+						$('#finaldiamondprice').text(Math.round(regular_p_final));
+					}
+					else{
+						var sale_p = Math.round(res.sale_price_with_vat);
+						
+						if(diamond_type=='lab_grown' && sale_p<=3000){
+							sale_p_final = sale_p-(regular_p*0.3);
+							
+						}else if(diamond_type=='lab_grown' && sale_p>3000){
+							sale_p_final = sale_p-(sale_p*0.5); 
+							
+						}else{
+							sale_p_final = sale_p;
+							
+						}
+						$('#selected_variation_price').val(res.sale_price);
+						$('#selected_final_price').val(Math.round(sale_p_final));
+						$('#finaldiamondprice').text(Math.round(sale_p_final));
+					}
 				}
 			});
 		}
 		function getCustomFilter(){
+			$('#finaldiamondprice').text("Pending...");
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -616,8 +533,6 @@
 
 					$('#filterDataDesign .type-variations-row').html(res);
 					getSelectedVariationsData();
-					$('#filterDataDesign').html(res);
-
                     return false;
                 }
             });
@@ -700,5 +615,30 @@
             });
         }
 
+        $(document).ready(function() {
+	      
+	      jQuery("#carousel").owlCarousel({
+			  autoplay: true,
+			  rewind: true, /* use rewind if you don't want loop */
+			  /*margin: 20,*/
+			   /*
+			  animateOut: 'fadeOut',
+			  animateIn: 'fadeIn',
+			  */
+			  responsiveClass: true,
+			  //autoHeight: true,
+			  autoplayTimeout: 7000,
+			  smartSpeed: 800,
+			  nav: true,
+			  items : 1,
+			});
+
+	      $(document).on('click','.product-gallery__trigger',function(e){
+	      		e.preventDefault();
+	      		$('#carousel .owl-item.active a').click();
+	      });
+
+	    });
 	</script>
+
 @endsection

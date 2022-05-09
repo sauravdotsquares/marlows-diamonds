@@ -27,12 +27,7 @@
                                     </div>
                                     <div class="product-price">
                                         {{MY_CURRENCY_SYMBOL}}
-                                        @if($product->ProductVariationMinMaxPrice->MinPrice == $product->ProductVariationMinMaxPrice->MaxPrice)
-                                        {{isset($product->ProductVariationMinMaxPrice->MinPrice)?$product->ProductVariationMinMaxPrice->MinPrice:0.00}}
-                                        @else
-                                        {{isset($product->ProductVariationMinMaxPrice->MinPrice)?$product->ProductVariationMinMaxPrice->MinPrice:0.00}}-
-                                            {{isset($product->ProductVariationMinMaxPrice->MaxPrice)?$product->ProductVariationMinMaxPrice->MaxPrice:0.00}}
-                                        @endif
+                                        {{isset($product->ProductVariationMinMaxPrice->MaxPrice)?$product->ProductVariationMinMaxPrice->MaxPrice:0.00}}
                                     </div>
                                     <div class="product-action-btn">
                                         <a class="btn-bg-small" href="{{asset('product/'.$product->slug)}}">Select Options</a>

@@ -190,7 +190,9 @@
 <!-- Marlow's End here -->
 
 
+<!-- Best Selling Marlow's Diamond Jewellery start here -->
 @include('front.includes.featuredproduct')
+<!-- Best Selling Marlow's Diamond Jewellery end here -->
 
 
 <!--Shop from Marlow’s GIA Certified Diamond Rings start -->
@@ -217,49 +219,6 @@
         </div>
 </div>
 <!--Shop from Marlow’s GIA Certified Diamond Rings end -->
-
-
-<div class="leftright-img-text">
-    <div class="container">
-        <div class="leftright-img-text-wraper">
-            <div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
-                <div class="leftright-imt-col leftright-img">
-                    <img src="assets/images/banner-hand.jpg" alt="banner-hand">
-                </div>
-                <div class="leftright-imt-col leftright-text">
-                    <div class="leftright-heading heading-h-three">
-                        Buy the Perfect Diamond Ring
-                    </div>
-                    <p>Planning to propose? Don’t know where to start? Fret not, we have diamond experts who can help you in finding the perfect engagement ring to best represent the promise you vow to that special someone.</p>
-                    <div class="viewguide-btn">
-                            <a class="btn-bg-small" href="https://www.marlows-diamonds.co.uk/wp-content/uploads/2020/03/MarlowsDiamonds-PremiumContent-Guide-3.pdf" target="_blank">View Guide</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="leftright-img-text-wraper">
-            <div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
-                <div class="leftright-imt-col leftright-text">
-                    <div class="leftright-heading heading-h-three">
-                        Choose Your Diamond with Marlow’s Terminology Guide
-                    </div>
-                    <p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond guide, you can better understand the different types of diamonds and what shapes are the perfect fit for you. Download your free guide today!</p>
-                    <div class="viewguide-btn">
-                            <a class="btn-bg-small" href="#">View Guide</a>
-                    </div>
-                </div>
-                <div class="leftright-imt-col leftright-img">
-                    <img src="assets/images/perfect-ring.jpg" alt="perfect-ring">
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-</div>
-
 <!-- Join our mailing list section start -->
 <div class="joinour-mailing">
     <div class="container">

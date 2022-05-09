@@ -47,7 +47,7 @@
                         <div class="pr-filter-title" ng-if="parent_cat=='engagement-rings'">
                             Diamond Cut
                         </div>
-                        <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags">
+                        <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags <%parent_cat%>">
                             <div class="filter-tags-col <%subSubCat.active_status%>"  ng-repeat="subSubCat in subSubCats">
                                 <div class="category-product-filter-icon">
                                     <a href="<%subSubCat.url%>"><img src="{{asset('storage')}}<%subSubCat.hover_icon%>" alt="icon"></a>
@@ -68,104 +68,10 @@
                 <!-- Category listing -->
                 <div class="product-grid-wrap">
                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
-                        <!-- <div class="product-grid-items-item">
-                            <div class="product-items-item-info">
-                                <div class="product-items-item-image">
-                                    <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/R1-143_0003-225x225.jpg" alt="image"></a>
-                                </div>
-                                <div class="product-items-item-details">
-                                    <div class="product-items-item-name">
-                                        <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}">AALIYAH | Four Claw split shoulder Solitaire Diamond Ring</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-grid-items-item">
-                            <div class="product-items-item-info">
-                                <div class="product-items-item-image">
-                                    <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/MTSS-707_00003-225x225.jpg" alt="image"></a>
-                                </div>
-                                <div class="product-items-item-details">
-                                    <div class="product-items-item-name">
-                                        <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}">ABBIE | Marquise shape solitaire Diamond Engagement Ring</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-grid-items-item ">
-                            <div class="product-items-item-info">
-                                <div class="product-items-item-image">
-                                    <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/R1-1027_0003-225x225.jpg" alt="image"></a>
-                                </div>
-                                <div class="product-items-item-details">
-                                    <div class="product-items-item-name">
-                                        <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}">ADDISON | Slim Twist Set Diamond Engagement Ring</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-grid-items-item">
-                            <div class="product-items-item-info">
-                                <div class="product-items-item-image">
-                                    <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/R1-241-Images_0003-225x225.jpg" alt="image"></a>
-                                </div>
-                                <div class="product-items-item-details">
-                                    <div class="product-items-item-name">
-                                        <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}">ALEXA | Four Claw thin set Diamond Ring</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-grid-items-item">
-                            <div class="product-items-item-info">
-                                <div class="product-items-item-image">
-                                    <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/CX28-AS9_0003-1-225x225.jpg" alt="image"></a>
-                                </div>
-                                <div class="product-items-item-details">
-                                    <div class="product-items-item-name">
-                                        <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}">AMAYA | Princess cut Knife Edge Set Engagement Ring</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-grid-items-item">
-                            <div class="product-items-item-info">
-                                <div class="product-items-item-image">
-                                    <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/MTSS-710_00003-1-225x225.jpg" alt="image"></a>
-                                </div>
-                                <div class="product-items-item-details">
-                                    <div class="product-items-item-name">
-                                        <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}">AMBER | Heart shape knife edge Straight edge Solitaire Engagement
-                                            Ring</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-grid-items-item">
-                            <div class="product-items-item-info">
-                                <div class="product-items-item-image">
-                                    <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/MTSS-652_00003-225x225.jpg" alt="image"></a>
-                                </div>
-                                <div class="product-items-item-details">
-                                    <div class="product-items-item-name">
-                                        <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}">ANNIE | Slim set Emerald Cut Engagement Ring</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-grid-items-item">
-                            <div class="product-items-item-info">
-                                <div class="product-items-item-image">
-                                    <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}"><img src="{{asset('')}}assets/images/R1-174_0003-225x225.jpg" alt="image"></a>
-                                </div>
-                                <div class="product-items-item-details">
-                                    <div class="product-items-item-name">
-                                        <a href="{{asset('product/phoenix-wide-band-princess-cut-solitaire-ring-2')}}">ARIANA | NSEW Taper Set Solitaire Diamond Ring</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
+                        
                     </div>
+                    <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
+                    <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
                 </div>
 
                 <div class="ajax-load text-center" style="display:block">
@@ -176,11 +82,12 @@
 
             <!-- Category SIdebar start -->
             <div class="category-sidebar-wrap">
-                @if(session('cart'))
+                
                 <div class="sidebar-main-cart">
                     <div class="sidebar-title">
                         Shopping Cart
                     </div>
+                    @if(session('cart'))
                     <div class="side-cart-row">
                         @php $total = 0 @endphp
                         @foreach(session('cart') as $id => $details)
@@ -207,11 +114,24 @@
                             </div>
                         @endforeach
                     </div>
+                    @else
+                        <div class="shopping_cart_content">
+
+                            <p class="mini-cart__empty-message">No products in the basket.</p>
+
+
+                        </div>
+                    @endif
                 </div>
-                @endif
-                <!-- <div class="side-recentlyview">
+                
+                <div class="side-recentlyview">
                     <div class="sidebar-title">
                         Recently Viewed
+                        <!-- @if(session('recently_view'))
+                        @foreach (Session::get('recently_view') as $product_id)
+                            {{print_r($product_id)}}
+                        @endforeach
+                        @endif -->
                     </div>
                     <div class="side-recently-item">
                         <div class="side-recently-col">
@@ -232,146 +152,37 @@
                                     alt="image"></a>
                         </div>
                     </div>
-                </div> -->
+                </div>
             </div>
             <!-- Category SIdebar end -->
         </div>
     </div>
 </div>
-<!-- Category Listing Wrap end -->
-
-<!-- Section Reviews -->
-<div class="container">
-    <div class="rating-review-block">
-        <div class="owl-carousel owl-theme slider-review">
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help.
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <input type="hidden" id="pagescroll" value="1">
 
-@endsection
-
 @section('js')
+
+<script>
+$(document).ready(function(){
+    $('.show-more-content').hide();
+    $('.show-more').click(function(){
+        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");       
+    });
+});
+
+</script>
     <script type="text/javascript">
+		
+        var page = 1;
         loadMoreData(page);
-        var page = $('#pagescroll').val();
+        
+
         $(window).scroll(function() {
-            if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+            var scroll = $('#scrollFlag').val();
+            if (scroll==0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
                 var page = $('#pagescroll').val();
                 loadMoreData(page);
+                $('#scrollFlag').val(1);
             }
         });
 
@@ -401,6 +212,8 @@
                     }
                     $('.ajax-load').hide();
                     $("#showProductList").append(data.html);
+                    $('#sectionHeight').val($( '#showProductList' ).height());
+                    $('#scrollFlag').val(0);
                 })
                 .fail(function(jqXHR, ajaxOptions, thrownError)
                 {
@@ -427,45 +240,18 @@
                 });
             }
         });
-
-
-
     </script>
-
-    <script>
-        // $(document).ready(function(){
-        //     getProductList();
-        // });
-
-        // function getProductList(){
-        //     console.log("Checking list");
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: '',
-        //         data: {
-        //             '_token': "{{csrf_token()}}",
-        //         },
-        //         success: function (res) {
-        //             console.log(res);
-        //             return false;
-        //             // if (res) {
-        //             //     $("#categories").append('<option value="">Select Category</option>' + res);
-        //             // }
-        //         }
-        //     });
-        // }
-
-    </script>
-
-<script>
-
-$(document).ready(function(){
-    $('.show-more-content').hide();
-    $('.show-more').click(function(){
-        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
-    });
-});
-
-</script>
+@endsection
+<!-- Category Listing Wrap end -->
+<!-- Section Reviews -->
+<div class="container">
+	<div class="rating-review-block">
+		<div class="owl-carousel owl-theme slider-review">
+		@include('front.pages.reviews')
+		</div>	
+	</div>
+</div>
 
 @endsection
+
+

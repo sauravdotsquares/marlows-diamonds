@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{!! isset($data->meta_title)?$data->meta_title:'' !!}</title>
+    <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
 
     <link rel="canonical" href="{{url()->current()}}" />
@@ -92,7 +92,7 @@ $(document).ready(function(){
 <script type="text/javascript">
   if($(window).innerWidth() <= 767) {
     $(document).ready(function() {
-      $('.accordian-toggle').click(function() {        
+      $('.accordian-toggle').click(function() {
       $(this).parents('.column-one-fifth').toggleClass('show-collapse');
           });
       });
@@ -103,25 +103,28 @@ $(document).ready(function(){
 <script type="text/javascript">
   if($(window).innerWidth() <= 1024) {
     $(document).ready(function() {
-      $('.main-navigaiton .nav-navbars li i').click(function() {        
-      $(this).parents('.level-zero').toggleClass('show-menus');
-          });
-      });
+        $('.main-navigaiton .nav-navbars .level-zero .fa-angle-down').on('click',function() {
+            $(this).parents('.level-0').toggleClass('show-menus');
+        });
+        $('.main-navigaiton .nav-navbars .level-zero .fa-angle-right').on('click',function() {
+            $(this).parents('.level-1').toggleClass('show-menus');
+        });        
+    });
   }
 </script>
 
 
 
 <script type="text/javascript">
-    $(function() {
+    /*$(function() {
         $('input.typeahead').focusout(function() {
           $(this).val(" ");
           $('.search-suggestion').html(" ");
           $('.search-suggestion').hide();
         });
-    });
+    });*/
 
-    $("input.typeahead").on('keyup',function(e){
+    /*$("input.typeahead").on('keyup',function(e){
         $('.search-suggestion').html(" ");
         if (e.target.value.length >= 3) {
           $.ajax({
@@ -139,7 +142,7 @@ $(document).ready(function(){
               }
           });
         }
-    });
+    });*/
 </script>
 </body>
 </html>

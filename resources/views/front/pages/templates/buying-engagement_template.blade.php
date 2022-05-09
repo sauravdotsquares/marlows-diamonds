@@ -5,11 +5,8 @@
 <div class="buying-engagementguide-page">
 	<div class="main-guide-blok">
 		<div class="container">
-			<h1>Guide To Buying An Engagement<br> Ring Online During Lockdown</h1>
-			<p>This is the only guide you need when buying an engagement ring online.</p>
-			<p>We understand there’s a lot of things to consider when buying an engagement ring from an online jeweller, and that’s why we’ll guide you <br>
-				through every step of the way to find the perfect choice of engagement ring with our expert help!
-			</p>			
+			<h1>{!!isset($data->title)?$data->title:""!!}</h1>
+				{!!isset($data->short_description)?$data->short_description:""!!}		
 		</div>
 	</div>
 
@@ -26,12 +23,12 @@
 						<p>Sign up to our newsletter to enter our yearly draw and win back the value of your first order!</p>
 					</div>
 					<div class="joinour-mailing-form">
-						<form action="" method="post" action="{{ route('maillist') }}">
+						<form method="post" action="{{ route('maillist') }}">
 							@csrf
 							<div class="form-rows flexed flex-flex-wrap">
 								<div class="form-col width-50">
 									<label>Yor Name<sup>*</sup></label>
-									<input class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text" name="title" placeholder="Your Name">
+									<input required class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text" name="title" placeholder="Your Name">
 									<!-- Error -->
 									@if ($errors->has('title'))
 									<div class="error">
@@ -41,7 +38,7 @@
 								</div>
 								<div class="form-col width-50">
 									<label>Email<sup>*</sup></label>
-									<input class="input-control {{ $errors->has('email') ? 'error' : '' }}" type="text" name="email" placeholder="Email Address">
+									<input required class="input-control {{ $errors->has('email') ? 'error' : '' }}" type="text" name="email" placeholder="Email Address">
 									@if ($errors->has('email'))
 									<div class="error">
 										{{ $errors->first('email') }}
@@ -63,11 +60,11 @@
 						</form>
 
 					</div>
-					@if(Session::has('success'))
+					<!-- @if(Session::has('success'))
 						<div class="alert alert-success">
 							{{Session::get('success')}}
 						</div>
-					@endif
+					@endif !-->
 				</div>
 			</div>
 			
@@ -236,7 +233,7 @@
 				This works best with a simple band that can lay flat on the guide once you’ve printed it off.</p>
 				<p>Simply hold it up to the various sizes to get a good idea and remember, you’re checking the inner diameter and inner circumference, not the outer edge of the ring.</p>
 				<div class="download-btn">
-					<a href="#">Download Guide Size</a>
+					<a href="https://www.marlows-diamonds.co.uk/wp-content/uploads/2021/02/Marlows1-Engagement-Ring-Guide-4.3.pdf">Download Guide Size</a>
 				</div>
 				<p>And if you’re stuck between two particular ring sizes, it's best to go with the bigger size for two reasons. Firstly, you don’t want to offend your partner by making it seem that they have fatter fingers than you’d expected. Secondly, it’s not cheap to resize a ring to the correct size.</p>
 
@@ -862,197 +859,76 @@
 <!-- main end of page middle text-->
 
 
-
-
 <!-- Section Reviews -->
 <div class="container">
-    <div class="rating-review-block">
-        <div class="owl-carousel owl-theme slider-review">
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-                        
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                            
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-                        
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                            
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-                        
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                            
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-                        
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="reviews-cont">
-                    <div class="reviewr-name">
-                        Sana Anwar
-                    </div>
-                    <div class="reviewr-star">
-                        <img src="{{asset('')}}assets/images/stars.png" alt="star">
-                    </div>
-                    <div class="reviewr-review-text">
-                        <div class="less-contents">I am a customer if the Birmingham store and I am very pleased with my purchase 6 years on. I
-                        bought a white gold diamond necklace and earrings set and am still delighted with my purchase.
-                        The staff are friendly and</div>
-                        
-                        <div class="show-more-content">
-                            accommodating. They do regular cleaning of my set and any problem I have had they have been happy to help. 
-                            I would definitely recommend this place. A million times better than the high Street and the aftercare is top notch!
-                        </div>
-                        <a class="show-more" href="javascript:void(0)">Read more</a>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- insta photos section start -->
+<div class="rating-review-block">
+				<div class="owl-carousel owl-theme slider-review">
+				@include('front.pages.reviews')
+				</div>	
+			</div>
+</div><!-- insta photos section start -->
 <div class="share-moment">
-	<div class="share-moment-heading"><div class="heading-h-two">Share your special moments with us<br> #marlowsengagements</div></div>
-	<div class="insta-photo-list">
-		<div class="owl-carousel owl-theme photo-slider">
-		    <div class="item">
-		    	<div class="instaphoto-info">
-		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-one.jpg" alt="insta photo">
-		    		</div>
-		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-		    		</div>
-		    	</div>
-		    </div>
-		    <div class="item">
-		    	<div class="instaphoto-info">
-		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-two.jpg" alt="insta photo">
-		    		</div>
-		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-		    		</div>
-		    	</div>
-		    </div>
-		    <div class="item">
-		    	<div class="instaphoto-info">
-		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-three.jpg" alt="insta photo">
-		    		</div>
-		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-		    		</div>
-		    	</div>
-		    </div>
-		    <div class="item">
-		    	<div class="instaphoto-info">
-		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-four.jpg" alt="insta photo">
-		    		</div>
-		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-		    		</div>
-		    	</div>
-		    </div>
-		    <div class="item">
-		    	<div class="instaphoto-info">
-		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-five.jpg" alt="insta photo">
-		    		</div>
-		    		<div class="insta-link">
-		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-		    		</div>
-		    	</div>
-		    </div>
-		    
-		</div>
-	</div>
-	<div class="insta-btn">
-		<a class="btn-bg-small" href="#"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
-	</div>
+   <div class="share-moment-heading">
+      <div class="heading-h-two">Share your special moments with us<br> #marlowsengagements</div>
+   </div>
+   <div class="insta-photo-list">
+      <div class="owl-carousel owl-theme photo-slider">
+         <div class="item">
+            <div class="instaphoto-info">
+               <div class="instaphoto-img">
+                  <img src="assets/images/insta-img-one.jpg" alt="insta photo">
+               </div>
+               <div class="insta-link">
+                  <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+               </div>
+            </div>
+         </div>
+         <div class="item">
+            <div class="instaphoto-info">
+               <div class="instaphoto-img">
+                  <img src="assets/images/insta-img-two.jpg" alt="insta photo">
+               </div>
+               <div class="insta-link">
+                  <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+               </div>
+            </div>
+         </div>
+         <div class="item">
+            <div class="instaphoto-info">
+               <div class="instaphoto-img">
+                  <img src="assets/images/insta-img-three.jpg" alt="insta photo">
+               </div>
+               <div class="insta-link">
+                  <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+               </div>
+            </div>
+         </div>
+         <div class="item">
+            <div class="instaphoto-info">
+               <div class="instaphoto-img">
+                  <img src="assets/images/insta-img-four.jpg" alt="insta photo">
+               </div>
+               <div class="insta-link">
+                  <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+               </div>
+            </div>
+         </div>
+         <div class="item">
+            <div class="instaphoto-info">
+               <div class="instaphoto-img">
+                  <img src="assets/images/insta-img-five.jpg" alt="insta photo">
+               </div>
+               <div class="insta-link">
+                  <a href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="insta-btn">
+      <a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
+   </div>
 </div>
-
-
-<!-- insta photos section end -->	
-
-
-
+<!-- insta photos section end -->
 
 @endsection
