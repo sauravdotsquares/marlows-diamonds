@@ -36,7 +36,7 @@
                            <th>Title</th>
                            <th>Stock</th>
                            <th>Category</th>
-                           <th>Tags</th>
+                          
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
@@ -59,8 +59,8 @@
                                  <td>{{isset($value->title)?$value->title:''}}</td>
                                  <td>In Stock</td>
                                  <td>{{isset($value->cat_details)?$value->cat_details:''}}</td>
-                                 <td>{{isset($value->tags)?$value->tags:''}}</td>
-                                 <td>{{$value->created_at}}</td>
+                                 
+                                 <td>{{date('d M Y H:i:s', strtotime($value->created_at))}}</td>
                                  <td>
                                     @if($value->status == 1)
                                        <a title="Change Status"
@@ -87,7 +87,7 @@
                            <th>Title</th>
                            <th>Stock</th>
                            <th>Category</th>
-                           <th>Tags</th>
+                           
                            <th>Created</th>
                            <th>Action</th>
                         </tr>

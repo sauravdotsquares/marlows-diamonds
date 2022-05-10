@@ -573,6 +573,19 @@
 		    angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
 		});
 
+		$(document).on('click','input[type="checkbox"]',function(){
+			if($(this).is(":checked")==true){
+				$(this).parent().parent().addClass('active-diamond');
+			}else{
+				$(this).parent().parent().removeClass('active-diamond');
+			}
+		});
+		$(document).on('click','input[type="radio"]',function(){
+			$('.shape-list li').removeClass('active-diamond')
+			$(this).parent().parent().addClass('active-diamond');
+			
+		});
+
         $(document).on('change', "[id^=selectedDiamondCheckBox]", function () {
             var index = parseInt($(this).attr("id").replace("selectedDiamondCheckBox",''));
             $('#addtobasketselectedrowid').val(index);
@@ -604,7 +617,7 @@
 
     function addtobasketFunction(index){
         var cert_number = $('#tdCertiLink'+index).find('a').attr('href');
-        console.log(cert_number);
+        //console.log(cert_number);
         // var filename = cert_number.replace( /^.*?([^\/]+)\..+?$/, '$1' );
         // var fileName_new = cert_number.replace(/[\#\?].*$/,'');
         // var src= $('#tdCertiLink'+index).find('a').attr('href');
@@ -649,17 +662,7 @@
 
 
 
-        console.log(certNumber);
-        // return false;
-
-        // console.log(cert_number.replace(/^.*\/\/[^\/]+/, ''));
-
-
-
-        // console.log(fileName_new);
-        // console.log(name);
-        // console.log(cert_number);
-        // console.log(filename);
+        //console.log(certNumber);
         // return false;
 
         $.ajax({
