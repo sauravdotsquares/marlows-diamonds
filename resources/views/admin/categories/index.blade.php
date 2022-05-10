@@ -75,10 +75,10 @@
                         <tr>
                             <th>Sr No</th>
                             <th>Name</th>
-                            <th>Image</th>
+                            
                             <th>Slug</th>
                             <th>Parent</th>
-                            <th>Description</th>
+                            <th>Meta Title</th>
                             <th>Created</th>
                             <th>Action</th>
                         </tr>
