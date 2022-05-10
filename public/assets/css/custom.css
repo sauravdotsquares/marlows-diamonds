@@ -911,7 +911,7 @@ a[type="button"] {-webkit-appearance: none !important;}
 .faq-main-list .col-lg-6 {padding-bottom: 30px;}
 .defaultpages-cols h6 {font-family: "Lato";}
 .defaultpages-cols h6 span {line-height: 30px;}
-
+.login-block-wrap {margin: 0 0 20px 0;}
 /** mega menuhover for desktop **/
 @media(min-width:1024px){
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
