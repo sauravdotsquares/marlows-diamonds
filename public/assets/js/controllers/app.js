@@ -141,27 +141,92 @@ MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
 /******** Define the Dekopay controller  ***************/
 
 MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
-    
+    var dekoFilters = null;
+    if(undefined !== window.dekofilters){
+        dekoFilters = window.dekofilters;
+    }
     $scope.financeOptions = function(){
         $scope.productPrice = $("#finaldiamondprice").text();
         $('#totalOrder').val($scope.productPrice);
         $('#totalOrderText').text($scope.productPrice);
         $('#totalOrderText').attr('data-val',$scope.productPrice);
         $('#financeAvailableModal').modal('show');
-        //console.log($scope.search);
-        /*var url  = base_url+"searchProducts";
-        $http({
-            method  : 'POST',
-            url     : url,
-            data    : {name:$scope.search}
-
-        }).success(function(data) {
-           // console.log(data);
-            $scope.searchResults = data;
+        if(undefined !== $('#totalOrderText') && null != $('#totalOrderText')){
             
-        });*/
-    }
+            alterFilters(); 
 
+            dekoInit(); 
+        }
+    }
+    $scope.calculate = function(){
+       dekoInit(); 
+    }
+    function alterFilters(){
+                if(null != dekoFilters){
+                var term = $('select[name="term"]').val(); 
+                if(dekoFilters.hasOwnProperty(term)){
+                    termProp = parseInt(dekoFilters[term]);
+                    $('select[name="percentage"] option').attr('disabled', 'disabled'); 
+                    $('select[name="percentage"] option').each(function(){
+                        var valInt = parseInt($(this).val());
+                        if(valInt >= termProp){
+                            $(this).removeAttr('disabled'); 
+                        }
+                    });
+                    
+                }else{
+                    $('select[name="percentage"] option').removeAttr('disabled'); 
+                }
+        }
+     }
+    function alterMinOption(){
+        var payedVal = $('select[name="percentage"]').val();
+       var update = false;
+       $('select[name="percentage"] option').each(function(){   
+           if($(this).val() == payedVal){
+                if($(this).prop('disabled')){
+                    update = true;  
+                }
+           }
+       });     
+        if(update || payedVal == null){
+            $('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first'));
+            $('select[name="percentage"] option:not([disabled]):first').prop('selected', 'selected');
+        }
+    }
+    function dekoInit(){
+        alterMinOption(); 
+       //Call the api 
+       var price = $('#totalOrder').val();
+       var payedVal = $('#payed').val();
+
+       var deposit  = parseFloat($('#payed').val()); 
+
+       var code = $('#terms').val(); 
+      
+       var amount = (parseFloat(price)/100)* deposit;
+       var my_fd = new FinanceDetails(code, parseFloat(price), deposit, amount);
+        
+       var preSetVal = parseFloat($('#preSetValue').val());
+       console.log(price);
+       console.log(preSetVal);
+       if(price>preSetVal){
+            $('.finance-available-options').css('display','block');
+            $('.finance_options_not_available').css('display','none');
+       }else{
+            $('.finance-available-options').css('display','none');
+            $('.finance_options_not_available').css('display','block');
+       }
+
+       $('#perMonths').text(parseFloat(my_fd.m_inst).toFixed(2)); 
+       $('#cashPrices').text(parseFloat(my_fd.goods_val).toFixed(2));
+       $('#Deposited').text(parseFloat(my_fd.d_amount).toFixed(2));
+       $('#loanAmt').text(parseFloat(my_fd.l_amount).toFixed(2));
+       $('#loanRepay').text(parseFloat(my_fd.l_repay).toFixed(2));
+       $('#costLoan').text(parseFloat(my_fd.l_cost).toFixed(2));
+       $('#totalAmt').text(parseFloat(my_fd.total).toFixed(2));
+       $('#noTerm').text(my_fd.term);
+    }
    
 });
 /*

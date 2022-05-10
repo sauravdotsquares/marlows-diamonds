@@ -20,6 +20,7 @@ use App\Http\Controllers\Front\ApiController;
 use View;
 use Illuminate\Support\Arr;
 use DB;
+use billythekid\dekopay\Core\DekoPayApiClient;
 
 class ProductController extends Controller
 {
@@ -49,6 +50,14 @@ class ProductController extends Controller
 
     public function productDetails($productSlug = null)
     {
+            $dekoEnabled = true;
+            $client = new DekoPayApiClient('','', env('DEKOPAY_API_KEY'));
+            $pay_url =  env('DEKOPAY_MODE');
+
+            if($dekoEnabled){
+                $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY');
+            }
+        
         if($productSlug !=null){
             $getProduct = Products::with('getProductVariation')->where('slug',$productSlug)->first();
             
@@ -68,9 +77,9 @@ class ProductController extends Controller
                     $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
 
                     //echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages]);
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
                 }else{
-                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages]);
+                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'url'=>$url]);
                 }
             }else{
                 return view('layouts.errors.404');
