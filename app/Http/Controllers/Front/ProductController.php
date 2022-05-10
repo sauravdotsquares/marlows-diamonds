@@ -485,6 +485,7 @@ class ProductController extends Controller
                                 $variationDetails[] = $getVariDetails;
                             //echo '<pre> '.$key1.'='.$key2; print_r($getVariDetails);
                         }
+                       // die;
                         if($attributeCount == count($variationDetails))
                             break;
                         
