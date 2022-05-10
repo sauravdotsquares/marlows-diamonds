@@ -213,8 +213,8 @@ Session::forget('recently_view');
 					</div>
 				</div>
 				
-				<div class="finance-available">
-					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
+				<div class="finance-available" ng-controller="DekopayController">
+					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
 							<span>see options</span>
@@ -450,7 +450,7 @@ Session::forget('recently_view');
 @endsection
 
 @section('js')
-
+	<script src="{{$url}}"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>

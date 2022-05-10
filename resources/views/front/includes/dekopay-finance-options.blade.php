@@ -1,4 +1,4 @@
-<div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-controller="DekopayController">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -9,7 +9,7 @@
         <div class="col-lg-12">
 			
 			<div class="finance-available-options">
-
+				<input type="hidden" name="preSetValue" id="preSetValue" value="{{env('DEKOPAY_MIN_AMT_EMI')}}">
 			
 			<ul class="payments">
 				<li><p> Price : </p>
@@ -43,7 +43,7 @@
 				</li>
 			</ul>
 	        <p class="deko-calculate">
-	            <button id="calculatebutton" class="btn">Calculate</button>
+	            <button id="calculatebutton" class="btn" ng-click="calculate()">Calculate</button>
 	        </p>
 			<ul class="pay_details" id="OCFDefault">
 				<li class="clearfix"> <p> Monthly Payment </p><p class="priced">  £   <span id="perMonths">83.66</span>  </p> </li>
@@ -63,6 +63,9 @@
 			</div>
 
 							
+			</div>
+			<div class="finance_options_not_available" style="display: none;">
+				<p>Finance options are not available for this product due to less amount.</p>
 			</div>
 		</div>
       </div>
