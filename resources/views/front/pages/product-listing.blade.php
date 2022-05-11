@@ -68,7 +68,7 @@
                 <!-- Category listing -->
                 <div class="product-grid-wrap">
                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
-                        
+
                     </div>
                     <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
                     <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
@@ -82,7 +82,7 @@
 
             <!-- Category SIdebar start -->
             <div class="category-sidebar-wrap">
-                
+
                 <div class="sidebar-main-cart">
                     <div class="sidebar-title">
                         Shopping Cart
@@ -123,36 +123,26 @@
                         </div>
                     @endif
                 </div>
-                
+                @if(session('recentproducts'))
                 <div class="side-recentlyview">
                     <div class="sidebar-title">
                         Recently Viewed
-                        <!-- @if(session('recently_view'))
-                        @foreach (Session::get('recently_view') as $product_id)
-                            {{print_r($product_id)}}
-                        @endforeach
-                        @endif -->
                     </div>
                     <div class="side-recently-item">
-                        <div class="side-recently-col">
-                            <a class="side-recently-pr-name" href="#">BRIE | Marquise shape Halo and shoulder channel
-                                set Engagement Ring</a>
-                            <a class="side-recently-pr-img" href="#"><img src="{{asset('')}}assets/images/RC2019B_00003-225x225.jpg"
-                                    alt="image"></a>
-                        </div>
-                        <div class="side-recently-col">
-                            <a class="side-recently-pr-name" href="#">CARMEN | Pear shape solitiare Diamond Engagement
-                                Ring</a>
-                            <a class="side-recently-pr-img" href="#"><img src="{{asset('')}}assets/images/RC2019B_00003-225x225.jpg"
-                                    alt="image"></a>
-                        </div>
-                        <div class="side-recently-col">
-                            <a class="side-recently-pr-name" href="#">AURORA | NSEW Thin band Petite Diamond Ring</a>
-                            <a class="side-recently-pr-img" href="#"><img src="{{asset('')}}assets/images/RC2019B_00003-225x225.jpg"
-                                    alt="image"></a>
-                        </div>
+                        @php $i = 0; @endphp
+                        @foreach(array_reverse(session('recentproducts')) as $ProductDetails)
+                            @if($i <= 8)
+                                <div class="side-recently-col">
+                                    <a class="side-recently-pr-name" href="{{asset('products/'.$ProductDetails['slug'])}}">{{$ProductDetails['name']}}</a>
+                                    <a class="side-recently-pr-img" href="{{asset('products/'.$ProductDetails['slug'])}}"><img src="{{asset('storage/'.$ProductDetails['image'])}}"
+                                            alt="image"></a>
+                                </div>
+                            @endif
+                            @php $i++; @endphp
+                        @endforeach
                     </div>
                 </div>
+                @endif
             </div>
             <!-- Category SIdebar end -->
         </div>
@@ -166,16 +156,16 @@
 $(document).ready(function(){
     $('.show-more-content').hide();
     $('.show-more').click(function(){
-        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");       
+        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
     });
 });
 
 </script>
     <script type="text/javascript">
-		
+
         var page = 1;
         loadMoreData(page);
-        
+
 
         $(window).scroll(function() {
             var scroll = $('#scrollFlag').val();
@@ -248,7 +238,7 @@ $(document).ready(function(){
 	<div class="rating-review-block">
 		<div class="owl-carousel owl-theme slider-review">
 		@include('front.pages.reviews')
-		</div>	
+		</div>
 	</div>
 </div>
 

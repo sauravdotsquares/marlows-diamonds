@@ -57,15 +57,27 @@ class ProductController extends Controller
             if($dekoEnabled){
                 $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY');
             }
-        
+
         if($productSlug !=null){
-            $getProduct = Products::with('getProductVariation')->where('slug',$productSlug)->first();
-            
+            $getProduct = Products::with(['getProductImages','getProductVariation'])->where('slug',$productSlug)->first();
+
             if(isset($getProduct) && !empty($getProduct)){
+                // store in session for recent viewd products start
+                $recentProduct = session()->get('recentproducts', []);
+
+                $recentProduct[$getProduct->id] = [
+                    "name" => $getProduct->title,
+                    "slug" => $getProduct->slug,
+                    "image" => isset($getProduct->getProductImages)?$getProduct->getProductImages->image_url:'',
+                ];
+
+                session()->put('recentproducts', $recentProduct);
+                // store in session for recent viewd products End
+
+
                 // Product Images
                 $prodImages = ProductImages::where('product_id',$getProduct->id)->get();
                 if($getProduct->dfinder_status == 1){
-
                     $productVariationId = ProductVariations::where('product_id',$getProduct->id)->pluck('id')->toArray();
                     //print_r($getProductVariationId); die;
                     if(isset($productVariationId) && !empty($productVariationId)){
@@ -478,13 +490,13 @@ class ProductController extends Controller
 
     public function getSelectedVariationsData(Request $request){
         $product_id = Products::where('slug',$request->slug)->value('id');
-        //print_r($request->variations); die; 
+        //print_r($request->variations); die;
         if($product_id!=''){
             $getProductVariationId = ProductVariations::where('product_id',$product_id)->pluck('id')->toArray();
-            
+
             if(!empty($getProductVariationId)){
                 $getVariDetails = ProductVariationDetails::groupBy('value')->whereIn('variation_id',$getProductVariationId)->whereIn('value',$request->variations)->get()->toArray();
-               $attributeCount = count($request->variations); 
+               $attributeCount = count($request->variations);
                 foreach ($getProductVariationId as $key1 => $productVariationId) {
                         $variationDetails = array();
                         foreach ($request->variations as $key2 => $variations) {
@@ -497,7 +509,7 @@ class ProductController extends Controller
                        // die;
                         if($attributeCount == count($variationDetails))
                             break;
-                        
+
                     # code...
                 }
                 //echo '<pre>'; print_r($variationDetails);
@@ -507,12 +519,12 @@ class ProductController extends Controller
             $vat = getVAT();
             if(isset($getVariDetails) && !empty($getVariDetails)){
                 $getSelectedVariationVideoImages = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select(DB::raw('(regular_price*"'.$vat.'") as regular_price_with_vat'),DB::raw('(sale_price*"'.$vat.'") as sale_price_with_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
-                
+
                 return response()->json($getSelectedVariationVideoImages);
             }
         }
     }
-    
+
 
     public function getRelatedProductList(Request $request)
     {
@@ -533,7 +545,7 @@ class ProductController extends Controller
             $view = view('front.ajax.productlistajax',compact('getProductListFinal'))->render();
         }else{
             $view = '';
-            
+
         }
 
         return response()->json(['html'=>$view]);
