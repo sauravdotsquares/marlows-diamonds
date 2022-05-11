@@ -20,6 +20,7 @@ use App\Http\Controllers\Front\ApiController;
 use View;
 use Illuminate\Support\Arr;
 use DB;
+use billythekid\dekopay\Core\DekoPayApiClient;
 
 class ProductController extends Controller
 {
@@ -49,6 +50,14 @@ class ProductController extends Controller
 
     public function productDetails($productSlug = null)
     {
+            $dekoEnabled = true;
+            $client = new DekoPayApiClient('','', env('DEKOPAY_API_KEY'));
+            $pay_url =  env('DEKOPAY_MODE');
+
+            if($dekoEnabled){
+                $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY');
+            }
+
         if($productSlug !=null){
             $getProduct = Products::with(['getProductImages','getProductVariation'])->where('slug',$productSlug)->first();
 
@@ -80,9 +89,9 @@ class ProductController extends Controller
                     $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
 
                     //echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages]);
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
                 }else{
-                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages]);
+                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'url'=>$url]);
                 }
             }else{
                 return view('layouts.errors.404');
@@ -487,11 +496,29 @@ class ProductController extends Controller
 
             if(!empty($getProductVariationId)){
                 $getVariDetails = ProductVariationDetails::groupBy('value')->whereIn('variation_id',$getProductVariationId)->whereIn('value',$request->variations)->get()->toArray();
+               $attributeCount = count($request->variations);
+                foreach ($getProductVariationId as $key1 => $productVariationId) {
+                        $variationDetails = array();
+                        foreach ($request->variations as $key2 => $variations) {
+                            $getVariDetails = ProductVariationDetails::where('variation_id',$productVariationId)->where('value',$variations)->get()->toArray();
+
+                            if(!empty($getVariDetails))
+                                $variationDetails[] = $getVariDetails;
+                            //echo '<pre> '.$key1.'='.$key2; print_r($getVariDetails);
+                        }
+                       // die;
+                        if($attributeCount == count($variationDetails))
+                            break;
+
+                    # code...
+                }
+                //echo '<pre>'; print_r($variationDetails);
+                //die;
                 //echo '<pre>'; print_r($getVariDetails); die;
             }
             $vat = getVAT();
             if(isset($getVariDetails) && !empty($getVariDetails)){
-                $getSelectedVariationVideoImages = ProductVariations::where('id',$getVariDetails[0]['variation_id'])->select(DB::raw('(regular_price*"'.$vat.'") as regular_price_with_vat'),DB::raw('(sale_price*"'.$vat.'") as sale_price_with_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
+                $getSelectedVariationVideoImages = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select(DB::raw('(regular_price*"'.$vat.'") as regular_price_with_vat'),DB::raw('(sale_price*"'.$vat.'") as sale_price_with_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
 
                 return response()->json($getSelectedVariationVideoImages);
             }

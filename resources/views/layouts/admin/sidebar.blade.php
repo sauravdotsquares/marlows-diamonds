@@ -166,13 +166,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{asset('admin/products/categories')}}" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'categories') active @endif">
+                <a href="{{asset('admin/products/categories')}}" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'categories' && request()->segment(4) != 'create') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{asset('admin/products/categories/create')}}" class="nav-link">
+                <a href="{{asset('admin/products/categories/create')}}" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'categories' && request()->segment(4) == 'create') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create category</p>
                 </a>

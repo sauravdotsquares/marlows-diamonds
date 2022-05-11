@@ -9,7 +9,7 @@
             </div>
 	<div class="login-reg-wraper">
       <div class="row justify-content-center">
-          <div class="col-md-6">
+          <div class="col-lg-6">
               <div class="card">
                  
                   <div class="card-body">
@@ -24,7 +24,7 @@
                           @csrf
                           <div class="checkout-form-group row">
                               <label class="input-label">Email address <abbr class="required">*</abbr></label>
-                              <div class="col-md-6">
+                              <div class="col-md-12">
                                   <input type="text" id="email_address" class="form-control" name="email" required autofocus>
                                   @if ($errors->has('email'))
                                       <span class="text-danger">{{ $errors->first('email') }}</span>

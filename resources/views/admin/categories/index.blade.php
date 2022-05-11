@@ -17,17 +17,13 @@
          <div class="col-12">
             <div class="card">
                <div class="row">
-                  <div class="col-6">
+                  
+                  <div class="col-12">
                      <div class="card-header">
-                        <h3 class="card-title">Category</h3>
-                     </div>
-                  </div>
-                  <div class="col-6">
-                     <div class="card-header1">
                         <!-- <button><a href="javascript:void()" id="addForm">Add</a></button> -->
                         <a href="{{asset('admin/products/categories/create')}}">
                            <button type="button" class="btn btn-primary">
-                              Add
+                              Add New Category
                            </button>
                         </a>
                      </div>
@@ -41,10 +37,10 @@
                         <tr>
                            <th>Sr No</th>
                            <th>Name</th>
-                           <th>Image</th>
+                           
                            <th>Slug</th>
                            <th>Parent</th>
-                           <th>Description</th>
+                           <th>Meta Title</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
@@ -54,10 +50,10 @@
                            <tr>
                               <td>{{++$key}}</td>
                               <td>{{$value->name}}</td>
-                              <td><img src="{{ asset('storage/'.$value->image_url) }}" alt=""></td>
+                              
                               <td>{{$value->slug}}</td>
                               <td>{{$value->parent_details}}</td>
-                              <td>{!!$value->description!!}</td>
+                              <td>{!!$value->meta_title!!}</td>
                               <td>{{$value->created_at}}</td>
                               <td>
                                  @if($value->status == 1)
@@ -79,10 +75,10 @@
                         <tr>
                             <th>Sr No</th>
                             <th>Name</th>
-                            <th>Image</th>
+                            
                             <th>Slug</th>
                             <th>Parent</th>
-                            <th>Description</th>
+                            <th>Meta Title</th>
                             <th>Created</th>
                             <th>Action</th>
                         </tr>

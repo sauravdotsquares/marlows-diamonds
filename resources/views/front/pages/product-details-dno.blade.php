@@ -122,6 +122,22 @@ Session::forget('recently_view');
 			<div class="product-info-media">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 				
+					<div id="carousel-zoom">
+						
+						@if($prodImages)
+
+							@foreach($prodImages as $images)
+								@php
+									$explode = explode('/',$images->image_url);
+									$explode1 = explode('.',$explode[1]);
+								@endphp
+								<div class="item">
+									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"></a>
+								</div>
+							@endforeach
+						@endif
+						
+					</div>
 					<div id="carousel" class="owl-carousel">
 						
 						@if($prodImages)
@@ -132,7 +148,7 @@ Session::forget('recently_view');
 									$explode1 = explode('.',$explode[1]);
 								@endphp
 								<div class="item">
-									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"><img src="{{asset('/storage/'.$images->image_url)}}" alt="{{$explode1[0]}}"></a>
+									<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"><img src="{{asset('/storage/'.$images->image_url)}}" alt="{{$explode1[0]}}"></a>
 								</div>
 							@endforeach
 						@endif
@@ -197,8 +213,8 @@ Session::forget('recently_view');
 					</div>
 				</div>
 				
-				<div class="finance-available">
-					<a type="button" data-bs-toggle="modal" data-bs-target="#financeAvailableModal">
+				<div class="finance-available" ng-controller="DekopayController">
+					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
 							<span>see options</span>
@@ -434,7 +450,7 @@ Session::forget('recently_view');
 @endsection
 
 @section('js')
-
+	<script src="{{$url}}"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
@@ -468,10 +484,12 @@ Session::forget('recently_view');
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 			var variations = [];
 			$('.type-variations-row select').each(function(i, sel){ 
-				//variations[$(sel).attr('id')]=$(sel).val();
-				variations.push($(sel).val());
+				
+				if($(sel).attr('name')!='finger-size')
+					variations.push($(sel).val());
 			});
-			//console.log(variations);
+			var data_slug = '{{url("/")}}';
+			console.log(variations);
 			$.ajax({
 				type: 'POST',
 				url: '{{route("get-variations-data")}}',
@@ -516,6 +534,17 @@ Session::forget('recently_view');
 						$('#selected_variation_price').val(res.sale_price);
 						$('#selected_final_price').val(Math.round(sale_p_final));
 						$('#finaldiamondprice').text(Math.round(sale_p_final));
+					}
+
+					if(res.vari_image!='' && res.vari_image!=null){
+						variation_image = res.vari_image;
+						$('#carousel .owl-item.active .item a').attr('href',data_slug+'/storage/'+res.vari_image);
+						$('#carousel .owl-item.active .item img').attr('src',data_slug+'/storage/'+res.vari_image);
+						//$("#carousel .owl-stage .owl-item").removeClass('active');
+						//$("#carousel .owl-stage .owl-item.variation_image").remove();
+			
+						//$("#carousel .owl-stage").prepend('<div class="owl-item active variation_image" style="width: 654.5px;"><div class="item"><a data-fancybox="gallery2" href="'+data_slug+'/storage/'+res.vari_image+'" data-caption="DS013_90_W_1651666442"><img src="'+data_slug+'/storage/'+res.vari_image+'" alt="DS013_90_W_1651666442"></a></div></div>');
+						//jQuery("#carousel").owlCarousel();
 					}
 				}
 			});
@@ -618,7 +647,7 @@ Session::forget('recently_view');
         $(document).ready(function() {
 	      
 	      jQuery("#carousel").owlCarousel({
-			  autoplay: true,
+			  //autoplay: true,
 			  rewind: true, /* use rewind if you don't want loop */
 			  /*margin: 20,*/
 			   /*
@@ -627,7 +656,7 @@ Session::forget('recently_view');
 			  */
 			  responsiveClass: true,
 			  //autoHeight: true,
-			  autoplayTimeout: 7000,
+			  //autoplayTimeout: 7000,
 			  smartSpeed: 800,
 			  nav: true,
 			  items : 1,

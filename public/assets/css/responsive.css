@@ -129,7 +129,11 @@ h2,.heading-h-two{font-size:22px}
 	.product-req-appointment{ margin-top: 10px; }
 	.finance-available a p{font-size: 14px;}
 }
-
+@media(max-width: 1024px){
+	.product-info-media .owl-carousel .owl-nav {
+		display: block; 
+	}
+}
 
 @media(min-width:768px) and (max-width:1024px){
 .product-info {padding: 0 15px 20px;}
@@ -230,7 +234,7 @@ h3,.heading-h-three{font-size:28px}
 .head-mini-search .formgroup{max-width:100%}
 .head-mini-search{position:fixed;top:0;left:0;background:#fff;width:100%;z-index:991;height:100%;display:none}
 .show-search-box .head-mini-search{display:flex}
-.site-logo-main img{max-width:110px}
+.site-logo-main img{max-width:100px}
 .site-logo-main{order:2;max-width:120px}
 .main-navigaiton{order:1}
 .head-mini-search form{width:100%}
