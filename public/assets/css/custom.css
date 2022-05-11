@@ -902,7 +902,7 @@ a[type="button"] {-webkit-appearance: none !important;}
 .finance-available-options .payments p:first-child{width: 15%;}
 .finance-available-options ul li input, .finance-available-options ul li select {margin: 0;width: 100%;padding: 5px;}
 .finance-available-options .deko-calculate {width: 100%;text-align: center;padding-top: 15px;}
-.finance-available-options .deko-calculate button {font-size: 1.0rem;border-radius: 5px;line-height: 1;background-color: #902f66;color: #ffffff;}
+.finance-available-options .deko-calculate button {font-size: 1.0rem;border-radius: 5px;line-height: 1;background-color: #902f66;color: #ffffff; padding: 13px 30px;}
 .finance-available-options .pay_details li p + p {text-align: right;}
 .finance-available-options .pay_details li {border-bottom: 1px solid #EFEFEF;}
 .finance_options_provided {text-align: center;}
@@ -912,6 +912,12 @@ a[type="button"] {-webkit-appearance: none !important;}
 .defaultpages-cols h6 {font-family: "Lato";}
 .defaultpages-cols h6 span {line-height: 30px;}
 .login-block-wrap {margin: 0 0 20px 0;}
+/** additional **/
+#financeAvailableModal .modal-header h5 {color: #000;font-size: 25px;font-family: "Lato";}
+#financeAvailableModal .modal-body select, #financeAvailableModal .modal-body input {height: 44px;background-color: transparent;border: 1px solid #D0D0D0;border-radius: 3px;}
+.finance_options_provided {margin-top: 22px;}
+.modal-header h5 {font-family: "Lato";color: #000;}
+
 /** mega menuhover for desktop **/
 @media(min-width:1024px){
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
