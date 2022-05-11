@@ -379,7 +379,7 @@ class ProductController extends Controller
     public function getCustomApiFilterData(Request $request)
     {
 
-        //echo '<pre>'; print_r($request->all()); die;
+        // echo '<pre>'; print_r($request->all()); die;
 
         $caratFrom = '0.30'; $caratTo = '0.39';
         if($request->carat!=''){
@@ -465,15 +465,16 @@ class ProductController extends Controller
             }
           }
           return response()->json(['html'=> $dataArray]);
-        $getApiController = new ApiController;
-        $getActualData = $getApiController->getRepnetApiFunction($request->all());
 
-        if(count($getActualData)){
-            $view = view('front.ajax.product_refinesearch',compact('getActualData'))->render();
-            return response()->json(['html'=> $view]);
-        }
+            // $getApiController = new ApiController;
+            // $getActualData = $getApiController->getRepnetApiFunction($request->all());
 
-        return response()->json(['html'=> '']);
+            // if(count($getActualData)){
+            //     $view = view('front.ajax.product_refinesearch',compact('getActualData'))->render();
+            //     return response()->json(['html'=> $view]);
+            // }
+
+            // return response()->json(['html'=> '']);
     }
 
     public function autocomplete(Request $request)
