@@ -22,14 +22,14 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('status') }}
    </div>
    @endif
-   
-	<?php 
+
+	<?php
 		// echo "In the blade file<pre>";
 		// print_r($banners->getBannerDetails[0]);
 		// die;
-	
+
 	?>
-   
+
    <!-- DataTables Example -->
    <section class="content">
       <div class="container-fluid">
@@ -50,7 +50,7 @@
                               <input type="text" id="title" name="title" class="form-control" value="{{ $banners->title }}" placeholder="Title" >
                            </div>
                         </div>
-					 </div>	
+					 </div>
 					 <div class="col-md-5">
 						<div class="form-group">
 							<div class="form-label-group">
@@ -60,7 +60,7 @@
 								@foreach($pages as $page)
 								<option value = {{ $page->id }} {{ $page->id==$banners->page_id ? 'selected' : '' }} >{{ $page->title }}</option>
 							@endforeach
-							</select>                  
+							</select>
 							</div>
 						</div>
 					 </div>
@@ -78,23 +78,23 @@
 					 </div>
 					 </div>
 					 <div class="row">
-					
+
 					 <div class="col-md-5">
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Description</label>
-                               <textarea id="description" name="description[]" class="form-control ckeditor description" placeholder="Banner Description" >{!! $banners->getBannerDetails[0]->description !!}</textarea>                    
+                               <textarea id="description" name="description[]" class="form-control ckeditor description" placeholder="Banner Description" >{!! $banners->getBannerDetails[0]->description !!}</textarea>
                            </div>
                         </div>
                      </div>
-                       <div class="col-md-5"> 
+                       <div class="col-md-5">
 						 <div class="form-group">
 							<label for="exampleInputFile">Banner Image</label>
 							<input type="hidden" name="ids[]" value="{{$banners->getBannerDetails[0]->id}}">
 							<div class="input-group">
-							@if($banners->getBannerDetails[0]->image!='') 
-								<img src="{{asset('storage').'/banners/'.$banners->getBannerDetails[0]->image}}" width="50px;">
-                              @endif
+							    @if($banners->getBannerDetails[0]->image!='')
+								    <img src="{{asset('storage').'/banners/'.$banners->getBannerDetails[0]->image}}" width="50px;">
+                                @endif
 							   <div class="custom-file">
                               <input type="file" id="image" name="image[]" value="{{ $banners->getBannerDetails[0]->image }}" class="custom-file-input" accept="image/*">
                               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
@@ -108,13 +108,19 @@
 					   </div>
 					   </div>
 					   </div>
-					</div> 
+					</div>
                       <div class="" id="dynamic_field" >
 					  <?php $i = 1; ?>
 					  @if($banners->getBannerDetails)
 						@foreach($banners->getBannerDetails as $key => $bannerDetails)
+                            <?php
+                                // echo "<pre>";
+                                // print_r($banners->getBannerDetails);
+                                // die;
+
+                            ?>
 							@if($key>0)
-								
+
 								<div class="row" id="row{{$i}}" class="dynamic-added">
 								<input type="hidden" name="ids[]" value="{{$bannerDetails->id}}">
 									<div class="col-md-5">
@@ -129,7 +135,7 @@
 										<div class="form-group">
 											<label for="exampleInputFile">Banner Image</label>
 											<div class="input-group">
-												<img width="150" src="{{url('/').'/images/banners/'.$bannerDetails->image}}" >
+												<img width="50px;" src="{{asset('storage').'/banners/'.$bannerDetails->image}}" >
 												<div class="custom-file">
 													<input type="file" id="image{{$i}}" name="image[]" class="custom-file-input" accept="image/*">
 														<label class="custom-file-label" for="exampleInputFile">Choose file</label>
@@ -146,19 +152,19 @@
 						@endforeach
 					  @endif
 					  </div>
-                     
-                     
+
+
                      <div class="form-group">
                         <button type="submit" class="btn btn-primary">Submit</button>
                      </div>
-                  
+
                      </div>
                   </div>
                </div>
-               
-                  
+
+
                </div>
-            
+
          </form>
       </div>
    </section>
@@ -177,38 +183,38 @@ $(document).on('change', '.custom-file-input', function (event) {
      $('.description').summernote({
 		 height:250
 	 })
-		
+
    })
-</script> 
+</script>
 <input type="hidden" name="csrf-token" content="{{ csrf_token() }}">
 <script type="text/javascript">
 
-    $(document).ready(function(){      
+    $(document).ready(function(){
 
       var postURL = "<?php echo url('addmore'); ?>";
 
-      var i=1;  
+      var i=1;
 
 
-      $('#add').click(function(){  
+      $('#add').click(function(){
 
-           i++;  
-		   
+           i++;
+
            $('#dynamic_field').append('<div class="row" id="row'+i+'" class="dynamic-added"><div class="col-md-5"><div class="form-group"><div class="form-label-group"><label for="product_name">Description</label><textarea id="description'+i+'" name="description[]" class="form-control description"></textarea></div></div></div><div class="col-md-5"><div class="form-group"><label for="exampleInputFile">Banner Image</label><div class="input-group"><div class="custom-file"><input type="file" id="image'+i+'" name="image[]" class="custom-file-input" accept="image/*"><label class="custom-file-label" for="exampleInputFile">Choose file</label></div></div></div></div><div class="col-md-2"><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></div></div>');
 			$('.description').summernote({
 			height:250
 			})
 
-      });  
+      });
 
 		$(".btn_remove").click(function(){
 			var id = $(this).data("remove_id");
 			var token = $("input[name='csrf-token']").attr("content");
-		    var button_id = $(this).attr("id");	
+		    var button_id = $(this).attr("id");
 			$.ajax(
 			{
 				//url: "delete-banner-image/"+id,
-				
+
 				 url: "{{ url('/admin/delete-banner-image/') }}/"+id,
 				type: 'DELETE',
 				data: {
@@ -216,23 +222,23 @@ $(document).on('change', '.custom-file-input', function (event) {
 					"_token": token,
 				},
 				success: function (){
-					 
+
 					//alert(button_id);
-					   $('#row'+button_id).remove();  
+					   $('#row'+button_id).remove();
 				}
 			});
-		   
+
 		});
 
 
-      /* $(document).on('click', '.btn_remove', function(){  
-			
-           var button_id = $(this).attr("id"); 
-	
-			console.log(button_id);
-			
+      /* $(document).on('click', '.btn_remove', function(){
 
-           $('#row'+button_id+'').remove();  
+           var button_id = $(this).attr("id");
+
+			console.log(button_id);
+
+
+           $('#row'+button_id+'').remove();
 
       });   */
 
@@ -248,19 +254,19 @@ $(document).on('change', '.custom-file-input', function (event) {
       });
 
 
-      $('#submit').click(function(){            
+      $('#submit').click(function(){
 
-           $.ajax({  
+           $.ajax({
 
-                url:postURL,  
+                url:postURL,
 
-                method:"POST",  
+                method:"POST",
 
                 data:$('#add_name').serialize(),
 
                 type:'json',
 
-                success:function(data)  
+                success:function(data)
 
                 {
 
@@ -286,11 +292,11 @@ $(document).on('change', '.custom-file-input', function (event) {
 
                     }
 
-                }  
+                }
 
-           });  
+           });
 
-      });  
+      });
 
 
       function printErrorMsg (msg) {
@@ -309,9 +315,9 @@ $(document).on('change', '.custom-file-input', function (event) {
 
       }
 
-    });  
+    });
 
-</script> 
+</script>
 
 
 @endsection

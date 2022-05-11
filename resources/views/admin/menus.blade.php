@@ -106,13 +106,33 @@
 
 	      });
 
-	      $("#btnUpdate").click(function(){
-	          editor.update();
-	      });
+            $("#btnUpdate").click(function(){
+                $('.text-error').html('');
+                $('.url-error').html('');
+                if($('#text').val() == '' ){
+                    $('#text').parent('.input-group').after('<lable class="text-error" style="color:red;">Text field is required</label>');
+                    return false;
+                }else if($('#href').val() == ''){
+                    $('#href').after('<lable class="url-error" style="color:red;">URL field is required</label>');
+                    return false;
+                }else{
+                    editor.update();
+                }
+            });
 
-	      $('#btnAdd').click(function(){
-	          editor.add();
-	      });
+            $('#btnAdd').click(function(){
+                $('.text-error').html('');
+                $('.url-error').html('');
+                if($('#text').val() == '' ){
+                    $('#text').parent('.input-group').after('<lable class="text-error" style="color:red;">Text field is required</label>');
+                    return false;
+                }else if($('#href').val() == ''){
+                    $('#href').after('<lable class="url-error" style="color:red;">URL field is required</label>');
+                    return false;
+                }else{
+                    editor.add();
+                }
+            });
 	      /* ====================================== */
 
 	      /** PAGE ELEMENTS **/
