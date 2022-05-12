@@ -54,7 +54,7 @@
 
 			</div>
 
-			  
+
 			</div>
 		</div>
 	</div>
@@ -68,13 +68,14 @@
 <div class="rating-review-block">
 				<div class="owl-carousel owl-theme slider-review">
 				@include('front.pages.reviews')
-				</div>	
+				</div>
 			</div>
 </div>
 
 
 <!-- insta photos section start -->
-<div class="share-moment">
+@include('front.includes.instagram-section')
+{{-- <div class="share-moment">
 	<div class="share-moment-heading"><div class="heading-h-two">Share your special moments with us<br> #marlowsengagements</div></div>
 	<div class="insta-photo-list">
 		<div class="owl-carousel owl-theme photo-slider">
@@ -128,16 +129,16 @@
 		    		</div>
 		    	</div>
 		    </div>
-		    
+
 		</div>
 	</div>
 	<div class="insta-btn">
 		<a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
 	</div>
-</div>
+</div> --}}
 
 
-<!-- insta photos section end -->	
+<!-- insta photos section end -->
 
 
 
