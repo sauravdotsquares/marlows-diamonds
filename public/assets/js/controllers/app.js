@@ -146,6 +146,8 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
         dekoFilters = window.dekofilters;
     }
     $scope.financeOptions = function(){
+        $scope.term='ONIB12-16.9';
+        $scope.percentage='10';
         $scope.productPrice = $("#finaldiamondprice").text();
         $('#totalOrder').val($scope.productPrice);
         $('#totalOrderText').text($scope.productPrice);
@@ -155,11 +157,20 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
             
             alterFilters(); 
 
-            dekoInit(); 
+            $scope.dekoInit(); 
         }
     }
+    $scope.financeOptionsCheckout = function(){
+        $scope.term='ONIB12-16.9';
+        $scope.percentage='10';
+       
+        alterFilters(); 
+
+        $scope.dekoInit(); 
+        
+    }
     $scope.calculate = function(){
-       dekoInit(); 
+       $scope.dekoInit(); 
     }
     function alterFilters(){
                 if(null != dekoFilters){
@@ -180,7 +191,7 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
         }
      }
     function alterMinOption(){
-        var payedVal = $('select[name="percentage"]').val();
+       var payedVal = $('select[name="percentage"]').val();
        var update = false;
        $('select[name="percentage"] option').each(function(){   
            if($(this).val() == payedVal){
@@ -194,7 +205,8 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
             $('select[name="percentage"] option:not([disabled]):first').prop('selected', 'selected');
         }
     }
-    function dekoInit(){
+    $scope.dekoInit = function(){
+        
         alterMinOption(); 
        //Call the api 
        var price = $('#totalOrder').val();
@@ -202,14 +214,17 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
 
        var deposit  = parseFloat($('#payed').val()); 
 
-       var code = $('#terms').val(); 
-      
+       var code = $('#terms').val();
+
+       $('#payPro').val(code); 
+       $('#payPer').val(payedVal); 
+        
        var amount = (parseFloat(price)/100)* deposit;
        var my_fd = new FinanceDetails(code, parseFloat(price), deposit, amount);
         
        var preSetVal = parseFloat($('#preSetValue').val());
-       console.log(price);
-       console.log(preSetVal);
+       //console.log(price);
+       //console.log(preSetVal);
        if(price>preSetVal){
             $('.finance-available-options').css('display','block');
             $('.finance_options_not_available').css('display','none');
