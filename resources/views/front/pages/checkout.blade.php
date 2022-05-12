@@ -283,161 +283,9 @@
                         <input type="hidden" id="selected_payment_type" name="selected_payment_type" value="paypal">
                         <div class="checkout-payment-options">
                             <ul class="cc_payment_methods_options">
-                                <li class="cc_payment_methods paypal_payment">
-                                    <input type="radio" name="payment_type" checked required="required" value="paypal">
-                                    <label class="paypal_label">
-                                        Paypal
-                                        <img src="{{asset('')}}assets/images/paypal-icon.png" alt="paypal">
-                                        <a class="what-paypal" href="https://www.paypal.com/gb/webapps/mpp/paypal-popup" onclick="javascript:window.open('https://www.paypal.com/gb/webapps/mpp/paypal-popup','WIPaypal','toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=1060, height=700'); return false;">What is PayPal?</a>
-                                    </label>
-                                    <div class="payment-box-main-drop paypal-pay-box">
-                                        Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
-                                        account.
-                                    </div>
-                                </li>
-                                <li class="cc_payment_methods via_deko_payment">
-                                    <input type="radio" name="payment_type" required="required" value="dekopay">
-                                    <label class="deko_label">
-                                        Dekopay
-                                        <img src="{{asset('')}}assets/images/dek_one.png" alt="deko">
-                                    </label>
-                                    <div class="payment-box-main-drop deko-pay-box" style="display:none;">
-                                        <p>Pay securely by Credit or Debit card or internet banking through Dekopay
-                                            Secure Servers.</p>
-                                        <div class="deko_finance">
-                                            <img src="../assets/images/Deko_square_colour_whiteBG200px_wide.png"
-                                                alt="deko">
-                                            <span> Finance Options </span>
-                                        </div>
-                                        <div class="payment-cc-details-box">
-                                            <div class="payment-cc-details-inner">
-                                                <div class="payment-cc-details-label">
-                                                    Price :
-                                                </div>
-                                                <div class="payment-cc-details-values">
-                                                    {{MY_CURRENCY_SYMBOL}} <span id="totalP">389.00</span>
-                                                </div>
-                                            </div>
-                                            <div class="payment-cc-details-inner">
-                                                <div class="payment-cc-details-label">
-                                                    Term :
-                                                </div>
-                                                <div class="payment-cc-details-values">
-                                                <select id="terms" name="term">
-                                                    <option value="ONIB12-16.9" selected=""> 12  Months Credit 16.9%</option>
-                                                    <option value="ONIB18-16.9"> 18  Months Credit 16.9%</option>
-                                                    <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
-                                                    <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
-                                                    <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
-                                                </select>
-                                                    <!-- <select id="paymentccdetails" name="paymentccdetails">
-                                                        <option value="12"> 12 Months Credit 16.9%</option>
-                                                        <option value="18"> 18 Months Credit 16.9%</option>
-                                                        <option value="24"> 24 Months Credit 16.9%</option>
-                                                        <option value="36"> 36 Months Credit 16.9%</option>
-                                                        <option value="48"> 48 Months Credit 16.9%</option>
-                                                    </select> -->
-                                                </div>
-                                            </div>
-                                            <div class="payment-cc-details-inner">
-                                                <div class="payment-cc-details-label">
-                                                    Deposit :
-                                                </div>
-                                                <div class="payment-cc-details-values">
-                                                    <!-- <select id="depositepercentage" name="depositepercentage">
-                                                        <option value="10">10%</option>
-                                                        <option value="20">20%</option>
-                                                        <option value="30">30%</option>
-                                                        <option value="40">40%</option>
-                                                        <option value="50">50%</option>
-                                                    </select> -->
-                                                    <select id="payed" name="percentage">
-                                                        <option value="10" selected="">10%</option>
-                                                        <option value="20">20%</option>
-                                                        <option value="30">30%</option>
-                                                        <option value="40">40%</option>
-                                                        <option value="50">50%</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="cc_pay_details">
-                                            <div class="cc_pay_details_inner">
-                                                <div class="cc_pay_details_label">
-                                                    Monthly Payment
-                                                </div>
-                                                <div class="cc_pay_details_values">
-                                                    £ <span id="perMonths">  </span>
-                                                </div>
-                                            </div>
-                                            <div class="cc_pay_details_inner">
-                                                <div class="cc_pay_details_label">
-                                                    Cash Price
-                                                </div>
-                                                <div class="cc_pay_details_values">
-                                                    £ <span id="cashPrices"> </span>
-                                                </div>
-                                            </div>
-                                            <div class="cc_pay_details_inner">
-                                                <div class="cc_pay_details_label">
-                                                    Deposit to Pay
-                                                </div>
-                                                <div class="cc_pay_details_values">
-                                                    £ <span id="Deposited"> </span>
-                                                </div>
-                                            </div>
-                                            <div class="cc_pay_details_inner">
-                                                <div class="cc_pay_details_label">
-                                                    Loan Amount
-                                                </div>
-                                                <div class="cc_pay_details_values">
-                                                    £ <span id="loanAmt"> </span>
-                                                </div>
-                                            </div>
-                                            <div class="cc_pay_details_inner">
-                                                <div class="cc_pay_details_label">
-                                                    Loan Repayment
-                                                </div>
-                                                <div class="cc_pay_details_values">
-                                                    £ <span id="loanRepay"> </span>
-                                                </div>
-                                            </div>
-                                            <div class="cc_pay_details_inner">
-                                                <div class="cc_pay_details_label">
-                                                    Cost of Loan
-                                                </div>
-                                                <div class="cc_pay_details_values">
-                                                    £ <span id="costLoan"> </span>
-                                                </div>
-                                            </div>
-                                            <div class="cc_pay_details_inner">
-                                                <div class="cc_pay_details_label">
-                                                    Total Amount Payable
-                                                </div>
-                                                <div class="cc_pay_details_values">
-                                                    £ <span id="totalAmt"> </span>
-                                                </div>
-                                            </div>
-                                            <div class="cc_pay_details_inner">
-                                                <div class="cc_pay_details_label">
-                                                    Number of Monthly Payments
-                                                </div>
-                                                <div class="cc_pay_details_values">
-                                                    <span id="noTerm"> </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" id="enableId" value="OCFDefault">
-                                        <div class="cc_how_apply">
-                                            <strong>HOW TO APPLY</strong>
-                                            <span>Choose Dekopay as your payment method and place your order.</span>
-                                            <span>Finance is only available to permanent UK residents aged between 18
-                                                and 80, subject to status, terms and conditions apply. For more details
-                                                about Dekopay please see <a href="#">Terms of Service</a> | <a
-                                                    href="#">Privacy Policy</a> | <a href="#">FAQ.</a></span>
-                                        </div>
-                                    </div>
-                                </li>
+
+                                @include('front.pages.payments.paypal',['totalAmount'=>$total])
+                                @include('front.pages.payments.dekopay',['totalAmount'=>$total])
                             </ul>
                         </div>
                         <div class="checkout-place-order">
@@ -466,6 +314,7 @@
 @endsection
 
 @section('js')
+<script src="{{$url}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
@@ -478,12 +327,12 @@
             $('#selected_payment_type').val($(this).val());
             switch ($(this).val()) {
                 case 'paypal':
-                    $(".paypal-pay-box").show();
-                    $(".deko-pay-box").hide();
+                    $(".paypal-pay-box").show('slow');
+                    $(".deko-pay-box").hide('slow');
                     break;
                 case 'dekopay':
-                    $(".paypal-pay-box").hide();
-                    $(".deko-pay-box").show();
+                    $(".paypal-pay-box").hide('slow');
+                    $(".deko-pay-box").show('slow');
                     break;
             }
         });
@@ -680,6 +529,8 @@
             },
         },
         submitHandler: function (form) {
+            $('.cc_place_order_btn button').text('Please Wait ...');
+            $('.cc_place_order_btn button').prop('disabled', true);
             var form_data = new FormData(form);
             $.ajax({
                 url: "{{ route('place.order') }}",
@@ -689,18 +540,24 @@
                 processData: false,
                 data: form_data,
                 success: function (response) {
+                    $('.cc_place_order_btn button').text('Place Order');
+                    $('.cc_place_order_btn button').prop('disabled', false);
                     if(response.status == 500){
-                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist</label>');
+                        
+
+                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
                         toastr.info(response.msg);
                     }
                     if(response.status == 200){
+                        
                         // toastr.success(response.msg);
                         // window.location.reload();
                         if($('#selected_payment_type').val() == 'paypal'){
                             window.location.href = "{{route('make.payment')}}/"+response.order_dt;
                         }else{
-                            console.log("dekopay");
+                            window.location.href = "{{route('make.dekopay')}}/"+response.order_dt;
                         }
+
                     }else{
                         toastr.info(response.error);
                     }

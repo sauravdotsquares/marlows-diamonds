@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\OrderDekopayFinance;
 use App\Models\User;
 use Auth;
 use Redirect;
@@ -16,7 +17,10 @@ class PlaceOrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
-        
+        //echo '<pre>'; print_r($request->all()); die;
+        //echo $encryt = base64_encode('6-7');
+        //echo $encryt = base64_decode($encryt);
+        //die;
         if(!Auth::check()){
             // If user is not logged in
             $getEmailExists = User::where('email',$request->cust_email)->count();
@@ -97,6 +101,19 @@ class PlaceOrderController extends Controller
                             $getOrderDetails->total_price = $getProduct['quantity']*$getProduct['price'];
                             $getOrderDetails->save();
                         } 
+
+                        //Check if the payment type is dekopay and save their records
+
+                        if($request->selected_payment_type == 'dekopay'){
+                            $orderDekopayFinance = new OrderDekopayFinance;
+                            $orderDekopayFinance->order_id = $getOrders->id;
+                            $orderDekopayFinance->order_key = base64_encode(Auth::user()->id.'-'.$getOrders->id);
+                            $orderDekopayFinance->finCodes = $request->payPro;
+                            $orderDekopayFinance->depositAmt = $request->payPer;
+                            $orderDekopayFinance->totalAmts = $request->final_price;
+                            
+                            $orderDekopayFinance->save();
+                        }
 
                         CustomerAddress::where('user_id',Auth::user()->id)->update(['order_id'=>$getOrders->id]);
                         return response()->json(['status'=>200,'msg'=>'Order added','order_dt'=>$getOrders->id]); 

@@ -918,6 +918,15 @@ a[type="button"] {-webkit-appearance: none !important;}
 .finance_options_provided {margin-top: 22px;}
 .modal-header h5 {font-family: "Lato";color: #000;}
 
+.container-payment-receipt table{width: 55%;margin: 0 auto;}
+.container-payment-receipt {padding: 50px 0;}
+.dekopay-message {text-align: center;font-size: 20px;color: #8e2e65;margin-bottom: 15px;font-weight: 700;}
+.container-payment-receipt table tr th {padding: 7px;background: #8e2e65bd;color: #fff;}
+.container-payment-receipt table tr td {padding: 7px;background: #8e2e65bd;color: #fff;}
+.container-payment-receipt table tr td {padding: 7px;background: aliceblue;color: #8e2e65;}
+#dekopay_payment_form {text-align: center;}
+#submit_dekopay_payment_form {margin-top: 20px;background: #8e2e65;border: none;}
+a[disabled="disabled"] {pointer-events: none;}
 /** mega menuhover for desktop **/
 @media(min-width:1024px){
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}

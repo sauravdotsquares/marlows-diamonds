@@ -8,6 +8,7 @@ use App\Models\Products;
 use App\Models\Country;
 use App\Models\User;
 use Auth;
+use billythekid\dekopay\Core\DekoPayApiClient;
 
 class AddToCartController extends Controller
 {
@@ -171,6 +172,14 @@ class AddToCartController extends Controller
 
     public function checkoutOrder(Request $request)
     {
+        $dekoEnabled = true;
+        $client = new DekoPayApiClient('','', env('DEKOPAY_API_KEY'));
+        $pay_url =  env('DEKOPAY_MODE');
+
+        if($dekoEnabled){
+            $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY');
+        }
+
         $cart = session()->get('cart');
         if(isset($cart) && !empty($cart)){
             $getCountries = Country::get();
@@ -186,7 +195,7 @@ class AddToCartController extends Controller
             //     echo "Check else";
             // }
             // die;
-            return view('front.pages.checkout',compact('getCountries','getUsersDetails'));
+            return view('front.pages.checkout',compact('getCountries','getUsersDetails','url'));
         }
         return redirect()->route('home');
     }
