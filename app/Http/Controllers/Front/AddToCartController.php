@@ -50,6 +50,9 @@ class AddToCartController extends Controller
                     if($key == 'certificatelink'){
                         $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
                         $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
+                    }elseif($key == 'imagelink'){
+                        $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                        $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Image</a></dd>';
                     }else{
                         $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
                         $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
@@ -102,10 +105,15 @@ class AddToCartController extends Controller
                     if($key == 'certificatelink'){
                         $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
                         $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
+                    }elseif($key == 'imagelink'){
+                        // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                        // $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Image</a></dd>';
                     }else{
                         $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
                         $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
                     }
+
+
                 }
             }
             $titleHtml .= ' </dl>';
@@ -124,7 +132,7 @@ class AddToCartController extends Controller
                     "selected_parameter"=> $selectedAttributes,
                     "quantity" => 1,
                     "price" => $input['price'],
-                    "image" => 'https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/MarlowsDiamonds-Logo-225x107.png'
+                    "image" => ''
                 ];
             }
             session()->put('cart', $cart);
