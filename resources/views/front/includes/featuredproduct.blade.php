@@ -25,10 +25,10 @@
                                     <div class="product-titles-small">
                                         <a href="{{asset('product/'.$product->slug)}}"> {{$product->title}}</a>
                                     </div>
-                                    <div class="product-price">
+                                    {{-- <div class="product-price">
                                         {{MY_CURRENCY_SYMBOL}}
                                         {{isset($product->ProductVariationMinMaxPrice->MaxPrice)?$product->ProductVariationMinMaxPrice->MaxPrice:0.00}}
-                                    </div>
+                                    </div> --}}
                                     <div class="product-action-btn">
                                         <a class="btn-bg-small" href="{{asset('product/'.$product->slug)}}">Select Options</a>
                                     </div>

@@ -15,7 +15,7 @@ use App\Models\ProductVariationDetails;
 use App\Models\Attributes;
 use Illuminate\Support\Arr;
 use App\Models\DiamondShapes;
-use View;  
+use View;
 
 class ProductController extends Controller
 {
@@ -64,7 +64,7 @@ class ProductController extends Controller
             return 'URL NOT FOUND';
         }
         $diamondShapes = DiamondShapes::all();
-        
+
         return view('admin.products.update',compact('getProductData','diamondShapes'));
     }
 
@@ -79,7 +79,7 @@ class ProductController extends Controller
             // 'featured_image' => 'required',
         ]);
 
-        //  setup categories 
+        //  setup categories
         //  $getParentId = 0;
         if(isset($request->table_id) && !empty($request->table_id)){
             if($request->table_id == $request->categories){
@@ -126,7 +126,7 @@ class ProductController extends Controller
             $msg = 'Successfully submitted!!!';
         }
 
-       
+
 
         if($request->hasFile('featured_image')) {
             $imagefeatured_image = single_image_upload($request->file('featured_image'),'Products','600','600');
@@ -150,21 +150,21 @@ class ProductController extends Controller
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
         }
 
-        
+
         if(isset($request->data) && !empty($request->data)){
             $getVariationArray = [
                 'variationData' => $request->data,
             ];
             $this->updateProductVariation($productDetails->id,$getVariationArray);
         }
-        
+
         if(isset($request->selected_attribute_name) && !empty($request->selected_attribute_name)){
             $this->uploadProductVariationAttributes($productDetails->id,implode(",",$request->selected_attribute_name));
         }
 
         // return response()->json($request->all());
 
-        return redirect()->back()->with('success', $msg);  
+        return redirect()->back()->with('success', $msg);
     }
 
     public function updateProductVariation($productId,$getVariationArray)
@@ -183,7 +183,7 @@ class ProductController extends Controller
             }else{
                 $imageVariImage = null;
             }
-            
+
 
             if(isset($value['vari_video']) && $value['vari_video']) {
                 $imageVariVideo = product_video_upload($value['vari_video'],'ProductsVariVideos');
@@ -219,35 +219,35 @@ class ProductController extends Controller
                 if(isset($newKey[0]) && $newKey[0] === 'attri'){
 
                     if(isset($value['is_update']) && $value['is_update']!=''){
-                        
+
                        ProductVariationDetails::where('variation_id',$value['is_update'])->where('key',$key1)->update([
                             'value' =>$variData,
-                        ]); 
+                        ]);
                    }else{
-                    
+
                         ProductVariationDetails::create([
                             'product_id' => $productId,
                             'variation_id'=>$getProductDataVariation->id,
                             'key' =>$key1,
                             'value' =>$variData,
                         ]);
-                       
+
                    }
-                    
+
                 }
             }
-            
+
         }
-      
+
         return true;
     }
 
     public function deleteProductVariation(Request $request){
-       
+
         ProductVariations::where('id',$request->var_id)->delete();
 
         ProductVariationDetails::where('variation_id',$request->var_id)->delete();
-        
+
         return true;
     }
 
@@ -264,7 +264,7 @@ class ProductController extends Controller
     public function uploadProductImages($imagesArray,$productId)
     {
         if(count($imagesArray) && !empty($imagesArray)){
-            ProductImages::where('product_id',$productId)->delete();
+
             foreach($imagesArray as $key => $image){
                 if($key == 'f2'){
                     $productDetails = ProductImages::create([
@@ -281,7 +281,7 @@ class ProductController extends Controller
                 }
             }
         }
-        
+
         return true;
     }
 
@@ -293,9 +293,9 @@ class ProductController extends Controller
         ]);
 
         $newSlug = new SlugController;
-        $newCustomSlug = $newSlug->makeNewSlugName('Attributes',$request->name,$request->name);  
+        $newCustomSlug = $newSlug->makeNewSlugName('Attributes',$request->name,$request->name);
         // 1. Model Name 2. Name/Title. 3. slugName
-    
+
 
         if($validator->fails()){
             return Redirect::back()->withErrors($validator->errors())->withInput();
@@ -350,7 +350,7 @@ class ProductController extends Controller
     {
         $statusChange = Products::findOrFail($request->id);
         if($statusChange){
-            
+
             $statusChange->update([
                 'status'=>$request->status,
             ]);
@@ -361,7 +361,7 @@ class ProductController extends Controller
 
     public function delete(Request $request)
     {
-        
+
         $post = Products::find($request->id)->delete();
         return response()->json($post);
     }
@@ -403,13 +403,13 @@ class ProductController extends Controller
                 $attr_key = explode('_', $attribute);
                 $attr = Attributes::where('slug',$attr_key[1])->first();
                 $attr_val = explode('|',$attr->values);
-                $all_attrs[$key]['name'] = $attr->name; 
-                $all_attrs[$key]['key'] = $attribute; 
-                $all_attrs[$key]['value'] = $attr_val; 
+                $all_attrs[$key]['name'] = $attr->name;
+                $all_attrs[$key]['key'] = $attribute;
+                $all_attrs[$key]['value'] = $attr_val;
             }
 
         }
-        
+
         //echo '<pre>';print_r($all_attrs); die;
 
         $variationArray = [];
@@ -417,7 +417,7 @@ class ProductController extends Controller
             foreach ($getVariations as $key => $variation) {
                 if($key==0) $section = 'item_details'; else $section = 'item_details'.$key;
                 // Get Product Variations
-                
+
                 $prod_variations = ProductVariationDetails::where('variation_id',$variation['id'])->get();
                 $prod_varitn = [];
                 foreach ($prod_variations as $key1 => $prod_variation) {

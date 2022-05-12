@@ -69,7 +69,7 @@
                 </div>
             @endif
 
-            <?php 
+            <?php
                 // echo "<pre>";
                 // print_r($getUsersDetails->getCustomerAddressFunction->country_id);
                 // die;
@@ -494,7 +494,7 @@
                 //console.log("if");
             }else{
                 if($(this).val() != ''){
-                    getEmailCheck(); 
+                    getEmailCheck();
                 }
             }
         });
@@ -629,51 +629,51 @@
             first_name: {
                 required: "First name is required",
             },
-            last_name:{ 
+            last_name:{
                 required: "Last name is required",
             },
             company_name: {
                 required: "Company name is required",
             },
-            country_id:{ 
+            country_id:{
                 required: "Country is required",
             },
             street_address_l1: {
                 required: "Street Address is required",
             },
-            street_address_l2:{ 
-                required: "Street Address 2 is required", 
+            street_address_l2:{
+                required: "Street Address 2 is required",
             },
             town_city: {
                 required: "Town/City is required",
             },
-            state:{ 
+            state:{
                 required: "State is required",
             },
             pin_code: {
                 required: "Pin Code is required",
             },
-            mobile:{ 
-                required: "Mobile Number is required", 
+            mobile:{
+                required: "Mobile Number is required",
             },
             cust_email: {
                 required: "Email is required",
                 email:"Email id is valid format",
             },
-            cust_username:{ 
-                required: "Username is required", 
+            cust_username:{
+                required: "Username is required",
             },
             cust_password: {
                 required: "Password is required",
             },
-            order_notes:{ 
-                required: "Order Notes is required", 
+            order_notes:{
+                required: "Order Notes is required",
             },
             payment_type: {
                 required: "Payment type is required",
             },
-            paymentccdetails:{ 
-                required: "Payment details is required", 
+            paymentccdetails:{
+                required: "Payment details is required",
             },
             depositepercentage: {
                 required: "Deposit percentage is required",
@@ -710,13 +710,13 @@
     });
 
 
-    
+
 
 </script>
 
 <script>
     var api = $("#myapi").val();
-    
+
     var dekoFilters = null;
     if(undefined !== window.dekofilters){
         dekoFilters = window.dekofilters;
@@ -724,13 +724,13 @@
         function alterMinOption(){
         var payedVal = $('select[name="percentage"]').val();
         var update = false;
-        $('select[name="percentage"] option').each(function(){	
+        $('select[name="percentage"] option').each(function(){
             if($(this).val() == payedVal){
                 if($(this).prop('disabled')){
-                    update = true;	
+                    update = true;
                 }
             }
-        });	   
+        });
         if(update || payedVal == null){
             $('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first'));
             $('select[name="percentage"] option:not([disabled]):first').prop('selected','selected');
@@ -740,28 +740,28 @@
 
     function alterFilters(){
             if(null != dekoFilters){
-            var term = $('select[name="term"]').val(); 
+            var term = $('select[name="term"]').val();
             if(dekoFilters.hasOwnProperty(term)){
                 termProp = parseInt(dekoFilters[term]);
-                $('select[name="percentage"] option').attr('disabled', 'disabled'); 
+                $('select[name="percentage"] option').attr('disabled', 'disabled');
                 $('select[name="percentage"] option').each(function(){
                     var valInt = parseInt($(this).val());
                     if(valInt >= termProp){
-                        $(this).removeAttr('disabled'); 
+                        $(this).removeAttr('disabled');
                     }
                 });
 
             }else{
-                $('select[name="percentage"] option').removeAttr('disabled'); 
+                $('select[name="percentage"] option').removeAttr('disabled');
             }
     }
     }
 
-    var url="https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=b884fefd2e03ec4c921c184fcc4273f0";	
+    var url="https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=b884fefd2e03ec4c921c184fcc4273f0";
 
     function get_deko_data(){
         $.getScript( url, function() {
-            alterFilters(); 
+            alterFilters();
             alterMinOption();
             var values = $("#final_price").val();
             var code =$("#terms").val();
@@ -776,30 +776,30 @@
             $("#loanRepay").html(my_fd_obj.l_repay);
             $("#costLoan").html(my_fd_obj.l_cost);
             $("#totalAmt").html(my_fd_obj.total);
-            $("#noTerm").html(my_fd_obj.term); 
+            $("#noTerm").html(my_fd_obj.term);
             $("#totalP").html(my_fd_obj.goods_val);
 
             $("#payPro").val(code);
             $("#payPer").val(percentage);
         });
     }
-    get_deko_data(); 
+    get_deko_data();
 
     $(document).ready(function(){
         $("#terms").on("change", function(){
-            alterFilters(); 
+            alterFilters();
             alterMinOption();
             $('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first'));
             $('select[name="percentage"] option:not([disabled]):first').prop('selected','selected');
 
-            get_deko_data(); 
+            get_deko_data();
         });
         $("#payed").on("change", function(){
-            alterFilters(); 
+            alterFilters();
             alterMinOption();
-            get_deko_data(); 
+            get_deko_data();
         });
-        
+
     });
 </script>
 

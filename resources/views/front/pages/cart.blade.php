@@ -29,22 +29,25 @@
 
                             @foreach(session('cart') as $id => $details)
                             <?php
-                                            // echo "<pre>";
-                                            // print_r($details['selected_parameter']['title']);
-                                            // die;
-                                        ?>
-                            @php $total += $details['price'] * $details['quantity'] @endphp
+                                // echo "<pre>";
+                                // print_r(session('cart'));
+                                // die;
+                            ?>
+                            @php
+                                $total += $details['price'] * $details['quantity'];
+                            @endphp
                             <tr data-id="{{ $id }}">
                                 <td class="product-info-col" data-th="Product">
                                     <div class="cart-item-name">
                                         <div class="cart-image-item">
-                                            @if($details['selected_parameter']['title'] == "Custom Diamond")
-                                            <img src="{{$details['image']}}" width="100" height="100"
+                                            @if(isset($details['selected_parameter']['imagelink']) && !empty($details['selected_parameter']['imagelink']))
+                                                <img src="{{$details['selected_parameter']['imagelink']}}" width="100" height="100"
+                                                class="img-responsive" />
+                                            @elseif(isset($details['image']) && !empty($details['image']))
+                                                <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
                                                 class="img-responsive" />
                                             @else
-                                            <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
-                                                class="img-responsive" />
-
+                                                <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/MarlowsDiamonds-Logo-225x107.png" width="100" height="100" class="img-responsive" />
                                             @endif
                                         </div>
                                         <div class="cart-nameitem">

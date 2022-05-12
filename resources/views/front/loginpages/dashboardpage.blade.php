@@ -125,13 +125,13 @@
                                                     <div class="col-md-6">
                                                         <div class="checkout-form-group">
                                                             <label class="input-label">First Name <abbr class="required">*</abbr></label>
-                                                            <input type="text" name="first_name" class="form-control" value="{{isset($getUserDetails->getCustomerAddressFunction->first_name)?$getUserDetails->getCustomerAddressFunction->first_name:''}}">
+                                                            <input required="required" type="text" name="first_name" class="form-control" value="{{isset($getUserDetails->getCustomerAddressFunction->first_name)?$getUserDetails->getCustomerAddressFunction->first_name:''}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="checkout-form-group">
                                                             <label class="input-label">Last Name <abbr class="required">*</abbr></label>
-                                                            <input type="text" name="last_name" class="form-control" value="{{isset($getUserDetails->getCustomerAddressFunction->first_name)?$getUserDetails->getCustomerAddressFunction->first_name:''}}">
+                                                            <input required="required" type="text" name="last_name" class="form-control" value="{{isset($getUserDetails->getCustomerAddressFunction->first_name)?$getUserDetails->getCustomerAddressFunction->first_name:''}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -141,7 +141,7 @@
                                                 </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Country/Region <abbr class="required">*</abbr></label>
-                                                    <select name="country_id" class="form-control">
+                                                    <select required="required" name="country_id" class="form-control">
                                                         @foreach($getCountries as $key => $country)
                                                             @if(isset($getUsersDetails->getCustomerAddressFunction->country_id) && $getUsersDetails->getCustomerAddressFunction->country_id == $country->shortname)
                                                                 <option value="{{$country->shortname}}" selected>{{$country->name}}</option>
@@ -153,12 +153,12 @@
                                                 </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Street address  <abbr class="required">*</abbr></label>
-                                                    <input type="text" class="form-control" name="street_address_l1" value="{{isset($getUserDetails->getCustomerAddressFunction->street_address_l1)?$getUserDetails->getCustomerAddressFunction->street_address_l1:''}}">
+                                                    <input required="required" type="text" class="form-control" name="street_address_l1" value="{{isset($getUserDetails->getCustomerAddressFunction->street_address_l1)?$getUserDetails->getCustomerAddressFunction->street_address_l1:''}}">
                                                     <input type="text" class="form-control" name="street_address_l2" value="{{isset($getUserDetails->getCustomerAddressFunction->street_address_l2)?$getUserDetails->getCustomerAddressFunction->street_address_l2:''}}" placeholder="Apartment, suite, unit, etc. (optional)">
                                                 </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Town / City  <abbr class="required">*</abbr></label>
-                                                    <input type="text" class="form-control" name="town_city" value="{{isset($getUserDetails->getCustomerAddressFunction->town_city)?$getUserDetails->getCustomerAddressFunction->town_city:''}}">
+                                                    <input required="required" type="text" class="form-control" name="town_city" value="{{isset($getUserDetails->getCustomerAddressFunction->town_city)?$getUserDetails->getCustomerAddressFunction->town_city:''}}">
                                                 </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">State <span class="optional">(Optional)</span></label>
@@ -166,19 +166,19 @@
                                                 </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Postcode <abbr class="required">*</abbr></label>
-                                                    <input type="text" class="form-control" name="pin_code" value="{{isset($getUserDetails->getCustomerAddressFunction->pin_code)?$getUserDetails->getCustomerAddressFunction->pin_code:''}}">
+                                                    <input required="required" type="text" class="form-control" name="pin_code" value="{{isset($getUserDetails->getCustomerAddressFunction->pin_code)?$getUserDetails->getCustomerAddressFunction->pin_code:''}}">
                                                 </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Phone  <abbr class="required">*</abbr></label>
-                                                    <input type="text" class="form-control" name="mobile" value="{{isset($getUserDetails->getCustomerAddressFunction->mobile)?$getUserDetails->getCustomerAddressFunction->mobile:''}}">
+                                                    <input required="required" type="text" class="form-control" name="mobile" value="{{isset($getUserDetails->getCustomerAddressFunction->mobile)?$getUserDetails->getCustomerAddressFunction->mobile:''}}">
                                                 </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Email address   <abbr class="required">*</abbr></label>
-                                                    <input type="text" class="form-control" name="email" value="{{isset($getUserDetails->getCustomerAddressFunction->email)?$getUserDetails->getCustomerAddressFunction->email:''}}">
+                                                    <input required="required" type="text" class="form-control" name="email" value="{{isset($getUserDetails->getCustomerAddressFunction->email)?$getUserDetails->getCustomerAddressFunction->email:''}}">
                                                 </div>
                                                 <div class="checkout-form-group">
                                                     <label class="input-label">Other Notes <abbr class="required">*</abbr></label>
-                                                    <textarea name="order_notes" class="form-control" id="order_notes" cols="30" rows="10">{{isset($getUserDetails->getCustomerAddressFunction->order_notes)?$getUserDetails->getCustomerAddressFunction->order_notes:''}}</textarea>
+                                                    <textarea required="required" name="order_notes" class="form-control" id="order_notes" cols="30" rows="10">{{isset($getUserDetails->getCustomerAddressFunction->order_notes)?$getUserDetails->getCustomerAddressFunction->order_notes:''}}</textarea>
                                                 </div>
                                                 <div class="save-changes">
                                                     <button class="btn-bg-small" type="submit">Save address</button>

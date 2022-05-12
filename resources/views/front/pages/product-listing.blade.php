@@ -56,13 +56,8 @@
                                     <a href="<%subSubCat.url%>"><%subSubCat.name%> </a>
                                 </div>
                             </div>
-
-
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- Category listing -->
@@ -93,6 +88,17 @@
                         @foreach(session('cart') as $id => $details)
                             @php $total += $details['price'] * $details['quantity'] @endphp
                             <div class="side-cart-item">
+                                <div class="cart-image-item">
+                                    @if(isset($details['selected_parameter']['imagelink']) && !empty($details['selected_parameter']['imagelink']))
+                                        <img src="{{$details['selected_parameter']['imagelink']}}" width="100" height="100"
+                                        class="img-responsive" />
+                                    @elseif(isset($details['image']) && !empty($details['image']))
+                                        <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
+                                        class="img-responsive" />
+                                    @else
+                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/MarlowsDiamonds-Logo-225x107.png" width="100" height="100" class="img-responsive" />
+                                    @endif
+                                </div>
                                 <div class="side-cart-delete">
                                     <a href="javascript:void(0);" data-id="{{ $id }}" class="remove-from-cart">x</a>
                                 </div>
@@ -107,12 +113,13 @@
                                 <div class="side-cart-total">
                                     <strong>Subtotal: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'] * $details['quantity'],2) }} (incl. VAT)
                                 </div>
-                                <div class="side-cart-actions">
-                                    <a class="view-basket btn-bg-small" href="{{route('product.cart')}}">View Basket</a>
-                                    <a class="btn-bg-small" href="{{route('product.checkout')}}">Checkout</a>
-                                </div>
+
                             </div>
                         @endforeach
+                        <div class="side-cart-actions">
+                            <a class="view-basket btn-bg-small" href="{{route('product.cart')}}">View Basket</a>
+                            <a class="btn-bg-small" href="{{route('product.checkout')}}">Checkout</a>
+                        </div>
                     </div>
                     @else
                         <div class="shopping_cart_content">

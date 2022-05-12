@@ -18,6 +18,7 @@ use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
 use App\Models\Products;
 //use SoapClient;
+use billythekid\dekopay\Core\DekoPayApiClient;
 
 if (!function_exists("helper_test")) {
     function helper_test()
@@ -27,7 +28,6 @@ if (!function_exists("helper_test")) {
 }
 if (!function_exists("getVAT")) {
     function getVAT(){
-
         return 1.2;
     }
 }
@@ -88,7 +88,7 @@ if (!function_exists("single_storage_image_upload")) {
 		// $height = 200;
 		// $width = 200;
 		$image = $imageUrl;
-        echo '<pre>';print_r($image); die;
+        // echo '<pre>';print_r($image); die;
 		$imageName = $image->getClientOriginalName();
 		$fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
 		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
