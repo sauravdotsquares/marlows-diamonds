@@ -38,6 +38,8 @@ class InstagramController extends Controller
     }
 
     function finalMainInstaFunction(){
+        ini_set("allow_url_fopen", 1);
+
         $instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'marlows_diamonds', '1580@Marlows30', new Psr16Adapter('Files'));
 
         $instagram->setUserAgent('User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36');
