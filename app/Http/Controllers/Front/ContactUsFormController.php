@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Mail;
 use App\Models\Appointments;
+use App\Models\Settings;
 
 class ContactUsFormController extends Controller {
     
@@ -13,8 +14,9 @@ class ContactUsFormController extends Controller {
     public function ContactUsForm(Request $request) {
 			
 		// return response()->json($request->all());
-		
-        // Form validation
+		    $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
+				
+		// Form validation
         $this->validate($request, [
             'title' => 'required',
             'email' => 'required|email',
@@ -26,14 +28,15 @@ class ContactUsFormController extends Controller {
         // 
 		//  Send mail to admin
 		
-        Mail::send('mail', array(
+		
+        Mail::send('email.mail', array(
             'title' => $request->get('title'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
             'user_query' => $request->get('description'),
-        ), function($message) use ($request){
+        ), function($message) use ($request,$admin_email ){
             $message->from('ds19@24livehost.com');
-            $message->to('marlowstesting@getnada.com', 'Admin')->subject('test subj');
+			$message->to($admin_email, 'Admin')->subject('NEED ASSISTANCE?');
         });
         return back()->with('success', 'We have received your message and would like to thank you for writing to us.');
         
