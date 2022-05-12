@@ -24,22 +24,22 @@ class PayPalPaymentController extends Controller
                 'price' => isset($orderDetails->product_price)?$orderDetails->product_price:'1.00',
                 'desc'  => isset($orderDetails->product_details->tags)?$orderDetails->product_details->tags:'No Desc',
                 'qty' => isset($orderDetails->quantity)?$orderDetails->quantity:1,
-            ]; 
+            ];
         }
 
 
         $product = [];
         $product['items'] = $getProdustItems;
-  
+
         $product['invoice_id'] = $orderId;
         $product['invoice_description'] = "Order #{$product['invoice_id']} Bill";
         $product['return_url'] = route('success.payment');
         $product['cancel_url'] = route('cancel.payment');
         $product['total'] = $getOrderDetails->final_price;
-        
+
 
         $paypalModule = new ExpressCheckout;
-  
+
         // $res = $paypalModule->setExpressCheckout($product);
         $res = $paypalModule->setExpressCheckout($product, true);
 
@@ -47,17 +47,17 @@ class PayPalPaymentController extends Controller
         // echo "<pre>";
         // print_r($res);
         // die;
-  
+
         return redirect($res['paypal_link']);
     }
-   
+
     public function paymentCancel(Request $request)
     {
         // echo "<pre>";
         // print_r($request->token);
         // die;
         session()->forget('cart');
-        
+
         $getOrderDetails = Order::where('token',$request->token)->update(['status'=>3]);
         $result = [
             'response' => 'Your Order number('.$request->token.') has been cancelled',
@@ -67,7 +67,7 @@ class PayPalPaymentController extends Controller
         return view('front.pages.cancel-page',$result);
         // dd('Your payment has been decliend. The payment cancelation page goes here!');
     }
-  
+
     public function paymentSuccess(Request $request)
     {
         session()->forget('cart');
@@ -76,7 +76,7 @@ class PayPalPaymentController extends Controller
         // die;
         $paypalModule = new ExpressCheckout;
         $response = $paypalModule->getExpressCheckoutDetails($request->token);
-  
+
         if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
             $getOrderDetails = Order::where('token',$request->token)->update(['status'=>2]);
             // echo "<pre>";
