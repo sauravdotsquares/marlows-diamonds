@@ -647,7 +647,6 @@
 		});
 
         $(document).on('click','input[type="checkbox"]',function(){
-
 			if($(this).is(":checked")==true){
 				$(this).parent().parent().addClass('active-diamond');
 			}else{
@@ -657,7 +656,6 @@
 		$(document).on('click','input[type="radio"]',function(){
 			$('.shape-list li').removeClass('active-diamond')
 			$(this).parent().parent().addClass('active-diamond');
-
 		});
 
         $(document).on('change', "[id^=selectedDiamondCheckBox]", function () {

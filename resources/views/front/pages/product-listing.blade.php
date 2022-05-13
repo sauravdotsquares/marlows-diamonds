@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="ajax-load text-center" style="display:block">
-                    <img src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More post</p>
+                    <img src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More Products</p>
                 </div>
 
                 {!! isset($data->description)?$data->description:'' !!}
