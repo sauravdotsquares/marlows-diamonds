@@ -133,16 +133,17 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in colour-list">
+										<div class="diamond-values-in">
 											<ul>
-												@foreach (range('D', 'K') as $key => $alphabet)
-												<li class="selected-this @if($key == 0) active-diamond @endif">
+												@foreach (range('D', 'K') as $alphabet)
+												<li class="selected-this">
 													<button type="button" class="btn">
 									                    {{$alphabet}}
 									                    <input value="{{$alphabet}}" class="diamond-colour" name="colour[]" type="checkbox" ng-click="getDiamondResults()">
 									                </button>
 												</li>
 												@endforeach
+
 											</ul>
 										</div>
 									</div>
@@ -166,7 +167,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in clarity-list">
+										<div class="diamond-values-in">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -239,7 +240,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in cut-grade-list">
+										<div class="diamond-values-in">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -282,7 +283,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in polish-list">
+										<div class="diamond-values-in">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -325,7 +326,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in symmetry-list">
+										<div class="diamond-values-in">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -369,7 +370,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in floure-list">
+										<div class="diamond-values-in">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -424,7 +425,7 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="diamond-fil-cols">
-										<div class="diamond-values-in certi-list">
+										<div class="diamond-values-in">
 											<ul>
 												<li>
 													<button type="button" class="btn">
@@ -572,19 +573,6 @@
 		    angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
 		});
 
-		$(document).on('click','input[type="checkbox"]',function(){
-			if($(this).is(":checked")==true){
-				$(this).parent().parent().addClass('active-diamond');
-			}else{
-				$(this).parent().parent().removeClass('active-diamond');
-			}
-		});
-		$(document).on('click','input[type="radio"]',function(){
-			$('.shape-list li').removeClass('active-diamond')
-			$(this).parent().parent().addClass('active-diamond');
-			
-		});
-
         $(document).on('change', "[id^=selectedDiamondCheckBox]", function () {
             var index = parseInt($(this).attr("id").replace("selectedDiamondCheckBox",''));
             $('#addtobasketselectedrowid').val(index);
@@ -594,79 +582,6 @@
             // alert($('#addtobasketselectedrowid').val());
             addtobasketFunction($('#addtobasketselectedrowid').val());
         });
-
-        $('input[name=shape]').on('click', function() {
-            // $('.shape-list ul li').remove();
-            $('.shape-list ul li').each(function(){
-                $(this).removeClass('active-diamond');
-            });
-            if($(this).prop('checked')) {
-                $(this).parent().parent().addClass('active-diamond');
-            }
-        });
-
-        $('input[class=diamond-colour]').on('click', function() {
-            $('.colour-list ul li').each(function(){
-                $(this).removeClass('active-diamond');
-            });
-            if($(this).prop('checked')) {
-                $(this).parent().parent().addClass('active-diamond');
-            }
-        });
-
-        $('input[class=diamond-clarity]').on('click', function() {
-            $('.clarity-list ul li').each(function(){
-                $(this).removeClass('active-diamond');
-            });
-            if($(this).prop('checked')) {
-                $(this).parent().parent().addClass('active-diamond');
-            }
-        });
-
-        $('input[class=diamond-grade]').on('click', function() {
-            $('.cut-grade-list ul li').each(function(){
-                $(this).removeClass('active-diamond');
-            });
-            if($(this).prop('checked')) {
-                $(this).parent().parent().addClass('active-diamond');
-            }
-        });
-
-        $('input[class=diamond-polish]').on('click', function() {
-            $('.polish-list ul li').each(function(){
-                $(this).removeClass('active-diamond');
-            });
-            if($(this).prop('checked')) {
-                $(this).parent().parent().addClass('active-diamond');
-            }
-        });
-
-        $('input[class=diamond-symmetry]').on('click', function() {
-            $('.symmetry-list ul li').each(function(){
-                $(this).removeClass('active-diamond');
-            });
-            if($(this).prop('checked')) {
-                $(this).parent().parent().addClass('active-diamond');
-            }
-        });
-
-        $('input[class=diamond-fluorescence]').on('click', function() {
-            $('.floure-list ul li').each(function(){
-                $(this).removeClass('active-diamond');
-            });
-            if($(this).prop('checked')) {
-                $(this).parent().parent().addClass('active-diamond');
-            }
-        });
-        $('input[class=diamond-certificate]').on('click', function() {
-            $('.certi-list ul li').each(function(){
-                $(this).removeClass('active-diamond');
-            });
-            if($(this).prop('checked')) {
-                $(this).parent().parent().addClass('active-diamond');
-            }
-        });
-
     });
 
     function getNumberFromCurrency(currency) {
@@ -689,7 +604,7 @@
 
     function addtobasketFunction(index){
         var cert_number = $('#tdCertiLink'+index).find('a').attr('href');
-        //console.log(cert_number);
+        // console.log(cert_number);
         // var filename = cert_number.replace( /^.*?([^\/]+)\..+?$/, '$1' );
         // var fileName_new = cert_number.replace(/[\#\?].*$/,'');
         // var src= $('#tdCertiLink'+index).find('a').attr('href');
@@ -734,7 +649,17 @@
 
 
 
-        //console.log(certNumber);
+        // console.log(certNumber);
+        // return false;
+
+        // console.log(cert_number.replace(/^.*\/\/[^\/]+/, ''));
+
+
+
+        // console.log(fileName_new);
+        // console.log(name);
+        // console.log(cert_number);
+        // console.log(filename);
         // return false;
 
         $.ajax({
