@@ -310,7 +310,7 @@ input.input-control{height:38px}
 .display_first_filter .product-filter-col:first-child {
     border: 0;
 }
-.cols-ryt-tags:not(.wedding-rings, .diamond-jewellery) .filter-tags-col {max-width: 12%;flex: 0 0 12%;-ms-flex: 0 0 12%;}
+.cols-ryt-tags:not(.wedding-rings, .diamond-jewellery, .engagement-rings) .filter-tags-col {max-width: 12%;flex: 0 0 12%;-ms-flex: 0 0 12%;}
 
 .product-filter-col:first-child {border-right: 2px solid #EFEFEF;max-width: 45%;flex: 0 0 45%;-ms-flex: 0 0 45%;}
 .category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top; background: #f2f2f7; padding: 12px 18px 20px;}
@@ -572,6 +572,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .middle-topbar-right li.dropdown a button {background: none;border: none;padding: 0;color: #878787;font-size: 14px; margin: 0;}
 .middle-topbar-right li.dropdown a img {max-width: 18px;vertical-align: top;display: inline-block;margin: 2px 8px 0 0;}
 .middle-topbar-right li.dropdown a .badge.badge-pill {color: #878787; padding: 0 3px; font-size: 13px; top: 0;}
+.side-cart-item .cart-image-item {width: auto;}
 /** cart page **/
 .cart-page-main {margin: 50px 0 50px 0;}
 .cart-image-item {width: 19%;display: inline-block;vertical-align: top;}
