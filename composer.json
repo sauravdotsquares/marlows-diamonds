@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "billythekid/dekopay-api": "0.0.2",
         "doctrine/dbal": "^3.3",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -14,10 +15,11 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "phpfastcache/phpfastcache": "8.1",
+        "raiym/instagram-php-scraper": "*",
         "santigarcor/laratrust": "^7.1",
         "seansch/rapnet": "dev-master",
-        "srmklive/paypal": "^1.0",
-        "billythekid/dekopay-api":"0.0.2"
+        "srmklive/paypal": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

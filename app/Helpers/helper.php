@@ -17,6 +17,7 @@ use App\Models\Faqs;
 use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
 use App\Models\Products;
+use App\Models\InstagramData;
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
 
@@ -472,6 +473,15 @@ if (!function_exists('validate_breadcrumb')) {
             }
 
             return $rapnetAllData;
+        }
+    }
+
+
+    if (!function_exists("getInstagramDataDetails")) {
+        function getInstagramDataDetails()
+        {
+            $getInstaData = InstagramData::latest()->get();
+            return $getInstaData;
         }
     }
 

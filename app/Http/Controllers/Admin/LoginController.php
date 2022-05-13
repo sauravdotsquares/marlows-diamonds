@@ -6,6 +6,7 @@ use App\Shop\Employees\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use App\Http\Controllers\Admin\InstagramController;
 
 class LoginController extends Controller
 {
@@ -59,6 +60,9 @@ class LoginController extends Controller
         $details['is_active'] = 1;
         if (auth()->guard('employee')->attempt($details)) {
             if(Auth::attempt($details, true)){
+
+                $updateInstaData = new InstagramController;
+                $updateInstaData->updateInstaData();
 
                 Auth::login(Auth::user(), true);
             }

@@ -156,6 +156,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('orders/change-order-status','OrderController@changeOrderStatus')->name('order.change.order.status');
 			Route::get('orders/order-product-details/{orderId}','OrderController@orderProductDetails')->name('order.product.details');
 		//});
+
+        Route::get('instagram-post', 'InstagramController@updateInstaData')->name('instagram-post');
+
 	});
 });
 
@@ -170,6 +173,8 @@ Route::group(['middleware' => ['customer']], function () {
 		Route::get('/my-accounts', 'LoginController@dashboardPage')->name('my_accounts');
 		Route::get('/logout-customer', 'LoginController@logout')->name('logout-customer');
 		// Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
+		Route::get('products/checkout/dekopay/{orderId?}', 'DekoPayController@receipt_page')->name('make.dekopay');
+		Route::get('wc-api/dekopay', 'DekoPayController@check_response');
 	});
 });
 
