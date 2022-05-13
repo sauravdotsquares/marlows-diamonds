@@ -1,4 +1,7 @@
 @extends('layouts.front.app')
+@section('css')
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+@endsection
 @section('content')
 <div class="category-banner" style="background-image:url(../assets/images/cart-bg.jpg)">
     <div class="container">
@@ -125,6 +128,9 @@
 @endsection
 
 @section('js')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <script type="text/javascript">
 
     $(".update-cart").change(function (e) {
@@ -153,14 +159,19 @@
 
         if (confirm("Are you sure want to remove?")) {
             $.ajax({
-                url: '{{ route('remove.from.cart') }}',
+                url: '{{ route("remove.from.cart") }}',
                 method: "DELETE",
                 data: {
                     _token: '{{ csrf_token() }}',
                     id: ele.parents("tr").attr("data-id")
                 },
                 success: function (response) {
-                    window.location.reload();
+                    if(response.status == 200){
+                        toastr.success(response.msg);
+                        setTimeout(function () {
+                            location.reload(true);
+                        }, 1500);
+                    }
                 }
             });
         }
