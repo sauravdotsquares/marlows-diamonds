@@ -491,7 +491,7 @@
 										<td id="tdClarity<%$index%>"><%records.Clarity%></td>
 										<td id="tdCut<%$index%>" ng-if="shape=='ROUND'"><%records.Cut%></td>
 										<td id="tdLab<%$index%>"><%records.Lab%></td>
-										<td id="tdAmount<%$index%>"><%records.Amount*VAT | number : 2 %></td>
+										<td id="tdAmount<%$index%>"><%records.Amount*1.25*VAT | number : 2 %></td>
 
 										<td id="tdCertiLink<%$index%>"> <a target="_block" class="table-view-btn" href="<%records.CertificateLink%>">View</a> </td>
 

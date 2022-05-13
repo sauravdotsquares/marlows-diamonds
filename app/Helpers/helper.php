@@ -319,7 +319,8 @@ if (!function_exists('validate_breadcrumb')) {
         {
             $results = HKDiamondStock::
                 where('Shape','LIKE',$data['shape'])
-                ->whereBetween('Carat', [$data['caratFrom'], $data['caratTo']]);
+                ->whereBetween('Carat', [$data['caratFrom'], $data['caratTo']])
+                ->orderBy('Amount','ASC');
 
             if(!empty($data['colour'])){
                 $results = $results->whereIn('Color', $data['colour']);
@@ -358,7 +359,7 @@ if (!function_exists('validate_breadcrumb')) {
                 $results = $results->take($data['num_of_row'])->get();
             else
                $results = $results->get();
-            //echo '<pre>'; print_r($results->toArray()); die;
+           // echo '<pre>'; print_r($results->toArray()); die;
             return $results->toArray();
         }
 
