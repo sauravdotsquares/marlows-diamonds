@@ -559,7 +559,7 @@
                         }
 
                     }else{
-                        toastr.info(response.error);
+                        // toastr.info(response.error);
                     }
                 }
             });

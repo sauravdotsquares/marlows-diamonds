@@ -6,7 +6,7 @@
     </label>
     <div class="payment-box-main-drop deko-pay-box " style="display:none;">
         <div class="finance-available-options">
-            <input type="hidden" value="{{ $totalAmount }}" id="totalOrder"> 
+            <input type="hidden" value="{{ $totalAmount }}" id="totalOrder">
             <input type="hidden" value="ONIB12-16.9" id="default_code">
             <input type="hidden" value="10" id="default_perc">
             <input type="hidden" value="{{env('DEKOPAY_API_KEY')}}" id="myapi">
@@ -43,7 +43,7 @@
                         <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
                         <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
                     </select>
-                        
+
                     </div>
                 </div>
                 <div class="payment-cc-details-inner">
@@ -51,7 +51,7 @@
                         Deposit :
                     </div>
                     <div class="payment-cc-details-values">
-                       
+
                         <select id="payed" name="percentage" ng-model="percentage"  ng-change="dekoInit()">
                             <option value="10" ng-selected="10">10%</option>
                             <option value="20">20%</option>
@@ -134,8 +134,8 @@
                 <span>Choose Dekopay as your payment method and place your order.</span>
                 <span>Finance is only available to permanent UK residents aged between 18
                     and 80, subject to status, terms and conditions apply. For more details
-                    about Dekopay please see <a href="#">Terms of Service</a> | <a
-                        href="#">Privacy Policy</a> | <a href="#">FAQ.</a></span>
+                    about Dekopay please see <a href="{{asset('terms')}}">Terms of Service</a> | <a
+                        href="{{asset('privacy-policy')}}">Privacy Policy</a> | <a href="{{asset('faq')}}">FAQ.</a></span>
             </div>
         </div>
         <div class="finance_options_not_available" style="display: none;">
