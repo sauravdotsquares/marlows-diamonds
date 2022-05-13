@@ -89,12 +89,6 @@
 
 @section('content')
 
-<?php
-	// echo "adsd<pre>";
-	// print_r($data);
-	// die;
-?>
-
 <!-- product info and media -->
 
 <div class="product-detail-wraper">
@@ -189,7 +183,7 @@
 					</div>
 
 					<div class="type-variations-row">
-						<div class="type-variations-col{{($data->diamond_shape != 'ROUND')?'-one':''}}">
+						<div class="type-variations-col">
 							<label class="label"> Clarity </label>
 							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
                     			<option value="">Choose an option</option>
@@ -213,9 +207,7 @@
                                 </select>
                             </div>
                         @endif
-					</div>
-					<div class="type-variations-row">
-						<div class="type-variations-col-one">
+                        <div class="type-variations-col{{($data->diamond_shape == 'ROUND')?'-one':''}}">
 							<label class="label"> Certificate </label>
 							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
                     			<option value="">Choose an option</option>
@@ -223,6 +215,16 @@
 								<option value="IGI">IGI</option>
 							</select>
 						</div>
+					</div>
+					<div class="type-variations-row">
+						{{-- <div class="type-variations-col{{($data->diamond_shape == 'ROUND')?'-one':''}}">
+							<label class="label"> Certificate </label>
+							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
+                    			<option value="">Choose an option</option>
+								<option value="GIA" selected="selected">GIA</option>
+								<option value="IGI">IGI</option>
+							</select>
+						</div> --}}
 					</div>
 					<div class="view-diamond-sec">
 						<div class="viewall-diamond-btn"><a class="btn-bg-large viewdiamond-btn"
@@ -539,7 +541,7 @@
 @endsection
 
 @section('js')
-	
+
 	<script src="{{$url}}"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

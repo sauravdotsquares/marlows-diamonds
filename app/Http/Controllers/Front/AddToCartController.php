@@ -42,7 +42,7 @@ class AddToCartController extends Controller
             $titleHtml = '';
 
             if(isset($productData) && !empty($productData->title)){
-                $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
+                $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'/'.'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
                 $selectedAttributes = [];
                 foreach($request->all('') as $key => $finalVal){
                     $selectedAttributes['title'] = $productData->title;

@@ -113,7 +113,7 @@
 				<div class="leftright-imt-col leftright-text">
 					<div class="leftright-heading heading-h-three">
 						Find Your Perfect Match
-					</div>		
+					</div>
 					<p>You found your perfect match so the engagement ring you propose with should also be a perfect match for your partner. Marlow’s Diamonds brings to you a curated assortment of diamond engagement rings in the most beautiful designs, stone settings, diamonds shapes, and ring sizes.</p>
 					<p>Why us? Because our diamonds are as special as your relationship. Our engagement rings are made only with ethically sourced diamonds. With us, you can be assured of quality because our diamonds are graded by the GIA. Adorning our sparkling stones will bring you joy and warmth for the rest of your lives.</p>
 					<div class="viewguide-btn">
@@ -121,7 +121,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -237,7 +237,7 @@
 <div class="journery-life-wraper">
 	<div class="container">
 	{!! isset($data->description)?$data->description:"" !!}
-		
+
 
 	</div>
 </div>
@@ -255,7 +255,7 @@
 		</div>
 		<div class="faq-list">
 			<div class="accordion" id="accordionExample">
-			  
+
 				@php
 				$getFaqs = getFaqs();
 				@endphp
@@ -296,13 +296,14 @@
 <div class="rating-review-block">
 				<div class="owl-carousel owl-theme slider-review">
 				@include('front.pages.reviews')
-				</div>	
+				</div>
 			</div>
 </div>
 
 
 <!-- insta photos section start -->
-<div class="share-moment">
+@include('front.includes.instagram-section')
+{{-- <div class="share-moment">
 	<div class="share-moment-heading"><div class="heading-h-two">Share your special moments with us<br> #marlowsengagements</div></div>
 	<div class="insta-photo-list">
 		<div class="owl-carousel owl-theme photo-slider">
@@ -356,14 +357,14 @@
 		    		</div>
 		    	</div>
 		    </div>
-		    
+
 		</div>
 	</div>
 	<div class="insta-btn">
 		<a class="btn-bg-small" href="#"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
 	</div>
-</div>
+</div> --}}
 
 
-<!-- insta photos section end -->			
+<!-- insta photos section end -->
 @endsection

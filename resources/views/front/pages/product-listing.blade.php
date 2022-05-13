@@ -13,9 +13,9 @@
 <div class="category-banner" style="background-image:url({{asset('')}}assets/images/engagement-rings-banner.png)">
     <div class="container">
         <div class="category-banner-text">
-            <h1>{{isset($data->name)?$data->name:''}}</h1>
+            <h1>{{isset($data->title)?$data->title:''}}</h1>
             <!-- <h2>AVAILABLE IN A VARIETY OF CUTS AND STYLES</h2> -->
-            {!! isset($data->description)?$data->description:'' !!}
+            <p>{!! isset($data->short_description)?$data->short_description:'' !!}</p>
         </div>
     </div>
 </div>
@@ -73,8 +73,8 @@
                     <img src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More post</p>
                 </div>
 
+                {!! isset($data->description)?$data->description:'' !!}
             </div>
-
             <!-- Category SIdebar start -->
             <div class="category-sidebar-wrap">
 
@@ -140,8 +140,8 @@
                         @foreach(array_reverse(session('recentproducts')) as $ProductDetails)
                             @if($i <= 8)
                                 <div class="side-recently-col">
-                                    <a class="side-recently-pr-name" href="{{asset('products/'.$ProductDetails['slug'])}}">{{$ProductDetails['name']}}</a>
-                                    <a class="side-recently-pr-img" href="{{asset('products/'.$ProductDetails['slug'])}}"><img src="{{asset('storage/'.$ProductDetails['image'])}}"
+                                    <a class="side-recently-pr-name" href="{{asset('product/'.$ProductDetails['slug'])}}">{{$ProductDetails['name']}}</a>
+                                    <a class="side-recently-pr-img" href="{{asset('product/'.$ProductDetails['slug'])}}"><img src="{{asset('storage/'.$ProductDetails['image'])}}"
                                             alt="image"></a>
                                 </div>
                             @endif
