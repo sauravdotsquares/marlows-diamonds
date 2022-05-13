@@ -41,7 +41,7 @@ h2,.heading-h-two{font-size:22px}
 .product-filter-col{max-width: 100%;flex: 0 0 100%;-ms-flex: 0 0 100%;}
 .product-filter-col:first-child{max-width: 100%;flex: 0 0 100%;-ms-flex: 0 0 100%; border: none;}
 .filter-tags-col{ max-width: 33%;flex: 0 0 33%;-ms-flex: 0 0 33%;}
-.cols-ryt-tags .filter-tags-col {max-width: 33%;flex: 0 0 33%;-ms-flex: 0 0 33%;margin: 0 0 25px;}
+.cols-ryt-tags .filter-tags-col {max-width: 33% !important;flex: 0 0 33%!important;-ms-flex: 0 0 33%!important;margin: 0 0 25px;}
 .product-grid-items-item{flex: 0 0 50%;max-width: 50%;-ms-flex: 0 0 50%;}
 .product-items-item-name a{ font-size: 14px; }
 .product-info-media {flex: 0 0 100%;-ms-flex: 0 0 100%;max-width: 100%;}
@@ -226,7 +226,11 @@ h3,.heading-h-three{font-size:28px}
 }
 .category-sidebar-wrap {width: 30%;}
 .category-list-wrap {width: 69%;}
-
+.cols-ryt-tags:not(.wedding-rings, .diamond-jewellery) .filter-tags-col {
+	max-width: 18%;
+	flex: 0 0 18%;
+	-ms-flex: 0 0 18%;
+}
 }
 
 /** media only for header responsive **/
