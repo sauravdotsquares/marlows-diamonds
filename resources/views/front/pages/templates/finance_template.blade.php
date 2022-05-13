@@ -9,7 +9,19 @@
 	</div>
 </div>
 
-<p>{!!$data->description!!}</p>
+<div class="defaultpages-wrap">
+
+	<div class="container">
+
+	<div class="defaultpages-cols">
+
+			{!!$data->description!!}
+
+
+		</div>
+	</div>
+</div>
+
 
 {{-- @include("front.includes.dekopayformulacalculationpage") --}}
 
