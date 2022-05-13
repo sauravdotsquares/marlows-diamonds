@@ -13,9 +13,9 @@
 <div class="category-banner" style="background-image:url({{asset('')}}assets/images/engagement-rings-banner.png)">
     <div class="container">
         <div class="category-banner-text">
-            <h1>{{isset($data->name)?$data->name:''}}</h1>
+            <h1>{{isset($data->title)?$data->title:''}}</h1>
             <!-- <h2>AVAILABLE IN A VARIETY OF CUTS AND STYLES</h2> -->
-            {!! isset($data->description)?$data->description:'' !!}
+            <p>{!! isset($data->short_description)?$data->short_description:'' !!}</p>
         </div>
     </div>
 </div>

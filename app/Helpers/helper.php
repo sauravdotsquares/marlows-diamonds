@@ -485,5 +485,21 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
+    if (!function_exists("getDekoPayFormulaURL")) {
+        function getDekoPayFormulaURL()
+        {
+            $dekoEnabled = true;
+            $client = new DekoPayApiClient('','', env('DEKOPAY_API_KEY'));
+            $pay_url =  env('DEKOPAY_MODE');
+
+            if($dekoEnabled){
+                $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY');
+            }
+
+            return $url;
+
+        }
+    }
+
 }
 
