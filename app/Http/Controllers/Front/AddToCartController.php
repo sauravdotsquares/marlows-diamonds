@@ -173,7 +173,8 @@ class AddToCartController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            session()->flash('success', 'Product removed successfully');
+            return response()->json(['status'=>200,'msg'=>'Product removed successfully']);
+            // session()->flash('success', 'Product removed successfully');
         }
     }
 
