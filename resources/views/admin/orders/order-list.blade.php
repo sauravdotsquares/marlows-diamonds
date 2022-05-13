@@ -142,7 +142,7 @@
                      }else{
                         toastr.info("Not Updated...");
                      }
-                     // window.location.reload();
+                     window.location.reload();
                }
             });
          }

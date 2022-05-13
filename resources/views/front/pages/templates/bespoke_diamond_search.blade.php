@@ -534,7 +534,9 @@
 						<div class="addbasket-req-btns">
 							{{-- <a class="white-bg-btn" href="#">Add To Basket</a> --}}
                             <a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
-							<a class="btn-bg-small" href="#">Request an Appointment</a>
+							<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+						Request an Appointment
+						</a>
 						</div>
 					</div>
 				</div>
@@ -544,6 +546,77 @@
 </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="requestAppointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-lg-12">
+			<!-- Success message -->
+			@if(Session::has('success'))
+				<div class="alert alert-success">
+					{{Session::get('success')}}
+				</div>
+			@endif
+				<div class="visit-form">
+
+					<form method="post" action="{{ route('contact') }}">
+					@csrf
+						<div class="form-controls">
+							<input type="text" name="title" id="title" class="{{ $errors->has('title') ? 'error' : '' }}" placeholder="Your Name">
+							<!-- Error -->
+							@if ($errors->has('name'))
+							<div class="error">
+								{{ $errors->first('name') }}
+							</div>
+							@endif
+						</div>
+						<div class="form-controls">
+							<input type="email" name="email" id="email" class="{{ $errors->has('email') ? 'error' : '' }}" placeholder="Your Email Address">
+							@if ($errors->has('email'))
+							<div class="error">
+								{{ $errors->first('email') }}
+							</div>
+							@endif
+						</div>
+						<div class="form-controls">
+							<input type="text" name="phone" id="phone" class="{{ $errors->has('phone') ? 'error' : '' }}" placeholder="Your Contact No.">
+							@if ($errors->has('phone'))
+							<div class="error">
+								{{ $errors->first('phone') }}
+							</div>
+							@endif
+						</div>
+						<div class="form-controls">
+							<textarea name="description" id="description" class="{{ $errors->has('description') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
+							@if ($errors->has('description'))
+							<div class="error">
+								{{ $errors->first('description') }}
+							</div>
+							@endif
+						</div>
+						<div class="google-capatcha">
+
+						</div>
+						<div class="action-submit">
+							<button type="submit" name="send" value="Submit">Send Message</button>
+						</div>
+					</form>
+
+				</div>
+		</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
 @section('js')
 <script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
