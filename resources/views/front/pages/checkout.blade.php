@@ -292,7 +292,7 @@
                             <div class="cc-terms-and-conditions-wrapper">
                                 Your personal data will be used to process your order, support your experience
                                 throughout this website, and for other purposes described in our
-                                <a href="#" target="_blank">Privacy Policy</a>
+                                <a href="{{asset('privacy-policy')}}" target="_blank">Privacy Policy</a>
                             </div>
                             <div class="cc_place_order_btn">
                                 @guest
@@ -437,7 +437,7 @@
                 required: true,
             },
             street_address_l2: {
-                required: true,
+                required: false,
             },
             town_city: {
                 required: true,
@@ -543,13 +543,13 @@
                     $('.cc_place_order_btn button').text('Place Order');
                     $('.cc_place_order_btn button').prop('disabled', false);
                     if(response.status == 500){
-                        
+
 
                         $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
                         toastr.info(response.msg);
                     }
                     if(response.status == 200){
-                        
+
                         // toastr.success(response.msg);
                         // window.location.reload();
                         if($('#selected_payment_type').val() == 'paypal'){

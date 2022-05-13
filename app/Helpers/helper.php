@@ -319,7 +319,8 @@ if (!function_exists('validate_breadcrumb')) {
         {
             $results = HKDiamondStock::
                 where('Shape','LIKE',$data['shape'])
-                ->whereBetween('Carat', [$data['caratFrom'], $data['caratTo']]);
+                ->whereBetween('Carat', [$data['caratFrom'], $data['caratTo']])
+                ->orderBy('Amount','ASC');
 
             if(!empty($data['colour'])){
                 $results = $results->whereIn('Color', $data['colour']);
@@ -358,7 +359,7 @@ if (!function_exists('validate_breadcrumb')) {
                 $results = $results->take($data['num_of_row'])->get();
             else
                $results = $results->get();
-            //echo '<pre>'; print_r($results->toArray()); die;
+           // echo '<pre>'; print_r($results->toArray()); die;
             return $results->toArray();
         }
 
@@ -482,6 +483,22 @@ if (!function_exists('validate_breadcrumb')) {
         {
             $getInstaData = InstagramData::latest()->get();
             return $getInstaData;
+        }
+    }
+
+    if (!function_exists("getDekoPayFormulaURL")) {
+        function getDekoPayFormulaURL()
+        {
+            $dekoEnabled = true;
+            $client = new DekoPayApiClient('','', env('DEKOPAY_API_KEY'));
+            $pay_url =  env('DEKOPAY_MODE');
+
+            if($dekoEnabled){
+                $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY');
+            }
+
+            return $url;
+
         }
     }
 

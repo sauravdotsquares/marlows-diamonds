@@ -7,7 +7,7 @@
                 <td>{{isset($apiRecords['Cut'])?$apiRecords['Cut']:''}}</td>
             @endif
             <td>{{isset($apiRecords['Lab'])?$apiRecords['Lab']:''}}</td>
-            <td>{{isset($apiRecords['Amount'])?number_format($apiRecords['Amount']*$VAT,2):''}}</td>
+            <td>{{isset($apiRecords['Amount'])?number_format(($apiRecords['Amount']*1.25)*$VAT,2):''}}</td>
             <td><a href="{{isset($apiRecords['CertificateLink'])?$apiRecords['CertificateLink']:''}}" target="_blank" class="table-btn certificate-link">View</a></td>
             <td>
                 <a href="{{isset($apiRecords['ImageLink'])?$apiRecords['ImageLink']:''}}" target="_blank" class="table-btn image-link">View

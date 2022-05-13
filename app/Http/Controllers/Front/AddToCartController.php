@@ -42,7 +42,7 @@ class AddToCartController extends Controller
             $titleHtml = '';
 
             if(isset($productData) && !empty($productData->title)){
-                $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
+                $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'/'.'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
                 $selectedAttributes = [];
                 foreach($request->all('') as $key => $finalVal){
                     $selectedAttributes['title'] = $productData->title;
@@ -173,7 +173,8 @@ class AddToCartController extends Controller
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            session()->flash('success', 'Product removed successfully');
+            return response()->json(['status'=>200,'msg'=>'Product removed successfully']);
+            // session()->flash('success', 'Product removed successfully');
         }
     }
 

@@ -149,10 +149,10 @@
                             <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                     </div>
                     <div class="mobile-cart">
-                        <a href="{{ route('product.cart') }}"> 
+                        <a href="{{ route('product.cart') }}">
                             <img src="/assets/images/cart-color-black.png" alt="cart">
                             <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
-                        <span class="mob-cart-number">{{ count((array) session('cart')) }}</span>
+                        <span class="mob-cart-number cartcount">{{ count((array) session('cart')) }}</span>
                         </a>
                     </div>
 
@@ -174,7 +174,7 @@
                         </div>
                     </div>
                         <div class="mobile-serch-box">
-                            <img src="assets/images/search.png" alt="search">
+                            <img src="{{asset('')}}assets/images/search.png" alt="search">
                             Search for products...
                         </div>
                     <nav class="nav-navbars">
@@ -187,12 +187,12 @@
                                     <li class="level-zero submenu {{$navbarItem['class_level']}}">
                                         <span>
                                         <a href="{{url($navbarItem['href'])}}">{{$navbarItem['text']}}
-                                            
+
                                         </a>
                                         @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
                                             <i class="fa fa-angle-down {{$navbarItem['class_level']}}" aria-hidden="true"></i>
                                         @endif
-                                            
+
                                         </span>
                                         @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
                                             @include('layouts.front.menus-sub', ['subs' => $navbarItem['children']])
@@ -225,7 +225,7 @@
                                         <div class="search-suggestion-title">
                                             <%result.title%>
                                         </div>
-                                      
+
                                     </div>
                                 </a>
                             </div>
