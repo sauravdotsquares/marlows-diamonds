@@ -505,7 +505,7 @@ Session::forget('recently_view');
 						var regular_p = Math.round(res.regular_price_with_vat);
 						
 						if(diamond_type=='lab_grown' && regular_p<=3000){
-							regular_p_final = regular_p-(regular_p*0.3);
+							regular_p_final = regular_p-(regular_p*0.35);
 							
 						}else if(diamond_type=='lab_grown' && regular_p>3000){
 							regular_p_final = regular_p-(regular_p*0.5); 
@@ -522,7 +522,7 @@ Session::forget('recently_view');
 						var sale_p = Math.round(res.sale_price_with_vat);
 						
 						if(diamond_type=='lab_grown' && sale_p<=3000){
-							sale_p_final = sale_p-(regular_p*0.3);
+							sale_p_final = sale_p-(regular_p*0.35);
 							
 						}else if(diamond_type=='lab_grown' && sale_p>3000){
 							sale_p_final = sale_p-(sale_p*0.5); 
