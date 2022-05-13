@@ -123,6 +123,9 @@ h2,.heading-h-two{font-size:22px}
 .diamond-type label {margin: 0 12px 9px 0;display: block;}
 .product-info-media .owl-carousel {padding: 0 50px;}
 body{overflow-x: hidden;}
+.cart-table-wraper { overflow-x: auto;}
+.cart-table-wraper .cart-table{ width: 1000px;}
+
 }
 
 @media(max-width: 500px){
