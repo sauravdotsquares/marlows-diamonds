@@ -17,7 +17,7 @@
    <div class="container">
       <div class="row">
          @php
-         $getFaqs = getFaqs();		
+         $getFaqs = getFaqs();
          @endphp
          @foreach($getFaqs as $key => $faqcat)
          <div class="col-lg-6">
@@ -53,8 +53,8 @@
                   </div>
                </div>
             </div>
-         
-      
+
+
       @endforeach
 	  </div>
    </div>
@@ -71,10 +71,12 @@
 <div class="rating-review-block">
 				<div class="owl-carousel owl-theme slider-review">
 				@include('front.pages.reviews')
-				</div>	
+				</div>
 			</div>
-</div><!-- insta photos section start -->
-<div class="share-moment">
+</div>
+<!-- insta photos section start -->
+@include('front.includes.instagram-section')
+{{-- <div class="share-moment">
    <div class="share-moment-heading">
       <div class="heading-h-two">Share your special moments with us<br> #marlowsengagements</div>
    </div>
@@ -135,7 +137,7 @@
    <div class="insta-btn">
       <a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
    </div>
-</div>
-<!-- insta photos section end -->	
+</div> --}}
+<!-- insta photos section end -->
 @endsection
 

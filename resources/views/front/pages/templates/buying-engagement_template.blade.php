@@ -6,7 +6,7 @@
 	<div class="main-guide-blok">
 		<div class="container">
 			<h1>{!!isset($data->title)?$data->title:""!!}</h1>
-				{!!isset($data->short_description)?$data->short_description:""!!}		
+				{!!isset($data->short_description)?$data->short_description:""!!}
 		</div>
 	</div>
 
@@ -50,7 +50,7 @@
 								<div class="form-col">
 									<label>Message</label>
 									<textarea name="description" class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
-									
+
 								</div>
 							</div>
 							<div class="action-btn">
@@ -67,7 +67,7 @@
 					@endif !-->
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 		<!-- Join our mailing list section End -->
@@ -79,21 +79,21 @@
 				<div class="col-md-6">
 					<div class="should-buy-col">
 						<h2>Should You Buy Diamond Engagement Rings Online? Guide To Buying An Engagement Ring Online During Lockdown</h2>
-					</div>	
+					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="should-buy-col">
-						<p>We understand there’s a lot of things to consider when buying an engagement ring from an online jeweller, 
+						<p>We understand there’s a lot of things to consider when buying an engagement ring from an online jeweller,
 							and that’s why we’ll guide you through every step of the way to find the perfect choice of engagement ring with our expert help!</p>
-						<p>This guide will help you better your knowledge of diamonds and their key factors, which are crucial to ensuring you get a fair 
+						<p>This guide will help you better your knowledge of diamonds and their key factors, which are crucial to ensuring you get a fair
 							purchase and the true quality of the diamond is reflected in the price.</p>
-					</div>	
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- guides even odd list of image text -->	
+	<!-- guides even odd list of image text -->
 	<div class="buying-guides-img-text">
 		<div class="container">
 			<!-- list -->
@@ -102,20 +102,20 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>Is Buying An Engagement Ring Online A Good Idea?</h3>
-							<p>The idea of whether you should buy an engagement ring 
-								online is only as good as the jeweller. So, to this 
+							<p>The idea of whether you should buy an engagement ring
+								online is only as good as the jeweller. So, to this
 								question, we’d say YES! However, keep in mind that it's not straightforward,
 								especially if you don’t know where to start or what ring style to go for.
 								But don’t worry if you’re currently in this predicament, as we’ve got you covered.</p>
-						</div>		
+						</div>
 					</div>
 					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="assets/images/Marlows-06.jpg" alt="img guide">
-						</div>		
+						</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss">
@@ -123,20 +123,20 @@
 					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="assets/images/Marlows-04.jpg" alt="img guide">
-						</div>		
+						</div>
 					</div>
 					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>Planning To Propose Over Lockdown?</h3>
 							<p>Despite the current pandemic, the rate of people popping the big question has not dropped at all - if anything, we’ve seen this number grow.
 								 With quarantined couples put to the test, many of them realised that they are capable of being committed to their relationship for life.</p>
-							<p>Buying an engagement ring during lockdown brings its own challenges, with nowhere open to allow you to view the rings in person and 
-								consultations being taken digitally. But even before COVID was a thing, choosing the right engagement ring online was never 
-								going to be an easy task. With that in mind, here are some essentials that you should have prepared if you’re ordering a ring as a surprise.</p>	 
-						</div>		
+							<p>Buying an engagement ring during lockdown brings its own challenges, with nowhere open to allow you to view the rings in person and
+								consultations being taken digitally. But even before COVID was a thing, choosing the right engagement ring online was never
+								going to be an easy task. With that in mind, here are some essentials that you should have prepared if you’re ordering a ring as a surprise.</p>
+						</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss ">
@@ -148,15 +148,15 @@
 								 the best style, stone or ring colour - you’ve found it. Learn the key lingo and get expert inspiration along the way.</p>
 								 <p>Buying an engagement ring online can be a daunting task, so where do you begin? Start by asking yourself the following questions one step at a time.
 									  Build your knowledge of engagement rings and learn the difference between various metals, stones and settings, and don’t forget the essentials.</p>
-						</div>		
+						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="assets/images/Marlows-05.jpg" alt="img guide">
-						</div>		
+						</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss">
@@ -164,19 +164,19 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="assets/images/Marlows-03.jpg" alt="img guide">
-						</div>		
+						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>Should You Buy A GIA Certified Diamond Engagement Ring?</h3>
 							<p>Our first piece of advice is that you need to buy a GIA Certified diamond engagement ring.
-								 Not only because we stock a stunning range of GIA certified diamond engagement rings, 
+								 Not only because we stock a stunning range of GIA certified diamond engagement rings,
 								 but also because you’ll receive a true representation of the product quality. So, rather than trusting a jeweller that
 								  speaks about the relevant diamond terms, trust one that has had them certified</p>
-						</div>		
+						</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss">
@@ -185,20 +185,20 @@
 						<div class="buying-guidelist-text">
 							<h3>What Should The Budget Be?</h3>
 							<p>This is custom heading element</p>
-							<p>There’s no ideal budget figure for an engagement ring because the national average changes depending on where you search. Plus, 
+							<p>There’s no ideal budget figure for an engagement ring because the national average changes depending on where you search. Plus,
 								the jeweller will always suggest that you spend more to get the highest quality ring possible. The only ideal ring budget
-								 will be one that allows you to comfortably afford the most beautiful option for your partner, without having to struggle 
+								 will be one that allows you to comfortably afford the most beautiful option for your partner, without having to struggle
 								 or compromise on things like the wedding and honeymoon.</p>
 							<p>This is custom heading element</p>
-						</div>		
+						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="assets/images/Marlows-02.jpg" alt="img guide">
-						</div>		
+						</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss">
@@ -206,21 +206,21 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="assets/images/Marlows-01.jpg" alt="img guide">
-						</div>		
+						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>What Is The Right Ring Size?</h3>
-							<p>Are you buying an engagement ring without knowing size? The ring size is sometimes overlooked until the final moments of engagement 
-								ring shopping, but if you don’t want any disappointment then it’s best to be clued up before going online and hunting 
+							<p>Are you buying an engagement ring without knowing size? The ring size is sometimes overlooked until the final moments of engagement
+								ring shopping, but if you don’t want any disappointment then it’s best to be clued up before going online and hunting
 								for the perfect engagement ring. After all, you want the proposal to be as perfect as possible.</p>
-							<p>However, finding the right engagement ring size is not a straightforward task if you want to keep things secret. Fortunately, 
-								we can recommend a few ways to find out the ring size without spilling the beans.</p>	
-						</div>		
+							<p>However, finding the right engagement ring size is not a straightforward task if you want to keep things secret. Fortunately,
+								we can recommend a few ways to find out the ring size without spilling the beans.</p>
+						</div>
 					</div>
 				</div>
-			</div>	
-			<!-- list end -->	
+			</div>
+			<!-- list end -->
 		</div>
 	</div>
 
@@ -228,8 +228,8 @@
 	<div class="howtobuy-engage-ring">
 		<div class="container">
 			<h3>How To Buy An Engagement Ring Without Knowing Size?</h3>
-			<p>If your partner wears rings frequently, then you’ve got a good opportunity to check the ring size from their existing collection and take measurements. 
-				You can also see how the ring size fits on your own finger. Additionally, you can also download our online ring size guide. 
+			<p>If your partner wears rings frequently, then you’ve got a good opportunity to check the ring size from their existing collection and take measurements.
+				You can also see how the ring size fits on your own finger. Additionally, you can also download our online ring size guide.
 				This works best with a simple band that can lay flat on the guide once you’ve printed it off.</p>
 				<p>Simply hold it up to the various sizes to get a good idea and remember, you’re checking the inner diameter and inner circumference, not the outer edge of the ring.</p>
 				<div class="download-btn">
@@ -250,41 +250,41 @@
 			<div class="whatdiamond-list">
 				<div class="row">
 					<div class="col-md-6 col-sm-6">
-						<div class="whatdimond-cols">	
-							<div class="whatdimond-cols-img">	
+						<div class="whatdimond-cols">
+							<div class="whatdimond-cols-img">
 								<img src="assets/images/pasted-image-0-1-300x300.png" alt="image1">
 							</div>
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								Solitaire Diamond Engagement Rings
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6 col-sm-6">
-						<div class="whatdimond-cols">	
-							<div class="whatdimond-cols-img">	
+						<div class="whatdimond-cols">
+							<div class="whatdimond-cols-img">
 								<img src="assets/images/unnamed-300x300.png" alt="image1">
 							</div>
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								Halo Diamond Engagement Rings
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6 col-sm-6">
-						<div class="whatdimond-cols">	
-							<div class="whatdimond-cols-img">	
+						<div class="whatdimond-cols">
+							<div class="whatdimond-cols-img">
 								<img src="assets/images/pasted-image-0-300x300.png" alt="image1">
 							</div>
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								Shoulder Set Diamond Engagement Rings
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6 col-sm-6">
-						<div class="whatdimond-cols">	
-							<div class="whatdimond-cols-img">	
+						<div class="whatdimond-cols">
+							<div class="whatdimond-cols-img">
 								<img src="assets/images/unnamed-1-300x300.png" alt="image1">
 							</div>
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								Multistone Diamond Engagement Rings
 							</div>
 						</div>
@@ -312,16 +312,16 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="whatdiamond-cols">
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 							What Is Diamond Clarity?
 							</div>
 							<p>
-								Diamond clarity is measured by the number of imperfections, also described as inclusions. 
+								Diamond clarity is measured by the number of imperfections, also described as inclusions.
 								The imperfections can be found either inside the stone or on the surface. The clarity chart for
-								GIA diamonds ranges from Flawless (FL), which means the diamond is free from any blemishes or inclusions, 
-								to Included (I1, I2, and I3), where the brilliance and transparency may be compromised. 
-								There are 11 categories in total and each describes the level in which the clarity of the 
-								stone is affected when looking under 10x magnification. To the naked eye, it’s hard to spot 
+								GIA diamonds ranges from Flawless (FL), which means the diamond is free from any blemishes or inclusions,
+								to Included (I1, I2, and I3), where the brilliance and transparency may be compromised.
+								There are 11 categories in total and each describes the level in which the clarity of the
+								stone is affected when looking under 10x magnification. To the naked eye, it’s hard to spot
 								any difference at all, therefore the clarity chart is required to grade the true quality of the diamond.
 							</p>
 							<div class="whatdiamond-imgs">
@@ -331,13 +331,13 @@
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="whatdiamond-cols">
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								What Is Diamond Cut?
 							</div>
 							<p>
-							The diamond cut is how we describe the shape of the diamond internally, as well as the polish and symmetry. Usually, 
-							when people think of the cut, they think of round, marquise or pear, for example. However, the cut is actually how we 
-							define how well the diamond interacts with light. The more precise the cut and craftsmanship, the better the symmetry 
+							The diamond cut is how we describe the shape of the diamond internally, as well as the polish and symmetry. Usually,
+							when people think of the cut, they think of round, marquise or pear, for example. However, the cut is actually how we
+							define how well the diamond interacts with light. The more precise the cut and craftsmanship, the better the symmetry
 							and polish, and the more light that is reflected. The cut ultimately defines how the sparkle will appear in terms of:
 							</p>
 							<ul>
@@ -357,14 +357,14 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="whatdiamond-cols">
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								What Is Diamond Carat Weight?
 							</div>
 							<p>
-							Carat ultimately represents the metric used to measure diamond weight. A single “carat” is equal to 200 milligrams. Each carat is then split into 100 points 
+							Carat ultimately represents the metric used to measure diamond weight. A single “carat” is equal to 200 milligrams. Each carat is then split into 100 points
 							and presented as a decimal. This weight is a huge defining factor when it comes to price, a 1-carat diamond could be up to six times more expensive
 							 than a 0.5 carat. However, you still need to take into account the clarity and quality of the cut for example, as you may be paying for a heavier
-							  diamond, only to compromise on the sparkle factor. The dealer may decide to describe the carat as a decimal rather than the more common fraction, 
+							  diamond, only to compromise on the sparkle factor. The dealer may decide to describe the carat as a decimal rather than the more common fraction,
 							  so we’ve provided a small chart here for you to convert carat metrics from fraction to decimal if required.
 							</p>
 							<div class="whatdiamond-tables">
@@ -376,10 +376,10 @@
 										</tr>
 									</thead>
 									<tbody>
-										
+
 										<tr>
 											<td>1/10</td>
-											<td>.09-.11</td> 
+											<td>.09-.11</td>
 										</tr>
 										<tr>
 											<td>1/8</td>
@@ -436,12 +436,12 @@
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="whatdiamond-cols">
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								What Is Diamond Colour?
 							</div>
 							<p>
 							We often think of all diamonds being transparent or white, although they can come in a range of colours including pink, blue, green and even yellow.
-							 However, if your white diamond has a yellow tint, this will reflect less true colour and will ultimately reduce the cost. 
+							 However, if your white diamond has a yellow tint, this will reflect less true colour and will ultimately reduce the cost.
 							 The GIA colour scale grades diamonds from D at the high end (colourless), down to Z (light colour) at the lower end of the scale.
 							  So, while your white diamond might be white by definition, it may appear slightly tinted. The less body colour that they have, the greater their value will be.
 							</p>
@@ -449,13 +449,13 @@
 								<img src="assets/images/marlows-diamond-colour.png" alt="diamond-cut">
 							</div>
 							<p>
-								The colour is tested when the stone is upside down so that less light is reflected, and it's easier to judge the colour or lack of. 
-								This also means that when the diamond is set, the colour may appear whiter.	
+								The colour is tested when the stone is upside down so that less light is reflected, and it's easier to judge the colour or lack of.
+								This also means that when the diamond is set, the colour may appear whiter.
 							</p>
 							<p>
 								Tip: a gold band may disguise the yellow tint of a J coloured stone for example, whereas a silver or platinum band is likely to highlight the defect more.
 							</p>
-							
+
 						</div>
 					</div>
 				</div>
@@ -470,10 +470,10 @@
 				<div class="row">
 					<div class="col-lg-5 col-md-5">
 						<div class="whichring-col">
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								Which Ring Metal Colour To Choose?
 							</div>
-							<p>Choosing the band colour for an engagement ring can be a tough factor to decide on unless your partner already has their heart 
+							<p>Choosing the band colour for an engagement ring can be a tough factor to decide on unless your partner already has their heart
 								set fully on a particular metal colour - this makes things very easy for you! However, if you’re buying a ring online then it
 								makes sense to understand the benefits of one metal over another, so take a look at our ring metal comparison chart.
 							</p>
@@ -492,7 +492,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										
+
 										<tr>
 											<td>Platinum</td>
 											<td>Toughest and lasts longest</td>
@@ -540,7 +540,7 @@
 							<p>2) Yellow gold. Versatile in price and rich in colour, so go with this if your partner likes the classic gold look.</p>
 							<p>3) White gold. While we love it just as much as platinum, it requires a little maintenance over time as the alloys fade.</p>
 							<p>4) Rose gold. Like white gold, it may require maintenance in the future.</p>
-							
+
 						</div>
 					</div>
 				</div>
@@ -558,24 +558,24 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="lifestyle-text">
-						<p>Indeed, the lifestyle of your fiance-to-be could affect your choice when buying a diamond engagement ring online, 
+						<p>Indeed, the lifestyle of your fiance-to-be could affect your choice when buying a diamond engagement ring online,
 							as the intention is to find one that they’ll be able to wear every day. But there are some cases where people
-							 will remove their ring for certain activities to protect it and ensure they don’t lose any of the diamonds. 
+							 will remove their ring for certain activities to protect it and ensure they don’t lose any of the diamonds.
 							 However, the more they remove the ring, the more chance there is of losing it, so you might want to avoid certain settings.</p>
 						<p>This is custom heading element</p>
 					</div>
-				</div>	
+				</div>
 				<div class="col-md-6">
 					<div class="lifestyle-text">
-						<p>If your fiance-to-be works with their hands mostly in a manual based job, you should avoid diamond engagement rings 
-							with a defined prong setting, as there is more risk of catching it on something and losing a stone. In this case, 
+						<p>If your fiance-to-be works with their hands mostly in a manual based job, you should avoid diamond engagement rings
+							with a defined prong setting, as there is more risk of catching it on something and losing a stone. In this case,
 							we would recommend a ring with a bezel setting that holds the diamond in place with a rim around the perimeter of
 							 the stone. This style of ring is much less likely to snag on clothing and features fewer crevices to keep clean.</p>
 					</div>
-				</div>	
+				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 
 	<!-- Does Style & Personality Affect Choice Of Engagement Rings? -->
 	<div class="doesstyle-wraper">
@@ -589,7 +589,7 @@
 					</p>
 				</div>
 			<div class="doesstyle-blocks">
-				<div class="whatdimond-cols-text">	
+				<div class="whatdimond-cols-text">
 					Which Ring Metal Colour To Choose?
 				</div>
 				<div class="row">
@@ -609,30 +609,30 @@
 			</div>
 
 			<div class="doesstyle-blocks">
-				<div class="whatdimond-cols-text">	
+				<div class="whatdimond-cols-text">
 					What Do Different Ring Settings Symbolise?
 				</div>
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="whatsdoes-col">
-							<p>In addition to the clothes that they wear, you could also look at matching up your choice of engagement ring with your partner’s personality and characteristics. 
+							<p>In addition to the clothes that they wear, you could also look at matching up your choice of engagement ring with your partner’s personality and characteristics.
 								Allow us to explain:</p>
 							<p><strong>Round Brilliant Cut Diamond</strong> - One of the oldest cut styles, classic and representative of a strong family ethos and the desire for a stable, comfortable life.
 							 It's said that people who wear these diamond rings are strong, direct and honest.</p>
 							<p><strong>Square/Princess Cut Diamond</strong> - A more modern style cut, often chosen for its deep sparkle. It’s an ideal choice for someone who takes chances
 							 and enjoys the spotlight.</p>
-							<p><strong>Emerald Cut Diamond</strong> - Glamorous but with a vintage feel about it. An emerald cut is an ideal choice for someone with strong self-confidence, 
+							<p><strong>Emerald Cut Diamond</strong> - Glamorous but with a vintage feel about it. An emerald cut is an ideal choice for someone with strong self-confidence,
 								assured and in control. Emerald cut stones make stunning large stones while their clean lines ensure it doesn't look too over the top.</p>
 							<p>This is custom heading element</p>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="whatsdoes-col">
-							<p><strong>Heart Cut Diamond</strong> - The heart cut represents the true sentiment of traditional love. An ideal diamond cut for those who are playful and bubbly, 
+							<p><strong>Heart Cut Diamond</strong> - The heart cut represents the true sentiment of traditional love. An ideal diamond cut for those who are playful and bubbly,
 							perfect for the true romantic.</p>
 							<p><strong>Pear Cut Diamond</strong>- A unique edge for those who like to stand out from the rest and take risks. The pear cut diamond represents someone who is
 							 outgoing and likes new experiences.</p>
-							<p><strong>Marquise Cut Diamond</strong> - For those who are larger than life, this vintage-styled cut is perfect for those who like to break tradition and 
+							<p><strong>Marquise Cut Diamond</strong> - For those who are larger than life, this vintage-styled cut is perfect for those who like to break tradition and
 							stand out with a creative edge</p>
 							<p><strong>Cushion Cut Diamond </strong> - The cushion cut diamond provides a soft look for those who still like to sparkle a lot. This bold yet elegant cut is ideal for those who love tradition.</p>
 						</div>
@@ -649,17 +649,17 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="whatsthere-cols">
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								What Is Their Hand Type?
 							</div>
 							<p>Choosing a diamond engagement ring based on hand type might sound slightly specific, however, this is an important part of narrowing down the options.
-								Your fiance-to-be most likely has an idea of what ring styles don’t match their hand type, therefore these details can't afford to be missed 
+								Your fiance-to-be most likely has an idea of what ring styles don’t match their hand type, therefore these details can't afford to be missed
 								when buying an engagement ring online.</p>
-							<p>All hands have a unique personality, so you must find a style of ring that is going to flatter and compliment this personality. The table below gives a starting point, 
+							<p>All hands have a unique personality, so you must find a style of ring that is going to flatter and compliment this personality. The table below gives a starting point,
 								however, remember to bear in mind their personal style too. Your partner's taste may not reflect the most flattering choice of ring, so you may
 								need to get a second opinion if that's the case.</p>
 						</div>
-					</div>	
+					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="whatsthere-cols">
 							<div class="whatdiamond-tables">
@@ -673,7 +673,7 @@
 									<tbody>
 										<tr>
 											<td>Wide or Large Fingers</td>
-											<td>Wide band, Split shanks, Elongated diamond</td> 
+											<td>Wide band, Split shanks, Elongated diamond</td>
 										</tr>
 										<tr>
 											<td>Slender Fingers</td>
@@ -703,7 +703,7 @@
 								</table>
 							</div>
 						</div>
-					</div>	
+					</div>
 				</div>
 			</div>
 
@@ -711,20 +711,20 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="whatsthere-cols text-center">
-							<img src="assets/images/unnamed-2.png" alt="image">							
+							<img src="assets/images/unnamed-2.png" alt="image">
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="whatsthere-cols">
-							<div class="whatdimond-cols-text">	
+							<div class="whatdimond-cols-text">
 								Is Buying An Engagement Ring Online Safe?
 							</div>
 							<p>This is custom heading element.</p>
-							<p>If you are worried about the idea of having an engagement ring delivered by mail, you can rest assured that you’re carrying out a safe and secure purchase with Marlow’s, 
+							<p>If you are worried about the idea of having an engagement ring delivered by mail, you can rest assured that you’re carrying out a safe and secure purchase with Marlow’s,
 								and we will ensure that your ring arrives safely by recorded delivery.</p>
 						</div>
-					</div>	
-						
+					</div>
+
 				</div>
 			</div>
 
@@ -776,7 +776,7 @@
 									<b>Colour</b> – A grading that determines the tint of the diamond, and how pure it is. This ranges from colourless (D) to saturated (Z).
 
 									<br><br>
-									<b>Cushion-Cut</b> –  A brilliant-cut rectangular/square diamond shape featuring curved sides, and rounded corners for a soft look and strong sparkle. 
+									<b>Cushion-Cut</b> –  A brilliant-cut rectangular/square diamond shape featuring curved sides, and rounded corners for a soft look and strong sparkle.
 									<br><br>
 									<b>Cut</b> – This describes the diamond’s surfaces or facets that strongly affect the beauty of the stone. Various diamond cuts are made to increase sparkle (dispersion, brilliance, and scintillation), or by making it appear bigger.
 									<br><br>
@@ -809,7 +809,7 @@
 									<br><br>
 									<b>Graining</b> – And inclusion that shows the growth pattern of a diamond. Can be found both internally and externally.
 									<br><br>
-									<b>Heart Cut</b> – A brilliant-cut diamond shaped into a heart. 
+									<b>Heart Cut</b> – A brilliant-cut diamond shaped into a heart.
 									<br><br>
 									<b>Inclusion</b> – An umbrella term used for describing any imperfections and flaws that appear on the diamond - despite the high level of craftsmanship, most diamonds will have inclusions.
 								</div>
@@ -839,9 +839,9 @@
 									<br><br>
 									<b>Symmetry</b> – how symmetrical the cut is, measuring from poor to ideal, and contributes to the level of radiance and scintillation.
 									<br><br>
-									<b>Table</b> – The largest surface of a cut diamond, the top facet. 
+									<b>Table</b> – The largest surface of a cut diamond, the top facet.
 									<br><br>
-									<b>Twinning Wisp</b> – A ribbon-like inclusion that could be featured inside the stone. 
+									<b>Twinning Wisp</b> – A ribbon-like inclusion that could be featured inside the stone.
 									<br><br>
 									<b>Wisp</b> – A thin, curved inclusion that can appear hair-like or cloud-like
 								</div>
@@ -864,10 +864,11 @@
 <div class="rating-review-block">
 				<div class="owl-carousel owl-theme slider-review">
 				@include('front.pages.reviews')
-				</div>	
+				</div>
 			</div>
 </div><!-- insta photos section start -->
-<div class="share-moment">
+@include('front.includes.instagram-section')
+{{-- <div class="share-moment">
    <div class="share-moment-heading">
       <div class="heading-h-two">Share your special moments with us<br> #marlowsengagements</div>
    </div>
@@ -928,7 +929,7 @@
    <div class="insta-btn">
       <a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
    </div>
-</div>
+</div> --}}
 <!-- insta photos section end -->
 
 @endsection
