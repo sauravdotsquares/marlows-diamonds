@@ -886,7 +886,7 @@ a[type="button"] {-webkit-appearance: none !important;}
 .certified-diamond-ring {padding: 30px 0 60px 0;}
 
 /**additional **/
-.product-info-media .product-gallery__trigger {position: absolute;right: 15px;top: 2px;z-index: 1;color: #000;font-size: 24px;cursor: pointer;}
+.product-info-media .product-gallery__trigger {position: absolute;right: 15px;top: 2px;z-index: 11;color: #000;font-size: 24px;cursor: pointer;}
 .type-variations-col label {margin-bottom: 5px;}
 .product-info-media .owl-carousel .owl-nav [class*="owl-"] {border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;}
 .product-info-media .owl-carousel .owl-nav .owl-next, .product-info-media .owl-carousel .owl-nav .owl-prev {top: 40%;position: absolute;}
