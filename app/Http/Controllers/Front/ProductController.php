@@ -62,6 +62,11 @@ class ProductController extends Controller
             $getProduct = Products::with(['getProductImages','getProductVariation'])->where('slug',$productSlug)->first();
 
             if(isset($getProduct) && !empty($getProduct)){
+                // Product Categories 
+                $prod_categories = explode(',',$getProduct->categories);
+                $checkPlanCat = Category::select('id')->whereIn('id',$prod_categories)->where('name','LIKE','%plain%')->get()->toArray();
+                if(!empty($checkPlanCat)) $plainband = true;
+                else $plainband = false;
                 // store in session for recent viewd products start
                 $recentProduct = session()->get('recentproducts', []);
 
@@ -91,7 +96,7 @@ class ProductController extends Controller
                     //echo '<pre>';print_r($variationDetails); die;
                     return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
                 }else{
-                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'url'=>$url]);
+                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'url'=>$url,'plainband'=>$plainband]);
                 }
             }else{
                 return view('layouts.errors.404');
