@@ -85,36 +85,6 @@
 
 @section('content')
 
-<?php
-	// echo "<pre>";
-	// print_r($data->getProductVariation[0]->regular_price);
-	// die;
-?>
-
-<!-- product info and media -->
-<!-- @php
-Session::forget('recently_view');
-	if(session('recently_view')){
-		//echo '<pre>';print_r(Session::get('recently_view')); die;
-		$arrayS = Session::get('recently_view');
-	}else
-		$arrayS = array();
-	
-	$title = isset($data->title)?$data->title:'';
-	if(!in_array(array('title'=>$title),$arrayS)){
-		$arr = array_merge($arrayS,array(['title'=>$title]));
-	}else{
-		$arr = $arrayS;
-	}
-	
-	//echo '<pre>';print_r($arr); die;
-	
-	
-	
-	//$product = collect([$unique]);
-	Session::push('recently_view', $arr);
-	//echo '<pre>';print_r(Session::get('recently_view')); die;
-@endphp -->
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
@@ -160,6 +130,7 @@ Session::forget('recently_view');
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
+				@if($plainband==false)
 				<div class="diamond-type">
 					<label>Choose Your Diamond</label>
 					<div class="d-type-input">
@@ -171,6 +142,7 @@ Session::forget('recently_view');
 						<span>Lab Grow Diamond</span>
 					</div>
 				</div>
+				@endif
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
 
