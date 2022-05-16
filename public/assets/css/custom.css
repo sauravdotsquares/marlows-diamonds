@@ -932,6 +932,7 @@ a[type="button"] {-webkit-appearance: none !important;}
 a[disabled="disabled"] {pointer-events: none;}
 
 .checkcart-item dl dd a {text-decoration: none;color: #8E2E65;}
+.category-list-wrap h2 { font-size: 25px;}
 
 /** mega menuhover for desktop **/
 @media(min-width:1024px){

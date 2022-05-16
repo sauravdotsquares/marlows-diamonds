@@ -110,15 +110,12 @@
 					</div>
 					<div id="carousel" class="owl-carousel">
 						
-						@if($prodImages)
+						@if($variationImages)
 
-							@foreach($prodImages as $images)
-								@php
-									$explode = explode('/',$images->image_url);
-									$explode1 = explode('.',$explode[1]);
-								@endphp
+							@foreach($variationImages as $images)
+								
 								<div class="item">
-									<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"><img src="{{asset('/storage/'.$images->image_url)}}" alt="{{$explode1[0]}}"></a>
+									<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}"><img src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}"></a>
 								</div>
 							@endforeach
 						@endif
