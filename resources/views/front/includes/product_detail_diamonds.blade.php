@@ -1,17 +1,23 @@
 <tr>
             <td>{{isset($apiRecords['Shape'])?$apiRecords['Shape']:''}}</td>
-            <td>{{isset($apiRecords['Carat'])?$apiRecords['Carat']:''}}</td>
+            <td>{{isset($apiRecords['Carat'])?number_format($apiRecords['Carat'],2):''}}</td>
             <td>{{isset($apiRecords['Color'])?$apiRecords['Color']:''}}</td>
             <td>{{isset($apiRecords['Clarity'])?$apiRecords['Clarity']:''}}</td>
             @if(isset($apiRecords['Shape']) && strtolower($apiRecords['Shape']) == "round")
-                <td>{{isset($apiRecords['Cut'])?$apiRecords['Cut']:''}}</td>
+                @if(isset($apiRecords['Cut']) && $apiRecords['Cut'] == "EX")
+                    <td>Excellent</td>
+                @else
+                    <td>{{isset($apiRecords['Cut'])?$apiRecords['Cut']:''}}</td>
+                @endif
             @endif
             <td>{{isset($apiRecords['Lab'])?$apiRecords['Lab']:''}}</td>
             <td>{{isset($apiRecords['Amount'])?number_format(($apiRecords['Amount']*1.25)*$VAT,2):''}}</td>
             <td><a href="{{isset($apiRecords['CertificateLink'])?$apiRecords['CertificateLink']:''}}" target="_blank" class="table-btn certificate-link">View</a></td>
             <td>
+                @if(isset($apiRecords['ImageLink']) && !empty($apiRecords['ImageLink']))
                 <a href="{{isset($apiRecords['ImageLink'])?$apiRecords['ImageLink']:''}}" target="_blank" class="table-btn image-link">View
                     Diamond</a>
+                @endif
             </td>
             <td>
 
