@@ -487,7 +487,7 @@
 								<tbody>
 									<tr ng-if="data.length>0 && loader==false" ng-repeat="records in data" class="<%$index%>" id="selectedDiamondRow<%$index%>">
 										<td id="tdShape<%$index%>"><%records.Shape%></td>
-										<td id="tdCarat<%$index%>"><%records.Carat%></td>
+										<td id="tdCarat<%$index%>"><%records.Carat | number : 2%></td>
 										<td id="tdColor<%$index%>"><%records.Color%></td>
 										<td id="tdClarity<%$index%>"><%records.Clarity%></td>
 										<td id="tdCut<%$index%>" ng-if="shape=='ROUND'"><%records.Cut%></td>
@@ -496,7 +496,7 @@
 
 										<td id="tdCertiLink<%$index%>"> <a target="_block" class="table-view-btn" href="<%records.CertificateLink%>">View</a> </td>
 
-										<td id="tdImgLink<%$index%>"><img ng-if="records.ImageLink" src="<%records.ImageLink%>" class="diamond_image" alt="<%records.Shape%>"></td>
+										<td id="tdImgLink<%$index%>"><a ng-if="records.ImageLink" href="<%records.ImageLink%>" class="diamond_image" target="_blank">View Diamond</a></td>
 
 										<td><input id="selectedDiamondCheckBox<%$index%>" data-certno="<%records.CERT_NO%>" data-stockno="<%records.Stock_NO%>" type="radio" name="selectedDiamond" value="<%records.Amount%>" ng-checked="$index==0" ng-click="updateDiamondPrice(records.Amount)" ng-model="selectedDiamond"></td>
 									</tr>
