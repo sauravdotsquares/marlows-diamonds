@@ -59,9 +59,41 @@
   $(document).ready(function(){
       $('.show-more-content').hide();
       $('.show-more').click(function(){
-          $(this).parents('.reviewr-review-text').toggleClass("show-text-col");       
+          $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
       });
+
+    // Zopim zendesk Chat JS function Call start
+    window.zopimloaded = false;
+    setTimeout(function(){
+        if(window.zopimloaded == false){
+            loadZopim();
+            window.zopimloaded = true;
+        }
+    }, 3000);
+    // Zopim zendesk Chat JS function Call End
   });
+
+    // Zopim zendesk Chat JS function apply Start
+    function loadZopim(){
+        window.$zopim || (function (d, s) {
+            var z = $zopim = function (c) {
+                z._.push(c)
+            }, $ = z.s =
+            d.createElement(s), e = d.getElementsByTagName(s)[0]; z.set = function (o) {
+                z.set.
+                _.push(o)
+            }; z._ = []; z.set._ = []; $.async = !0; $.setAttribute('charset', 'utf-8');  $.setAttribute('defer', 'defer');
+            $.src = 'https://v2.zopim.com/?lAfFPTz4EQR4ncicqFdIqIA6clXDoO0f'; z.t = +new Date; $.
+            type = 'text/javascript'; e.parentNode.insertBefore($, e)
+        })(document, 'script');
+
+        $zopim(function () {
+            $zopim.livechat.button.setColor('#FFCC00');
+        });
+    }
+
+    // Zopim zendesk Chat JS function apply End
+
 
 </script>
 <script>
@@ -108,7 +140,7 @@ $(document).ready(function(){
         });
         $('.main-navigaiton .nav-navbars .level-zero .fa-angle-right').on('click',function() {
             $(this).parents('.level-1').toggleClass('show-menus');
-        });        
+        });
     });
   }
 </script>
