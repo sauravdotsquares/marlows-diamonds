@@ -246,6 +246,8 @@ Route::namespace('Front')->group(function () {
 	Route::post('reset-password', 'ForgotPasswordController@submitResetPasswordForm')->name('reset.password.post');
 
 	Route::get('search/autocomplete','ProductController@autocomplete')->name('autocomplete');
+
+	Route::post('download-pdf','HomeController@downloadPDF')->name('download-pdf');
 });
 
 /*
