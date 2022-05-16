@@ -96,7 +96,7 @@ class ProductController extends Controller
                     //echo '<pre>';print_r($variationDetails); die;
                     return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
                 }else{
-                    $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->get();
+                    $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->groupBy('vari_image')->get();
                    // echo '<pre>';print_r($variationDetails); die;
                     return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'url'=>$url,'plainband'=>$plainband,'variationImages'=>$variationDetails]);
                 }
