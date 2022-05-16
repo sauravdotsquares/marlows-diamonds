@@ -15,15 +15,16 @@
 </div>
 <!-- category header banner end -->
 
-
 <!-- Visit US map and form -->
 <div class="visit-form-map">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8">
-				<div class="viti-map">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2429.571318268873!2d-1.9142953840215433!3d52.486897046434166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4870bcedd249bb6d%3A0xba2e1f541ca072aa!2s46%20Warstone%20Ln%2C%20Birmingham%20B18%206JJ%2C%20UK!5e0!3m2!1sen!2sin!4v1649678690220!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+				<div id="div-1-1-content"  class="viti-map div-1-1-content dc-11 open">
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2429.571318268873!2d-1.9142953840215433!3d52.486897046434166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4870bcedd249bb6d%3A0xba2e1f541ca072aa!2s46%20Warstone%20Ln%2C%20Birmingham%20B18%206JJ%2C%20UK!5e0!3m2!1sen!2sin!4v1649678690220!5m2!1sen!2sin" width="950" height="555" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 				</div>
+				<div id="div-1-2-content" class="viti-map dc-12"><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2483.8525101227824!2d-0.16446100000000002!3d51.497574!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876054098ba5097%3A0x18add362c927fd34!2s20%20Beauchamp%20Pl%2C%20London%20SW3%201NQ%2C%20UK!5e0!3m2!1sen!2sin!4v1652681925563!5m2!1sen!2sin" width="850" height="555" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
 			</div>
 			<div class="col-lg-4">
 			<!-- Success message -->
@@ -93,6 +94,54 @@
 	</div>
 </div>
 
+<script>
+var firstDiv = $("#div-1-1");
+var secondDiv = $("#div-1-2");
 
+$(document).ready(function() {
+  //On Click of 1st Div, we're also toggling the 2nd DIV in case if it was open
+  // Can handle in a better way as well
+  // Same goes for the 2nd div
+  firstDiv.click(() => {
+    $(".dc-11").addClass("open");
+    $(".dc-12").removeClass("open");
+  });
 
+  secondDiv.click(() => {
+    $(".dc-12").addClass("open");
+    $(".dc-11").removeClass("open");
+  });
+});
+</script>
+<style>
+.outer-block {
+  width: 200px;
+  margin: auto;
+}
+
+.block {
+  display: flex;
+}
+
+.block>div {
+  flex: 1;
+  text-align: center;
+  border: 2px solid red;
+  height: 80px;
+}
+
+.open {
+  display: block !important;
+}
+
+.dc-11 {
+
+  display: none;
+}
+
+.dc-12 {
+
+  display: none;
+}
+</style>
 @endsection
