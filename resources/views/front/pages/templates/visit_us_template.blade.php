@@ -20,7 +20,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8">
-			
+
 				<div id="div-1-1-content"  class="viti-map div-1-1-content dc-11 open">
 					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2429.571318268873!2d-1.9142953840215433!3d52.486897046434166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4870bcedd249bb6d%3A0xba2e1f541ca072aa!2s46%20Warstone%20Ln%2C%20Birmingham%20B18%206JJ%2C%20UK!5e0!3m2!1sen!2sin!4v1649678690220!5m2!1sen!2sin" width="950" height="555" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 				</div>
@@ -28,11 +28,11 @@
 			</div>
 			<div class="col-lg-4">
 			<!-- Success message -->
-			@if(Session::has('success'))
+			{{-- @if(Session::has('success'))
 				<div class="alert alert-success">
 					{{Session::get('success')}}
 				</div>
-			@endif
+			@endif --}}
 				<div class="visit-form">
 					<h3>NEED ASSISTANCE?</h3>
 					<p>We're here to help...<br>Complete the contact form below and we will be in touch.</p>
@@ -135,12 +135,12 @@ $(document).ready(function() {
 }
 
 .dc-11 {
- 
+
   display: none;
 }
 
 .dc-12 {
-  
+
   display: none;
 }
 </style>
