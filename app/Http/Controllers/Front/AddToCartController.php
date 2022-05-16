@@ -76,7 +76,6 @@ class AddToCartController extends Controller
                 session()->put('cart', $cart);
 
                 return response()->json(['cartcount'=>count((array) session('cart')),'success'=>'Product added to cart successfully!']);
-                // return redirect()->back()->with('success', 'Product added to cart successfully!');
             }else{
                 return response()->json(['error'=>'Not Match']);
             }
@@ -106,8 +105,7 @@ class AddToCartController extends Controller
                         $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
                         $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
                     }elseif($key == 'imagelink'){
-                        // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                        // $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Image</a></dd>';
+                        // Image Link is shown blank
                     }else{
                         $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
                         $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
@@ -117,10 +115,6 @@ class AddToCartController extends Controller
                 }
             }
             $titleHtml .= ' </dl>';
-
-            // echo "<pre>";
-            // print_r($selectedAttributes);
-            // die;
 
             $cart = session()->get('cart', []);
 
@@ -138,8 +132,6 @@ class AddToCartController extends Controller
             session()->put('cart', $cart);
 
             return response()->json(['cartcount'=>count((array) session('cart')),'success'=>'Product added to cart successfully!']);
-            // return redirect()->back()->with('success', 'Product added to cart successfully!');
-
         }else{
             return response()->json(['error'=>'Not Added...']);
         }
@@ -174,7 +166,6 @@ class AddToCartController extends Controller
                 session()->put('cart', $cart);
             }
             return response()->json(['status'=>200,'msg'=>'Product removed successfully']);
-            // session()->flash('success', 'Product removed successfully');
         }
     }
 
@@ -194,16 +185,8 @@ class AddToCartController extends Controller
             $getCountries = Country::get();
             $getUsersDetails = [];
             if(auth()->guard('customer')->check()){
-                // echo "if check ";
-                // die;
                 $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::user()->id)->first();
             }
-            // if(Auth::user()->id){
-            //     echo "Check if".Auth::user()->id;
-            // }else{
-            //     echo "Check else";
-            // }
-            // die;
             return view('front.pages.checkout',compact('getCountries','getUsersDetails','url'));
         }
         return redirect()->route('home');

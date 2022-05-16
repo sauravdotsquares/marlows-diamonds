@@ -1,5 +1,5 @@
 <?php
-// This is Appointments controller 
+// This is Appointments controller
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
@@ -9,13 +9,11 @@ use App\Models\Appointments;
 use App\Models\Settings;
 
 class ContactUsFormController extends Controller {
-    
+
     // Store Contact Form data
     public function ContactUsForm(Request $request) {
-			
-		// return response()->json($request->all());
 		    $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
-				
+
 		// Form validation
         $this->validate($request, [
             'title' => 'required',
@@ -25,10 +23,10 @@ class ContactUsFormController extends Controller {
          ]);
         //  Store data in database
          Appointments::create($request->all());
-        // 
+        //
 		//  Send mail to admin
-		
-		
+
+
         Mail::send('email.mail', array(
             'title' => $request->get('title'),
             'email' => $request->get('email'),
@@ -39,6 +37,6 @@ class ContactUsFormController extends Controller {
 			$message->to($admin_email, 'Admin')->subject('NEED ASSISTANCE?');
         });
         return back()->with('success', 'We have received your message and would like to thank you for writing to us.');
-        
+
     }
 }

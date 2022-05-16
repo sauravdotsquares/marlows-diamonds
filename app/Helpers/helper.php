@@ -95,18 +95,6 @@ if (!function_exists("single_storage_image_upload")) {
 		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
 		return $fileName;
 
-        // $filenameWithExt = $imageUrl->getClientOriginalName();
-        ////Get just filename
-        // $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        ////Get just ext
-        // $extension = $imageUrl->getClientOriginalExtension();
-        ////Filename to store
-        // $fileNameToStore = $folderName.'/'.$filename.'_'.time().'.'.$extension;
-
-		// Image::make($imageUrl)->resize(600,300)->save(storage_path('app/' . $fileNameToStore));
-        ////Upload Image
-        ////$path = $imageUrl->storeAs('public',$fileNameToStore);
-        // return $fileNameToStore;
     }
 }
 
@@ -126,17 +114,6 @@ if (!function_exists("product_image_upload")) {
         // Upload Image
         $path = $imageUrl->storeAs('public',$fileNameToStore);
 
-        // // echo "it is working single";
-        // if (!file_exists('images/'.$folderName)) {
-        //     mkdir('images/'.$folderName, 0777);
-        // }
-        // // mkdir('images/'.$folderName, 0777);
-        // $uploadpath = public_path().'\images\\'.$folderName;
-        // // $original_name = $imageUrl->getClientOriginalName();
-        // $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
-        // // $filename = $original_name;
-        // $imageUrl->move($uploadpath, $filename);
-
         return  $fileNameToStore;
 
         // return $data;
@@ -155,16 +132,6 @@ if (!function_exists("product_video_upload")) {
         // Upload Image
         $path = $imageUrl->storeAs('public',$fileNameToStore);
 
-        // echo "it is working single";
-        // if (!file_exists('images/'.$folderName)) {
-        //     mkdir('images/'.$folderName, 0777);
-        // }
-        // // mkdir('images/'.$folderName, 0777);
-        // $uploadpath = public_path().'\images\\'.$folderName;
-        // // $original_name = $imageUrl->getClientOriginalName();
-        // $filename = $folderName.'/'.rand().time() . '_' . $imageUrl->getClientOriginalName();
-        // // $filename = $original_name;
-        // $imageUrl->move($uploadpath, $filename);
         return  $fileNameToStore;
 
         // return $data;
