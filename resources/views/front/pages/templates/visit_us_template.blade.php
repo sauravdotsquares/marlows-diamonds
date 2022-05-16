@@ -27,11 +27,11 @@
 			</div>
 			<div class="col-lg-4">
 			<!-- Success message -->
-			@if(Session::has('success'))
+			{{-- @if(Session::has('success'))
 				<div class="alert alert-success">
 					{{Session::get('success')}}
 				</div>
-			@endif
+			@endif --}}
 				<div class="visit-form">
 					<h3>NEED ASSISTANCE?</h3>
 					<p>We're here to help...<br>Complete the contact form below and we will be in touch.</p>

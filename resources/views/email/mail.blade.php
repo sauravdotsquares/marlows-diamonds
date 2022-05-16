@@ -36,17 +36,17 @@
               <tr>
                 <td ><p>Hello,</p>
 				<div style="text-align:left;line-height: 24px;">
-					<p><strong>Name:</strong> {{ $title }}</p>
-					<p><strong>Email:</strong> {{ $email }}</p>
-          <p><strong>Phone Number:</strong> {{ $phone }}</p>
-					<p><strong>Message:</strong> {{ $user_query }}</p>
+					<p><strong>Name:</strong> {{ isset($title)?$title:$name }}</p>
+					<p><strong>Email:</strong> {{ isset($email)?$email:'' }}</p>
+          <p><strong>Phone Number:</strong> {{ isset($phone)?$phone:'' }}</p>
+					<p><strong>Message:</strong> {{ isset($user_query)?$user_query:'' }}</p>
 				</div>
 				</td>
               </tr>
               <tr>
                 <td> </td>
               </tr>
-              
+
               <tr>
                 <td height="30"> </td>
               </tr>
