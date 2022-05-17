@@ -174,7 +174,7 @@ Route::group(['middleware' => ['customer']], function () {
 		Route::get('/logout-customer', 'LoginController@logout')->name('logout-customer');
 		// Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
 		Route::get('products/checkout/dekopay/{orderId?}', 'DekoPayController@receipt_page')->name('make.dekopay');
-		Route::get('wc-api/dekopay', 'DekoPayController@check_response');
+		
 	});
 });
 
@@ -248,6 +248,7 @@ Route::namespace('Front')->group(function () {
 	Route::get('search/autocomplete','ProductController@autocomplete')->name('autocomplete');
 
 	Route::post('download-pdf','HomeController@downloadPDF')->name('download-pdf');
+	Route::get('deko-api/dekopay', 'DekoPayController@check_response');
 });
 
 /*

@@ -78,12 +78,12 @@ class DekoPayController extends Controller
 			"Goods[Price]"=> $bool * 100,
 			"Goods[Description]"=> $desc,
 			"Goods[Quantity]"=> 1,
-			"Finance[Code]" => $finCode,
+			"Finance[Code]" => 'ONIB12-14.9',
 			"Finance[Deposit]" => ($depositAmt/100) * $bool*100,
 		);
-		
+		//echo '<pre>'; print_r($postFields); die;
 		$pay_url =  $this->pay_url;
-		$interface = ($pay_url != 'live') ? "https://test.dekopay.com:3343/" : "https://secure.dekopay.com:6686/";
+		$interface = ($pay_url != 'live') ? "https://test.dekopay.com:6686/" : "https://secure.dekopay.com:6686/";
 
 	
 			
@@ -101,7 +101,7 @@ class DekoPayController extends Controller
 		curl_setopt($curlSession, CURLOPT_USERAGENT, "Dekopay HTTP Post");
 		curl_setopt($curlSession, CURLOPT_FOLLOWLOCATION, 1);
 		$curl_response = curl_exec($curlSession);
-
+		//echo '<pre>'; print_r($curl_response); die;
 		/*Check if curl option has error or not*/
 		if(curl_errno($curlSession))
 		{
@@ -151,8 +151,8 @@ class DekoPayController extends Controller
 		$posted=$_PostVal;
 		
 		
-	//	file_put_contents(__DIR__.'/'.time().'.txt', print_r($posted,true));
-
+		file_put_contents(__DIR__.'/'.time().'.txt', print_r($posted,true));
+		//echo '<pre>';  print_r($posted); die;
 		if(empty($posted['Identification']['RetailerUniqueRef'])){
 			return view('front.pages.payments.dekopay_failed',['message'=>'Request Failure']);
 		}
