@@ -618,7 +618,7 @@
 			});
 	      $owl.owlCarousel({
 			  //autoplay: true,
-			 // rewind: true, /* use rewind if you don't want loop */
+			  rewind: true, /* use rewind if you don't want loop */
 			  /*margin: 20,*/
 			   /*
 			  animateOut: 'fadeOut',
@@ -634,7 +634,7 @@
 
 	      $(document).on('click','.product-gallery__trigger',function(e){
 	      		e.preventDefault();
-	      		$('#carousel .owl-item.active a').click();
+	      		$('#carousel-zoom .item:first-child a').click();
 	      });
 
 
