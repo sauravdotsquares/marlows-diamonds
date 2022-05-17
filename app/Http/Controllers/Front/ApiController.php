@@ -11,28 +11,23 @@ class ApiController extends Controller
     public function getRepnetApiFunction($filterArray)
     {
 
-        // echo "asdads<pre>";
-        // print_r($filterArray);
-        // print_r($filterArray['carat']);
-        // die;
-
         $client = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL",
         array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
-        
+
         $params = array('Username'=>'95503', 'Password'=>'@diamond1');
         $client->__soapCall("Login", array($params), NULL, NULL, $output_headers);
-    
+
         $ticket = $output_headers["AuthenticationTicketHeader"]->Ticket;
-    
+
         $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
-        
+
         $rapnetData = $rapnetAllData = array();
 
         $ns = "http://technet.rapaport.com/";
         $headerBody = array("Ticket" => $ticket);
         $header = new \SoapHeader($ns, 'AuthenticationTicketHeader', $headerBody);
         $client1->__setSoapHeaders($header);
-        
+
         if(isset($filterArray['grade'])){
             if($filterArray['grade'] == 'EX'){
                 $filterTo = 'EXCELLENT';
@@ -78,8 +73,8 @@ class ApiController extends Controller
             "SortDirection" => "ASC",
             "SortBy" => "PRICE"
         );
-    
-    
+
+
         $params1 = array("SearchParams" => $searchParams, "DiamondsFound" => 0);
 
         $results=$client1->__soapCall("GetDiamonds", array($params1), NULL, NULL, $output_headers);
@@ -91,7 +86,7 @@ class ApiController extends Controller
             $object = new \stdclass;
             $object->Table1 = '';
         }
-        
+
         if(is_object($object->Table1)){
             $allData[]=$object->Table1;
         }else{
@@ -117,7 +112,7 @@ class ApiController extends Controller
             $data[$key]['FancyColorDescription']= '';
             $data[$key]['ImageLink']= '';
             $data[$key]['CertificateLink']= '';
-            
+
             if($value->LabTitle=='GIA'){
                 $data[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$value->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
             }else if($value->LabTitle=='IGI'){
@@ -126,7 +121,7 @@ class ApiController extends Controller
             }else if($value->LabTitle=='HRD'){
                 $data[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$value->CertificateNumber.'&weight='.$value->Weight;
             }else{
-                $data[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$value->DiamondID;	
+                $data[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$value->DiamondID;
             }
             $data[$key]['data_fetch']= 'Rapnet';
 
@@ -138,10 +133,6 @@ class ApiController extends Controller
 
     public function getHariKrishnaFunction($getFilterData)
     {
-
-        // echo "getHariKrishnaFunction<pre>";
-        // print_r($resp);
-        // die;
 
         $info = getdate();
         $date = $info['mday'];
