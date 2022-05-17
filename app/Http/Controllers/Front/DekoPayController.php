@@ -73,15 +73,16 @@ class DekoPayController extends Controller
 		$postFields = array(
 			"action" => "credit_application_link",
 			"Identification[api_key]"=> $this->apikey,
-			"Identification[RetailerUniqueRef]"=> $order->order_key,
+			"Identification[RetailerUniqueRef]"=> $order->order_id.'-'.$order->order_key,
 			"Identification[InstallationID]"=> $install_id,
 			"Goods[Price]"=> $bool * 100,
 			"Goods[Description]"=> $desc,
 			"Goods[Quantity]"=> 1,
-			"Finance[Code]" => 'ONIB12-14.9',
+			"Finance[Code]" => $finCode,
+			//"Finance[Code]" => 'ONIB12-14.9',
 			"Finance[Deposit]" => ($depositAmt/100) * $bool*100,
 		);
-		//echo '<pre>'; print_r($postFields); die;
+		
 		$pay_url =  $this->pay_url;
 		$interface = ($pay_url != 'live') ? "https://test.dekopay.com:6686/" : "https://secure.dekopay.com:6686/";
 
@@ -101,7 +102,7 @@ class DekoPayController extends Controller
 		curl_setopt($curlSession, CURLOPT_USERAGENT, "Dekopay HTTP Post");
 		curl_setopt($curlSession, CURLOPT_FOLLOWLOCATION, 1);
 		$curl_response = curl_exec($curlSession);
-		//echo '<pre>'; print_r($curl_response); die;
+
 		/*Check if curl option has error or not*/
 		if(curl_errno($curlSession))
 		{
@@ -145,14 +146,14 @@ class DekoPayController extends Controller
 			
 	}
 
-	public function check_response()
+	public function check_response(Request $request)
 	{ 
-		$_PostVal=$_REQUEST;
+		$_PostVal=$request->all();
 		$posted=$_PostVal;
 		
 		
 		file_put_contents(__DIR__.'/'.time().'.txt', print_r($posted,true));
-		//echo '<pre>';  print_r($posted); die;
+
 		if(empty($posted['Identification']['RetailerUniqueRef'])){
 			return view('front.pages.payments.dekopay_failed',['message'=>'Request Failure']);
 		}
@@ -182,7 +183,9 @@ class DekoPayController extends Controller
 
 	}
 	function payment_complete($order_id){
+		Order::where('id',$order_id)->update(['pay_timestamp'=>date('Y-m-d h:i:s'),'status'=>2]);
 
+		session()->forget('cart');
 	}
 	function successful_request( $posted ) {
 			$order_id_key=$posted['Identification']['RetailerUniqueRef'];
