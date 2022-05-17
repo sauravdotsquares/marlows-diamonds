@@ -528,8 +528,8 @@
                     <input type="hidden" id="addStockNumber" value="0">
 					<div class="table-bottom-content">
 						<div class="diamond-total-subtotal">
-							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount*VAT | number : 2 %></p>
-							<div class="total-diamond-price" ng-if="firstDiamondAmount">£ <%firstDiamondAmount*VAT | number : 0 %> </div>
+							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount*1.25*VAT | number : 2 %></p>
+							<div class="total-diamond-price" ng-if="firstDiamondAmount">£ <%firstDiamondAmount*1.25*VAT | number : 0 %> </div>
 						</div>
 						<div class="addbasket-req-btns">
 							{{-- <a class="white-bg-btn" href="#">Add To Basket</a> --}}
