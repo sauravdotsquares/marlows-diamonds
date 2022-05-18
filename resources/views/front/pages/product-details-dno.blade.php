@@ -84,44 +84,52 @@
 @endsection
 
 @section('content')
+<?php
+    // echo "<pre>";
+    // print_r(count($prodImages));
+    // print_r(count($variationImages));
+    // // print_r($data);
+    // die;
 
+?>
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 
 			<div class="product-info-media">
-				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
-				
-					<div id="carousel-zoom">
-						
-						@if($prodImages)
+				{{-- <a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
 
-							@foreach($prodImages as $images)
-								@php
-									$explode = explode('/',$images->image_url);
-									$explode1 = explode('.',$explode[1]);
-								@endphp
-								<div class="item">
-									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"></a>
-								</div>
-							@endforeach
-						@endif
-						
-					</div>
 					<div id="carousel" class="owl-carousel">
-						
-						@if($variationImages)
+                        @if($variationImages)
+                            @foreach($variationImages as $images)
+                                <div class="item">
+                                    <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
+                                        <img src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
+                                    </a>
+                                </div>
+                            @endforeach
+                        @endif
 
-							@foreach($variationImages as $images)
-								
-								<div class="item">
-									<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}"><img src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}"></a>
-								</div>
-							@endforeach
-						@endif
-						
+						{{-- @if($prodImages)
+                            @foreach($prodImages as $images)
+                                @php
+                                    $explode = explode('/',$images->image_url);
+                                    $explode1 = explode('.',$explode[1]);
+                                @endphp
+                                <div class="item">
+                                    <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
+                                        <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
+                                    </a>
+                                </div>
+                            @endforeach
+                        @endif --}}
 					</div>
-				
+					{{-- <div id="carousel" class="owl-carousel">
+
+
+
+					</div> --}}
+
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -172,7 +180,7 @@
 					</div>
 
 					<div class="product-to-basket">
-						
+
 						<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
 					</div>
 					<div class="product-req-appointment">
@@ -181,7 +189,7 @@
 						</a>
 					</div>
 				</div>
-				
+
 				<div class="finance-available" ng-controller="DekopayController">
 					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -209,7 +217,7 @@
 		</div>
 		<div class="related-products-list">
 			<div id="relatedProductData" class="related-product">
-				
+
 			</div>
 
 		</div>
@@ -340,7 +348,7 @@
 	<div class="rating-review-block">
 					<div class="owl-carousel owl-theme slider-review">
 					@include('front.pages.reviews')
-					</div>	
+					</div>
 	</div>
 </div>
 
@@ -425,7 +433,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
 	<script>
 		$(document).ready(function(){
-			
+
 			getCustomFilter();
 
             getRelatedProduct();
@@ -444,7 +452,7 @@
 			});
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
 				getSelectedVariationsData();
-				
+
 			});
 
 		})
@@ -452,8 +460,8 @@
 			$('#finaldiamondprice').text("Pending...");
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 			var variations = [];
-			$('.type-variations-row select').each(function(i, sel){ 
-				
+			$('.type-variations-row select').each(function(i, sel){
+
 				if($(sel).attr('name')!='finger-size')
 					variations.push($(sel).val());
 			});
@@ -472,16 +480,16 @@
 				success: function (res) {
 					if(res.regular_price!='' || res.regular_price!='0.00'){
 						var regular_p = Math.round(res.regular_price_with_vat);
-						
+
 						if(diamond_type=='lab_grown' && regular_p<=3000){
 							regular_p_final = regular_p-(regular_p*0.35);
-							
+
 						}else if(diamond_type=='lab_grown' && regular_p>3000){
-							regular_p_final = regular_p-(regular_p*0.5); 
-							
+							regular_p_final = regular_p-(regular_p*0.5);
+
 						}else{
 							regular_p_final = regular_p;
-							
+
 						}
 						$('#selected_variation_price').val(res.regular_price);
 						$('#selected_final_price').val(Math.round(regular_p_final));
@@ -489,16 +497,16 @@
 					}
 					else{
 						var sale_p = Math.round(res.sale_price_with_vat);
-						
+
 						if(diamond_type=='lab_grown' && sale_p<=3000){
 							sale_p_final = sale_p-(regular_p*0.35);
-							
+
 						}else if(diamond_type=='lab_grown' && sale_p>3000){
-							sale_p_final = sale_p-(sale_p*0.5); 
-							
+							sale_p_final = sale_p-(sale_p*0.5);
+
 						}else{
 							sale_p_final = sale_p;
-							
+
 						}
 						$('#selected_variation_price').val(res.sale_price);
 						$('#selected_final_price').val(Math.round(sale_p_final));
@@ -507,10 +515,10 @@
 
 					if(res.vari_image!='' && res.vari_image!=null){
 						variation_image = data_slug+'/storage/'+res.vari_image;
-						
+
 						var $speed = 0;
 						$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
-						
+
 					}
 				}
 			});
@@ -616,8 +624,8 @@
 			$owl.children().each( function( index ) {
 			  $(this).attr( 'data-position', index ); // NB: .attr() instead of .data()
 			});
-	      $owl.owlCarousel({
-			  //autoplay: true,
+	        $owl.owlCarousel({
+			  autoplay: true,
 			  rewind: true, /* use rewind if you don't want loop */
 			  /*margin: 20,*/
 			   /*
@@ -626,18 +634,16 @@
 			  */
 			  responsiveClass: true,
 			  //autoHeight: true,
-			  //autoplayTimeout: 7000,
+			  autoplayTimeout: 7000,
 			  smartSpeed: 300,
 			  nav: true,
 			  items : 1,
 			});
 
-	      $(document).on('click','.product-gallery__trigger',function(e){
-	      		e.preventDefault();
-	      		$('#carousel-zoom .item:first-child a').click();
-	      });
-
-
+            $(document).on('click','.product-gallery__trigger',function(e){
+                    e.preventDefault();
+                    $('#carousel-zoom .item:first-child a').click();
+            });
 
 	    });
 	</script>
