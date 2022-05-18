@@ -106,7 +106,7 @@ h2,.heading-h-two{font-size:22px}
 .icon-payment img {margin: 0 0 10px 0;}
 .live-diamond-search {padding: 30px 0 0;}
 .diamond-values-in ul li {padding: 2px 2px;}
-.diamond-values-in ul li button {padding: 0 3px;}
+.diamond-values-in ul li button {padding: 0 3px;min-width: 33px; font-size: 12px;}
 .addbasket-req-btns .white-bg-btn {margin: 0 0 10px 0;}
 .account-main-content #orderDataTable_paginate a {margin: 0 10px 10px 0;}
 .scrollable-table {padding-bottom: 30px;}
@@ -289,6 +289,7 @@ h3,.heading-h-three{font-size:28px}
 	.chepaest-lab-left p {font-size: 13px;line-height: 27px;margin: 0 0 10px 0;}
 	.shape-list ul li {flex: 0 0 33%;-ms-flex: 0 0 33%;max-width: 33%;}
 	.diamond-field-labels {font-size: 12px;}
+	.diamond-shapes {align-items: start !important;}
 }
 
 @media(min-width: 1200px) and (max-width: 1420px){
@@ -297,4 +298,8 @@ h3,.heading-h-three{font-size:28px}
 	.chepaest-lab-left h3 {font-size: 23px;margin: 0 0 19px 0;}
 	.main-navigaiton .nav-navbars .level-zero > span > a {padding: 15px 8px;}
 	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {right: -2px;}
+}
+
+@media(max-width:991px){
+	.diamond-field-labels {margin-bottom: 8px;}
 }
