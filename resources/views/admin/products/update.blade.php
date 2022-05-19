@@ -165,12 +165,14 @@
                         <label for="exampleInputFile">Product Gallery</label>
                         @if(isset($getProductData->getProductGallery) && !empty($getProductData->getProductGallery))
                             @foreach($getProductData->getProductGallery as $key => $gallery)
-                                <div class="img_wrp">
-                                    <img src="{{ asset('storage/'.$gallery->image_url) }}" id="imgeremovenew{{$gallery->id}}"  alt=""  class="gallery_image">
-                                    <a href="javascript:void(0);" id="imgeremove{{$gallery->id}}" data-productdt="{{$gallery->product_id}}">
-                                        <img class="close" id="imgeremovenewClose{{$gallery->id}}"  src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
-                                    </a>
-                                </div>
+                                @if(isset($gallery->is_featured) && $gallery->is_featured != 1)
+                                    <div class="img_wrp">
+                                        <img src="{{ asset('storage/'.$gallery->image_url) }}" id="imgeremovenew{{$gallery->id}}"  alt=""  class="gallery_image">
+                                        <a href="javascript:void(0);" id="imgeremove{{$gallery->id}}" data-productdt="{{$gallery->product_id}}">
+                                            <img class="close" id="imgeremovenewClose{{$gallery->id}}"  src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
+                                        </a>
+                                    </div>
+                                @endif
                             @endforeach
                         @endif
                         <div class="input-group">
