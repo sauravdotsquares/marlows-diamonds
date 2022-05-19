@@ -110,7 +110,7 @@
                             @endforeach
                         @endif
 
-						{{-- @if($prodImages)
+						@if($prodImages)
                             @foreach($prodImages as $images)
                                 @php
                                     $explode = explode('/',$images->image_url);
@@ -122,7 +122,7 @@
                                     </a>
                                 </div>
                             @endforeach
-                        @endif --}}
+                        @endif
 					</div>
 					{{-- <div id="carousel" class="owl-carousel">
 

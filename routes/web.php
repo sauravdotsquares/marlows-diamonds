@@ -93,6 +93,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
 			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
 			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
+			Route::post('/products/remove-product-images','ProductController@removeProductImages')->name('remove-product-images');
 
 			// Faqs Route
 			Route::get('/faqs', 'FaqController@index')->name('faqs');
@@ -174,7 +175,7 @@ Route::group(['middleware' => ['customer']], function () {
 		Route::get('/logout-customer', 'LoginController@logout')->name('logout-customer');
 		// Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
 		Route::get('products/checkout/dekopay/{orderId?}', 'DekoPayController@receipt_page')->name('make.dekopay');
-		
+
 	});
 });
 
