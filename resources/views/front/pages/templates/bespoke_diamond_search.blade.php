@@ -630,6 +630,7 @@
 
 		noUiSlider.create(stepsSlider, {
 		    start: [0.3, 2.5],
+            margin: 0.5,
 		    connect: true,
 		    tooltips: [true, wNumb({decimals: 0})],
 		    range: {
