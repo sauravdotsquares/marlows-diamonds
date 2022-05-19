@@ -116,11 +116,13 @@
                                     $explode = explode('/',$images->image_url);
                                     $explode1 = explode('.',$explode[1]);
                                 @endphp
-                                <div class="item">
-                                    <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
-                                        <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
-                                    </a>
-                                </div>
+                                @if(isset($images->is_featured) && $images->is_featured != 1)
+                                    <div class="item">
+                                        <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
+                                            <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
+                                        </a>
+                                    </div>
+                                @endif
                             @endforeach
                         @endif
 					</div>
