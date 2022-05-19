@@ -630,19 +630,12 @@
 
 		noUiSlider.create(stepsSlider, {
 		    start: [0.3, 2.5],
-            step: 0.2, // Slider moves in increments of '10'
-            margin: 1.0, // Handles must be more than '10' apart
 		    connect: true,
-            behaviour: "tap", // Move handle on tap, bar is draggable "drag", "tap", "snap", "fixed"
 		    tooltips: [true, wNumb({decimals: 0})],
 		    range: {
 		        'min': [0.3],
 		        'max': [5]
 		    },
-            // pips: { // Show a scale with the slider
-            //     mode: 'steps',
-            //     density: 0.5
-            // }
 		});
 
 		stepsSlider.noUiSlider.on('update', function (values, handle) {
