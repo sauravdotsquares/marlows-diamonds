@@ -10,6 +10,16 @@
       margin-right: 2px;
       color: black;
    }
+
+   .img_wrp {
+        display: inline-block;
+        position: relative;
+    }
+    .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 </style>
 
 @endsection
@@ -17,7 +27,7 @@
 @section('content')
 
 
-<?php 
+<?php
 
     $cateArray = explode(",",$getProductData->categories);
 
@@ -108,8 +118,8 @@
                            </div>
                         </div>
 
-                        
-                        
+
+
 						      <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Short Description</label>
@@ -134,7 +144,12 @@
                      <div class="form-group">
                         <label for="exampleInputFile">Featured Image</label>
                         @if(isset($getProductData->getProductImages) && !empty($getProductData->getProductImages))
-                            <img src="{{ asset('storage/'.$getProductData->getProductImages->image_url) }}" alt="" class="featured_image">
+                            <div class="img_wrp">
+                                <img src="{{ asset('storage/'.$getProductData->getProductImages->image_url) }}" alt="" id="imgeremovenew{{$gallery->id}}" class="featured_image imgResponsiveMax">
+                                <a href="javascript:void(0);" id="imgeremove{{$getProductData->getProductImages->id}}" data-productdt="{{$getProductData->getProductImages->product_id}}">
+                                    <img class="close" src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
+                                </a>
+                            </div>
                         @endif
                         <div class="input-group">
                            <div class="custom-file">
@@ -150,7 +165,12 @@
                         <label for="exampleInputFile">Product Gallery</label>
                         @if(isset($getProductData->getProductGallery) && !empty($getProductData->getProductGallery))
                             @foreach($getProductData->getProductGallery as $key => $gallery)
-                                <img src="{{ asset('storage/'.$gallery->image_url) }}" alt=""  class="gallery_image">
+                                <div class="img_wrp">
+                                    <img src="{{ asset('storage/'.$gallery->image_url) }}" id="imgeremovenew{{$gallery->id}}"  alt=""  class="gallery_image">
+                                    <a href="javascript:void(0);" id="imgeremove{{$gallery->id}}" data-productdt="{{$gallery->product_id}}">
+                                        <img class="close" src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
+                                    </a>
+                                </div>
                             @endforeach
                         @endif
                         <div class="input-group">
@@ -182,11 +202,11 @@
                                  <label for="status">Product Status</label>
                                  <select id="status" name="status" class="form-control">
                                     <option value="">Select Status</option>
-                                   
+
                                     <option value="1" @if(isset($getProductData->status) && $getProductData->status == 1) selected @endif>Published</option>
 
                                     <option value="0" @if(isset($getProductData->status) && $getProductData->status == 0) selected @endif>Not Published</option>
-                                   
+
                                  </select>
                               </div>
                            </div>
@@ -201,12 +221,12 @@
                                        <option value="">Select Diamond Finder Status</option>
                                        <option value="1" @if(isset($getProductData->dfinder_status) && $getProductData->dfinder_status == 1) selected @endif>Yes</option>
                                        <option value="0" @if(isset($getProductData->dfinder_status) && $getProductData->dfinder_status == 0) selected @endif>No</option>
-                                      
+
                                     </select>
                                  </div>
                               </div>
                            </div>
-                          
+
                            <div class="col-md-6" id="diamond_shape_field"  style="@if(isset($getProductData->dfinder_status) && $getProductData->dfinder_status == 1) display:block @else display:none @endif">
                             <div class="form-group">
                                  <div class="form-label-group">
@@ -220,7 +240,7 @@
                                  </div>
                               </div>
                            </div>
-                           
+
                         </div>
                         <div class="row">
                            <div class="col-md-6">
@@ -228,9 +248,9 @@
                                  <div class="form-label-group">
                                     <select id="is_featured" name="is_featured" class="form-control">
                                        <option value="">Select Featured</option>
-                                       
+
                                        <option value="1"  @if(isset($getProductData->is_featured) && $getProductData->is_featured == 1) selected @endif>Featured</option>
-                                      
+
                                     </select>
                                  </div>
                               </div>
@@ -267,7 +287,7 @@
                      <h3 class="card-title">Product Data</h3>
                   </div>
                   <div class="card-body">
-                    
+
                      <div class="row">
                         <div class="col-5 col-sm-3 prod-data-left-section">
                            <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist"
@@ -315,10 +335,10 @@
                                                 <label for="product_name">Taxable</label>
                                                 <select name="is_taxable" id="is_taxable" class="form-control">
                                                    <option value=""> Select Any</option>
-                                                  
+
                                                       <option value="0" @if($getProductData->is_taxable == 0) selected @endif> Non Taxable</option>
                                                       <option value="1"  @if($getProductData->is_taxable == 1) selected @endif> Taxable</option>
-                                                  
+
                                                 </select>
                                              </div>
                                           </div>
@@ -382,14 +402,14 @@
                                     </div>
                                  </div>
 
-                                 
+
 
                               </div>
                               <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel"
                                  aria-labelledby="vert-tabs-messages-tab">
 
                                  <div id="show_variation">
-                                    
+
 
                                     <div class="accordion variation_section" id="accordionExample">
                                        <div id="item_details" class="attr_section" data-attr-key="0">
@@ -467,10 +487,10 @@
                                                    </div>
                                                 </div>
                                        </div>
-                                       
+
                                     </div>
                                  </div>
-                                 
+
                               </div>
                               <div id="new_item_details" class="new_item_details"></div>
                            </div>
@@ -479,7 +499,7 @@
                         </div>
                      </div>
                   </div>
-                  
+
                </div>
             </div>
             </div>
@@ -505,13 +525,40 @@
 <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
 
 <script>
+
+    $(document).on('click', "[id^=imgeremove]", function () {
+        var index = parseInt($(this).attr("id").replace("imgeremove", ''));
+        console.log(index);
+        console.log($(this).data('productdt'));
+
+        $.ajax({
+            type: 'POST',
+            url: '{{route("admin.remove-product-images")}}',
+            data: {
+                '_token': "{{csrf_token()}}",
+                'productimage': index,
+                'productdt': $(this).data('productdt'),
+            },
+            success: function (res) {
+                if(res.status == 200){
+                    // removed msg
+                    // $(this).closest('.featured_image').css('display','none');
+                    $('#imgeremovenew'+index).remove();
+                    $('#imgeremove'+index).child('img').remove();
+                }
+                // getAttribute();
+                return false;
+            }
+        });
+    });
+
    $('.select2').select2();
 
    $("#tags").val();
 
    $("#tags").tagsinput('items');
 
-   
+
 
    $(function () {
       // Summernote
@@ -521,7 +568,7 @@
       $('#description').summernote({
          height: 200,
       })
-		
+
    });
 
    //validation and form submission function here
@@ -568,6 +615,8 @@
       });
    }
 
+
+
    $(document).on('change', "[id^=attributevari]", function () {
       var index = parseInt($(this).attr("id").replace("attributevari", ''));
       // let changeText = $(this).data('name').replace(/ /g, "_");
@@ -598,7 +647,7 @@
          let changeTextArray = $(document).find('#attributevari'+value.id).data('value').split('|');
          let changeTextName = $(document).find('#attributevari'+value.id).data('name');
          // $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
-         
+
          if ($(document).find('#attributevari'+value.id).prop('checked') == true) {
             $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
             $.each(changeTextArray, function (key, value) {
@@ -622,7 +671,7 @@
          let changeTextArray = $(document).find('#attributevari'+value.id).data('value').split('|');
          let changeTextName = $(document).find('#attributevari'+value.id).data('name');
          // $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
-         
+
          if ($(document).find('#attributevari'+value.id).prop('checked') == true) {
             $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
             $.each(changeTextArray, function (key, value) {
@@ -638,7 +687,7 @@
    }
 
    // $("#addVariationClone").on('click',function(){
-      
+
    // });
 
 
@@ -662,7 +711,7 @@
 
 
    $('#variationData').on('click',function(){
-      
+
       $.ajax({
          type: 'POST',
          url: '{{asset("admin/get-product-details-variation")}}',
@@ -671,15 +720,15 @@
             'id': '{{$getProductData->id}}',
          },
          success: function (res) {
-           
+
             if(res.length>0){
                $( ".variation_section").html("");
                $.each( res, function( i ,val) {
                  $( ".variation_section").append(val);
                });
             }
-            
-            
+
+
          }
       })
    });
@@ -701,7 +750,7 @@
                'var_id': var_id,
             },
             success: function (res) {
-              
+
               $("#item_details"+key).remove();
             }
          })
@@ -728,7 +777,7 @@
          button.appendTo('.variation_section');
          button.attr('id', 'item_details' + attr_key);
          button.attr('data-attr-key', attr_key);
-         
+
          button.find('.vari_add_update').attr('id','is_update_'+attr_key);
          button.find('input').each(function() {
                const fieldname = $(this).attr('data-field');
@@ -754,7 +803,7 @@
       });
       $(document).on('click','.remove',function(e){
          $(this).remove();
-         
+
          e.preventDefault();
       });
       $("#dfinder_status").on('change',function(){

@@ -429,4 +429,12 @@ class ProductController extends Controller
         }
         return $variationArray;
     }
+
+    public function removeProductImages(Request $request)
+    {
+        $productDetails = ProductImages::where('id',$request->productimage)->delete();
+
+        return response()->json(['status'=>200,'msg'=>"Removed!!!"]);
+
+    }
 }
