@@ -145,9 +145,9 @@
                         <label for="exampleInputFile">Featured Image</label>
                         @if(isset($getProductData->getProductImages) && !empty($getProductData->getProductImages))
                             <div class="img_wrp">
-                                <img src="{{ asset('storage/'.$getProductData->getProductImages->image_url) }}" alt="" id="imgeremovenew{{$gallery->id}}" class="featured_image imgResponsiveMax">
+                                <img src="{{ asset('storage/'.$getProductData->getProductImages->image_url) }}" alt="" id="imgeremovenew{{$getProductData->getProductImages->id}}" class="featured_image imgResponsiveMax">
                                 <a href="javascript:void(0);" id="imgeremove{{$getProductData->getProductImages->id}}" data-productdt="{{$getProductData->getProductImages->product_id}}">
-                                    <img class="close" src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
+                                    <img class="close" src="{{asset('admin\dist\img\cross.png')}}" id="imgeremovenewClose{{$getProductData->getProductImages->id}}" height="10" width="10" />
                                 </a>
                             </div>
                         @endif
@@ -168,7 +168,7 @@
                                 <div class="img_wrp">
                                     <img src="{{ asset('storage/'.$gallery->image_url) }}" id="imgeremovenew{{$gallery->id}}"  alt=""  class="gallery_image">
                                     <a href="javascript:void(0);" id="imgeremove{{$gallery->id}}" data-productdt="{{$gallery->product_id}}">
-                                        <img class="close" src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
+                                        <img class="close" id="imgeremovenewClose{{$gallery->id}}"  src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
                                     </a>
                                 </div>
                             @endforeach
@@ -528,9 +528,6 @@
 
     $(document).on('click', "[id^=imgeremove]", function () {
         var index = parseInt($(this).attr("id").replace("imgeremove", ''));
-        console.log(index);
-        console.log($(this).data('productdt'));
-
         $.ajax({
             type: 'POST',
             url: '{{route("admin.remove-product-images")}}',
@@ -542,9 +539,8 @@
             success: function (res) {
                 if(res.status == 200){
                     // removed msg
-                    // $(this).closest('.featured_image').css('display','none');
                     $('#imgeremovenew'+index).remove();
-                    $('#imgeremove'+index).child('img').remove();
+                    $('#imgeremovenewClose'+index).remove();
                 }
                 // getAttribute();
                 return false;
