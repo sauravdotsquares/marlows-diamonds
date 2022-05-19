@@ -633,7 +633,7 @@
             step: 0.2, // Slider moves in increments of '10'
             margin: 1.0, // Handles must be more than '10' apart
 		    connect: true,
-            behaviour: "fixed", // Move handle on tap, bar is draggable "drag", "tap", "snap", "fixed"
+            behaviour: "drag", // Move handle on tap, bar is draggable "drag", "tap", "snap", "fixed"
 		    tooltips: [true, wNumb({decimals: 0})],
 		    range: {
 		        'min': [0.3],
