@@ -639,10 +639,10 @@
 		        'min': [0.3],
 		        'max': [5]
 		    },
-            // pips: { // Show a scale with the slider
-            //     mode: 'steps',
-            //     density: 0.2
-            // }
+            pips: { // Show a scale with the slider
+                mode: 'steps',
+                density: 0.5
+            }
 		});
 
 		stepsSlider.noUiSlider.on('update', function (values, handle) {
