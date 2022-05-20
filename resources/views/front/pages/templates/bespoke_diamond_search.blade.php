@@ -4,6 +4,24 @@
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+
+<style>
+    .ui-slider-handle{
+        width: 35px !important;
+        font-size: small !important;
+        color: #FF0000 !important;
+        text-align: center !important;
+    }
+
+    .ui-slider .ui-slider-handle{
+        height: 1.5em; color: #8e2e65 !important;}
+.ui-widget-header{background: #8e2e65 !important;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{
+    border-color: #8e2e65 !important; outline: none; box-shadow: none; background: #fff !important;
+    }
+</style>
+
 @endsection
 <div class="perfect-certified-wrap" id="diamondMainController" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()"  ng-cloak>
 	<div class="container">
@@ -110,9 +128,12 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="range_carat_wap">
-										<div id="range-slider"></div>
-										<input type="hidden" id="input-carat-min" name="carat">
-										<input type="hidden" id="input-carat-max" name="carat-max">
+                                        <div id="slider"></div>
+                                        {{-- <div id="min"></div>
+                                        <div id="max"></div> --}}
+										{{-- <div id="range-slider"></div> --}}
+										<input type="hidden" class="sliderValue" data-index="0" value="0.5" id="input-carat-min" name="carat">
+										<input type="hidden" class="sliderValue" data-index="1" value="2.3" id="input-carat-max" name="carat-max">
 									 </div>
 									<div class="diamond-filter-quote">
 										<div class="quote-icon-pop">
@@ -610,41 +631,110 @@
 				</div>
 		</div>
       </div>
-
     </div>
-  </div>
 </div>
+</div>
+
+
 
 
 <!-- Modal -->
 @section('js')
-<script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script>
+{{-- <script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <script type="text/javascript">
+
+
+
+
     jQuery(document).ready(function($){
+        // $('#slider .ui-corner-all:first-child').text('0.3');
+
+
+        $("#slider").slider({
+            range: true,
+            min: 0.3,
+            max: 5.0,
+            step: 0.1,
+            values: [0.3, 2.5],
+            slide: function(event, ui) {
+
+
+
+                for (var i = 0; i < ui.values.length; ++i) {
+                    // console.log('Checking');
+                    $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
+                }
+
+
+
+            },
+            change: function(){
+
+                var value1 = $("#slider").slider("values", 0);
+                var value2 = $("#slider").slider("values", 1);
+                $("#slider").find(".ui-slider-handle:first").text(value1);
+                $("#slider").find(".ui-slider-handle:last").text(value2);
+
+                angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
+            },
+        });
+
+        // $('#min').html('$' + $('#slider').slider('values', 0)).position({
+        //     my: 'center top',
+        //     at: 'center bottom',
+        //     of: $('#slider a:eq(0)'),
+        //     offset: "0, 10"
+        // });
+
+        // $('#max').html('$' + $('#slider').slider('values', 1)).position({
+        //     my: 'center top',
+        //     at: 'center bottom',
+        //     of: $('#slider a:eq(1)'),
+        //     offset: "0, 10"
+        // });
+
+        // $("#input-carat-min").change(function() {
+        //     console.log("Testing ");
+        //     var $this = $(this);
+        //     $("#slider").slider("values", $this.data("index"), $this.val());
+        // });
+
+
+
 		var stepsSlider = document.getElementById('range-slider');
 		var input0 = document.getElementById('input-carat-min');
 		var input1 = document.getElementById('input-carat-max');
 		var inputs = [input0, input1];
 
-		noUiSlider.create(stepsSlider, {
-		    start: [0.3, 2.5],
-		    connect: true,
-		    tooltips: [true, wNumb({decimals: 0})],
-		    range: {
-		        'min': [0.3],
-		        'max': [5]
-		    },
-		});
+		// noUiSlider.create(stepsSlider, {
+		//     start: [0.3, 2.5],
+		//     connect: true,
+        //     behavior:'fixed',
+		//     tooltips: [true, wNumb({decimals: 0})],
+		//     range: {
+		//         'min': [0.3],
+		//         'max': [5]
+		//     },
+		// });
+        //input-carat-min
+        //input-carat-max
+        // $('#input-carat-min').on('change',function(){
+        //     console.log($(this).val().trigger('change'));
+        // });
+        // $('#input-carat-max').on('change',function(){
+        //     console.log($(this).val().trigger('change'));
+        // });
 
-		stepsSlider.noUiSlider.on('update', function (values, handle) {
-		    inputs[handle].value = values[handle];
-			//jQuery(".search-button button").trigger('click');
-		});
-		stepsSlider.noUiSlider.on('change', function (values, handle) {
-		    angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
-		});
+		// stepsSlider.noUiSlider.on('update', function (values, handle) {
+		//     inputs[handle].value = values[handle];
+		// 	//jQuery(".search-button button").trigger('click');
+		// });
+		// stepsSlider.noUiSlider.on('change', function (values, handle) {
+		//     angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
+		// });
 
         $(document).on('click','input[type="checkbox"]',function(){
 			if($(this).is(":checked")==true){
