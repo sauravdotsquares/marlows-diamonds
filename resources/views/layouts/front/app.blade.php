@@ -32,9 +32,15 @@
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
+    <style type="text/css">
+      [ng-cloak]
+      {
+        display: none !important;
+      }
+    </style>
 
 </head>
-<body ng-app="MarlowsAPP" ng-cloak>
+<body ng-app="MarlowsAPP">
     @include('layouts.front.header')
 
     @if(session('success'))
