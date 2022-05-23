@@ -34,7 +34,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
 
 </head>
-<body ng-app="MarlowsAPP">
+<body ng-app="MarlowsAPP" ng-cloak>
     @include('layouts.front.header')
 
     @if(session('success'))
