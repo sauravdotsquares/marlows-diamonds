@@ -651,7 +651,9 @@
 
     jQuery(document).ready(function($){
         // $('#slider .ui-corner-all:first-child').text('0.3');
-
+        $(".ma-info-icon").click(function(){
+			$(this).next(".m-quote-pop").toggle();
+		});
 
         $("#slider").slider({
             range: true,
