@@ -17,4 +17,5 @@ yarn-error.log
 /.idea
 /.vscode
 composer.lock
+/public/robots.txt
 robots.txt
