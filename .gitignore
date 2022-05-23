@@ -1,6 +1,5 @@
 /node_modules
 /public/hot
-/public/robots.txt
 /public/storage
 /public/uploads
 /public/images
@@ -18,3 +17,5 @@ yarn-error.log
 /.idea
 /.vscode
 composer.lock
+/public/robots.txt
+robots.txt
