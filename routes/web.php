@@ -95,7 +95,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
 			Route::post('/products/remove-product-images','ProductController@removeProductImages')->name('remove-product-images');
 
-			// Faqs Route
+			// Faqs Route list
 			Route::get('/faqs', 'FaqController@index')->name('faqs');
 			Route::get('/faqs/create', 'FaqController@create')->name('create');
 			Route::post('/faqs/add', 'FaqController@add')->name('add');
