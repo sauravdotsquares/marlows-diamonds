@@ -1,3 +1,4 @@
+@inject('header_settings', 'App\Models\Settings')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +39,8 @@
         display: none !important;
       }
     </style>
-
+    {!!$header_settings->get_options('google_tag_manager_code')!!}
+    {!!$header_settings->get_options('google_analytics_code')!!}
 </head>
 <body ng-app="MarlowsAPP">
     @include('layouts.front.header')
