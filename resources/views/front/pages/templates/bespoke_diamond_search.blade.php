@@ -643,13 +643,37 @@
 {{-- <script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
 <script type="text/javascript">
 
+function touchHandler(event) {
+    var touch = event.changedTouches[0];
 
+    var simulatedEvent = document.createEvent("MouseEvent");
+        simulatedEvent.initMouseEvent({
+        touchstart: "mousedown",
+        touchmove: "mousemove",
+        touchend: "mouseup"
+    }[event.type], true, true, window, 1,
+        touch.screenX, touch.screenY,
+        touch.clientX, touch.clientY, false,
+        false, false, false, 0, null);
+
+    touch.target.dispatchEvent(simulatedEvent);
+    event.preventDefault();
+}
 
 
     jQuery(document).ready(function($){
+
+        function init() {
+            document.addEventListener("touchstart", touchHandler, true);
+            document.addEventListener("touchmove", touchHandler, true);
+            document.addEventListener("touchend", touchHandler, true);
+            document.addEventListener("touchcancel", touchHandler, true);
+        }
+
         // $('#slider .ui-corner-all:first-child').text('0.3');
         $(".ma-info-icon").click(function(){
 			$(this).next(".m-quote-pop").toggle();
@@ -682,6 +706,11 @@
 
                 angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
             },
+        });
+
+        $("#slider").draggable({
+            axis: "x",
+            containment: "parent"
         });
 
         // $('#min').html('$' + $('#slider').slider('values', 0)).position({
