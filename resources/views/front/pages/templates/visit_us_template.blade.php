@@ -71,12 +71,19 @@
 							</div>
 							@endif
 						</div>
-						<div class="google-capatcha">
-
+						<div class="google-capatcha form-controls">
+						<div class="g-recaptcha" name="g-recaptcha-response" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
+						</div>
+						@if ($errors->has('g-recaptcha-response'))
+							<div class="error">
+								{{ $errors->first('g-recaptcha-response') }}
+							</div>
+							@endif	
 						</div>
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
+						
 					</form>
 					<div class="visitform-text">
 						Your information will <b>NOT</b> be used by third-parties for marketing. Please see our <u><a href="/privacy-policy">privacy policy</a></u> for more information.
@@ -112,6 +119,16 @@ $(document).ready(function() {
     $(".dc-11").removeClass("open");
   });
 });
+</script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script>
+         grecaptcha.ready(function() {
+             grecaptcha.execute('6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN', {action: 'contact'}).then(function(token) {
+                if (token) {
+                  document.getElementById('recaptcha').value = token;
+                }
+             });
+         });
 </script>
 <style>
 .outer-block {
