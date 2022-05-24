@@ -33,7 +33,7 @@
 	</div>
 </div>
 <div class="ajax-load text-center" style="display:none">
-	<p><img src="https://www.marlows-diamonds.co.uk/wp-content/plugins/ajax-load-more/core/img/spinner-ring.gif">Loading More post</p>
+	<p><img src="/images/spinner.gif">Loading More post</p>
 </div>
 <!-- Section Reviews -->
 <div class="container">
