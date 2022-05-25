@@ -29,6 +29,8 @@
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/responsive.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
+
+
     @yield('css')
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
@@ -41,16 +43,6 @@
     </style>
     {!!$header_settings->get_options('google_tag_manager_code')!!}
     {!!$header_settings->get_options('google_analytics_code')!!}
-
-    <style type="text/css">
-      @font-face{font-family:'Playfair Display';src:url('../fonts/PlayfairDisplay-Bold.eot');src:url('../fonts/PlayfairDisplay-Bold.eot?#iefix') format('embedded-opentype'),url('../fonts/PlayfairDisplay-Bold.woff2') format('woff2'),url('../fonts/PlayfairDisplay-Bold.woff') format('woff'),url('../fonts/PlayfairDisplay-Bold.ttf') format('truetype'),url('../fonts/PlayfairDisplay-Bold.svg#PlayfairDisplay-Bold') format('svg');font-weight:bold;font-style:normal;font-display:swap}
-    @font-face{font-family:'Playfair Display';src:url('../fonts/PlayfairDisplay-Regular.eot');src:url('../fonts/PlayfairDisplay-Regular.eot?#iefix') format('embedded-opentype'),url('../fonts/PlayfairDisplay-Regular.woff2') format('woff2'),url('../fonts/PlayfairDisplay-Regular.woff') format('woff'),url('../fonts/PlayfairDisplay-Regular.ttf') format('truetype'),url('../fonts/PlayfairDisplay-Regular.svg#PlayfairDisplay-Regular') format('svg');font-weight:normal;font-style:normal;font-display:swap}
-    @font-face{font-family:'Lato';src:url('../fonts/Lato-Bold.eot');src:url('../fonts/Lato-Bold.eot?#iefix') format('embedded-opentype'),url('../fonts/Lato-Bold.woff2') format('woff2'),url('../fonts/Lato-Bold.woff') format('woff'),url('../fonts/Lato-Bold.ttf') format('truetype'),url('../fonts/Lato-Bold.svg#Lato-Bold') format('svg');font-weight:bold;font-style:normal;font-display:swap}
-    @font-face{font-family:'Lato';src:url('../fonts/Lato-Regular.eot');src:url('../fonts/Lato-Regular.eot?#iefix') format('embedded-opentype'),url('../fonts/Lato-Regular.woff2') format('woff2'),url('../fonts/Lato-Regular.woff') format('woff'),url('../fonts/Lato-Regular.ttf') format('truetype'),url('../fonts/Lato-Regular.svg#Lato-Regular') format('svg');font-weight:normal;font-style:normal;font-display:swap}
-
-
-    </style>
-
 
 </head>
 <body ng-app="MarlowsAPP">
