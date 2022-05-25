@@ -128,12 +128,27 @@
 							<div class="diamond-field-contens col-lg-9">
 								<div class="diamond-field-inner-bar">
 									<div class="range_carat_wap">
+
+                                        <div class="srchniput-fil">
+                                            <div class="minrange">
+												<span>Min Carat</span>
+												<input id="sliderRangeSetMin" disabled data-index="0" class="sliderValue" value="0.5"/>
+											</div>
+                                            <div class="maxrange">
+											<span>Max Carat</span>
+												<input id="sliderRangeSetMax" disabled data-index="1" class="sliderValue" value="2.5"/>
+											</div>
+                                        </div>
+
                                         <div id="slider"></div>
+
                                         {{-- <div id="min"></div>
                                         <div id="max"></div> --}}
 										{{-- <div id="range-slider"></div> --}}
-										<input type="hidden" class="sliderValue" data-index="0" value="0.5" id="input-carat-min" name="carat">
-										<input type="hidden" class="sliderValue" data-index="1" value="2.3" id="input-carat-max" name="carat-max">
+                                            <div class="srchniput-fil">
+                                                <input type="hidden" class="sliderValue" data-index="0" value="0.5" id="input-carat-min" name="carat">
+                                                <input type="hidden" class="sliderValue" data-index="1" value="2.5" id="input-carat-max" name="carat-max">
+										    </div>
 									 </div>
 									<div class="diamond-filter-quote">
 										<div class="quote-icon-pop">
@@ -647,22 +662,22 @@
 
 <script type="text/javascript">
 
-function touchHandler(event) {
-    var touch = event.changedTouches[0];
+    function touchHandler(event) {
+        var touch = event.changedTouches[0];
 
-    var simulatedEvent = document.createEvent("MouseEvent");
-        simulatedEvent.initMouseEvent({
-        touchstart: "mousedown",
-        touchmove: "mousemove",
-        touchend: "mouseup"
-    }[event.type], true, true, window, 1,
-        touch.screenX, touch.screenY,
-        touch.clientX, touch.clientY, false,
-        false, false, false, 0, null);
+        var simulatedEvent = document.createEvent("MouseEvent");
+            simulatedEvent.initMouseEvent({
+            touchstart: "mousedown",
+            touchmove: "mousemove",
+            touchend: "mouseup"
+        }[event.type], true, true, window, 1,
+            touch.screenX, touch.screenY,
+            touch.clientX, touch.clientY, false,
+            false, false, false, 0, null);
 
-    touch.target.dispatchEvent(simulatedEvent);
-    event.preventDefault();
-}
+        touch.target.dispatchEvent(simulatedEvent);
+        event.preventDefault();
+    }
 
 
     jQuery(document).ready(function($){
@@ -684,9 +699,12 @@ function touchHandler(event) {
             min: 0.3,
             max: 5.0,
             step: 0.1,
-            values: [0.3, 2.5],
+            values: [0.5, 2.5],
             slide: function(event, ui) {
-
+                var value1 = $("#slider").slider("values", 0);
+                var value2 = $("#slider").slider("values", 1);
+                $("#sliderRangeSetMin").val(value1);
+                $("#sliderRangeSetMax").val(value2);
 
 
                 for (var i = 0; i < ui.values.length; ++i) {
@@ -694,46 +712,29 @@ function touchHandler(event) {
                     $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
                 }
 
-
-
             },
             change: function(){
 
                 var value1 = $("#slider").slider("values", 0);
                 var value2 = $("#slider").slider("values", 1);
-                $("#slider").find(".ui-slider-handle:first").text(value1);
-                $("#slider").find(".ui-slider-handle:last").text(value2);
+                // $("#slider").find(".ui-slider-handle:first").text(value1);
+                // $("#slider").find(".ui-slider-handle:last").text(value2);
 
                 angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
             },
         });
 
-        $("#slider").draggable({
-            axis: "x",
-            containment: "parent"
+        $("#sliderRangeSetMin").change(function (event) {
+            var value1 = parseFloat($("#sliderRangeSetMin").val());
+            var highVal = value1 * 2;
+            $("#slider").slider("option", {"max": highVal, "value": value1});
         });
 
-        // $('#min').html('$' + $('#slider').slider('values', 0)).position({
-        //     my: 'center top',
-        //     at: 'center bottom',
-        //     of: $('#slider a:eq(0)'),
-        //     offset: "0, 10"
-        // });
-
-        // $('#max').html('$' + $('#slider').slider('values', 1)).position({
-        //     my: 'center top',
-        //     at: 'center bottom',
-        //     of: $('#slider a:eq(1)'),
-        //     offset: "0, 10"
-        // });
-
-        // $("#input-carat-min").change(function() {
-        //     console.log("Testing ");
-        //     var $this = $(this);
-        //     $("#slider").slider("values", $this.data("index"), $this.val());
-        // });
-
-
+        $("#sliderRangeSetMax").change(function (event) {
+            var value1 = parseFloat($("#sliderRangeSetMax").val());
+            var highVal = value1 * 2;
+            $("#slider").slider("option", {"max": highVal, "value": value1});
+        });
 
 		var stepsSlider = document.getElementById('range-slider');
 		var input0 = document.getElementById('input-carat-min');
