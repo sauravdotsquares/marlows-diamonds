@@ -130,8 +130,14 @@
 									<div class="range_carat_wap">
 
                                         <div class="srchniput-fil">
-                                            <input id="sliderRangeSetMin" class="sliderValue" value="0.5"/>
-                                            <input id="sliderRangeSetMax" class="sliderValue" value="2.5"/>
+                                            <div class="minrange">
+												<span>Min Carat</span>
+												<input id="sliderRangeSetMin" class="sliderValue" value="0.5"/>
+											</div>
+                                            <div class="maxrange">
+											<span>Max Carat</span>
+												<input id="sliderRangeSetMax" class="sliderValue" value="2.5"/>
+											</div>
                                         </div>
 
                                         <div id="slider"></div>
