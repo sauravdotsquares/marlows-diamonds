@@ -129,6 +129,8 @@
 								<div class="diamond-field-inner-bar">
 									<div class="range_carat_wap">
                                         <div id="slider"></div>
+                                        <input id="sliderRangeSetMin" value="0.5"/>
+                                        <input id="sliderRangeSetMax" value="2.5"/>
                                         {{-- <div id="min"></div>
                                         <div id="max"></div> --}}
 										{{-- <div id="range-slider"></div> --}}
@@ -684,9 +686,12 @@ function touchHandler(event) {
             min: 0.3,
             max: 5.0,
             step: 0.1,
-            values: [0.3, 2.5],
+            values: [0.5, 2.5],
             slide: function(event, ui) {
-
+                var value1 = $("#slider").slider("values", 0);
+                var value2 = $("#slider").slider("values", 1);
+                $("#sliderRangeSetMin").val(value1);
+                $("#sliderRangeSetMax").val(value2);
 
 
                 for (var i = 0; i < ui.values.length; ++i) {
@@ -694,24 +699,30 @@ function touchHandler(event) {
                     $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
                 }
 
-
-
             },
             change: function(){
 
                 var value1 = $("#slider").slider("values", 0);
                 var value2 = $("#slider").slider("values", 1);
-                $("#slider").find(".ui-slider-handle:first").text(value1);
-                $("#slider").find(".ui-slider-handle:last").text(value2);
+                // $("#slider").find(".ui-slider-handle:first").text(value1);
+                // $("#slider").find(".ui-slider-handle:last").text(value2);
 
                 angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
             },
         });
 
-        $("#slider").draggable({
-            axis: "x",
-            containment: "parent"
+        $("#sliderRangeSetMin").change(function (event) {
+            var value1 = parseFloat($("#sliderRangeSetMin").val());
+            var highVal = value1 * 2;
+            $("#slider").slider("option", {"max": highVal, "value": value1});
         });
+
+        $("#sliderRangeSetMax").change(function (event) {
+            var value1 = parseFloat($("#sliderRangeSetMax").val());
+            var highVal = value1 * 2;
+            $("#slider").slider("option", {"max": highVal, "value": value1});
+        });
+
 
         // $('#min').html('$' + $('#slider').slider('values', 0)).position({
         //     my: 'center top',
