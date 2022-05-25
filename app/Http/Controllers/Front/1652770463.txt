@@ -1,0 +1,6 @@
+Array
+(
+    [token] => 458fe1f2160c4f4901af55d503fad740
+    [statmentref] => VLS for Close Brothers Ltd
+    [retaileruniqueref] => kkfghghghg
+)
