@@ -132,11 +132,11 @@
                                         <div class="srchniput-fil">
                                             <div class="minrange">
 												<span>Min Carat</span>
-												<input id="sliderRangeSetMin" class="sliderValue" value="0.5"/>
+												<input id="sliderRangeSetMin" disabled data-index="0" class="sliderValue" value="0.5"/>
 											</div>
                                             <div class="maxrange">
 											<span>Max Carat</span>
-												<input id="sliderRangeSetMax" class="sliderValue" value="2.5"/>
+												<input id="sliderRangeSetMax" disabled data-index="1" class="sliderValue" value="2.5"/>
 											</div>
                                         </div>
 
@@ -147,7 +147,7 @@
 										{{-- <div id="range-slider"></div> --}}
                                             <div class="srchniput-fil">
                                                 <input type="hidden" class="sliderValue" data-index="0" value="0.5" id="input-carat-min" name="carat">
-                                                <input type="hidden" class="sliderValue" data-index="1" value="2.3" id="input-carat-max" name="carat-max">
+                                                <input type="hidden" class="sliderValue" data-index="1" value="2.5" id="input-carat-max" name="carat-max">
 										    </div>
 									 </div>
 									<div class="diamond-filter-quote">
