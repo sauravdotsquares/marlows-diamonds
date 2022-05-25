@@ -407,8 +407,14 @@
 							</div>
 							@endif
 						</div>
-						<div class="google-capatcha">
-
+						<div class="google-capatcha form-controls">
+						<div class="g-recaptcha" name="g-recaptcha-response" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
+						</div>
+						@if ($errors->has('g-recaptcha-response'))
+							<div class="error">
+								{{ $errors->first('g-recaptcha-response') }}
+							</div>
+							@endif	
 						</div>
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
@@ -649,5 +655,5 @@
 
 	    });
 	</script>
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection
