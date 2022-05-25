@@ -307,7 +307,7 @@
 							effective way that is available online and easy to use, should you have any complaints
 							please contact us on 0121-236-4415 or email on hello@marlows-diamonds.co.uk
 							<div class="vew-tc-btn">
-								<a class="btn-bg-small" href="#">View T&C's</a>
+								<a class="btn-bg-small" href="/terms">View T&C's</a>
 							</div>
 						</div>
 					</div>

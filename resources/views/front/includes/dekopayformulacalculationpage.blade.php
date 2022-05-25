@@ -89,7 +89,7 @@
                             </li>
                         </ul>
                         <p class="finance_options_provided">Finance options powered by <img
-                                src="https://www.marlows-diamonds.co.uk/wp-content/themes/betheme-child//images/Deko_landscape_colour_whiteBG200px_wide.png"
+                                src="/images/Deko_landscape_colour_whiteBG200px_wide.png"
                                 style="height:25px;" class="nolazy" alt="DEKO"></p>
 
                         <input type="hidden" id="enableId" value="OCFDefault"> <br>
