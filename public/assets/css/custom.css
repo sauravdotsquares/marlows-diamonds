@@ -550,7 +550,8 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-filter-in input {width: 100%;}
 .quote-icon-pop .ma-info-icon img {max-width: 25px;}
 .quote-icon-pop {text-align: right; position: relative;}
-.m-quote-pop {position: absolute;background: #fff;text-align: left;box-shadow: 0 0 10px 6px rgba(0,0,0,.1);border-radius: 6px;width: 300px;right: -50px;padding: 12px 13px;bottom: 50px; display: none;}
+.m-quote-pop {position: absolute;background: #fff;text-align: left;box-shadow: 0 0 10px 6px rgba(0,0,0,.1);border-radius: 6px;width: 300px;right: -50px;padding: 12px 13px;bottom: 50px; display: none; 
+z-index: 11;}
 .diamond-values-in ul {display: flex;list-style: none; flex-wrap: wrap;}
 .diamond-values-in ul li{padding: 2px 4px;}
 .diamond-values-in ul li button {width:100%;text-decoration: none;border: 1px solid #EBEBEB;padding: 0 6px;height: 38px;display: block;line-height: 38px;background: #f9f9f9;color: #9a9a9a;font-size: 11px;margin: 0 3px 0 0; position: relative;}
@@ -933,6 +934,17 @@ a[disabled="disabled"] {pointer-events: none;}
 
 .checkcart-item dl dd a {text-decoration: none;color: #8E2E65;}
 .category-list-wrap h2 { font-size: 25px;}
+.srchniput-fil {
+	display: flex;
+	column-gap: 10px;
+	margin: 18px 0 0 0;
+}
+.srchniput-fil input {
+	height: 44px;
+	text-align: center;
+	width: 100%;
+}
+
 
 /** mega menuhover for desktop **/
 @media(min-width:1024px){

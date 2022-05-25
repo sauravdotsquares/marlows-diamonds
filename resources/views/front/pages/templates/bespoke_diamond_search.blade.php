@@ -134,8 +134,10 @@
                                         {{-- <div id="min"></div>
                                         <div id="max"></div> --}}
 										{{-- <div id="range-slider"></div> --}}
+										<div class="srchniput-fil">
 										<input type="hidden" class="sliderValue" data-index="0" value="0.5" id="input-carat-min" name="carat">
 										<input type="hidden" class="sliderValue" data-index="1" value="2.3" id="input-carat-max" name="carat-max">
+										</div>
 									 </div>
 									<div class="diamond-filter-quote">
 										<div class="quote-icon-pop">
