@@ -193,10 +193,10 @@
                                     @guest
                                     <div class="checkout-create-account">
                                         <div class="create-account-checkbox">
-                                            <input type="checkbox" checked>
+                                            <input type="checkbox" id="showRegisterDiv" name="showregistercheck">
                                             <label>Create an Account?</label>
                                         </div>
-                                        <div class="create-account-fields">
+                                        <div class="create-account-fields showregisterform" style="display: none;">
                                             <div class="checkout-form-group">
                                                 <label class="input-label">Account username<abbr
                                                         class="required">*</abbr></label>
@@ -323,6 +323,10 @@
             $(".checkout-login-form").toggle(200);
         });
 
+        $('#showRegisterDiv').on('change',function(){
+            $('.showregisterform').toggle();
+        });
+
         $('input[type=radio][name=payment_type]').on('change', function() {
             $('#selected_payment_type').val($(this).val());
             switch ($(this).val()) {
@@ -337,16 +341,16 @@
             }
         });
 
-        $('#cust_email').on('blur',function(){
-            var data = '{!! isset(auth()->user()->email)?auth()->user()->email:'' !!}';
-            if(data){
-                //console.log("if");
-            }else{
-                if($(this).val() != ''){
-                    getEmailCheck();
-                }
-            }
-        });
+        // $('#cust_email').on('blur',function(){
+        //     var data = '{!! isset(auth()->user()->email)?auth()->user()->email:'' !!}';
+        //     if(data){
+        //         //console.log("if");
+        //     }else{
+        //         if($(this).val() != ''){
+        //             getEmailCheck();
+        //         }
+        //     }
+        // });
 
     });
 
