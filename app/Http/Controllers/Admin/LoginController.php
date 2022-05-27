@@ -58,6 +58,7 @@ class LoginController extends Controller
 
         $details = $request->only('email', 'password');
         $details['is_active'] = 1;
+        $details['user_role'] = 1;
         if (auth()->guard('employee')->attempt($details)) {
             if(Auth::attempt($details, true)){
 
