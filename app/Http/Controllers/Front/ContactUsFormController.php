@@ -34,7 +34,7 @@ class ContactUsFormController extends Controller {
             'phone' => $request->get('phone'),
             'user_query' => $request->get('description'),
         ), function($message) use ($request,$admin_email ){
-            $message->from('ds19@24livehost.com');
+            $message->from('hello@marlows-diamonds.co.uk');
 			$message->to($admin_email, 'Admin')->subject('NEED ASSISTANCE?');
         });
         return back()->with('success', 'We have received your message and would like to thank you for writing to us.');

@@ -66,7 +66,7 @@ class OrderController extends Controller
 			
             
         ), function($message) use ($request,$admin_email ){	
-			$message->from('ds19@24livehost.com');
+			$message->from('hello@marlows-diamonds.co.uk');
 			$message->to($admin_email, 'Admin')->subject('Order Status');
 			$message->cc($request['customer_email'], 'Customer')->subject('Order Status');
 			

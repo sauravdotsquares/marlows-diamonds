@@ -619,7 +619,7 @@
                 success: function (res) {
 
 					$('#filterDataDesign .type-variations-row').html(res);
-                    getProdVideo();
+                    //getProdVideo();
 
                 }
             });
