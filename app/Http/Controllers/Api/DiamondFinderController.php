@@ -71,7 +71,7 @@ class DiamondFinderController
         }
         //echo '<pre>'; print_r($hkData); die;
         //echo $hkData['current_page'];
-        $rapnetData = getRapnetApiRecords($data,$hkData['current_page']);
+        $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
         //echo '<pre>'; print_r($rapnetData); die;
 
         $rapnetRecords = [];
@@ -99,7 +99,7 @@ class DiamondFinderController
     					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$result->CertificateNumber.'&weight='.$result->Weight;
     				}
     				else {
-    					$rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID;	
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID;
     				}
 
 	        }
@@ -110,7 +110,7 @@ class DiamondFinderController
 
         $hkData['VAT'] = getVAT();
         $hkData['firstDiamondAmount'] = $hkData['data'][0]['Amount'];
-       // $hkData = 
+       // $hkData =
 		return response($hkData);
     }
 
