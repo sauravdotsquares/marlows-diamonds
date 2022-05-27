@@ -739,6 +739,7 @@
 						$('#addtobasket').removeClass('disabledAnchor');
                     }else{
                         $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
+                        $('#refineSearchData').html("No Data Found");
                         // $('#finaldiamondprice').text('Sorry we have no diamonds matching your selection.');
                         $('#selected_final_price').val('');
 						$('#selected_diamond_price').val('');

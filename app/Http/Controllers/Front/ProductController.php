@@ -62,7 +62,7 @@ class ProductController extends Controller
             $getProduct = Products::with(['getProductImages','getProductVariation'])->where('slug',$productSlug)->first();
 
             if(isset($getProduct) && !empty($getProduct)){
-                // Product Categories 
+                // Product Categories
                 $prod_categories = explode(',',$getProduct->categories);
                 $checkPlanCat = Category::select('id')->whereIn('id',$prod_categories)->where('name','LIKE','%plain%')->get()->toArray();
                 if(!empty($checkPlanCat)) $plainband = true;
@@ -426,7 +426,7 @@ class ProductController extends Controller
         //echo '<pre>'; print_r($data); die;
 
         $hkData = getHKApiRecords($data);
-        $rapnetData = getRapnetApiRecords($data,1);
+        $rapnetData = getRapnetApiRecordsDiamondSearch($data,1);
 
         //echo '<pre>'; print_r($rapnetData); die;
         $rapnetRecords = [];
