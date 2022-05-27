@@ -1,19 +1,24 @@
 @extends('layouts.front.app')
   
 @section('content')
-<main class="login-form">
+<div class="login-register-page login-form">
   <div class="cotainer">
-      <div class="row justify-content-center">
-          <div class="col-md-8">
+	<div class="accounts-heading text-center">
+                <h1>RESET PASSWORD</h1>
+                
+    </div>
+      <div class="login-reg-wraper">
+          <div class="row justify-content-center">
+          <div class="col-lg-6">
               <div class="card">
-                  <div class="card-header">Reset Password</div>
-                  <div class="card-body">
+                 
+					<div class="card-body">
   
                       <form action="{{ route('reset.password.post') }}" method="POST">
                           @csrf
                           <input type="hidden" name="token" value="{{ $token }}">
   
-                          <div class="form-group row">
+                          <div class="checkout-form-group row">
                               <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
                               <div class="col-md-6">
                                   <input type="text" id="email_address" class="form-control" name="email" required autofocus>
@@ -23,7 +28,7 @@
                               </div>
                           </div>
   
-                          <div class="form-group row">
+                          <div class="checkout-form-group row">
                               <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                               <div class="col-md-6">
                                   <input type="password" id="password" class="form-control" name="password" required autofocus>
@@ -33,7 +38,7 @@
                               </div>
                           </div>
   
-                          <div class="form-group row">
+                          <div class="checkout-form-group row">
                               <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
                               <div class="col-md-6">
                                   <input type="password" id="password-confirm" class="form-control" name="password_confirmation" required autofocus>
@@ -43,17 +48,20 @@
                               </div>
                           </div>
   
-                          <div class="col-md-6 offset-md-4">
-                              <button type="submit" class="btn btn-primary">
-                                  Reset Password
-                              </button>
+                          <div class="checkout-form-group row">
+							  <div class="action-login">
+								  <button type="submit" class="btn-bg-small">
+									  Reset Password
+								  </button>
+							  </div>
                           </div>
                       </form>
                         
+					</div>
                   </div>
               </div>
           </div>
       </div>
   </div>
-</main>
+</div>
 @endsection 

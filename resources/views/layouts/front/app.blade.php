@@ -29,6 +29,8 @@
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/responsive.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
+
+
     @yield('css')
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
@@ -41,6 +43,7 @@
     </style>
     {!!$header_settings->get_options('google_tag_manager_code')!!}
     {!!$header_settings->get_options('google_analytics_code')!!}
+
 </head>
 <body ng-app="MarlowsAPP">
     @include('layouts.front.header')
