@@ -946,8 +946,9 @@ a[disabled="disabled"] {pointer-events: none;}
 	text-align: left;
 	width: 100%;
 	padding: 0 10px;
+	background: none;
+	border: 1px solid #B0B0B0;
 }
-
 
 .range_carat_wap #slider * {transition: none;}
 .srchniput-fil {display: flex;column-gap: 10px;margin:3px 0 19px 0;}
