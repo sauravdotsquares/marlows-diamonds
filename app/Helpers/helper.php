@@ -438,6 +438,125 @@ if (!function_exists('validate_breadcrumb')) {
                 ];
             }
 
+            if(is_object($object->Table1)){
+                $allData[]=$object->Table1;
+            }else{
+                $allData=$object->Table1;
+            }
+
+            if(!empty($allData)){
+                $rapnetAllData = array_merge($rapnetData,$allData);
+            }
+
+            return $rapnetAllData;
+        }
+    }
+
+    /*
+    ** Rapnet API function
+    * @params : data as array
+    */
+    if (!function_exists("getRapnetApiRecordsDiamondSearch")) {
+
+        function getRapnetApiRecordsDiamondSearch($data=array(),$pageNumber){
+
+            $client = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
+
+            $params = array('Username'=>'95503', 'Password'=>'@diamond1');
+            $client->__soapCall("Login", array($params), NULL, NULL, $output_headers);
+
+            $ticket = $output_headers["AuthenticationTicketHeader"]->Ticket;
+
+           // $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
+
+            $rapnetData = $rapnetAllData = array();
+
+            $ns = "http://technet.rapaport.com/";
+            $headerBody = array("Ticket" => $ticket);
+            $header = new \SoapHeader($ns, 'AuthenticationTicketHeader', $headerBody);
+            $client->__setSoapHeaders($header);
+
+            if(isset($data['gradeFrom'])){
+                if($data['gradeFrom'] == 'EX'){ $gradeFrom = 'EXCELLENT';
+                } elseif($data['gradeFrom'] == 'VG'){ $gradeFrom = 'VERY_GOOD';
+                } elseif($data['gradeFrom'] == 'GD'){ $gradeFrom = 'GOOD';
+                }
+            }
+            if(isset($data['gradeTo'])){
+                if($data['gradeTo'] == 'EX'){ $gradeTo = 'EXCELLENT';
+                } elseif($data['gradeTo'] == 'VG'){ $gradeTo = 'VERY_GOOD';
+                } elseif($data['gradeTo'] == 'GD'){ $gradeTo = 'GOOD';
+                }
+            }
+            if(isset($data['symmetryFrom'])){
+                if($data['symmetryFrom'] == 'EX'){ $symmetryFrom = 'Excellent';
+                } elseif($data['symmetryFrom'] == 'VG'){ $symmetryFrom = 'Very_Good';
+                } elseif($data['symmetryFrom'] == 'GD'){ $symmetryFrom = 'Good';
+                }
+            }
+            if(isset($data['symmetryTo'])){
+                if($data['symmetryTo'] == 'EX'){ $symmetryTo = 'Excellent';
+                } elseif($data['symmetryTo'] == 'VG'){ $symmetryTo = 'Very_Good';
+                } elseif($data['symmetryTo'] == 'GD'){ $symmetryTo = 'Good';
+                }
+            }
+            if(isset($data['polishFrom'])){
+                if($data['polishFrom'] == 'EX'){ $polishFrom = 'Excellent';
+                } elseif($data['polishFrom'] == 'VG'){ $polishFrom = 'Very_Good';
+                } elseif($data['polishFrom'] == 'GD'){ $polishFrom = 'Good';
+                }
+            }
+            if(isset($data['polishTo'])){
+                if($data['polishTo'] == 'EX'){ $polishTo = 'Excellent';
+                } elseif($data['polishTo'] == 'VG'){ $polishTo = 'Very_Good';
+                } elseif($data['polishTo'] == 'GD'){ $polishTo = 'Good';
+                }
+            }
+
+
+            $searchParams = array(
+                "ShapeCollection" => array($data['shape']),
+                "LabCollection" => $data['certificate'],
+                "ColorFrom" => $data['colorFrom'],
+                "ColorTo" => $data['colorTo'],
+                "ClarityFrom" => $data['clarityFrom'],
+                "ClarityTo" => $data['clarityTo'],
+                "SizeFrom" => $data['caratFrom'],
+                "SizeTo" => $data['caratTo'],
+                "CutFrom" => $gradeFrom,
+                "CutTo" => $gradeTo,
+                "SymmetryFrom" =>$symmetryFrom,
+                "SymmetryTo" =>$symmetryTo,
+                "PolishFrom" =>$polishFrom,
+                "PolishTo" =>$polishTo,
+                "FluorescenceIntensityCollection" =>$data['fluorescence'],
+                "PriceFrom" => "1",
+                "PriceTo" => "999999",
+                "PageNumber" => $pageNumber,
+                "PageSize" => $data['PageSize'],
+                "SortDirection" => "ASC",
+                "SortBy" => "PRICE"
+            );
+
+
+            $params1 = array("SearchParams" => $searchParams, "DiamondsFound" => 0);
+
+            $results=$client->__soapCall("GetDiamonds", array($params1), NULL, NULL, $output_headers);
+
+            if(isset($results->GetDiamondsResult) && !empty($results->GetDiamondsResult->any)){
+                $apiXmlResponse = simplexml_load_string($results->GetDiamondsResult->any);
+                $object = json_decode(json_encode($apiXmlResponse->NewDataSet));
+            }else{
+                $object = new \stdclass;
+                $object->Table1 = '';
+            }
+
+            if(is_object($object->Table1)){
+                $allData[]=$object->Table1;
+            }else{
+                $allData=$object->Table1;
+            }
+
             if(!empty($allData)){
                 $rapnetAllData = array_merge($rapnetData,$allData);
             }
