@@ -20,7 +20,9 @@ use PayPal\Api\Transaction;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
-use Session, Redirect;
+use Session, Redirect, Config;
+use Mail;
+use App\Models\Settings;
 
 class PayPalPaymentController extends Controller
 {
@@ -123,12 +125,27 @@ class PayPalPaymentController extends Controller
 
     public function paymentCancel(Request $request)
     {
-        // echo "<pre>";
-        // print_r($request->token);
-        // die;
         session()->forget('cart');
 
         $getOrderDetails = Order::where('token',$request->token)->update(['status'=>3]);
+
+        $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first()->toArray();
+
+        $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
+
+        $data = [
+            'data' => $getOrderDetailsMail
+        ];
+
+        $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
+            Mail::send('email.orderstatus', array(
+            'data1' => $data,
+        ), function($message) use ($request,$admin_email ){
+            $message->from('hello@marlows-diamonds.co.uk');
+            $message->to($admin_email, 'Admin')->subject('PAYMENT CANCELLED');
+            $message->cc($request['customer_email'], 'Customer')->subject('PAYMENT CANCELLED');
+        });
+
         $result = [
             'response' => 'Your Order number('.$request->token.') has been cancelled',
             // 'getOrderDetails' => (isset($getOrderDetails)?$getOrderDetails:[]),
@@ -150,6 +167,24 @@ class PayPalPaymentController extends Controller
 
             if ($result->getState() == 'approved') {
                 $getOrderDetails = Order::where('token',$request->token)->update(['status'=>2]);
+
+                $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first()->toArray();
+
+                $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
+
+                $data = [
+                    'data' => $getOrderDetailsMail
+                ];
+
+                $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
+                    Mail::send('email.orderstatus', array(
+                    'data1' => $data,
+                ), function($message) use ($request,$admin_email ){
+                    $message->from('hello@marlows-diamonds.co.uk');
+                    $message->to($admin_email, 'Admin')->subject(env('APP_NAME').'  ('.$request->token.') -New customer order');
+                    $message->cc($request['customer_email'], 'Customer')->subject(env('APP_NAME').'  ('.$request->token.') -New customer order');
+                });
+                
                 $result = [
                     'response' => 'Your Order number('.$request->token.') has been successfully paid',
                 ];

@@ -27,7 +27,6 @@
 //     'validate_ssl'   => true, // Validate SSL when creating api client.
 // ];
 
-
 return [
     'client_id' => env('PAYPAL_CLIENT_ID',''),
     'secret' => env('PAYPAL_SECRET',''),

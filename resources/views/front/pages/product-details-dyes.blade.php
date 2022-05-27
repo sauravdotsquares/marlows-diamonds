@@ -114,7 +114,7 @@
 
 					</div>
 
-				<video id="variationVideo" style="width: 100%;" loop autoplay preload="auto" muted="1" playsinline>
+				<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 					@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 						<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
 					@else
@@ -619,7 +619,7 @@
                 success: function (res) {
 
 					$('#filterDataDesign .type-variations-row').html(res);
-                    getProdVideo();
+                    //getProdVideo();
 
                 }
             });
