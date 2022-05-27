@@ -53,23 +53,42 @@ class LoginController extends Controller
     }
 
     public function register($userDetails){
-        if(isset($userDetails['email']) && isset($userDetails['password'])){
+        if(isset($userDetails['email'])){
+            // echo "if";
+            // die;
             $getInsertedDetails = User::create([
                 'name' => 'customer',
                 'email' => $userDetails['email'],
                 'username' => isset($userDetails['username'])?$userDetails['username']:'customer',
-                'password' => bcrypt($userDetails['password']),
+                'password' => bcrypt(isset($userDetails['password'])?$userDetails['password']:'123456789'),
                 'nicename' => 'Customers',
                 'user_role' => 3,
                 'is_active' => 1
             ]);
-            return true;
-        }else{
-            return false;
+            return $getInsertedDetails;
         }
+
+        return false;
     }
 
     public function login($userDetails){
+        if(isset($userDetails['email'])){
+            $getDetails = [
+                'email'=>$userDetails['email'],
+                'password'=>isset($userDetails['password'])?$userDetails['password']:'123456789',
+            ];
+        }
+        if(isset($getDetails) && !empty($getDetails)){
+            if(Auth::attempt($userDetails, true)){
+                Auth::login(Auth::user(), true);
+                $getUserId = User::where('email',$userDetails['email'])->first();
+                return $getUserId;
+            }
+        }
+        return false;
+    }
+
+    public function loginPageFunction($userDetails){
         if (auth()->guard('customer')->attempt($userDetails)) {
             if(Auth::attempt($userDetails, true)){
                 Auth::login(Auth::user(), true);
@@ -104,14 +123,11 @@ class LoginController extends Controller
     public function registerCheckoutCustomer($userDetails)
     {
         $getRegisterResponse = $this->register($userDetails);
-
-        if(isset($getRegisterResponse) && $getRegisterResponse == 1){
-            $getLoginResponse = $this->login($userDetails);
-            if(isset($getLoginResponse) && $getLoginResponse == 1){
-                return true;
-            }
-        }
-        return false;
+        // if(isset($getRegisterResponse) && $getRegisterResponse == 1){
+        //     $getLoginResponse = $this->login($userDetails);
+        //     return $getLoginResponse;
+        // }
+        return $getRegisterResponse;
     }
 
     public function loginCustomer(Request $request)
@@ -119,7 +135,7 @@ class LoginController extends Controller
         unset($request['_token']);
 
         if(isset($request->email) && !empty($request->email) && isset($request->password) && !empty($request->password)){
-            $getLoginResponse = $this->login($request->all(''));
+            $getLoginResponse = $this->loginPageFunction($request->all(''));
             if(isset($getLoginResponse) && $getLoginResponse == 1){
                 return redirect(route('my_accounts'));
             }else{
