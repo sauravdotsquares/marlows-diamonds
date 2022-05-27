@@ -15,6 +15,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
+        "paypal/rest-api-sdk-php": "^1.14",
         "phpfastcache/phpfastcache": "8.1",
         "raiym/instagram-php-scraper": "*",
         "santigarcor/laratrust": "^7.1",
