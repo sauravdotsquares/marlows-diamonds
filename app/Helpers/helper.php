@@ -430,10 +430,12 @@ if (!function_exists('validate_breadcrumb')) {
                 $object->Table1 = '';
             }
 
-            if(is_object($object->Table1)){
+            if(isset($object->Table1) && !empty($object->Table1)){
                 $allData[]=$object->Table1;
             }else{
-                $allData=$object->Table1;
+                $allData=[
+                    '0' => '',
+                ];
             }
 
             if(!empty($allData)){

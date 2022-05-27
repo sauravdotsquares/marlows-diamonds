@@ -80,6 +80,11 @@
 			cursor: default;
 			color:white;
 		}
+        span.price-not-found {
+            font-size: 14px;
+            color: #8e2e65;
+            font-weight: bold;
+        }
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -259,8 +264,8 @@
 				<div class="product-decriptions">
 					{!!$data->description!!}
 				</div>
-				<div class="product-finder-price">
-					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
+				<div class="product-finder-price" id="finaldiamondprice">
+
 				</div>
 				<input type="hidden" id="certificate_url" name="certificate_url" value="">
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($variationDetails->regular_price)?$variationDetails->regular_price:$variationDetails->sale_price}}">
@@ -523,7 +528,7 @@
 							<div class="error">
 								{{ $errors->first('g-recaptcha-response') }}
 							</div>
-							@endif	
+							@endif
 						</div>
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
@@ -692,7 +697,7 @@
 		}
 
 		function getSelectedAttributePrice(){
-			$('#finaldiamondprice').text("Pending...");
+			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$('#addtobasket').addClass('disabledAnchor');
 
 			var caratVal = $('#carat').val();
@@ -718,17 +723,29 @@
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
-					$('#finaldiamondprice').html("");
 
-					if(res){
-						$('#finaldiamondprice').text(res.finalPrice);
+                    // console.log(res.statuscode);
+                    // return false;
+
+					$('#finaldiamondprice').html("");
+                    if(res.statuscode == 200){
+                        // $('#finaldiamondprice').html(res.finalPrice);
+                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
 						$('#selected_final_price').val(res.finalPrice);
 						$('#selected_diamond_price').val(res.diamondPrice);
 						$('#selected_diamond_certno').val(res.Stock_NO);
 						$('#certificate_url').val(res.CertificateLink);
 						$('#productCertificateLink').attr('href',res.CertificateLink);
 						$('#addtobasket').removeClass('disabledAnchor');
-					}
+                    }else{
+                        $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
+                        // $('#finaldiamondprice').text('Sorry we have no diamonds matching your selection.');
+                        $('#selected_final_price').val('');
+						$('#selected_diamond_price').val('');
+						$('#selected_diamond_certno').val('');
+						$('#certificate_url').val('');
+						$('#productCertificateLink').attr('href','');
+                    }
                 }
 
             });
