@@ -11,3 +11,4 @@
 [12-May-2022 12:29:59 UTC] PHP Deprecated:  Required parameter $pageNumber follows optional parameter $data in /home/stagingmarlows/public_html/marlows/app/Helpers/helper.php on line 372
 [16-May-2022 12:03:50 UTC] PHP Deprecated:  Required parameter $pageNumber follows optional parameter $data in /home/stagingmarlows/public_html/marlows/app/Helpers/helper.php on line 373
 [17-May-2022 05:04:20 UTC] PHP Deprecated:  Required parameter $pageNumber follows optional parameter $data in /home/stagingmarlows/public_html/marlows/app/Helpers/helper.php on line 340
+[26-May-2022 10:35:55 UTC] PHP Deprecated:  Required parameter $pageNumber follows optional parameter $data in /home/stagingmarlows/public_html/marlows/app/Helpers/helper.php on line 340

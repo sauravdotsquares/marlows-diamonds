@@ -10,45 +10,115 @@ use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\User;
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Payer;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Amount;
+use PayPal\Api\Transaction;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Payment;
+use PayPal\Api\PaymentExecution;
+use Session, Redirect;
 
 class PayPalPaymentController extends Controller
 {
+    public function __construct()
+    {
+        /** PayPal api context **/
+        $paypal_conf = \Config::get('paypal');
+        $this->_api_context = new ApiContext(new OAuthTokenCredential(
+            $paypal_conf['client_id'],
+            $paypal_conf['secret'])
+        );
+        $this->_api_context->setConfig($paypal_conf['settings']);
+    }
+
     public function handlePayment($orderId)
     {
         $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id',$orderId)->first();
 
         $getProdustItems = [];
         foreach($getOrderDetails->getOrderDetailsFunction as $key => $orderDetails){
-            $getProdustItems[] = [
-                'name' => isset($orderDetails->product_details->title)?$orderDetails->product_details->title:'No Name',
-                'price' => isset($orderDetails->product_price)?$orderDetails->product_price:'1.00',
-                'desc'  => isset($orderDetails->product_details->tags)?$orderDetails->product_details->tags:'No Desc',
-                'qty' => isset($orderDetails->quantity)?$orderDetails->quantity:1,
-            ];
+            // $getProdustItems[] = [
+            //     'name' => isset($orderDetails->product_details->title)?$orderDetails->product_details->title:'No Name',
+            //     'price' => isset($orderDetails->product_price)?$orderDetails->product_price:'1.00',
+            //     'desc'  => isset($orderDetails->product_details->tags)?$orderDetails->product_details->tags:'No Desc',
+            //     'qty' => isset($orderDetails->quantity)?$orderDetails->quantity:1,
+            // ];
+            $item = new Item();
+            $item->setName(isset($orderDetails->product_details->title)?$orderDetails->product_details->title:'No Name') /** item name **/
+                        ->setCurrency(Config::get('paypal.currency','GBP'))
+                        ->setQuantity(isset($orderDetails->quantity)?$orderDetails->quantity:1)
+                        ->setPrice(isset($orderDetails->product_price)?$orderDetails->product_price:'1.00'); /** unit price **/
+            $getProdustItems[] = $item;
         }
 
 
-        $product = [];
-        $product['items'] = $getProdustItems;
+        // $product = [];
+        // $product['items'] = $getProdustItems;
 
-        $product['invoice_id'] = $orderId;
-        $product['invoice_description'] = "Order #{$product['invoice_id']} Bill";
-        $product['return_url'] = route('success.payment');
-        $product['cancel_url'] = route('cancel.payment');
-        $product['total'] = $getOrderDetails->final_price;
+        // $product['invoice_id'] = $orderId;
+        // $product['invoice_description'] = "Order #{$product['invoice_id']} Bill";
+        // $product['return_url'] = route('success.payment');
+        // $product['cancel_url'] = route('cancel.payment');
+        // $product['total'] = $getOrderDetails->final_price;
 
 
-        $paypalModule = new ExpressCheckout;
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
 
-        // $res = $paypalModule->setExpressCheckout($product);
-        $res = $paypalModule->setExpressCheckout($product, true);
+        $item_list = new ItemList();
+        $item_list->setItems($getProdustItems);
 
-        $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$res['TOKEN'],'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($res['TIMESTAMP'])),'correlationid'=>$res['CORRELATIONID'],'acknowledge'=>$res['ACK'],'build'=>$res['BUILD'],'status'=>1]);
-        // echo "<pre>";
-        // print_r($res);
-        // die;
+        $amount = new Amount();
+        $amount->setCurrency(Config::get('paypal.currency','GBP'))
+            ->setTotal($getOrderDetails->final_price);
 
-        return redirect($res['paypal_link']);
+        $transaction = new Transaction();
+        $transaction->setAmount($amount)
+            ->setItemList($item_list)
+            ->setDescription('Your transaction description');
+
+        $redirect_urls = new RedirectUrls();
+        $redirect_urls->setReturnUrl(route('success.payment')) /** Specify return URL **/
+            ->setCancelUrl(route('cancel.payment'));
+
+
+        $payment = new Payment();
+        $payment->setIntent('Sale')
+            ->setPayer($payer)
+            ->setRedirectUrls($redirect_urls)
+            ->setTransactions(array($transaction));
+        /** dd($payment->create($this->_api_context));exit; **/
+        try {
+            $payment->create($this->_api_context);
+        } catch (\PayPal\Exception\PPConnectionException $ex) {
+            if (\Config::get('app.debug')) {
+            \Session::put('error', 'Connection timeout');
+                            return Redirect::route('paywithpaypal');
+            } else {
+            \Session::put('error', 'Some error occur, sorry for inconvenient');
+                            return Redirect::route('paywithpaypal');
+            }
+        }
+
+        foreach ($payment->getLinks() as $link) {
+            if ($link->getRel() == 'approval_url') {
+            $redirect_url = $link->getHref();
+                            break;
+            }
+        }
+
+        if (isset($redirect_url)) {
+            $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>1]);
+            return Redirect::away($redirect_url);
+        }
+
+        $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>0]);
+
+        return redirect()->back()->with('error','Payment gateway initiliazation failed.');
     }
 
     public function paymentCancel(Request $request)
@@ -71,24 +141,20 @@ class PayPalPaymentController extends Controller
     public function paymentSuccess(Request $request)
     {
         session()->forget('cart');
-        // echo "<pre>";
-        // print_r($request->all(''));
-        // die;
-        $paypalModule = new ExpressCheckout;
-        $response = $paypalModule->getExpressCheckoutDetails($request->token);
+        $requestData = $request->all();
+        if(isset($request->paymentId) && isset($request->PayerID) && isset($request->token)){
+            $payment = Payment::get($requestData['paymentId'], $this->_api_context);
+            $execution = new PaymentExecution();
+            $execution->setPayerId($requestData['PayerID']);
+            $result = $payment->execute($execution, $this->_api_context);
 
-        if (in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-            $getOrderDetails = Order::where('token',$request->token)->update(['status'=>2]);
-            // echo "<pre>";
-            // print_r($getOrderDetails);
-            // die;
-            $result = [
-                'response' => 'Your Order number('.$request->token.') has been successfully paid',
-                // 'getOrderDetails' => $getOrderDetails
-            ];
-            return view('front.pages.success-page',$result);
-
-            // dd('Payment was successfull. The payment success page goes here!');
+            if ($result->getState() == 'approved') {
+                $getOrderDetails = Order::where('token',$request->token)->update(['status'=>2]);
+                $result = [
+                    'response' => 'Your Order number('.$request->token.') has been successfully paid',
+                ];
+                return view('front.pages.success-page',$result);
+            }
         }
 
         $getOrderDetails = Order::where('token',$request->token)->update(['status'=>3]);

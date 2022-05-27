@@ -8,7 +8,6 @@
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
     <meta name="robots" content="noindex, nofollow"/>  
     <link rel="canonical" href="{{url()->current()}}" />
-
     <meta property="og:locale" content="en_GB" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{!! isset($data->meta_title)?$data->meta_title:'' !!}" />
