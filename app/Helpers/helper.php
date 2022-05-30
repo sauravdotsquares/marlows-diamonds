@@ -523,7 +523,7 @@ if (!function_exists('validate_breadcrumb')) {
                 "SymmetryTo" =>$symmetryTo,
                 "PolishFrom" =>$polishFrom,
                 "PolishTo" =>$polishTo,
-                "FluorescenceIntensityCollection" =>$data['fluorescence'],
+                "FluorescenceIntensityCollection" =>implode(',',$data['fluorescence']),
                 "PriceFrom" => "1",
                 "PriceTo" => "999999",
                 "PageNumber" => $pageNumber,
