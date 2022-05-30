@@ -312,7 +312,6 @@
     }
 
     function getOrderList(){
-        console.log("Checking list");
         $.ajax({
             type: 'POST',
             url: '{{route("get.order.details")}}',
