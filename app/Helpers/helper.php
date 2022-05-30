@@ -452,7 +452,7 @@ if (!function_exists('validate_breadcrumb')) {
     */
     if (!function_exists("getRapnetApiRecordsDiamondSearch")) {
 
-        function getRapnetApiRecordsDiamondSearch($data=array(),$pageNumber){
+        function getRapnetApiRecordsDiamondSearch($data=array(),$pageNumber=null){
 
             $client = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
 
