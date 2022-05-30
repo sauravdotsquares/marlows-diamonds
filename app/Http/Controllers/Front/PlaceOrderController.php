@@ -43,6 +43,8 @@ class PlaceOrderController extends Controller
             }
 
 
+        }else if(Auth::check()){
+            $getEmailExists = User::where('email',$request->cust_email)->first();
         }
         // echo "<pre>";
         // print_r($getEmailExists);
