@@ -157,7 +157,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('orders/change-order-status','OrderController@changeOrderStatus')->name('order.change.order.status');
 			Route::get('orders/order-product-details/{orderId}','OrderController@orderProductDetails')->name('order.product.details');
 		//});
-
+            Route::get('get-harikrishna-data','HariKrishnaController@index');
         Route::get('instagram-post', 'InstagramController@updateInstaData')->name('instagram-post');
 
 	});
