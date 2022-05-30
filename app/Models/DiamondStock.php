@@ -9,6 +9,10 @@ class DiamondStock extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+    //BaseModelOne.php
+    protected $connection = 'mysqlOne';
+
     protected $table = "diamondstock";
-    
+
 }
