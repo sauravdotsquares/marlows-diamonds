@@ -149,6 +149,7 @@
 
 					</div>
 				</div>
+                @if($plainbandMulti==false)
 				<div id="apiCustomDesign">
 					<div class="type-variations-row">
 						<div class="type-variations-col">
@@ -261,6 +262,7 @@
 						</div>
 					</div>
 				</div>
+                @endif
 				<div class="product-decriptions">
 					{!!$data->description!!}
 				</div>
@@ -724,8 +726,6 @@
                 },
                 success: function (res) {
 
-                    // console.log(res.statuscode);
-                    // return false;
 
 					$('#finaldiamondprice').html("");
                     if(res.statuscode == 200){
@@ -778,6 +778,7 @@
 
 		function getFinalPrice(){
 			$('#addtobasket').addClass('disabledAnchor');
+            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$.ajax({
                 type: 'POST',
                 url: '{{route("products-final-price")}}',
@@ -790,11 +791,12 @@
                 success: function (res) {
 					$('#finaldiamondprice').html("");
 					if(res != ''){
-						$('#finaldiamondprice').text(res);
+						// $('#finaldiamondprice').text(res);
+                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res+' </span>');
 						$('#selected_final_price').val(res);
 						$('#addtobasket').removeClass('disabledAnchor');
 					}else{
-						$('#finaldiamondprice').text("");
+						$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
 					}
                 }
             });

@@ -67,6 +67,10 @@ class ProductController extends Controller
                 $checkPlanCat = Category::select('id')->whereIn('id',$prod_categories)->where('name','LIKE','%plain%')->get()->toArray();
                 if(!empty($checkPlanCat)) $plainband = true;
                 else $plainband = false;
+
+                $checkPlanCatMultiStone = Category::select('id')->whereIn('id',$prod_categories)->where('name','LIKE','%Multi-Stone%')->get()->toArray();
+                if(!empty($checkPlanCatMultiStone)) $plainbandMulti = true;
+                else $plainbandMulti = false;
                 // store in session for recent viewd products start
                 $recentProduct = session()->get('recentproducts', []);
 
@@ -94,7 +98,7 @@ class ProductController extends Controller
                     $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
 
                     //echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'plainbandMulti'=>$plainbandMulti,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
                 }else{
                     $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->groupBy('vari_image')->get();
                    // echo '<pre>';print_r($variationDetails); die;
