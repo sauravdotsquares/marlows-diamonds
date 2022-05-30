@@ -571,7 +571,7 @@
 
 			getSelectedAttributePrice();
 
-			$('#carat').on('change',function(){
+			$(document).on('change','#carat',function(){
 				getSelectedAttributePrice();
 			});
 			$('#diamond-colour').on('change',function(){
