@@ -784,7 +784,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'variation_price' : parseFloat($('#selected_variation_price').val()),
-					'diamond_price' : parseFloat($('#selected_diamond_price').val()),
+					'diamond_price' : parseFloat($('#selected_diamond_price').val().split(",").join("")),
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
