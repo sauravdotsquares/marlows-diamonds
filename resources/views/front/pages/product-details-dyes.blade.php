@@ -674,6 +674,7 @@
 					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
+					'setting_price': getNumberFromCurrency($('#selected_variation_price').val()) || 0, //parseFloat($('#price').val()) || 0;
 					'price': getNumberFromCurrency($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;
 					'certificatelink': $('#certificate_url').val() || '',
 					'shape': $('#selected_diamond_shape').val() || '',
