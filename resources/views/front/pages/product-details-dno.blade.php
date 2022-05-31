@@ -75,6 +75,11 @@
 			border:10px solid transparent;
 			border-bottom-color:#fff;
 		}
+        span.price-not-found {
+            font-size: 14px;
+            color: #8e2e65;
+            font-weight: bold;
+        }
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -84,14 +89,7 @@
 @endsection
 
 @section('content')
-<?php
-    // echo "<pre>";
-    // print_r(count($prodImages));
-    // print_r(count($variationImages));
-    // // print_r($data);
-    // die;
 
-?>
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
@@ -150,11 +148,11 @@
 				<div class="diamond-type">
 					<label>Choose Your Diamond</label>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" checked value="mined">
+						<input type="radio" name="attribute_choose-your-diamond" @if($plainbandMulti==false) checked @endif  value="mined">
 						<span>Mined Diamond</span>
 					</div>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
+						<input type="radio" name="attribute_choose-your-diamond" @if($plainbandMulti==true) checked @endif value="lab_grown">
 						<span>Lab Grown Diamond</span>
 					</div>
 				</div>
@@ -170,9 +168,12 @@
 				<div class="product-decriptions">
 					{!!$data->description!!}
 				</div>
-				<div class="product-finder-price">
-					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
+                <div class="product-finder-price" id="finaldiamondprice">
+
 				</div>
+				{{-- <div class="product-finder-price">
+					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
+				</div> --}}
 
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
@@ -440,7 +441,13 @@
 
 <!-- Modal -->
 @include('front.includes.dekopay-finance-options')
-
+<?php
+    if($plainbandMulti){
+        $plainbandMulti = 1;
+    }else{
+        $plainbandMulti = 0;
+    }
+?>
 @endsection
 
 @section('js')
@@ -507,7 +514,7 @@
 		}
 
 		function getSelectedVariationsData(){
-			$('#finaldiamondprice').text("Pending...");
+			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 			var variations = [];
 			$('.type-variations-row select').each(function(i, sel){
@@ -527,7 +534,9 @@
 					'variations' : variations,
 				},
 				success: function (res) {
+                    console.log(res.statusCode);
 					if(res.regular_price!='' || res.regular_price!='0.00'){
+                        // console.log("if");
 						var regular_p = Math.round(res.regular_price_with_vat);
 
 						if(diamond_type=='lab_grown' && regular_p<=3000){
@@ -542,9 +551,15 @@
 						}
 						$('#selected_variation_price').val(res.regular_price);
 						$('#selected_final_price').val(Math.round(regular_p_final));
-						$('#finaldiamondprice').text(Math.round(regular_p_final));
-					}
-					else{
+                        if(res.statusCode == 500){
+                            $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
+                        }else{
+                            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p_final)+' </span>');
+
+                        }
+						// $('#finaldiamondprice').text();
+					}else{
+                        console.log("Else");
 						var sale_p = Math.round(res.sale_price_with_vat);
 
 						if(diamond_type=='lab_grown' && sale_p<=3000){
@@ -559,7 +574,8 @@
 						}
 						$('#selected_variation_price').val(res.sale_price);
 						$('#selected_final_price').val(Math.round(sale_p_final));
-						$('#finaldiamondprice').text(Math.round(sale_p_final));
+						// $('#finaldiamondprice').text(Math.round(sale_p_final));
+                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(sale_p_final)+' </span>');
 					}
 
 					if(res.vari_image!='' && res.vari_image!=null){
@@ -580,6 +596,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
+                    'type' : '{{$plainbandMulti}}',
                 },
                 success: function (res) {
 
