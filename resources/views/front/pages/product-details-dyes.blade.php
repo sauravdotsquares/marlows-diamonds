@@ -149,7 +149,6 @@
 
 					</div>
 				</div>
-                @if($plainbandMulti==false)
 				<div id="apiCustomDesign">
 					<div class="type-variations-row">
 						<div class="type-variations-col">
@@ -262,7 +261,6 @@
 						</div>
 					</div>
 				</div>
-                @endif
 				<div class="product-decriptions">
 					{!!$data->description!!}
 				</div>
