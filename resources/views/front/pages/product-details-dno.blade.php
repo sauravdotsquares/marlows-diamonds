@@ -500,7 +500,8 @@
 					else
 						$('#selected_variation_price').val(res.sale_price);
 					if(action!=null && action=='onChange')
-						getFinalPrice();
+						// getFinalPrice();
+                        getSelectedVariationsData();
 				}
 			});
 		}
@@ -515,7 +516,6 @@
 					variations.push($(sel).val());
 			});
 			var data_slug = '{{url("/")}}';
-			console.log(variations);
 			$.ajax({
 				type: 'POST',
 				url: '{{route("get-variations-data")}}',
