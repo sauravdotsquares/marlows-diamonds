@@ -155,7 +155,7 @@
 					</div>
 					<div class="d-type-input">
 						<input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
-						<span>Lab Grow Diamond</span>
+						<span>Lab Grown Diamond</span>
 					</div>
 				</div>
 				@endif
