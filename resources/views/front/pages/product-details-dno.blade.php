@@ -506,9 +506,11 @@
 						$('#selected_variation_price').val(res.regular_price);
 					else
 						$('#selected_variation_price').val(res.sale_price);
-					if(action!=null && action=='onChange')
+					if(action!=null && action=='onChange'){
+
+                        // getSelectedVariationsData();
+                    }
 						// getFinalPrice();
-                        getSelectedVariationsData();
 				}
 			});
 		}
