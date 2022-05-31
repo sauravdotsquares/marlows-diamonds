@@ -898,6 +898,7 @@
                 'certificate' : $('#tdLab'+index).text(),
                 'certificate_number' : certNumber,
                 'price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, //parseFloat($('#price').val()) || 0;
+                'setting_price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, //parseFloat($('#price').val()) || 0;
                 'certificatelink': $('#tdCertiLink'+index).find('a').attr('href') || '',
                 'shape': $('#tdShape'+index).text() || '',
                 'imagelink': $('#tdImgLink'+index).find('img').attr('src') || '',
