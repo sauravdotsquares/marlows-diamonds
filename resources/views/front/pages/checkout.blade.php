@@ -274,7 +274,7 @@
                                         <th>Total</th>
                                         <td>
                                             <strong>{{MY_CURRENCY_SYMBOL}}{{ $total }}</strong>
-                                            <small class="tax_label">(includes {{MY_CURRENCY_SYMBOL}}{{$totalVat}} VAT)</small>
+                                            <small class="tax_label">(includes {{MY_CURRENCY_SYMBOL}}{{isset($totalVat)?$totalVat:0.00}} VAT)</small>
                                         </td>
                                     </tr>
                                 </tfoot>
