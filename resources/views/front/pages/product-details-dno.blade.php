@@ -98,8 +98,8 @@
 
 			<div class="product-info-media">
 				{{-- <a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
-
-					<div id="carousel" class="owl-carousel">
+                @if($plainbandMulti==false)
+                    <div id="carousel" class="owl-carousel">
                         @if($variationImages)
                             @foreach($variationImages as $images)
                                 <div class="item">
@@ -110,7 +110,7 @@
                             @endforeach
                         @endif
 
-						@if($prodImages)
+                        @if($prodImages)
                             @foreach($prodImages as $images)
                                 @php
                                     $explode = explode('/',$images->image_url);
@@ -125,7 +125,16 @@
                                 @endif
                             @endforeach
                         @endif
-					</div>
+                    </div>
+                @else
+                    <video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+                        @if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
+                            <source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
+                        @else
+                            <source src="" type="video/mp4" type="video/mp4" />
+                        @endif
+                    </video>
+                @endif
 					{{-- <div id="carousel" class="owl-carousel">
 
 
@@ -414,7 +423,7 @@
 							<div class="error">
 								{{ $errors->first('g-recaptcha-response') }}
 							</div>
-							@endif	
+							@endif
 						</div>
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
@@ -463,7 +472,39 @@
 
 			});
 
+            $(document).on('change','#metal-type',function(){
+				getProdVideo('onChange');
+
+			});
 		})
+
+        function getProdVideo(action=null){
+			var metal_type = $('#metal-type :selected').val();
+
+			$.ajax({
+				type: 'POST',
+				url: '{{route("get-product-video")}}',
+				data: {
+					'_token': "{{csrf_token()}}",
+					'slug' : '{{$data->slug}}',
+					'metal_color' : metal_type,
+				},
+				success: function (res) {
+					if(res.vari_video){
+						var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+						$('#variationVideo').attr('src', videoUrl);
+						$("#variationVideo")[0].play();
+					}
+					if(res.regular_price!='' || res.regular_price!='0.00')
+						$('#selected_variation_price').val(res.regular_price);
+					else
+						$('#selected_variation_price').val(res.sale_price);
+					if(action!=null && action=='onChange')
+						getFinalPrice();
+				}
+			});
+		}
+
 		function getSelectedVariationsData(){
 			$('#finaldiamondprice').text("Pending...");
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
