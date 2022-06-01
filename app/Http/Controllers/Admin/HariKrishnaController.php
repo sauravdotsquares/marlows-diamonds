@@ -16,6 +16,10 @@ class HariKrishnaController extends Controller
         ini_set('max_execution_time', 3000);
 
         $basket_data = DiamondStock::get()->toArray();
+        //  echo "done sdfdf";
+        // echo "Done<pre>";
+        // // print_r($basket_data);
+        // die;
         HariKrishna::truncate();
         foreach($basket_data as $records)
         {

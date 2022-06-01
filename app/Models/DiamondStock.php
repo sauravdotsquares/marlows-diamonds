@@ -13,6 +13,6 @@ class DiamondStock extends Model
     //BaseModelOne.php
     protected $connection = 'mysqlOne';
 
-    protected $table = "diamondstock";
+    protected $table = "asbivgyrdiamondstock";
 
 }

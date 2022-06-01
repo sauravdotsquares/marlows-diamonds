@@ -12,3 +12,5 @@
 [16-May-2022 12:03:50 UTC] PHP Deprecated:  Required parameter $pageNumber follows optional parameter $data in /home/stagingmarlows/public_html/marlows/app/Helpers/helper.php on line 373
 [17-May-2022 05:04:20 UTC] PHP Deprecated:  Required parameter $pageNumber follows optional parameter $data in /home/stagingmarlows/public_html/marlows/app/Helpers/helper.php on line 340
 [26-May-2022 10:35:55 UTC] PHP Deprecated:  Required parameter $pageNumber follows optional parameter $data in /home/stagingmarlows/public_html/marlows/app/Helpers/helper.php on line 340
+[01-Jun-2022 09:49:10 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 458752 bytes) in /home/stagingmarlows/public_html/marlows/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 373
+[01-Jun-2022 09:49:10 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/stagingmarlows/public_html/marlows/vendor/laravel/framework/src/Illuminate/Session/FileSessionHandler.php on line 54
