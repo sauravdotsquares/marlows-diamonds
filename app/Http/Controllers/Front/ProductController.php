@@ -102,7 +102,7 @@ class ProductController extends Controller
                 }else{
                     $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->groupBy('vari_image')->get();
                    // echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'url'=>$url,'plainband'=>$plainband,'variationImages'=>$variationDetails]);
+                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'plainbandMulti'=>$plainbandMulti,'url'=>$url,'plainband'=>$plainband,'variationImages'=>$variationDetails]);
                 }
             }else{
                 return view('layouts.errors.404');
@@ -310,6 +310,9 @@ class ProductController extends Controller
 
     public function getCustomFilter(Request $request)
     {
+
+
+
         $product_id = Products::where('slug',$request->slug)->value('id');
         if($product_id!=''){
             $productSelectedAttribute = ProductVariationAttributes::where('product_id',$product_id)->value('attr_values');
@@ -355,9 +358,12 @@ class ProductController extends Controller
                         else
                             $final_attr['attri_'.$attribute['slug']] = $found;
 
+                            // echo "<pre>";
+                            // print_r($request->type);
+                            // print_r($final_attr);
+                            // die;
 
-
-                        $variationArray[] = View::make('front.includes.show_variations',['final_attr'=>$final_attr])->render();
+                        $variationArray[] = View::make('front.includes.show_variations',['final_attr'=>$final_attr,'type'=>$request->type])->render();
                     }
 
                 }
@@ -533,6 +539,8 @@ class ProductController extends Controller
                 $getSelectedVariationVideoImages = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select(DB::raw('(regular_price*"'.$vat.'") as regular_price_with_vat'),DB::raw('(sale_price*"'.$vat.'") as sale_price_with_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
 
                 return response()->json($getSelectedVariationVideoImages);
+            }else{
+                return response()->json(['statusCode'=>'500','msg'=>'No Variation Found']);
             }
         }
     }

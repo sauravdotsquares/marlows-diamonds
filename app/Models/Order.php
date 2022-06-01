@@ -13,6 +13,7 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+        'custom_order_id',
         'pay_timestamp',
         'correlationid',
         'acknowledge',

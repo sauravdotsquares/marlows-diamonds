@@ -572,6 +572,7 @@
 			getSelectedAttributePrice();
 
 			$('#carat').on('change',function(){
+                console.log("checking");
 				getSelectedAttributePrice();
 			});
 			$('#diamond-colour').on('change',function(){
@@ -675,6 +676,7 @@
 					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
+					'setting_price': getNumberFromCurrency($('#selected_variation_price').val()) || 0, //parseFloat($('#price').val()) || 0;
 					'price': getNumberFromCurrency($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;
 					'certificatelink': $('#certificate_url').val() || '',
 					'shape': $('#selected_diamond_shape').val() || '',
@@ -785,7 +787,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'variation_price' : parseFloat($('#selected_variation_price').val()),
-					'diamond_price' : parseFloat($('#selected_diamond_price').val()),
+					'diamond_price' : parseFloat($('#selected_diamond_price').val().split(",").join("")),
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {

@@ -584,5 +584,12 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
+    if (!function_exists("getVATPriceFunction")) {
+        function getVATPriceFunction($getTotal)
+        {
+            return ($getTotal*20)/100;
+        }
+    }
+
 }
 

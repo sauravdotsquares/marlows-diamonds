@@ -37,6 +37,7 @@ class AddToCartController extends Controller
             $input = $request->all('');
             unset($request['slug']);
             unset($request['price']);
+            unset($request['setting_price']);
             unset($request['_token']);
 
             $titleHtml = '';
@@ -70,6 +71,7 @@ class AddToCartController extends Controller
                         "selected_parameter"=> $selectedAttributes,
                         "quantity" => 1,
                         "price" => $input['price'],
+                        "vat" => getVATPriceFunction($input['setting_price']),
                         "image" => $productData->getProductImages->image_url
                     ];
                 }
@@ -126,6 +128,7 @@ class AddToCartController extends Controller
                     "selected_parameter"=> $selectedAttributes,
                     "quantity" => 1,
                     "price" => $input['price'],
+                    "vat" => getVATPriceFunction($input['setting_price']),
                     "image" => ''
                 ];
             }
