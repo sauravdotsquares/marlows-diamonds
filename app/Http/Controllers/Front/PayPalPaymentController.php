@@ -150,8 +150,8 @@ class PayPalPaymentController extends Controller
             'data1' => $data,
         ), function($message) use ($request,$admin_email ){
             $message->from('hello@marlows-diamonds.co.uk');
-            $message->to($admin_email, 'Admin')->subject('PAYMENT CANCELLED');
-            $message->cc($request['customer_email'], 'Customer')->subject('PAYMENT CANCELLED');
+            $message->to($admin_email, 'Admin')->subject('Order Received');
+            $message->cc($request['customer_email'], 'Customer')->subject('Order Received');
         });
 
         $result = [
@@ -189,8 +189,8 @@ class PayPalPaymentController extends Controller
                     'data1' => $data,
                 ), function($message) use ($request,$admin_email ){
                     $message->from('hello@marlows-diamonds.co.uk');
-                    $message->to($admin_email, 'Admin')->subject(env('APP_NAME').'  ('.$request->token.') -New customer order');
-                    $message->cc($request['customer_email'], 'Customer')->subject(env('APP_NAME').'  ('.$request->token.') -New customer order');
+                    $message->to($admin_email, 'Admin')->subject(env('APP_NAME').'  ('.$getOrderDetailsMail['custom_order_id'].') -Order Received');
+                    $message->cc($request['customer_email'], 'Customer')->subject(env('APP_NAME').'  ('.$getOrderDetailsMail['custom_order_id'].') -Order Received');
                 });
 
                 $result = [

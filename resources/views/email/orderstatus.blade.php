@@ -20,19 +20,19 @@
 									<tbody>
 									<tr>
 										<td align="center">
-											<img src="{{ asset('') }}assets/images/logo.png">
+											<img src="{{ asset('') }}assets/images/logo.png" alt="Marlow's Diamond">
 										</td>
 									</tr>
 									<tr>
 										<td align="center" style="padding: 40px 0 20px 0;font-family:Arial;">
 											<i style="font-size: 18px; color: #505050;font-family:Arial;">Hello from Marlows Diamonds!</i>
-											<h3 style="margin: 0; font-weight: normal; line-height: 40px; font-size: 22px;font-family:Arial;"><b>Thanks for your order!</b></h3>
+											<h3 style="margin: 0; font-weight: normal; line-height: 40px; font-size: 22px;font-family:Arial;"><b>New customer order!</b></h3>
 										</td>
 									</tr>
 									<tr>
 										<td>
-											<p style="font-size: 16px; line-height: 25px; color: #505050;font-family:Arial;">Your order has been received and is now being {{ isset($data1['data']['status_details']) ? $data1['data']['status_details'] : '' }}. Your order details are shown below for your reference. </p>
-											<p style="font-size: 16px; line-height: 25px; color: #505050;font-family:Arial;">Pay with {{ isset($data1['data']['payment_type']) ? $data1['data']['payment_type'] : '' }}.</p>
+											<p style="font-size: 16px; line-height: 25px; color: #505050;font-family:Arial;">You have received an order from {{$data1['data']['order_address']['first_name']}}. The order is as follows: </p>
+											{{-- <p style="font-size: 16px; line-height: 25px; color: #505050;font-family:Arial;">Paid with {{ isset($data1['data']['payment_type']) ? $data1['data']['payment_type'] : '' }}.</p> --}}
 										</td>
 									</tr>
 									</tbody>
@@ -54,7 +54,7 @@
 									<tbody>
 										<tr>
 											<td style="font-size: 16px;font-family:Arial; padding: 20px 0; font-style: italic;"> Order number: {{ isset($data1['data']['custom_order_id']) ? $data1['data']['custom_order_id'] : '' }} </td>
-											<td align="right"  style="font-size: 16px;font-family:Arial; padding: 20px 0;font-style: italic;">  Order date: {!! isset($data1['data']['created_at']) ? date("d-m-Y", strtotime($data1['data']['created_at'])) : '' !!}  </td>
+											<td align="right"  style="font-size: 16px;font-family:Arial; padding: 20px 0;font-style: italic;">  Order date: {!! isset($data1['data']['created_at']) ? date("M d, Y", strtotime($data1['data']['created_at'])) : '' !!}  </td>
 										</tr>
 									</tbody>
 								</table>
@@ -217,16 +217,16 @@
 								<table border="0" width="600px" cellspacing="0" cellpadding="0" align="center" style="border-collapse: collapse; max-width: 600px;">
 									<tr>
 										<td align="center" style="padding: 20px 0; color: #fff;font-family:Arial;">
-											<a style="color: #fff; text-decoration: none; padding:0 20px; font-style: 26px;" href="#">
+											<a style="color: #fff; text-decoration: none; padding:0 20px; font-style: 26px;" href="https://www.facebook.com/MarlowsDiamonds/">
 												<i style="font-size: 26px;" class="fa fa-facebook-square" aria-hidden="true"></i>
 											</a>
-											<a style="color: #fff; text-decoration: none; padding:0 20px; font-style: 26px;" href="#">
+											<a style="color: #fff; text-decoration: none; padding:0 20px; font-style: 26px;" href="https://www.instagram.com/accounts/login/?next=/marlows_diamonds/">
 												<i style="font-size: 26px;" class="fa fa-instagram" aria-hidden="true"></i>
 											</a>
-											<a style="color: #fff; text-decoration: none; padding:0 20px; font-style: 26px;" href="#">
+											<a style="color: #fff; text-decoration: none; padding:0 20px; font-style: 26px;" href="https://twitter.com/MarlowsDiamonds">
 												<i style="font-size: 26px;" class="fa fa-twitter-square" aria-hidden="true"></i>
 											</a>
-											<a style="color: #fff; text-decoration: none; padding:0 20px; font-style: 26px;" href="#">
+											<a style="color: #fff; text-decoration: none; padding:0 20px; font-style: 26px;" href="http://marlows-diamonds.co.uk">
 												<i style="font-size: 26px;" class="fa fa-link" aria-hidden="true"></i>
 											</a>
 
