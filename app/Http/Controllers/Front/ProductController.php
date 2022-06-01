@@ -98,7 +98,7 @@ class ProductController extends Controller
                     $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
 
                     //echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'plainbandMulti'=>$plainbandMulti,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
                 }else{
                     $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->groupBy('vari_image')->get();
                    // echo '<pre>';print_r($variationDetails); die;
