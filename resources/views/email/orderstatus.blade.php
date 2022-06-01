@@ -31,7 +31,7 @@
 									</tr>
 									<tr>
 										<td>
-											<p style="font-size: 16px; line-height: 25px; color: #505050;font-family:Arial;">You have received an order from {{$data1['data']['order_address']['first_name']}}. The order is as follows: </p>
+											<p style="font-size: 16px; line-height: 25px; color: #505050;font-family:Arial;">Thank you for placing your order. It is now being processed and an update will be sent within 72hrs. The order is as follows: </p>
 											{{-- <p style="font-size: 16px; line-height: 25px; color: #505050;font-family:Arial;">Paid with {{ isset($data1['data']['payment_type']) ? $data1['data']['payment_type'] : '' }}.</p> --}}
 										</td>
 									</tr>
