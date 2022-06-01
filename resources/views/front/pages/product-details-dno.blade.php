@@ -610,6 +610,7 @@
 		}
 
 		function addtobasketFunction(getUrl){
+            var trdata = $('#finaldiamondprice span').text().replace(/[^0-9]/gi, '');
 			$.ajax({
                 type: 'POST',
                 url: getUrl,
@@ -623,7 +624,7 @@
 					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
-					'price': parseFloat($('#finaldiamondprice').text()) || 0, //parseFloat($('#price').val()) || 0;
+					'price':parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
                     'setting_price': parseFloat($('#selected_variation_price').val()) || 0, //parseFloat($('#price').val()) || 0;
                 },
                 success: function (res) {
