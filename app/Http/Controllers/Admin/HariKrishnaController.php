@@ -15,11 +15,15 @@ class HariKrishnaController extends Controller
         set_time_limit(5000);
         ini_set('max_execution_time', 3000);
 
+<<<<<<< HEAD
         $basket_data = DiamondStock::get()->toArray();
         //  echo "done sdfdf";
         // echo "Done<pre>";
         // // print_r($basket_data);
         // die;
+=======
+        $basket_data = DiamondStock::orderBy('Sr_No','asc')->get()->toArray();
+>>>>>>> 76727e38caa8db3f6bc17ddf5d0c1206fd995842
         HariKrishna::truncate();
         foreach($basket_data as $records)
         {
@@ -28,8 +32,8 @@ class HariKrishnaController extends Controller
             $records['updated_at'] = date('Y-m-d h:i:s');
             HariKrishna::create($records);
         }
-        echo "done sdfdf";
-        echo "Done<pre>";
-        die;
+        // echo "done sdfdf";
+        // echo "Done<pre>";
+        // die;
     }
 }
