@@ -53,7 +53,7 @@
 									</thead>
 									<tbody>
 										<tr>
-											<td style="font-size: 16px;font-family:Arial; padding: 20px 0; font-style: italic;"> Order number: {{ isset($data1['data']['token']) ? $data1['data']['token'] : '' }} </td>
+											<td style="font-size: 16px;font-family:Arial; padding: 20px 0; font-style: italic;"> Order number: {{ isset($data1['data']['custom_order_id']) ? $data1['data']['custom_order_id'] : '' }} </td>
 											<td align="right"  style="font-size: 16px;font-family:Arial; padding: 20px 0;font-style: italic;">  Order date: {!! isset($data1['data']['created_at']) ? date("d-m-Y", strtotime($data1['data']['created_at'])) : '' !!}  </td>
 										</tr>
 									</tbody>
