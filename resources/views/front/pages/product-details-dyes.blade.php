@@ -149,6 +149,7 @@
 
 					</div>
 				</div>
+                @if($plainbandMulti==false)
 				<div id="apiCustomDesign">
 					<div class="type-variations-row">
 						<div class="type-variations-col">
@@ -261,6 +262,7 @@
 						</div>
 					</div>
 				</div>
+                @endif
 				<div class="product-decriptions">
 					{!!$data->description!!}
 				</div>
@@ -570,6 +572,7 @@
 			getSelectedAttributePrice();
 
 			$('#carat').on('change',function(){
+                console.log("checking");
 				getSelectedAttributePrice();
 			});
 			$('#diamond-colour').on('change',function(){
@@ -673,6 +676,7 @@
 					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
+					'setting_price': getNumberFromCurrency($('#selected_variation_price').val()) || 0, //parseFloat($('#price').val()) || 0;
 					'price': getNumberFromCurrency($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;
 					'certificatelink': $('#certificate_url').val() || '',
 					'shape': $('#selected_diamond_shape').val() || '',
@@ -724,8 +728,6 @@
                 },
                 success: function (res) {
 
-                    // console.log(res.statuscode);
-                    // return false;
 
 					$('#finaldiamondprice').html("");
                     if(res.statuscode == 200){
@@ -778,23 +780,25 @@
 
 		function getFinalPrice(){
 			$('#addtobasket').addClass('disabledAnchor');
+            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$.ajax({
                 type: 'POST',
                 url: '{{route("products-final-price")}}',
                 data: {
                     '_token': "{{csrf_token()}}",
 					'variation_price' : parseFloat($('#selected_variation_price').val()),
-					'diamond_price' : parseFloat($('#selected_diamond_price').val()),
+					'diamond_price' : parseFloat($('#selected_diamond_price').val().split(",").join("")),
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
 					$('#finaldiamondprice').html("");
 					if(res != ''){
-						$('#finaldiamondprice').text(res);
+						// $('#finaldiamondprice').text(res);
+                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res+' </span>');
 						$('#selected_final_price').val(res);
 						$('#addtobasket').removeClass('disabledAnchor');
 					}else{
-						$('#finaldiamondprice').text("");
+						$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
 					}
                 }
             });

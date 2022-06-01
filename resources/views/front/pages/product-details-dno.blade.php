@@ -75,6 +75,11 @@
 			border:10px solid transparent;
 			border-bottom-color:#fff;
 		}
+        span.price-not-found {
+            font-size: 14px;
+            color: #8e2e65;
+            font-weight: bold;
+        }
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -84,22 +89,15 @@
 @endsection
 
 @section('content')
-<?php
-    // echo "<pre>";
-    // print_r(count($prodImages));
-    // print_r(count($variationImages));
-    // // print_r($data);
-    // die;
 
-?>
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 
 			<div class="product-info-media">
 				{{-- <a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
-
-					<div id="carousel" class="owl-carousel">
+                @if($plainbandMulti==false)
+                    <div id="carousel" class="owl-carousel">
                         @if($variationImages)
                             @foreach($variationImages as $images)
                                 <div class="item">
@@ -110,7 +108,7 @@
                             @endforeach
                         @endif
 
-						@if($prodImages)
+                        @if($prodImages)
                             @foreach($prodImages as $images)
                                 @php
                                     $explode = explode('/',$images->image_url);
@@ -125,7 +123,16 @@
                                 @endif
                             @endforeach
                         @endif
-					</div>
+                    </div>
+                @else
+                    <video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+                        @if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
+                            <source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
+                        @else
+                            <source src="" type="video/mp4" type="video/mp4" />
+                        @endif
+                    </video>
+                @endif
 					{{-- <div id="carousel" class="owl-carousel">
 
 
@@ -141,12 +148,12 @@
 				<div class="diamond-type">
 					<label>Choose Your Diamond</label>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" checked value="mined">
+						<input type="radio" name="attribute_choose-your-diamond" @if($plainbandMulti==false) checked @endif  value="mined">
 						<span>Mined Diamond</span>
 					</div>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
-						<span>Lab Grow Diamond</span>
+						<input type="radio" name="attribute_choose-your-diamond" @if($plainbandMulti==true) checked @endif value="lab_grown">
+						<span>Lab Grown Diamond</span>
 					</div>
 				</div>
 				@endif
@@ -161,9 +168,12 @@
 				<div class="product-decriptions">
 					{!!$data->description!!}
 				</div>
-				<div class="product-finder-price">
-					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
+                <div class="product-finder-price" id="finaldiamondprice">
+
 				</div>
+				{{-- <div class="product-finder-price">
+					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
+				</div> --}}
 
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
@@ -414,7 +424,7 @@
 							<div class="error">
 								{{ $errors->first('g-recaptcha-response') }}
 							</div>
-							@endif	
+							@endif
 						</div>
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
@@ -431,7 +441,13 @@
 
 <!-- Modal -->
 @include('front.includes.dekopay-finance-options')
-
+<?php
+    if($plainbandMulti){
+        $plainbandMulti = 1;
+    }else{
+        $plainbandMulti = 0;
+    }
+?>
 @endsection
 
 @section('js')
@@ -463,9 +479,44 @@
 
 			});
 
+            $(document).on('change','#metal-type',function(){
+				getProdVideo('onChange');
+
+			});
 		})
+
+        function getProdVideo(action=null){
+			var metal_type = $('#metal-type :selected').val();
+
+			$.ajax({
+				type: 'POST',
+				url: '{{route("get-product-video")}}',
+				data: {
+					'_token': "{{csrf_token()}}",
+					'slug' : '{{$data->slug}}',
+					'metal_color' : metal_type,
+				},
+				success: function (res) {
+					if(res.vari_video){
+						var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+						$('#variationVideo').attr('src', videoUrl);
+						$("#variationVideo")[0].play();
+					}
+					if(res.regular_price!='' || res.regular_price!='0.00')
+						$('#selected_variation_price').val(res.regular_price);
+					else
+						$('#selected_variation_price').val(res.sale_price);
+					if(action!=null && action=='onChange'){
+
+                        // getSelectedVariationsData();
+                    }
+						// getFinalPrice();
+				}
+			});
+		}
+
 		function getSelectedVariationsData(){
-			$('#finaldiamondprice').text("Pending...");
+			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 			var variations = [];
 			$('.type-variations-row select').each(function(i, sel){
@@ -474,7 +525,6 @@
 					variations.push($(sel).val());
 			});
 			var data_slug = '{{url("/")}}';
-			console.log(variations);
 			$.ajax({
 				type: 'POST',
 				url: '{{route("get-variations-data")}}',
@@ -486,7 +536,9 @@
 					'variations' : variations,
 				},
 				success: function (res) {
+                    console.log(res.statusCode);
 					if(res.regular_price!='' || res.regular_price!='0.00'){
+                        // console.log("if");
 						var regular_p = Math.round(res.regular_price_with_vat);
 
 						if(diamond_type=='lab_grown' && regular_p<=3000){
@@ -501,9 +553,15 @@
 						}
 						$('#selected_variation_price').val(res.regular_price);
 						$('#selected_final_price').val(Math.round(regular_p_final));
-						$('#finaldiamondprice').text(Math.round(regular_p_final));
-					}
-					else{
+                        if(res.statusCode == 500){
+                            $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
+                        }else{
+                            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p_final)+' </span>');
+
+                        }
+						// $('#finaldiamondprice').text();
+					}else{
+                        console.log("Else");
 						var sale_p = Math.round(res.sale_price_with_vat);
 
 						if(diamond_type=='lab_grown' && sale_p<=3000){
@@ -518,7 +576,8 @@
 						}
 						$('#selected_variation_price').val(res.sale_price);
 						$('#selected_final_price').val(Math.round(sale_p_final));
-						$('#finaldiamondprice').text(Math.round(sale_p_final));
+						// $('#finaldiamondprice').text(Math.round(sale_p_final));
+                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(sale_p_final)+' </span>');
 					}
 
 					if(res.vari_image!='' && res.vari_image!=null){
@@ -539,6 +598,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
+                    'type' : '{{$plainbandMulti}}',
                 },
                 success: function (res) {
 
@@ -550,6 +610,7 @@
 		}
 
 		function addtobasketFunction(getUrl){
+            var trdata = $('#finaldiamondprice span').text().replace(/[^0-9]/gi, '');
 			$.ajax({
                 type: 'POST',
                 url: getUrl,
@@ -563,7 +624,8 @@
 					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
-					'price': parseFloat($('#finaldiamondprice').text()) || 0, //parseFloat($('#price').val()) || 0;
+					'price':parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
+                    'setting_price': parseFloat($('#selected_variation_price').val()) || 0, //parseFloat($('#price').val()) || 0;
                 },
                 success: function (res) {
 					console.log(res);

@@ -50,7 +50,7 @@
                                                 <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
                                                 class="img-responsive" />
                                             @else
-                                                <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/MarlowsDiamonds-Logo-225x107.png" width="100" height="100" class="img-responsive" />
+                                                <img src="{{asset('assets/images/marlowsdiamonds-logo.png')}}" width="70" height="100" class="img-responsive" />
                                             @endif
                                         </div>
                                         <div class="cart-nameitem">
