@@ -40,6 +40,14 @@ class PayPalPaymentController extends Controller
     public function handlePayment($orderId)
     {
         $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id',$orderId)->first();
+        $maxOrderId = Order::max('custom_order_id');
+
+
+        if(isset($maxOrderId) && !empty($maxOrderId)){
+            $generateCustomOrderId = $maxOrderId +1;
+        }else{
+            $generateCustomOrderId = '31002';
+        }
 
         $getProdustItems = [];
         foreach($getOrderDetails->getOrderDetailsFunction as $key => $orderDetails){
@@ -114,11 +122,11 @@ class PayPalPaymentController extends Controller
         }
 
         if (isset($redirect_url)) {
-            $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>1]);
+            $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'custom_order_id'=>$generateCustomOrderId,'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>1]);
             return Redirect::away($redirect_url);
         }
 
-        $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>0]);
+        $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'custom_order_id'=>$generateCustomOrderId,'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>0]);
 
         return redirect()->back()->with('error','Payment gateway initiliazation failed.');
     }
@@ -147,7 +155,7 @@ class PayPalPaymentController extends Controller
         });
 
         $result = [
-            'response' => 'Your Order number('.$request->token.') has been cancelled',
+            'response' => 'Your Order number('.$getOrderDetailsMail['custom_order_id'].') has been cancelled',
             // 'getOrderDetails' => (isset($getOrderDetails)?$getOrderDetails:[]),
         ];
 
@@ -186,7 +194,7 @@ class PayPalPaymentController extends Controller
                 });
 
                 $result = [
-                    'response' => 'Your Order number('.$request->token.') has been successfully paid',
+                    'response' => 'Your Order number('.$getOrderDetailsMail['custom_order_id'].') has been successfully paid',
                 ];
                 return view('front.pages.success-page',$result);
             }
