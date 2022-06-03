@@ -109,44 +109,52 @@ class AddToCartController extends Controller
 
     public function addToCartDiamond(Request $request)
     {
-        if(isset($request->certificate_number) && !empty($request->certificate_number) && $request->certificate_number > 0){
+
+        // echo "<pre>";
+        // print_r($request->all(''));
+        // die;
+
+        if(isset($request->CERT_NO) && !empty($request->CERT_NO) && $request->CERT_NO > 0){
 
             $input = $request->all('');
             unset($request['slug']);
             unset($request['price']);
             unset($request['_token']);
 
-            $titleHtml = '';
+            // $titleHtml = '';
 
-            $titleHtml .= '<div class="cartproduct-title">Custom Diamond</div> <dl class="variation">';
+            // $titleHtml .= '<div class="cartproduct-title">Custom Diamond</div> <dl class="variation">';
             $selectedAttributes = [];
             foreach($request->all('') as $key => $finalVal){
-                $selectedAttributes['title'] = 'Custom Diamond';
+                // $selectedAttributes['title'] = 'Custom Diamond';
                 if(isset($finalVal) && !empty($finalVal)){
                     $selectedAttributes[$key] = $finalVal;
-                    if($key == 'certificatelink'){
-                        $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                        $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
-                    }elseif($key == 'imagelink'){
-                        // Image Link is shown blank
-                    }else{
-                        $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                        $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
-                    }
+                    // if($key == 'certificatelink'){
+                    //     $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                    //     $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
+                    // }elseif($key == 'imagelink'){
+                    //     // Image Link is shown blank
+                    // }else{
+                    //     $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
+                    //     $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
+                    // }
 
 
                 }
             }
-            $titleHtml .= ' </dl>';
+            // $titleHtml .= ' </dl>';
 
             $cart = session()->get('cart', []);
-
-            if(isset($cart[$request->certificate_number])) {
-                $cart[$request->certificate_number]['quantity']++;
+            // echo "<pre>";
+            // print_r($selectedAttributes);
+            // // print_r($request->all(''));
+            // die;
+            if(isset($cart[$request->CERT_NO])) {
+                $cart[$request->CERT_NO]['quantity']++;
             } else {
-                $cart[$request->certificate_number] = [
-                    "name" => $titleHtml,
-                    "selected_parameter"=> $selectedAttributes,
+                $cart[$request->CERT_NO] = [
+                    "name" => 'Custom Diamond',
+                    "customArray"=> $selectedAttributes,
                     "quantity" => 1,
                     "price" => $input['price'],
                     "vat" => getVATPriceFunction($input['setting_price']),

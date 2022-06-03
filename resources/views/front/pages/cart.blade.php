@@ -43,8 +43,8 @@
                                 <td class="product-info-col" data-th="Product">
                                     <div class="cart-item-name">
                                         <div class="cart-image-item">
-                                            @if(isset($details['selected_parameter']['imagelink']) && !empty($details['selected_parameter']['imagelink']))
-                                                <img src="{{$details['selected_parameter']['imagelink']}}" width="100" height="100"
+                                            @if(isset($details['customArray']['ImageLink']) && !empty($details['customArray']['ImageLink']))
+                                                <img src="{{$details['customArray']['ImageLink']}}" width="100" height="100"
                                                 class="img-responsive" />
                                             @elseif(isset($details['image']) && !empty($details['image']))
                                                 <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
@@ -54,7 +54,11 @@
                                             @endif
                                         </div>
                                         <div class="cart-nameitem">
-                                            <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div>
+                                            @if(isset($details['customArray']['slug']) && !empty($details['customArray']['slug']))
+                                                <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div>
+                                            @else
+                                                <div class="cartproduct-title"><a href="javascript:void(0);"> {{ $details['name'] }}</a></div>
+                                            @endif
                                             <dl class="variation">
                                                 @if(isset($details['customArray']['choose_diamond']) && !empty($details['customArray']['choose_diamond']))
                                                     <dt class="variation-Colour">Choose Your Diamond: </dt>
