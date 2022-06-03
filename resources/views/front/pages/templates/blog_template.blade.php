@@ -10,13 +10,25 @@
   		}
   	</style>
 <!-- header banner start -->
+<?php
+    $customImage = isset($data->image)?$data->image:'';
+    $title = '';
+    $customSubTitle = '';
+    $customShortDescription = '';
 
-<div class="category-banner" style="background-image:url({{asset('storage/'.$data->image)}})">
+    if(isset($data->blog_title_details) && !empty($data->blog_title_details)){
+        $title =$data->name;
+        $customSubTitle = $data->blog_title_details->subtitle;
+        $customShortDescription = $data->blog_title_details->short_description;
+        $customImage = isset($data->blog_title_details->image)?$data->blog_title_details->image:'';
+    }
+?>
+<div class="category-banner" style="background-image:url({{asset('storage/'.$customImage)}})">
 	<div class="container">
 		<div class="category-banner-text">
-			<h1>{{$data->title}}</h1>
-			<h2>{{$data->subtitle}}</h2>
-			<p><?php echo html_entity_decode($data->short_description);?></p>
+			<h1>{{isset($data->title)?$data->title:$title}}</h1>
+			<h2>{{isset($data->subtitle)?$data->subtitle:$customSubTitle}}</h2>
+			<p><?php echo html_entity_decode(isset($data->short_description)?$data->short_description:$customShortDescription);?></p>
 		</div>
 	</div>
 </div>
