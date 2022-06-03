@@ -148,11 +148,11 @@
 				<div class="diamond-type">
 					<label>Choose Your Diamond</label>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" @if($plainbandMulti==false) checked @endif  value="mined">
+						<input type="radio" name="attribute_choose-your-diamond" value="mined">
 						<span>Mined Diamond</span>
 					</div>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" @if($plainbandMulti==true) checked @endif value="lab_grown">
+						<input type="radio" name="attribute_choose-your-diamond" checked value="lab_grown">
 						<span>Lab Grown Diamond</span>
 					</div>
 				</div>
