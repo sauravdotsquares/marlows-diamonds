@@ -5,15 +5,16 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\DiamondStock;
 use App\Models\HariKrishna;
+use DB;
 
-class DemoCrone extends Command
+class LogCron extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'demo:crone';
+    protected $signature = 'log:cron';
 
     /**
      * The console command description.
@@ -39,18 +40,19 @@ class DemoCrone extends Command
      */
     public function handle()
     {
-        $this->info('successfully');
-        $basket_data = DiamondStock::get()->toArray();
+        
+        $this->line('==================');
+        $this->line('Running my job at ' . date('Y-m-d h:i:s'));
         HariKrishna::truncate();
-        foreach($basket_data as $records)
-        {
-            unset($records['id']);
-            $records['created_at'] = date('Y-m-d h:i:s');
-            $records['updated_at'] = date('Y-m-d h:i:s');
-            HariKrishna::create($records);
-        }
-        echo "done sdfdf";
-        // return 0;
-        // $this->info("demo:crone Crone Run Successfully");
+        
+        DiamondStock::chunk(1000, function ($records) {
+            foreach ($records as $record) {
+                unset($record['id']);
+                $record['created_at'] = date('Y-m-d h:i:s');
+                $record['updated_at'] = date('Y-m-d h:i:s');
+                HariKrishna::create($record->toArray());
+            }
+        });
+        $this->line('Ending my job at ' . date('Y-m-d h:i:s'));
     }
 }
