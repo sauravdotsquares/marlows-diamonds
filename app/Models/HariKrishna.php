@@ -13,7 +13,7 @@ class HariKrishna extends Model
     //BaseModelOne.php
     protected $connection = 'mysql';
 
-    protected $table = "harikrishna";
+    protected $table = "hkdiamondstock";
 
     protected $fillable = [
         "Sr_No",
