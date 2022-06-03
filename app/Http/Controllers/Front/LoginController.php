@@ -53,6 +53,7 @@ class LoginController extends Controller
     }
 
     public function register($userDetails){
+
         if(isset($userDetails['email'])){
             // echo "if";
             // die;
@@ -66,6 +67,26 @@ class LoginController extends Controller
                 'is_active' => 1
             ]);
             return $getInsertedDetails;
+        }
+
+        return false;
+    }
+
+    public function registerLoginFrontPage($userDetails){
+
+        if(isset($userDetails['email'])){
+            // echo "if";
+            // die;
+            $getInsertedDetails = User::create([
+                'name' => 'customer',
+                'email' => $userDetails['email'],
+                'username' => isset($userDetails['username'])?$userDetails['username']:'customer',
+                'password' => bcrypt(isset($userDetails['password'])?$userDetails['password']:'123456789'),
+                'nicename' => 'Customers',
+                'user_role' => 3,
+                'is_active' => 1
+            ]);
+            return true;
         }
 
         return false;
@@ -101,11 +122,16 @@ class LoginController extends Controller
 
     public function registerCustomer(Request $request)
     {
+        $request->validate([
+            'username' => 'required|max:255',
+            'email' => 'required|unique:users|max:255',
+            'password' => 'required',
+        ]);
         unset($request['_token']);
-        $getRegisterResponse = $this->register($request->all(''));
+        $getRegisterResponse = $this->registerLoginFrontPage($request->all(''));
 
         if(isset($getRegisterResponse) && $getRegisterResponse == 1){
-            $getLoginResponse = $this->login($request->all(''));
+            $getLoginResponse = $this->loginPageFunction($request->all(''));
 
             if(isset($getLoginResponse) && $getLoginResponse == 1){
                 return redirect(route('my_accounts'));
