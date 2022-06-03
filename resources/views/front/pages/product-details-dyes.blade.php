@@ -681,6 +681,7 @@
 					'certificatelink': $('#certificate_url').val() || '',
 					'shape': $('#selected_diamond_shape').val() || '',
 					'certificate': $('#selected_diamond_certno').val() || '',
+                    'jsondata':$('input[name="selectrefinedata"]:checked').data('jsonvalue'),
                 },
                 success: function (res) {
 					// console.log(res);

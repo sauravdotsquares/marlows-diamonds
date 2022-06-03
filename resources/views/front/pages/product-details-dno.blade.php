@@ -623,6 +623,7 @@
 					'fingersize' : $('#finger-size').val(),
 					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
+                    'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
 					'slug' : '{{$data->slug}}',
 					'price':parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
                     'setting_price': parseFloat($('#selected_variation_price').val()) || 0, //parseFloat($('#price').val()) || 0;

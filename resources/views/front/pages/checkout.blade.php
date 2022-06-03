@@ -252,7 +252,56 @@
                                             @php $totalVat += $details['vat'] * $details['quantity'] @endphp
                                         <tr class="checkcart-item">
                                             <td class="checkpr-name">
-                                                {!! $details['name'] !!}
+                                                <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div>
+                                                <dl class="variation">
+                                                    @if(isset($details['customArray']['choose_diamond']) && !empty($details['customArray']['choose_diamond']))
+                                                        <dt class="variation-Colour">Choose Your Diamond: </dt>
+                                                        <dd class="variation-Colour"><p> {{ ($details['customArray']['choose_diamond'] == 'lab_grown')?'Lab Grown':'Mined'}}</p></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['metalcolor']) && !empty($details['customArray']['metalcolor']))
+                                                        <dt class="variation-Colour">Metal: </dt>
+                                                        <dd class="variation-Colour"><p> {{$details['customArray']['metalcolor']}}</p></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['fingersize']) && !empty($details['customArray']['fingersize']))
+                                                        <dt class="variation-FingerSize">Finger Size: </dt>
+                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['fingersize']}}</p></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['Shape']) && !empty($details['customArray']['Shape']))
+                                                        <dt class="variation-FingerSize">Diamond Shape: </dt>
+                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Shape']}}</p></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['Carat']) && !empty($details['customArray']['Carat']))
+                                                        <dt class="variation-FingerSize">Diamond Carat: </dt>
+                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Carat']}}</p></dd>
+                                                    @elseif(isset($details['customArray']['carat']) && !empty($details['customArray']['carat']))
+                                                        <dt class="variation-FingerSize">Diamond Carat: </dt>
+                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['carat']}}</p></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['Color']) && !empty($details['customArray']['Color']))
+                                                        <dt class="variation-FingerSize">Diamond Color: </dt>
+                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Color']}}</p></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['Clarity']) && !empty($details['customArray']['Clarity']))
+                                                        <dt class="variation-FingerSize">Diamond Cut Grade: </dt>
+                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Clarity']}}</p></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['Lab']) && !empty($details['customArray']['Lab']))
+                                                        <dt class="variation-FingerSize">Certificate: </dt>
+                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Lab']}}</p></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['CertificateLink']) && !empty($details['customArray']['CertificateLink']))
+                                                        <dt class="variation-FingerSize">Certificate Link: </dt>
+                                                        <dd class="variation-FingerSize"><a target="_blank" href="{{$details['customArray']['CertificateLink']}}">View Certificate</a></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['ImageLink']) && !empty($details['customArray']['ImageLink']))
+                                                        <dt class="variation-FingerSize">Image: </dt>
+                                                        <dd class="variation-FingerSize"><a target="_blank" href="{{$details['customArray']['ImageLink']}}">View Diamond</a></dd>
+                                                    @endif
+                                                    @if(isset($details['customArray']['CERT_NO']) && !empty($details['customArray']['CERT_NO']))
+                                                        <dt class="variation-FingerSize">Certificate: </dt>
+                                                        <dd class="variation-FingerSize"><p >{{$details['customArray']['CERT_NO']}}</p></dd>
+                                                    @endif
+                                                </dl>
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
                                             </td>
                                             <td class="check-product-total">

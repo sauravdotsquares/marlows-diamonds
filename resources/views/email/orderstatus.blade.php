@@ -8,6 +8,12 @@
 </head>
 <body style="padding: 0; margin: 0;">
 <table width="100%" border="0" cellspacing="0" cellpadding="3" style="font-family:Arial; margin: auto; background-color: #fff;">
+    <?php
+        // echo "<pre>";
+        // print_r($data1['data']);
+        // die;
+
+    ?>
 	<tbody>
 		<tr>
 			<td>
@@ -72,44 +78,172 @@
 									</thead>
 									<tbody>
 										@foreach($data1['data']['get_order_details_function'] as $key => $orderDetails)
-										<?php
+                                            <?php
+                                            $detailsDecode = (array)json_decode($orderDetails['order_product_details']);
+                                            // unset($detailsDecode['title']);
+                                            // echo "adasd<pre>";
+                                            // print_r($detailsDecode);
+                                            // die;
+                                            ?>
+                                            <tr>
+                                                <td width="270px" align="left" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+                                                color: #505050;line-height: 20px;">
+                                                <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                    {{isset($orderDetails['product_details']['title'])?$orderDetails['product_details']['title']:''}}</p>
+                                                    {{-- <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">	 </p> --}}
 
-                                        $detailsDecode = (array)json_decode($orderDetails['order_product_details']);
-                                        // echo "adasd<pre>";
-                                        unset($detailsDecode['title']);
-                                        // print_r($data1['data']['final_price']);
-                                        // die;
-
-                                        ?>
-										<tr>
-											<td width="270px" align="left" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
-											color: #505050;line-height: 20px;">
-												<p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">												{{isset($orderDetails['product_details']['title'])?$orderDetails['product_details']['title']:''}}</p>
-
-												@foreach($detailsDecode as $key1 => $jsonData)
-                                                    @if($key1 == 'certificatelink')
-                                                        <?php // echo "<pre>"; print_r($jsonData); die; ?>
-                                                        {{-- <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
-                                                        <strong style=" font-size: 14px;">{{ucwords($key1)}}:</strong>  <a href="{{$jsonData}}" target="_blank">
-                                                            view </a></p> --}}
-                                                    @else
+                                                    @if(isset($detailsDecode['choose_diamond']) && !empty($detailsDecode['choose_diamond']))
                                                         <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
-                                                        <strong style=" font-size: 14px;">{{ucwords($key1)}}:</strong> {{$jsonData}}</p>
+                                                            <strong style=" font-size: 14px;">
+                                                                Choose Your Diamond:
+                                                            </strong>
+                                                            {{ ($detailsDecode['choose_diamond'] == 'lab_grown')?'Lab Grown':'Mined'}}
+                                                        </p>
                                                     @endif
-                                                @endforeach
+                                                    @if(isset($detailsDecode['metalcolor']) && !empty($detailsDecode['metalcolor']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Metal:
+                                                            </strong>
+                                                            {{$detailsDecode['metalcolor']}}
+                                                        </p>
+                                                    @endif
+                                                    @if(isset($detailsDecode['fingersize']) && !empty($detailsDecode['fingersize']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Finger Size:
+                                                            </strong>
+                                                            {{$detailsDecode['fingersize']}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if(isset($detailsDecode['Carat']) && !empty($detailsDecode['Carat']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond Carat:
+                                                            </strong>
+                                                            {{$detailsDecode['Carat']}}
+                                                        </p>
+                                                    @elseif(isset($detailsDecode['carat']) && !empty($detailsDecode['carat']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond Carat:
+                                                            </strong>
+                                                            {{$detailsDecode['carat']}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if(isset($detailsDecode['Color']) && !empty($detailsDecode['Color']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond Color:
+                                                            </strong>
+                                                            {{$detailsDecode['Color']}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if(isset($detailsDecode['Clarity']) && !empty($detailsDecode['Clarity']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond Clarity:
+                                                            </strong>
+                                                            {{$detailsDecode['Clarity']}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if(isset($detailsDecode['Lab']) && !empty($detailsDecode['Lab']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond Certificate:
+                                                            </strong>
+                                                            {{$detailsDecode['Lab']}}
+                                                        </p>
+                                                    @endif
+
+                                                    @if(isset($detailsDecode['shape']) && !empty($detailsDecode['shape']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond Shape:
+                                                            </strong>
+                                                            {{$detailsDecode['shape']}}
+                                                        </p>
+                                                    @endif
+                                                    @if(isset($detailsDecode['Stock_NO']) && !empty($detailsDecode['Stock_NO']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond StockNo:
+                                                            </strong>
+                                                            {{$detailsDecode['Stock_NO']}}
+                                                        </p>
+                                                    @endif
 
 
-											</td>
-											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
-											color: #505050;line-height: 20px; font-size: 14px;">
-													{{$orderDetails['quantity']}}
-											</td>
-											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
-											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$orderDetails['total_price']}}
-											</td>
-										</tr>
-										<?php // die; ?>
+
+
+
+
+                                                    {{-- @if(isset($detailsDecode['CertificateLink']) && !empty($detailsDecode['CertificateLink']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Certificate Link:
+                                                            </strong>
+                                                            <a target="_blank" href="{{$detailsDecode['CertificateLink']}}">View Certificate</a>
+
+                                                        </p>
+                                                    @endif --}}
+                                                    {{-- @if(isset($detailsDecode['ImageLink']) && !empty($detailsDecode['ImageLink']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Image:
+                                                            </strong>
+                                                            <a target="_blank" href="{{$detailsDecode['ImageLink']}}">View Diamond</a>
+                                                        </p>
+                                                    @endif --}}
+
+                                                    @if(isset($detailsDecode['CERT_NO']) && !empty($detailsDecode['CERT_NO']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond CertificateNo:
+                                                            </strong>
+                                                            {{$detailsDecode['CERT_NO']}}
+                                                        </p>
+                                                    @endif
+
+
+                                                    {{-- @foreach($detailsDecode as $key1 => $jsonData)
+                                                        @if($key1 == 'certificatelink')
+
+                                                        @else
+                                                            <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">{{ucwords($key1)}}:</strong> {{$jsonData}}</p>
+                                                        @endif
+                                                    @endforeach --}}
+                                                </td>
+
+                                                {{-- <td width="270px" align="left" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+                                                color: #505050;line-height: 20px;">
+                                                    <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                    WED023</p>
+                                                    <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                    <strong style=" font-size: 14px;">Choose Your Diamond:</strong> Mined Diamond </p>
+                                                    <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                    <strong style=" font-size: 14px;">Finger Size:</strong> l </p>
+                                                    <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                    <strong style=" font-size: 14px;">Carat:</strong> 0.38 </p>
+                                                    <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                    <strong style=" font-size: 14px;">Metal Colour:</strong> 9ct White Gold </p>
+                                                </td> --}}
+
+                                                <td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+                                                color: #505050;line-height: 20px; font-size: 14px;">
+                                                        {{$orderDetails['quantity']}}
+                                                </td>
+                                                <td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+                                                color: #505050;line-height: 20px; font-size: 14px;">
+                                                        {{MY_CURRENCY_SYMBOL}}{{$orderDetails['total_price']}}
+                                                </td>
+                                            </tr>
+                                            <?php // die; ?>
 										@endforeach
 
 
@@ -181,14 +315,14 @@
 									<tbody>
 										<tr>
 											<td align="center" style="border: 1px dashed #808080;font-family:Arial; font-size: 15px; color: #808080; padding: 30px 20px; line-height: 24px;">
-												{{$data1['data']['order_address']['first_name']}} {{$data1['data']['order_address']['last_name']}}<br>
-												{{$data1['data']['order_address']['company_name']}}<br>
-												{{$data1['data']['order_address']['street_address_l1']}} {{$data1['data']['order_address']['street_address_l2']}}<br>
-												{{$data1['data']['order_address']['town_city']}}<br>
-												{{$data1['data']['order_address']['state']}} {{$data1['data']['order_address']['pin_code']}}<br>
-												{{$data1['data']['order_address']['country_name']}}<br>
-												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="tel:{{$data1['data']['order_address']['mobile']}}"> {{$data1['data']['order_address']['mobile']}}</a><br>
-												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="mailto:{{$data1['data']['order_address']['email']}}"> {{$data1['data']['order_address']['email']}}</a>
+												{{isset($data1['data']['order_address']['first_name'])?$data1['data']['order_address']['first_name']:''}} {{isset($data1['data']['order_address']['last_name'])?$data1['data']['order_address']['last_name']:''}}<br>
+												{{isset($data1['data']['order_address']['company_name'])?$data1['data']['order_address']['company_name']:''}}<br>
+												{{isset($data1['data']['order_address']['street_address_l1'])?$data1['data']['order_address']['street_address_l1']:''}} {{isset($data1['data']['order_address']['street_address_l2'])?$data1['data']['order_address']['street_address_l2']:''}}<br>
+												{{isset($data1['data']['order_address']['town_city'])?$data1['data']['order_address']['town_city']:''}}<br>
+												{{isset($data1['data']['order_address']['state'])?$data1['data']['order_address']['state']:''}} {{isset($data1['data']['order_address']['pin_code'])?$data1['data']['order_address']['pin_code']:''}}<br>
+												{{isset($data1['data']['order_address']['country_name'])?$data1['data']['order_address']['country_name']:''}}<br>
+												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="tel:{{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}"> {{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}</a><br>
+												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="mailto:{{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}"> {{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}</a>
 											</td>
 										</tr>
 										<tr>
