@@ -11,10 +11,10 @@
 				<a href="{{env('APP_URL')}}">Home</a>
 			</li>
 			<li>
-				<a href="#">Custom Engagement Rings</a>
+				<a href="{{asset($data->cat_name->slug)}}">{{isset($data->cat_name->name)?$data->cat_name->name:'Uncategorized'}}</a>
 			</li>
 			<li>
-				<a href="#">{{$data->title}}</a>
+				<a href="{{asset('blog-resources/'.$data->slug)}}">{{isset($data->title)?$data->title:'Title'}}</a>
 			</li>
 
 		</ul>
@@ -43,7 +43,7 @@
 					<div class="blogdetail-desc">
 						<?php echo html_entity_decode($data->description);?>
 					</div>
-				</div>	
+				</div>
 			</div>
 			<div class="col-lg-3">
 				<div class="blogdetails-sidebar">
@@ -73,9 +73,9 @@
 							@endforeach
 						</ul>
 					</div>
-				</div>				
+				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
@@ -87,7 +87,7 @@
 		<div class="head-para-three">
 			<div class="heading-h-three">
 				Related Posts
-			</div>			
+			</div>
 		</div>
 		<div class="related-post-slider">
 			<div class="owl-carousel owl-theme related-post st-arrows">
@@ -118,9 +118,9 @@
 					</div>
 			    </div>
 				@endforeach
-			
-			    
-			    
+
+
+
 			</div>
 		</div>
 	</div>
