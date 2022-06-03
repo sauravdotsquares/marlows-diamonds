@@ -590,6 +590,14 @@ if (!function_exists('validate_breadcrumb')) {
             return ($getTotal*20)/100;
         }
     }
+    if (!function_exists("prefunc")) {
+        function prefunc($getData)
+        {
+            echo "<pre>";
+            print_r($getData);
+            die;
+        }
+    }
 
 }
 

@@ -1,4 +1,11 @@
 @extends('layouts.front.app')
+@section('css')
+<style>
+    .error{
+            color:red !important;
+        }
+</style>
+@endsection
 @section('content')
 
     @if(Session::has('error'))
@@ -54,18 +61,33 @@
                                     @csrf
                                     <div class="checkout-form-group">
                                         <label class="input-label">Username <abbr class="required">*</abbr></label>
-                                        <input type="text" name="username" id="username" required="required" class="form-control">
+                                        <input type="text" name="username" id="username" required="required" class="form-control {{ $errors->has('username') ? 'error' : '' }}">
+                                        @if ($errors->has('username'))
+                                            <div class="error">
+                                                {{ $errors->first('username') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Email address <abbr class="required">*</abbr></label>
-                                        <input type="email" name="email" id="email" required="required" class="form-control">
+                                        <input type="email" name="email" id="email" required="required" class="form-control {{ $errors->has('email') ? 'error' : '' }}">
+                                        @if ($errors->has('email'))
+                                        <div class="error">
+                                            {{ $errors->first('email') }}
+                                        </div>
+                                        @endif
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Password <abbr class="required">*</abbr></label>
-                                        <input type="password" name="password" id="password" required="required" class="form-control">
+                                        <input type="password" name="password" id="password" required="required" class="form-control {{ $errors->has('password') ? 'error' : '' }}">
+                                        @if ($errors->has('password'))
+                                            <div class="error">
+                                                {{ $errors->first('password') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="log-privacy-policy-text">
-                                        <p>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our 
+                                        <p>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our
                                             <a href="/privacy-policy" target="_blank">privacy policy</a>.</p>
                                     </div>
                                     <div class="action-login">
@@ -81,8 +103,8 @@
     </div>
 
 
-    
+
 @endsection
-  
+
 @section('js')
 @endsection
