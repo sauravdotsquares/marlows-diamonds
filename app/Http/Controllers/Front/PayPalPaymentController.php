@@ -146,12 +146,13 @@ class PayPalPaymentController extends Controller
         ];
 
         $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
-            Mail::send('email.orderstatus', array(
+            Mail::send('email.orderstatus-cancel', array(
             'data1' => $data,
         ), function($message) use ($request,$admin_email ){
             $message->from('hello@marlows-diamonds.co.uk');
-            $message->to($admin_email, 'Admin')->subject('Order Received');
-            $message->cc($request['customer_email'], 'Customer')->subject('Order Received');
+            $message->to($admin_email, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+            $message->to('london@marlows-diamonds.co.uk', 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+            $message->cc($request['customer_email'], 'Customer')->subject('Marlows Diamonds: Your transaction not completed.');
         });
 
         $result = [

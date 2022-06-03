@@ -437,8 +437,8 @@ class ProductController extends Controller
 
         $hkData = getHKApiRecords($data);
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,1);
+        // prefunc($rapnetData);
 
-        //echo '<pre>'; print_r($rapnetData); die;
         $rapnetRecords = [];
         if(!empty($rapnetData)){
             foreach ($rapnetData as $key => $result) {
@@ -452,6 +452,7 @@ class ProductController extends Controller
                 $rapnetRecords[$key]['Lab'] = $result->LabTitle;
                 $rapnetRecords[$key]['Amount'] = $result->FinalPrice;
                 $rapnetRecords[$key]['Stock_NO'] = $result->DiamondID;
+                $rapnetRecords[$key]['CERT_NO'] = $result->CertificateNumber;
 
 
                 if($result->LabTitle=='GIA'){
@@ -468,12 +469,15 @@ class ProductController extends Controller
                     }
 
             }
+            // echo '<pre>'; print_r($rapnetRecords); die;
           }
          //echo '<pre>'; print_r($rapnetRecords); die;
           $apiData['data'] = Arr::collapse([$hkData, $rapnetRecords]);
 
           $apiData['VAT'] = getVAT();
           //echo '<pre>'; print_r($apiData); die;
+
+        //   prefunc($apiData);
 
           if(!empty($apiData['data'])){
             $dataArray = [];
