@@ -190,8 +190,8 @@ class PayPalPaymentController extends Controller
                     'data1' => $data,
                 ), function($message) use ($request,$admin_email ){
                     $message->from('hello@marlows-diamonds.co.uk');
-                    $message->to($admin_email, 'Admin')->subject(env('APP_NAME').'  ('.$getOrderDetailsMail['custom_order_id'].') -Order Received');
-                    $message->cc($request['customer_email'], 'Customer')->subject(env('APP_NAME').'  ('.$getOrderDetailsMail['custom_order_id'].') -Order Received');
+                    $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
+                    $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
                 });
                 
                 $result = [
