@@ -252,7 +252,12 @@
                                             @php $totalVat += $details['vat'] * $details['quantity'] @endphp
                                         <tr class="checkcart-item">
                                             <td class="checkpr-name">
-                                                <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div>
+                                                @if(isset($details['customArray']['slug']) && !empty($details['customArray']['slug']))
+                                                    <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div>
+                                                @else
+                                                    <div class="cartproduct-title"><a href="javascript:void(0);"> {{ $details['name'] }}</a></div>
+                                                @endif
+                                                {{-- <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div> --}}
                                                 <dl class="variation">
                                                     @if(isset($details['customArray']['choose_diamond']) && !empty($details['customArray']['choose_diamond']))
                                                         <dt class="variation-Colour">Choose Your Diamond: </dt>
