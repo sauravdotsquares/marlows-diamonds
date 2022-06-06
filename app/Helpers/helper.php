@@ -587,7 +587,8 @@ if (!function_exists('validate_breadcrumb')) {
     if (!function_exists("getVATPriceFunction")) {
         function getVATPriceFunction($getTotal)
         {
-            return ($getTotal*20)/100;
+            // return $getTotal - ($getTotal/1.2);
+            return number_format($getTotal - ($getTotal/1.2),2);
         }
     }
     if (!function_exists("prefunc")) {
