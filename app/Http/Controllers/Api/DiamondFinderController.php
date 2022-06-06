@@ -87,6 +87,7 @@ class DiamondFinderController
 	        	$rapnetRecords[$key]['Lab'] = $result->LabTitle;
 	        	$rapnetRecords[$key]['Amount'] = $result->FinalPrice;
 	        	$rapnetRecords[$key]['Stock_NO'] = $result->DiamondID;
+                $rapnetRecords[$key]['CERT_NO'] = $result->CertificateNumber;
 
 
 	        	if($result->LabTitle=='GIA'){

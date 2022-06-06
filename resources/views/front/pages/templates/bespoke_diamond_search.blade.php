@@ -863,12 +863,16 @@
         if(certificatenumber != '' && certificatenumber !== null && certificatenumber !== undefined){
             // console.log("certificatenumber");
             certNumber = certificatenumber;
-        }else if(stockno != '' && stockno !== null && stockno !== undefined){
+        }else{
+            certNumber = '';
+        }
+
+        if(stockno != '' && stockno !== null && stockno !== undefined){
             // console.log("stockno");
-            certNumber = stockno;
+            stockno = stockno;
         }else{
             // console.log("else");
-            certNumber = 0;
+            stockno = stockno;
         }
 
 
@@ -891,17 +895,18 @@
             url: '{{route("add.to.cart.diamond")}}',
             data: {
                 '_token': "{{csrf_token()}}",
-                'carat' : $('#tdCarat'+index).text(),
-                'color' : $('#tdColor'+index).text(),
-                'clarity' : $('#tdClarity'+index).text(),
-                'grade' : $('#tdCut'+index).text(),
-                'certificate' : $('#tdLab'+index).text(),
-                'certificate_number' : certNumber,
+                'Carat' : $('#tdCarat'+index).text(),
+                'Color' : $('#tdColor'+index).text(),
+                'Clarity' : $('#tdClarity'+index).text(),
+                'Cut' : $('#tdCut'+index).text(),
+                'Lab' : $('#tdLab'+index).text(),
+                'CERT_NO' : certNumber,
+                'Stock_NO' : stockno,
                 'price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, //parseFloat($('#price').val()) || 0;
                 'setting_price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, //parseFloat($('#price').val()) || 0;
-                'certificatelink': $('#tdCertiLink'+index).find('a').attr('href') || '',
-                'shape': $('#tdShape'+index).text() || '',
-                'imagelink': $('#tdImgLink'+index).find('img').attr('src') || '',
+                'CertificateLink': $('#tdCertiLink'+index).find('a').attr('href') || '',
+                'Shape': $('#tdShape'+index).text() || '',
+                'ImageLink': $('#tdImgLink'+index).find('a').attr('href') || '',
             },
             success: function (res) {
                 // console.log(res);
