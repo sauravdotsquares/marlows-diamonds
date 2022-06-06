@@ -591,7 +591,7 @@
 			});
 		}
 		function getCustomFilter(){
-			$('#finaldiamondprice').text("Pending...");
+			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -627,7 +627,7 @@
                     'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
 					'slug' : '{{$data->slug}}',
 					'price':parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
-                    'setting_price': parseFloat($('#selected_variation_price').val()) || 0, //parseFloat($('#price').val()) || 0;
+                    'setting_price': parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
                 },
                 success: function (res) {
 					console.log(res);
