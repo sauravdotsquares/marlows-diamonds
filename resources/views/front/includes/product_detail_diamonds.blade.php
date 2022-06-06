@@ -20,9 +20,7 @@
                 @endif
             </td>
             <td>
-
-                    <input type="radio" id="selectrefinedata{{$key}}" class="refinedata" data-price="{{isset($apiRecords['Amount'])?number_format(($apiRecords['Amount']*1.25)*$VAT,2):''}}" data-certurl="{{isset($apiRecords['CertificateLink'])?$apiRecords['CertificateLink']:''}}" data-certno="{{isset($apiRecords['Stock_NO'])?$apiRecords['Stock_NO']:''}}" data-shape="{{isset($apiRecords['Shape'])?$apiRecords['Shape']:''}}" name="selectrefinedata" @if($key==0) checked @endif>
-
+                    <input type="radio" id="selectrefinedata{{$key}}" data-jsonvalue="{{json_encode($apiRecords)}}" class="refinedata" data-price="{{isset($apiRecords['Amount'])?number_format(($apiRecords['Amount']*1.25)*$VAT,2):''}}" data-certurl="{{isset($apiRecords['CertificateLink'])?$apiRecords['CertificateLink']:''}}" data-certno="{{isset($apiRecords['Stock_NO'])?$apiRecords['Stock_NO']:''}}" data-shape="{{isset($apiRecords['Shape'])?$apiRecords['Shape']:''}}" name="selectrefinedata" @if($key==0) checked @endif>
             </td>
 
 </tr>

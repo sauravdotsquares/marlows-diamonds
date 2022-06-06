@@ -103,7 +103,7 @@ class PlaceOrderController extends Controller
                             $getOrderDetails->order_id = $getOrders->id;
                             $getOrderDetails->product_id = $key;
                             $getOrderDetails->user_id = $getEmailExists->id;
-                            $getOrderDetails->order_product_details = json_encode($getProduct['selected_parameter']);
+                            $getOrderDetails->order_product_details = json_encode($getProduct['customArray']);
                             $getOrderDetails->quantity = $getProduct['quantity'];
                             $getOrderDetails->product_price = $getProduct['price'];
                             $getOrderDetails->total_price = $getProduct['quantity']*$getProduct['price'];
