@@ -18,7 +18,6 @@
                 <img src="{{asset('assets/images/ring-img.png')}}" alt="ring img">
             </div>
         </div>
-
     </div>
 </div>
 <!-- home main-banner endt -->
@@ -231,7 +230,7 @@
                 <p>Join our world full of diamonds and we’ll sparkle your inbox by keeping you up-to-date.</p>
             </div>
             <div class="joinour-mailing-form">
-                <form action="" method="post" action="{{ route('maillist') }}">
+                <form method="post" action="{{ route('maillist') }}">
                     @csrf
 					<div class="form-rows flexed flex-flex-wrap">
                         <div class="form-col width-50">
@@ -258,15 +257,12 @@
                         <div class="form-col">
                             <label>Message</label>
                             <textarea required="required" name="description" class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
-
                         </div>
                     </div>
                     <div class="action-btn">
                         <button class="white-bg-btn">Subscribe</button>
-
                     </div>
                 </form>
-
             </div>
 			@if(Session::has('success'))
 				<div class="alert alert-success">

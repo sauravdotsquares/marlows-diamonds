@@ -1,7 +1,7 @@
 
 
 <div class="vieworderd-list ">
-    <p> Order <strong>#{{$getOrderDetails->token}}</strong> was placed on <strong>{{$getOrderDetails->created_at->format('M d, Y')}}</strong> and is currently
+    <p> Order <strong>#{{$getOrderDetails->custom_order_id}}</strong> was placed on <strong>{{$getOrderDetails->created_at->format('M d, Y')}}</strong> and is currently
         <strong>{{$getOrderDetails->status_details}}.</strong></p>
     <div class="view-order-details">
         <h4>Order details</h4>
@@ -16,32 +16,92 @@
                 <tbody>
                     @foreach($getOrderDetails->getOrderDetailsFunction as $key => $value)
                         <?php
-                            $getDataProduct = (array)json_decode($value->order_product_details);
-                            $new_value = $getDataProduct['title'];
-                            unset($getDataProduct['title']);
-                            array_unshift($getDataProduct, $new_value);
+                            // echo "<pre>";
+                            // print_r($value->product_details->title);
+                            // // print_r($value->order_product_details);
+                            // die;
+                        ?>
+                        <?php
+                            $detailsDecode = (array)json_decode($value->order_product_details);
+                            // $new_value = $getDataProduct['title'];
+                            // unset($getDataProduct['title']);
+                            // array_unshift($getDataProduct, $new_value);
                         ?>
                         <tr>
                             <td>
                                 @if(isset($value->product_details) && !empty($value->product_details))
                                     <a class="order-pr-name" href="{{asset('product/')}}/{{isset($value->product_details)?$value->product_details->slug:''}}">
-                                        <strong class="product-quantity">{{isset($getDataProduct['0'])?$getDataProduct['0']:''}}×{{$value->quantity}}</strong>
+                                        <strong class="product-quantity">{{isset($value->product_details->title)?$value->product_details->title:'Custom Diamond'}}×{{$value->quantity}}</strong>
                                     </a>
                                 @elseif(isset($getDataProduct['0']) && $getDataProduct['0'] == 'Custom Diamond')
                                     <a class="order-pr-name" href="javascript:void(0);">
-                                        <strong class="product-quantity">{{isset($getDataProduct['0'])?$getDataProduct['0']:''}}×{{$value->quantity}}</strong>
+                                        <strong class="product-quantity">{{isset($getDataProduct['0'])?$getDataProduct['0']:'Custom Diamond'}}×{{$value->quantity}}</strong>
                                     </a>
                                 @endif
                                 <ul class="wc-item-meta">
-                                    @foreach($getDataProduct as $keyR => $valnew)
+                                    @if(isset($detailsDecode['choose_diamond']) && !empty($detailsDecode['choose_diamond']))
+                                        <li><strong class="wc-item-meta-label">Choose Your Diamond :</strong>
+                                            <p> {{ ($detailsDecode['choose_diamond'] == 'lab_grown')?'Lab Grown':'Mined'}}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['metalcolor']) && !empty($detailsDecode['metalcolor']))
+                                        <li><strong class="wc-item-meta-label">Metal:</strong>
+                                            <p> {{ $detailsDecode['metalcolor'] }}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['fingersize']) && !empty($detailsDecode['fingersize']))
+                                        <li><strong class="wc-item-meta-label">Finger Size:</strong>
+                                            <p> {{ $detailsDecode['fingersize'] }}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['Carat']) && !empty($detailsDecode['Carat']))
+                                        <li><strong class="wc-item-meta-label">Diamond Carat:</strong>
+                                            <p> {{ $detailsDecode['Carat'] }}</p>
+                                        </li>
+                                    @elseif(isset($detailsDecode['carat']) && !empty($detailsDecode['carat']))
+                                        <li><strong class="wc-item-meta-label">Diamond Carat:</strong>
+                                            <p> {{ $detailsDecode['carat'] }}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['Color']) && !empty($detailsDecode['Color']))
+                                        <li><strong class="wc-item-meta-label">Diamond Color:</strong>
+                                            <p> {{ $detailsDecode['Color'] }}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['Clarity']) && !empty($detailsDecode['Clarity']))
+                                        <li><strong class="wc-item-meta-label">Diamond Clarity:</strong>
+                                            <p> {{ $detailsDecode['Clarity'] }}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['Lab']) && !empty($detailsDecode['Lab']))
+                                        <li><strong class="wc-item-meta-label">Diamond Certificate:</strong>
+                                            <p> {{ $detailsDecode['Lab'] }}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['shape']) && !empty($detailsDecode['shape']))
+                                        <li><strong class="wc-item-meta-label">Diamond Shape:</strong>
+                                            <p> {{ $detailsDecode['shape'] }}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['Stock_NO']) && !empty($detailsDecode['Stock_NO']))
+                                        <li><strong class="wc-item-meta-label"> Diamond StockNo:</strong>
+                                            <p> {{ $detailsDecode['Stock_NO'] }}</p>
+                                        </li>
+                                    @endif
+                                    @if(isset($detailsDecode['CERT_NO']) && !empty($detailsDecode['CERT_NO']))
+                                        <li><strong class="wc-item-meta-label">Diamond CertificateNo:</strong>
+                                            <p> {{ $detailsDecode['CERT_NO'] }}</p>
+                                        </li>
+                                    @endif
+
+                                    {{-- @foreach($getDataProduct as $keyR => $valnew)
+
                                         @if($keyR != 0)
                                             @if($keyR == "certificatelink")
                                                 <li><strong class="wc-item-meta-label">{{ucfirst($keyR)}}:</strong><a href="{{$valnew}}" target="_blank">View</a>
-                                                    {{-- <p>{{ucfirst($valnew)}}</p> --}}
                                                 </li>
                                             @elseif($keyR == "imagelink")
                                                 <li><strong class="wc-item-meta-label">{{ucfirst($keyR)}}:</strong><a href="{{$valnew}}" target="_blank">View</a>
-                                                    {{-- <p>{{ucfirst($valnew)}}</p> --}}
                                                 </li>
                                             @else
                                                 <li><strong class="wc-item-meta-label">{{ucfirst($keyR)}}:</strong>
@@ -49,7 +109,7 @@
                                                 </li>
                                             @endif
                                         @endif
-                                    @endforeach
+                                    @endforeach --}}
                                 </ul>
                             </td>
                             <td> {{MY_CURRENCY_SYMBOL}} {{ $value->product_price * $value->quantity}}</td>
