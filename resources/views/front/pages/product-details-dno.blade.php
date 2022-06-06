@@ -617,6 +617,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'carat' : $('#carat').val(),
+					'total-diamond-weight' : $('#total-diamond-weight').val(),
 					'color' : $('#diamond-colour').val(),
 					'clarity' : $('#diamond-clarity').val(),
 					'grade' : $('#diamond-grade').val(),

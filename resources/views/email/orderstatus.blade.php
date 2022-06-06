@@ -116,6 +116,14 @@
                                                             {{$detailsDecode['fingersize']}}
                                                         </p>
                                                     @endif
+                                                    @if(isset($detailsDecode['total-diamond-weight']) && !empty($detailsDecode['total-diamond-weight']))
+                                                        <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+                                                            <strong style=" font-size: 14px;">
+                                                                Diamond Weight:
+                                                            </strong>
+                                                            {{$detailsDecode['total-diamond-weight']}}
+                                                        </p>
+                                                    @endif
 
                                                     @if(isset($detailsDecode['Carat']) && !empty($detailsDecode['Carat']))
                                                         <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
