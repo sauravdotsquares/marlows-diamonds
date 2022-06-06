@@ -176,14 +176,14 @@
                                                             {{$detailsDecode['shape']}}
                                                         </p>
                                                     @endif
-                                                    @if(isset($detailsDecode['Stock_NO']) && !empty($detailsDecode['Stock_NO']))
+                                                    {{-- @if(isset($detailsDecode['Stock_NO']) && !empty($detailsDecode['Stock_NO']))
                                                         <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
                                                             <strong style=" font-size: 14px;">
                                                                 Diamond StockNo:
                                                             </strong>
                                                             {{$detailsDecode['Stock_NO']}}
                                                         </p>
-                                                    @endif
+                                                    @endif --}}
 
 
 
