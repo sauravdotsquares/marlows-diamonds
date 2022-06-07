@@ -72,6 +72,10 @@
                                                     <dt class="variation-FingerSize">Finger Size: </dt>
                                                     <dd class="variation-FingerSize"><p>{{$details['customArray']['fingersize']}}</p></dd>
                                                 @endif
+                                                @if(isset($details['customArray']['width-mm']) && !empty($details['customArray']['width-mm']))
+                                                    <dt class="variation-FingerSize">Width MM: </dt>
+                                                    <dd class="variation-FingerSize"><p>{{$details['customArray']['width-mm']}}</p></dd>
+                                                @endif
                                                 @if(isset($details['customArray']['total-diamond-weight']) && !empty($details['customArray']['total-diamond-weight']))
                                                     <dt class="variation-FingerSize">Diamond Weight: </dt>
                                                     <dd class="variation-FingerSize"><p>{{$details['customArray']['total-diamond-weight']}}</p></dd>
@@ -118,7 +122,7 @@
                                 <td class="product-price-col" data-th="Price">{{MY_CURRENCY_SYMBOL}}{{
                                     number_format($details['price'],2) }}</td>
                                 <td class="product-quantity-col" data-th="Quantity">
-                                    <input type="number" value="{{ $details['quantity'] }}"
+                                    <input type="number" disabled="disabled" value="{{ $details['quantity'] }}"
                                         class="form-control quantity update-cart" />
                                 </td>
                                 <td class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}}{{

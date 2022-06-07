@@ -84,7 +84,7 @@ class AddToCartController extends Controller
                 $cart = session()->get('cart', []);
 
                 if(isset($cart[$productData->id])) {
-                    $cart[$productData->id]['quantity']++;
+                    // $cart[$productData->id]['quantity']++;
                 } else {
                     $cart[$productData->id] = [
                         "name" => $productData->title,
@@ -150,7 +150,7 @@ class AddToCartController extends Controller
             // // print_r($request->all(''));
             // die;
             if(isset($cart[$request->CERT_NO])) {
-                $cart[$request->CERT_NO]['quantity']++;
+                // $cart[$request->CERT_NO]['quantity']++;
             } else {
                 $cart[$request->CERT_NO] = [
                     "name" => 'Custom Diamond',
