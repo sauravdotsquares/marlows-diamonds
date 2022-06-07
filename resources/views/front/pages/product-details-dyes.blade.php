@@ -85,6 +85,9 @@
             color: #8e2e65;
             font-weight: bold;
         }
+        .error {
+            color: #e74c3c !important;
+        }
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -488,8 +491,9 @@
 			@endif
 				<div class="visit-form">
 
-					<form method="post" action="{{ route('contact') }}">
+					<form id="contactForm">
 					@csrf
+                        <input type="hidden" name="custom_url" id="custom_url" value="{{url()->full()}}">
 						<div class="form-controls">
 							<input type="text" name="title" id="title" class="{{ $errors->has('title') ? 'error' : '' }}" placeholder="Your Name">
 							<!-- Error -->
@@ -559,8 +563,85 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
+
+        function blankForm(){
+            $('input[name="title"]').val('');
+            $('input[name="email"]').val('');
+            $('input[name="phone"]').val('');
+            $('textarea[name="description"]').val('');
+            $("button[type='submit']").prop('disabled',false);
+            $('#requestAppointment').modal('hide');
+            grecaptcha.reset();
+        }
+
+
+
 		$(document).ready(function(){
+            $('form#contactForm').validate({
+                rules: {
+                    title: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    phone: {
+                        required: true,
+                    },
+                    description: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    title: {
+                        required: 'Name is required',
+                    },
+                    email: {
+                        required: 'Email is required',
+                        email: 'Valid email is required',
+                    },
+                    phone: {
+                        required: 'Phone is required',
+                    },
+                    description: {
+                        required: 'Description is required',
+                    }
+                },
+                submitHandler: function (form) {
+                    if (grecaptcha.getResponse()) {
+                        var form_data = new FormData(form);
+                        $(form).find("button[type='submit']").prop('disabled',true);
+                        $("button[type='submit']").text("Please Wait...");
+                        $.ajax({
+                            url: "{{ route('contact') }}",
+                            method: "POST",
+                            cache:false,
+                            contentType:false,
+                            processData: false,
+                            data: form_data,
+                            success: function (response) {
+                                blankForm();
+                                $("button[type='submit']").text("Subscribe");
+                                // $(this).find("button[type='submit']").prop('disabled',true);
+                                // console.log(response);
+                                // return false;
+                                if(response.status == 200){
+                                    toastr.success(response.success);
+                                    // window.location.reload();
+                                }else{
+                                    toastr.info(response.error);
+                                }
+                            }
+                        });
+                    } else {
+                        alert('Please confirm captcha to proceed')
+                    }
+                }
+            });
+
             getRelatedProduct();
 
 			getCustomFilter(); //getProdVideo();

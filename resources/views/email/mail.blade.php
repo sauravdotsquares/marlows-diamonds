@@ -12,6 +12,13 @@
 		</tr>
 		<tr>
 			<td style="color: #000; font-size: 15px;font-family:Arial; border-bottom: 1px solid #A0A0A0; padding: 13px 0 10px 0 ">
+				<p style="color: #000; font-size: 15px;font-family:Arial; margin: 0; line-height: 30px;"><b style="color: #000; font-size: 15px;font-family:Arial;">URL</b></p>
+				<p style="color: #000; font-size: 15px;font-family:Arial; margin: 0;">
+					<a style="color: #8E2E65; font-size: 15px;font-family:Arial; margin: 0; text-decoration: none;" href="javascript:void(0);">{{ isset($url)?$url:'' }}</a></p>
+			</td>
+		</tr>
+        <tr>
+			<td style="color: #000; font-size: 15px;font-family:Arial; border-bottom: 1px solid #A0A0A0; padding: 13px 0 10px 0 ">
 				<p style="color: #000; font-size: 15px;font-family:Arial; margin: 0; line-height: 30px;"><b style="color: #000; font-size: 15px;font-family:Arial;">Email</b></p>
 				<p style="color: #000; font-size: 15px;font-family:Arial; margin: 0;">
 					<a style="color: #8E2E65; font-size: 15px;font-family:Arial; margin: 0; text-decoration: none;" href="mailto:{{ isset($email)?$email:'' }}">{{ isset($email)?$email:'' }}</a></p>
@@ -31,7 +38,6 @@
 					{{ isset($user_query)?$user_query:'' }}
 				</p>
 			</td>
-		</tr>	
+		</tr>
 	</tbody>
-
 </table>
