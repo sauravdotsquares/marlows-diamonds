@@ -11,8 +11,8 @@ class Appointments extends Model
      * @var string $table
      */
     protected $table = 'appointments';
-    
+
     use HasFactory;
-	
-	protected $fillable = ['title','email','phone','description','status'];
+
+	protected $fillable = ['title','email','custom_url','phone','description','status'];
 }
