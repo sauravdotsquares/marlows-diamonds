@@ -54,6 +54,11 @@
                                             <p> {{ $detailsDecode['fingersize'] }}</p>
                                         </li>
                                     @endif
+                                    @if(isset($detailsDecode['width-mm']) && !empty($detailsDecode['width-mm']))
+                                        <li><strong class="wc-item-meta-label">Width MM:</strong>
+                                            <p> {{ $detailsDecode['width-mm'] }}</p>
+                                        </li>
+                                    @endif
                                     @if(isset($detailsDecode['total-diamond-weight']) && !empty($detailsDecode['total-diamond-weight']))
                                         <li><strong class="wc-item-meta-label">Diamond Weight:</strong>
                                             <p> {{ $detailsDecode['total-diamond-weight'] }}</p>
