@@ -39,7 +39,7 @@ class Order extends Model
     }
     public function getOrderAddressAttribute()
     {
-        return CustomerAddress::where('order_id',$this->id)->first();
+        return CustomerAddress::where('user_id',$this->user_id)->first();
     }
     public function getTotalQuantityAttribute()
     {
