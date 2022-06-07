@@ -228,7 +228,7 @@ $(document).ready(function() {
                     data: form_data,
                     success: function (response) {
                         blankForm();
-                        $("button[type='submit']").text("Subscribe");
+                        $("button[type='submit']").text("Send Message");
                         // $(this).find("button[type='submit']").prop('disabled',true);
                         // console.log(response);
                         // return false;
