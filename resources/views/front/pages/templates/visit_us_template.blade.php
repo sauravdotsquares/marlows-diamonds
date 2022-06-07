@@ -1,6 +1,13 @@
 @extends('layouts.front.app')
 @section('content')
-
+    @section('css')
+    <style>
+        .error {
+            color: #e74c3c !important;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @endsection
 
 
 <!-- category header banner start -->
@@ -36,8 +43,9 @@
 				<div class="visit-form">
 					<h3>NEED ASSISTANCE?</h3>
 					<p>We're here to help...<br>Complete the contact form below and we will be in touch.</p>
-					<form method="post" action="{{ route('contact') }}">
-					@csrf
+					<form id="contactForm">
+					    @csrf
+                        <input type="hidden" name="custom_url" id="custom_url" value="{{url()->full()}}">
 						<div class="form-controls">
 							<input type="text" name="title" id="title" class="{{ $errors->has('title') ? 'error' : '' }}" placeholder="Your Name">
 							<!-- Error -->
@@ -78,12 +86,12 @@
 							<div class="error">
 								{{ $errors->first('g-recaptcha-response') }}
 							</div>
-							@endif	
+							@endif
 						</div>
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
-						
+
 					</form>
 					<div class="visitform-text">
 						Your information will <b>NOT</b> be used by third-parties for marketing. Please see our <u><a href="/privacy-policy">privacy policy</a></u> for more information.
@@ -131,34 +139,111 @@ $(document).ready(function() {
          });
 </script>
 <style>
-.outer-block {
-  width: 200px;
-  margin: auto;
-}
+    .outer-block {
+    width: 200px;
+    margin: auto;
+    }
 
-.block {
-  display: flex;
-}
+    .block {
+    display: flex;
+    }
 
-.block>div {
-  flex: 1;
-  text-align: center;
-  border: 2px solid red;
-  height: 80px;
-}
+    .block>div {
+    flex: 1;
+    text-align: center;
+    border: 2px solid red;
+    height: 80px;
+    }
 
-.open {
-  display: block !important;
-}
+    .open {
+    display: block !important;
+    }
 
-.dc-11 {
+    .dc-11 {
 
-  display: none;
-}
+    display: none;
+    }
 
-.dc-12 {
+    .dc-12 {
 
-  display: none;
-}
+    display: none;
+    }
 </style>
+@endsection
+@section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    function blankForm(){
+        $('input[name="title"]').val('');
+        $('input[name="email"]').val('');
+        $('input[name="phone"]').val('');
+        $('textarea[name="description"]').val('');
+        $("button[type='submit']").prop('disabled',false);
+        grecaptcha.reset();
+    }
+
+    $('form#contactForm').validate({
+        rules: {
+            title: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            phone: {
+                required: true,
+            },
+            description: {
+                required: true,
+            }
+        },
+        messages: {
+            title: {
+                required: 'Name is required',
+            },
+            email: {
+                required: 'Email is required',
+                email: 'Valid email is required',
+            },
+            phone: {
+                required: 'Phone is required',
+            },
+            description: {
+                required: 'Description is required',
+            }
+        },
+        submitHandler: function (form) {
+            if (grecaptcha.getResponse()) {
+                var form_data = new FormData(form);
+                $(form).find("button[type='submit']").prop('disabled',true);
+                $("button[type='submit']").text("Please Wait...");
+                $.ajax({
+                    url: "{{ route('contact') }}",
+                    method: "POST",
+                    cache:false,
+                    contentType:false,
+                    processData: false,
+                    data: form_data,
+                    success: function (response) {
+                        blankForm();
+                        $("button[type='submit']").text("Subscribe");
+                        // $(this).find("button[type='submit']").prop('disabled',true);
+                        // console.log(response);
+                        // return false;
+                        if(response.status == 200){
+                            toastr.success(response.success);
+                            // window.location.reload();
+                        }else{
+                            toastr.info(response.error);
+                        }
+                    }
+                });
+            } else {
+                alert('Please confirm captcha to proceed')
+            }
+        }
+    });
+</script>
 @endsection
