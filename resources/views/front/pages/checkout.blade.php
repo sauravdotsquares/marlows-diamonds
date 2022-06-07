@@ -271,6 +271,10 @@
                                                         <dt class="variation-FingerSize">Finger Size: </dt>
                                                         <dd class="variation-FingerSize"><p>{{$details['customArray']['fingersize']}}</p></dd>
                                                     @endif
+                                                    @if(isset($details['customArray']['width-mm']) && !empty($details['customArray']['width-mm']))
+                                                        <dt class="variation-FingerSize">Width MM: </dt>
+                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['width-mm']}}</p></dd>
+                                                    @endif
                                                     @if(isset($details['customArray']['total-diamond-weight']) && !empty($details['customArray']['total-diamond-weight']))
                                                         <dt class="variation-FingerSize">Diamond Weight: </dt>
                                                         <dd class="variation-FingerSize"><p>{{$details['customArray']['total-diamond-weight']}}</p></dd>
