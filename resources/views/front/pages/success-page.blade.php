@@ -24,7 +24,7 @@
         }
         $getJsonOrderData = json_encode($getCustomOrderData);
     ?>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-988710676"></script>
     <script>
         gtag('event', 'purchase', {{$getJsonOrderData}});
     </script>
