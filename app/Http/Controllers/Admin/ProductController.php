@@ -437,4 +437,13 @@ class ProductController extends Controller
         return response()->json(['status'=>200,'msg'=>"Removed!!!"]);
 
     }
+
+    public function getProductExcelReport()
+    {
+        $getAllProductList = Products::with(['getProductVariation'])->select('title',)->latest()->get();
+        return response()->json($getAllProductList);
+        // echo "<pre>";
+        // print_r("Check another report of product");
+        // die;
+    }
 }

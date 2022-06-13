@@ -46,6 +46,7 @@
 
 </head>
 <body ng-app="MarlowsAPP">
+    @yield('google-ecommerce')
     @include('layouts.front.header')
 
     @if(session('success'))
