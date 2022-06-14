@@ -62,8 +62,8 @@ class LoginController extends Controller
         if (auth()->guard('employee')->attempt($details)) {
             if(Auth::attempt($details, true)){
 
-                $updateInstaData = new InstagramController;
-                $updateInstaData->updateInstaData();
+                // $updateInstaData = new InstagramController;
+                // $updateInstaData->updateInstaData();
 
                 Auth::login(Auth::user(), true);
             }
