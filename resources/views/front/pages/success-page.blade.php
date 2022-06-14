@@ -22,11 +22,9 @@
                 'price' => $value2['total_price'],
             );
         }
-        $getJsonOrderData = json_encode($getCustomOrderData);
     ?>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-988710676"></script>
     <script>
-        gtag('event', 'purchase', {{$getJsonOrderData}});
+        gtag('event', 'purchase', {!!json_encode($getCustomOrderData)!!});
     </script>
 @endsection
 @section('content')
