@@ -249,7 +249,7 @@
                                     @if(session('cart'))
                                         @foreach(session('cart') as $id => $details)
                                             @php $total += $details['price'] * $details['quantity'] @endphp
-                                            @php $totalVat += $details['vat'] * $details['quantity'] @endphp
+                                            @php $totalVat += str_replace( ',', '', $details['vat'] ) * $details['quantity'] @endphp
                                         <tr class="checkcart-item">
                                             <td class="checkpr-name">
                                                 @if(isset($details['customArray']['slug']) && !empty($details['customArray']['slug']))

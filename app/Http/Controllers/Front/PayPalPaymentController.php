@@ -195,6 +195,7 @@ class PayPalPaymentController extends Controller
                 });
 
                 $result = [
+                    'pay' => $getOrderDetailsMail,
                     'response' => 'Your Order number('.$getOrderDetailsMail['custom_order_id'].') has been successfully paid',
                 ];
                 return view('front.pages.success-page',$result);
