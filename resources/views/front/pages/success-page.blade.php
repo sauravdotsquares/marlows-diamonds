@@ -1,5 +1,32 @@
 @extends('layouts.front.app')
-
+@section('google-ecommerce')
+    <?php
+        $getCustomOrderData = array();
+        $getCustomOrderData['transaction_id'] = $pay['custom_order_id'];
+        $getCustomOrderData['affiliation'] = 'Marlows online store';
+        $getCustomOrderData['value'] = $pay['final_price'];
+        $getCustomOrderData['currency'] = "GBP";
+        $getCustomOrderData['tax'] = getVATPriceFunction($pay['final_price']);
+        $getCustomOrderData['shipping'] = 0;
+        $getCustomOrderData['items'] = array();
+        foreach($pay['get_order_details_function'] as $value2){
+            $getCustomOrderData['items'][] = array(
+                'id' => $value2['id'],
+                'name' => $value2['product_details']['title'],
+                'list_name' => 'Search Results',
+                'brand' => 'Marlows',
+                'category' => $value2['product_details']['cat_details'],
+                'variant'=> 'Black',
+                'list_position' => 1,
+                'quantity'=> $value2['quantity'],
+                'price' => $value2['total_price'],
+            );
+        }
+    ?>
+    <script>
+        gtag('event', 'purchase', {!!json_encode($getCustomOrderData)!!});
+    </script>
+@endsection
 @section('content')
 
     <div class="category-banner" style="background-image:url(../assets/images/cart-bg.jpg)">
