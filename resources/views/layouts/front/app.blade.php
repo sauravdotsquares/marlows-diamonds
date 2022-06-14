@@ -43,6 +43,16 @@
     {!!$header_settings->get_options('google_tag_manager_code')!!}
     {!!$header_settings->get_options('google_analytics_code')!!}
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1365164-4"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-1365164-4');
+    </script>
+
 </head>
 <body ng-app="MarlowsAPP">
     @yield('google-ecommerce')
