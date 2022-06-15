@@ -440,10 +440,84 @@ class ProductController extends Controller
 
     public function getProductExcelReport()
     {
-        $getAllProductList = Products::with(['getProductVariation'])->select('title',)->latest()->get();
-        return response()->json($getAllProductList);
-        // echo "<pre>";
-        // print_r("Check another report of product");
-        // die;
+        // $getAllProductList = Products::with(['getProductVariation'])->select('*')->latest()->get();
+        // return response()->json($getAllProductList);
+
+        // Filter the excel data
+        // function filterData(&$str){
+        //     $str = preg_replace("/\t/", "\\t", $str);
+        //     $str = preg_replace("/\r?\n/", "\\n", $str);
+        //     if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+        // }
+
+        // Excel file name for download
+        $fileName = "product-data_" . date('Y-m-d') . ".xls";
+
+        // Column names
+        $fields = array('ID', 'Product Name', 'Categories', 'URL', 'Short Description', 'Description', 'Meta Title', 'Meta Description','Variation Details');
+
+        // Display column names as first row
+        $excelData = implode("\t", array_values($fields)) . "\n";
+
+        // Fetch records from database
+        $getAllProductList = Products::with(['getProductVariation'])->select('*')->latest()->get();
+
+        if(count($getAllProductList)){
+            foreach($getAllProductList as $key => $products){
+                $variationDetails = '';
+                foreach($products->getProductVariation as $key1 => $var1){
+                    // echo "adasd<pre>";
+                    // print_r($var1->get_vari_details_id);
+                    // die;
+                    $variationDetails .= ++$key1.':-';
+                    foreach($var1->get_vari_details_id as $key2 => $var2){
+                        $var2->key = str_replace("attri_","",$var2->key);
+                        // echo "adasd<pre>";
+                        // print_r($var2->key);
+                        // die;
+                        if(isset($var2->value) && !empty($var2->value)){
+
+                        }else{
+                            $var2->value = 'All Sizes';
+                        }
+                        $variationDetails .= $var2->key.' - '.$var2->value.' ';
+                    }
+                    $variationDetails .= ' - Prices - '.$var1->regular_price.'   <br>   ';
+                }
+                // echo "adasdsda<pre>";
+                // print_r($variationDetails);
+                // die;
+
+                $lineData = array($products->id, $products->title, $products->cat_details, $products->slug, strip_tags($products->short_description), strip_tags($products->description), $products->meta_title, $products->meta_description,strip_tags($variationDetails));
+                // array_walk($lineData, 'filterData');
+                $excelData .= implode("\t", array_values($lineData)) . "\n";
+            }
+        }else{
+            $excelData .= 'No records found...'. "\n";
+        }
+
+
+        // $query = $db->query("SELECT * FROM members ORDER BY id ASC");
+        // if($query->num_rows > 0){
+        //     // Output each row of the data
+        //     while($row = $query->fetch_assoc()){
+        //         $status = ($row['status'] == 1)?'Active':'Inactive';
+        //         $lineData = array($row['id'], $row['first_name'], $row['last_name'], $row['email'], $row['gender'], $row['country'], $row['created'], $status);
+        //         array_walk($lineData, 'filterData');
+        //         $excelData .= implode("\t", array_values($lineData)) . "\n";
+        //     }
+        // }else{
+        //     $excelData .= 'No records found...'. "\n";
+        // }
+
+        // Headers for download
+        header("Content-Type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=\"$fileName\"");
+
+        // Render excel data
+        echo $excelData;
+        exit;
     }
+
+
 }
