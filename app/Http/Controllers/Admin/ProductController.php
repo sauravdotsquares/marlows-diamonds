@@ -440,21 +440,11 @@ class ProductController extends Controller
 
     public function getProductExcelReport()
     {
-        // $getAllProductList = Products::with(['getProductVariation'])->select('*')->latest()->get();
-        // return response()->json($getAllProductList);
-
-        // Filter the excel data
-        // function filterData(&$str){
-        //     $str = preg_replace("/\t/", "\\t", $str);
-        //     $str = preg_replace("/\r?\n/", "\\n", $str);
-        //     if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
-        // }
-
         // Excel file name for download
         $fileName = "product-data_" . date('Y-m-d') . ".xls";
 
         // Column names
-        $fields = array('ID', 'Product Name', 'Categories', 'URL', 'Short Description', 'Description', 'Meta Title', 'Meta Description','Variation Details');
+        $fields = array('Product Name','Carat','Metal','DiamondWeight','Width','Price');
 
         // Display column names as first row
         $excelData = implode("\t", array_values($fields)) . "\n";
@@ -464,51 +454,45 @@ class ProductController extends Controller
 
         if(count($getAllProductList)){
             foreach($getAllProductList as $key => $products){
-                $variationDetails = '';
                 foreach($products->getProductVariation as $key1 => $var1){
-                    // echo "adasd<pre>";
-                    // print_r($var1->get_vari_details_id);
-                    // die;
-                    $variationDetails .= ++$key1.':-';
+                    $title = '';
+                    $metalType = '';
+                    $caratType = '';
+                    $widthType = '';
+                    $diamondWeight = '';
+                    $price = '';
                     foreach($var1->get_vari_details_id as $key2 => $var2){
                         $var2->key = str_replace("attri_","",$var2->key);
-                        // echo "adasd<pre>";
-                        // print_r($var2->key);
-                        // die;
-                        if(isset($var2->value) && !empty($var2->value)){
-
+                        $title = $products->title;
+                        if(isset($var2->key) && $var2->key == 'metal-type'){
+                            $metalType .= $var2->value;
                         }else{
-                            $var2->value = 'All Sizes';
+                            $metalType .= '';
                         }
-                        $variationDetails .= $var2->key.' - '.$var2->value.' ';
+                        if(isset($var2->key) && $var2->key == 'carat'){
+                            $caratType .= $var2->value;
+                        }else{
+                            $caratType .= '';
+                        }
+                        if(isset($var2->key) && $var2->key == 'total-diamond-weight'){
+                            $diamondWeight .= $var2->value;
+                        }else{
+                            $diamondWeight .= '';
+                        }
+                        if(isset($var2->key) && $var2->key == 'width-mm'){
+                            $widthType = $var2->value;
+                        }else{
+                            $widthType = '';
+                        }
+                        $price = $var1->regular_price;
                     }
-                    $variationDetails .= ' - Prices - '.$var1->regular_price.'   <br>   ';
+                    $lineData = array($products->title,$caratType,$metalType,$diamondWeight,$widthType,$var1->regular_price);
+                    $excelData .= implode("\t", array_values($lineData)) . "\n";
                 }
-                // echo "adasdsda<pre>";
-                // print_r($variationDetails);
-                // die;
-
-                $lineData = array($products->id, $products->title, $products->cat_details, $products->slug, strip_tags($products->short_description), strip_tags($products->description), $products->meta_title, $products->meta_description,strip_tags($variationDetails));
-                // array_walk($lineData, 'filterData');
-                $excelData .= implode("\t", array_values($lineData)) . "\n";
             }
         }else{
             $excelData .= 'No records found...'. "\n";
         }
-
-
-        // $query = $db->query("SELECT * FROM members ORDER BY id ASC");
-        // if($query->num_rows > 0){
-        //     // Output each row of the data
-        //     while($row = $query->fetch_assoc()){
-        //         $status = ($row['status'] == 1)?'Active':'Inactive';
-        //         $lineData = array($row['id'], $row['first_name'], $row['last_name'], $row['email'], $row['gender'], $row['country'], $row['created'], $status);
-        //         array_walk($lineData, 'filterData');
-        //         $excelData .= implode("\t", array_values($lineData)) . "\n";
-        //     }
-        // }else{
-        //     $excelData .= 'No records found...'. "\n";
-        // }
 
         // Headers for download
         header("Content-Type: application/vnd.ms-excel");
