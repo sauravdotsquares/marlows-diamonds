@@ -604,6 +604,8 @@
 				if($(sel).attr('name')!='finger-size')
 					variations.push($(sel).val());
 			});
+            var multistone = '{{$plainbandMulti}}';
+            var jewellery = '{{$plainbandJewellery}}';
 			var data_slug = '{{url("/")}}';
 			$.ajax({
 				type: 'POST',
@@ -616,9 +618,7 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-                    console.log(res.statusCode);
 					if(res.regular_price!='' || res.regular_price!='0.00'){
-                        // console.log("if");
 						var regular_p = Math.round(res.regular_price_with_vat);
 
 						if(diamond_type=='lab_grown' && regular_p<=3000){
@@ -629,8 +629,13 @@
 
 						}else{
 							regular_p_final = regular_p;
-
 						}
+                        if(multistone == 1){
+                            regular_p_final = regular_p_final* 1.5;
+                        }
+                        if(jewellery == 1){
+                            regular_p_final = regular_p_final* 1.1;
+                        }
 						$('#selected_variation_price').val(res.regular_price);
 						$('#selected_final_price').val(Math.round(regular_p_final));
                         if(res.statusCode == 500){
@@ -641,7 +646,6 @@
                         }
 						// $('#finaldiamondprice').text();
 					}else{
-                        console.log("Else");
 						var sale_p = Math.round(res.sale_price_with_vat);
 
 						if(diamond_type=='lab_grown' && sale_p<=3000){
@@ -652,8 +656,13 @@
 
 						}else{
 							sale_p_final = sale_p;
-
 						}
+                        if(multistone == 1){
+                            sale_p_final = sale_p_final* 1.5;
+                        }
+                        if(jewellery == 1){
+                            sale_p_final = sale_p_final* 1.1;
+                        }
 						$('#selected_variation_price').val(res.sale_price);
 						$('#selected_final_price').val(Math.round(sale_p_final));
 						// $('#finaldiamondprice').text(Math.round(sale_p_final));
