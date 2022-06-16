@@ -71,6 +71,12 @@ class ProductController extends Controller
                 $checkPlanCatMultiStone = Category::select('id')->whereIn('id',$prod_categories)->where('name','LIKE','%Multi-Stone%')->get()->toArray();
                 if(!empty($checkPlanCatMultiStone)) $plainbandMulti = true;
                 else $plainbandMulti = false;
+
+                $checkPlanCatJwellery = Category::select('id')->whereIn('id',$prod_categories)->where('name','LIKE','%Diamond Jewellery%')->get()->toArray();
+
+                if(!empty($checkPlanCatJwellery)) $plainbandJewellery = true;
+                else $plainbandJewellery = false;
+
                 // store in session for recent viewd products start
                 $recentProduct = session()->get('recentproducts', []);
 
@@ -98,11 +104,11 @@ class ProductController extends Controller
                     $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
 
                     //echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'plainbandMulti'=>$plainbandMulti,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'plainbandMulti'=>$plainbandMulti,'plainbandJewellery'=>$plainbandJewellery,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
                 }else{
                     $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->groupBy('vari_image')->get();
-                   // echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'plainbandMulti'=>$plainbandMulti,'url'=>$url,'plainband'=>$plainband,'variationImages'=>$variationDetails]);
+                    // echo '<pre>';print_r($variationDetails); die;
+                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'plainbandMulti'=>$plainbandMulti,'plainbandJewellery'=>$plainbandJewellery,'url'=>$url,'plainband'=>$plainband,'variationImages'=>$variationDetails]);
                 }
             }else{
                 return view('layouts.errors.404');
@@ -518,7 +524,7 @@ class ProductController extends Controller
 
             if(!empty($getProductVariationId)){
                 $getVariDetails = ProductVariationDetails::groupBy('value')->whereIn('variation_id',$getProductVariationId)->whereIn('value',$request->variations)->get()->toArray();
-               $attributeCount = count($request->variations);
+                $attributeCount = count($request->variations);
                 foreach ($getProductVariationId as $key1 => $productVariationId) {
                         $variationDetails = array();
                         foreach ($request->variations as $key2 => $variations) {
@@ -536,7 +542,7 @@ class ProductController extends Controller
                 }
                 //echo '<pre>'; print_r($variationDetails);
                 //die;
-                //echo '<pre>'; print_r($getVariDetails); die;
+                // echo '<pre>'; print_r($getVariDetails); die;
             }
             $vat = getVAT();
             if(isset($getVariDetails) && !empty($getVariDetails)){
