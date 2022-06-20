@@ -309,26 +309,28 @@
     @include('front.includes.instagram-section')
 
     <!-- insta photos section end -->
-    <?php
+    @php
         $getPopups = getPromotionalPOPup();
-    ?>
-    <!-- Modal -->
-    <div class="modal fade" id="showPromotionPopup" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ isset($getPopups->title)?$getPopups->title:'' }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-lg-12">
-                        {!! isset($getPopups->description)?$getPopups->description:'' !!}
+    @endphp
+    @if(isset($getPopups) && !empty($getPopups))
+        <!-- Modal -->
+        <div class="modal fade" id="showPromotionPopup" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ isset($getPopups->title)?$getPopups->title:'' }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            {!! isset($getPopups->description)?$getPopups->description:'' !!}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
 @endsection
 @section('js')
