@@ -18,6 +18,7 @@ use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
 use App\Models\Products;
 use App\Models\InstagramData;
+use App\Models\Popups;
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
 
@@ -600,5 +601,11 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
+    if (!function_exists("getPromotionalPOPup")) {
+        function getPromotionalPOPup()
+        {
+            return Popups::where('status',1)->first();
+        }
+    }
 }
 

@@ -1,12 +1,12 @@
 @extends('layouts.front.app')
 @section('content')
 @section('css')
-<style>
-    .error {
-        color: #e74c3c !important;
-    }
-</style>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+        .error {
+            color: #e74c3c !important;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
     <!-- home main-banner start -->
     <div class="home-main-banner">
@@ -309,6 +309,27 @@
     @include('front.includes.instagram-section')
 
     <!-- insta photos section end -->
+    <?php
+        $getPopups = getPromotionalPOPup();
+    ?>
+    <!-- Modal -->
+    <div class="modal fade" id="showPromotionPopup" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ isset($getPopups->title)?$getPopups->title:'' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        {!! isset($getPopups->description)?$getPopups->description:'' !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('js')
 <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -316,18 +337,25 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     grecaptcha.ready(function() {
-        grecaptcha.execute('6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN', {action: 'contact'}).then(function(token) {
-           if (token) {
-             document.getElementById('recaptcha').value = token;
-           }
+        grecaptcha.execute('6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN', {
+            action: 'contact'
+        }).then(function(token) {
+            if (token) {
+                document.getElementById('recaptcha').value = token;
+            }
         });
     });
 
-    function blankForm(){
+    $(document).ready(function(){
+        $('#showPromotionPopup').modal('show');
+    });
+
+
+    function blankForm() {
         $('input[name="title"]').val('');
         $('input[name="email"]').val('');
         $('textarea[name="description"]').val('');
-        $("button[type='submit']").prop('disabled',false);
+        $("button[type='submit']").prop('disabled', false);
         grecaptcha.reset();
     }
 
@@ -356,28 +384,28 @@
                 required: 'Description is required',
             }
         },
-        submitHandler: function (form) {
+        submitHandler: function(form) {
             if (grecaptcha.getResponse()) {
                 var form_data = new FormData(form);
-                $(form).find("button[type='submit']").prop('disabled',true);
+                $(form).find("button[type='submit']").prop('disabled', true);
                 $("button[type='submit']").text("Please Wait...");
                 $.ajax({
                     url: "{{ route('maillist') }}",
                     method: "POST",
-                    cache:false,
-                    contentType:false,
+                    cache: false,
+                    contentType: false,
                     processData: false,
                     data: form_data,
-                    success: function (response) {
+                    success: function(response) {
                         blankForm();
                         $("button[type='submit']").text("Subscribe");
                         // $(this).find("button[type='submit']").prop('disabled',true);
                         // console.log(response);
                         // return false;
-                        if(response.status == 200){
+                        if (response.status == 200) {
                             toastr.success(response.success);
                             // window.location.reload();
-                        }else{
+                        } else {
                             toastr.info(response.error);
                         }
                     }
@@ -388,6 +416,5 @@
 
         }
     });
-
 </script>
 @endsection
