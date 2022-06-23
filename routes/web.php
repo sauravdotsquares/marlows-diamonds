@@ -156,12 +156,19 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::get('orders/orders-details-page','OrderController@index')->name('order.details.page');
 			Route::post('orders/change-order-status','OrderController@changeOrderStatus')->name('order.change.order.status');
 			Route::get('orders/order-product-details/{orderId}','OrderController@orderProductDetails')->name('order.product.details');
-		//});
+		    //});
             Route::get('get-harikrishna-data','HariKrishnaController@index');
-        Route::get('instagram-post', 'InstagramController@updateInstaData')->name('instagram-post');
+            Route::get('instagram-post', 'InstagramController@updateInstaData')->name('instagram-post');
 
             Route::get('get-product-excel-report','ProductController@getProductExcelReport')->name('get-product-report');
 
+            Route::get('discount','DiscountController@index')->name('discount');
+            Route::get('creatediscount','DiscountController@addDiscount')->name('create-discount');
+            Route::post('creatediscount','DiscountController@addDiscount')->name('create-discount-form');
+            Route::post('/change-discount','DiscountController@status');
+			Route::post('/delete-discount','DiscountController@delete');
+
+            Route::get('xmlpage','XMLController@XMLFunction')->name('xml-page');
 	});
 });
 
