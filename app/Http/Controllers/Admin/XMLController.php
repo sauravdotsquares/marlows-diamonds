@@ -198,9 +198,9 @@ class XMLController extends Controller
 
                 $product->appendChild($link);
 
-                $link    = $dom->createElement('g:google_product_category', '200');
+                // $link    = $dom->createElement('g:google_product_category', '200');
 
-                $product->appendChild($link);
+                // $product->appendChild($link);
 
                 $image_link     = $dom->createElement('g:image_link', $productImageLink);
 
