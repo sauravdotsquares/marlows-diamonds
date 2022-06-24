@@ -152,11 +152,15 @@ class XMLController extends Controller
 
                 $productId        =  'p_id_'.md5($productName);
 
-                // echo "<pre>";
-                // print_r($productId);
+
+
+                $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
+                // $productDescription = str_replace(['<p>', '</p>'], '', $productDescription);
+
+                // echo $productDescription."<pre>";
+                // print_r($productDescription);
                 // die;
 
-                $productDescription    =  htmlspecialchars($productArrayNew->short_description);
                 $productLink     =  'https://www.marlows-diamonds.co.uk/product/'.$productArrayNew->slug;
                 $productImageLink      =  'https://www.marlows-diamonds.co.uk/storage/'.$productArrayNew->getProductImages->image_url;
                 $productPrice  =  $price*1.2;
@@ -174,11 +178,11 @@ class XMLController extends Controller
                 $productid  = $dom->createElement('g:id', $productId);
                 $product->appendChild($productid);
 
-                $title   = $dom->createElement('g:title', '<![CDATA['.$productName.']]>');
+                $title   = $dom->createElement('g:title', $productName);
 
                 $product->appendChild($title);
 
-                $description   = $dom->createElement('g:description', '<![CDATA['.$productDescription.']]>');
+                $description   = $dom->createElement('g:description', $productDescription);
 
                 $product->appendChild($description);
 
@@ -190,15 +194,15 @@ class XMLController extends Controller
 
                 $product->appendChild($link);
 
-                $link    = $dom->createElement('g:product_type', '<![CDATA['.$productType.']]>');
+                $link    = $dom->createElement('g:product_type', $productType);
 
                 $product->appendChild($link);
 
-                $link    = $dom->createElement('g:google_product_category', '<![CDATA[200]]>');
+                $link    = $dom->createElement('g:google_product_category', '200');
 
                 $product->appendChild($link);
 
-                $image_link     = $dom->createElement('g:image_link', '<![CDATA['.$productImageLink.']]>');
+                $image_link     = $dom->createElement('g:image_link', $productImageLink);
 
                 $product->appendChild($image_link);
 
@@ -210,20 +214,20 @@ class XMLController extends Controller
 
                 $product->appendChild($availability);
 
-                $price = $dom->createElement('g:price', '<![CDATA[ '.$productPrice.' GBP '.' ]]>');
+                $price = $dom->createElement('g:price', $productPrice.' GBP ');
 
                 $product->appendChild($price);
 
-                $price = $dom->createElement('g:brand', '<![CDATA[ Marlows Diamonds ]]>');
+                $price = $dom->createElement('g:brand', 'Marlows Diamonds');
 
                 $product->appendChild($price);
 
-                $price = $dom->createElement('g:canonical_link', '<![CDATA[ '.$productLink.' ]]>');
+                $price = $dom->createElement('g:canonical_link', $productLink);
 
                 $product->appendChild($price);
 
                 foreach($productArrayNew->getProductGallery as $key => $addImages){
-                    $additional_image_link = $dom->createElement('g:additional_image_link', '<![CDATA[https://www.marlows-diamonds.co.uk/storage/'.$addImages->image_url .' ]]>');
+                    $additional_image_link = $dom->createElement('g:additional_image_link', 'https://www.marlows-diamonds.co.uk/storage/'.$addImages->image_url);
 
                     $product->appendChild($additional_image_link);
                 }
