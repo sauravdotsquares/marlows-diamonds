@@ -36,14 +36,12 @@
    <!-- DataTables Example -->
    <section class="content">
       <div class="container-fluid">
-         <form id="addForm" action="{{ asset('admin/create-discount-form') }}" enctype="multipart/form-data" method="POST">
+         <form id="addForm" action="{{ asset('admin/creatediscount') }}" enctype="multipart/form-data" method="POST">
             @csrf
             <input type="hidden" name="table_id" id="table_id" value="{{isset($getData->id)?$getData->id:''}}">
-            <input type="hidden" name="slug_bk" id="slug_bk" value="{{isset($getData->slug)?$getData->slug:''}}">
-            <input type="hidden" name="image_url_bk" id="image_url_bk" value="{{isset($getData->image_url)?$getData->image_url:''}}">
             <div class="row">
-               <div class="col-md-8">
-                  <div class="card card-primary">
+                <div class="col-md-8">
+                    <div class="card card-primary">
                      <div class="card-header">
                         <h3 class="card-title">Add Discount</h3>
                      </div>
