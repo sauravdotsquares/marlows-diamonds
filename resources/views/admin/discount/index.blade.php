@@ -54,7 +54,7 @@
                             <td>
                                 <a title="Edit" href="{{asset('admin/edit-discount/'.$val->id)}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
 
-                                <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$val}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                {{-- <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$val}}"><i class="fa fa-trash" aria-hidden="true"></i></a> --}}
                             </td>
                          </tr>
                          @endforeach
