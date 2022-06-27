@@ -23,71 +23,71 @@ class XMLController extends Controller
         // die;
     }
 
-    public function createXMLfile($booksArray){
-        // echo "checking in xml files <pre>";
-        // print_r($booksArray);
-        // die;
+    // public function createXMLfile($booksArray){
+    //     // echo "checking in xml files <pre>";
+    //     // print_r($booksArray);
+    //     // die;
 
-        if (!file_exists(public_path('files/'))) {
-            mkdir(public_path('files/'), 0777);
-        }
+    //     if (!file_exists(public_path('files/'))) {
+    //         mkdir(public_path('files/'), 0777);
+    //     }
 
-        $filePath = public_path('files/book.xml');
+    //     $filePath = public_path('files/book.xml');
 
-        $dom     = new \DOMDocument('1.0', 'utf-8');
+    //     $dom     = new \DOMDocument('1.0', 'utf-8');
 
-        $root      = $dom->createElement('books');
+    //     $root      = $dom->createElement('books');
 
-        for($i=0; $i<count($booksArray); $i++){
-            // echo "aff<pre>";
-            // print_r($booksArray[$i]['id']);
-            // die;
+    //     for($i=0; $i<count($booksArray); $i++){
+    //         // echo "aff<pre>";
+    //         // print_r($booksArray[$i]['id']);
+    //         // die;
 
-          $bookId        =  $booksArray[$i]['id'];
+    //       $bookId        =  $booksArray[$i]['id'];
 
-          $bookName = htmlspecialchars($booksArray[$i]['title']);
+    //       $bookName = htmlspecialchars($booksArray[$i]['title']);
 
-          $bookAuthor    =  $booksArray[$i]['author_name'];
+    //       $bookAuthor    =  $booksArray[$i]['author_name'];
 
-          $bookPrice     =  $booksArray[$i]['price'];
+    //       $bookPrice     =  $booksArray[$i]['price'];
 
-          $bookISBN      =  $booksArray[$i]['ISBN'];
+    //       $bookISBN      =  $booksArray[$i]['ISBN'];
 
-          $bookCategory  =  $booksArray[$i]['category'];
+    //       $bookCategory  =  $booksArray[$i]['category'];
 
-          $book = $dom->createElement('book');
+    //       $book = $dom->createElement('book');
 
-          $book->setAttribute('id', $bookId);
+    //       $book->setAttribute('id', $bookId);
 
-          $name     = $dom->createElement('title', $bookName);
+    //       $name     = $dom->createElement('title', $bookName);
 
-          $book->appendChild($name);
+    //       $book->appendChild($name);
 
-          $author   = $dom->createElement('author', $bookAuthor);
+    //       $author   = $dom->createElement('author', $bookAuthor);
 
-          $book->appendChild($author);
+    //       $book->appendChild($author);
 
-          $price    = $dom->createElement('price', $bookPrice);
+    //       $price    = $dom->createElement('price', $bookPrice);
 
-          $book->appendChild($price);
+    //       $book->appendChild($price);
 
-          $isbn     = $dom->createElement('ISBN', $bookISBN);
+    //       $isbn     = $dom->createElement('ISBN', $bookISBN);
 
-          $book->appendChild($isbn);
+    //       $book->appendChild($isbn);
 
-          $category = $dom->createElement('category', $bookCategory);
+    //       $category = $dom->createElement('category', $bookCategory);
 
-          $book->appendChild($category);
+    //       $book->appendChild($category);
 
-          $root->appendChild($book);
+    //       $root->appendChild($book);
 
-        }
+    //     }
 
-        $dom->appendChild($root);
+    //     $dom->appendChild($root);
 
-        $dom->save($filePath);
+    //     $dom->save($filePath);
 
-    }
+    // }
 
     public function createXMLfileNewFormat($productArray){
         // echo "checking in xml files <pre>";
@@ -107,6 +107,11 @@ class XMLController extends Controller
         $root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:c', 'http://base.google.com/ns/1.0');
         $root->setAttributeNS('', 'version', '2.0');
         $root->setAttributeNS('', 'encoding', 'utf-8');
+
+        $channelNew = $dom->createElement('channel');
+        // $xml_a = $xmlObject->createElement('parent');
+        // $channel->appendChild($channel);
+        // $root->appendChild($channel);
 
         foreach($productArray as $key => $productArrayNew){
 
@@ -147,11 +152,15 @@ class XMLController extends Controller
 
                 $productId        =  'p_id_'.md5($productName);
 
-                // echo "<pre>";
-                // print_r($productId);
+
+
+                $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
+                // $productDescription = str_replace(['<p>', '</p>'], '', $productDescription);
+
+                // echo $productDescription."<pre>";
+                // print_r($productDescription);
                 // die;
 
-                $productDescription    =  htmlspecialchars($productArrayNew->short_description);
                 $productLink     =  'https://www.marlows-diamonds.co.uk/product/'.$productArrayNew->slug;
                 $productImageLink      =  'https://www.marlows-diamonds.co.uk/storage/'.$productArrayNew->getProductImages->image_url;
                 $productPrice  =  $price*1.2;
@@ -169,11 +178,11 @@ class XMLController extends Controller
                 $productid  = $dom->createElement('g:id', $productId);
                 $product->appendChild($productid);
 
-                $title   = $dom->createElement('g:title', '<![CDATA['.$productName.']]>');
+                $title   = $dom->createElement('g:title', $productName);
 
                 $product->appendChild($title);
 
-                $description   = $dom->createElement('g:description', '<![CDATA['.$productDescription.']]>');
+                $description   = $dom->createElement('g:description', $productDescription);
 
                 $product->appendChild($description);
 
@@ -185,15 +194,15 @@ class XMLController extends Controller
 
                 $product->appendChild($link);
 
-                $link    = $dom->createElement('g:product_type', '<![CDATA['.$productType.']]>');
+                $link    = $dom->createElement('g:product_type', $productType);
 
                 $product->appendChild($link);
 
-                $link    = $dom->createElement('g:google_product_category', '<![CDATA[200]]>');
+                // $link    = $dom->createElement('g:google_product_category', '200');
 
-                $product->appendChild($link);
+                // $product->appendChild($link);
 
-                $image_link     = $dom->createElement('g:image_link', '<![CDATA['.$productImageLink.']]>');
+                $image_link     = $dom->createElement('g:image_link', $productImageLink);
 
                 $product->appendChild($image_link);
 
@@ -205,20 +214,20 @@ class XMLController extends Controller
 
                 $product->appendChild($availability);
 
-                $price = $dom->createElement('g:price', '<![CDATA[ '.$productPrice.' GBP '.' ]]>');
+                $price = $dom->createElement('g:price', $productPrice.' GBP ');
 
                 $product->appendChild($price);
 
-                $price = $dom->createElement('g:brand', '<![CDATA[ Marlows Diamonds ]]>');
+                $price = $dom->createElement('g:brand', 'Marlows Diamonds');
 
                 $product->appendChild($price);
 
-                $price = $dom->createElement('g:canonical_link', '<![CDATA[ '.$productLink.' ]]>');
+                $price = $dom->createElement('g:canonical_link', $productLink);
 
                 $product->appendChild($price);
 
                 foreach($productArrayNew->getProductGallery as $key => $addImages){
-                    $additional_image_link = $dom->createElement('g:additional_image_link', '<![CDATA[https://www.marlows-diamonds.co.uk/storage/'.$addImages->image_url .' ]]>');
+                    $additional_image_link = $dom->createElement('g:additional_image_link', 'https://www.marlows-diamonds.co.uk/storage/'.$addImages->image_url);
 
                     $product->appendChild($additional_image_link);
                 }
@@ -245,7 +254,8 @@ class XMLController extends Controller
 
                 $product->appendChild($identifier_exists);
 
-                $root->appendChild($product);
+                $channelNew->appendChild($product);
+                $root->appendChild($channelNew);
 
             }
 
@@ -267,4 +277,20 @@ class XMLController extends Controller
         $dom->save($filePath);
 
     }
+
+
+    // public function newTestXML($dataArray)
+    // {
+    //     $filePath = public_path('files/book123.xml');
+    //     $xmlObject   = new \DOMDocument();
+    //     $xml = $xmlObject->createElement('root');
+    //     $xml_a = $xmlObject->createElement('parent');
+    //     $xml_b = $xmlObject->createElement('child');
+    //     $xml_b->setAttribute('attribute','value');
+    //     $xml_b->appendChild(new \DOMElement('item', 'itemValue'));
+    //     $xml_a->appendChild($xml_b);
+    //     $xml->appendChild($xml_a);
+    //     $xmlObject->appendChild($xml);
+    //     echo $xmlObject->save($filePath);
+    // }
 }

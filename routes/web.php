@@ -164,7 +164,8 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 
             Route::get('discount','DiscountController@index')->name('discount');
             Route::get('creatediscount','DiscountController@addDiscount')->name('create-discount');
-            Route::post('creatediscount','DiscountController@addDiscount')->name('create-discount-form');
+            Route::post('creatediscount','DiscountController@addDiscountData')->name('create-discount-form');
+            Route::get('edit-discount/{disId}','DiscountController@editPageDiscountData')->name('edit-discount');
             Route::post('/change-discount','DiscountController@status');
 			Route::post('/delete-discount','DiscountController@delete');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Discount;
 
 class DiscountController extends Controller
 {
@@ -13,12 +14,13 @@ class DiscountController extends Controller
         $breadcrumb = [
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Discount", "url" => route("admin.discount"), "icon" => "fa fa-percent"],
-
         ];
+
         populate_breadcrumb($breadcrumb);
-        // echo "Checking";
-        // die;
-        return view('admin.discount.index');
+
+        $getDiscountData = Discount::latest()->get();
+
+        return view('admin.discount.index',compact('getDiscountData'));
     }
 
     public function addDiscount()
@@ -29,7 +31,7 @@ class DiscountController extends Controller
 
         ];
 
-        $getParentCategory = Category::select('name','slug','parent_id','short_description','description')->where('parent_id',0)->get();
+        $getParentCategory = Category::select('name','slug','parent_id','short_description','description','id')->where('parent_id',0)->get();
 
         // return response()->json($getParentCategory);
 
@@ -39,9 +41,49 @@ class DiscountController extends Controller
 
     public function addDiscountData(Request $request)
     {
-        // echo "<pre>";
-        // print_r($request->all(''));
-        // die;
+        $getDuplicateDiscount = Discount::where('category_id',$request->category_id)->first();
+        if(isset($getDuplicateDiscount) && !empty($getDuplicateDiscount)){
+            if(isset($request->table_id) && !empty($request->table_id)){
+                $insDiscountData = Discount::updateOrCreate(['id'=>$request->table_id],[
+                    'category_id'=> $request->category_id,
+                    'category_slug'=> $request->category_slug,
+                    'discount'=> $request->discount,
+                    'inc_percentage'=> $request->inc_percentage,
+                    'end_date'=> $request->end_date,
+                    'status'=> $request->status,
+                ]);
+            }
+            return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Duplicate Category not allowed');
+        }else{
+            $insDiscountData = Discount::updateOrCreate(['category_id'=>$request->category_id],[
+                'category_id'=> $request->category_id,
+                'category_slug'=> $request->category_slug,
+                'discount'=> $request->discount,
+                'inc_percentage'=> $request->inc_percentage,
+                'end_date'=> $request->end_date,
+                'status'=> $request->status,
+            ]);
+
+            return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Banner Added Successfully');
+        }
+    }
+
+    public function editPageDiscountData($discountId)
+    {
+        $getDiscountData = Discount::where('id',$discountId)->first();
+
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Discount Create", "url" => route("admin.create-discount"), "icon" => "fa fa-percent"],
+
+        ];
+
+        $getParentCategory = Category::select('name','slug','parent_id','short_description','description','id')->where('parent_id',0)->get();
+
+
+        populate_breadcrumb($breadcrumb);
+
+        return view('admin.discount.create',compact('getParentCategory','getDiscountData'));
     }
 
     public function status(Request $request)
