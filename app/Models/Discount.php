@@ -12,8 +12,17 @@ class Discount extends Model
     protected $table = 'discounts';
     protected $fillable = [
         'category_id',
+        'category_slug',
         'discount',
+        'inc_percentage',
         'end_date',
         'status'
     ];
+
+    protected $appends = ['cat_details'];
+
+    public function getCatDetailsAttribute()
+    {
+        return Category::where('id',$this->category_id)->value('name');
+    }
 }

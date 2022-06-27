@@ -83,6 +83,11 @@
         .error {
             color: #e74c3c !important;
         }
+
+        div#finaldiamondprice span del {
+            font-size: 20px;
+        }
+
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -171,6 +176,9 @@
 				<div class="product-decriptions">
 					{!!$data->description!!}
 				</div>
+                <div class="product-finder-price"  id="discountedTotalPrice">
+
+                </div>
                 <div class="product-finder-price" id="finaldiamondprice">
 
 				</div>
@@ -179,6 +187,7 @@
 				</div> --}}
 
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
+                <input type="hidden" name="selected_discounted_price" id="selected_discounted_price" value="0.00">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
 				<input type="hidden" name="selected_final_price" id="selected_final_price" value="0.00">
 
@@ -618,31 +627,35 @@
 					'variations' : variations,
 				},
 				success: function (res) {
+
 					if(res.regular_price!='' || res.regular_price!='0.00'){
 						var regular_p = Math.round(res.regular_price_with_vat);
 
-						if(diamond_type=='lab_grown' && regular_p<=3000){
-							regular_p_final = regular_p-(regular_p*0.35);
-
-						}else if(diamond_type=='lab_grown' && regular_p>3000){
-							regular_p_final = regular_p-(regular_p*0.5);
-
-						}else{
-							regular_p_final = regular_p;
-						}
-                        if(multistone == 1){
-                            regular_p_final = regular_p_final* 1.5;
-                        }
-                        if(jewellery == 1){
-                            regular_p_final = regular_p_final* 1.1;
-                        }
+						// if(diamond_type=='lab_grown' && regular_p<=3000){
+						// 	regular_p_final = regular_p-(regular_p*0.35);
+						// }else if(diamond_type=='lab_grown' && regular_p>3000){
+						// 	regular_p_final = regular_p-(regular_p*0.5);
+						// }else{
+						// 	regular_p_final = regular_p;
+						// }
+                        // if(multistone == 1){
+                        //     regular_p_final = regular_p_final* 1.5;
+                        // }
+                        // if(jewellery == 1){
+                        //     regular_p_final = regular_p_final* 1.1;
+                        // }
 						$('#selected_variation_price').val(res.regular_price);
-						$('#selected_final_price').val(Math.round(regular_p_final));
+						$('#selected_final_price').val(Math.round(regular_p));
                         if(res.statusCode == 500){
                             $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
                         }else{
-                            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p_final)+' </span>');
+                            if(regular_p == res.regular_price_with_vat_discount){
+                                $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+                            }else{
+                                $('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p)+'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
 
+                                $('#selected_discounted_price').val(res.regular_price_with_vat_discount);
+                            }
                         }
 						// $('#finaldiamondprice').text();
 					}else{
@@ -699,7 +712,7 @@
 		}
 
 		function addtobasketFunction(getUrl){
-            var trdata = $('#finaldiamondprice span').text().replace(/[^0-9]/gi, '');
+            var trdata = $('#finaldiamondprice .price').text().replace(/[^0-9]/gi, '');
 			$.ajax({
                 type: 'POST',
                 url: getUrl,
@@ -717,6 +730,8 @@
                     'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
 					'slug' : '{{$data->slug}}',
 					'price':parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
+					'discounted_price':parseInt($('#selected_discounted_price').val()) || 0, //parseFloat($('#price').val()) || 0;
+					'final_price':parseInt($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;
                     'setting_price': parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
                 },
                 success: function (res) {

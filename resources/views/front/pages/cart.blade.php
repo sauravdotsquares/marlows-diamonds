@@ -33,7 +33,7 @@
                             @foreach(session('cart') as $id => $details)
                             <?php
                                 // echo "<pre>";
-                                // print_r(session('cart'));
+                                // print_r($details['customArray']['final_price']);
                                 // die;
                             ?>
                             @php
@@ -119,7 +119,13 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="product-price-col" data-th="Price">{{MY_CURRENCY_SYMBOL}}{{
+                                <td class="product-price-col" data-th="Price">
+                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']))
+                                        <del>{{MY_CURRENCY_SYMBOL}}{{
+                                            number_format($details['customArray']['final_price'],2) }}
+                                        </del>
+                                    @endif
+                                    &nbsp; {{MY_CURRENCY_SYMBOL}}{{
                                     number_format($details['price'],2) }}</td>
                                 <td class="product-quantity-col" data-th="Quantity">
                                     <input type="number" disabled="disabled" value="{{ $details['quantity'] }}"
