@@ -14,6 +14,7 @@ class Discount extends Model
         'category_id',
         'category_slug',
         'discount',
+        'inc_percentage',
         'end_date',
         'status'
     ];

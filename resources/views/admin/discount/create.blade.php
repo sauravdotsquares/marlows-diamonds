@@ -39,19 +39,26 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="form-label-group">
-                                        <label for="name">Choose Category</label>
+                                        <label for="category_id">Choose Category</label>
                                         <select name="category_id" class="form-control" id="category_id">
                                             <option value="">Choose Any</option>
                                             @foreach($getParentCategory as $key => $cate)
                                                 <option value="{{$cate->id}}" @if(isset($getDiscountData) && $getDiscountData->category_id == $cate->id) selected @endif>{{$cate->name}}</option>
                                             @endforeach
+                                            <option value="18" @if(isset($getDiscountData) && $getDiscountData->category_id == 18) selected @endif>Multi-Stone</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-label-group">
-                                        <label for="title">Discount(%)</label>
+                                        <label for="discount">Discount(%)</label>
                                         <input type="text" id="discount" name="discount" class="form-control" placeholder="Discount" value="{{isset($getDiscountData->discount)?$getDiscountData->discount:''}}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-label-group">
+                                        <label for="inc_percentage">Increase(%)</label>
+                                        <input type="text" id="inc_percentage" name="inc_percentage" class="form-control" placeholder="Increase" value="{{isset($getDiscountData->inc_percentage)?$getDiscountData->inc_percentage:''}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -97,7 +104,4 @@
 @endsection
 
 @section('js')
-    <script>
-
-    </script>
 @endsection

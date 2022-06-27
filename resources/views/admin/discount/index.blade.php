@@ -37,7 +37,8 @@
                         <tr>
                            <th>Sr No</th>
                            <th>Category Name</th>
-                           <th>Total Discount(%)</th>
+                           <th>Discount(%)</th>
+                           <th>Increase(%)</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
@@ -48,6 +49,7 @@
                             <td>{{++$key}}</td>
                             <td>{{$val->cat_details}}</td>
                             <td>{{$val->discount}}</td>
+                            <td>{{$val->inc_percentage}}</td>
                             <td>{{$val->created_at}}</td>
                             <td>
                                 <a title="Edit" href="{{asset('admin/edit-discount/'.$val->id)}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
@@ -61,7 +63,8 @@
                         <tr>
                             <th>Sr No</th>
                             <th>Category Name</th>
-                            <th>Total Discount(%)</th>
+                            <th>Discount(%)</th>
+                            <th>Increase(%)</th>
                             <th>Created</th>
                             <th>Action</th>
                         </tr>

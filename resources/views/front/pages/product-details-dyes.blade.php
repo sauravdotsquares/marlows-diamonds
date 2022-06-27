@@ -88,6 +88,10 @@
         .error {
             color: #e74c3c !important;
         }
+
+        div#finaldiamondprice del {
+            font-size: 20px;
+        }
 	</style>
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -274,6 +278,8 @@
 				</div>
 				<input type="hidden" id="certificate_url" name="certificate_url" value="">
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($variationDetails->regular_price)?$variationDetails->regular_price:$variationDetails->sale_price}}">
+				<input type="hidden" name="selected_setting_price" id="selected_setting_price" value="0.00">
+				<input type="hidden" name="selected_discounted_price" id="selected_discounted_price" value="0.00">
 				<input type="hidden" name="selected_diamond_price" id="selected_diamond_price" value="0.00">
 				<input type="hidden" name="selected_final_price" id="selected_final_price" value="0.00">
 				<input type="hidden" name="selected_diamond_shape" id="selected_diamond_shape" value="{{$data->diamond_shape}}">
@@ -809,14 +815,18 @@
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
-
-
 					$('#finaldiamondprice').html("");
                     if(res.statuscode == 200){
                         // $('#finaldiamondprice').html(res.finalPrice);
-                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
+                        if(res.finalPrice == res.discountedPrice){
+                            $('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                        }else{
+                            $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                        }
 						$('#selected_final_price').val(res.finalPrice);
 						$('#selected_diamond_price').val(res.diamondPrice);
+						$('#selected_discounted_price').val(res.discountedPrice);
+						$('#selected_setting_price').val(res.settingPrice);
 						$('#selected_diamond_certno').val(res.Stock_NO);
 						$('#certificate_url').val(res.CertificateLink);
 						$('#productCertificateLink').attr('href',res.CertificateLink);
@@ -869,15 +879,27 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'variation_price' : parseFloat($('#selected_variation_price').val()),
+					'setting_price' : parseFloat($('#selected_setting_price').val().split(",").join("")),
+					'discounted_price' : parseFloat($('#selected_discounted_price').val().split(",").join("")),
 					'diamond_price' : parseFloat($('#selected_diamond_price').val().split(",").join("")),
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
+                    // console.log("res");
+                    // console.log(res);
+                    // return false;
 					$('#finaldiamondprice').html("");
-					if(res != ''){
+					if(res.finalPrice != ''){
 						// $('#finaldiamondprice').text(res);
-                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res+' </span>');
-						$('#selected_final_price').val(res);
+                        if(res.finalPrice == res.discountedPrice){
+                            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
+                            $('#selected_final_price').val(res.finalPrice);
+                        }else{
+                            // $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res+' </span>');
+                            $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                            // $('#selected_final_price').val(res.finalPrice);
+                        }
+
 						$('#addtobasket').removeClass('disabledAnchor');
 					}else{
 						$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');

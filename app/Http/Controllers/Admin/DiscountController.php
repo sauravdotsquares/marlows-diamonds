@@ -48,6 +48,7 @@ class DiscountController extends Controller
                     'category_id'=> $request->category_id,
                     'category_slug'=> $request->category_slug,
                     'discount'=> $request->discount,
+                    'inc_percentage'=> $request->inc_percentage,
                     'end_date'=> $request->end_date,
                     'status'=> $request->status,
                 ]);
@@ -58,6 +59,7 @@ class DiscountController extends Controller
                 'category_id'=> $request->category_id,
                 'category_slug'=> $request->category_slug,
                 'discount'=> $request->discount,
+                'inc_percentage'=> $request->inc_percentage,
                 'end_date'=> $request->end_date,
                 'status'=> $request->status,
             ]);
