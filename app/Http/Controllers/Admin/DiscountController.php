@@ -123,7 +123,7 @@ class DiscountController extends Controller
             $arrayNew[$i]['discount'] = isset($getDiscountRangeArray['discount_range'.$i])?$getDiscountRangeArray['discount_range'.$i]:0;
             $arrayNew[$i]['discount_id'] = isset($discountId)?$discountId:0;
         }
-
+        DiscountRange::where('category_id',$value['category_id'])->delete();
         foreach($arrayNew as $key => $value){
             DiscountRange::create([
                 'category_id'=> $value['category_id'],
