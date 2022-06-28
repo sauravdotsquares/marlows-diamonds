@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Category;
 use App\Models\Discount;
+use App\Models\DiscountRange;
 
 class ProductPriceController extends Controller
 {
@@ -19,14 +20,12 @@ class ProductPriceController extends Controller
 
         $finalPrice = $settingPrice + $diamondPrice;
 
-        $getDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
+        $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
-        return response()->json(['finalPrice'=>round($finalPrice),'discountedPrice'=>round($getDiscountedPrice)]); // round($getStatusSettingPrice);
+        return response()->json(['finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount'])]); // round($getStatusSettingPrice);
     }
 
     public function getProductFinalPriceWithDiamond(Request $request){
-
-        $getStatusSettingPrice = $this->getActualSettingPrice($request->slug,$request->variation_price);
 
         $caratFrom = '0.30'; $caratTo = '0.39';
         if($request->carat!=''){
@@ -65,21 +64,22 @@ class ProductPriceController extends Controller
 
         //echo '<pre>'; print_r($data); die;
         $vat = getVAT();
-        $settingPrice = sprintf('%0.2f', $request->variation_price * $vat);
+        $settingPrice = sprintf('%0.2f', $request->variation_price);
         $hkData = getHKApiRecords($data);
 
         if(!empty($hkData)){
-        	$diamondPrice = sprintf('%0.2f', ($hkData[0]['Amount']*1.25)*$vat);
+        	$diamondPrice = sprintf('%0.2f', ($hkData[0]['Amount']*1.25));
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
 
             $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
-        	return json_encode(array('statuscode'=>'200','finalPrice'=>$finalPrice,'discountedPrice'=>round($finalDiscountedPrice),'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$hkData[0]['Stock_NO'],'CertificateLink'=>$hkData[0]['CertificateLink']));
+
+        	return json_encode(array('statuscode'=>'200','finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount']),'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$hkData[0]['Stock_NO'],'CertificateLink'=>$hkData[0]['CertificateLink']));
         }else{
         	$rapnetData = getRapnetApiRecords($data,1);
 
             if(isset($rapnetData[0]) && !empty($rapnetData[0]->FinalPrice)){
-                $diamondPrice = sprintf('%0.2f', ($rapnetData[0]->FinalPrice*1.25)*$vat);
+                $diamondPrice = sprintf('%0.2f', ($rapnetData[0]->FinalPrice*1.25));
                 $rapnetCertificateLink = '';
                 if($rapnetData[0]->LabTitle=='GIA'){
                     $rapnetCertificateLink= 'https://www.gia.edu/cs/Satellite?reportno='.$rapnetData[0]->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
@@ -92,7 +92,8 @@ class ProductPriceController extends Controller
 
                 $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
-                return json_encode(array('statuscode'=>'200','finalPrice'=>$finalPrice,'discountedPrice'=>round($finalDiscountedPrice),'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$rapnetData[0]->DiamondID,'CertificateLink'=>$rapnetCertificateLink));
+
+                return json_encode(array('statuscode'=>'200','finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount']),'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$rapnetData[0]->DiamondID,'CertificateLink'=>$rapnetCertificateLink));
             }else{
                 $finalPrice = 0;
                 return json_encode(array('statuscode'=>'500','finalPrice'=>'0'));
@@ -102,6 +103,7 @@ class ProductPriceController extends Controller
 
     public function getActualSettingPrice($slug,$finalPrice)
     {
+
         $product_id = Products::where('slug',$slug)->value('id');
 
         if($product_id!=''){
@@ -111,35 +113,48 @@ class ProductPriceController extends Controller
 
             $checkPlanCatArray = Category::whereIn('id',$prod_categories)->where('parent_id',0)->first()->toArray();
 
-            $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date')->where('category_id',$checkPlanCatArray['id'])->where('status',1)->first()->toArray();
+            $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date')->where('category_id',$checkPlanCatArray['id'])->where('status',1)->first();
+
+
+            $vat = getVAT();
 
             $increaseDiscount = 1;
             $discountPercentage = 1;
             if(isset($disPercentage) && !empty($disPercentage)){
+                $disPercentage = $disPercentage->toArray();
                 if(auth()->guard('customer')->check()){
                     if($disPercentage['end_date'] >= date('Y-m-d')){
+
+                        $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
+                        ->whereRaw('"'.$finalPrice.'" between `from_price` and `to_price`')
+                        ->first();
+
                         $discountPercentage = 1 + ($disPercentage['discount']/100);
-                    }else{
-                        $discountPercentage = 1;
+
+                        if(isset($getDiscountRange)){
+                            if($getDiscountRange->discount > 1){
+                                $discountPercentage = 1 + ($getDiscountRange->discount/100);
+                            }
+                        }
                     }
                     if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
                         $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
-                    }else{
-                        $increaseDiscount = 1;
                     }
                 }
             }
 
-            $settingPriceWithVat = $finalPrice*$increaseDiscount;
+            $settingPriceWithOutVat = $finalPrice*$increaseDiscount;
+            $settingPriceWithVat = $settingPriceWithOutVat*$vat;
             $settingPriceWithVatDiscount = $settingPriceWithVat/$discountPercentage;
 
             $result = [
+                'finalPrice' => $finalPrice,
                 'settingPriceWithVat' =>  $settingPriceWithVat,
                 'settingPriceWithVatDiscount' =>  $settingPriceWithVatDiscount,
                 'discountedPrice' => $settingPriceWithVat - $settingPriceWithVatDiscount,
             ];
 
-            return $settingPriceWithVatDiscount;
+            return $result;
         }
     }
 

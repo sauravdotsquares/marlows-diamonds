@@ -19,10 +19,15 @@ class Discount extends Model
         'status'
     ];
 
-    protected $appends = ['cat_details'];
+    protected $appends = ['cat_details','discount_range_details'];
 
     public function getCatDetailsAttribute()
     {
         return Category::where('id',$this->category_id)->value('name');
+    }
+
+    public function getDiscountRangeDetailsAttribute()
+    {
+        return DiscountRange::where('discount_id',$this->id)->get()->toArray();
     }
 }
