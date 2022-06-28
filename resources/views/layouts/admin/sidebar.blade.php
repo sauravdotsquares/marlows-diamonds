@@ -1,10 +1,10 @@
   <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <?php 
+    <?php
       // echo request()->segment(4);
       // die;
-    
+
     ?>
     <a href="{{asset('/')}}" class="brand-link">
       <img src="{{ asset('admin/dist/img/MarlowsDiamonds-Logo.png')}}" alt="Marlow's Diamond" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -55,8 +55,8 @@
                   <p>Add Banner</p>
                 </a>
               </li>
-              
-              
+
+
             </ul>
           </li>
           <li class="nav-item @if(request()->segment(2) == 'posts') menu-is-opening menu-open @endif">
@@ -86,7 +86,7 @@
                   <p>Categories</p>
                 </a>
               </li>
-              
+
             </ul>
           </li>
           <li class="nav-item @if(request()->segment(2) == 'pages') menu-is-opening menu-open @endif">
@@ -110,8 +110,8 @@
                   <p>Add Page</p>
                 </a>
               </li>
-              
-              
+
+
             </ul>
           </li>
           <li class="nav-item @if(request()->segment(2) == 'menus' || request()->segment(2) == 'header-settings' || request()->segment(2) == 'footer-settings') menu-is-opening menu-open @endif">
@@ -141,7 +141,7 @@
                   <p>Footer Settings</p>
                 </a>
               </li>
-              
+
             </ul>
           </li>
           <li class="nav-item @if(request()->segment(2) == 'products') menu-is-opening menu-open @endif">
@@ -193,7 +193,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Customers</p>
                 </a>
-              </li>              
+              </li>
             </ul>
           </li>
 
@@ -201,7 +201,7 @@
             <a href="{{route('admin.order.details.page')}}" class="nav-link @if(request()->segment(2) == 'orders') active @endif">
               <i class="nav-icon fa fa-users"></i>
               <p>
-                Orders 
+                Orders
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -211,7 +211,7 @@
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders Lists</p>
                 </a>
-              </li>              
+              </li>
             </ul>
           </li>
 
@@ -224,8 +224,8 @@
               </p>
             </a>
           </li> -->
-          
-         
+
+
           <li class="nav-item @if(request()->segment(2) == 'reviews') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'reviews') active @endif">
               <i class="nav-icon fa fa-comments"></i>
@@ -247,11 +247,11 @@
                   <p>Add Review</p>
                 </a>
               </li>
-              
-              
+
+
             </ul>
           </li>
-		  
+
 		  <li class="nav-item @if(request()->segment(2) == 'faqs') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'faqs') active @endif">
               <i class="nav-icon fa fa-question-circle"></i>
@@ -273,11 +273,11 @@
                   <p>Add Faq</p>
                 </a>
               </li>
-              
-              
+
+
             </ul>
           </li>
-		  
+
 		  <li class="nav-item">
             <a href="/admin/enquiries" class="nav-link @if(request()->segment(2) == 'enquiries') active @endif">
               <i class="nav-icon far fa-envelope"></i>
@@ -317,8 +317,31 @@
                   <p>Add Popup</p>
                 </a>
               </li>
-              
-              
+            </ul>
+          </li>
+          <li class="nav-item @if(request()->segment(2) == 'discount') menu-is-opening menu-open @endif">
+            <a href="#" class="nav-link @if(request()->segment(2) == 'discount') active @endif">
+              <i class="nav-icon far fa-window-maximize"></i>
+              <p>
+                Discount
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/admin/discount" class="nav-link @if(request()->segment(2) == 'discount') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Discount</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/discount/creatediscount" class="nav-link @if(request()->segment(2) == 'discount' && request()->segment(3) == 'creatediscount') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Discount</p>
+                </a>
+              </li>
+
+
             </ul>
           </li>
           <li class="nav-item">
@@ -333,7 +356,7 @@
             <a href="{{ route('admin.change-password') }}" class="nav-link @if(request()->segment(2) == 'change-password') active @endif">
               <i class="nav-icon fa fa-lock"></i>
               <p>
-                Change Password 
+                Change Password
               </p>
             </a>
           </li>
