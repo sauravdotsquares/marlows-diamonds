@@ -14,6 +14,7 @@ use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
 use App\Models\ProductImages;
 use App\Models\Discount;
+use App\Models\DiscountRange;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -505,24 +506,7 @@ class ProductController extends Controller
                 $checkPlanCatArray = Category::whereIn('id',$prod_categories)->where('parent_id',0)->first()->toArray();
             }
 
-            $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date')->where('category_id',$checkPlanCatArray['id'])->where('status',1)->first()->toArray();
-
-            $increaseDiscount = 1;
-            $discountPercentage = 1;
-            if(isset($disPercentage) && !empty($disPercentage)){
-                if(auth()->guard('customer')->check()){
-                    if($disPercentage['end_date'] >= date('Y-m-d')){
-                        $discountPercentage = 1 + ($disPercentage['discount']/100);
-                    }else{
-                        $discountPercentage = 1;
-                    }
-                    if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
-                        $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
-                    }else{
-                        $increaseDiscount = 1;
-                    }
-                }
-            }
+            $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date')->where('category_id',$checkPlanCatArray['id'])->where('status',1)->first();
 
             $getProductVariationId = ProductVariations::where('product_id',$product_id)->pluck('id')->toArray();
 
@@ -536,28 +520,53 @@ class ProductController extends Controller
 
                             if(!empty($getVariDetails))
                                 $variationDetails[] = $getVariDetails;
-                            //echo '<pre> '.$key1.'='.$key2; print_r($getVariDetails);
                         }
-                       // die;
                         if($attributeCount == count($variationDetails))
                             break;
 
-                    # code...
                 }
-                //echo '<pre>'; print_r($variationDetails);
-                //die;
-                // echo '<pre>'; print_r($getVariDetails); die;
             }
             $vat = getVAT();
             $newArray = [];
             if(isset($getVariDetails) && !empty($getVariDetails)){
                 $getSelectedVariationVideoImages = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select(DB::raw('(regular_price) as regular_price_without_vat'),DB::raw('(sale_price) as sale_price_without_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
 
+                $increaseDiscount = 1;
+                $discountPercentage = 1;
+                if(isset($disPercentage) && !empty($disPercentage)){
+                    $disPercentage = $disPercentage->toArray();
+                    if(auth()->guard('customer')->check()){
+                        if($disPercentage['end_date'] >= date('Y-m-d')){
+
+                            $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
+                            ->whereRaw('"'.$getSelectedVariationVideoImages->regular_price.'" between `from_price` and `to_price`')
+                            ->first();
+
+                            $discountPercentage = 1 + ($disPercentage['discount']/100);
+
+                            if(isset($getDiscountRange) && !empty($getDiscountRange->discount)){
+                                if($getDiscountRange->discount > 1){
+                                    $discountPercentage = 1 + ($getDiscountRange->discount/100);
+                                }
+                            }
+                        }else{
+                            $discountPercentage = 1;
+                        }
+                        if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
+                            $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
+                        }else{
+                            $increaseDiscount = 1;
+                        }
+                    }
+                }
+
+
                 if($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat<=3000){
                     $regular_p_final = (($getSelectedVariationVideoImages->regular_price_without_vat-($getSelectedVariationVideoImages->regular_price_without_vat*0.35))*$increaseDiscount)*$vat;// sprintf('%0.2f', ;
                     $regular_p_discount_final = $regular_p_final/$discountPercentage;
                 }elseif($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat>3000){
-                    $regular_p_final = (($getSelectedVariationVideoImages->regular_price_without_vat-($getSelectedVariationVideoImages->regular_price_without_vat*0.5))*$increaseDiscount)*$vat;// sprintf('%0.2f', ;
+                    $regular_p_final = (($getSelectedVariationVideoImages->regular_price_without_vat-($getSelectedVariationVideoImages->regular_price_without_vat*0.5))*$increaseDiscount)*$vat;
+                    // sprintf('%0.2f', ;
                     $regular_p_discount_final = $regular_p_final/$discountPercentage;
                 }else{
                     $regular_p_final = (($getSelectedVariationVideoImages->regular_price_without_vat)*$increaseDiscount)*$vat;
