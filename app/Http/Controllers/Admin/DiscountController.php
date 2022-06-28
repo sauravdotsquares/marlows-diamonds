@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Discount;
+use App\Models\DiscountRange;
 
 class DiscountController extends Controller
 {
@@ -52,7 +53,11 @@ class DiscountController extends Controller
                     'end_date'=> $request->end_date,
                     'status'=> $request->status,
                 ]);
+                $this->addDiscountRanges($request->all(),$insDiscountData->id);
+            }else{
+                $this->addDiscountRanges($request->all(),$getDuplicateDiscount->id);
             }
+
             return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Duplicate Category not allowed');
         }else{
             $insDiscountData = Discount::updateOrCreate(['category_id'=>$request->category_id],[
@@ -64,7 +69,9 @@ class DiscountController extends Controller
                 'status'=> $request->status,
             ]);
 
-            return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Banner Added Successfully');
+            $this->addDiscountRanges($request->all(),$insDiscountData->id);
+
+            return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Discount Added Successfully');
         }
     }
 
@@ -103,5 +110,31 @@ class DiscountController extends Controller
     {
         $post = Discount::find($request->id)->delete();
         return response()->json($post);
+    }
+
+    public function addDiscountRanges($getDiscountRangeArray,$discountId)
+    {
+        $arrayNew = [];
+
+        for($i=1;$i<=7;$i++){
+            $arrayNew[$i]['category_id'] = isset($getDiscountRangeArray['category_id'])?$getDiscountRangeArray['category_id']:0;
+            $arrayNew[$i]['from'] = isset($getDiscountRangeArray['range'.$i.'_from'])?$getDiscountRangeArray['range'.$i.'_from']:0;
+            $arrayNew[$i]['to'] = isset($getDiscountRangeArray['range'.$i.'_to'])?$getDiscountRangeArray['range'.$i.'_to']:0;
+            $arrayNew[$i]['discount'] = isset($getDiscountRangeArray['discount_range'.$i])?$getDiscountRangeArray['discount_range'.$i]:0;
+            $arrayNew[$i]['discount_id'] = isset($discountId)?$discountId:0;
+        }
+
+        foreach($arrayNew as $key => $value){
+            DiscountRange::create([
+                'category_id'=> $value['category_id'],
+                'discount_id'=> $value['discount_id'],
+                'from_price'=> $value['from'],
+                'to_price'=> $value['to'],
+                'discount'=> $value['discount'],
+                'status'=> 1,
+            ]);
+        }
+
+        return true;
     }
 }
