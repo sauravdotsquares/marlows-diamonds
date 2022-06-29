@@ -552,9 +552,18 @@ class ProductController extends Controller
 
                 $increaseDiscount = 1;
                 $discountPercentage = 1;
+                $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
                 if(isset($disPercentage) && !empty($disPercentage)){
                     $disPercentage = $disPercentage->toArray();
                     if(auth()->guard('customer')->check()){
+                        if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
+                            $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
+                        }else{
+                            $increaseDiscount = 1;
+                        }
+
+                        $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
+
                         if($disPercentage['end_date'] >= date('Y-m-d')){
 
                             $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
@@ -575,15 +584,11 @@ class ProductController extends Controller
                         }else{
                             $discountPercentage = 1;
                         }
-                        if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
-                            $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
-                        }else{
-                            $increaseDiscount = 1;
-                        }
+
                     }
                 }
 
-                $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
+
                 $regular_p_discount_final = $regular_p_final/$discountPercentage;
 
                 $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
