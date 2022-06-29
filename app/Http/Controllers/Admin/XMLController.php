@@ -14,7 +14,7 @@ class XMLController extends Controller
         $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->latest()->get();
         // return response()->json($getProductData);
         // echo "<pre>";
-        // print_r($getProductData);
+        // print_r($getProductData->toArray());
         // die;
         $this->createXMLfileNewFormat($getProductData);
         echo "Done";
@@ -124,9 +124,12 @@ class XMLController extends Controller
                 $caratType = '';
                 $widthType = '';
                 $diamondWeight = '';
+                $linkQuery = '';
                 foreach($dataArray->get_vari_details_id as $key2 => $var2){
-
                     $var2->key = str_replace("attri_","",$var2->key);
+                    if($var2->value){
+                        $linkQuery .= $linkQuery ? '&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
+                    }
                     if(isset($var2->key) && $var2->key == 'metal-type'){
                         $metalType .= $var2->value;
                     }
@@ -161,9 +164,10 @@ class XMLController extends Controller
                 // print_r($productDescription);
                 // die;
 
+                $productQueryLink=  'https://www.marlows-diamonds.co.uk/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                 $productLink     =  'https://www.marlows-diamonds.co.uk/product/'.$productArrayNew->slug;
                 $productImageLink      =  'https://www.marlows-diamonds.co.uk/storage/'.$productArrayNew->getProductImages->image_url;
-                $productPrice  =  $price*1.2;
+                $productPrice  =  round($price*1.2);
                 // $productSalePrice  =  '';
                 // $productSalePriceEffectiveDate  =  '';
                 $productCondition  =  'new';
@@ -190,7 +194,7 @@ class XMLController extends Controller
 
                 $product->appendChild($item_group_id);
 
-                $link    = $dom->createElement('g:link', $productLink);
+                $link    = $dom->createElement('g:link', htmlentities($productQueryLink));
 
                 $product->appendChild($link);
 
@@ -234,17 +238,17 @@ class XMLController extends Controller
 
 
 
-                // $shipping_label = $dom->createElement('g:shipping_label', 0.00);
+                $shipping_label = $dom->createElement('g:shipping_label', 0.00);
 
-                // $product->appendChild($shipping_label);
+                $product->appendChild($shipping_label);
 
-                // $gender = $dom->createElement('g:gender', '<![CDATA[ Female ]]>');
+                $gender = $dom->createElement('g:gender', '<![CDATA[ Female ]]>');
 
-                // $product->appendChild($gender);
+                $product->appendChild($gender);
 
-                // $age_group = $dom->createElement('g:age_group', '<![CDATA[ Adult ]]>');
+                $age_group = $dom->createElement('g:age_group', '<![CDATA[ Adult ]]>');
 
-                // $product->appendChild($age_group);
+                $product->appendChild($age_group);
 
                 $metal = $dom->createElement('g:metal', $metalType);
 
