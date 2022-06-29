@@ -131,11 +131,21 @@ class ProductPriceController extends Controller
 
                         $discountPercentage = 1 + ($disPercentage['discount']/100);
 
-                        if(isset($getDiscountRange)){
+                        if(isset($getDiscountRange) && !empty($getDiscountRange->discount)){
                             if($getDiscountRange->discount > 1){
                                 $discountPercentage = 1 + ($getDiscountRange->discount/100);
+                            }else{
+                                $discountPercentage = 1;
                             }
+                        }else{
+                            $discountPercentage = 1;
                         }
+
+                        // if(isset($getDiscountRange)){
+                        //     if($getDiscountRange->discount > 1){
+                        //         $discountPercentage = 1 + ($getDiscountRange->discount/100);
+                        //     }
+                        // }
                     }
                     if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
                         $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);

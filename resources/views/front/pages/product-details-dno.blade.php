@@ -701,6 +701,8 @@
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
                     'type' : '{{$plainbandMulti}}',
+                    'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
+                    'carat' : '{{ isset($requestData["carat"]) ? $requestData["carat"] : "" }}',
                 },
                 success: function (res) {
 
