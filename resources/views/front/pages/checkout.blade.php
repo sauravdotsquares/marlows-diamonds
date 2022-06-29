@@ -241,6 +241,7 @@
                                 <thead>
                                     <tr>
                                         <th class="checkproduct-name">Product</th>
+                                        <th class="checkproduct-price">Price</th>
                                         <th class="checkproduct-total">Subtotal</th>
                                     </tr>
                                 </thead>
@@ -317,8 +318,19 @@
                                                 </dl>
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
                                             </td>
+                                            <td>
+                                                <span>
+                                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']))
+                                                        <del>{{MY_CURRENCY_SYMBOL}}{{
+                                                            $details['customArray']['final_price'] }}
+                                                        </del>
+                                                    @endif <br>
+                                                    {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                                                </span>
+                                            </td>
                                             <td class="check-product-total">
-                                                <span>{{MY_CURRENCY_SYMBOL}}{{ $details['price'] * $details['quantity'] }}</span>
+                                                <span>
+                                                    {{MY_CURRENCY_SYMBOL}}{{ $details['price'] * $details['quantity'] }}</span>
                                             </td>
                                         </tr>
                                         @endforeach

@@ -37,19 +37,34 @@
                         <tr>
                            <th>Sr No</th>
                            <th>Category Name</th>
-                           <th>Total Discount(%)</th>
+                           <th>Discount(%)</th>
+                           <th>Increase(%)</th>
                            <th>Created</th>
                            <th>Action</th>
                         </tr>
                      </thead>
                      <tbody>
+                        @foreach($getDiscountData as $key => $val)
+                        <tr>
+                            <td>{{++$key}}</td>
+                            <td>{{$val->cat_details}}</td>
+                            <td>{{$val->discount}}</td>
+                            <td>{{$val->inc_percentage}}</td>
+                            <td>{{$val->created_at}}</td>
+                            <td>
+                                <a title="Edit" href="{{asset('admin/edit-discount/'.$val->id)}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
 
+                                {{-- <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$val}}"><i class="fa fa-trash" aria-hidden="true"></i></a> --}}
+                            </td>
+                         </tr>
+                         @endforeach
                      </tbody>
                      <tfoot>
                         <tr>
                             <th>Sr No</th>
                             <th>Category Name</th>
-                            <th>Total Discount(%)</th>
+                            <th>Discount(%)</th>
+                            <th>Increase(%)</th>
                             <th>Created</th>
                             <th>Action</th>
                         </tr>
@@ -150,7 +165,7 @@
             let themeId = $('input[name=themeId]').val();
             $.ajax({
                type:"POST",
-               url:'{{asset("admin/delete-categories")}}',
+               url:'{{asset("admin/delete-discount")}}',
                data:{
                   "_token": "{{ csrf_token() }}",
                   'id':themeId,

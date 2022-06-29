@@ -13,6 +13,8 @@ use App\Models\DiamondStock;
 use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
 use App\Models\ProductImages;
+use App\Models\Discount;
+use App\Models\DiscountRange;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -48,7 +50,7 @@ class ProductController extends Controller
         return view('front.pages.product-listing',['data'=>$getCatId,'cat1'=>$cat1,'cat2'=>$cat2,'cat3'=>$cat3]);
     }
 
-    public function productDetails($productSlug = null)
+    public function productDetails(Request $request, $productSlug = null)
     {
             $dekoEnabled = true;
             $client = new DekoPayApiClient('','', env('DEKOPAY_API_KEY'));
@@ -57,6 +59,8 @@ class ProductController extends Controller
             if($dekoEnabled){
                 $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key='.env('DEKOPAY_API_KEY');
             }
+
+        $requestData = $request->query() ? $request->query() : [];
 
         if($productSlug !=null){
             $getProduct = Products::with(['getProductImages','getProductVariation'])->where('slug',$productSlug)->first();
@@ -108,7 +112,7 @@ class ProductController extends Controller
                 }else{
                     $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->groupBy('vari_image')->get();
                     // echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'plainbandMulti'=>$plainbandMulti,'plainbandJewellery'=>$plainbandJewellery,'url'=>$url,'plainband'=>$plainband,'variationImages'=>$variationDetails]);
+                    return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'plainbandMulti'=>$plainbandMulti,'plainbandJewellery'=>$plainbandJewellery,'url'=>$url,'plainband'=>$plainband,'variationImages'=>$variationDetails, 'requestData' => $requestData]);
                 }
             }else{
                 return view('layouts.errors.404');
@@ -235,35 +239,7 @@ class ProductController extends Controller
                 }
             }
         }
-
         return json_encode($blankArray);
-    }
-
-    public function getRepNetAPI(Request $request)
-    {
-        Rapnet::setDiamondParams(
-            // $request->input('diamond_shape'),
-            // $request->input('carat_weight'),
-            // $request->input('diamond_color'),
-            // $request->input('estimated_clarity')
-            'ROUND',
-            '0.3',
-            'D',
-            'IF'
-        );
-        // $getData = Rapnet::setDiamondParams(
-        //     $request->input('Round'),
-        //     $request->input('0.30'),
-        //     $request->input('I'),
-        //     $request->input('VVS2')
-        // );
-
-        $price = Rapnet::getPrice();
-
-        echo "Testing again ada da adsd <pre>";
-        print_r($price);
-        die;
-
     }
 
     public function getNewRepNetFunction(Type $var = null)
@@ -338,6 +314,8 @@ class ProductController extends Controller
                     foreach ($attributes as $key => $attribute) {
                         $final_attr['name'] = $attribute['name'];
                         $final_attr['slug'] = $attribute['slug'];
+                        $selected = isset($request[$final_attr['slug']])?$request[$final_attr['slug']]:'';
+
 
                         $explode_attr = explode('|', $attribute['values']);
 
@@ -369,7 +347,7 @@ class ProductController extends Controller
                             // print_r($final_attr);
                             // die;
 
-                        $variationArray[] = View::make('front.includes.show_variations',['final_attr'=>$final_attr,'type'=>$request->type])->render();
+                        $variationArray[] = View::make('front.includes.show_variations',['final_attr'=>$final_attr,'type'=>$request->type, 'selected' => $selected])->render();
                     }
 
                 }
@@ -518,8 +496,22 @@ class ProductController extends Controller
 
     public function getSelectedVariationsData(Request $request){
         $product_id = Products::where('slug',$request->slug)->value('id');
-        //print_r($request->variations); die;
+
         if($product_id!=''){
+            $getProduct = Products::with(['getProductImages','getProductVariation'])->where('slug',$request->slug)->first();
+
+            $prod_categories = explode(',',$getProduct->categories);
+
+            if (in_array("18", $prod_categories))
+            {
+                $prod_categories = ['18'];
+                $checkPlanCatArray = Category::whereIn('id',$prod_categories)->first()->toArray();
+            }else{
+                $checkPlanCatArray = Category::whereIn('id',$prod_categories)->where('parent_id',0)->first()->toArray();
+            }
+
+            $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date')->where('category_id',$checkPlanCatArray['id'])->where('status',1)->first();
+
             $getProductVariationId = ProductVariations::where('product_id',$product_id)->pluck('id')->toArray();
 
             if(!empty($getProductVariationId)){
@@ -532,23 +524,81 @@ class ProductController extends Controller
 
                             if(!empty($getVariDetails))
                                 $variationDetails[] = $getVariDetails;
-                            //echo '<pre> '.$key1.'='.$key2; print_r($getVariDetails);
                         }
-                       // die;
                         if($attributeCount == count($variationDetails))
                             break;
 
-                    # code...
                 }
-                //echo '<pre>'; print_r($variationDetails);
-                //die;
-                // echo '<pre>'; print_r($getVariDetails); die;
             }
             $vat = getVAT();
+            $newArray = [];
             if(isset($getVariDetails) && !empty($getVariDetails)){
-                $getSelectedVariationVideoImages = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select(DB::raw('(regular_price*"'.$vat.'") as regular_price_with_vat'),DB::raw('(sale_price*"'.$vat.'") as sale_price_with_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
+                $getSelectedVariationVideoImages = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select(DB::raw('(regular_price) as regular_price_without_vat'),DB::raw('(sale_price) as sale_price_without_vat'),'vari_image','vari_video','regular_price','sale_price')->first();
 
-                return response()->json($getSelectedVariationVideoImages);
+
+
+                if($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat<=3000){
+                    $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat-($getSelectedVariationVideoImages->regular_price_without_vat*0.35));// sprintf('%0.2f', ;
+                    // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+                }elseif($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat>3000){
+                    $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat-($getSelectedVariationVideoImages->regular_price_without_vat*0.5));
+                    // sprintf('%0.2f', ;
+                    // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+                }else{
+                    $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat);
+                    // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+                }
+
+
+                $increaseDiscount = 1;
+                $discountPercentage = 1;
+                $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
+                if(isset($disPercentage) && !empty($disPercentage)){
+                    $disPercentage = $disPercentage->toArray();
+                    if(auth()->guard('customer')->check()){
+                        if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
+                            $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
+                        }else{
+                            $increaseDiscount = 1;
+                        }
+
+                        $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
+
+                        if($disPercentage['end_date'] >= date('Y-m-d')){
+
+                            $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
+                            ->whereRaw('"'.$regular_p_final.'" between `from_price` and `to_price`')
+                            ->first();
+
+                            $discountPercentage = 1 + ($disPercentage['discount']/100);
+
+                            if(isset($getDiscountRange) && !empty($getDiscountRange->discount)){
+                                if($getDiscountRange->discount > 1){
+                                    $discountPercentage = 1 + ($getDiscountRange->discount/100);
+                                }else{
+                                    $discountPercentage = 1;
+                                }
+                            }else{
+                                $discountPercentage = 1;
+                            }
+                        }else{
+                            $discountPercentage = 1;
+                        }
+
+                    }
+                }
+
+
+                $regular_p_discount_final = $regular_p_final/$discountPercentage;
+
+                $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+                $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                $newArray['regular_price_with_vat'] =round($regular_p_final);
+                $newArray['regular_price_with_vat_discount'] = round($regular_p_discount_final);
+
+
+                return response()->json($newArray);
             }else{
                 return response()->json(['statusCode'=>'500','msg'=>'No Variation Found']);
             }
