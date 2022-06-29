@@ -141,12 +141,6 @@
                         @endif
                     </video>
                 @endif
-					{{-- <div id="carousel" class="owl-carousel">
-
-
-
-					</div> --}}
-
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -155,14 +149,25 @@
 				@if($plainband==false)
 				<div class="diamond-type">
 					<label>Choose Your Diamond</label>
-					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" @if(isset($requestData["metal-type"]) && $requestData["diamond_type"] == 'mined') checked @endif value="mined">
-						<span>Mined Diamond</span>
-					</div>
-					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond"  @if(!isset($requestData["metal-type"]) && $requestData["diamond_type"] != 'mined') checked @endif value="lab_grown">
-						<span>Lab Grown Diamond</span>
-					</div>
+                    @if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
+                        <div class="d-type-input">
+                            <input type="radio" name="attribute_choose-your-diamond"  checked value="mined">
+                            <span>Mined Diamond</span>
+                        </div>
+                        <div class="d-type-input">
+                            <input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
+                            <span>Lab Grown Diamond</span>
+                        </div>
+                    @else
+                        <div class="d-type-input">
+                            <input type="radio" name="attribute_choose-your-diamond" value="mined">
+                            <span>Mined Diamond</span>
+                        </div>
+                        <div class="d-type-input">
+                            <input type="radio" name="attribute_choose-your-diamond" checked value="lab_grown">
+                            <span>Lab Grown Diamond</span>
+                        </div>
+                    @endif
 				</div>
 				@endif
 				<div class="product-type-variations" id="filterDataDesign">
