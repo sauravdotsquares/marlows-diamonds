@@ -128,7 +128,7 @@ class XMLController extends Controller
                 foreach($dataArray->get_vari_details_id as $key2 => $var2){
                     $var2->key = str_replace("attri_","",$var2->key);
                     if($var2->value){
-                        $linkQuery .= $linkQuery ? '&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
+                        $linkQuery .= $linkQuery ? '&diamond_type=mined&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
                     }
                     if(isset($var2->key) && $var2->key == 'metal-type'){
                         $metalType .= $var2->value;

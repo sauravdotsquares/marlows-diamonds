@@ -120,13 +120,25 @@ class ProductPriceController extends Controller
 
             $increaseDiscount = 1;
             $discountPercentage = 1;
+
+            $settingPriceWithOutVat = $finalPrice*$increaseDiscount;
+            $settingPriceWithVat = $settingPriceWithOutVat*$vat;
+
             if(isset($disPercentage) && !empty($disPercentage)){
                 $disPercentage = $disPercentage->toArray();
                 if(auth()->guard('customer')->check()){
+
+                    if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
+                        $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
+                    }
+
+                    $settingPriceWithOutVat = $finalPrice*$increaseDiscount;
+                    $settingPriceWithVat = $settingPriceWithOutVat*$vat;
+
                     if($disPercentage['end_date'] >= date('Y-m-d')){
 
                         $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
-                        ->whereRaw('"'.$finalPrice.'" between `from_price` and `to_price`')
+                        ->whereRaw('"'.$settingPriceWithVat.'" between `from_price` and `to_price`')
                         ->first();
 
                         $discountPercentage = 1 + ($disPercentage['discount']/100);
@@ -147,14 +159,11 @@ class ProductPriceController extends Controller
                         //     }
                         // }
                     }
-                    if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
-                        $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
-                    }
+
                 }
             }
 
-            $settingPriceWithOutVat = $finalPrice*$increaseDiscount;
-            $settingPriceWithVat = $settingPriceWithOutVat*$vat;
+
             $settingPriceWithVatDiscount = $settingPriceWithVat/$discountPercentage;
 
             $result = [
