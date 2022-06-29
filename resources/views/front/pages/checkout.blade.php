@@ -320,7 +320,7 @@
                                             </td>
                                             <td>
                                                 <span>
-                                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']))
+                                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
                                                         <del>{{MY_CURRENCY_SYMBOL}}{{
                                                             $details['customArray']['final_price'] }}
                                                         </del>
