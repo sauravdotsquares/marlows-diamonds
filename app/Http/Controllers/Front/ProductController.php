@@ -564,6 +564,7 @@ class ProductController extends Controller
 
                         $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
 
+
                         if($disPercentage['end_date'] >= date('Y-m-d')){
 
                             $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
@@ -585,6 +586,14 @@ class ProductController extends Controller
                             $discountPercentage = 1;
                         }
 
+                    }else{
+                        if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
+                            $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
+                        }else{
+                            $increaseDiscount = 1;
+                        }
+
+                        $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
                     }
                 }
 
