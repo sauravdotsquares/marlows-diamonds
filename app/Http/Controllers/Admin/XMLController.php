@@ -232,11 +232,11 @@ class XMLController extends Controller
 
                     $product->appendChild($shipping_label);
 
-                    $gender = $dom->createElement('g:gender', '<![CDATA[ Female ]]>');
+                    $gender = $dom->createElement('g:gender', 'Female');
 
                     $product->appendChild($gender);
 
-                    $age_group = $dom->createElement('g:age_group', '<![CDATA[ Adult ]]>');
+                    $age_group = $dom->createElement('g:age_group', 'Adult');
 
                     $product->appendChild($age_group);
 
