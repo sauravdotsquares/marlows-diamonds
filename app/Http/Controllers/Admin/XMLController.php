@@ -154,9 +154,9 @@ class XMLController extends Controller
                     // $productDescription = str_replace(['<p>', '</p>'], '', $productDescription);
 
 
-                    $productQueryLink=  'https://www.marlows-diamonds.co.uk/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
-                    $productLink     =  'https://www.marlows-diamonds.co.uk/product/'.$productArrayNew->slug;
-                    $productImageLink      =  'https://www.marlows-diamonds.co.uk/storage/'.$productArrayNew->getProductImages->image_url;
+                    $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
+                    $productLink     =  url('').'/product/'.$productArrayNew->slug;
+                    $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
                     $productPrice  =  round($getFinalPriceArray);
                     // $productSalePrice  =  '';
                     // $productSalePriceEffectiveDate  =  '';
@@ -221,7 +221,7 @@ class XMLController extends Controller
                     $product->appendChild($price);
 
                     foreach($productArrayNew->getProductGallery as $key => $addImages){
-                        $additional_image_link = $dom->createElement('g:additional_image_link', 'https://www.marlows-diamonds.co.uk/storage/'.$addImages->image_url);
+                        $additional_image_link = $dom->createElement('g:additional_image_link', url('').'/storage/'.$addImages->image_url);
 
                         $product->appendChild($additional_image_link);
                     }
@@ -278,20 +278,27 @@ class XMLController extends Controller
             $checkPlanCatArray = Category::whereIn('id',$prod_categories)->where('parent_id',0)->first()->toArray();
         }
 
+        $checkPlanCat = Category::select('id')->whereIn('id',$prod_categories)->where('name','LIKE','%plain%')->get()->toArray();
+        if(!empty($checkPlanCat)) $plainband = true;
+        else $plainband = false;
+
 
         $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date')->where('category_id',$checkPlanCatArray['id'])->where('status',1)->first();
 
-
-        if($diamondType == 'lab_grown' && $finalPrices<=3000){
-            $regular_p_final = ($finalPrices-($finalPrices*0.35));// sprintf('%0.2f', ;
-            // $regular_p_discount_final = $regular_p_final/$discountPercentage;
-        }elseif($diamondType == 'lab_grown' && $finalPrices>3000){
-            $regular_p_final = ($finalPrices-($finalPrices*0.5));
-            // sprintf('%0.2f', ;
-            // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+        if($plainband != true){
+            if($diamondType == 'lab_grown' && $finalPrices<=3000){
+                $regular_p_final = ($finalPrices-($finalPrices*0.35));// sprintf('%0.2f', ;
+                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+            }elseif($diamondType == 'lab_grown' && $finalPrices>3000){
+                $regular_p_final = ($finalPrices-($finalPrices*0.5));
+                // sprintf('%0.2f', ;
+                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+            }else{
+                $regular_p_final = $finalPrices;
+                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+            }
         }else{
             $regular_p_final = $finalPrices;
-            // $regular_p_discount_final = $regular_p_final/$discountPercentage;
         }
 
         $increaseDiscount = 1;
