@@ -708,6 +708,8 @@
                     'type' : '{{$plainbandMulti}}',
                     'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
                     'carat' : '{{ isset($requestData["carat"]) ? $requestData["carat"] : "" }}',
+                    'width-mm': '{{ isset($requestData["width-mm"]) ? $requestData["width-mm"] : "" }}',
+                    'total-diamond-weight': '{{ isset($requestData["total-diamond-weight"]) ? $requestData["total-diamond-weight"] : "" }}',
                 },
                 success: function (res) {
 
