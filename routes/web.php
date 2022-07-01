@@ -170,6 +170,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::post('/delete-discount','DiscountController@delete');
 
             Route::get('xmlpage','XMLController@XMLFunction')->name('xml-page');
+
+            /* Sitemap Route*/
+            Route::get('/sitemap', 'SitemapController@index')->name('sitemap');
 	});
 });
 
