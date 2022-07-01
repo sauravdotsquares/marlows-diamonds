@@ -120,7 +120,7 @@
                                     </div>
                                 </td>
                                 <td class="product-price-col" data-th="Price">
-                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']))
+                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
                                         <del>{{MY_CURRENCY_SYMBOL}}{{
                                             number_format($details['customArray']['final_price'],2) }}
                                         </del>

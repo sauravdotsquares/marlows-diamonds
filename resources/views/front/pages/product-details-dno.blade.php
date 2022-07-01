@@ -116,18 +116,20 @@
                             @endforeach
                         @endif
 
-                        @if($prodImages)
+                        @if(isset($prodImages) && $prodImages)
                             @foreach($prodImages as $images)
-                                @php
-                                    $explode = explode('/',$images->image_url);
-                                    $explode1 = explode('.',$explode[1]);
-                                @endphp
-                                @if(isset($images->is_featured) && $images->is_featured != 1)
-                                    <div class="item">
-                                        <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
-                                            <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
-                                        </a>
-                                    </div>
+                                @if(isset($images->image_url) && !empty($images->image_url))
+                                    @php
+                                        $explode = explode('/',$images->image_url);
+                                        $explode1 = explode('.',$explode[1]);
+                                    @endphp
+                                    @if(isset($images->is_featured) && $images->is_featured != 1)
+                                        <div class="item">
+                                            <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
+                                                <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
+                                            </a>
+                                        </div>
+                                    @endif
                                 @endif
                             @endforeach
                         @endif
@@ -708,6 +710,8 @@
                     'type' : '{{$plainbandMulti}}',
                     'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
                     'carat' : '{{ isset($requestData["carat"]) ? $requestData["carat"] : "" }}',
+                    'width-mm': '{{ isset($requestData["width-mm"]) ? $requestData["width-mm"] : "" }}',
+                    'total-diamond-weight': '{{ isset($requestData["total-diamond-weight"]) ? $requestData["total-diamond-weight"] : "" }}',
                 },
                 success: function (res) {
 

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\Models\Category;
+use App\Models\Discount;
+use App\Models\DiscountRange;
 
 class XMLController extends Controller
 {
@@ -12,15 +15,8 @@ class XMLController extends Controller
     {
         // Fetch records from database
         $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->latest()->get();
-        // return response()->json($getProductData);
-        // echo "<pre>";
-        // print_r($getProductData->toArray());
-        // die;
         $this->createXMLfileNewFormat($getProductData);
         echo "Done";
-        // echo "Done<pre>";
-        // print_r($getProductData);
-        // die;
     }
 
     // public function createXMLfile($booksArray){
@@ -90,9 +86,6 @@ class XMLController extends Controller
     // }
 
     public function createXMLfileNewFormat($productArray){
-        // echo "checking in xml files <pre>";
-        // print_r($booksArray);
-        // die;
 
         if (!file_exists(public_path('files/'))) {
             mkdir(public_path('files/'), 0777);
@@ -109,176 +102,255 @@ class XMLController extends Controller
         $root->setAttributeNS('', 'encoding', 'utf-8');
 
         $channelNew = $dom->createElement('channel');
-        // $xml_a = $xmlObject->createElement('parent');
-        // $channel->appendChild($channel);
-        // $root->appendChild($channel);
 
         foreach($productArray as $key => $productArrayNew){
 
+            $diamondTypeArray = ["lab_grown","mined"];
 
             foreach($productArrayNew->getProductVariation as $var => $dataArray){
+                foreach($diamondTypeArray as $diamondKey => $diamondType){
+                    $getFinalPriceArray = $this->getPriceCalculationFunction($diamondType,$productArrayNew->categories,$dataArray->regular_price);
 
-                $title = '';
-                $metalType = '';
-                $price = '';
-                $caratType = '';
-                $widthType = '';
-                $diamondWeight = '';
-                $linkQuery = '';
-                foreach($dataArray->get_vari_details_id as $key2 => $var2){
-                    $var2->key = str_replace("attri_","",$var2->key);
-                    if($var2->value){
-                        $linkQuery .= $linkQuery ? '&diamond_type=mined&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
-                    }
-                    if(isset($var2->key) && $var2->key == 'metal-type'){
-                        $metalType .= $var2->value;
+                    $title = '';
+                    $metalType = '';
+                    $price = '';
+                    $caratType = '';
+                    $widthType = '';
+                    $diamondWeight = '';
+                    $linkQuery = '';
+                    foreach($dataArray->get_vari_details_id as $key2 => $var2){
+                        $var2->key = str_replace("attri_","",$var2->key);
+                        if($var2->value){
+                            $linkQuery .= $linkQuery ? '&diamond_type='.$diamondType.'&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
+                        }
+                        if(isset($var2->key) && $var2->key == 'metal-type'){
+                            $metalType .= $var2->value;
+                        }
+
+                        if(isset($var2->key) && $var2->key == 'carat'){
+                            $caratType .= $var2->value;
+                        }
+
+                        if(isset($var2->key) && $var2->key == 'total-diamond-weight'){
+                            $diamondWeight .= $var2->value;
+                        }
+
+                        if(isset($var2->key) && $var2->key == 'width-mm'){
+                            $widthType = $var2->value;
+                        }
+
+                        $price = $dataArray->regular_price;
                     }
 
-                    if(isset($var2->key) && $var2->key == 'carat'){
-                        $caratType .= $var2->value;
+
+                    $productGroupId        =  'ig_'.$productArrayNew->id;
+                    $productName = htmlspecialchars($productArrayNew->title.' - '.(($caratType!='')?$caratType.' - ':'').(($diamondWeight!='')?$diamondWeight.' - ':'').(($widthType!='')?$widthType.' - ':'').(($diamondType!='')?$diamondType.' - ':'').$metalType);
+
+                    $productId        =  'p_id_'.md5($productName);
+
+
+
+                    $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
+                    // $productDescription = str_replace(['<p>', '</p>'], '', $productDescription);
+
+
+                    $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
+                    $productLink     =  url('').'/product/'.$productArrayNew->slug;
+                    $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
+                    $productPrice  =  round($getFinalPriceArray);
+                    // $productSalePrice  =  '';
+                    // $productSalePriceEffectiveDate  =  '';
+                    $productCondition  =  'new';
+                    // $productShippingWeight  =  '1.00 lb';
+                    $productAvailability  =  'in stock';
+                    $productIdentifierExists  =  'no';
+                    // $productAdditionalImageLink  =  'https://mccoyhome.com/media/catalog/product/s/q/squareall6.jpeg';
+                    $productType  =  $productArrayNew->cat_details;
+
+                    $product = $dom->createElement('item');
+
+                    $productid  = $dom->createElement('g:id', $productId);
+                    $product->appendChild($productid);
+
+                    $title   = $dom->createElement('g:title', $productName);
+
+                    $product->appendChild($title);
+
+                    $description   = $dom->createElement('g:description', $productDescription);
+
+                    $product->appendChild($description);
+
+                    $item_group_id   = $dom->createElement('g:item_group_id', $productGroupId);
+
+                    $product->appendChild($item_group_id);
+
+                    $link    = $dom->createElement('g:link', htmlentities($productQueryLink));
+
+                    $product->appendChild($link);
+
+                    $link    = $dom->createElement('g:product_type', $productType);
+
+                    $product->appendChild($link);
+
+                    // $link    = $dom->createElement('g:google_product_category', '200');
+
+                    // $product->appendChild($link);
+
+                    $image_link     = $dom->createElement('g:image_link', $productImageLink);
+
+                    $product->appendChild($image_link);
+
+                    $condition = $dom->createElement('g:condition', $productCondition);
+
+                    $product->appendChild($condition);
+
+                    $availability = $dom->createElement('g:availability', $productAvailability);
+
+                    $product->appendChild($availability);
+
+                    $price = $dom->createElement('g:price', $productPrice.' GBP ');
+
+                    $product->appendChild($price);
+
+                    $price = $dom->createElement('g:brand', 'Marlows Diamonds');
+
+                    $product->appendChild($price);
+
+                    $price = $dom->createElement('g:canonical_link', $productLink);
+
+                    $product->appendChild($price);
+
+                    foreach($productArrayNew->getProductGallery as $key => $addImages){
+                        $additional_image_link = $dom->createElement('g:additional_image_link', url('').'/storage/'.$addImages->image_url);
+
+                        $product->appendChild($additional_image_link);
                     }
 
-                    if(isset($var2->key) && $var2->key == 'total-diamond-weight'){
-                        $diamondWeight .= $var2->value;
-                    }
 
-                    if(isset($var2->key) && $var2->key == 'width-mm'){
-                        $widthType = $var2->value;
-                    }
 
-                    $price = $dataArray->regular_price;
+                    $shipping_label = $dom->createElement('g:shipping_label', 0.00);
+
+                    $product->appendChild($shipping_label);
+
+                    $gender = $dom->createElement('g:gender', 'Female');
+
+                    $product->appendChild($gender);
+
+                    $age_group = $dom->createElement('g:age_group', 'Adult');
+
+                    $product->appendChild($age_group);
+
+                    $metal = $dom->createElement('g:metal', $metalType);
+
+                    $product->appendChild($metal);
+
+                    $identifier_exists = $dom->createElement('g:identifier_exists', $productIdentifierExists);
+
+                    $product->appendChild($identifier_exists);
+
+                    $channelNew->appendChild($product);
+                    $root->appendChild($channelNew);
+
                 }
-
-
-                $productGroupId        =  'ig_'.$productArrayNew->id;
-                $productName = htmlspecialchars($productArrayNew->title.' - '.(($caratType!='')?$caratType.' - ':'').(($diamondWeight!='')?$diamondWeight.' - ':'').(($widthType!='')?$widthType.' - ':'').$metalType);
-
-                $productId        =  'p_id_'.md5($productName);
-
-
-
-                $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
-                // $productDescription = str_replace(['<p>', '</p>'], '', $productDescription);
-
-                // echo $productDescription."<pre>";
-                // print_r($productDescription);
-                // die;
-
-                $productQueryLink=  'https://www.marlows-diamonds.co.uk/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
-                $productLink     =  'https://www.marlows-diamonds.co.uk/product/'.$productArrayNew->slug;
-                $productImageLink      =  'https://www.marlows-diamonds.co.uk/storage/'.$productArrayNew->getProductImages->image_url;
-                $productPrice  =  round($price*1.2);
-                // $productSalePrice  =  '';
-                // $productSalePriceEffectiveDate  =  '';
-                $productCondition  =  'new';
-                // $productShippingWeight  =  '1.00 lb';
-                $productAvailability  =  'in stock';
-                $productIdentifierExists  =  'no';
-                // $productAdditionalImageLink  =  'https://mccoyhome.com/media/catalog/product/s/q/squareall6.jpeg';
-                $productType  =  $productArrayNew->cat_details;
-
-                $product = $dom->createElement('item');
-
-                $productid  = $dom->createElement('g:id', $productId);
-                $product->appendChild($productid);
-
-                $title   = $dom->createElement('g:title', $productName);
-
-                $product->appendChild($title);
-
-                $description   = $dom->createElement('g:description', $productDescription);
-
-                $product->appendChild($description);
-
-                $item_group_id   = $dom->createElement('g:item_group_id', $productGroupId);
-
-                $product->appendChild($item_group_id);
-
-                $link    = $dom->createElement('g:link', htmlentities($productQueryLink));
-
-                $product->appendChild($link);
-
-                $link    = $dom->createElement('g:product_type', $productType);
-
-                $product->appendChild($link);
-
-                // $link    = $dom->createElement('g:google_product_category', '200');
-
-                // $product->appendChild($link);
-
-                $image_link     = $dom->createElement('g:image_link', $productImageLink);
-
-                $product->appendChild($image_link);
-
-                $condition = $dom->createElement('g:condition', $productCondition);
-
-                $product->appendChild($condition);
-
-                $availability = $dom->createElement('g:availability', $productAvailability);
-
-                $product->appendChild($availability);
-
-                $price = $dom->createElement('g:price', $productPrice.' GBP ');
-
-                $product->appendChild($price);
-
-                $price = $dom->createElement('g:brand', 'Marlows Diamonds');
-
-                $product->appendChild($price);
-
-                $price = $dom->createElement('g:canonical_link', $productLink);
-
-                $product->appendChild($price);
-
-                foreach($productArrayNew->getProductGallery as $key => $addImages){
-                    $additional_image_link = $dom->createElement('g:additional_image_link', 'https://www.marlows-diamonds.co.uk/storage/'.$addImages->image_url);
-
-                    $product->appendChild($additional_image_link);
-                }
-
-
-
-                $shipping_label = $dom->createElement('g:shipping_label', 0.00);
-
-                $product->appendChild($shipping_label);
-
-                $gender = $dom->createElement('g:gender', '<![CDATA[ Female ]]>');
-
-                $product->appendChild($gender);
-
-                $age_group = $dom->createElement('g:age_group', '<![CDATA[ Adult ]]>');
-
-                $product->appendChild($age_group);
-
-                $metal = $dom->createElement('g:metal', $metalType);
-
-                $product->appendChild($metal);
-
-                $identifier_exists = $dom->createElement('g:identifier_exists', $productIdentifierExists);
-
-                $product->appendChild($identifier_exists);
-
-                $channelNew->appendChild($product);
-                $root->appendChild($channelNew);
 
             }
 
-
-
-
-
         }
-            // echo "aff<pre>";
-            // print_r($productsArray[$i]['id']);
-            // die;
-
-
-
-        // }
 
         $dom->appendChild($root);
 
         $dom->save($filePath);
+
+    }
+
+
+    public function getPriceCalculationFunction($diamondType,$category,$finalPrices)
+    {
+
+        $vat = getVAT();
+        $prod_categories = explode(',',$category);
+
+        if (in_array("18", $prod_categories))
+        {
+            $prod_categories = ['18'];
+            $checkPlanCatArray = Category::whereIn('id',$prod_categories)->first()->toArray();
+        }else{
+            $checkPlanCatArray = Category::whereIn('id',$prod_categories)->where('parent_id',0)->first()->toArray();
+        }
+
+        $checkPlanCat = Category::select('id')->whereIn('id',$prod_categories)->where('name','LIKE','%plain%')->get()->toArray();
+        if(!empty($checkPlanCat)) $plainband = true;
+        else $plainband = false;
+
+
+        $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date')->where('category_id',$checkPlanCatArray['id'])->where('status',1)->first();
+
+        if($plainband != true){
+            if($diamondType == 'lab_grown' && $finalPrices<=3000){
+                $regular_p_final = ($finalPrices-($finalPrices*0.35));// sprintf('%0.2f', ;
+                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+            }elseif($diamondType == 'lab_grown' && $finalPrices>3000){
+                $regular_p_final = ($finalPrices-($finalPrices*0.5));
+                // sprintf('%0.2f', ;
+                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+            }else{
+                $regular_p_final = $finalPrices;
+                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+            }
+        }else{
+            $regular_p_final = $finalPrices;
+        }
+
+        $increaseDiscount = 1;
+        $discountPercentage = 1;
+        $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
+        if(isset($disPercentage) && !empty($disPercentage)){
+            $disPercentage = $disPercentage->toArray();
+            if(auth()->guard('customer')->check()){
+                if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
+                    $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
+                }else{
+                    $increaseDiscount = 1;
+                }
+
+                $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
+
+
+                if($disPercentage['end_date'] >= date('Y-m-d')){
+
+                    $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
+                    ->whereRaw('"'.$regular_p_final.'" between `from_price` and `to_price`')
+                    ->first();
+
+                    $discountPercentage = 1 + ($disPercentage['discount']/100);
+
+                    if(isset($getDiscountRange) && !empty($getDiscountRange->discount)){
+                        if($getDiscountRange->discount > 1){
+                            $discountPercentage = 1 + ($getDiscountRange->discount/100);
+                        }else{
+                            $discountPercentage = 1;
+                        }
+                    }else{
+                        $discountPercentage = 1;
+                    }
+                }else{
+                    $discountPercentage = 1;
+                }
+
+            }else{
+                if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
+                    $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
+                }else{
+                    $increaseDiscount = 1;
+                }
+                $regular_p_final = (($regular_p_final)*$increaseDiscount)*$vat;
+            }
+        }
+
+        $regular_p_discount_final = $regular_p_final/$discountPercentage;
+
+
+        return $regular_p_final;
 
     }
 
