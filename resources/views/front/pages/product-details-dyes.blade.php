@@ -710,6 +710,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
+                    'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
                 },
                 success: function (res) {
 
