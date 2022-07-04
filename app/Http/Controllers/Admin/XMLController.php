@@ -13,8 +13,21 @@ class XMLController extends Controller
 {
     public function XMLFunction()
     {
+
+        // $data = \DB::table("articles")
+        //         ->select("title")
+        //         ->whereRaw("find_in_set('find value',colum_name)")
+        //         ->get();
+
         // Fetch records from database
-        $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->latest()->get();
+        $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->latest()
+        ->whereRaw("NOT find_in_set(8,categories)")
+        ->get();
+
+        // echo "<pre>";
+        // print_r($getProductData);
+        // die;
+
         $this->createXMLfileNewFormat($getProductData);
         echo "Done";
     }
