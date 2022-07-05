@@ -30,7 +30,7 @@ class XMLController extends Controller
             mkdir(public_path('files/'), 0777);
         }
 
-        $filePath = public_path('files/book.xml');
+        $filePath = public_path('files/book_final.xml');
 
         $dom     = new \DOMDocument('1.0', 'utf-8');
 
