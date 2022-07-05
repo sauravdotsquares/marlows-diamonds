@@ -108,7 +108,7 @@ class ProductController extends Controller
                     $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
 
                     //echo '<pre>';print_r($variationDetails); die;
-                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'plainbandMulti'=>$plainbandMulti,'plainbandJewellery'=>$plainbandJewellery,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url]);
+                    return view('front.pages.product-details-dyes',['data'=>$getProduct,'plainbandMulti'=>$plainbandMulti,'plainbandJewellery'=>$plainbandJewellery,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url, 'requestData' => $requestData]);
                 }else{
                     $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->groupBy('vari_image')->get();
                     // echo '<pre>';print_r($variationDetails); die;
@@ -341,11 +341,6 @@ class ProductController extends Controller
                             $final_attr['attri_'.$attribute['slug']] = $explode_attr;
                         else
                             $final_attr['attri_'.$attribute['slug']] = $found;
-
-                            // echo "<pre>";
-                            // print_r($request->type);
-                            // print_r($final_attr);
-                            // die;
 
                         $variationArray[] = View::make('front.includes.show_variations',['final_attr'=>$final_attr,'type'=>$request->type, 'selected' => $selected])->render();
                     }
