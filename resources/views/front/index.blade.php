@@ -283,7 +283,7 @@
                             </div>
                         </div>
                         <div class="google-capatcha form-controls">
-                            <div class="g-recaptcha" name="g-recaptcha-response"
+                            <div class="g-recaptcha"
                                 data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
                             </div>
                             @if ($errors->has('g-recaptcha-response'))
