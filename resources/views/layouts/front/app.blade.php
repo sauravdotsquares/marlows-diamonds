@@ -142,7 +142,7 @@ $(document).ready(function(){
 </script>
 
 <!-- footer collapse -->
-<script type="text/javascript">
+<script>
   if($(window).innerWidth() <= 767) {
     $(document).ready(function() {
       $('.accordian-toggle').click(function() {
@@ -153,7 +153,7 @@ $(document).ready(function(){
 </script>
 
 <!-- header dropdown menu level collapse -->
-<script type="text/javascript">
+<script>
   if($(window).innerWidth() <= 1024) {
     $(document).ready(function() {
         $('.main-navigaiton .nav-navbars .level-zero .fa-angle-down').on('click',function() {
@@ -168,7 +168,7 @@ $(document).ready(function(){
 
 
 
-<script type="text/javascript">
+<script>
     /*$(function() {
         $('input.typeahead').focusout(function() {
           $(this).val(" ");
