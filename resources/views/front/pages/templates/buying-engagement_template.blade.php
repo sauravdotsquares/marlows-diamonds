@@ -233,7 +233,7 @@
 				This works best with a simple band that can lay flat on the guide once you’ve printed it off.</p>
 				<p>Simply hold it up to the various sizes to get a good idea and remember, you’re checking the inner diameter and inner circumference, not the outer edge of the ring.</p>
 				<div class="download-btn">
-					<a href="https://www.marlows-diamonds.co.uk/wp-content/uploads/2021/02/Marlows1-Engagement-Ring-Guide-4.3.pdf">Download Guide Size</a>
+					<a href="{{asset('')}}files/Marlows1-Engagement-Ring-Guide-4.3.pdf">Download Guide Size</a>
 				</div>
 				<p>And if you’re stuck between two particular ring sizes, it's best to go with the bigger size for two reasons. Firstly, you don’t want to offend your partner by making it seem that they have fatter fingers than you’d expected. Secondly, it’s not cheap to resize a ring to the correct size.</p>
 
