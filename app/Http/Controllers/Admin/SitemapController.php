@@ -16,11 +16,10 @@ class SitemapController extends Controller
 {
     public function index() {
         $getProductData = Products::select('slug','categories')->latest()->get();
-        $getCategoryData = Category::with('grandchildren')->select('*')->get();
+        $getCategoryData = Category::with('grandchildren')->select('*')->where('parent_id',0)->get();
         $getPagesData = Pages::select('slug')->latest()->get();
         $getPostCategoryData = PostCategory::select('slug')->latest()->get();
         $getPostData = Posts::select('slug')->latest()->get();
-        $getMenusData = Menus::select('slug')->latest()->get();
 
         $resultArray = [
             'getProductData' => $getProductData, // done
@@ -28,7 +27,6 @@ class SitemapController extends Controller
             'getPagesData' => $getPagesData, // done
             'getPostCategoryData' => $getPostCategoryData,
             'getPostData' => $getPostData,
-            'getMenusData' => $getMenusData,
         ];
 
         $this->createXMLfileNewFormat($resultArray);
@@ -45,22 +43,140 @@ class SitemapController extends Controller
         $root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
         $root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         // $root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
-        // $root->setAttributeNS('', 'version', '2.0');
-        // $root->setAttributeNS('', 'encoding', 'utf-8');
-
-        // $channelNew = $dom->createElement('channel');
-
         $customUrl = '';
+
+        // Main URL Show Start
+        $productUrl = $dom->createElement('url');
+
+        $locurl  = $dom->createElement('loc', url(''));
+        $productUrl->appendChild($locurl);
+
+        $lastmoddate   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
+
+        $productUrl->appendChild($lastmoddate);
+
+        $priority   = $dom->createElement('priority', 1 - substr_count('/', '/') / 10);
+        $productUrl->appendChild($priority);
+        $root->appendChild($productUrl);
+
+        // Main URL End
+
+        // account URL Start
+            $productUrl = $dom->createElement('url');
+
+            $locurl  = $dom->createElement('loc', url('').'/my-account');
+            $productUrl->appendChild($locurl);
+
+            $lastmoddate   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
+
+            $productUrl->appendChild($lastmoddate);
+
+            $priority   = $dom->createElement('priority', 1 - substr_count('/my-account', '/') / 10);
+            $productUrl->appendChild($priority);
+            $root->appendChild($productUrl);
+
+        // account URL End
+
+        // /products/wishlist URL Start
+            $productUrl = $dom->createElement('url');
+
+            $locurl  = $dom->createElement('loc', url('').'/products/wishlist');
+            $productUrl->appendChild($locurl);
+
+            $lastmoddate   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
+
+            $productUrl->appendChild($lastmoddate);
+
+            $priority   = $dom->createElement('priority', 1 - substr_count('/products/wishlist', '/') / 10);
+            $productUrl->appendChild($priority);
+            $root->appendChild($productUrl);
+        // /products/wishlist URL End
+
+        // /products/cart URL Start
+            $productUrl = $dom->createElement('url');
+
+            $locurl  = $dom->createElement('loc', url('').'/products/cart');
+            $productUrl->appendChild($locurl);
+
+            $lastmoddate   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
+
+            $productUrl->appendChild($lastmoddate);
+
+            $priority   = $dom->createElement('priority', 1 - substr_count('/products/cart', '/') / 10);
+            $productUrl->appendChild($priority);
+            $root->appendChild($productUrl);
+        // /products/cart URL End
+
+        // /users/forget-password URL Start
+            $productUrl = $dom->createElement('url');
+
+            $locurl  = $dom->createElement('loc', url('').'/users/forget-password');
+            $productUrl->appendChild($locurl);
+
+            $lastmoddate   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
+
+            $productUrl->appendChild($lastmoddate);
+
+            $priority   = $dom->createElement('priority', 1 - substr_count('/users/forget-password', '/') / 10);
+            $productUrl->appendChild($priority);
+            $root->appendChild($productUrl);
+        // /users/forget-password URL End
+
         foreach($productArray['getCategoryData'] as $keyCat => $catDetails){
             $activeUrl = '';
             if(isset($catDetails->grandchildren) && count($catDetails->grandchildren)){
+                $increData1 = 0;
                 foreach($catDetails->grandchildren as $graKey => $childValue){
+                    $increData2 = 0;
                     if(isset($childValue->grandchildren) && count($childValue->grandchildren)){
                         foreach($childValue->grandchildren as $graKey1 => $childValueGrand){
                             $activeUrl = '/product-category/'.$catDetails->slug.'/'.$childValue->slug.'/'.$childValueGrand->slug;
 
-                            $productUrl = $dom->createElement('url');
+                            if($increData1==0){
+                                $productUrl = $dom->createElement('url');
+                                $activeUrl1 = '/product-category/'.$catDetails->slug;
 
+                                $locurl1  = $dom->createElement('loc', url('').$activeUrl1);
+
+                                $productUrl->appendChild($locurl1);
+
+                                $lastmoddate1   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
+
+                                $productUrl->appendChild($lastmoddate1);
+
+                                $priority1   = $dom->createElement('priority', 1 - substr_count($activeUrl1, '/') / 10);
+
+                                $productUrl->appendChild($priority1);
+
+                                $root->appendChild($productUrl);
+
+                                $increData1= $increData1+1;
+                            }
+
+                            if($increData2==0){
+                                $productUrl = $dom->createElement('url');
+                                $activeUrl2 = '/product-category/'.$catDetails->slug.'/'.$childValue->slug;
+
+                                $productUrl = $dom->createElement('url');
+
+                                $locurl2  = $dom->createElement('loc', url('').$activeUrl2);
+
+                                $productUrl->appendChild($locurl2);
+
+                                $lastmoddate2   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
+
+                                $productUrl->appendChild($lastmoddate2);
+
+                                $priority2   = $dom->createElement('priority', 1 - substr_count($activeUrl2, '/') / 10);
+
+                                $productUrl->appendChild($priority2);
+
+                                $root->appendChild($productUrl);
+
+                                $increData2= $increData2+1;
+                            }
+
+                            $productUrl = $dom->createElement('url');
                             $locurl  = $dom->createElement('loc', url('').$activeUrl);
                             $productUrl->appendChild($locurl);
 
@@ -75,42 +191,8 @@ class SitemapController extends Controller
                             $root->appendChild($productUrl);
 
                         }
-                    }else{
-                        $activeUrl = '/product-category/'.$catDetails->slug.'/'.$childValue->slug;
-
-                        $productUrl = $dom->createElement('url');
-
-                        $locurl  = $dom->createElement('loc', url('').$activeUrl);
-                        $productUrl->appendChild($locurl);
-
-                        $lastmoddate   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
-
-                        $productUrl->appendChild($lastmoddate);
-
-                        $priority   = $dom->createElement('priority', 1 - substr_count($activeUrl, '/') / 10);
-
-                        $productUrl->appendChild($priority);
-
-                        $root->appendChild($productUrl);
                     }
                 }
-            }else{
-                $activeUrl = '/product-category/'.$catDetails->slug;
-
-                $productUrl = $dom->createElement('url');
-
-                $locurl  = $dom->createElement('loc', url('').$activeUrl);
-                $productUrl->appendChild($locurl);
-
-                $lastmoddate   = $dom->createElement('lastmod', Carbon::now()->toIso8601String());
-
-                $productUrl->appendChild($lastmoddate);
-
-                $priority   = $dom->createElement('priority', 1 - substr_count($activeUrl, '/') / 10);
-
-                $productUrl->appendChild($priority);
-
-                $root->appendChild($productUrl);
             }
         }
 
@@ -177,9 +259,11 @@ class SitemapController extends Controller
             $root->appendChild($productUrl);
         }
 
+
+
+
         $dom->appendChild($root);
 
         $dom->save($filePath);
-
     }
 }
