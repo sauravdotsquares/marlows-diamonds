@@ -1,11 +1,11 @@
 @extends('layouts.admin.app')
 @section('content')
 @section('css')
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
 <!-- Main content -->
 <section class="content">
-    
+
     <div class="container-fluid order-details-dash">
         <div class="row">
             <div class="col-12">
@@ -19,7 +19,7 @@
                     <div class="woocommerce-MyAccount-content">
                         <div class="woocommerce-notices-wrapper"></div>
                         <p>
-                            Order #<mark class="order-number">{{isset($getOrderDetails->token)?$getOrderDetails->token:''}}</mark> was placed on <mark class="order-date">{{isset($getOrderDetails->created_at)?$getOrderDetails->created_at->format('M d, Y'):''}}</mark> and is currently 
+                            Order #<mark class="order-number">{{isset($getOrderDetails->token)?$getOrderDetails->token:''}}</mark> was placed on <mark class="order-date">{{isset($getOrderDetails->created_at)?$getOrderDetails->created_at->format('M d, Y'):''}}</mark> and is currently
                             <!-- <mark class="order-status">Cancelled</mark>  -->
                             <a href="javascript:void(0);" type="button" class="" data-bs-toggle="modal" id="orderSelectedStatus" data-status="{{isset($getOrderDetails->status)?$getOrderDetails->status:''}}" data-bs-target="#exampleModal">{!!isset($getOrderDetails->status_details_designs)?$getOrderDetails->status_details_designs:''!!}</a>.
                         </p>
@@ -35,7 +35,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($getOrderDetails->getOrderDetailsFunction as $key => $orderDetails)
-                                        <?php 
+                                        <?php
                                             if(isset($orderDetails->order_product_details) && !empty($orderDetails->order_product_details)){
                                                 $orderProductDetails = json_decode($orderDetails->order_product_details);
                                             }else{
@@ -58,7 +58,7 @@
                                                                     <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
                                                                         <a href="{{$orderProductDetails}}" target="_blank">
                                                                         view </a>
-                                                                    </li> 
+                                                                    </li>
                                                                 @else
                                                                     <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
                                                                         <p>{{$orderProductDetails}}</p>
@@ -166,7 +166,7 @@
                 // console.log($(this).data('status'));
                 $('#status_change').val($(this).data('status'));
             });
-            
+
 
             $('#status_change').on('change',function(){
                 if(confirm("Are you sure want to Change Status?")) {
@@ -174,12 +174,12 @@
                         url: "{{ route('admin.order.change.order.status') }}",
                         method: "POST",
                         data: {
-                            _token: '{{ csrf_token() }}', 
+                            _token: '{{ csrf_token() }}',
                             order_token: '{{$getOrderDetails->token}}',
                             order_status: $(this).val()
                         },
                         success: function (response) {
-                            // 
+                            //
                             if(response.status == 200){
                                 toastr.success(response.msg);
                             }else{

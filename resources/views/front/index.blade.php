@@ -6,7 +6,7 @@
             color: #e74c3c !important;
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
     <!-- home main-banner start -->
     <div class="home-main-banner">
