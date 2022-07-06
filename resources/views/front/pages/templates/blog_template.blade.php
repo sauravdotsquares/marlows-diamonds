@@ -60,7 +60,7 @@
 
 
 
-<script type="text/javascript">
+<script>
 	var page = 1;
 	$( document ).ready(function() {
 	    loadMoreData(page);
