@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 @section('content')
 @section('css')
-   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
 <!-- Main content -->
 <section class="content">
@@ -15,7 +15,7 @@
           @endif
             <div class="card">
                <div class="card-header">
-                  
+
                </div>
                <!-- /.card-header -->
                <div class="card-body">
@@ -74,7 +74,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
-            
+
          </div>
       </div>
    </div>
@@ -123,7 +123,7 @@
          $('#status_change').val($(this).data('status'));
          $('#status_change').attr('data-token',$(this).data('token'));
       });
-      
+
 
       $('#status_change').on('change',function(){
          if(confirm("Are you sure want to Change Status?")) {
@@ -131,12 +131,12 @@
                url: "{{ route('admin.order.change.order.status') }}",
                method: "POST",
                data: {
-                     _token: '{{ csrf_token() }}', 
+                     _token: '{{ csrf_token() }}',
                      order_token: $(this).data('token'),
                      order_status: $(this).val()
                },
                success: function (response) {
-                     // 
+                     //
                      if(response.status == 200){
                         toastr.success(response.msg);
                      }else{
