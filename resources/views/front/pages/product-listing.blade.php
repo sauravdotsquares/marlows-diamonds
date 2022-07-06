@@ -168,7 +168,7 @@ $(document).ready(function(){
 });
 
 </script>
-    <script type="text/javascript">
+    <script>
 
         var page = 1;
         loadMoreData(page);
