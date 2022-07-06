@@ -81,7 +81,7 @@
     </div>
 </div>
 @section('js')
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
             var productPane = document.querySelector('.product-cover');
             var paneContainer = document.querySelector('.product-cover-wrap');
