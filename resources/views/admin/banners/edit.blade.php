@@ -187,7 +187,7 @@ $(document).on('change', '.custom-file-input', function (event) {
    })
 </script>
 <input type="hidden" name="csrf-token" content="{{ csrf_token() }}">
-<script type="text/javascript">
+<script>
 
     $(document).ready(function(){
 
