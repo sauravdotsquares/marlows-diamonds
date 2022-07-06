@@ -1,10 +1,10 @@
 @extends('layouts.front.app')
 @section('content')
 @section('css')
-<link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet" type="text/css">
-<link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+<link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
 
 <style>
     .ui-slider-handle{

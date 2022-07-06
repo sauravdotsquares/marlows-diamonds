@@ -23,19 +23,19 @@
     <meta name="twitter:site" content="@marlowsdiamonds" />
 	<link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
 	<link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
-    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/responsive.css?').env('VERSION') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/responsive.css?').env('VERSION') }}" rel="stylesheet">
 
 
     @yield('css')
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
-    <style type="text/css">
+    <style>
       [ng-cloak]
       {
         display: none !important;
