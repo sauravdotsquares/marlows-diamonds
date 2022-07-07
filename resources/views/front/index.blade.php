@@ -22,7 +22,7 @@
             </div>
             <div class="main-banner-col banner-ryt-col">
                 <div class="main-banner-ryt-img">
-                    <img src="{{ asset('assets/images/ring-img.png') }}" alt="ring img">
+                    <img src="{{ asset('assets/images/ring-img.webp') }}" alt="ring img">
                 </div>
             </div>
         </div>
