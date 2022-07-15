@@ -19,7 +19,7 @@ class PageController
     public function page($slug=null)
     {
         if($slug!=null){
-            $pageData = Pages::where('slug',$slug)->first();
+            $pageData = Pages::where('slug',$slug)->where('status',1)->first();
             $pageCategory = PostCategory::where('slug',$slug)->first();
 			//$blogdata= Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
 
