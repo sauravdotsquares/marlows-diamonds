@@ -15,13 +15,24 @@ class XMLController extends Controller
     {
         set_time_limit(0);
 
+        // Products::with(['getProductImages','getProductGallery','getProductVariation'])->chunk(150, function ($records) {
+        //     $this->createXMLfileNewFormat($records);
+
+        //     // foreach ($records as $record) {
+        //     //     unset($record['id']);
+        //     //     $record['created_at'] = date('Y-m-d h:i:s');
+        //     //     $record['updated_at'] = date('Y-m-d h:i:s');
+        //     //     HariKrishna::create($record->toArray());
+        //     // }
+        // });
+
         // Fetch records from database
         $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->latest()
         // ->whereRaw("NOT find_in_set(8,categories)")
         ->get();
 
         $this->createXMLfileNewFormat($getProductData);
-        echo "Done";
+        echo "XML Done";
     }
 
     public function createXMLfileNewFormat($productArray){
@@ -50,10 +61,7 @@ class XMLController extends Controller
                 foreach($diamondTypeArray as $diamondKey => $diamondType){
 
                     $prod_categories = explode(',',$productArrayNew->categories);
-                    // echo "<pre>";
-                    // print_r($productArrayNew->diamond_shape);
-                    // die;
-                    // $diamondShapeNew = isset($productArrayNew->diamond_shape)?$productArrayNew->diamond_shape:'ROUND';
+
                     if(in_array("8", $prod_categories) && $diamondType == 'lab_grown'){
                         // No entry in data
                         if (in_array("18", $prod_categories)){
@@ -99,20 +107,15 @@ class XMLController extends Controller
 
 
                                 $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
-                                // $productDescription = str_replace(['<p>', '</p>'], '', $productDescription);
-
 
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
                                 $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
                                 $productPrice  =  round($getFinalPriceArray);
-                                // $productSalePrice  =  '';
-                                // $productSalePriceEffectiveDate  =  '';
                                 $productCondition  =  'new';
-                                // $productShippingWeight  =  '1.00 lb';
                                 $productAvailability  =  'in stock';
                                 $productIdentifierExists  =  'no';
-                                // $productAdditionalImageLink  =  'https://mccoyhome.com/media/catalog/product/s/q/squareall6.jpeg';
+
                                 $productType  =  $productArrayNew->cat_details;
 
                                 $product = $dom->createElement('item');
@@ -367,11 +370,6 @@ class XMLController extends Controller
 
     public function getPriceCalculationFunction($productData,$diamondType,$finalPrices)
     {
-
-        // echo "<pre>";
-        // print_r($productData);
-        // die;
-
         $getDiamondShape = '';
         if(isset($productData->diamond_shape) && !empty($productData->diamond_shape)){
             $getDiamondShape = $productData->diamond_shape;
@@ -414,15 +412,11 @@ class XMLController extends Controller
 
         if($plainband != true){
             if($diamondType == 'lab_grown' && $finalPrices<=3000){
-                $regular_p_final = ($finalPrices-($finalPrices*0.35));// sprintf('%0.2f', ;
-                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+                $regular_p_final = ($finalPrices-($finalPrices*0.35));
             }elseif($diamondType == 'lab_grown' && $finalPrices>3000){
                 $regular_p_final = ($finalPrices-($finalPrices*0.5));
-                // sprintf('%0.2f', ;
-                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
             }else{
                 $regular_p_final = $finalPrices;
-                // $regular_p_discount_final = $regular_p_final/$discountPercentage;
             }
         }else{
             $regular_p_final = $finalPrices;
@@ -474,8 +468,6 @@ class XMLController extends Controller
             }
         }
 
-        // $regular_p_discount_final = $regular_p_final/$discountPercentage;
-
 
         return $regular_p_final;
 
@@ -518,25 +510,16 @@ class XMLController extends Controller
 
         $data = array('shape'=>$requestDataArray['shape'],'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$caratFrom,'caratTo'=>$caratTo,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'num_of_row'=>1,'PageSize'=>1);
 
-        //echo '<pre>'; print_r($data); die;
         $vat = getVAT();
         $settingPrice = sprintf('%0.2f', $requestDataArray['variation_price']);
         $hkData = getHKApiRecords($data);
-        // echo "<pre>";
-        // print_r($hkData);
+
         if(!empty($hkData)){
         	$diamondPrice = sprintf('%0.2f', ($hkData[0]['Amount']*1.25));
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
 
             $finalDiscountedPrice = $this->getActualSettingPrice($requestDataArray['slug'],$finalPrice);
 
-            // echo "asff<pre>";
-            // print_r($settingPrice);
-            // print_r($diamondPrice);
-            // print_r($finalDiscountedPrice);
-            // die;
-
-        	// return json_encode(array('statuscode'=>'200','finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount']),'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$hkData[0]['Stock_NO'],'CertificateLink'=>$hkData[0]['CertificateLink']));
         	return $finalDiscountedPrice;
         }else{
         	$rapnetData = getRapnetApiRecords($data,1);
@@ -555,13 +538,6 @@ class XMLController extends Controller
 
                 $finalDiscountedPrice = $this->getActualSettingPrice($requestDataArray['slug'],$finalPrice);
 
-                // echo "asff in repnet<pre>";
-                // print_r($settingPrice);
-                // print_r($diamondPrice);
-                // print_r($finalDiscountedPrice);
-                // die;
-
-                // return json_encode(array('statuscode'=>'200','finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount']),'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$rapnetData[0]->DiamondID,'CertificateLink'=>$rapnetCertificateLink));
                 return $finalDiscountedPrice;
             }
         }
@@ -591,7 +567,6 @@ class XMLController extends Controller
             $discountPercentage = 1;
 
             $finalPriceWithVat = ($finalPrice*$increaseDiscount)*$vat;
-            // $settingPriceWithVat = $settingPriceWithOutVat*$vat;
 
             if(isset($disPercentage) && !empty($disPercentage)){
                 $disPercentage = $disPercentage->toArray();
@@ -602,50 +577,9 @@ class XMLController extends Controller
                     }
 
                     $finalPriceWithVat = ($finalPrice*$increaseDiscount)*$vat;
-                    // $settingPriceWithVat = $settingPriceWithOutVat*$vat;
-
-                    // if($disPercentage['end_date'] >= date('Y-m-d')){
-
-                    //     // $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
-                    //     // ->whereRaw('"'.$settingPriceWithVat.'" between `from_price` and `to_price`')
-                    //     // ->first();
-
-                    //     // $discountPercentage = 1 + ($disPercentage['discount']/100);
-
-                    //     // if(isset($getDiscountRange) && !empty($getDiscountRange->discount)){
-                    //     //     if($getDiscountRange->discount > 1){
-                    //     //         $discountPercentage = 1 + ($getDiscountRange->discount/100);
-                    //     //     }else{
-                    //     //         $discountPercentage = 1;
-                    //     //     }
-                    //     // }else{
-                    //     //     $discountPercentage = 1;
-                    //     // }
-
-                    //     // if(isset($getDiscountRange)){
-                    //     //     if($getDiscountRange->discount > 1){
-                    //     //         $discountPercentage = 1 + ($getDiscountRange->discount/100);
-                    //     //     }
-                    //     // }
-                    // }
 
                 }
             }
-
-
-            // $settingPriceWithVatDiscount = $settingPriceWithVat/$discountPercentage;
-
-            // $result = [
-            //     'finalPrice' => $finalPrice,
-            //     'settingPriceWithVat' =>  $settingPriceWithVat,
-            //     // 'settingPriceWithVatDiscount' =>  $settingPriceWithVatDiscount,
-            //     'discountedPrice' => $settingPriceWithVat - $settingPriceWithVatDiscount,
-            // ];
-
-
-            // echo "<pre>";
-            // print_r($result);
-            // die;
 
             return $finalPriceWithVat;
         }

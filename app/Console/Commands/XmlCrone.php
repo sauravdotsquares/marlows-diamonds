@@ -3,16 +3,16 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\Admin\SitemapController;
+use App\Http\Controllers\Admin\XMLController;
 
-class SitemapCron extends Command
+class XmlCrone extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'sitemap:cron';
+    protected $signature = 'xml:cron';
 
     /**
      * The console command description.
@@ -38,11 +38,11 @@ class SitemapCron extends Command
      */
     public function handle()
     {
-        \Log::info("Sitemap Cron is working fine Start!");
+        $this->line('Running my job at ' . date('Y-m-d h:i:s'));
 
-        $sitemapController = new SitemapController;
-        $sitemapController->sitemapFunction();
+        $xmlController = new XMLController;
+        $xmlController->XMLFunction();
         // return 0;
-        \Log::info("Sitemap Cron is working fine End!");
+        $this->line('Ending my job at ' . date('Y-m-d h:i:s'));
     }
 }

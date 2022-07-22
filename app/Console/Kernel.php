@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\LogCron::class,
         Commands\SitemapCron::class,
+        Commands\XmlCrone::class,
     ];
     /**
      * Define the application's command schedule.
@@ -24,12 +25,23 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // $schedule->call(function(){
+        //     info('Called Every Minutes before');
+        // })->everyMinute()->appendOutputTo(storage_path().'/logs/sitemap_cron1.log');
+
         // $schedule->command('inspire')->hourly();
         // $schedule->command('demo:crone')->everyFiveMinutes();
+
         $schedule->command('log:cron')
-                 ->everyMinute()-> appendOutputTo (storage_path().'/logs/log_cron.log');
+                 ->everyThirtyMinutes()-> appendOutputTo (storage_path().'/logs/log_cron.log');
         $schedule->command('sitemap:cron')
-                 ->everyMinute()->appendOutputTo (storage_path().'/logs/sitemap_cron.log');
+                 ->daily()->appendOutputTo (storage_path().'/logs/sitemap_cron.log');
+        $schedule->command('xml:cron')
+                 ->dailyAt('09:00')->appendOutputTo(storage_path().'/logs/xml_crone.log');
+
+        // $schedule->call(function(){
+        //     info('Called Every Minutes after');
+        // })->everyMinute()->appendOutputTo(storage_path().'/logs/sitemap_cron.log');
     }
 
     /**
