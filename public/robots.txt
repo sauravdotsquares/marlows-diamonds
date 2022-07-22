@@ -4,3 +4,4 @@ Disallow: /my-account
 Disallow: /products/wishlist
 Disallow: /products/cart
 Disallow: /products/checkout
+sitemap: https://marlows-diamonds.co.uk/sitemap.xml
