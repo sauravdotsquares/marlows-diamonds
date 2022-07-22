@@ -14,10 +14,10 @@ use Carbon\Carbon;
 
 class SitemapController extends Controller
 {
-    public function index() {
+    public function sitemapFunction() {
         $getProductData = Products::select('slug','categories')->latest()->get();
         $getCategoryData = Category::with('grandchildren')->select('*')->where('parent_id',0)->get();
-        $getPagesData = Pages::select('slug')->latest()->get();
+        $getPagesData = Pages::select('slug')->where('status',1)->latest()->get();
         $getPostCategoryData = PostCategory::select('slug')->latest()->get();
         $getPostData = Posts::select('slug')->latest()->get();
 

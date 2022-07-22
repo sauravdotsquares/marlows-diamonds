@@ -172,7 +172,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
             Route::get('xmlpage','XMLController@XMLFunction')->name('xml-page');
 
             /* Sitemap Route*/
-            Route::get('/sitemap', 'SitemapController@index')->name('sitemap');
+            Route::get('/sitemap', 'SitemapController@sitemapFunction')->name('sitemap');
 	});
 });
 
