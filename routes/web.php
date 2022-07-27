@@ -159,6 +159,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		    //});
             Route::get('get-harikrishna-data','HariKrishnaController@index');
             Route::get('instagram-post', 'InstagramController@updateInstaData')->name('instagram-post');
+            Route::get('instagram-api-post', 'InstagramController@index')->name('instagram');
 
             Route::get('get-product-excel-report','ProductController@getProductExcelReport')->name('get-product-report');
 
