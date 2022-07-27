@@ -12,7 +12,7 @@ class InstagramData extends Model
     protected $table = 'instagram_datas';
 
     protected $fillable = [
-        'link','image_url','title','status'
+        'insta_id','link','alt','image_url','title','media_type','insta_timestamp','username','status'
     ];
 
 }

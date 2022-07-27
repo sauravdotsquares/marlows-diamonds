@@ -6,9 +6,62 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Phpfastcache\Helper\Psr16Adapter;
 use App\Models\InstagramData;
+use App\Http\Controllers\Admin\InstaLibraryController;
 
 class InstagramController extends Controller
 {
+
+    public function index()
+    {
+        $params = array(
+            'get_code' => isset( $_GET['code'] ) ? $_GET['code'] : '',
+            'access_token' => config('instagram.access_token'),
+            'user_id' => '',
+        );
+        $iguser = new InstaLibraryController($params);
+        $user = $iguser->getUser();
+
+        $params = array(
+            'get_code' => isset( $_GET['code'] ) ? $_GET['code'] : '',
+            'access_token' => config('instagram.access_token'),
+            'user_id' => $user['id']
+        );
+
+        $igMedia = new InstaLibraryController($params);
+
+        $userMedia = $iguser->getUsersMedia($user['id']);
+
+        InstagramData::truncate();
+        foreach ($userMedia['data'] as $key  => $value) {
+
+            $images[$key] = [
+                'image_link'=> str_replace("&amp;","&", $value['media_url']),
+                'insta_link'=>"",
+            ];
+
+            $path = $images[$key]['image_link'];
+            $imageName = $key.'.webp';
+            $img = public_path('images/Instagram/') . $imageName;
+
+            $fileNameToStore = 'Instagram'.'/'.$imageName;
+
+
+            InstagramData::create([
+                'insta_id'=> $value['id'],
+                'link'=>$value['permalink'],
+                'image_url'=>$fileNameToStore,
+                'alt'=>$value['caption'],
+                'title'=>$value['caption'],
+                'media_type'=>$value['media_type'],
+                'insta_timestamp'=>$value['timestamp'],
+                'username'=>$value['username'],
+            ]);
+
+            file_put_contents($img, file_get_contents($path));
+        }
+        echo "Done";
+    }
+
     /**
      * This function show the image from instagram.
      *
