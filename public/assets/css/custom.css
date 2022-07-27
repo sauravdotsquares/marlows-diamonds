@@ -965,7 +965,11 @@ a[disabled="disabled"] {pointer-events: none;}
 }
 .range_carat_wap #slider .ui-slider-handle {width: 18px !important;height: 22px;top: -0.5em;}
 .product-action-btn {margin-top: 20px;}
-.instaphoto-img img {width: 100% !important; height: auto !important;}
+.instaphoto-img img {
+	width: 100% !important;
+	height: 370px !important;
+	object-fit: cover;
+}
 
 
 /** mega menuhover for desktop **/
