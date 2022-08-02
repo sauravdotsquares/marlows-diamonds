@@ -2,11 +2,14 @@
 @section('content')
 
 <!-- header banner start -->
-<div class="category-banner" style="background-image:url({{asset('storage/'.$data->image)}})">
+<div class="category-banner engagement-banner" style="background-image:url({{asset('storage/'.$data->image)}})">
 	<div class="container">
 		<div class="category-banner-text">
 			<h1>{!!isset($data->subtitle)?$data->subtitle:""!!}</h1>
 			<p>{!!isset($data->short_description)?$data->short_description:""!!}</p>
+			<div class="ring-pr-shop-btn">
+				<a class="btn-bg-small" href="{{asset('/product-category/engagement-rings')}}">Shop Now</a>
+			</div>
 		</div>
 	</div>
 </div>
@@ -151,40 +154,37 @@
 			</div>
 			<p>Some of the most common Engagement Ring Q&A's</p>
 		</div>
-		<div class="faq-list">
-			<div class="accordion" id="accordionExample">
-
-				@php
-				$getEngagementFaqs = getEngagementFaqs();
-				@endphp
-
-				@foreach($getEngagementFaqs as $key => $faq)
-					<div class="accordion-item">
-						<h2 class="accordion-header" id="{{$faq->id}}">
-							@if($key == 0)
-								<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
-							@else
-								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
-							@endif
-							{{isset($faq->title)?$faq->title:""}}
-						  </button>
-						</h2>
-						@if($key == 0)
-							<div id="collapse{{$faq->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
-						@else
-							<div id="collapse{{$faq->id}}" class="accordion-collapse collapse" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
-						@endif
-						  <div class="accordion-body">
-						   {!! isset($faq->description)?$faq->description:"" !!}
-						  </div>
-						</div>
-					</div>
-				@endforeach
-
-			</div>
-		</div>
-	</div>
-</div>
+            <div class="faq-list">
+                <div class="accordion" id="accordionExample">
+                    @php
+                        $getEngagementFaqs = getEngagementFaqs(8);
+                    @endphp
+                    @foreach($getEngagementFaqs as $key => $faq)
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="{{$faq->id}}">
+                                @if($key == 0)
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
+                                @else
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
+                                @endif
+                                {{isset($faq->title)?$faq->title:""}}
+                            </button>
+                            </h2>
+                            @if($key == 0)
+                                <div id="collapse{{$faq->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
+                            @else
+                                <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
+                            @endif
+                            <div class="accordion-body">
+                            {!! isset($faq->description)?$faq->description:"" !!}
+                            </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+	    </div>
+    </div>
 </div>
 
 <!-- FAQ Section end here -->
