@@ -82,7 +82,7 @@ if (!function_exists("single_image_upload")) {
 }
 
 if (!function_exists("single_storage_image_upload")) {
-    function single_storage_image_upload($imageUrl,$folderName,$height,$width)
+    function single_storage_image_upload($imageUrl,$folderName,$height=null,$width=null)
     {
         if (!file_exists(storage_path('app/public/' . $folderName))) {
             mkdir(storage_path('app/public/' . $folderName), 0777);
@@ -263,9 +263,9 @@ if (!function_exists('validate_breadcrumb')) {
 	}
 
 	if (!function_exists("getEngagementFaqs")) {
-    function getEngagementFaqs()
+    function getEngagementFaqs($faqCategory)
 		{
-			$getengagementfaqs = Faqs::take(50)->orderBy('id','DESC')->where('categories', 0)->get();
+            $getengagementfaqs = Faqs::orderBy('id','DESC')->where('categories', $faqCategory)->get();
 			return ($getengagementfaqs);
 		}
 	}

@@ -243,8 +243,11 @@
 </div>
 <!-- Your Journery of a lifetime start here end-->
 
-
+@php
+                $getFaqs = getEngagementFaqs(100);
+				@endphp
 <!-- FAQ Section start here -->
+@if(isset($getFaqs) && count($getFaqs))
 <div class="faq-section engagement-ring-faq">
 	<div class="container">
 		<div class="head-para-three">
@@ -256,9 +259,7 @@
 		<div class="faq-list">
 			<div class="accordion" id="accordionExample">
 
-				@php
-				$getFaqs = getFaqs();
-				@endphp
+
 
 				@foreach($getFaqs as $key => $faq)
 					<div class="accordion-item">
@@ -282,12 +283,11 @@
 						</div>
 					</div>
 				@endforeach
-
 			</div>
 		</div>
 	</div>
 </div>
-
+@endif
 
 <!-- FAQ Section end here -->
 
