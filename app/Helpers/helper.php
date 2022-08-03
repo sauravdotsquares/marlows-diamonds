@@ -87,15 +87,15 @@ if (!function_exists("single_storage_image_upload")) {
         if (!file_exists(storage_path('app/public/' . $folderName))) {
             mkdir(storage_path('app/public/' . $folderName), 0777);
         }
-		// $height = 200;
-		// $width = 200;
 		$image = $imageUrl;
-        // echo '<pre>';print_r($image); die;
 		$imageName = $image->getClientOriginalName();
 		$fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
-		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
+        if(isset($height) && !empty($height) && isset($width) && !empty($width)){
+            Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
+        }else{
+            Image::make($image)->save(storage_path('app/public/' . $fileName));
+        }
 		return $fileName;
-
     }
 }
 
