@@ -15,6 +15,7 @@ use App\Models\ProductVariationDetails;
 use App\Models\ProductImages;
 use App\Models\Discount;
 use App\Models\DiscountRange;
+use App\Models\Pages;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -29,15 +30,12 @@ class ProductController extends Controller
     public function productCategory($cat1=null,$cat2=null,$cat3=null)
     {
         if($cat3 != null){
-            // echo "cat3";
             $getCatId = Category::where('slug', $cat3)->first();
 
         }elseif($cat2 != null){
-            // echo "cat2";
             $getCatId = Category::where('slug', $cat2)->first();
 
         }elseif($cat1 !=null){
-            // echo "cat1<pre>";
             $getCatId = Category::where('slug', $cat1)->first();
 
         }else{
@@ -45,9 +43,18 @@ class ProductController extends Controller
         }
         if(!$getCatId){
             return view('layouts.errors.404');
-
         }
-        return view('front.pages.product-listing',['data'=>$getCatId,'cat1'=>$cat1,'cat2'=>$cat2,'cat3'=>$cat3]);
+
+        if(isset($getCatId->parent_details) && $getCatId->parent_details == 'Parent' && $getCatId->id == 8){
+
+            $pageData = Pages::where('slug',$getCatId->slug)->where('status',1)->first();
+
+            // For Engagement Rings Product List page redirections
+            return view('front.pages.product-listing-engage',['data'=>$getCatId,'data1'=>$pageData,'cat1'=>$cat1,'cat2'=>$cat2,'cat3'=>$cat3]);
+        }else{
+            // For Other Product Listing page redirections
+            return view('front.pages.product-listing',['data'=>$getCatId,'cat1'=>$cat1,'cat2'=>$cat2,'cat3'=>$cat3]);
+        }
     }
 
     public function productDetails(Request $request, $productSlug = null)
