@@ -12,8 +12,8 @@
 <div class="category-banner engagement-banner" style="background-image:url({{asset('storage/'.$data1->image)}})">
 	<div class="container">
 		<div class="category-banner-text">
-			<h1>{!!isset($data->subtitle)?$data->subtitle:"Engagement Rings"!!}</h1>
-			<p>{!!(isset($data->short_description) && !empty($data->short_description))?$data->short_description:"Getting engaged is one of the most special and memorable moments of one's life."!!}</p>
+			<h1>{!!isset($data1->subtitle)?$data1->subtitle:"Engagement Rings"!!}</h1>
+			<p>{!!(isset($data1->short_description) && !empty($data1->short_description))?$data1->short_description:"Getting engaged is one of the most special and memorable moments of one's life."!!}</p>
 			<div class="ring-pr-shop-btn">
 				<a class="btn-bg-small" href="{{asset('/live-diamond-search')}}">LIVE Diamond Search</a>
 			</div>
