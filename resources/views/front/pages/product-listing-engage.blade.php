@@ -1,4 +1,11 @@
 @extends('layouts.front.app')
+@section('css')
+<style>
+    .ring-pr-shop-btn {
+        margin-top: 12px;
+    }
+</style>
+@endsection
 @section('content')
 
 <!-- header banner start -->
@@ -8,7 +15,7 @@
 			<h1>{!!isset($data->subtitle)?$data->subtitle:"Engagement Rings"!!}</h1>
 			<p>{!!(isset($data->short_description) && !empty($data->short_description))?$data->short_description:"Getting engaged is one of the most special and memorable moments of one's life."!!}</p>
 			<div class="ring-pr-shop-btn">
-				<a class="btn-bg-small" href="{{asset('/product-category/engagement-rings')}}">Shop Now</a>
+				<a class="btn-bg-small" href="{{asset('/live-diamond-search')}}">LIVE Diamond Search</a>
 			</div>
 		</div>
 	</div>
