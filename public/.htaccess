@@ -68,4 +68,4 @@ Header always set Content-Security-Policy "upgrade-insecure-requests;"
 # php -- END cPanel-generated handler, do not edit
 
 
-Redirect 301 /engagement-rings  /product-category/engagement-rings
+#Redirect 301 /engagement-rings  /product-category/engagement-rings
