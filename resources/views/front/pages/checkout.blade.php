@@ -166,7 +166,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">PIN <abbr
+                                                        <label class="input-label">Postcode <abbr
                                                                 class="required">*</abbr></label>
                                                         <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->pin_code)?$getUsersDetails->getCustomerAddressFunction->pin_code:''}}" id="pin_code" name="pin_code" required="required" class="form-control">
                                                     </div>

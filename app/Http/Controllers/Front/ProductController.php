@@ -185,7 +185,7 @@ class ProductController extends Controller
 
         // return response()->json($getCateProductId);
 
-        $getProductListFinal = Products::with('getProductImages')->orderBy('title','asc')->whereIn('id',$output)->simplePaginate(12);
+        $getProductListFinal = Products::with('getProductImages')->orderBy('title','asc')->where('status',1)->whereIn('id',$output)->simplePaginate(12);
 
         if(isset($getProductListFinal) && !empty($getProductListFinal)){
             $view = view('front.ajax.productlistajax',compact('getProductListFinal'))->render();
