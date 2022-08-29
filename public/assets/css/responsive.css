@@ -126,6 +126,8 @@ body{overflow-x: hidden;}
 .cart-table-wraper { overflow-x: auto;}
 .cart-table-wraper .cart-table{ width: 1000px;}
 
+.category-banner.engagement-banner { padding: 65px 0; }
+
 }
 
 @media(max-width: 500px){
@@ -139,7 +141,7 @@ body{overflow-x: hidden;}
 }
 @media(max-width: 1024px){
 	.product-info-media .owl-carousel .owl-nav {
-		display: block; 
+		display: block;
 	}
 }
 
@@ -276,7 +278,7 @@ h3,.heading-h-three{font-size:28px}
 }
 
 @media(max-width:767px){
-	
+
 	.menus-wraper{max-width: 290px;}
 }
 
