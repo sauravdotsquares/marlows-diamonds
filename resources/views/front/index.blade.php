@@ -10,7 +10,7 @@
         <div class="main-banner-wraper flex-flex-wrap flexed">
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
-                    <h1 class="fortesttocodelive">Find the Perfect Diamond Rings from Marlow’s</h1>
+                    <h1>Find the Perfect Diamond Rings from Marlow’s</h1>
                     <p>A diamond is forever, so should be yours.</p>
                     <div class="shop-engage-btn">
                         <a class="btn-bg-large" href="{{ asset('engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
