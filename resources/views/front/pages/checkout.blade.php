@@ -166,7 +166,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">PIN <abbr
+                                                        <label class="input-label">Postcode <abbr
                                                                 class="required">*</abbr></label>
                                                         <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->pin_code)?$getUsersDetails->getCustomerAddressFunction->pin_code:''}}" id="pin_code" name="pin_code" required="required" class="form-control">
                                                     </div>
@@ -442,20 +442,11 @@
                 },
                 success: function (response) {
                     $('#cust_email-error').remove();
-                    // console.log(response);
                     if(response){
                         $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email('+customeremail+') is already exist Please Logged in </label>');
                         $('#cust_email').val(" ");
-                        // $('#cust_email-error').css('display','block');
-                        // toastr.success('Already exists please login');
-                        // window.location.reload();
                         return response;
                     }
-                    // else{
-                    //     $('#cust_email-error').remove();
-                    //     // toastr.info('not exist do continue');
-                    //     return response;
-                    // }
                 }
             });
         }else{
@@ -622,23 +613,16 @@
                     $('.cc_place_order_btn button').text('Place Order');
                     $('.cc_place_order_btn button').prop('disabled', false);
                     if(response.status == 500){
-
-
                         $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
                         toastr.info(response.msg);
                     }
                     if(response.status == 200){
-
-                        // toastr.success(response.msg);
-                        // window.location.reload();
                         if($('#selected_payment_type').val() == 'paypal'){
                             window.location.href = "{{route('make.payment')}}/"+response.order_dt;
                         }else{
                             window.location.href = "{{route('make.dekopay')}}/"+response.order_dt;
                         }
 
-                    }else{
-                        // toastr.info(response.error);
                     }
                 }
             });

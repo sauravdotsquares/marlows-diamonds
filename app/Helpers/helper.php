@@ -82,20 +82,20 @@ if (!function_exists("single_image_upload")) {
 }
 
 if (!function_exists("single_storage_image_upload")) {
-    function single_storage_image_upload($imageUrl,$folderName,$height=null,$width=null)
+    function single_storage_image_upload($imageUrl,$folderName,$height,$width)
     {
         if (!file_exists(storage_path('app/public/' . $folderName))) {
             mkdir(storage_path('app/public/' . $folderName), 0777);
         }
+		// $height = 200;
+		// $width = 200;
 		$image = $imageUrl;
+        // echo '<pre>';print_r($image); die;
 		$imageName = $image->getClientOriginalName();
 		$fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
-        if(isset($height) && !empty($height) && isset($width) && !empty($width)){
-            Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
-        }else{
-            Image::make($image)->save(storage_path('app/public/' . $fileName));
-        }
+		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
 		return $fileName;
+
     }
 }
 
@@ -263,9 +263,9 @@ if (!function_exists('validate_breadcrumb')) {
 	}
 
 	if (!function_exists("getEngagementFaqs")) {
-    function getEngagementFaqs($faqCategory)
+    function getEngagementFaqs()
 		{
-            $getengagementfaqs = Faqs::orderBy('id','DESC')->where('categories', $faqCategory)->get();
+			$getengagementfaqs = Faqs::take(50)->orderBy('id','DESC')->where('categories', 0)->get();
 			return ($getengagementfaqs);
 		}
 	}
