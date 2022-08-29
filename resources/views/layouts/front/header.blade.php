@@ -250,7 +250,10 @@
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
                 </div>
                 <div class="post-bar-center">
-                    {!!$header_settings->get_options('header-center')!!}
+                    <p> Up to
+                     <span class="header-heighlight-text">30%</span>  off in our Summer Sale - </p>
+                    <p> ends 15th September </p>
+                    <!-- {!!$header_settings->get_options('header-center')!!} -->
                 </div>
                 <div class="post-bar-right">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
