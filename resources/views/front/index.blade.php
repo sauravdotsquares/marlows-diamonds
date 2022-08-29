@@ -1,13 +1,10 @@
 @extends('layouts.front.app')
 @section('content')
-@section('css')
-    <style>
-        .error {
-            color: #e74c3c !important;
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-@endsection
+    @section('css')
+        <style> .error { color: #e74c3c !important; } </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @endsection
+
     <!-- home main-banner start -->
     <div class="home-main-banner">
         <div class="main-banner-wraper flex-flex-wrap flexed">
@@ -31,7 +28,6 @@
 
 
     <!-- Shop from the Best start here -->
-
     <div class="shopfrom-best">
         <div class="container">
             <div class="head-para-three">

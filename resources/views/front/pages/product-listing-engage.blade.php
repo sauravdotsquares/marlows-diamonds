@@ -161,7 +161,7 @@
 <div class="choosedreamy-wrap">
 	<div class="container">
 		<div class="head-para-three">
-			<h2 class="heading-h-three">Choose A Dreamy Setting for Your Engagement Ring</h2>
+			<h2 class="heading-h-three">Choose A Dream Setting for Your Engagement Ring</h2>
 		</div>
 		<div class="rings-grid-wrap">
 			<div class="row">

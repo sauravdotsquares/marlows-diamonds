@@ -14,7 +14,7 @@ use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
 use App\Models\ProductImages;
 use App\Models\Discount;
-use App\Models\DiscountRange;
+use App\Models\DiscountRange; 
 use App\Models\Pages;
 use SoapClient;
 use Rapnet;
@@ -51,7 +51,7 @@ class ProductController extends Controller
 
             // For Engagement Rings Product List page redirections
             return view('front.pages.product-listing-engage',['data'=>$getCatId,'data1'=>$pageData,'cat1'=>$cat1,'cat2'=>$cat2,'cat3'=>$cat3]);
-        }else{
+        }else{ 
             // For Other Product Listing page redirections
             return view('front.pages.product-listing',['data'=>$getCatId,'cat1'=>$cat1,'cat2'=>$cat2,'cat3'=>$cat3]);
         }
