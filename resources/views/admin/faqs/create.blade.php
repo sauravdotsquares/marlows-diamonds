@@ -43,7 +43,7 @@
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Answer</label>
-                              <textarea id="description" name="description" class="form-control ckeditor"></textarea>
+                              <textarea id="description" name="description" class="form-control ckeditor"></textarea>                    
                            </div>
                         </div>
                      </div>
@@ -56,11 +56,11 @@
 							  <label for="product_name">Categories</label>
 								<select name="categories" id="categories" class="" >
 									@foreach($faqcategories as $cat)
-										<option value = {{ $cat->cat_id }} {{ old('cat') == $cat->cat_id ? 'selected' : ''}} >{{ $cat->title }}</option>
+										<option value = {{ $cat->id }} {{ old('cat') == $cat->id ? 'selected' : ''}} >{{ $cat->title }}</option>
 									@endforeach
 								</select>
 						   </div>
-					  </div>
+					  </div> 
                      <div class="form-group">
                         <div class="form-label-group">
                            <select id="status" name="status" class="form-control">
@@ -87,7 +87,7 @@
      $('#description').summernote({
 	 height:250
 	})
-
+   
    })
 </script>
 @endsection

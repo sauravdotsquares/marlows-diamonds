@@ -26,7 +26,7 @@ class PageController extends Controller
         populate_breadcrumb($breadcrumb);
 		$pages = Pages::all();
 		return view('admin.pages.index', compact('pages'));
-
+		
     }
 
     /**
@@ -49,11 +49,11 @@ class PageController extends Controller
              $templates[$key]['value'] = $explode[0];
              $templates[$key]['name'] = ucwords(str_replace('_',' ',$explode[0]));
         }
-
+     
         $pages = Pages::all();
         return view('admin.pages.create',compact('pages','templates'));
 	}
-
+	
     /**
      * Store a newly created resource in storage.
      *
@@ -68,27 +68,27 @@ class PageController extends Controller
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
-
+			
         ]);
         if($request->hasFile('image')) {
 
             //$image_array = [];
 
             //foreach ($request->file('image') as $image) {
-
+                
                 $image = '';
-                $image = single_storage_image_upload($request->file('image'),'Post','1300','600');
+                $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
             //}
         }
-
+		
 		if(empty($image)){
 			$input['image'] = '';
 		}
 		else{
-
+			
 			$input['image'] = $image;
 		}
-
+		
 		//dd($input);
 
         $pages = Pages::create($input);
@@ -109,7 +109,7 @@ class PageController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-
+		
 		$templates = [];
         $files = File::allFiles(resource_path('views/front/pages/templates'));
         foreach ($files as $key => $value) {
@@ -117,12 +117,12 @@ class PageController extends Controller
              $templates[$key]['value'] = $explode[0];
              $templates[$key]['name'] = ucwords(str_replace('_',' ',$explode[0]));
         }
-
+		
 		$id = base64_decode($pageid);
 		if ($id == '') {
             return 'URL NOT FOUND';
         }
-
+		
 		$pages = Pages::find($id);
 		if (empty($pages)) {
             return 'URL NOT FOUND';
@@ -139,7 +139,7 @@ class PageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $pageid) {
-
+        
 		$id = base64_decode($pageid);
         if ($id == '') {
             return 'URL NOT FOUND';
@@ -151,14 +151,14 @@ class PageController extends Controller
             return 'URL NOT FOUND';
         }
 
-
+       
 
         $input = $request->all();
 		$request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
-
+			
         ]);
 		/*image update*/
        if($request->hasFile('image')) {
@@ -166,18 +166,18 @@ class PageController extends Controller
             //$image_array = [];
 
             //foreach ($request->file('image') as $image) {
-
+                
                 $image = '';
-                $image = single_storage_image_upload($request->file('image'),'Post','','');
+                $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
             //}
         }
 
-
+        
        if(empty($image)){
 			//$input['image'] = '';
 		}
 		else{
-
+			
 			$input['image'] = $image;
 		}
         $pages->fill($input)->save();
@@ -185,7 +185,7 @@ class PageController extends Controller
         return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Updated Successfully');
     }
 
-
+    
 
     /**
      * Remove the specified resource from storage.
@@ -195,14 +195,14 @@ class PageController extends Controller
      */
     public function delete($pageid) {
         $id = base64_decode($pageid);
-        Pages::find($id)->delete();
+        Pages::find($id)->delete(); 
 		return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Deleted Successfully');
     }
 	 /**
      * Status
      */
-	public function status($ids,$status) {
-        $ids = base64_decode($ids);
+	public function status($ids,$status) { 
+        $ids = base64_decode($ids);       
         $pages =  Pages::find($ids);
         if (empty($pages)) {
             return 'URL NOT FOUND';
@@ -210,7 +210,7 @@ class PageController extends Controller
 
         $input['status'] = $status;
         unset($input['_token']);
-
+        
         $pages->fill($input)->save();
 
         return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Status Updated Successfully');
