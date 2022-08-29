@@ -126,25 +126,26 @@ class ProductController extends Controller
             $msg = 'Successfully submitted!!!';
         }
 
-
-
         if($request->hasFile('featured_image')) {
-            $imagefeatured_image = single_image_upload($request->file('featured_image'),'Products','600','600');
+            $imagefeatured_image = final_image_upload_single_function($request->file('featured_image'),'Products',$productDetails->id,'230','230');
         }else{
             $imagefeatured_image = [];
         }
         //print_r($imagefeatured_image); die;
-         if($request->hasFile('gallery_image')) {
-            $imagegallery_image = single_image_upload($request->file('gallery_image'),'Products','600','600');
+        if($request->hasFile('gallery_image')) {
+            $imagegallery_image = final_image_upload_array_function($request->file('gallery_image'),'Products',$productDetails->id,'230','230');
         }else{
             $imagegallery_image = [];
         }
+
         //print_r($imagefeatured_image); die;
         if(count($imagegallery_image) || count($imagefeatured_image)){
             $finalArrayImages = array_merge($imagegallery_image,$imagefeatured_image);
         }else{
             $finalArrayImages = [];
         }
+
+
 
         if(isset($finalArrayImages) && !empty($finalArrayImages) && count($finalArrayImages)){
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
@@ -269,13 +270,15 @@ class ProductController extends Controller
                 if($key == 'f2'){
                     $productDetails = ProductImages::create([
                         'product_id'=> $productId,
-                        'image_url'=> $image,
+                        'thumb_image_url'=> $image['T'],
+                        'image_url'=> $image['R'],
                         'is_featured'=> 1,
                     ]);
                 }else{
                     $productDetails = ProductImages::create([
                         'product_id'=> $productId,
-                        'image_url'=> $image,
+                        'thumb_image_url'=> $image['T'],
+                        'image_url'=> $image['R'],
                         'is_featured'=> 0,
                     ]);
                 }

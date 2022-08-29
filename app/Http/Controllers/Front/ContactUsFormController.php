@@ -12,21 +12,21 @@ class ContactUsFormController extends Controller {
 
     // Store Contact Form data
     public function ContactUsForm(Request $request) {
-		$admin_email = Settings::where("option_name",'admin_email')->value('option_value');
+        $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
 
-		// Form validation
+        // Form validation
         $this->validate($request, [
             'title' => 'required',
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'description' => 'required',
             'custom_url' => 'required',
-			'g-recaptcha-response' => 'required'
+            'g-recaptcha-response' => 'required'
         ]);
         //  Store data in database
         Appointments::create($request->all());
         //
-		//  Send mail to admin
+        //  Send mail to admin
 
 
         Mail::send('email.mail', array(
@@ -37,7 +37,7 @@ class ContactUsFormController extends Controller {
             'user_query' => $request->get('description'),
         ), function($message) use ($request,$admin_email ){
             $message->from('hello@marlows-diamonds.co.uk');
-			$message->to($admin_email, 'Admin')->subject('New Website Inquiry');
+            $message->to($admin_email, 'Admin')->subject('New Website Inquiry');
         });
 
         return response()->json(['status'=> 200, 'success'=>'We have received your message and would like to thank you for writing to us.']);
