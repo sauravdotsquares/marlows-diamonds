@@ -60,6 +60,7 @@ class AddToCartController extends Controller
 
             $titleHtml = '';
 
+
             if(isset($productData) && !empty($productData->title)){
                 // $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'/'.'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
                 $selectedAttributes = [];
@@ -83,7 +84,10 @@ class AddToCartController extends Controller
 
                 $cart = session()->get('cart', []);
 
+
+
                 if(isset($cart[$productData->id])) {
+                    return response()->json(['error'=>'This product is already exists in cart']);
                     // $cart[$productData->id]['quantity']++;
                 } else {
                     $cart[$productData->id] = [

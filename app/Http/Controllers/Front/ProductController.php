@@ -107,9 +107,10 @@ class ProductController extends Controller
                     }
                     $variationDetails = ProductVariations::where('id',$variDetails->variation_id)->select('vari_image','vari_video','regular_price','sale_price')->first();
 
-                    //echo '<pre>';print_r($variationDetails); die;
+                    
                     return view('front.pages.product-details-dyes',['data'=>$getProduct,'plainbandMulti'=>$plainbandMulti,'plainbandJewellery'=>$plainbandJewellery,'variationDetails'=>$variationDetails,'prodImages'=>$prodImages,'url'=>$url, 'requestData' => $requestData]);
                 }else{
+
                     $variationDetails = ProductVariations::where('product_id',$getProduct->id)->select('vari_image')->groupBy('vari_image')->get();
                     // echo '<pre>';print_r($variationDetails); die;
                     return view('front.pages.product-details-dno',['data'=>$getProduct,'prodImages'=>$prodImages,'plainbandMulti'=>$plainbandMulti,'plainbandJewellery'=>$plainbandJewellery,'url'=>$url,'plainband'=>$plainband,'variationImages'=>$variationDetails, 'requestData' => $requestData]);
