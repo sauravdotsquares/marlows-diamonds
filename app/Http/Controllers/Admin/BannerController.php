@@ -21,7 +21,6 @@ class BannerController extends Controller
         $breadcrumb = [
             ["name" => "Banners", "url" => route("admin.banners"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
-
         ];
         populate_breadcrumb($breadcrumb);
 		$banners = Banners::all();

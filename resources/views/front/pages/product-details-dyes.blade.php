@@ -790,6 +790,9 @@
 		}
 
 		function getSelectedAttributePrice(){
+
+
+
 			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$('#addtobasket').addClass('disabledAnchor');
 
@@ -870,6 +873,7 @@
                 }
             });
 		}
+
 
 		function getFinalPrice(){
 			$('#addtobasket').addClass('disabledAnchor');

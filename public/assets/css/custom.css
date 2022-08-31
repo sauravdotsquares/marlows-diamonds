@@ -979,3 +979,8 @@ a[disabled="disabled"] {pointer-events: none;}
 .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one:hover>.inner-submenu{display:block;animation-name:fadeIn;animation-duration:300ms}
 }
+
+
+
+
+.header-heighlight-text{  background: #fc0; font-weight: bold; color: #8e2e65; padding: 2px 6px; border-radius: 3px; margin: 0 5px;  }
