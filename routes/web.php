@@ -236,7 +236,7 @@ Route::namespace('Front')->group(function () {
 	Route::post('/', 'MailListFormController@MailListForm')->name('maillist');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 
-
+ 
 	Route::get('products/cart', 'AddToCartController@index')->name('product.cart');
 	Route::post('product/add-to-cart', 'AddToCartController@addToCart')->name('add.to.cart');
 	Route::post('product/add-to-cart-diamond', 'AddToCartController@addToCartDiamond')->name('add.to.cart.diamond');

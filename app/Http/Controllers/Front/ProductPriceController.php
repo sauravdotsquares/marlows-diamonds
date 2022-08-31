@@ -22,7 +22,9 @@ class ProductPriceController extends Controller
 
         $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
-        return response()->json(['finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount'])]); // round($getStatusSettingPrice);
+        return response()->json([
+            'finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),
+            'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount'])]); // round($getStatusSettingPrice);
     }
 
     public function getProductFinalPriceWithDiamond(Request $request){
@@ -126,7 +128,7 @@ class ProductPriceController extends Controller
 
             if(isset($disPercentage) && !empty($disPercentage)){
                 $disPercentage = $disPercentage->toArray();
-                if(auth()->guard('customer')->check()){
+                if(auth()->guard('customer')->check() || 1){
 
                     if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
                         $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
