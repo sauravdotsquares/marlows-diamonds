@@ -1,4 +1,5 @@
 /node_modules
+/live_backup
 /public/hot
 /public/storage
 /public/uploads

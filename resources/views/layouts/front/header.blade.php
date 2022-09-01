@@ -150,7 +150,7 @@
                     </div>
                     <div class="mobile-cart">
                         <a href="{{ route('product.cart') }}">
-                            <img src="/assets/images/cart-color-black.png" alt="cart">
+                            <img src="{{asset('')}}/assets/images/cart-color-black.png" alt="cart">
                             <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
                         <span class="mob-cart-number cartcount">{{ count((array) session('cart')) }}</span>
                         </a>
