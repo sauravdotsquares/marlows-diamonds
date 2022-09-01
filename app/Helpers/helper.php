@@ -656,5 +656,13 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
+
+    function prd($data=''){
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+        die();
+    }
+
 }
 
