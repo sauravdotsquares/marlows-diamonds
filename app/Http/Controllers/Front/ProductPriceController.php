@@ -115,7 +115,10 @@ class ProductPriceController extends Controller
 
             $checkPlanCatArray = Category::whereIn('id',$prod_categories)->where('parent_id',0)->first()->toArray();
 
-            $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date')->where('category_id',$checkPlanCatArray['id'])->where('status',1)->first();
+            $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date','is_login_users')
+                            ->where('category_id',$checkPlanCatArray['id'])
+                            ->where('status',1)
+                            ->first();
 
 
             $vat = getVAT();
@@ -128,7 +131,16 @@ class ProductPriceController extends Controller
 
             if(isset($disPercentage) && !empty($disPercentage)){
                 $disPercentage = $disPercentage->toArray();
-                if(auth()->guard('customer')->check() || 1){
+
+                if($disPercentage['is_login_users']){
+                    $isDiscountApplicable = auth()->guard('customer')->check();
+                }else{
+                    $isDiscountApplicable = true;
+                }
+
+                // prd($disPercentage['is_login_users']);
+
+                if( $isDiscountApplicable ){
 
                     if(isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1){
                         $increaseDiscount = 1 + ($disPercentage['inc_percentage']/100);
