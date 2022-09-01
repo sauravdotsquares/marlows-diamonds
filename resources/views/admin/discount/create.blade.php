@@ -68,12 +68,21 @@
                                         <input type="text" id="inc_percentage" name="inc_percentage" class="form-control" placeholder="Increase" value="{{isset($getDiscountData->inc_percentage)?$getDiscountData->inc_percentage:''}}">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="title">End Date</label>
                                         <input type="date" id="end_date" name="end_date" class="form-control" placeholder="End Date" value="{{isset($getDiscountData->end_date)?$getDiscountData->end_date:''}}">
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input name="is_login_users" class="custom-control-input custom-control-input-success custom-control-input-outline" type="checkbox" id="is_login_users" {{  empty($getDiscountData->is_login_users)  ? '' : 'checked' }}>
+                                        <label for="is_login_users" class="custom-control-label">Is this discount is applicable for login users only</label>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="card card-primary">
