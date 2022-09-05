@@ -177,7 +177,7 @@ class ProductController extends Controller
         }
 
 
-        prd($getParentHierarchy);
+        // prd($getParentHierarchy);
 
         // prd($getParentHierarchy);
         // return response()->json($getParentHierarchy);
