@@ -175,7 +175,8 @@ class ProductController extends Controller
                 }
             }
         }
-        prd($getParentHierarchy);
+
+        // prd($getParentHierarchy);
         // return response()->json($getParentHierarchy);
         // $blankArray = [];
         // foreach($getParentData as $key1 => $valueArray1){
@@ -210,6 +211,9 @@ class ProductController extends Controller
                 array_push($getCateProductId, $getProductList);
             }
         }
+
+        prd($getCateProductId);
+
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
 
