@@ -214,6 +214,8 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
+        prd($output);
+
         $getProductListFinal = Products::with('getProductImages')->orderBy('title', 'asc')->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
 
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
