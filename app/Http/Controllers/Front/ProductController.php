@@ -164,7 +164,7 @@ class ProductController extends Controller
 
         $getParentData = Category::with('grandchildren')->where('status', 1)->where('id', $request->cate_id)->select('id', 'parent_id')->first()->toArray();
 
-        prd($getParentData);
+        
        
         $getParentHierarchy = array($getParentData['id']);
         foreach ($getParentData['grandchildren'] as $keyName => $childId) {
@@ -175,6 +175,7 @@ class ProductController extends Controller
                 }
             }
         }
+        prd($getParentHierarchy);
         // return response()->json($getParentHierarchy);
         // $blankArray = [];
         // foreach($getParentData as $key1 => $valueArray1){
