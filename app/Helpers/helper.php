@@ -657,6 +657,34 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
+    function generateSlug($title="", $table="", $keyName="slug" ,$number=0){
+        $slug = slugify($title);
+        $slug = $number ? $slug . '-'.$number : $slug;
+        $isSlugExists = $table::where($keyName, $slug)->first();
+        if(!empty($isSlugExists)){
+            $number = $number+1;
+            return generateSlug($title,$table, $keyName, $number);
+        }else{
+            return $slug;
+        }
+    }
+
+
+    function slugify($text, string $divider = '-'){
+        
+        $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = preg_replace('~[^-\w]+~', '', $text);
+        $text = trim($text, $divider);
+        $text = preg_replace('~-+~', $divider, $text);
+        $text = strtolower($text);
+        if (empty($text)) {
+            return 'n-a';
+        }
+        return $text;
+    }
+
+
     function prd($data=''){
         echo '<pre>';
         print_r($data);

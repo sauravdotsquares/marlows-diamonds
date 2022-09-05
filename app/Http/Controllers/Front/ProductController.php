@@ -161,8 +161,11 @@ class ProductController extends Controller
     }
 
     public function getProductList(Request $request){
+
         $getParentData = Category::with('grandchildren')->where('status', 1)->where('id', $request->cate_id)->select('id', 'parent_id')->first()->toArray();
 
+        prd($getParentData);
+       
         $getParentHierarchy = array($getParentData['id']);
         foreach ($getParentData['grandchildren'] as $keyName => $childId) {
             array_push($getParentHierarchy, $childId['id']);
@@ -172,9 +175,7 @@ class ProductController extends Controller
                 }
             }
         }
-
         // return response()->json($getParentHierarchy);
-
         // $blankArray = [];
         // foreach($getParentData as $key1 => $valueArray1){
         //     if($key1 == 'id'){
@@ -204,14 +205,12 @@ class ProductController extends Controller
 
         if (count($getParentHierarchy)) {
             foreach ($getParentHierarchy as $prKey => $proVal) {
-                $getProductList = Products::whereRaw("find_in_set('" . $proVal . "',categories)")
-                    ->pluck('id')->toArray();
+                $getProductList = Products::whereRaw("find_in_set('" . $proVal . "',categories)")->pluck('id')->toArray();
                 array_push($getCateProductId, $getProductList);
             }
         }
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        // return response()->json($getCateProductId);
 
         $getProductListFinal = Products::with('getProductImages')->orderBy('title', 'asc')->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
 
@@ -221,8 +220,6 @@ class ProductController extends Controller
             $view = '';
             $getProductListFinal = '';
         }
-
-
 
         return response()->json(['page' => $getProductListFinal, 'html' => $view]);
         // echo "<pre>";
