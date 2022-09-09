@@ -19,8 +19,8 @@ use View;
 
 class ProductController extends Controller
 {
-    public function index(Type $var = null)
-    {
+
+    public function index(Request $request){
         $breadcrumb = [
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Product Lists", "url" => route("admin.products-list"), "icon" => "fa fa-home"],
@@ -28,13 +28,16 @@ class ProductController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
 
-        $getProducts = Products::latest()->get();
+        $query = Products::latest();
+
+        $query = getFilter(Products::class, $query, $request->query());
+
+        $getProducts = $query->paginate(10);
 
         return view('admin.products.index',compact('getProducts'));
     }
 
-    public function create()
-    {
+    public function create(){
         $breadcrumb = [
             ["name" => "Add New Product", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
@@ -50,8 +53,7 @@ class ProductController extends Controller
         return view('admin.products.create',compact('diamondShapes'));
     }
 
-    public function updatePage($productId = null)
-    {
+    public function updatePage($productId = null){
         $breadcrumb = [
             ["name" => "Edit Product", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
@@ -68,10 +70,7 @@ class ProductController extends Controller
         return view('admin.products.update',compact('getProductData','diamondShapes'));
     }
 
-    public function submitProduct(Request $request)
-    {
-
-        // return response()->json($request->all());
+    public function submitProduct(Request $request){
 
         $validator = Validator::make($request->all(), [
             // 'title' => 'required',
@@ -79,7 +78,6 @@ class ProductController extends Controller
             // 'featured_image' => 'required',
         ]);
 
-        //  setup categories
         //  $getParentId = 0;
         if(isset($request->table_id) && !empty($request->table_id)){
             if($request->table_id == $request->categories){
@@ -121,7 +119,6 @@ class ProductController extends Controller
                 'meta_title'=> $request->meta_title,
                 'meta_keyword'=> $request->meta_keyword,
                 'meta_description'=> $request->meta_description,
-                // 'image_url'=> $image,
             ]);
             $msg = 'Successfully submitted!!!';
         }
@@ -145,12 +142,9 @@ class ProductController extends Controller
             $finalArrayImages = [];
         }
 
-
-
         if(isset($finalArrayImages) && !empty($finalArrayImages) && count($finalArrayImages)){
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
         }
-
 
         if(isset($request->data) && !empty($request->data)){
             $getVariationArray = [
@@ -196,7 +190,8 @@ class ProductController extends Controller
 
            if(isset($value['is_update']) && $value['is_update']!=''){
 
-                $getProductDataVariation = ProductVariations::where('id',$value['is_update'])->update([
+                $getProductDataVariation = ProductVariations::where('id',$value['is_update'])
+                ->update([
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                     'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
                     'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
@@ -213,8 +208,12 @@ class ProductController extends Controller
                     'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
                 ]);
             }
-            /*echo $value['attri_carat']; die;
-            echo '<pre>'; print_r($value); die;*/
+
+            /*
+                echo $value['attri_carat']; die;
+                echo '<pre>'; print_r($value); die;
+            */
+
             foreach($value as $key1 => $variData){
                 $newKey = explode("_",$key1);
                 if(isset($newKey[0]) && $newKey[0] === 'attri'){

@@ -22,6 +22,7 @@
 
   <link rel="stylesheet" href="{{ asset('admin/dist/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css')}}">
   <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('admin/plugins/sweetalert2/sweetalert2.min.css')}}">
   
   @yield('css')
   <!-- jQuery -->
@@ -46,7 +47,9 @@
 
 </div>
 <!-- ./wrapper -->
-
+<script>
+  var csrf_token = '<?php echo csrf_token(); ?>';
+</script>
 <!-- Bootstrap -->
 <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
@@ -61,9 +64,9 @@
 <script src="{{ asset('admin/plugins/raphael/raphael.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/jquery-mapael/jquery.mapael.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/jquery-mapael/maps/usa_states.min.js')}}"></script>
-<!-- ChartJS -->
+
 <script src="{{ asset('admin/plugins/chart.js/Chart.min.js')}}"></script>
-<!-- DataTables  & Plugins -->
+
 <script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
@@ -77,20 +80,26 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{ asset('admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/moment/moment.min.js')}}"></script>
 <script src="{{ asset('admin/dist/js/pages/dashboard2.js')}}"></script>
+<script src="{{ asset('admin/js/admin.js')}}"></script>
+
 
 <script>
 $(function () {
   bsCustomFileInput.init();
 });
+var csrf_token = '<?php echo csrf_token(); ?>';
 </script>
-<!-- Page specific script -->
+
 <script>
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
     $('#example2').DataTable({
       "paging": false,
       "lengthChange": false,
@@ -102,7 +111,7 @@ $(function () {
     });
   });
 </script>
-
-@yield('js')
+  @include('layouts.toaster')
+  @yield('js')
 </body>
 </html>

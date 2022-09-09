@@ -377,8 +377,7 @@ class ProductController extends Controller
         return response()->json(['status' => 'Not attribute selected']);
     }
 
-    public function getProductVideo(Request $request)
-    {
+    public function getProductVideo(Request $request){
         $getProduct = Products::where('slug', $request->slug)->select('id')->first();
 
         if (isset($getProduct) && !empty($getProduct->id)) {
@@ -397,8 +396,7 @@ class ProductController extends Controller
         return response()->json($getProductVariationId);
     }
 
-    public function getCustomApiFilterData(Request $request)
-    {
+    public function getCustomApiFilterData(Request $request){
 
         // echo '<pre>'; print_r($request->all()); die;
 
@@ -517,6 +515,155 @@ class ProductController extends Controller
     }
 
 
+    // public function getSelectedVariationsData(Request $request){
+        
+    //     $product_id = Products::where('slug', $request->slug)->value('id');
+
+    //     if ($product_id != '') {
+    //         $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $request->slug)->first();
+
+    //         $prod_categories = explode(',', $getProduct->categories);
+
+    //         if (in_array("18", $prod_categories)) {
+    //             $prod_categories = ['18'];
+    //             $checkPlanCatArray = Category::whereIn('id', $prod_categories)->first()->toArray();
+    //         } else {
+    //             $checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
+    //         }
+
+    //         $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date','is_login_users')
+    //                         ->where('category_id', $checkPlanCatArray['id'])
+    //                         ->where('status', 1)
+    //                         ->first();
+
+    //         $getProductVariationId = ProductVariations::where('product_id', $product_id)
+    //                                 ->pluck('id')
+    //                                 ->toArray();
+
+    //         if (!empty($getProductVariationId)) {
+    //             $getVariDetails = ProductVariationDetails::groupBy('value')
+    //                             ->whereIn('variation_id', $getProductVariationId)
+    //                             ->whereIn('value', $request->variations)
+    //                             ->get()
+    //                             ->toArray();
+
+    //             $attributeCount = count($request->variations);
+    //             foreach ($getProductVariationId as $key1 => $productVariationId) {
+    //                 $variationDetails = array();
+
+    //                 foreach ($request->variations as $key2 => $variations) {
+    //                     $getVariDetails =   ProductVariationDetails::where('variation_id', $productVariationId)
+    //                                         ->where('value', $variations)
+    //                                         ->get()
+    //                                         ->toArray();
+
+    //                     if (!empty($getVariDetails))
+    //                         $variationDetails[] = $getVariDetails;
+    //                 }
+
+    //                 if ($attributeCount == count($variationDetails))
+    //                     break;
+    //             }
+    //         }
+    //         $vat = getVAT();
+    //         $newArray = [];
+    //         if (isset($getVariDetails) && !empty($getVariDetails)) {
+    //             $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
+    //                                                 ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'regular_price', 'sale_price')
+    //                                                 ->first();
+
+    //             if ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat <= 3000) {
+    //                 $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.35)); 
+    //                 // sprintf('%0.2f', ;
+    //                 // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+    //             } elseif ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat > 3000) {
+    //                 $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.5));
+    //                 // sprintf('%0.2f', ;
+    //                 // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+    //             } else {
+    //                 $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat);
+    //                 // $regular_p_discount_final = $regular_p_final/$discountPercentage;
+    //             }
+
+
+    //             $increaseDiscount = 1;
+    //             $discountPercentage = 1;
+    //             $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
+
+
+    //             if (isset($disPercentage) && !empty($disPercentage)) {
+    //                 $disPercentage = $disPercentage->toArray();
+
+
+    //                 if($disPercentage['is_login_users']){
+    //                     $isDiscountApplicable = auth()->guard('customer')->check();
+    //                 }else{
+    //                     $isDiscountApplicable = true;
+    //                 }
+
+    //                 /**  If customer login */
+    //                 //if ( 1 || $disPercentage->is_login_users || auth()->guard('customer')->check()) {
+    //                 if ( $isDiscountApplicable ) {
+
+    //                     if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
+    //                         $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
+    //                     } else {
+    //                         $increaseDiscount = 1;
+    //                     }
+
+    //                     $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
+
+
+    //                     if ($disPercentage['end_date'] >= date('Y-m-d')) {
+
+    //                         $getDiscountRange = DiscountRange::select('category_id', 'from_price', 'to_price', 'discount')
+    //                                             ->where('category_id', $checkPlanCatArray['id'])
+    //                                             ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
+    //                                             ->first();
+
+    //                         $discountPercentage = 1 + ($disPercentage['discount'] / 100);
+
+    //                         if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
+    //                             if ($getDiscountRange->discount > 1) {
+    //                                 $discountPercentage = 1 + ($getDiscountRange->discount / 100);
+    //                             } else {
+    //                                 $discountPercentage = 1;
+    //                             }
+    //                         } else {
+    //                             $discountPercentage = 1;
+    //                         }
+
+    //                     } else {
+    //                         $discountPercentage = 1;
+    //                     }
+    //                 } else {
+    //                     if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
+    //                         $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
+    //                     } else {
+    //                         $increaseDiscount = 1;
+    //                     }
+
+    //                     $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
+    //                 }
+    //             }
+
+    //             $regular_p_discount_final = $regular_p_final / $discountPercentage;
+
+    //             $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+    //             $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+    //             $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+    //             $newArray['regular_price_with_vat'] = round($regular_p_final);
+    //             $newArray['regular_price_with_vat_discount'] = round($regular_p_discount_final);
+
+
+    //             return response()->json($newArray);
+    //         } else {
+    //             return response()->json(['statusCode' => '500', 'msg' => 'No Variation Found']);
+    //         }
+    //     }
+    // }
+
+
     public function getSelectedVariationsData(Request $request){
         
         $product_id = Products::where('slug', $request->slug)->value('id');
@@ -541,6 +688,9 @@ class ProductController extends Controller
             $getProductVariationId = ProductVariations::where('product_id', $product_id)
                                     ->pluck('id')
                                     ->toArray();
+
+            // prd($request->diamond_type);
+            // prd($request->variations);
 
             if (!empty($getProductVariationId)) {
                 $getVariDetails = ProductVariationDetails::groupBy('value')
@@ -567,6 +717,7 @@ class ProductController extends Controller
                         break;
                 }
             }
+
             $vat = getVAT();
             $newArray = [];
             if (isset($getVariDetails) && !empty($getVariDetails)) {
@@ -576,15 +727,10 @@ class ProductController extends Controller
 
                 if ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat <= 3000) {
                     $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.35)); 
-                    // sprintf('%0.2f', ;
-                    // $regular_p_discount_final = $regular_p_final/$discountPercentage;
                 } elseif ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat > 3000) {
                     $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.5));
-                    // sprintf('%0.2f', ;
-                    // $regular_p_discount_final = $regular_p_final/$discountPercentage;
                 } else {
                     $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat);
-                    // $regular_p_discount_final = $regular_p_final/$discountPercentage;
                 }
 
 
