@@ -35,155 +35,192 @@ Route::namespace('Admin')->group(function () {
 });
 
 Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'], function () {
+
 	Route::namespace('Admin')->group(function () {
+
 		//Route::group(['middleware' => ['role:superadmin|admin']], function () {
-			Route::get('/', 'DashboardController@index')->name('dashboard');
-			Route::any('/uploadEditorImage', 'PostController@uploadEditorImage');
-			Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-			// Change Password Routes
-			Route::get('/change-password', 'PasswordController@index')->name('change-password');
-			Route::post('/change-password', 'PasswordController@changePassword');
-			// Settings Route
-			Route::get('/settings', 'SettingsController@index');
-			Route::post('/settings-update', 'SettingsController@update');
-			// Pages Route
-			Route::get('/pages', 'PageController@index')->name('pages');
-			Route::get('/pages/create', 'PageController@create')->name('create');
-			Route::post('/pages/add', 'PageController@add')->name('add');
-			Route::get('/pages/update/{id}', 'PageController@update')->name('create');
-			Route::post('/pages/edit/{id}', 'PageController@edit');
-			Route::get('/delete-page/{id}', 'PageController@delete');
-			Route::get('/pages/status/{id}/{status}', 'PageController@status');
-			// Blog/Posts Routes
-			Route::get('/posts', 'PostController@index')->name('posts');
-			Route::get('/posts/create', 'PostController@create')->name('create');
-			Route::post('/posts/add', 'PostController@add')->name('add');
-			Route::get('/posts/update/{id}', 'PostController@update')->name('create');
-			Route::post('/posts/edit/{id}', 'PostController@edit');
-			Route::get('/delete-post/{id}', 'PostController@delete');
-			Route::get('/posts/status/{id}/{status}', 'PostController@status');
+		Route::get('/', 'DashboardController@index')->name('dashboard');
+		Route::any('/uploadEditorImage', 'PostController@uploadEditorImage');
+		Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+		// Change Password Routes
+		Route::get('/change-password', 'PasswordController@index')->name('change-password');
+		Route::post('/change-password', 'PasswordController@changePassword');
+		// Settings Route
+		Route::get('/settings', 'SettingsController@index');
+		Route::post('/settings-update', 'SettingsController@update');
+		// Pages Route
+		Route::get('/pages', 'PageController@index')->name('pages');
+		Route::get('/pages/create', 'PageController@create')->name('create');
+		Route::post('/pages/add', 'PageController@add')->name('add');
+		Route::get('/pages/update/{id}', 'PageController@update')->name('create');
+		Route::post('/pages/edit/{id}', 'PageController@edit');
+		Route::get('/delete-page/{id}', 'PageController@delete');
+		Route::get('/pages/status/{id}/{status}', 'PageController@status');
+		// Blog/Posts Routes
+		Route::get('/posts', 'PostController@index')->name('posts');
+		Route::get('/posts/create', 'PostController@create')->name('create');
+		Route::post('/posts/add', 'PostController@add')->name('add');
+		Route::get('/posts/update/{id}', 'PostController@update')->name('create');
+		Route::post('/posts/edit/{id}', 'PostController@edit');
+		Route::get('/delete-post/{id}', 'PostController@delete');
+		Route::get('/posts/status/{id}/{status}', 'PostController@status');
 
-			// Post Category Routes
-			Route::get('/posts/categories','PostCategoryController@index')->name('postcategories');
-			Route::get('/posts/categories/create/{catslug?}','PostCategoryController@createForm')->name('create');
-			Route::post('/posts/categories/add','PostCategoryController@add')->name('add');
-			Route::post('/get-postcategories','PostCategoryController@getPostCategory')->name('get-postcategories');
-			Route::post('/change-postcategories','PostCategoryController@status');
-			Route::post('/delete-postcategories','PostCategoryController@delete');
-			//Appreance>Menus Routes
-			Route::get('/menus', 'MenuController@index')->name('menus');
-			Route::post('/menus/save', 'MenuController@save');
-			// Customer Users Routes
-			Route::get('/users', 'UserController@index')->name('users');
-			Route::get('/users/create', 'UserController@create')->name('create');
-			Route::post('/users/add', 'UserController@add')->name('add');
-			Route::get('/users/update/{id}', 'UserController@update')->name('create');
-			Route::post('/users/edit/{id}', 'UserController@edit');
-			Route::get('/delete-user/{id}', 'UserController@delete');
-			Route::get('/users/status/{id}/{status}', 'UserController@status');
-			// Product Category Routes
-			Route::get('/products/categories','CategoryController@index')->name('categories');
-			Route::get('/products/categories/create/{catslug?}','CategoryController@createForm')->name('create');
-			Route::post('/products/categories/add','CategoryController@add')->name('add');
-			Route::post('/get-categories','CategoryController@getCategory')->name('get-category');
-			Route::post('/change-categories','CategoryController@status');
-			Route::post('/delete-categories','CategoryController@delete');
+		// Post Category Routes
+		Route::get('/posts/categories','PostCategoryController@index')->name('postcategories');
+		Route::get('/posts/categories/create/{catslug?}','PostCategoryController@createForm')->name('create');
+		Route::post('/posts/categories/add','PostCategoryController@add')->name('add');
+		Route::post('/get-postcategories','PostCategoryController@getPostCategory')->name('get-postcategories');
+		Route::post('/change-postcategories','PostCategoryController@status');
+		Route::post('/delete-postcategories','PostCategoryController@delete');
 
-			// Product Add Pages Routes
-			Route::get('/products/products','ProductController@index')->name('products-list');
-			Route::get('/products/create','ProductController@create')->name('products-createform');
-			Route::get('/products/update/{prodid}','ProductController@updatePage')->name('products-updateform');
-			Route::post('/products/change-product-status','ProductController@status')->name('change-product-status');
-			Route::post('/products/delete-product-records','ProductController@delete')->name('delete-product-records');
-			Route::post('/get-product-details-variation','ProductController@getProductDetailsVariation')->name('get-product-details-variation');
+		//Appreance > Menus Routes
+		Route::get('/menus', 'MenuController@index')->name('menus');
+		Route::post('/menus/save', 'MenuController@save');
 
-			Route::post('/delete-product-variation','ProductController@deleteProductVariation')->name('delete-product-variation');
+		// Customer Users Routes
+		Route::get('/users', 'UserController@index')->name('users');
+		Route::get('/users/create', 'UserController@create')->name('create');
+		Route::post('/users/add', 'UserController@add')->name('add');
+		Route::get('/users/update/{id}', 'UserController@update')->name('create');
+		Route::post('/users/edit/{id}', 'UserController@edit');
+		Route::get('/delete-user/{id}', 'UserController@delete');
+		Route::get('/users/status/{id}/{status}', 'UserController@status');
 
-			Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
-			Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
-			Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
-			Route::post('/products/remove-product-images','ProductController@removeProductImages')->name('remove-product-images');
+		// Product Category Routes
+		Route::get('/products/categories','CategoryController@index')->name('categories');
+		Route::get('/products/categories/create/{catslug?}','CategoryController@createForm')->name('create');
+		Route::post('/products/categories/add','CategoryController@add')->name('add');
+		Route::post('/get-categories','CategoryController@getCategory')->name('get-category');
+		Route::post('/change-categories','CategoryController@status');
+		Route::post('/delete-categories','CategoryController@delete');
 
-			// Faqs Route list
-			Route::get('/faqs', 'FaqController@index')->name('faqs');
-			Route::get('/faqs/create', 'FaqController@create')->name('create');
-			Route::post('/faqs/add', 'FaqController@add')->name('add');
-			Route::get('/faqs/update/{id}', 'FaqController@update')->name('create');
-			Route::post('/faqs/edit/{id}', 'FaqController@edit');
-			Route::get('/delete-faq/{id}', 'FaqController@delete');
-			Route::get('/faqs/status/{id}/{status}', 'FaqController@status');
-			// Faq Category Routes
-			Route::get('/faqcategories', 'FaqCategoryController@index')->name('faqcategories');
-			Route::get('/faqcategories/create', 'FaqCategoryController@create')->name('createfaqcategories');
-			Route::post('/faqcategories/add', 'FaqCategoryController@add')->name('add');
-			Route::get('/faqcategories/update/{id}', 'FaqCategoryController@update')->name('create');
-			Route::post('/faqcategories/edit/{id}', 'FaqCategoryController@edit');
-			Route::get('/delete-faqcategories/{id}', 'FaqCategoryController@delete');
-			// Reviews Route
-			Route::get('/reviews', 'ReviewController@index')->name('faqs');
-			Route::get('/reviews/create', 'ReviewController@create')->name('create');
-			Route::post('/reviews/add', 'ReviewController@add')->name('add');
-			Route::get('/reviews/update/{id}', 'ReviewController@update')->name('create');
-			Route::post('/reviews/edit/{id}', 'ReviewController@edit');
-			Route::get('/delete-review/{id}', 'ReviewController@delete');
-			Route::get('/reviews/status/{id}/{status}', 'ReviewController@status');
-			// Enquiries
-			Route::get('/enquiries', 'EnquiryController@index')->name('enquiries');
-			Route::get('/enquiries/update/{id}', 'EnquiryController@update')->name('create');
-			Route::post('/enquiries/edit/{id}', 'EnquiryController@edit');
-			Route::get('/delete-enquiry/{id}', 'EnquiryController@delete');
-			// Appointments
-			Route::get('/appointments', 'AppointmentController@index')->name('appointments');
-			Route::get('/appointments/update/{id}', 'AppointmentController@update')->name('create');
-			Route::post('/appointments/edit/{id}', 'AppointmentController@edit');
-			Route::get('/delete-appointment/{id}', 'AppointmentController@delete');
-			// Popups Route
-			Route::get('/popups', 'PopupController@index')->name('popups');
-			Route::get('/popups/create', 'PopupController@create')->name('create');
-			Route::post('/popups/add', 'PopupController@add')->name('add');
-			Route::get('/popups/update/{id}', 'PopupController@update')->name('create');
-			Route::post('/popups/edit/{id}', 'PopupController@edit');
-			Route::get('/delete-popup/{id}', 'PopupController@delete');
-			Route::get('/popups/status/{id}/{status}', 'PopupController@status');
+		// Product Add Pages Routes
+		Route::get('/products/products','ProductController@index')->name('products-list');
+		Route::get('/products/create','ProductController@create')->name('products-createform');
+		Route::get('/products/update/{prodid}','ProductController@updatePage')->name('products-updateform');
+		Route::post('/products/change-product-status','ProductController@status')->name('change-product-status');
+		Route::post('/products/delete-product-records','ProductController@delete')->name('delete-product-records');
+		Route::post('/get-product-details-variation','ProductController@getProductDetailsVariation')->name('get-product-details-variation');
 
-			// Header Settings Route
-			Route::get('/header-settings', 'SettingsController@headerSetting')->name('header-settings');
-			Route::post('/header-settings-update', 'SettingsController@headerSettingUpdate');
-			// Footer Settings Route
-			Route::get('/footer-settings', 'SettingsController@footerSetting')->name('footer-settings');
-			Route::post('/footer-settings-update', 'SettingsController@footerSettingUpdate');
-			// Banner Route
-			Route::get('/banners', 'BannerController@index')->name('banners');
-			Route::get('/banners/create', 'BannerController@create')->name('create');
-			Route::post('/banners/add', 'BannerController@add')->name('add');
-			Route::get('/banners/update/{id}', 'BannerController@update')->name('create');
-			Route::post('/banners/edit/{id}', 'BannerController@edit');
-			Route::get('/delete-banner/{id}', 'BannerController@delete');
-			Route::delete('/delete-banner-image/{id}', 'BannerController@deleteBannerImage');
-			Route::get('/banners/status/{id}/{status}', 'BannerController@status');
+		Route::post('/delete-product-variation','ProductController@deleteProductVariation')->name('delete-product-variation');
 
-			Route::get('orders/orders-details-page','OrderController@index')->name('order.details.page');
-			Route::post('orders/change-order-status','OrderController@changeOrderStatus')->name('order.change.order.status');
-			Route::get('orders/order-product-details/{orderId}','OrderController@orderProductDetails')->name('order.product.details');
-		    //});
-            Route::get('get-harikrishna-data','HariKrishnaController@index');
-            Route::get('instagram-post', 'InstagramController@updateInstaData')->name('instagram-post');
-            Route::get('instagram-api-post', 'InstagramController@index')->name('instagram');
+		Route::post('/products/submit-product','ProductController@submitProduct')->name('submit-product');
+		Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
+		Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
+		Route::post('/products/remove-product-images','ProductController@removeProductImages')->name('remove-product-images');
 
-            Route::get('get-product-excel-report','ProductController@getProductExcelReport')->name('get-product-report');
+		// Faqs Route list
+		Route::get('/faqs', 'FaqController@index')->name('faqs');
+		Route::get('/faqs/create', 'FaqController@create')->name('create');
+		Route::post('/faqs/add', 'FaqController@add')->name('add');
+		Route::get('/faqs/update/{id}', 'FaqController@update')->name('create');
+		Route::post('/faqs/edit/{id}', 'FaqController@edit');
+		Route::get('/delete-faq/{id}', 'FaqController@delete');
+		Route::get('/faqs/status/{id}/{status}', 'FaqController@status');
+		// Faq Category Routes
+		Route::get('/faqcategories', 'FaqCategoryController@index')->name('faqcategories');
+		Route::get('/faqcategories/create', 'FaqCategoryController@create')->name('createfaqcategories');
+		Route::post('/faqcategories/add', 'FaqCategoryController@add')->name('add');
+		Route::get('/faqcategories/update/{id}', 'FaqCategoryController@update')->name('create');
+		Route::post('/faqcategories/edit/{id}', 'FaqCategoryController@edit');
+		Route::get('/delete-faqcategories/{id}', 'FaqCategoryController@delete');
+		// Reviews Route
+		Route::get('/reviews', 'ReviewController@index')->name('faqs');
+		Route::get('/reviews/create', 'ReviewController@create')->name('create');
+		Route::post('/reviews/add', 'ReviewController@add')->name('add');
+		Route::get('/reviews/update/{id}', 'ReviewController@update')->name('create');
+		Route::post('/reviews/edit/{id}', 'ReviewController@edit');
+		Route::get('/delete-review/{id}', 'ReviewController@delete');
+		Route::get('/reviews/status/{id}/{status}', 'ReviewController@status');
+		// Enquiries
+		Route::get('/enquiries', 'EnquiryController@index')->name('enquiries');
+		Route::get('/enquiries/update/{id}', 'EnquiryController@update')->name('create');
+		Route::post('/enquiries/edit/{id}', 'EnquiryController@edit');
+		Route::get('/delete-enquiry/{id}', 'EnquiryController@delete');
+		// Appointments
+		Route::get('/appointments', 'AppointmentController@index')->name('appointments');
+		Route::get('/appointments/update/{id}', 'AppointmentController@update')->name('create');
+		Route::post('/appointments/edit/{id}', 'AppointmentController@edit');
+		Route::get('/delete-appointment/{id}', 'AppointmentController@delete');
+		// Popups Route
+		Route::get('/popups', 'PopupController@index')->name('popups');
+		Route::get('/popups/create', 'PopupController@create')->name('create');
+		Route::post('/popups/add', 'PopupController@add')->name('add');
+		Route::get('/popups/update/{id}', 'PopupController@update')->name('create');
+		Route::post('/popups/edit/{id}', 'PopupController@edit');
+		Route::get('/delete-popup/{id}', 'PopupController@delete');
+		Route::get('/popups/status/{id}/{status}', 'PopupController@status');
 
-            Route::get('discount','DiscountController@index')->name('discount');
-            Route::get('discount/creatediscount','DiscountController@addDiscount')->name('create-discount');
-            Route::post('creatediscount','DiscountController@addDiscountData')->name('create-discount-form');
-            Route::get('edit-discount/{disId}','DiscountController@editPageDiscountData')->name('edit-discount');
-            Route::post('/change-discount','DiscountController@status');
-			Route::post('/delete-discount','DiscountController@delete');
+		// Header Settings Route
+		Route::get('/header-settings', 'SettingsController@headerSetting')->name('header-settings');
+		Route::post('/header-settings-update', 'SettingsController@headerSettingUpdate');
+		// Footer Settings Route
+		Route::get('/footer-settings', 'SettingsController@footerSetting')->name('footer-settings');
+		Route::post('/footer-settings-update', 'SettingsController@footerSettingUpdate');
+		// Banner Route
+		Route::get('/banners', 'BannerController@index')->name('banners');
+		Route::get('/banners/create', 'BannerController@create')->name('create');
+		Route::post('/banners/add', 'BannerController@add')->name('add');
+		Route::get('/banners/update/{id}', 'BannerController@update')->name('create');
+		Route::post('/banners/edit/{id}', 'BannerController@edit');
+		Route::get('/delete-banner/{id}', 'BannerController@delete');
+		Route::delete('/delete-banner-image/{id}', 'BannerController@deleteBannerImage');
+		Route::get('/banners/status/{id}/{status}', 'BannerController@status');
 
-            Route::get('xmlpage','XMLController@XMLFunction')->name('xml-page');
+		Route::get('orders/orders-details-page','OrderController@index')->name('order.details.page');
+		Route::post('orders/change-order-status','OrderController@changeOrderStatus')->name('order.change.order.status');
+		Route::get('orders/order-product-details/{orderId}','OrderController@orderProductDetails')->name('order.product.details');
+		//});
+		Route::get('get-harikrishna-data','HariKrishnaController@index');
+		Route::get('instagram-post', 'InstagramController@updateInstaData')->name('instagram-post');
+		Route::get('instagram-api-post', 'InstagramController@index')->name('instagram');
 
-            /* Sitemap Route*/
-            Route::get('/sitemap', 'SitemapController@sitemapFunction')->name('sitemap');
+		Route::get('get-product-excel-report','ProductController@getProductExcelReport')->name('get-product-report');
+
+		Route::get('discount','DiscountController@index')->name('discount');
+		Route::get('discount/creatediscount','DiscountController@addDiscount')->name('create-discount');
+		Route::post('creatediscount','DiscountController@addDiscountData')->name('create-discount-form');
+		Route::get('edit-discount/{disId}','DiscountController@editPageDiscountData')->name('edit-discount');
+		Route::post('/change-discount','DiscountController@status');
+		Route::post('/delete-discount','DiscountController@delete');
+
+		Route::get('xmlpage','XMLController@XMLFunction')->name('xml-page');
+
+		/* Sitemap Route*/
+		Route::get('/sitemap', 'SitemapController@sitemapFunction')->name('sitemap');
+
+		Route::group(['as' => 'masters.', 'prefix' => 'masters' ], function () {
+			Route::any('/{type}', 'MastersController@index')->name('index');
+			Route::any('/add/{type}', 'MastersController@add')->name('add');
+			Route::any('/edit/{type}/{slug}', 'MastersController@edit')->name('edit');
+			Route::any('/status/{type}/{slug}', 'MastersController@status')->name('status');
+			Route::any('/delete/{type}/{slug}', 'MastersController@delete')->name('delete');
+		});
+
+		Route::group(['as' => 'product_combinations.', 'prefix' => 'product_combinations' ], function () {
+			Route::any('', 'GlobalCombinationsController@index')->name('index');
+			Route::any('/add', 'GlobalCombinationsController@add')->name('add');
+			Route::any('/edit/{slug}', 'GlobalCombinationsController@edit')->name('edit');
+			Route::any('/status/{slug}', 'GlobalCombinationsController@status')->name('status');
+			Route::any('/view/{slug}', 'GlobalCombinationsController@view')->name('view');
+		});
+
+
+		Route::group(['as' => 'app_products.', 'prefix' => 'app_products' ], function () {
+			Route::any('', 'AppProductsController@index')->name('index');
+			Route::any('/add', 'AppProductsController@add')->name('add');
+			Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
+			
+			// Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
+			// Route::any('/status/{slug}', 'AppProductsController@status')->name('status');
+			// Route::any('/view/{slug}', 'AppProductsController@view')->name('view');
+		});
+
+
+
 	});
+
+
 });
 
 Auth::routes();

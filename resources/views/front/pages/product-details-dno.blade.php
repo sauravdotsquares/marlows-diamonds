@@ -148,30 +148,32 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
+
 				@if($plainband==false)
-				<div class="diamond-type">
-					<label>Choose Your Diamond</label>
-                    @if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
-                        <div class="d-type-input">
-                            <input type="radio" name="attribute_choose-your-diamond"  checked value="mined">
-                            <span>Mined Diamond</span>
-                        </div>
-                        <div class="d-type-input">
-                            <input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
-                            <span>Lab Grown Diamond</span>
-                        </div>
-                    @else
-                        <div class="d-type-input">
-                            <input type="radio" name="attribute_choose-your-diamond" value="mined">
-                            <span>Mined Diamond</span>
-                        </div>
-                        <div class="d-type-input">
-                            <input type="radio" name="attribute_choose-your-diamond" checked value="lab_grown">
-                            <span>Lab Grown Diamond</span>
-                        </div>
-                    @endif
-				</div>
+					<div class="diamond-type">
+						<label>Choose Your Diamond</label>
+						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
+							<div class="d-type-input">
+								<input type="radio" name="attribute_choose-your-diamond"  checked value="mined">
+								<span>Mined Diamond</span>
+							</div>
+							<div class="d-type-input">
+								<input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
+								<span>Lab Grown Diamond</span>
+							</div>
+						@else
+							<div class="d-type-input">
+								<input type="radio" name="attribute_choose-your-diamond" value="mined">
+								<span>Mined Diamond</span>
+							</div>
+							<div class="d-type-input">
+								<input type="radio" name="attribute_choose-your-diamond" checked value="lab_grown">
+								<span>Lab Grown Diamond</span>
+							</div>
+						@endif
+					</div>
 				@endif
+
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
 
