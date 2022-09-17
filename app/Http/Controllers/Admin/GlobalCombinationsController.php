@@ -115,7 +115,7 @@ class GlobalCombinationsController extends Controller{
         }
         if(!empty($data['variations'])){
             foreach ($data['variations'] as $key => $value) {
-                $data['form_data'][$key] = (array)json_decode($value['variations_id']);
+                $data['form_data'][$key] = $value['variations_id'];
                 $data['form_data'][$key]['id'] = $value['id'];
             }
         }
@@ -153,8 +153,6 @@ class GlobalCombinationsController extends Controller{
                 'form_data.*.price.min' => 'Please enter price greater than 1',
                 'form_data.*.price.max' => 'Please enter less than 100',
             ]);
-
-
             
             $globalData = GlobalCombinations::where(['id'=> $data['id'] ])->first();
             $globalData->name = $request['name'];
@@ -228,7 +226,7 @@ class GlobalCombinationsController extends Controller{
         }
         if(!empty($data['variations'])){
             foreach ($data['variations'] as $key => $value) {
-                $data['form_data'][$key] = (array)json_decode($value['variations_id']);
+                $data['form_data'][$key] = $value['variations_id'];
                 $data['form_data'][$key]['id'] = $value['id'];
             }
         }

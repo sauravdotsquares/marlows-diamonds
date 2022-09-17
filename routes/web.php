@@ -98,6 +98,10 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::get('/products/products','ProductController@index')->name('products-list');
 		Route::get('/products/create','ProductController@create')->name('products-createform');
 		Route::get('/products/update/{prodid}','ProductController@updatePage')->name('products-updateform');
+		Route::any('/products/update-price/{slug}','ProductController@productPricing')->name('product-pricing');
+		Route::any('/products/get-product-price','ProductController@getProductPricing')->name('get-product-price');
+		
+
 		Route::post('/products/change-product-status','ProductController@status')->name('change-product-status');
 		Route::post('/products/delete-product-records','ProductController@delete')->name('delete-product-records');
 		Route::post('/get-product-details-variation','ProductController@getProductDetailsVariation')->name('get-product-details-variation');
@@ -210,6 +214,12 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('', 'AppProductsController@index')->name('index');
 			Route::any('/add', 'AppProductsController@add')->name('add');
 			Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
+			Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
+			Route::any('/attributes/{slug}', 'AppProductsController@addAttributes')->name('add_attributes');
+			Route::any('/variations/{slug}', 'AppProductsController@addVariations')->name('add_variations');
+			Route::any('/get-categories', 'AppProductsController@getCategories')->name('get_categories');
+
+			
 			
 			// Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
 			// Route::any('/status/{slug}', 'AppProductsController@status')->name('status');
@@ -263,7 +273,7 @@ Route::namespace('Front')->group(function () {
 	Route::post('product/get-related-product-list','ProductController@getRelatedProductList')->name('get.related.product.list');
 
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
-	Route::post('product/get-variations-data','ProductController@getSelectedVariationsData')->name('get-variations-data');
+	Route::any('product/get-variations-data','ProductController@getSelectedVariationsData')->name('get-variations-data');
 
 	Route::post('product/get-products-video','ProductController@getProductVideo')->name('get-product-video');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
@@ -310,6 +320,25 @@ Route::namespace('Front')->group(function () {
 
 	Route::post('download-pdf','HomeController@downloadPDF')->name('download-pdf');
 	Route::get('deko-api/dekopay', 'DekoPayController@check_response');
+
+
+
+	Route::group(['as' => 'app_products.', 'prefix' => 'app-products' ], function () {
+		
+		Route::any('/details/{slug}', 'AppProductsController@getProductDetails')->name('details');
+		Route::any('/customfilter', 'AppProductsController@getCustomFilter')->name('customfilter');
+		Route::any('/customfilternew', 'AppProductsController@getCustomFilterNew')->name('customfilternew');
+		Route::any('/varitiondata', 'AppProductsController@getSelectedVariationsData')->name('varitiondata');
+
+		
+		//Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
+		
+		// Route::any('/add', 'GlobalCombinationsController@add')->name('add');
+		// Route::any('/edit/{slug}', 'GlobalCombinationsController@edit')->name('edit');
+		// Route::any('/status/{slug}', 'GlobalCombinationsController@status')->name('status');
+		// Route::any('/view/{slug}', 'GlobalCombinationsController@view')->name('view');
+	});
+
 });
 
 /*

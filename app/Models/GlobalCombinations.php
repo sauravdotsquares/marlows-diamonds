@@ -18,4 +18,15 @@ class GlobalCombinations extends Model
 	public function variations(){
 		return $this->hasMany('App\Models\GlobalCombinationsVariations','global_combinations_id','id');
 	}
+
+	// public static function combinations($combinationId=null){
+	// 	$globalCombination = GlobalCombinationsVariations::where([
+	// 		'global_combinations_id' => $combinationId,
+	// 		'is_active' => 1,
+	// 		'is_deleted' => 0
+	// 	])->get();
+	// 	return $globalCombination->toArray();
+    //     // return $this->hasOne(ProductImages::class,'product_id','id')->where('is_featured',1);
+    // }
+
 }

@@ -87,6 +87,7 @@
                                           href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="1"><i
                                              class="fa fa-edit" aria-hidden="true"></i></a>
                                        @endif
+                                       <a title="Pricing" href="{{route('admin.product-pricing',[$value->slug])}}" class="btn btn-success btn-sm"><i class="fa fa-solid fa-dollar-sign" aria-hidden="true"></i></a>
                                        <a title="Edit" href="{{route('admin.products-updateform',[$value->id])}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
                                        <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$value}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                     </td>

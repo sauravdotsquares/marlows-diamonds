@@ -63,9 +63,13 @@ class ProductController extends Controller
             if (isset($getProduct) && !empty($getProduct)) {
                 // Product Categories
                 $prod_categories = explode(',', $getProduct->categories);
+
+                
+
                 $checkPlanCat = Category::select('id')->whereIn('id', $prod_categories)->where('name', 'LIKE', '%plain%')->get()->toArray();
                 if (!empty($checkPlanCat)) $plainband = true;
                 else $plainband = false;
+
 
                 $checkPlanCatMultiStone = Category::select('id')->whereIn('id', $prod_categories)->where('name', 'LIKE', '%Multi-Stone%')->get()->toArray();
                 if (!empty($checkPlanCatMultiStone)) $plainbandMulti = true;
@@ -111,7 +115,6 @@ class ProductController extends Controller
                         ->select('vari_image', 'vari_video', 'regular_price', 'sale_price')
                         ->first();
 
-
                     return  view(
                         'front.pages.product-details-dyes',
                         [
@@ -130,6 +133,7 @@ class ProductController extends Controller
                         ->select('vari_image')
                         ->groupBy('vari_image')
                         ->get();
+
                     return  view(
                         'front.pages.product-details-dno',
                         [
@@ -571,7 +575,6 @@ class ProductController extends Controller
     //             $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
     //                                                 ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'regular_price', 'sale_price')
     //                                                 ->first();
-
     //             if ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat <= 3000) {
     //                 $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.35)); 
     //                 // sprintf('%0.2f', ;
@@ -665,11 +668,13 @@ class ProductController extends Controller
 
 
     public function getSelectedVariationsData(Request $request){
-        
+
         $product_id = Products::where('slug', $request->slug)->value('id');
 
         if ($product_id != '') {
-            $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $request->slug)->first();
+
+            // with(['getProductImages', 'getProductVariation'])
+            $getProduct = Products::where('slug', $request->slug)->first();
 
             $prod_categories = explode(',', $getProduct->categories);
 
@@ -689,17 +694,20 @@ class ProductController extends Controller
                                     ->pluck('id')
                                     ->toArray();
 
-            // prd($request->diamond_type);
-            // prd($request->variations);
+
 
             if (!empty($getProductVariationId)) {
+
                 $getVariDetails = ProductVariationDetails::groupBy('value')
                                 ->whereIn('variation_id', $getProductVariationId)
                                 ->whereIn('value', $request->variations)
                                 ->get()
                                 ->toArray();
+                
 
                 $attributeCount = count($request->variations);
+                // prd($getProductVariationId);
+
                 foreach ($getProductVariationId as $key1 => $productVariationId) {
                     $variationDetails = array();
 
@@ -718,13 +726,18 @@ class ProductController extends Controller
                 }
             }
 
-            $vat = getVAT();
+            $vat = getVAT(); // Fixed 1.2
+
+            // echo 'vat:- '. $vat;die;
             $newArray = [];
             if (isset($getVariDetails) && !empty($getVariDetails)) {
+
+                // Get product variation price
                 $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
                                                     ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'regular_price', 'sale_price')
                                                     ->first();
-
+                
+                /** Price change for lab grown */
                 if ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat <= 3000) {
                     $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.35)); 
                 } elseif ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat > 3000) {
@@ -733,15 +746,14 @@ class ProductController extends Controller
                     $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat);
                 }
 
-
                 $increaseDiscount = 1;
                 $discountPercentage = 1;
+                
                 $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
 
 
                 if (isset($disPercentage) && !empty($disPercentage)) {
                     $disPercentage = $disPercentage->toArray();
-
 
                     if($disPercentage['is_login_users']){
                         $isDiscountApplicable = auth()->guard('customer')->check();
@@ -749,8 +761,6 @@ class ProductController extends Controller
                         $isDiscountApplicable = true;
                     }
 
-                    /**  If customer login */
-                    //if ( 1 || $disPercentage->is_login_users || auth()->guard('customer')->check()) {
                     if ( $isDiscountApplicable ) {
 
                         if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
@@ -759,9 +769,11 @@ class ProductController extends Controller
                             $increaseDiscount = 1;
                         }
 
+                        // echo $regular_p_final * $increaseDiscount;
+                        // echo (($regular_p_final) * $increaseDiscount);die;
+                        
                         $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
-
-
+                        
                         if ($disPercentage['end_date'] >= date('Y-m-d')) {
 
                             $getDiscountRange = DiscountRange::select('category_id', 'from_price', 'to_price', 'discount')
@@ -769,11 +781,13 @@ class ProductController extends Controller
                                                 ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
                                                 ->first();
 
+                            
                             $discountPercentage = 1 + ($disPercentage['discount'] / 100);
-
+                            
                             if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
                                 if ($getDiscountRange->discount > 1) {
                                     $discountPercentage = 1 + ($getDiscountRange->discount / 100);
+                                    //echo 'here: - ' . $discountPercentage;die;
                                 } else {
                                     $discountPercentage = 1;
                                 }
@@ -784,6 +798,8 @@ class ProductController extends Controller
                         } else {
                             $discountPercentage = 1;
                         }
+                        
+
                     } else {
                         if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
                             $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
@@ -791,11 +807,15 @@ class ProductController extends Controller
                             $increaseDiscount = 1;
                         }
 
+                        
+
                         $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
                     }
                 }
 
+                
                 $regular_p_discount_final = $regular_p_final / $discountPercentage;
+                
 
                 $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
                 $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
