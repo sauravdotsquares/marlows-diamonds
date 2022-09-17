@@ -4,19 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\GlobalCombinations;
+use App\Models\AppProductAttributes;
 
 class Masters extends Model
 { 
     use HasFactory;
-    
-    /**
-     * @var string $table
-     * 
-     * 
-     * product_attributes
-     * 
-     * 
-    */
+
 
     protected $table = 'masters';
 
@@ -32,5 +26,43 @@ class Masters extends Model
         'created_at',
         'updated_at'
     ];
+
+
+    // public static function attributes(){
+    //     $attributes = self::where('type','product_attributes')->latest()->where(['is_deleted'=>0, 'is_active'=>1])->get()->toArray();
+    //     // $global_combinations = GlobalCombinations::where(['is_deleted'=>0, 'is_active'=>1])->get()->toArray();
+    //     // $attributes_all =  array_merge($attributes, $global_combinations);
+    //     // usort($attributes_all, function($a, $b) {
+    //     //     return $a['id'] <=> $b['id'];
+    //     // });
+    //     return $attributes;
+    // }
+
+
+    public static function attributes(){
+        $attributes = self::where('type','product_attributes')->latest()->where(['is_deleted'=>0, 'is_active'=>1])->get()->toArray();
+        return $attributes;
+    }
+
+    public static function combinations(){
+        $global_combinations = GlobalCombinations::where(['is_deleted'=>0, 'is_active'=>1])->get()->toArray();
+        return $global_combinations;
+    }
+
+
+    public static function product_variations($product_id=null){
+        $attributes = AppProductAttributes::where(['is_deleted'=>0,'is_active'=>1,'product_id'=>$product_id])->where('attribute_id','!=',null)->get()->toArray();
+
+        foreach ($attributes as $attributes_key => $attributes_value) {
+
+            
+            $attributeItem = self::where('id', $attributes_value['attribute_id'])->first();
+            $attributes[$attributes_key]['name'] = $attributeItem['name'];
+            $attributes[$attributes_key]['slug'] = $attributeItem['slug'];
+
+            $attributes[$attributes_key]['variations'] = self::where(['is_deleted'=>0,'is_active'=>1, 'parent_id'=>$attributes_value['attribute_id'] ])->get()->toArray();
+        }
+        return $attributes;
+    }
 
 }

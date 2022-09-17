@@ -14,7 +14,7 @@
         showToaster('success', '<?php echo session()->get("success") ?>');
         // toastr.success('<?php echo session()->get("success") ?>')
     <?php }else if(session()->get("error")){ ?>
-        showToaster('error', '<?php echo session()->get("success") ?>');
+        showToaster('error', '<?php echo session()->get("error") ?>');
         // toastr.error('<?php echo session()->get("error") ?>')
     <?php } ?>
 </script>

@@ -709,5 +709,20 @@ if (!function_exists('validate_breadcrumb')) {
         return $query;
     }
 
+
+    function unique_code($limit=30){
+        return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
+    }
+
+    function in_array_multi($needle, $haystack, $strict = false) {
+        foreach ($haystack as $item) {
+            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+                return true;
+            }
+        }
+    
+        return false;
+    }
+
 }
 

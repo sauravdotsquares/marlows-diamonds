@@ -35,4 +35,12 @@ class AppProducts extends Model{
         'created_at',
         'updated_at',
     ];
+
+    public function getProductImages(){
+        return $this->hasOne(AppProductImages::class,'product_id','id')->where('image_type','image_type');
+    }
+
+    public function getProductVariation(){
+        return $this->hasMany(AppProductAttributeVariations::class,'product_id','id');
+    }
 }
