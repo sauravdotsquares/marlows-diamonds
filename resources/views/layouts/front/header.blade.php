@@ -245,15 +245,15 @@
 
     <div class="post-bar">
         <div class="container">
-            <div class="post-bar-wraper flexed flex-justify-between flex-items-center">
-                <div class="post-bar-left">
+            <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
+                <div class="post-bar-left header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
                 </div>
-                <div class="post-bar-center" style="height: 40px;">
+                {{-- <div class="post-bar-center" style="height: 40px;"> --}}
                     {{-- <p> Up to <span class="header-heighlight-text">30%</span>  off in our Summer Sale - </p> --}}
                     {{-- <p> ends 15th September </p> --}}
-                </div>
-                <div class="post-bar-right">
+                {{-- </div> --}}
+                <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
                 </div>
             </div>
