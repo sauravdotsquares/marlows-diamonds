@@ -105,7 +105,7 @@
 			<div class="product-info-media">
 				{{-- <a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
                 @if($plainbandMulti==false)
-                    <div id="carousel" class="owl-carousel ">
+                    <div id="carousel" class="owl-carousel">
                         @if($variationImages)
                             @foreach($variationImages as $images)
                                 <div class="item">
@@ -616,18 +616,21 @@
 		function getSelectedVariationsData(){
 			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
+
 			var variations = [];
 			$('.type-variations-row select').each(function(i, sel){
-
-				if($(sel).attr('name')!='finger-size')
+				if($(sel).attr('name')!='finger-size'){
 					variations.push($(sel).val());
+				}
 			});
+
             var multistone = '{{$plainbandMulti}}';
             var jewellery = '{{$plainbandJewellery}}';
 			var data_slug = '{{url("/")}}';
+
 			$.ajax({
 				type: 'POST',
-				url: '{{route("get-variations-data")}}',
+				url: '{{route("app_products.varitiondata")}}',
 				dataType: 'JSON',
 				data: {
 					'_token': "{{csrf_token()}}",
@@ -705,7 +708,7 @@
 			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$.ajax({
                 type: 'POST',
-                url: '{{route("custom-filter")}}',
+                url: '{{route("app_products.customfilternew")}}',
                 data: {
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',

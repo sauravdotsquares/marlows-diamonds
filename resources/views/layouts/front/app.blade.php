@@ -32,7 +32,9 @@
 
 
     @yield('css')
-
+    <script>
+      var systemBaseUrl = '<?php echo url("/"); ?>/';
+    </script>
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
     <style>

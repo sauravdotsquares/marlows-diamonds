@@ -15,12 +15,16 @@ use App\Models\ProductVariationDetails;
 use App\Models\Attributes;
 use Illuminate\Support\Arr;
 use App\Models\DiamondShapes;
+use App\Models\ProductVariationsMaster;
+use App\Models\GlobalCombinationsVariations;
+use App\Models\Masters;
+
 use View;
 
 class ProductController extends Controller
 {
-    public function index(Type $var = null)
-    {
+
+    public function index(Request $request){
         $breadcrumb = [
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Product Lists", "url" => route("admin.products-list"), "icon" => "fa fa-home"],
@@ -28,13 +32,16 @@ class ProductController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
 
-        $getProducts = Products::latest()->get();
+        $query = Products::latest();
+
+        $query = getFilter(Products::class, $query, $request->query());
+
+        $getProducts = $query->paginate(10);
 
         return view('admin.products.index',compact('getProducts'));
     }
 
-    public function create()
-    {
+    public function create(){
         $breadcrumb = [
             ["name" => "Add New Product", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
@@ -50,8 +57,7 @@ class ProductController extends Controller
         return view('admin.products.create',compact('diamondShapes'));
     }
 
-    public function updatePage($productId = null)
-    {
+    public function updatePage($productId = null){
         $breadcrumb = [
             ["name" => "Edit Product", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
@@ -68,10 +74,7 @@ class ProductController extends Controller
         return view('admin.products.update',compact('getProductData','diamondShapes'));
     }
 
-    public function submitProduct(Request $request)
-    {
-
-        // return response()->json($request->all());
+    public function submitProduct(Request $request){
 
         $validator = Validator::make($request->all(), [
             // 'title' => 'required',
@@ -79,7 +82,6 @@ class ProductController extends Controller
             // 'featured_image' => 'required',
         ]);
 
-        //  setup categories
         //  $getParentId = 0;
         if(isset($request->table_id) && !empty($request->table_id)){
             if($request->table_id == $request->categories){
@@ -121,7 +123,6 @@ class ProductController extends Controller
                 'meta_title'=> $request->meta_title,
                 'meta_keyword'=> $request->meta_keyword,
                 'meta_description'=> $request->meta_description,
-                // 'image_url'=> $image,
             ]);
             $msg = 'Successfully submitted!!!';
         }
@@ -145,12 +146,9 @@ class ProductController extends Controller
             $finalArrayImages = [];
         }
 
-
-
         if(isset($finalArrayImages) && !empty($finalArrayImages) && count($finalArrayImages)){
             $this->uploadProductImages($finalArrayImages,$productDetails->id);
         }
-
 
         if(isset($request->data) && !empty($request->data)){
             $getVariationArray = [
@@ -196,7 +194,8 @@ class ProductController extends Controller
 
            if(isset($value['is_update']) && $value['is_update']!=''){
 
-                $getProductDataVariation = ProductVariations::where('id',$value['is_update'])->update([
+                $getProductDataVariation = ProductVariations::where('id',$value['is_update'])
+                ->update([
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                     'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
                     'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
@@ -213,8 +212,12 @@ class ProductController extends Controller
                     'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
                 ]);
             }
-            /*echo $value['attri_carat']; die;
-            echo '<pre>'; print_r($value); die;*/
+
+            /*
+                echo $value['attri_carat']; die;
+                echo '<pre>'; print_r($value); die;
+            */
+
             foreach($value as $key1 => $variData){
                 $newKey = explode("_",$key1);
                 if(isset($newKey[0]) && $newKey[0] === 'attri'){
@@ -504,6 +507,111 @@ class ProductController extends Controller
         // Render excel data
         echo $excelData;
         exit;
+    }
+
+
+    public function productPricing(Request $request){
+
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Products", "url" => route("admin.products-list"), "icon" => ""],
+            ["name" => "Product pricing", "url" => route("admin.product-pricing",[$request['slug']]), "icon" => ""],
+        ];
+        $page_title = 'Product pricing';
+        populate_breadcrumb($breadcrumb);
+        $product = Products::where(['slug'=> $request['slug']])->first();
+        if(empty($product)){
+            return redirect()->route('admin.products-list')->with('error','Products not identified');
+        }
+        
+        $variationData = ProductVariationsMaster::select(['id','master_id','price'])->where(['product_id'=> $product->id, 'is_active'=>1, 'is_deleted'=>0])->get()->toArray();
+        foreach ( $variationData as $k=>$v ){
+            $variationData[$variationData[$k]['master_id']] = $v;
+            unset($variationData[$k]);
+        }
+        $caratData = Masters::where(['type'=> 'carat'])->get();
+
+        if($request->post()){
+            $validated = $request->validate([
+                'data.*.master_id' => 'required|numeric',
+                'data.*.price' => 'required|numeric|digits_between:1,7',
+                'data.*.dataId' => 'sometimes',
+                'slug' => 'required',
+            ],
+            [
+                'data.*.master_id.required' => 'Please select carat',
+                'data.*.master_id.price' => 'Please select valid price',
+                'data.*.price.digits_between' => 'Price must be between 1 and 7 digits.',
+                'data.*.price.required' => 'Please enter numbers',
+                'data.*.price.numeric' => 'Please enter valid numbers',
+            ]);
+
+            if(!empty($validated['data'])){
+                $validDataId = [];
+                foreach ($validated['data'] as $data_key => $data_value) {
+
+                    $master_data = Masters::where('id',$data_value['master_id'] )->first();
+
+                    if(!empty($data_value['id'])){
+                        $new_record = ProductVariationsMaster::where(['id'=> $data_value['id']])->first();
+                        if(empty($new_record)){
+                            $new_record = new ProductVariationsMaster();
+                            $new_record->product_id = $product->id;
+                        }
+                    }else{
+                        $new_record = new ProductVariationsMaster();
+                        $new_record->product_id = $product->id;
+                    }
+
+                    $new_record->master_id = $data_value['master_id'];
+                    $new_record->master_parent_id =  $master_data->parent_id;
+                    $new_record->master_data = json_encode($master_data);
+                    $new_record->combination_id = 1;
+                    $new_record->price = $data_value['price'];
+                    $new_record->save();
+                    array_push($validDataId, $new_record->id);
+                }
+
+                ProductVariationsMaster::whereNotIn('id', $validDataId)->where('is_deleted',0)->update(['is_deleted'=>1]);
+                return redirect()->back()->with('success','Pricing updated successfully');
+            }
+
+        }
+
+        
+        return view('admin.products.pricing',compact(['product','page_title','caratData','variationData']));
+        //ProductVariationsMaster
+        
+    }
+
+
+    public function getProductPricing(Request $request){
+
+        // $request['price']
+        if(!empty($request['price']) && is_numeric($request['price'])  && strlen($request['price']) < 7 ){
+
+            $dataToSend = [];
+            $combinationData = GlobalCombinationsVariations::where('global_combinations_id',1)->get()->toArray();
+            foreach ($combinationData as $combination_key => $combination_value) {
+
+                $master_type = Masters::select(['name','slug','id'])->where('id', $combination_value['variations_id']['metal_types'] )->first();
+                $product_type = Masters::select(['name','slug','id'])->where('id', $combination_value['variations_id']['product_type'] )->first();
+                
+                $percentage = (int)$combination_value['price'];
+                $totalWidth = (int)$request['price'];
+                $new_width = ($percentage / 100) * $totalWidth;
+
+                $string = $product_type->name .' + '. $master_type->name . '( '.  $percentage .'% ) = ' . $new_width;
+
+                array_push($dataToSend, $string);
+            }
+
+            return response()->json(['status'=>'success', 'price'=> $request['price'], 'data'=> $dataToSend]);
+
+        }else{
+            return response()->json(['status'=>'error']);
+        }
+
     }
 
 
