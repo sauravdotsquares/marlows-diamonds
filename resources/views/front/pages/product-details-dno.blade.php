@@ -637,63 +637,86 @@
 				},
 				success: function (res) {
 
-					if(res.regular_price!='' || res.regular_price!='0.00'){
-						var regular_p = Math.round(res.regular_price_with_vat);
+					if(typeof res.formula!='undefined' && res.formula){
 
-						// console.log('regular_p',regular_p)
-
-						// if(diamond_type=='lab_grown' && regular_p<=3000){
-						// 	regular_p_final = regular_p-(regular_p*0.35);
-						// }else if(diamond_type=='lab_grown' && regular_p>3000){
-						// 	regular_p_final = regular_p-(regular_p*0.5);
-						// }else{
-						// 	regular_p_final = regular_p;
-						// }
-                        // if(multistone == 1){
-                        //     regular_p_final = regular_p_final* 1.5;
-                        // }
-                        // if(jewellery == 1){
-                        //     regular_p_final = regular_p_final* 1.1;
-                        // }
 						$('#selected_variation_price').val(res.regular_price);
 						$('#selected_final_price').val(Math.round(regular_p));
-                        if(res.statusCode == 500){
-                            $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
-                        }else if(!regular_p){
-							$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+
+						if(res.statusCode == 500){
+							$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
+						}else if(!regular_p){
+							$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ parseFloat(res.regular_price_with_vat_discount).toFixed(2)  + ' </span>');
 						}else{
-                            if(regular_p == res.regular_price_with_vat_discount){
-                                $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
-                            }else{
-                                $('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p)+'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+							if(regular_p == res.regular_price_with_vat_discount){
+								$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ parseFloat(res.regular_price_with_vat_discount).toFixed(2) + ' </span>');
+							}else{
+								$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+ parseFloat(regular_p).toFixed(2) +'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ parseFloat(res.regular_price_with_vat_discount).toFixed(2) + ' </span>');
 
-                                $('#selected_discounted_price').val(res.regular_price_with_vat_discount);
-                            }
-                        }
-						// $('#finaldiamondprice').text();
-					}else{
-						var sale_p = Math.round(res.sale_price_with_vat);
-
-						if(diamond_type=='lab_grown' && sale_p<=3000){
-							sale_p_final = sale_p-(regular_p*0.35);
-
-						}else if(diamond_type=='lab_grown' && sale_p>3000){
-							sale_p_final = sale_p-(sale_p*0.5);
-
-						}else{
-							sale_p_final = sale_p;
+								$('#selected_discounted_price').val(res.regular_price_with_vat_discount);
+							}
 						}
-                        if(multistone == 1){
-                            sale_p_final = sale_p_final* 1.5;
-                        }
-                        if(jewellery == 1){
-                            sale_p_final = sale_p_final* 1.1;
-                        }
-						$('#selected_variation_price').val(res.sale_price);
-						$('#selected_final_price').val(Math.round(sale_p_final));
-						// $('#finaldiamondprice').text(Math.round(sale_p_final));
-                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(sale_p_final)+' </span>');
+
+					}else{
+						if(res.regular_price!='' || res.regular_price!='0.00'){
+							var regular_p = Math.round(res.regular_price_with_vat);
+							
+							// console.log('regular_p',regular_p)
+							// if(diamond_type=='lab_grown' && regular_p<=3000){
+							// 	regular_p_final = regular_p-(regular_p*0.35);
+							// }else if(diamond_type=='lab_grown' && regular_p>3000){
+							// 	regular_p_final = regular_p-(regular_p*0.5);
+							// }else{
+							// 	regular_p_final = regular_p;
+							// }
+							// if(multistone == 1){
+							//     regular_p_final = regular_p_final* 1.5;
+							// }
+							// if(jewellery == 1){
+							//     regular_p_final = regular_p_final* 1.1;
+							// }
+							$('#selected_variation_price').val(res.regular_price);
+							$('#selected_final_price').val(Math.round(regular_p));
+							if(res.statusCode == 500){
+								$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
+							}else if(!regular_p){
+								$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+							}else{
+								if(regular_p == res.regular_price_with_vat_discount){
+									$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+								}else{
+									$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p)+'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+
+									$('#selected_discounted_price').val(res.regular_price_with_vat_discount);
+								}
+							}
+							// $('#finaldiamondprice').text();
+						}else{
+							var sale_p = Math.round(res.sale_price_with_vat);
+
+							if(diamond_type=='lab_grown' && sale_p<=3000){
+								sale_p_final = sale_p-(regular_p*0.35);
+
+							}else if(diamond_type=='lab_grown' && sale_p>3000){
+								sale_p_final = sale_p-(sale_p*0.5);
+
+							}else{
+								sale_p_final = sale_p;
+							}
+							if(multistone == 1){
+								sale_p_final = sale_p_final* 1.5;
+							}
+							if(jewellery == 1){
+								sale_p_final = sale_p_final* 1.1;
+							}
+							$('#selected_variation_price').val(res.sale_price);
+							$('#selected_final_price').val(Math.round(sale_p_final));
+							// $('#finaldiamondprice').text(Math.round(sale_p_final));
+							$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(sale_p_final)+' </span>');
+						}
 					}
+
+
+					
 
 					if(res.vari_image!='' && res.vari_image!=null){
 						variation_image = data_slug+'/storage/'+res.vari_image;

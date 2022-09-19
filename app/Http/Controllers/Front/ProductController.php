@@ -719,16 +719,19 @@ class ProductController extends Controller
 
                         $combinationsPriceFormula = $combinationsPriceFormula->toArray();
 
-                        $totalPrice =   !empty($combinations['total_price']) ? ( ((int)$combinationsPriceFormula['price']) / 100) * ((int)$combinations['total_price']) : 0;
-                        $price = ( ((int)$combinationsPriceFormula['price']) / 100) * ((int)$combinations['price']);
+                        $totalPrice =   !empty($combinations['total_price']) ? ( ((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['total_price']) : 0;
+                        $price = ( ((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['price']);
                         $runOldCode = false;
+
+                        // return number_format((float)$totalPrice, 2, '.', '');
+
 
                         $newArray['vari_image'] = '';
                         $newArray['formula'] = true;
                         $newArray['vari_video'] = '';
                         $newArray['regular_price'] = $price;
-                        $newArray['regular_price_with_vat'] = $totalPrice ? round($totalPrice) : '0.00';
-                        $newArray['regular_price_with_vat_discount'] = round($price);
+                        $newArray['regular_price_with_vat'] = $totalPrice ? number_format((float)$totalPrice, 2, '.', '') : '0.00';
+                        $newArray['regular_price_with_vat_discount'] = number_format((float)$price, 2, '.', '');
                         return response()->json($newArray);
                     }
                 }
