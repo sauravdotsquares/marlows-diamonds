@@ -15,6 +15,9 @@ use App\Models\ProductVariationDetails;
 use App\Models\ProductImages;
 use App\Models\Discount;
 use App\Models\DiscountRange;
+use App\Models\Masters;
+use App\Models\ProductVariationsMaster;
+use App\Models\GlobalCombinationsVariations;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -669,20 +672,72 @@ class ProductController extends Controller
 
     public function getSelectedVariationsData(Request $request){
 
-        // $productData = Products::where('slug', $request->slug)->first();
-        // if(!empty($productData)){
-        //     $prodCategoriesDJ = explode(',', $productData->categories);
-        //     if(in_array('2', $prodCategoriesDJ)){     
-        //         /** mined and lab_grown id exists in masters table */
-        //         $productType = !empty($request['diamond_type']) && $request['diamond_type'] == 'mined' ? 1 : 2;
-        //         prd($request->variations);
-        //     }
-        // }
+        $productData = Products::where('slug', $request->slug)->first();
+        $runOldCode = true;
+        if(!empty($productData)){
+            $prodCategoriesDJ = explode(',', $productData->categories);
+            if(in_array('2', $prodCategoriesDJ)){
+
+                $allCarats = Masters::where(['type'=>'carat','is_deleted'=>0, 'is_active'=>1])->pluck('name');
+                if($allCarats->count()){ $allCarats = $allCarats->toArray(); }else{ $allCarats = []; }
+                $metalTypes = Masters::where(['type'=>'metal_types','is_deleted'=>0, 'is_active'=>1])->pluck('name');
+                if($metalTypes->count()){ $metalTypes = $metalTypes->toArray(); }else{ $metalTypes = []; }
+             
+                /** mined and lab_grown id exists in masters table */
+                /** get carat metal type and product type */
+                $productType = !empty($request['diamond_type']) && $request['diamond_type'] == 'mined' ? 1 : 2;
+                $selectedMetalType = "";
+                $selectedMetalTypeId = "";
+                $carat = "";
+
+                foreach ($request['variations'] as $variations_key => $variations_value) {
+                    if(in_array($variations_value, $metalTypes)){
+                        $selectedMetalType = $variations_value;
+                        $metalData = Masters::where(['type'=>'metal_types', 'name'=> $selectedMetalType])->first();
+                        $selectedMetalTypeId = $metalData->id;
+                    }else if(in_array($variations_value, $allCarats)){
+                        $carat = $variations_value;
+                    }
+                }
+
+                $combinations = ProductVariationsMaster::with(['masterData'])
+                                ->whereHas('masterData', function($q) use ($carat) { $q->where('name',$carat); })
+                                ->where(['product_id'=> $productData->id, 'is_deleted'=> 0, 'is_active'=>1 ])
+                                ->first();
+                                // ->toArray();
+
+                if(!empty($combinations)){
+                    $combinations = $combinations->toArray();
+
+                    $combinationsPriceFormula = GlobalCombinationsVariations::where(['is_deleted'=>0 ,'is_active'=> 1, 'global_combinations_id'=> 1 ])
+                    ->where('variations_id->metal_types',$selectedMetalTypeId)
+                    ->where('variations_id->product_type',$productType)
+                    ->first();
+                    // ->toArray();
+
+                    if(!empty($combinationsPriceFormula)){
+
+                        $combinationsPriceFormula = $combinationsPriceFormula->toArray();
+
+                        $totalPrice =   !empty($combinations['total_price']) ? ( ((int)$combinationsPriceFormula['price']) / 100) * ((int)$combinations['total_price']) : 0;
+                        $price = ( ((int)$combinationsPriceFormula['price']) / 100) * ((int)$combinations['price']);
+                        $runOldCode = false;
+
+                        $newArray['vari_image'] = '';
+                        $newArray['formula'] = true;
+                        $newArray['vari_video'] = '';
+                        $newArray['regular_price'] = $price;
+                        $newArray['regular_price_with_vat'] = $totalPrice ? round($totalPrice) : '0.00';
+                        $newArray['regular_price_with_vat_discount'] = round($price);
+                        return response()->json($newArray);
+                    }
+                }
+            }
+        }
 
 
         $product_id = Products::where('slug', $request->slug)->value('id');
-
-        if ($product_id != '') {
+        if ($product_id != '' && $runOldCode) {
 
             // with(['getProductImages', 'getProductVariation'])
             $getProduct = Products::where('slug', $request->slug)->first();

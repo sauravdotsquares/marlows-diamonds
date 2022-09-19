@@ -640,6 +640,8 @@
 					if(res.regular_price!='' || res.regular_price!='0.00'){
 						var regular_p = Math.round(res.regular_price_with_vat);
 
+						// console.log('regular_p',regular_p)
+
 						// if(diamond_type=='lab_grown' && regular_p<=3000){
 						// 	regular_p_final = regular_p-(regular_p*0.35);
 						// }else if(diamond_type=='lab_grown' && regular_p>3000){
@@ -657,7 +659,9 @@
 						$('#selected_final_price').val(Math.round(regular_p));
                         if(res.statusCode == 500){
                             $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
-                        }else{
+                        }else if(!regular_p){
+							$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+						}else{
                             if(regular_p == res.regular_price_with_vat_discount){
                                 $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
                             }else{
