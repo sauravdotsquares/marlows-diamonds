@@ -13,7 +13,7 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Product Details</h3>
+                            <h3 class="card-title">Product Details of {{$product->title}}</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -57,6 +57,16 @@
                                                     <label class="form-check-label" for="exampleCheck2">{{ $carat_value->name .' '. ucwords($carat_value->type) }} </label>
                                                 </div>
                                             </div>
+
+                                            <div class="col-sm-3 {{  !empty($selectedValue['master_id']) ? '' : 'visibility_hidden'  }}" id="total_amount_variation_{{$carat_value->slug}}">
+                                                <div class="form-group">
+                                                    <div class="form-label-group">
+                                                        <input type="text" id="total_price" name="{{  !empty($selectedValue['master_id']) ? "data[$carat_key][total_price]" : ''  }}" class="form-control price_{{$carat_value->slug}}" placeholder="Total Amount of {{ $carat_value->name .' '. ucwords($carat_value->type) }}" value="{{  !empty($selectedValue['total_price']) ? $selectedValue['total_price'] : '' }}">
+                                                    </div>
+                                                    @error('data.'.$carat_key.'.total_price') <span class="custom-error">{{ $message }}</span>  @enderror
+                                                </div>
+                                            </div>
+
                                             <div class="col-sm-3 {{  !empty($selectedValue['master_id']) ? '' : 'visibility_hidden'  }}" id="amount_variation_{{$carat_value->slug}}">
                                                 <input name="{{  !empty($selectedValue['master_id']) ? "data[$carat_key][id]" : ''  }}" id="dataId" type="hidden" value="{{  !empty($selectedValue['id'])  ? $selectedValue['id'] : '' }}" >
                                                 <div class="form-group">
@@ -65,7 +75,6 @@
                                                     </div>
                                                     @error('data.'.$carat_key.'.price') <span class="custom-error">{{ $message }}</span>  @enderror
                                                 </div>
-                                                
                                             </div>
                                             <div class="col-sm-3 {{  !empty($selectedValue['master_id']) ? '' : 'visibility_hidden'  }}" id="amount_information_variation_{{$carat_value->slug}}">
                                                 <a href="javascript:;" class="information-tooltip" id="{{$carat_value->slug}}">
@@ -136,11 +145,18 @@
                 $("#amount_" + $checkId).removeClass('visibility_hidden');
                 $("#amount_" + $checkId).find('#dataId').attr('name',`data[${$dataIndex}][id]`);
                 $("#amount_" + $checkId).find('#price').attr('name',`data[${$dataIndex}][price]`);
+
+                $("#total_amount_" + $checkId).removeClass('visibility_hidden');
+                $("#total_amount_" + $checkId).find('#total_price').attr('name',`data[${$dataIndex}][total_price]`);
+
             }else{
                 $("#amount_information_" + $checkId).addClass('visibility_hidden');
                 $("#amount_" + $checkId).addClass('visibility_hidden');
                 $("#amount_" + $checkId).find('#price').attr('name',``);
                 $("#amount_" + $checkId).find('#dataId').attr('name',``);
+
+                $("#total_amount_" + $checkId).addClass('visibility_hidden');
+                $("#total_amount_" + $checkId).find('#total_price').attr('name',``);
             }
         });
     });
