@@ -30,8 +30,7 @@ class CategoryController extends Controller
         return view('admin.categories.index',$result);
     }
 
-    public function getCategory(Request $request)
-    {
+    public function getCategory(Request $request){
         $getCatId_arr = [];
         if(isset($request->id)){
             $getCategory = Products::find($request->id);

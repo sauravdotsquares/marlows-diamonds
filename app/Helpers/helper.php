@@ -18,6 +18,7 @@ use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
 use App\Models\Products;
 use App\Models\InstagramData;
+use App\Models\Masters;
 use App\Models\Popups;
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
@@ -459,7 +460,6 @@ if (!function_exists('validate_breadcrumb')) {
 
             $params = array('Username'=>'95503', 'Password'=>'@diamond1');
             $client->__soapCall("Login", array($params), NULL, NULL, $output_headers);
-
             $ticket = $output_headers["AuthenticationTicketHeader"]->Ticket;
 
            // $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
@@ -657,11 +657,71 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
+    function generateSlug($title="", $table="", $keyName="slug" ,$number=0){
+        $slug = slugify($title);
+        $slug = $number ? $slug . '-'.$number : $slug;
+        $isSlugExists = $table::where($keyName, $slug)->first();
+        if(!empty($isSlugExists)){
+            $number = $number+1;
+            return generateSlug($title,$table, $keyName, $number);
+        }else{
+            return $slug;
+        }
+    }
+
+
+    function slugify($text, string $divider = '-'){
+        $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = preg_replace('~[^-\w]+~', '', $text);
+        $text = trim($text, $divider);
+        $text = preg_replace('~-+~', $divider, $text);
+        $text = strtolower($text);
+        if (empty($text)) {
+            return 'n-a';
+        }
+        return $text;
+    }
+
+
     function prd($data=''){
         echo '<pre>';
         print_r($data);
         echo '</pre>';
         die();
+    }
+
+
+
+    function getMasterById($id=''){
+        return  Masters::where('id',$id)->first()->toArray();
+    }
+
+
+    function getFilter($table, $query, $filter=[]){
+        if(count($filter)){
+            foreach ($filter as $key => $value) {
+                if(Schema::hasColumn( app($table)->getTable(), $key)){
+                    $query = $query->where($key, 'like', '%' . $filter[$key] . '%');
+                }
+            }
+        }
+        return $query;
+    }
+
+
+    function unique_code($limit=30){
+        return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
+    }
+
+    function in_array_multi($needle, $haystack, $strict = false) {
+        foreach ($haystack as $item) {
+            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+                return true;
+            }
+        }
+    
+        return false;
     }
 
 }

@@ -180,3 +180,10 @@ textarea#attribute_value {
 }
 .pr-desc-text-img img {max-width: 130px;}
 .pr-desc-text-img {border: 1px solid #D0D0D0;padding: 0;width: 130px;margin: 7px 0 20px 0;}
+.custom-error{ width: 100%;margin-top: 0.35rem; font-size: 90%; color: #dc3545; }	
+.combinations {
+    padding-bottom: 0px;
+    border-bottom: 2px solid black;
+    padding-top: 10px;
+    border-radius: 5px;
+}

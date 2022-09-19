@@ -249,11 +249,9 @@
                 <div class="post-bar-left">
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
                 </div>
-                <div class="post-bar-center">
-                    <p> Up to
-                     <span class="header-heighlight-text">30%</span>  off in our Summer Sale - </p>
-                    <p> ends 15th September </p>
-                    <!-- {!!$header_settings->get_options('header-center')!!} -->
+                <div class="post-bar-center" style="height: 40px;">
+                    {{-- <p> Up to <span class="header-heighlight-text">30%</span>  off in our Summer Sale - </p> --}}
+                    {{-- <p> ends 15th September </p> --}}
                 </div>
                 <div class="post-bar-right">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
