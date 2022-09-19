@@ -580,7 +580,7 @@ class ProductController extends Controller
                     array_push($validDataId, $new_record->id);
                 }
 
-                ProductVariationsMaster::whereNotIn('id', $validDataId)->where('is_deleted',0)->update(['is_deleted'=>1]);
+                ProductVariationsMaster::whereNotIn('id', $validDataId)->where(['product_id'=>$product->id])->where('is_deleted',0)->update(['is_deleted'=>1]);
                 return redirect()->back()->with('success','Pricing updated successfully');
             }
 
