@@ -669,6 +669,17 @@ class ProductController extends Controller
 
     public function getSelectedVariationsData(Request $request){
 
+        // $productData = Products::where('slug', $request->slug)->first();
+        // if(!empty($productData)){
+        //     $prodCategoriesDJ = explode(',', $productData->categories);
+        //     if(in_array('2', $prodCategoriesDJ)){     
+        //         /** mined and lab_grown id exists in masters table */
+        //         $productType = !empty($request['diamond_type']) && $request['diamond_type'] == 'mined' ? 1 : 2;
+        //         prd($request->variations);
+        //     }
+        // }
+
+
         $product_id = Products::where('slug', $request->slug)->value('id');
 
         if ($product_id != '') {
