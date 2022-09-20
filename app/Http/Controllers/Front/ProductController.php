@@ -675,8 +675,10 @@ class ProductController extends Controller
         $productData = Products::where('slug', $request->slug)->first();
         $runOldCode = true;
         if(!empty($productData)){
+
             $prodCategoriesDJ = explode(',', $productData->categories);
-            if(in_array('2', $prodCategoriesDJ)){
+            // prd($prodCategoriesDJ);
+            if(in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)){
 
                 $allCarats = Masters::where(['type'=>'carat','is_deleted'=>0, 'is_active'=>1])->pluck('name');
                 if($allCarats->count()){ $allCarats = $allCarats->toArray(); }else{ $allCarats = []; }
@@ -722,9 +724,6 @@ class ProductController extends Controller
                         $totalPrice =   !empty($combinations['total_price']) ? ( ((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['total_price']) : 0;
                         $price = ( ((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['price']);
                         $runOldCode = false;
-
-                        // return number_format((float)$totalPrice, 2, '.', '');
-
 
                         $newArray['vari_image'] = '';
                         $newArray['formula'] = true;
