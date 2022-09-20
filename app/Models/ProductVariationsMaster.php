@@ -18,9 +18,18 @@ class ProductVariationsMaster extends Model{
         'master_data',
         'combination_id',
         'price',
+        'total_price',
         'is_active',
         'is_deleted'
     ];
+
+    public function masterData(){
+        return $this->hasOne(Masters::class,'id','master_id');
+    }
+
+    public function getParentMasterData(){
+        return $this->hasOne(Masters::class,'master_parent_id','id');
+    }
 
 
 }

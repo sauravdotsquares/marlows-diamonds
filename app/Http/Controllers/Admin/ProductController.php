@@ -524,7 +524,8 @@ class ProductController extends Controller
             return redirect()->route('admin.products-list')->with('error','Products not identified');
         }
         
-        $variationData = ProductVariationsMaster::select(['id','master_id','price'])->where(['product_id'=> $product->id, 'is_active'=>1, 'is_deleted'=>0])->get()->toArray();
+        $variationData = ProductVariationsMaster::select(['id','master_id','price','total_price'])->where(['product_id'=> $product->id, 'is_active'=>1, 'is_deleted'=>0])->get()->toArray();
+
         foreach ( $variationData as $k=>$v ){
             $variationData[$variationData[$k]['master_id']] = $v;
             unset($variationData[$k]);
@@ -532,9 +533,13 @@ class ProductController extends Controller
         $caratData = Masters::where(['type'=> 'carat'])->get();
 
         if($request->post()){
+
+            
+
             $validated = $request->validate([
                 'data.*.master_id' => 'required|numeric',
                 'data.*.price' => 'required|numeric|digits_between:1,7',
+                'data.*.total_price' => 'sometimes',
                 'data.*.dataId' => 'sometimes',
                 'slug' => 'required',
             ],
@@ -542,7 +547,9 @@ class ProductController extends Controller
                 'data.*.master_id.required' => 'Please select carat',
                 'data.*.master_id.price' => 'Please select valid price',
                 'data.*.price.digits_between' => 'Price must be between 1 and 7 digits.',
+                'data.*.price.total_price' => 'Total price must be between 1 and 7 digits.',
                 'data.*.price.required' => 'Please enter numbers',
+                'data.*.price.total_price' => 'Please enter numbers',
                 'data.*.price.numeric' => 'Please enter valid numbers',
             ]);
 
@@ -568,11 +575,12 @@ class ProductController extends Controller
                     $new_record->master_data = json_encode($master_data);
                     $new_record->combination_id = 1;
                     $new_record->price = $data_value['price'];
+                    $new_record->total_price = $data_value['total_price'];
                     $new_record->save();
                     array_push($validDataId, $new_record->id);
                 }
 
-                ProductVariationsMaster::whereNotIn('id', $validDataId)->where('is_deleted',0)->update(['is_deleted'=>1]);
+                ProductVariationsMaster::whereNotIn('id', $validDataId)->where(['product_id'=>$product->id])->where('is_deleted',0)->update(['is_deleted'=>1]);
                 return redirect()->back()->with('success','Pricing updated successfully');
             }
 
@@ -597,9 +605,10 @@ class ProductController extends Controller
                 $master_type = Masters::select(['name','slug','id'])->where('id', $combination_value['variations_id']['metal_types'] )->first();
                 $product_type = Masters::select(['name','slug','id'])->where('id', $combination_value['variations_id']['product_type'] )->first();
                 
-                $percentage = (int)$combination_value['price'];
-                $totalWidth = (int)$request['price'];
+                $percentage = (float)$combination_value['price'];
+                $totalWidth = (float)$request['price'];
                 $new_width = ($percentage / 100) * $totalWidth;
+                $new_width = number_format((float)$new_width, 2, '.', '');
 
                 $string = $product_type->name .' + '. $master_type->name . '( '.  $percentage .'% ) = ' . $new_width;
 
