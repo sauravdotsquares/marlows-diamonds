@@ -61,7 +61,7 @@
                                             <div class="col-sm-3 {{  !empty($selectedValue['master_id']) ? '' : 'visibility_hidden'  }}" id="total_amount_variation_{{$carat_value->slug}}">
                                                 <div class="form-group">
                                                     <div class="form-label-group">
-                                                        <input type="text" id="total_price" name="{{  !empty($selectedValue['master_id']) ? "data[$carat_key][total_price]" : ''  }}" class="form-control price_{{$carat_value->slug}}" placeholder="Total Amount of {{ $carat_value->name .' '. ucwords($carat_value->type) }}" value="{{  !empty($selectedValue['total_price']) ? $selectedValue['total_price'] : '' }}">
+                                                        <input type="text" id="total_price" name="{{  !empty($selectedValue['master_id']) ? "data[$carat_key][total_price]" : ''  }}" class="form-control total_price_{{$carat_value->slug}}" placeholder="Total Amount of {{ $carat_value->name .' '. ucwords($carat_value->type) }}" value="{{  !empty($selectedValue['total_price']) ? $selectedValue['total_price'] : '' }}">
                                                     </div>
                                                     @error('data.'.$carat_key.'.total_price') <span class="custom-error">{{ $message }}</span>  @enderror
                                                 </div>
@@ -164,6 +164,7 @@
 
     $(document).on('click','.information-tooltip', function(e) {
         const dataId = $(this).attr('id');
+        console.log('dataId', dataId);
         const $price = $(".price_"+dataId).val();
 
         var fd = new FormData();    
