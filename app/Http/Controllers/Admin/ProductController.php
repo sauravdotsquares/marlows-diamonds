@@ -605,9 +605,10 @@ class ProductController extends Controller
                 $master_type = Masters::select(['name','slug','id'])->where('id', $combination_value['variations_id']['metal_types'] )->first();
                 $product_type = Masters::select(['name','slug','id'])->where('id', $combination_value['variations_id']['product_type'] )->first();
                 
-                $percentage = (int)$combination_value['price'];
-                $totalWidth = (int)$request['price'];
+                $percentage = (float)$combination_value['price'];
+                $totalWidth = (float)$request['price'];
                 $new_width = ($percentage / 100) * $totalWidth;
+                $new_width = number_format((float)$new_width, 2, '.', '');
 
                 $string = $product_type->name .' + '. $master_type->name . '( '.  $percentage .'% ) = ' . $new_width;
 
