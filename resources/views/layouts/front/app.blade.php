@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
-    <meta name="robots" content="noindex, nofollow"/>  
+
     <link rel="canonical" href="{{url()->current()}}" />
+
+    {{-- OG Tags --}}
     <meta property="og:locale" content="en_GB" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{!! isset($data->meta_title)?$data->meta_title:'' !!}" />
@@ -18,10 +20,16 @@
     <meta property="og:image:width" content="120" />
     <meta property="og:image:height" content="120" />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta name="twitter:card" content="summary_large_image" />
+
+    {{-- Twitter Tags --}}
+    <meta name="twitter:card" content="Summary" />
     <meta name="twitter:site" content="@marlowsdiamonds" />
-	<link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
-	<link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
+    <meta name="twitter:url" content="{{url()->current()}}" />
+    <meta name="twitter:title" content="{!! isset($data->meta_title)?$data->meta_title:'' !!}" />
+    <meta name="twitter:description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
+
+	  <link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
+	  <link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -39,7 +47,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
     <style>
       [ng-cloak]
-      {
+      { 
         display: none !important;
       }
     </style>

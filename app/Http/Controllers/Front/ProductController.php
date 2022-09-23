@@ -702,6 +702,10 @@ class ProductController extends Controller
                     }
                 }
 
+                // echo $selectedMetalType;
+                // echo $productType;
+                // echo $carat;die;
+
                 $combinations = ProductVariationsMaster::with(['masterData'])
                                 ->whereHas('masterData', function($q) use ($carat) { $q->where('name',$carat); })
                                 ->where(['product_id'=> $productData->id, 'is_deleted'=> 0, 'is_active'=>1 ])
