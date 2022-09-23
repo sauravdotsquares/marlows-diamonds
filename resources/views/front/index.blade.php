@@ -22,7 +22,7 @@
             </div>
             <div class="main-banner-col banner-ryt-col">
                 <div class="main-banner-ryt-img">
-                    <img src="{{ asset('assets/images/ring-img.webp') }}" alt="ring img">
+                    <img src="{{ asset('assets/images/ring-img.webp') }}" alt="Ring image">
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/diamond-jewellery.png" alt="rings"></a>
+                                <a href="#"><img src="assets/images/diamond-jewellery.png" alt="Diamond Jewellery"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -62,7 +62,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/engagement-ring.png" alt="rings"></a>
+                                <a href="#"><img src="assets/images/engagement-ring.png" alt="Engagement Ring"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -81,7 +81,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/wedding-ring.png" alt="rings"></a>
+                                <a href="#"><img src="assets/images/wedding-ring.png" alt="Wedding Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -101,7 +101,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/multi-stone.png" alt="rings"></a>
+                                <a href="#"><img src="assets/images/multi-stone.png" alt="Multi Stone Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -144,7 +144,7 @@
                     <div class="whychoose-col">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/warranty.png" alt="">
+                                <img src="assets/images/warranty.png" alt="Lifetime Warranty">
                             </div>
                             <div class="whychoose-col-text">
                                 Lifetime Warranty
@@ -154,7 +154,7 @@
                     <div class="whychoose-col">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/diamond.png" alt="">
+                                <img src="assets/images/diamond.png" alt="GIA Certified Diamonds">
                             </div>
                             <div class="whychoose-col-text">
                                 GIA Certified Diamonds
@@ -164,7 +164,7 @@
                     <div class="whychoose-col">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/favourite.png" alt="">
+                                <img src="assets/images/favourite.png" alt="50 Years Experience">
                             </div>
                             <div class="whychoose-col-text">
                                 50 Years Experience
@@ -174,7 +174,7 @@
                     <div class="whychoose-col">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/exchange.png" alt="">
+                                <img src="assets/images/exchange.png" alt="FREE 30 Day Returns">
                             </div>
                             <div class="whychoose-col-text">
                                 FREE 30 Day Returns

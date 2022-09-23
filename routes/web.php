@@ -209,22 +209,25 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/view/{slug}', 'GlobalCombinationsController@view')->name('view');
 		});
 
-
-		Route::group(['as' => 'app_products.', 'prefix' => 'app_products' ], function () {
-			Route::any('', 'AppProductsController@index')->name('index');
-			Route::any('/add', 'AppProductsController@add')->name('add');
-			Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
-			Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
-			Route::any('/attributes/{slug}', 'AppProductsController@addAttributes')->name('add_attributes');
-			Route::any('/variations/{slug}', 'AppProductsController@addVariations')->name('add_variations');
-			Route::any('/get-categories', 'AppProductsController@getCategories')->name('get_categories');
-
-			
-			
-			// Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
-			// Route::any('/status/{slug}', 'AppProductsController@status')->name('status');
-			// Route::any('/view/{slug}', 'AppProductsController@view')->name('view');
+		Route::group(['as' => 'combinations.', 'prefix' => 'combinations', 'namespace' =>'Products' ], function () {
+			Route::any('', 'CombinationsController@index')->name('index');
+			Route::any('/add-attributes', 'CombinationsController@addAttributes')->name('add_attributes');
+			Route::any('/add-varitions/{slug}', 'CombinationsController@addVariations')->name('add_varitions');
 		});
+
+		
+
+
+
+		// Route::group(['as' => 'app_products.', 'prefix' => 'app_products' ], function () {
+		// 	
+		// 	Route::any('/add', 'AppProductsController@add')->name('add');
+		// 	Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
+		// 	Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
+		// 	Route::any('/attributes/{slug}', 'AppProductsController@addAttributes')->name('add_attributes');
+		// 	Route::any('/variations/{slug}', 'AppProductsController@addVariations')->name('add_variations');
+		// 	Route::any('/get-categories', 'AppProductsController@getCategories')->name('get_categories');
+		// });
 
 
 

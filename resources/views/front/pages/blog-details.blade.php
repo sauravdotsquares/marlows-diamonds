@@ -37,7 +37,7 @@
 						</div>
 					<div class="blog-main-img">
 						@if(!empty(($data->image)))
-                           <img src="{{asset('storage/'.$data->image)}}" alt="1">
+                           <img src="{{asset('storage/'.$data->image)}}" alt="{{$data->title}}">
                         @endif
 					</div>
 					<div class="blogdetail-desc">
@@ -98,7 +98,7 @@
 				<div class="item">
 			    	<div class="blos-listbox">
 						<div class="blos-listbox-img">
-							<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}"><img src="{{asset('storage/'.$post->image)}}" alt="1"></a>
+							<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}"><img src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}"></a>
 						</div>
 						<div class="blos-listbox-text">
 							<div class="blos-list-date">
