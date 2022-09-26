@@ -100,6 +100,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::get('/products/update/{prodid}','ProductController@updatePage')->name('products-updateform');
 		Route::any('/products/update-price/{slug}','ProductController@productPricing')->name('product-pricing');
 		Route::any('/products/get-product-price','ProductController@getProductPricing')->name('get-product-price');
+		Route::any('/products/images/{slug}','ProductController@uploadFiles')->name('update_product_images');
+		
+
 		
 
 		Route::post('/products/change-product-status','ProductController@status')->name('change-product-status');
@@ -274,6 +277,7 @@ Route::namespace('Front')->group(function () {
 	Route::post('product/get-product-list','ProductController@getProductList');
 
 	Route::post('product/get-related-product-list','ProductController@getRelatedProductList')->name('get.related.product.list');
+	
 
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 	Route::any('product/get-variations-data','ProductController@getSelectedVariationsData')->name('get-variations-data');

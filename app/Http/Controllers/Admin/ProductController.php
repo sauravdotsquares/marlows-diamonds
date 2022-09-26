@@ -624,4 +624,55 @@ class ProductController extends Controller
     }
 
 
+    public function uploadFiles(Request $request){
+
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Products", "url" => route("admin.products-list"), "icon" => ""],
+            ["name" => "Product pricing", "url" => route("admin.product-pricing",[$request['slug']]), "icon" => ""],
+        ];
+        $page_title = 'Product pricing';
+        populate_breadcrumb($breadcrumb);
+        $product = Products::where(['slug'=> $request['slug']])->first();
+        if(empty($product)){
+            return redirect()->route('admin.products-list')->with('error','Products not identified');
+        }
+
+
+        if($request->post()){
+
+            if($request->hasFile('image')){
+                //$imageVariVideo = product_video_upload($value['vari_video'],'ProductsVariVideos');
+                $image = product_video_upload($request->file('image'),'ProductsVariVideos');
+
+                $file = $request->file('image');
+
+                if(!empty($image) && !empty($image)){
+                    $new_image = new ProductImages();
+                    $new_image->product_id  = $product->id;
+                    $new_image->image_url = $image;
+                    $new_image->type = "thumbnail_rotation_image";
+                    $new_image->status = 1;
+                    $new_image->extension = $file->getClientOriginalExtension();;
+                    $new_image->size = $file->getSize();
+                    if( $new_image->save() ){
+
+                        ProductImages::where(['type'=>'thumbnail_rotation_image','product_id'=> $product->id])->where('id','!=',$new_image->id)->delete();
+
+                        return redirect()->back()->with('success','File uploaded successfully');
+                    }else{
+                        return redirect()->back()->with('error','Something went wrong');
+                    }
+                }
+
+                
+            }else{
+                return redirect()->back()->with('error','Something went wrong');
+            }
+        }
+
+        return view('admin.products.upload_files', compact(['product']));
+    }
+
+
 }
