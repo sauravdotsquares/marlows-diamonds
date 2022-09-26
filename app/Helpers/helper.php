@@ -20,6 +20,8 @@ use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Popups;
+use App\Models\ProductImages;
+
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
 
@@ -722,6 +724,21 @@ if (!function_exists('validate_breadcrumb')) {
         }
     
         return false;
+    }
+
+
+    function getThumbnailGif($productId=""){
+        $image = ProductImages::where([
+            'status'=>1,
+            'type' => 'thumbnail_rotation_image',
+            'product_id' => $productId
+        ])->first();
+
+        if(!empty($image)){
+            return $image;
+        }else{
+            return null;
+        }
     }
 
 }

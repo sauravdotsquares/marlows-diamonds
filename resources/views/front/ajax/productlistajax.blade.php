@@ -1,28 +1,28 @@
 @foreach($getProductListFinal as $product)
 
+	<?php $thumbnailGif = getThumbnailGif($product->id); ?>
 
-	<div class="product-grid-items-item {{ $product->slug == "aaliyah" ? 'product-hover-affect' : '' }}">
+	<div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
 		<div class="product-items-item-info">
 			<div class="product-items-item-image">
-				<a href="{{asset('product/'.$product->slug)}}"  class="{{ $product->slug == "aaliyah" ? 'product-hov' : '' }}" >
+				<a href="{{asset('product/'.$product->slug)}}"  class="{{ $thumbnailGif ? 'product-hov' : '' }}" >
 					@if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
-
-					<img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="{{$product->title}}">
-					
-					{{-- <?php if($product->slug == "aaliyah"){ ?>
-						<img src="{{ asset('storage/Products/gif/01.gif')}}" alt="{{$product->title}}">
-					<?php }else{ ?>
 						<img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="{{$product->title}}">
-					<?php } ?> --}}
-
-						{{-- <img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="{{$product->title}}"> --}}
-						
 					@endif
 
-					<?php if($product->slug == "aaliyah"){ ?>
-						<video class="product-hover-video" muted="muted">
+					<?php if($thumbnailGif){ ?>
+						{{-- <video class="product-hover-video" muted="muted">
 							<source src="{{ asset('storage/ProductsVariVideos/R1-143-White_Square-_1651731110.mp4')}}" type="video/mp4">
-						  </video>						  
+						  </video> --}}
+
+						  
+						  	<?php if($thumbnailGif->extension == "gif"){ ?>
+						  		<img src="{{ asset('storage/' . $thumbnailGif->image_url )}}" class="product-hover-video" >
+						  	<?php }else if($thumbnailGif->extension == "mp4"){ ?>
+								<video class="product-hover-video" muted="muted">
+									<source src="{{ asset('storage/'.  $thumbnailGif->image_url)}}" type="video/mp4">
+								</video>
+							<?php } ?>
 					<?php } ?>
 
 				</a>
