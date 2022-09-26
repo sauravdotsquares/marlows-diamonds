@@ -6,59 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
-
-    <link rel="canonical" href="{{url()->current()}}" />
-
-    {{-- OG Tags --}}
-    <meta property="og:locale" content="en_GB" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="{!! isset($data->meta_title)?$data->meta_title:'' !!}" />
-    <meta property="og:description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
-    <meta property="og:url" content="{{url()->current()}}" />
-    <meta property="og:site_name" content="{!! config('app.name') !!}" />
-    <meta property="og:image" content="" />
-    <meta property="og:image:width" content="120" />
-    <meta property="og:image:height" content="120" />
-    <meta property="og:image:type" content="image/jpeg" />
-
-    {{-- Twitter Tags --}}
-    <meta name="twitter:card" content="Summary" />
-    <meta name="twitter:site" content="@marlowsdiamonds" />
-    <meta name="twitter:url" content="{{url()->current()}}" />
-    <meta name="twitter:title" content="{!! isset($data->meta_title)?$data->meta_title:'' !!}" />
-    <meta name="twitter:description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
+    @include('layouts.front.seo_header')
 
 	  <link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
 	  <link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/developer.css?').env('VERSION') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/responsive.css?').env('VERSION') }}" rel="stylesheet">
 
-
     @yield('css')
+
     <script>
       var systemBaseUrl = '<?php echo url("/"); ?>/';
     </script>
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
     <style>
-      [ng-cloak]
-      {
-        display: none !important;
-      }
+      [ng-cloak] {  display: none !important; }
     </style>
-   
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1365164-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'UA-1365164-1');
     </script>
     
@@ -70,11 +44,6 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WBT3LKH');</script>
     <!-- End Google Tag Manager -->
-    
-    
-   
-    
-
 
 </head>
 <body ng-app="MarlowsAPP">
@@ -104,6 +73,7 @@
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>
+
 @yield('js')
 <script>
   $(document).ready(function(){
@@ -174,9 +144,9 @@ $(document).ready(function(){
 <script>
   if($(window).innerWidth() <= 767) {
     $(document).ready(function() {
-      $('.accordian-toggle').click(function() {
-      $(this).parents('.column-one-fifth').toggleClass('show-collapse');
-          });
+        $('.accordian-toggle').click(function() {
+          $(this).parents('.column-one-fifth').toggleClass('show-collapse');
+        });
       });
   }
 </script>
