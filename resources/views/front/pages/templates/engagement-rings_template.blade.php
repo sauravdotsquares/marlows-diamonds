@@ -23,7 +23,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="/product-category/engagement-rings/solitaire/"><img src="assets/images/CR10-SE45_0003.jpg" alt="ring"></a>
+							<a href="/product-category/engagement-rings/solitaire/"><img src="assets/images/CR10-SE45_0003.jpg" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -41,7 +41,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="/product-category/engagement-rings/halo/"><img src="assets/images/DSR21-Images_0003.jpg" alt="ring"></a>
+							<a href="/product-category/engagement-rings/halo/"><img src="assets/images/DSR21-Images_0003.jpg" alt="HALO ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -59,7 +59,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="/product-category/engagement-rings/shoulder-set/"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="ring"></a>
+							<a href="/product-category/engagement-rings/shoulder-set/"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -77,7 +77,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="/product-category/engagement-rings/multi-stone/"><img src="assets/images/R3-143_0003.jpg" alt="ring"></a>
+							<a href="/product-category/engagement-rings/multi-stone/"><img src="assets/images/R3-143_0003.jpg" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">

@@ -100,6 +100,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::get('/products/update/{prodid}','ProductController@updatePage')->name('products-updateform');
 		Route::any('/products/update-price/{slug}','ProductController@productPricing')->name('product-pricing');
 		Route::any('/products/get-product-price','ProductController@getProductPricing')->name('get-product-price');
+		Route::any('/products/images/{slug}','ProductController@uploadFiles')->name('update_product_images');
+		
+
 		
 
 		Route::post('/products/change-product-status','ProductController@status')->name('change-product-status');
@@ -209,22 +212,25 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/view/{slug}', 'GlobalCombinationsController@view')->name('view');
 		});
 
-
-		Route::group(['as' => 'app_products.', 'prefix' => 'app_products' ], function () {
-			Route::any('', 'AppProductsController@index')->name('index');
-			Route::any('/add', 'AppProductsController@add')->name('add');
-			Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
-			Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
-			Route::any('/attributes/{slug}', 'AppProductsController@addAttributes')->name('add_attributes');
-			Route::any('/variations/{slug}', 'AppProductsController@addVariations')->name('add_variations');
-			Route::any('/get-categories', 'AppProductsController@getCategories')->name('get_categories');
-
-			
-			
-			// Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
-			// Route::any('/status/{slug}', 'AppProductsController@status')->name('status');
-			// Route::any('/view/{slug}', 'AppProductsController@view')->name('view');
+		Route::group(['as' => 'combinations.', 'prefix' => 'combinations', 'namespace' =>'Products' ], function () {
+			Route::any('', 'CombinationsController@index')->name('index');
+			Route::any('/add-attributes', 'CombinationsController@addAttributes')->name('add_attributes');
+			Route::any('/add-varitions/{slug}', 'CombinationsController@addVariations')->name('add_varitions');
 		});
+
+		
+
+
+
+		// Route::group(['as' => 'app_products.', 'prefix' => 'app_products' ], function () {
+		// 	
+		// 	Route::any('/add', 'AppProductsController@add')->name('add');
+		// 	Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
+		// 	Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
+		// 	Route::any('/attributes/{slug}', 'AppProductsController@addAttributes')->name('add_attributes');
+		// 	Route::any('/variations/{slug}', 'AppProductsController@addVariations')->name('add_variations');
+		// 	Route::any('/get-categories', 'AppProductsController@getCategories')->name('get_categories');
+		// });
 
 
 
@@ -271,6 +277,7 @@ Route::namespace('Front')->group(function () {
 	Route::post('product/get-product-list','ProductController@getProductList');
 
 	Route::post('product/get-related-product-list','ProductController@getRelatedProductList')->name('get.related.product.list');
+	
 
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 	Route::any('product/get-variations-data','ProductController@getSelectedVariationsData')->name('get-variations-data');

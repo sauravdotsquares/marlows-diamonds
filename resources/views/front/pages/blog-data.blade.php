@@ -5,8 +5,8 @@
 					<div class="blos-listbox-img">
 						<a href="{{url('/blog-resources/'.$post->slug)}}">
 						 @if(!empty(($post->image)))
-                           <img src="{{asset('storage/'.$post->image)}}"  alt="blog1">
-                         @else <img src="{{url('/images/marlowsdiamonds-logo.png')}}"  alt="blog1">
+                           <img src="{{asset('storage/'.$post->image)}}"  alt="{{$post->title}}">
+                         @else <img src="{{url('/images/marlowsdiamonds-logo.png')}}"  alt="{{$post->title}}">
 						 @endif
 						</a>
 					</div>

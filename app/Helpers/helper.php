@@ -20,6 +20,8 @@ use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Popups;
+use App\Models\ProductImages;
+
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
 
@@ -608,48 +610,99 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
+    // if (!function_exists("final_image_upload_single_function")) {
+    //     function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
+    //     {
+    //         $modelId = base64_encode($modelId);
+    //         if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
+    //             mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+    //         }
+
+    //         $imageName = $imageUrl->getClientOriginalName();
+    //         $fileName =  rand().$imageName;
+    //         $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
+
+    //         Image::make($imageUrl)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
+    //         Image::make($imageUrl)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+
+    //         $data['f2']['R'] = $modelName.'/'.$modelId.'/'.$fileName;
+    //         $data['f2']['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+
+    //         return $data;
+    //     }
+    // }
+
     if (!function_exists("final_image_upload_single_function")) {
         function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
-        {
+        {   
+            $imagePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
-            if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
-                mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+            if (!file_exists(storage_path($imagePath ))) {
+                mkdir(storage_path($imagePath), 777, true);
             }
 
             $imageName = $imageUrl->getClientOriginalName();
-            $fileName =  rand().$imageName;
+            $fileName =  rand().slugify($imageName);
             $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
-            Image::make($imageUrl)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
-            Image::make($imageUrl)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+            Image::make($imageUrl)->save(storage_path($imagePath . $fileName));
+            Image::make($imageUrl)->resize($height,$width)->save(storage_path($imagePath . $fileNameThumb));
 
-            $data['f2']['R'] = $modelName.'/'.$modelId.'/'.$fileName;
-            $data['f2']['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+            $data['f2']['R'] = $modelName .'/' . $fileName;
+            $data['f2']['T'] = $modelName .'/' . $fileNameThumb;
 
             return $data;
         }
     }
 
+    // if (!function_exists("final_image_upload_array_function")) {
+    //     function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null)
+    //     {
+    //         $modelId = base64_encode($modelId);
+    //         if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
+    //             mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+    //         }
+
+    //         if(is_array($imageUrlArray)){
+    //             $data= [];
+    //             foreach($imageUrlArray as $key => $file) {
+    //                 $imageName = $file->getClientOriginalName();
+    //                 $fileName =  rand().$imageName;
+    //                 $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
+
+    //                 Image::make($file)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
+    //                 Image::make($file)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+
+    //                 $data[$key]['R'] = $modelName.'/'.$modelId.'/'.$fileName;
+    //                 $data[$key]['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+    //             }
+    //         }
+    //         return $data;
+    //     }
+    // }
+
     if (!function_exists("final_image_upload_array_function")) {
         function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null)
-        {
+        {   
+            $modulePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
-            if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
-                mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+            if (!file_exists(storage_path($modulePath))) {
+                mkdir(storage_path($modulePath), 777, true);
             }
 
             if(is_array($imageUrlArray)){
                 $data= [];
                 foreach($imageUrlArray as $key => $file) {
+
                     $imageName = $file->getClientOriginalName();
-                    $fileName =  rand().$imageName;
+                    $fileName =  rand().slugify($imageName);
                     $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
-                    Image::make($file)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
-                    Image::make($file)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+                    Image::make($file)->save(storage_path($modulePath . $fileName));
+                    Image::make($file)->resize($height,$width)->save(storage_path( $modulePath .$fileNameThumb));
 
-                    $data[$key]['R'] = $modelName.'/'.$modelId.'/'.$fileName;
-                    $data[$key]['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+                    $data[$key]['R'] = $modelName .'/'. $fileName;
+                    $data[$key]['T'] = $modelName .'/'. $fileNameThumb;
                 }
             }
             return $data;
@@ -722,6 +775,21 @@ if (!function_exists('validate_breadcrumb')) {
         }
     
         return false;
+    }
+
+
+    function getThumbnailGif($productId=""){
+        $image = ProductImages::where([
+            'status'=>1,
+            'type' => 'thumbnail_rotation_image',
+            'product_id' => $productId
+        ])->first();
+
+        if(!empty($image)){
+            return $image;
+        }else{
+            return null;
+        }
     }
 
 }

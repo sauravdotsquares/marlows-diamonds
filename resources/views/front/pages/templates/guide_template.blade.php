@@ -23,7 +23,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/CR10-SE45_0003.jpg" alt="ring"></a>
+							<a href="#"><img src="assets/images/CR10-SE45_0003.jpg" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -41,7 +41,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/DSR21-Images_0003.jpg" alt="ring"></a>
+							<a href="#"><img src="assets/images/DSR21-Images_0003.jpg" alt="HALO ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -59,7 +59,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="ring"></a>
+							<a href="#"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -77,7 +77,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/R3-143_0003.jpg" alt="ring"></a>
+							<a href="#"><img src="assets/images/R3-143_0003.jpg" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -137,7 +137,7 @@
 			    <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
+			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -155,7 +155,7 @@
 			    <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
+			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -173,7 +173,7 @@
 			     <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
+			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -191,7 +191,7 @@
 			     <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
+			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt=" SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -209,7 +209,7 @@
 			     <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="rings"></a>
+			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">

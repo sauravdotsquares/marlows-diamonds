@@ -5,6 +5,7 @@
 /public/uploads
 /public/images
 /storage/*.key
+/storage/framework/cache
 /vendor
 /public/
 .env

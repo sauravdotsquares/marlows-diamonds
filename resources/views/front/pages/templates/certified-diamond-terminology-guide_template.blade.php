@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col-lg-6  col-md-6">
 				<div class="certified-diamond-img">
-					<img src="{{asset('')}}assets/images/marlows-diamonds-terminology-guide-showcase.png" alt="mob">
+					<img src="{{asset('')}}assets/images/marlows-diamonds-terminology-guide-showcase.png" alt="Marlows-diamonds-terminology-guide-showcase">
 				</div>
 			</div>
 			<div class="col-lg-6 col-md-6">
