@@ -273,15 +273,25 @@ class ProductController extends Controller
                 if($key == 'f2'){
                     $productDetails = ProductImages::create([
                         'product_id'=> $productId,
+
                         //'thumb_image_url'=> $image['T'],
                         'image_url'=> $image,
+
+                        // 'thumb_image_url'=> $image['T'],
+                        'image_url'=> $image['R'],
+
                         'is_featured'=> 1,
                     ]);
                 }else{
                     $productDetails = ProductImages::create([
                         'product_id'=> $productId,
+
                         //'thumb_image_url'=> $image['T'],
                         'image_url'=> $image,
+
+                        // 'thumb_image_url'=> $image['T'],
+                        'image_url'=> $image['R'],
+
                         'is_featured'=> 0,
                     ]);
                 }

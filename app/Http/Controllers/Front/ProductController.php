@@ -228,7 +228,6 @@ class ProductController extends Controller
 
         $getProductListFinal = Products::with('getProductImages')->orderBy('title', 'asc')->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
 
-
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             foreach ($getProductListFinal as $product_list_key => $product_list_value) {
 
@@ -246,7 +245,7 @@ class ProductController extends Controller
                     $getProductListFinal[$product_list_key]->minimumValue = $minimumValue;
                     $getProductListFinal[$product_list_key]->maximumValue = $maximumValue;
 
-                }
+                } 
             }
             $view = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
         } else {
