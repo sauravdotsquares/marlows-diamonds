@@ -170,6 +170,30 @@ $(document).ready(function(){
 </script>
     <script>
 
+
+    // $(".product-hover-affect").hover(function () {
+    //     console.log('hover')
+    //     if($(this).find('video').length){
+    //         $(this).find('video')[0].play()
+    //     }
+    // },function () {
+    //     console.log('hover out')
+    //     if($(this).find('video').length){
+    //         $(this).find('video')[0].pause()
+    //     }
+    // });
+
+    $(document).on('mouseenter','.product-hover-affect', function (event) {
+        if($(this).find('video').length){
+            $(this).find('video')[0].play()
+        }
+    }).on('mouseleave','.top-level',  function(){
+        if($(this).find('video').length){
+            $(this).find('video')[0].pause()
+        }
+    });
+
+
         var page = 1;
         loadMoreData(page);
 
