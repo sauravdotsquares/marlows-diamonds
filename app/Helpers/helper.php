@@ -610,23 +610,46 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
+    // if (!function_exists("final_image_upload_single_function")) {
+    //     function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
+    //     {
+    //         $modelId = base64_encode($modelId);
+    //         if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
+    //             mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+    //         }
+
+    //         $imageName = $imageUrl->getClientOriginalName();
+    //         $fileName =  rand().$imageName;
+    //         $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
+
+    //         Image::make($imageUrl)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
+    //         Image::make($imageUrl)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+
+    //         $data['f2']['R'] = $modelName.'/'.$modelId.'/'.$fileName;
+    //         $data['f2']['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+
+    //         return $data;
+    //     }
+    // }
+
     if (!function_exists("final_image_upload_single_function")) {
         function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
-        {
+        {   
+            $imagePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
-            if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
-                mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+            if (!file_exists(storage_path($imagePath ))) {
+                mkdir(storage_path($imagePath), 777, true);
             }
 
             $imageName = $imageUrl->getClientOriginalName();
             $fileName =  rand().$imageName;
             $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
-            Image::make($imageUrl)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
-            Image::make($imageUrl)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+            Image::make($imageUrl)->save(storage_path($imagePath . $fileName));
+            Image::make($imageUrl)->resize($height,$width)->save(storage_path($imagePath . $fileNameThumb));
 
-            $data['f2']['R'] = $modelName.'/'.$modelId.'/'.$fileName;
-            $data['f2']['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+            $data['f2']['R'] = $modelName . $fileName;
+            $data['f2']['T'] = $modelName. $fileNameThumb;
 
             return $data;
         }
