@@ -282,7 +282,7 @@ class ProductController extends Controller
                         'product_id'=> $productId,
                         // 'thumb_image_url'=> $image['T'],
                         'image_url'=> $image['R'],
-                        'is_featured'=> 0,
+                        'is_featured'=> 0, 
                     ]);
                 }
             }
