@@ -642,14 +642,14 @@ if (!function_exists('validate_breadcrumb')) {
             }
 
             $imageName = $imageUrl->getClientOriginalName();
-            $fileName =  rand().$imageName;
+            $fileName =  rand().slugify($imageName);
             $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
             Image::make($imageUrl)->save(storage_path($imagePath . $fileName));
             Image::make($imageUrl)->resize($height,$width)->save(storage_path($imagePath . $fileNameThumb));
 
-            $data['f2']['R'] = $modelName . $fileName;
-            $data['f2']['T'] = $modelName. $fileNameThumb;
+            $data['f2']['R'] = $modelName .'/' . $fileName;
+            $data['f2']['T'] = $modelName .'/' . $fileNameThumb;
 
             return $data;
         }
@@ -693,15 +693,16 @@ if (!function_exists('validate_breadcrumb')) {
             if(is_array($imageUrlArray)){
                 $data= [];
                 foreach($imageUrlArray as $key => $file) {
+
                     $imageName = $file->getClientOriginalName();
-                    $fileName =  rand().$imageName;
+                    $fileName =  rand().slugify($imageName);
                     $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
                     Image::make($file)->save(storage_path($modulePath . $fileName));
                     Image::make($file)->resize($height,$width)->save(storage_path( $modulePath .$fileNameThumb));
 
-                    $data[$key]['R'] = $modelName . $fileName;
-                    $data[$key]['T'] = $modelName . $fileNameThumb;
+                    $data[$key]['R'] = $modelName .'/'. $fileName;
+                    $data[$key]['T'] = $modelName .'/'. $fileNameThumb;
                 }
             }
             return $data;
