@@ -128,13 +128,13 @@ class ProductController extends Controller
         }
 
         if($request->hasFile('featured_image')) {
-            $imagefeatured_image = single_image_upload($request->file('featured_image'),'Products',$productDetails->id,'230','230');
+            $imagefeatured_image = final_image_upload_single_function($request->file('featured_image'),'Products',$productDetails->id,'230','230');
         }else{
             $imagefeatured_image = [];
         }
         //print_r($imagefeatured_image); die;
         if($request->hasFile('gallery_image')) {
-            $imagegallery_image = single_image_upload($request->file('gallery_image'),'Products',$productDetails->id,'230','230');
+            $imagegallery_image = final_image_upload_array_function($request->file('gallery_image'),'Products',$productDetails->id,'230','230');
         }else{
             $imagegallery_image = [];
         }
@@ -273,26 +273,16 @@ class ProductController extends Controller
                 if($key == 'f2'){
                     $productDetails = ProductImages::create([
                         'product_id'=> $productId,
-
-                        //'thumb_image_url'=> $image['T'],
-                        'image_url'=> $image,
-
                         // 'thumb_image_url'=> $image['T'],
                         'image_url'=> $image['R'],
-
                         'is_featured'=> 1,
                     ]);
                 }else{
                     $productDetails = ProductImages::create([
                         'product_id'=> $productId,
-
-                        //'thumb_image_url'=> $image['T'],
-                        'image_url'=> $image,
-
                         // 'thumb_image_url'=> $image['T'],
                         'image_url'=> $image['R'],
-
-                        'is_featured'=> 0,
+                        'is_featured'=> 0, 
                     ]);
                 }
             }
