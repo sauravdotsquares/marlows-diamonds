@@ -21,6 +21,9 @@ use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Popups;
 use App\Models\ProductImages;
+use App\Models\ProductVariations;
+use App\Models\ProductVariationDetails;
+
 
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
@@ -790,6 +793,51 @@ if (!function_exists('validate_breadcrumb')) {
         }else{
             return null;
         }
+    }
+
+
+    function getProductVariationImage($productId="", $request=[]){
+        
+        $getProductVariationId = ProductVariations::where('product_id', $productId)->pluck('id');
+        if(!empty($getProductVariationId) && $getProductVariationId->count()){
+            $getProductVariationId = $getProductVariationId->toArray();
+
+            // Statement 2
+            // $getVariDetails = ProductVariationDetails::groupBy('value')
+            //                     ->whereIn('variation_id', $getProductVariationId)
+            //                     ->whereIn('value', $request['variations'])
+            //                     ->get();
+            // if(!empty($getVariDetails) && $getVariDetails->count()){
+            //     $getVariDetails = $getVariDetails->toArray();
+            // }
+            // // endof statement 2
+
+            $variationDetails = [];
+            $attributeCount = count($request->variations);
+            foreach ($getProductVariationId as $key1 => $productVariationId) {
+                $variationDetails = array();
+                foreach ($request->variations as $key2 => $variations) {
+                    $getVariDetails =   ProductVariationDetails::where('variation_id', $productVariationId)
+                                        ->where('value', $variations)
+                                        ->get()
+                                        ->toArray();
+
+                    if (!empty($getVariDetails))
+                        $variationDetails[] = $getVariDetails;
+                }
+                if ($attributeCount == count($variationDetails)){ break; }
+            }
+
+
+            $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
+                ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'regular_price', 'sale_price')
+                ->first();
+            
+            return $getSelectedVariationVideoImages->toArray();
+        }else{
+            return null;
+        }
+
     }
 
 }

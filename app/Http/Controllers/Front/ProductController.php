@@ -727,9 +727,6 @@ class ProductController extends Controller
                     }
                 }
 
-                // echo $selectedMetalType;
-                // echo $productType;
-                // echo $carat;die;
 
                 $combinations = ProductVariationsMaster::with(['masterData'])
                                 ->whereHas('masterData', function($q) use ($carat) { $q->where('name',$carat); })
@@ -754,7 +751,9 @@ class ProductController extends Controller
                         $price = ( ((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['price']);
                         $runOldCode = false;
 
-                        $newArray['vari_image'] = '';
+
+                        $image = getProductVariationImage($productData->id, $request);
+                        $newArray['vari_image'] = !empty($image['vari_image']) ? $image['vari_image'] : '';
                         $newArray['formula'] = true;
                         $newArray['vari_video'] = '';
                         $newArray['regular_price'] = $price;
