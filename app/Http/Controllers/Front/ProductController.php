@@ -753,7 +753,7 @@ class ProductController extends Controller
 
 
                         $image = getProductVariationImage($productData->id, $request);
-                        prd($image);
+                       
                         $newArray['vari_image'] = !empty($image['vari_image']) ? $image['vari_image'] : '';
                         $newArray['formula'] = true;
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
