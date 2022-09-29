@@ -171,8 +171,6 @@ class ProductController extends Controller
 
         $getParentData = Category::with('grandchildren')->where('status', 1)->where('id', $request->cate_id)->select('id', 'parent_id')->first()->toArray();
 
-        
-       
         $getParentHierarchy = array($getParentData['id']);
         foreach ($getParentData['grandchildren'] as $keyName => $childId) {
             array_push($getParentHierarchy, $childId['id']);
@@ -224,29 +222,43 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        
-
         $getProductListFinal = Products::with('getProductImages')->orderBy('title', 'asc')->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
-
+        
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
+            $notInList=0;
             foreach ($getProductListFinal as $product_list_key => $product_list_value) {
+
+                $categories = explode(',', $product_list_value->categories);
 
                 $combinations = ProductVariationsMaster::where(['product_id'=> $product_list_value->id, 'is_deleted'=> 0, 'is_active'=>1 ])
                                 ->orderBy('price','DESC')
                                 ->pluck('price');
+
                 if(!empty($combinations) && $combinations && $combinations->count()){
                     $combinations = $combinations->toArray();
                     $min = min($combinations);
                     $max = max($combinations);
-
+                    
                     $minimumValue = (55/ 100) * $min;
                     $maximumValue = $max;
 
                     $getProductListFinal[$product_list_key]->minimumValue = $minimumValue;
                     $getProductListFinal[$product_list_key]->maximumValue = $maximumValue;
+                }else{
 
-                } 
+                    if(!in_array('8', $categories)){
+                        $product_variations = ProductVariations::where(['product_id'=> $product_list_value->id])->pluck('regular_price');
+                        if(!empty($product_variations) && $product_variations->count()){
+                            $product_variations = $product_variations->toArray();
+                            $getProductListFinal[$product_list_key]->minimumValue = min($product_variations);
+                            $getProductListFinal[$product_list_key]->maximumValue = max($product_variations);
+                        }
+                    }
+                    
+
+                }
             }
+            // prd($notInList);
             $view = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
         } else {
             $view = '';
