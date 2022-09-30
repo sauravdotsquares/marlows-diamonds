@@ -80,10 +80,35 @@
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0Xhv4i9FPupH00PKvZaHuwyC7sytzBZo" defer ></script>
+
 
 @yield('js')
 <script>
+
+/** show map on window load */
+window.onload = initLocationMap
+function initLocationMap() {
+  
+  // The location of Uluru
+  const latLng = { lat: -25.344, lng: 131.031 };
+  
+  // The map, centered at Uluru
+  const map = new google.maps.Map(document.getElementById("location_map"), {
+    zoom: 4,
+    center: latLng,
+  });
+  // The marker, positioned at Uluru
+  const marker = new google.maps.Marker({
+    position: latLng,
+    map: map,
+  });
+
+  // alert('asdf');
+}
+
   $(document).ready(function(){
+    
       $('.show-more-content').hide();
       $('.show-more').click(function(){
           $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
