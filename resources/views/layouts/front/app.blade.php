@@ -97,6 +97,9 @@ function initLocationMap() {
     map: map,
   });
 
+  console.log('map',map);
+  console.log('marker',marker);
+
   // alert('asdf');
 }
 
