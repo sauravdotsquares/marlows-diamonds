@@ -73,7 +73,7 @@
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0Xhv4i9FPupH00PKvZaHuwyC7sytzBZo" defer ></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU" defer ></script>
 
 
 @yield('js')
