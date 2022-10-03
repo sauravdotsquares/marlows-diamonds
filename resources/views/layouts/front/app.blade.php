@@ -79,29 +79,7 @@
 @yield('js')
 <script>
 
-/** show map on window load */
-window.onload = initLocationMap
-function initLocationMap() {
-  
-  // The location of Uluru
-  const latLng = { lat: -25.344, lng: 131.031 };
-  
-  // The map, centered at Uluru
-  const map = new google.maps.Map(document.getElementById("location_map"), {
-    zoom: 4,
-    center: latLng,
-  });
-  // The marker, positioned at Uluru
-  const marker = new google.maps.Marker({
-    position: latLng,
-    map: map,
-  });
 
-  console.log('map',map);
-  console.log('marker',marker);
-
-  // alert('asdf');
-}
 
   $(document).ready(function(){
     
