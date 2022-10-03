@@ -307,6 +307,7 @@
     </div>
     <!-- Join our mailing list section End -->
     @include('front.includes.instagram-section')
+    @include('front.includes.location_section')
 
     <!-- insta photos section end -->
     @php

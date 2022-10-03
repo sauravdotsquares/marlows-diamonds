@@ -73,10 +73,16 @@
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU" defer ></script>
+
 
 @yield('js')
 <script>
+
+
+
   $(document).ready(function(){
+    
       $('.show-more-content').hide();
       $('.show-more').click(function(){
           $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
