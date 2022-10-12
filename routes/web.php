@@ -222,15 +222,22 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 
 
 
-		// Route::group(['as' => 'app_products.', 'prefix' => 'app_products' ], function () {
-		// 	
-		// 	Route::any('/add', 'AppProductsController@add')->name('add');
-		// 	Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
-		// 	Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
-		// 	Route::any('/attributes/{slug}', 'AppProductsController@addAttributes')->name('add_attributes');
-		// 	Route::any('/variations/{slug}', 'AppProductsController@addVariations')->name('add_variations');
-		// 	Route::any('/get-categories', 'AppProductsController@getCategories')->name('get_categories');
-		// });
+		Route::group(['as' => 'app_products.', 'prefix' => 'app-products', 'namespace' =>'Products' ], function () {
+			
+			Route::any('/', 'AppProductsController@list')->name('list');
+			Route::any('/basic-information', 'AppProductsController@basicInformation')->name('basic_information');
+			Route::any('/variations/{slug}', 'AppProductsController@variationsSelection')->name('variations');
+			Route::any('/upload-images', 'AppProductsController@uploadImages')->name('upload_images');
+			Route::any('/remove-images', 'AppProductsController@removeImage')->name('remove_images');
+			
+			
+			// Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
+			// Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
+			// Route::any('/attributes/{slug}', 'AppProductsController@addAttributes')->name('add_attributes');
+			// Route::any('/variations/{slug}', 'AppProductsController@addVariations')->name('add_variations');
+			// Route::any('/get-categories', 'AppProductsController@getCategories')->name('get_categories');
+
+		});
 
 
 
@@ -260,6 +267,7 @@ Route::namespace('Front')->group(function () {
     Route::get('/', 'PageController@page')->name('home');
 
 	Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
+	
 
     Route::get('/my-account', 'LoginController@index')->name('my-account');
     Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
@@ -270,7 +278,10 @@ Route::namespace('Front')->group(function () {
     Route::post('/check-email-id', 'LoginController@checkEmailId')->name('check.email.id');
 
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
+	Route::any('/exclusive', 'ProductController@exclusiveMarlows')->name('products.exclusive');
     Route::get('{page}', 'PageController@page')->name('page');
+
+
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
 	Route::get('product/{slug?}','ProductController@productDetails');
 	//Route::post('product/{slug?}','ContactUsFormController@ContactUsForm')->name('contact');
@@ -331,15 +342,17 @@ Route::namespace('Front')->group(function () {
 
 
 	Route::group(['as' => 'app_products.', 'prefix' => 'app-products' ], function () {
+
+
+		//Route::any('/details/{slug}', 'AppProductsController@getProductDetails')->name('details');
 		
 		Route::any('/details/{slug}', 'AppProductsController@getProductDetails')->name('details');
 		Route::any('/customfilter', 'AppProductsController@getCustomFilter')->name('customfilter');
 		Route::any('/customfilternew', 'AppProductsController@getCustomFilterNew')->name('customfilternew');
 		Route::any('/varitiondata', 'AppProductsController@getSelectedVariationsData')->name('varitiondata');
-
 		
-		//Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 		
+		// Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 		// Route::any('/add', 'GlobalCombinationsController@add')->name('add');
 		// Route::any('/edit/{slug}', 'GlobalCombinationsController@edit')->name('edit');
 		// Route::any('/status/{slug}', 'GlobalCombinationsController@status')->name('status');
@@ -351,7 +364,6 @@ Route::namespace('Front')->group(function () {
 /*
 *** Angular Routes Group
 */
-
 Route::group(['prefix' => 'api/v1'], function() {
 	Route::namespace('Api')->group(function () {
 		Route::get('getDiamondDataFromAPI' , 'DiamondFinderController@diamondSearch');

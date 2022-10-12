@@ -630,7 +630,7 @@
 
       $(document).on('click','#add_item',function () {
          var button = $('#item_details').clone(true);
-         var attr_key = $( ".attr_section:last-child" ).data( "attr-key" );
+         var attr_key = $( ".attr_section:last-child" ).data("attr-key");
          attr_key++;
          var is_update = 'is_update';
          button.find('input').val('');

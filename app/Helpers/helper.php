@@ -19,6 +19,7 @@ use App\Models\HKDiamondStock;
 use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
+use App\Models\Category;
 use App\Models\Popups;
 use App\Models\ProductImages;
 use App\Models\ProductVariations;
@@ -838,6 +839,76 @@ if (!function_exists('validate_breadcrumb')) {
             return null;
         }
 
+    }
+
+    function getCategoriesTree($exsitingCategories=[], $parentId=0){
+
+
+        //return Category::with(['childCategories'])->get()->toArray();
+
+        // if(!count($exsitingCategories)){
+        //     $parent_categories = Category::where('parent_id',0)->where(['status'=>1])->get();
+        //     if($parent_categories->count()){
+
+        //         /** Check if child category exists */
+        //         $isChildExists = false;
+        //         foreach ($parent_categories as $key => $value) {
+        //             $childCount = Category::where('parent_id',$value->id)->where(['status'=>1])->count();
+        //             if($childCount){
+        //                 $isChildExists = true;
+        //                 break;
+        //             }
+        //         }
+        //         if($isChildExists){
+        //             return getCategoriesTree($parent_categories->toArray());
+        //         }else{
+        //             return $parent_categories->toArray();
+        //         }
+        //     }
+        // }else{
+
+
+        //     foreach ($exsitingCategories as $key => $value) {
+        //         # code...
+        //     }
+
+
+        // }
+
+        // $parent_categories = Category::where('parent_id',$parentId)->where(['status'=>1])->get();
+        // foreach ($parent_categories as $key => $value) {
+        //     $childExist = Category::where('parent_id',$value->id)->where(['status'=>1])->count();
+        //     if($childExist){
+        //         $parent_categories->child = Category::where('parent_id',$value->id)->where(['status'=>1])->get();
+        //     }
+        // }
+    }
+
+
+    function upload_file($file, $path=""){
+        
+        try {
+            $originalName = $file->getClientOriginalName();
+            $size = $file->getSize();
+            $extension = $file->getClientOriginalExtension();
+            $mimeType = $file->getMimeType();
+    
+            $fileName = time().uniqid().'_'.$originalName;
+    
+            $destinationPath = 'uploads/'.$path .'/';
+            $toReturn = $file->move($destinationPath,$fileName);
+            return [
+                'name' => $path .'/'. $fileName,
+                'size' => $size,
+                'extension' => $extension,
+                'mimeType' => $mimeType,
+                'original_name' => $originalName,
+            ];
+        } catch (\Throwable $th) {
+            return null;
+        }
+
+       
     }
 
 }

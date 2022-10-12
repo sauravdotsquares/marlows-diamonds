@@ -17,8 +17,6 @@ class AppProductAttributes extends Model
 	protected $fillable = [
         'product_id',
         'attribute_id',
-        'global_combination_id',
-        'is_attribute',
         'information',
         'is_active',
         'is_deleted',
@@ -26,17 +24,16 @@ class AppProductAttributes extends Model
         'updated_at',
     ];
 
-    public function getInformationAttribute($value){
-        if(gettype($value) == 'string'){
-            return json_decode($value, true);
-        }else{
-            return $value;
-        }
-    }
-
-    public function selectedVariations(){
-        return $this->hasMany(AppProductAttributeVariationDescripiton::class,'selected_variation_parent_id','attribute_id')->where(['is_active'=>1, 'is_deleted'=>0]);
-    }
+    // public function getInformationAttribute($value){
+    //     if(gettype($value) == 'string'){
+    //         return json_decode($value, true);
+    //     }else{
+    //         return $value;
+    //     }
+    // }
+    // public function selectedVariations(){
+    //     return $this->hasMany(AppProductAttributeVariationDescripiton::class,'selected_variation_parent_id','attribute_id')->where(['is_active'=>1, 'is_deleted'=>0]);
+    // }
 }
 
 
