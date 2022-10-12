@@ -12,12 +12,14 @@ class AppProductImages extends Model{
     use HasFactory;
 
 	protected $fillable = [
-        'product_id',
+        'parent_id',
+        'belongs_from',
         'image',
         'image_type',
-        'size_in_bytes',
+        'size',
         'extension',
-        'original_image_name',
+        'original_name',
+        'display_order',
         'metadata',
         'is_active',
         'is_deleted',

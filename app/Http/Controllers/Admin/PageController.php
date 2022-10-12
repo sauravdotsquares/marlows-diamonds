@@ -96,7 +96,7 @@ class PageController extends Controller
         return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Added Successfully');
     }
 
-    /**
+    /** 
      * Display the specified resource.
      *
      * @param  int  $id
