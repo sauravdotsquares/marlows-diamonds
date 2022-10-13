@@ -66,6 +66,11 @@
 
     @include('layouts.front.footer')
 
+
+    <script>
+      const mapMarker = '{{ asset("images/map_marker.png") }}';
+    </script>
+
 <script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.js"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
