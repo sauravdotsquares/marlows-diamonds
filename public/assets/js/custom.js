@@ -117,12 +117,9 @@ $('.mobil-bar').owlCarousel({
 });
 
 
-
-
-
 /** location map */
 window.onload = function() {
-    initLocationMap(); 
+    initLocationMap();
 }
 function initLocationMap() {
   
@@ -199,3 +196,25 @@ function initLocationMap() {
     }
     
 }
+
+
+$(window).on("load", function () {
+    $("#map").length &&
+        (document.getElementById("map").addEventListener(
+            "dragstart",
+            function (e) {
+                console.log('dragstart');
+                (null != $("#map .gm-style").length && 0 != $("#map .gm-style").length && "" != $("#map .gm-style").length) || loadSnazymap(e);
+            },
+            !1
+        ),
+        document.getElementById("map").addEventListener(
+            "touchstart",
+            function (e) {
+                console.log('drags-end');
+                (null != $("#map .gm-style").length && 0 != $("#map .gm-style").length && "" != $("#map .gm-style").length) || loadSnazymap(e);
+            },
+            !1
+        ));
+});
+$("dd").after("<br>");

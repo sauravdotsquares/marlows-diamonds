@@ -1058,3 +1058,9 @@ a[disabled="disabled"] {pointer-events: none;}
 .post-bar .post-bar-center a span {
     transition: initial;
 }
+#location_map * {
+	-moz-transition: none;
+	-webkit-transition: none;
+	-o-transition: all 0s ease;
+	transition: none;
+  }
