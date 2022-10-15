@@ -39,4 +39,5 @@ class Category extends Model
     {
         return $this->children()->with('grandchildren')->select('id','parent_id','slug','title');
     }
+     
 }
