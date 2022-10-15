@@ -577,12 +577,12 @@
 						if(res.statusCode == 500){
 							$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
 						}else if(!regular_p){
-							$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ parseFloat(res.regular_price_with_vat_discount).toFixed(2)  + ' </span>');
+							$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ res.regular_price_with_vat_discount  + ' </span>');
 						}else{
 							if(regular_p == res.regular_price_with_vat_discount){
-								$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ parseFloat(res.regular_price_with_vat_discount).toFixed(2) + ' </span>');
+								$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ res.regular_price_with_vat_discount + ' </span>');
 							}else{
-								$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+ parseFloat(regular_p).toFixed(2) +'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ parseFloat(res.regular_price_with_vat_discount).toFixed(2) + ' </span>');
+								$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+ regular_p +'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ parseFloat(res.regular_price_with_vat_discount).toFixed(2) + ' </span>');
 
 								$('#selected_discounted_price').val(res.regular_price_with_vat_discount);
 							}
