@@ -1038,3 +1038,29 @@ a[disabled="disabled"] {pointer-events: none;}
     font-size: 22px;
 }
 }
+
+.post-bar .post-bar-center a {
+    padding: 13px;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 40px;
+    border: 2px solid #fff;
+    text-transform: uppercase;
+    padding: 11px 20px;
+}
+.post-bar .post-bar-center {
+    height: auto !important;
+}
+.post-bar .post-bar-center a:hover {
+    color: #903C6C;
+    background: #fff;
+}
+.post-bar .post-bar-center a span {
+    transition: initial;
+}
+#location_map * {
+	-moz-transition: none;
+	-webkit-transition: none;
+	-o-transition: all 0s ease;
+	transition: none;
+  }

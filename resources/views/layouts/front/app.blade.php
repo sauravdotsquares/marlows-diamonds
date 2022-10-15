@@ -66,6 +66,11 @@
 
     @include('layouts.front.footer')
 
+
+    <script>
+      const mapMarker = '{{ asset("images/map_marker.png") }}';
+    </script>
+
 <script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.js"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
@@ -85,7 +90,7 @@
     
       $('.show-more-content').hide();
       $('.show-more').click(function(){
-          $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
+        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
       });
 
     // Zopim zendesk Chat JS function Call start

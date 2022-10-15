@@ -40,8 +40,11 @@ class Masters extends Model
 
 
     public static function attributes(){
-        $attributes = self::where('type','product_attributes')->latest()->where(['is_deleted'=>0, 'is_active'=>1])->get()->toArray();
-        return $attributes;
+        $attributes = self::where('type','product_attributes')->latest()->where(['is_deleted'=>0, 'is_active'=>1])->get();
+        if($attributes->count()){
+            return $attributes->toArray();
+        }
+        return [];
     }
 
     public static function combinations(){
