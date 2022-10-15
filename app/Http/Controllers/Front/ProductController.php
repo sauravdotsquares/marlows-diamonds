@@ -728,8 +728,13 @@ class ProductController extends Controller
                         $newArray['formula'] = true;
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
                         $newArray['regular_price'] = $price;
-                        $newArray['regular_price_with_vat'] = $totalPrice ? number_format((float)$totalPrice, 2, '.', '') : '0.00';
-                        $newArray['regular_price_with_vat_discount'] = number_format((float)$price, 2, '.', '');
+
+                        $newArray['regular_price_with_vat'] = $totalPrice ? round($totalPrice) : '00';
+                        $newArray['regular_price_with_vat_discount'] = round($price);
+                        
+                        // $newArray['regular_price_with_vat'] = $totalPrice ? number_format((float)$totalPrice, 2, '.', '') : '0.00';
+                        // $newArray['regular_price_with_vat_discount'] = number_format((float)$price, 2, '.', '');
+                        
                         return response()->json($newArray);
                     }
                 }
