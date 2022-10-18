@@ -171,27 +171,55 @@ $(document).ready(function(){
     <script>
 
 
-    // $(".product-hover-affect").hover(function () {
-    //     console.log('hover')
-    //     if($(this).find('video').length){
-    //         $(this).find('video')[0].play()
-    //     }
-    // },function () {
-    //     console.log('hover out')
-    //     if($(this).find('video').length){
-    //         $(this).find('video')[0].pause()
-    //     }
-    // });
-
     $(document).on('mouseenter','.product-hover-affect', function (event) {
+        console.log('mouse enter')
         if($(this).find('video').length){
             $(this).find('video')[0].play()
         }
     }).on('mouseleave','.top-level',  function(){
+        console.log('mouse leave')
         if($(this).find('video').length){
             $(this).find('video')[0].pause()
         }
-    });
+    })
+    
+    $(document).on('touchstart','.product-hover-affect',function() {
+
+        // console.log('touchstart', $(this).find('video'));
+        //display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff;
+        // a.product-hov {
+        //     -webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
+        // -ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);}
+
+        $(this).find('a.product-hov').css({
+            '-webkit-transition' : 'all 200ms ease-in',
+            '-webkit-transform' : 'scale(1.2)',
+            '-ms-transition' : 'all 200ms ease-in',
+            '-ms-transform' : 'scale(1.2)',
+            '-moz-transition' : 'all 200ms ease-in',
+            '-moz-transform' : 'scale(1.2)',
+            'transition' : 'all 200ms ease-in',
+            'transform': 'scale(1.2)'
+        });
+        $(this).find('.product-hover-video').css({
+            'display': "block",
+            'position': "absolute",
+            'top': "0",
+            "width": "100%",
+            "height" : "100%",
+            "background" : "#fff"
+        });
+
+        if($(this).find('video').length){
+            $(this).find('video')[0].play()
+        }
+    })
+    // .on('touchend' ,function() {
+    //     console.log('touchend');
+    //     if($(this).find('video').length){
+    //         $(this).find('video')[0].play()
+    //     }
+    // })
 
 
         var page = 1;
