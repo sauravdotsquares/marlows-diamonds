@@ -1,4 +1,5 @@
 @inject('header_settings', 'App\Models\Settings')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
