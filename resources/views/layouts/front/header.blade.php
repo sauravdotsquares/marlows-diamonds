@@ -186,9 +186,9 @@
                                 @foreach($navbars as $navbarItem)
                                     <li class="level-zero submenu {{$navbarItem['class_level']}}">
                                         <span>
-                                        <a href="{{url($navbarItem['href'])}}">{{$navbarItem['text']}}
-
-                                        </a>
+                                            <a href="{{url($navbarItem['href'])}}">
+                                                {!! $navbarItem['text'] !!}
+                                            </a>
                                         @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
                                             <i class="fa fa-angle-down {{$navbarItem['class_level']}}" aria-hidden="true"></i>
                                         @endif
