@@ -20,4 +20,12 @@ class Combinations extends Model
         'created_at',
         'updated_at'
     ];
+
+    public static function combinations(){
+        $data = self::where(['is_deleted'=>0, 'is_active'=>1])->latest()->get();
+        if($data->count()){
+            return $data->toArray();
+        }
+        return null;
+    }
 }

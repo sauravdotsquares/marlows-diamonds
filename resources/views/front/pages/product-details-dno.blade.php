@@ -83,6 +83,7 @@
 				</div>
 
 				@if($plainband==false)
+					@if(!in_array('exclusive-to-marlows', $all_categories_slug) )
 					<div class="diamond-type">
 						<label>Choose Your Diamond</label>
 						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
@@ -105,6 +106,7 @@
 							</div>
 						@endif
 					</div>
+					@endif
 				@endif
 
 				<div class="product-type-variations" id="filterDataDesign">
