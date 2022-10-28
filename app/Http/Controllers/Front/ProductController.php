@@ -131,6 +131,13 @@ class ProductController extends Controller
                         ]
                     );
                 } else {
+
+                    $all_categories_slug = Category::select(['id','slug'])->whereIn('id', $prod_categories)->pluck('slug');
+                    if($all_categories_slug->count()){
+                        $all_categories_slug = $all_categories_slug->toArray(); 
+                    }else{
+                        $all_categories_slug = [];
+                    }
                     
                     $variationDetails = ProductVariations::where('product_id', $getProduct->id)
                         ->select('vari_image')
@@ -147,7 +154,8 @@ class ProductController extends Controller
                             'url' => $url,
                             'plainband' => $plainband,
                             'variationImages' => $variationDetails,
-                            'requestData' => $requestData
+                            'requestData' => $requestData,
+                            'all_categories_slug' => $all_categories_slug
                         ]
                     );
                 }

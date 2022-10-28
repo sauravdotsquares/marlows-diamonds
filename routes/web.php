@@ -229,6 +229,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/variations/{slug}', 'AppProductsController@variationsSelection')->name('variations');
 			Route::any('/upload-images', 'AppProductsController@uploadImages')->name('upload_images');
 			Route::any('/remove-images', 'AppProductsController@removeImage')->name('remove_images');
+
+			Route::any('/change-status/{slug}', 'AppProductsController@changeStatus')->name('change_status');
+			Route::any('/delete/{slug}', 'AppProductsController@deleteRecord')->name('delete');
 			
 			
 			// Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
