@@ -20,7 +20,11 @@ use App\Models\AppProductImages;
 use App\Models\AppProducts;
 use App\Models\Masters;
 use App\Models\AppProductCategories;
+use App\Models\AppProductAttributes;
 use App\Models\MetaInformation;
+use App\Models\Products\Combinations;
+
+
 use Illuminate\Support\Facades\File; 
 // use App\Models\ProductVariationsMaster;
 // use App\Models\GlobalCombinationsVariations;
@@ -43,7 +47,22 @@ class AppProductsController extends Controller{
      * list of all products
      */
     public function list(Request $request){
-        # code...
+
+        /**  Setup breadcrumb */
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard")],
+            ["name" => $this->module_name , "url" => route($this->route_path . "list"  )],
+        ];
+        populate_breadcrumb($breadcrumb);
+        $page_title = 'Products';
+
+        $query = AppProducts::where(['is_deleted'=>0]);
+        
+        /** Filter */
+        $query = getFilter(AppProducts::class, $query, $request->query());
+
+        $data = $query->paginate($this->default_pagination_limit);
+        return view($this->view_path . 'list' ,compact(['data','page_title']) );
     }//endof list
 
 
@@ -62,9 +81,11 @@ class AppProductsController extends Controller{
         $page_title = 'Basic information';
         $category_data = $this->categoryOptions('options');
         $diamondShapes = DiamondShapes::all();
+        $attributes = Masters::attributes();
+        $combinations = Combinations::combinations();
 
         if($request->post()){
-            
+
             /** create validations */
             $validated = $request->validate([
                 'title' => 'required',
@@ -83,6 +104,9 @@ class AppProductsController extends Controller{
                 "thumb_image" => "sometimes",
                 "featured_images" => "sometimes",
                 "image_gallary" => "sometimes",
+                "thumb_video" => "sometimes",
+                "attributes" => "required",
+                "combination_id" => "sometimes",
             ],[
                 'title.required' => 'Please enter product title',
                 'tags.required' =>  'Please enter product tags',
@@ -90,6 +114,7 @@ class AppProductsController extends Controller{
                 'meta_title.required' =>  'Please enter meta title',
                 'meta_keyword.required' =>  'Please enter meta keywords',
                 'meta_description.required' =>  'Please enter meta description',
+                "attributes.required" => "Please select attributes"
             ]);
 
             try {
@@ -106,6 +131,7 @@ class AppProductsController extends Controller{
                 $new_product->is_featured = !empty($validated['is_featured']) ? (int)$validated['is_featured'] : 0;
                 $new_product->status = !empty($validated['status']) ? (int)$validated['status'] : 0 ;
                 $new_product->is_draft = 1;
+                $new_product->combination_id = !empty($validated['combination_id']) ? $validated['combination_id'] : null ;
                 if($new_product->save()){
 
                     /** add categories for product */
@@ -118,6 +144,20 @@ class AppProductsController extends Controller{
                         }
                     }
 
+                    /** Add attributes for products */
+                    if( !empty($validated['attributes']) && count($validated['attributes'])){
+                        foreach ($validated['attributes'] as $attributes_value) {
+                            $attributeData = Masters::where('id', $attributes_value)->first();
+                            if(!empty($attributeData)){
+                                $new_attribute = new AppProductAttributes();
+                                $new_attribute->product_id = $new_product->id;
+                                $new_attribute->attribute_id = $attributes_value;
+                                $new_attribute->information =  json_encode($attributeData);
+                                $new_attribute->save();
+                            }
+                        }
+                    }
+
                     /** save meta information of product */
                     $new_meta = MetaInformation::saveMetaInformation(null,[
                         'parent_id' => $new_product->id,
@@ -126,6 +166,7 @@ class AppProductsController extends Controller{
                         'meta_description' =>$validated['meta_description'],
                         'meta_keyword' =>$validated['meta_keyword'],
                     ]);
+
                     /** Update featured image */
                     if(!empty($validated['featured_images'])){
                         AppProductImages::where('id',$validated['featured_images'] )->update([
@@ -145,6 +186,13 @@ class AppProductsController extends Controller{
                         ]);
                     }
 
+                    /** Update thumbnail video */
+                    if(!empty($validated['thumb_video'])){
+                        AppProductImages::where('id',$validated['thumb_video'] )->update([
+                            'parent_id' => $new_product->id
+                        ]);
+                    }
+
                     return redirect()->route('admin.app_products.variations', $new_product->slug)->with('success',__('Basic information saved successfully'));
                 }else{
                     return redirect()->route('admin.app_products.basic_information')->with('error',__('Something went wrong'));
@@ -154,7 +202,7 @@ class AppProductsController extends Controller{
             }  
         }
         
-        return view($this->view_path . 'basic_information' ,compact(['category_data','diamondShapes']) );
+        return view($this->view_path . 'basic_information' ,compact(['category_data','diamondShapes','attributes','combinations']) );
     }//endof basicInformation
 
     /**
@@ -179,14 +227,31 @@ class AppProductsController extends Controller{
         $page_title = ' information';
         $attributes = Masters::attributes();
 
+        /** get all selected attributes */
+        $selectedAttributes = AppProductAttributes::where([ 'product_id' => $product->id, 'is_deleted' => 0, 'is_active' => 1 ])->pluck('attribute_id');
+        $attributeData = [];
+        foreach ($selectedAttributes as $attr_key => $attr_value) {
+            $attribute = Masters::where(['id'=> $attr_value, 'is_deleted'=>0])->select(['id','name','slug'])->first()->toArray();
+            if(!empty($attribute)){
+                $variations = Masters::where(['parent_id'=> $attribute['id'], 'is_deleted'=>0 ])->select(['id','name','slug'])->get();
+                if($variations->count()){
+                    $attribute['variations'] = $variations->toArray();
+                    array_push($attributeData, $attribute);
+                }
+            }
+        }
+
+        // prd($attributeData);
+
         if($request->post()){
 
             prd($request->all());
 
         }
 
-        return view($this->view_path . 'variations' ,compact(['attributes']) );
+        return view($this->view_path . 'variations' ,compact(['attributes','attributeData']) );
     }//endof variationsSelection
+
 
     public function categoryOptions($type="options", $level=0, $prefix=""){
         $rows = Category::select(['name','title','id','parent_id','slug'])->where('parent_id',$level)->get();
@@ -306,5 +371,65 @@ class AppProductsController extends Controller{
      * 
      * 
      */
+
+
+    /**
+     * function to change status
+     * @param slug
+     */
+    public function changeStatus(Request $request){
+        $product = AppProducts::where('slug',$request['slug'])->first();
+        if(!empty($product)){
+
+            $product->is_active = $product->is_active ? 0 : 1;
+            $message = $product->is_active ? "Activated" : "Inactivated";
+
+            if($product->save()){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Product status ' . $message . ' successfully',
+                ], 200);
+            }else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Something went wrong'
+                ], 200);
+            }
+
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Product not identified'
+            ], 200);
+        }
+    }//endof changeStatus
+
+
+    /**
+     * function to delete record
+     * @param slug
+     */
+    public function deleteRecord(Request $request){
+        $product = AppProducts::where('slug',$request['slug'])->first();
+        if(!empty($product)){
+            $product->is_deleted =  1;
+            if($product->save()){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Product has been deleted successfully'
+                ], 200);
+            }else{
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Something went wrong'
+                ], 200);
+            }
+        }else{
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Product not identified'
+            ], 200);
+        }
+    }//endof deleteRecord
 
 }

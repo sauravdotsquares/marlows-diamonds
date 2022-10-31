@@ -5,10 +5,10 @@ $link_limit = 7;
 @if ($paginator->lastPage() > 1)
     <ul class="pagination">
         <li class="page-item {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
-            <a class="page-link" href="{{ $paginator->url(1) }}"><<</a>
+            <a class="page-link" href="{{ $paginator->url(1) }}">First</a>
         </li>
         <li class="page-item {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
-            <a class="page-link" href="{{ $paginator->previousPageUrl() }}"><</a>
+            <a class="page-link" href="{{ $paginator->previousPageUrl() }}">Previous</a>
         </li>
 
         @for ($i = 1; $i <= $paginator->lastPage(); $i++)
@@ -31,10 +31,10 @@ $link_limit = 7;
         @endfor
 
         <li class="page-item {{ ($paginator->currentPage() == $paginator->lastPage()) ? ' disabled' : '' }}">
-            <a class="page-link" href="{{ $paginator->nextPageUrl() }}">></a>
+            <a class="page-link" href="{{ $paginator->nextPageUrl() }}">Next</a>
         </li>
         <li class="page-item {{ ($paginator->currentPage() == $paginator->lastPage()) ? ' disabled' : '' }}">
-            <a class="page-link" href="{{ $paginator->url($paginator->lastPage()) }}">>></a>
+            <a class="page-link" href="{{ $paginator->url($paginator->lastPage()) }}">Last</a>
         </li>
     </ul>
 @endif

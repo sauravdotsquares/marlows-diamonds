@@ -911,5 +911,9 @@ if (!function_exists('validate_breadcrumb')) {
        
     }
 
+    function show_dots($in, $length=30){
+        return strlen($in) > $length ? substr($in,0,$length)."..." : $in;
+    }
+
 }
 
