@@ -250,8 +250,9 @@ class ProductController extends Controller
                     $minimumValue = (55/ 100) * $min;
                     $maximumValue = $max;
 
-                    $getProductListFinal[$product_list_key]->minimumValue = $minimumValue . '.00';
-                    $getProductListFinal[$product_list_key]->maximumValue = $maximumValue . '.00';
+                    /** Inside this */
+                    $getProductListFinal[$product_list_key]->minimumValue = $minimumValue;
+                    $getProductListFinal[$product_list_key]->maximumValue = $maximumValue;
                 }else{
 
                     $categorySlgs = Category::whereIn('id',$categories)->pluck('slug');
@@ -264,8 +265,8 @@ class ProductController extends Controller
                         $product_variations = ProductVariations::where(['product_id'=> $product_list_value->id])->pluck('regular_price');
                         if(!empty($product_variations) && $product_variations->count()){
                             $product_variations = $product_variations->toArray();
-                            $getProductListFinal[$product_list_key]->minimumValue = min($product_variations) . '.0';
-                            $getProductListFinal[$product_list_key]->maximumValue = max($product_variations) . '.0';
+                            $getProductListFinal[$product_list_key]->minimumValue = min($product_variations);
+                            $getProductListFinal[$product_list_key]->maximumValue = max($product_variations);
                         }
                     }
                     
