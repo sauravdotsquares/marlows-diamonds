@@ -898,21 +898,19 @@ class ProductController extends Controller
                     }
                 }
 
-                /** Working on exclusive products */
-                $prd_cat = explode(',', $productData->categories);
-                $categorySlugs = Category::whereIn('id', $prd_cat )->pluck('slug');
+
+                $categorySlugs = Category::whereIn('id',$prod_categories )->pluck('slug');
                 if($categorySlugs->count()){
                     $categorySlugs = $categorySlugs->toArray();
                 }
                 if(in_array('exclusive-to-marlows', $categorySlugs)){
-                    $newArray['vari_image'] = $getSelectedVariationVideoImages->regular_price;
-                    $newArray['vari_video'] = $getSelectedVariationVideoImages->regular_price;
-                    $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
-                    $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
-                    $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['vari_image'] = $getSelectedVariationVideoImages->regular_price;;
+                    $newArray['vari_video'] = $getSelectedVariationVideoImages->regular_price;;
+                    $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;;
+                    $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;;
+                    $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;;
                     return response()->json($newArray);
                 }
-                /** END Working on exclusive products */
 
                 
                 $regular_p_discount_final = $regular_p_final / $discountPercentage;
