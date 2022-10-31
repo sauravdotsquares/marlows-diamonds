@@ -254,7 +254,13 @@ class ProductController extends Controller
                     $getProductListFinal[$product_list_key]->maximumValue = $maximumValue;
                 }else{
 
-                    if(!in_array('8', $categories)){
+                    $categorySlgs = Category::whereIn('id',$categories )->pluck('slug');
+                    if($categorySlgs->count()){
+                        $categorySlgs = $categorySlgs->toArray();
+                    }
+
+                    if(!in_array('8', $categories) && !in_array('exclusive-to-marlows', $categorySlgs) ){
+
                         $product_variations = ProductVariations::where(['product_id'=> $product_list_value->id])->pluck('regular_price');
                         if(!empty($product_variations) && $product_variations->count()){
                             $product_variations = $product_variations->toArray();

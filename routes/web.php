@@ -218,10 +218,6 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/add-varitions/{slug}', 'CombinationsController@addVariations')->name('add_varitions');
 		});
 
-		
-
-
-
 		Route::group(['as' => 'app_products.', 'prefix' => 'app-products', 'namespace' =>'Products' ], function () {
 			
 			Route::any('/', 'AppProductsController@list')->name('list');
