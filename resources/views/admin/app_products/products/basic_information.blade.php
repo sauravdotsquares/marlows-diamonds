@@ -12,8 +12,9 @@
                             <h3 class="card-title">{{ __("Basic information")}}</h3>
                         </div>
 
-                        <?php $old = session()->getOldInput(); 
-                        $dataToFill = count($old) ? $old : [];
+                        <?php 
+                            $old = session()->getOldInput(); 
+                            $dataToFill = count($old) ? $old : [];
                         ?>
 
                         <div class="card-body">
@@ -88,10 +89,10 @@
                             </div>
                         </div>
 
-
                         <div class="card-header">
                             <h3 class="card-title">{{ __("Variable information")}}</h3>
                         </div>
+
                         <div class="card-body">
                             
                             <div class="form-group row">
@@ -143,6 +144,16 @@
                                     @error('is_featured') <span class="custom-error">{{ $message }}</span>  @enderror
                                 </div>
 
+                                <div class="form-label-group col-sm-12 col-md-6">
+                                    <label>{{ __("Price combinations")}}</label>
+                                    <select id="combinations" name="combination_id" class="form-control">
+                                        <option value="">{{ __("Select global price Combinations")}}</option>
+                                        @foreach($combinations as $combinations_value)
+                                            <option {{ !empty($dataToFill['combination_id']) && $dataToFill['combination_id']==$combinations_value['id'] ? 'selected' : ''  }} value="{{$combinations_value['id'] }}">{{ $combinations_value['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('combination_id') <span class="custom-error">{{ $message }}</span>  @enderror
+                                </div>
                             </div>
 
                         </div>
@@ -151,10 +162,15 @@
                             <h3 class="card-title">{{ __("Image gallary")}}</h3>
                         </div>
                         <div class="card-body">
-
+                            
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Thumbnail image")}}</label>
                                 <input type="file" id="thumb_image" name="thumb_image" >
+                            </div>
+
+                            <div class="form-label-group col-sm-12 col-md-12">
+                                <label>{{ __("Thumbnail video")}}</label>
+                                <input type="file" id="thumb_video" name="thumb_video" >
                             </div>
 
                             <div class="form-label-group col-sm-12 col-md-12">
@@ -165,6 +181,24 @@
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Image gallary")}}</label>
                                 <input type="file" id="image_gallary" name="image_gallary" >
+                            </div>
+                            
+                        </div>
+
+                        <div class="card-header">
+                            <h3 class="card-title">{{ __("Attributes")}}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <?php foreach ($attributes as $attributes_key => $attributes_value) { ?>
+                                    <div class="form-group col-sm-4">
+                                        <div class="form-check">
+                                            <input id="attr-{{$attributes_value['id']}}" {{ (!empty($dataToFill['attributes']) && in_array($attributes_value['id'], $dataToFill['attributes'])) ? 'checked' : '' }} class="form-check-input" type="checkbox" name="attributes[]" value="{{ $attributes_value['id'] }}">
+                                            <label for="attr-{{$attributes_value['id']}}" class="form-check-label">{{ $attributes_value['name'] }}</label>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                                @error('attributes') <span class="custom-error">{{ $message }}</span>  @enderror
                             </div>
                         </div>
 
@@ -258,6 +292,7 @@
                 revert: '{{ route("admin.app_products.remove_images") }}',
             },
         });
+
         imagePicker($('#image_gallary'), {
             allowMultiple:true,
             placeholder: "Image gallary",
@@ -269,6 +304,23 @@
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'IMAGE-TYPE': "product_gallery"
+                },
+                process: '{{ route("admin.app_products.upload_images") }}',
+                revert: '{{ route("admin.app_products.remove_images") }}',
+            },
+        });
+
+        videoPicker($('#thumb_video'), {
+            allowMultiple:false,
+            placeholder: "Thumbnail Video",
+            imagePreviewHeight: 100,
+            imagePreviewTransparencyIndicator: "grid",
+            isMultipleUploading: false,
+            inputName: "thumb_video",
+            server: {
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'IMAGE-TYPE': "thumb_video"
                 },
                 process: '{{ route("admin.app_products.upload_images") }}',
                 revert: '{{ route("admin.app_products.remove_images") }}',

@@ -131,6 +131,13 @@ class ProductController extends Controller
                         ]
                     );
                 } else {
+
+                    $all_categories_slug = Category::select(['id','slug'])->whereIn('id', $prod_categories)->pluck('slug');
+                    if($all_categories_slug->count()){
+                        $all_categories_slug = $all_categories_slug->toArray(); 
+                    }else{
+                        $all_categories_slug = [];
+                    }
                     
                     $variationDetails = ProductVariations::where('product_id', $getProduct->id)
                         ->select('vari_image')
@@ -147,7 +154,8 @@ class ProductController extends Controller
                             'url' => $url,
                             'plainband' => $plainband,
                             'variationImages' => $variationDetails,
-                            'requestData' => $requestData
+                            'requestData' => $requestData,
+                            'all_categories_slug' => $all_categories_slug
                         ]
                     );
                 }
@@ -246,7 +254,13 @@ class ProductController extends Controller
                     $getProductListFinal[$product_list_key]->maximumValue = $maximumValue;
                 }else{
 
-                    if(!in_array('8', $categories)){
+                    $categorySlgs = Category::whereIn('id',$categories )->pluck('slug');
+                    if($categorySlgs->count()){
+                        $categorySlgs = $categorySlgs->toArray();
+                    }
+
+                    if(!in_array('8', $categories) && !in_array('exclusive-to-marlows', $categorySlgs) ){
+
                         $product_variations = ProductVariations::where(['product_id'=> $product_list_value->id])->pluck('regular_price');
                         if(!empty($product_variations) && $product_variations->count()){
                             $product_variations = $product_variations->toArray();
@@ -669,10 +683,9 @@ class ProductController extends Controller
 
         $productData = Products::where('slug', $request->slug)->first();
         $runOldCode = true;
-        if(!empty($productData)){
 
+        if(!empty($productData)){
             $prodCategoriesDJ = explode(',', $productData->categories);
-            // prd($prodCategoriesDJ);
             if(in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)){
 
                 $allCarats = Masters::where(['type'=>'carat','is_deleted'=>0, 'is_active'=>1])->pluck('name');
@@ -885,10 +898,24 @@ class ProductController extends Controller
                     }
                 }
 
+                /** Working on exclusive products */
+                $prd_cat = explode(',', $productData->categories);
+                $categorySlugs = Category::whereIn('id', $prd_cat )->pluck('slug');
+                if($categorySlugs->count()){
+                    $categorySlugs = $categorySlugs->toArray();
+                }
+                if(in_array('exclusive-to-marlows', $categorySlugs)){
+                    $newArray['vari_image'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['vari_video'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
+                    return response()->json($newArray);
+                }
+                /** END Working on exclusive products */
+
                 
                 $regular_p_discount_final = $regular_p_final / $discountPercentage;
-                
-
                 $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
                 $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
                 $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
