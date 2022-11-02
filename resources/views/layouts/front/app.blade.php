@@ -98,7 +98,17 @@
     
       $('.show-more-content').hide();
       $('.show-more').click(function(){
-        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
+
+        const element = $(this).parents('.reviewr-review-text');
+        if(element.hasClass('show-text-col')){
+          $(this).text('Read more');
+          element.removeClass('show-text-col');
+        }else{
+          $(this).text('Read less');
+          element.addClass('show-text-col');
+        }
+
+        // $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
       });
 
     // Zopim zendesk Chat JS function Call start

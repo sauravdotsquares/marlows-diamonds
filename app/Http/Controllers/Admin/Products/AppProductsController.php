@@ -228,10 +228,12 @@ class AppProductsController extends Controller{
         $attributes = Masters::attributes();
 
         /** get all selected attributes */
-        $selectedAttributes = AppProductAttributes::where([ 'product_id' => $product->id, 'is_deleted' => 0, 'is_active' => 1 ])->pluck('attribute_id');
+        $selectedAttributes = AppProductAttributes::where([ 'product_id' => $product->id, 'is_deleted' => 0, 'is_active' => 1 ])->get()->toArray();//->pluck('attribute_id');
+        
         $attributeData = [];
         foreach ($selectedAttributes as $attr_key => $attr_value) {
-            $attribute = Masters::where(['id'=> $attr_value, 'is_deleted'=>0])->select(['id','name','slug'])->first()->toArray();
+            $attribute = Masters::where(['id'=> $attr_value['attribute_id'], 'is_deleted'=>0])->select(['id','name','slug'])->first()->toArray();
+            $attribute['product_attribute'] = $attr_value;
             if(!empty($attribute)){
                 $variations = Masters::where(['parent_id'=> $attribute['id'], 'is_deleted'=>0 ])->select(['id','name','slug'])->get();
                 if($variations->count()){
@@ -241,15 +243,26 @@ class AppProductsController extends Controller{
             }
         }
 
-        // prd($attributeData);
 
         if($request->post()){
 
-            prd($request->all());
+             /** create validations */
+             $validated = $request->validate([
+                'variation_data.*.price' => 'required',
+                'variation_data.*.variations' => 'sometimes',
+                'variation_data.*.in_stock' => 'sometimes',
+                'variation_data.*.image_id' => 'sometimes',
+            ],[
+                'variation_data.*.price.required' => 'Please enter price',
+            ]);
+
+
+            $data = $request->all();
+            prd($data);
 
         }
 
-        return view($this->view_path . 'variations' ,compact(['attributes','attributeData']) );
+        return view($this->view_path . 'variations' ,compact(['attributes','attributeData','product']) );
     }//endof variationsSelection
 
 
@@ -282,6 +295,8 @@ class AppProductsController extends Controller{
     }
 
 
+    // 'featured_image','product_gallery','variation','thumb_image','thumb_video',''
+
     public function uploadImages(Request $request){
 
         $keys = array_keys($request->all());
@@ -298,6 +313,9 @@ class AppProductsController extends Controller{
                 'message' => 'Image type not identified'
             ], 400); ;
         }
+
+        $imageFrom = $request->header('IMAGE-FROM') ? $request->header('IMAGE-FROM') : 'md_app_products' ;
+
         if($request->hasFile($image_key)){
             $fileData = upload_file($request[$image_key], 'products');
             if($fileData && is_array($fileData)){
@@ -308,7 +326,7 @@ class AppProductsController extends Controller{
                 $new_image->original_name  = $fileData['original_name'];
                 $new_image->metadata  = json_encode($fileData);
                 $new_image->image_type  = $imageType;
-                $new_image->belongs_from  = 'md_app_products';
+                $new_image->belongs_from  = $imageFrom;
                 $new_image->save();
                 return $new_image->id;
             }
