@@ -177,7 +177,7 @@ class ProductController extends Controller
 
     public function getProductList(Request $request){
 
-        $getParentData = Category::with('grandchildren')->where('status', 1)->where('id', $request->cate_id)->select('id', 'parent_id')->first()->toArray();
+        $getParentData = Category::with('grandchildren')->where('status', 1)->where('id', $request->cate_id)->select('id', 'parent_id','slug')->first()->toArray();
 
         $getParentHierarchy = array($getParentData['id']);
         foreach ($getParentData['grandchildren'] as $keyName => $childId) {
@@ -230,7 +230,17 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        $getProductListFinal = Products::with('getProductImages')->orderBy('title', 'asc')->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
+        if($getParentData['slug'] == 'exclusive-to-marlows'){
+            $orderKey = "created_at";
+            $orderValue = "desc";
+        }else{
+            $orderKey = "title";
+            $orderValue = "asc";
+        }
+
+        
+
+        $getProductListFinal = Products::with('getProductImages')->orderBy($orderKey, $orderValue )->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
         
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $notInList=0;
