@@ -13,7 +13,7 @@
                         </div>
 
                         <?php
-                            $request_data = $product_vari->count() ? $product_vari : [1];// request()->old() ? request()->old() : [1];
+                            $request_data = [1]; //$product_vari->count() ? $product_vari : [1];// request()->old() ? request()->old() : [1];
                             //$request_data = !empty($request_data['variation_data']) ? $request_data['variation_data'] : [1];
 
                             

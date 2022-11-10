@@ -230,15 +230,20 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        if($getParentData['slug'] == 'exclusive-to-marlows'){
-            $orderKey = "created_at";
-            $orderValue = "desc";
-        }else{
-            $orderKey = "title";
-            $orderValue = "asc";
+        /** Order by  */
+        switch ($getParentData['slug']) {
+            case 'exclusive-to-marlows':{
+                $orderKey = "created_at";
+                $orderValue = "desc";
+                break;
+            }
+            default:{
+                $orderKey = "title";
+                $orderValue = "asc";
+                break;
+            }
         }
 
-        
 
         $getProductListFinal = Products::with('getProductImages')->orderBy($orderKey, $orderValue )->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
         

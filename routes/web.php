@@ -222,7 +222,11 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			
 			Route::any('/', 'AppProductsController@list')->name('list');
 			Route::any('/basic-information', 'AppProductsController@basicInformation')->name('basic_information');
+			Route::any('/basic-information/{slug}', 'AppProductsController@editBasicInformation')->name('edit_basic_information');
+			
 			Route::any('/variations/{slug}', 'AppProductsController@variationsSelection')->name('variations');
+			Route::any('/variations-edit/{slug}', 'AppProductsController@variationsSelectionEdit')->name('variations_edit');
+			
 			Route::any('/upload-images', 'AppProductsController@uploadImages')->name('upload_images');
 			Route::any('/remove-images', 'AppProductsController@removeImage')->name('remove_images');
 
