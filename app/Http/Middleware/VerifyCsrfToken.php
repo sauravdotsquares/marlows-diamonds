@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'https://192.168.3.151/gitProjects/marlows-diamond/public/p/diamond-jeweller'
     ];
 }

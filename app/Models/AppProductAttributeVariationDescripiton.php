@@ -35,4 +35,8 @@ class AppProductAttributeVariationDescripiton extends Model
             return $value;
         }
     }
+
+    public function info(){
+        return $this->hasOne(Masters::class,'id','variation_id');
+    }
 }

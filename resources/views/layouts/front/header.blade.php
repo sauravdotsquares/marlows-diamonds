@@ -253,8 +253,8 @@
                     {{-- <a href="{{ route('products.exclusive') }}" >
                         <span> Exclusive to Marlows </span>
                     </a> --}}
-                    {{-- <p> Up to <span class="header-heighlight-text">30%</span>  off in our Summer Sale - </p> --}}
-                    {{-- <p> ends 15th September </p> --}}
+                    <p> The Marlow's Black Friday Sale is here. Up to  </p>
+                    <p> <span class="header-heighlight-text">30%</span> Off throughout </p>
                 </div>
                 <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>

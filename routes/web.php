@@ -270,7 +270,6 @@ Route::namespace('Front')->group(function () {
     Route::get('/', 'PageController@page')->name('home');
 
 	Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
-	
 
     Route::get('/my-account', 'LoginController@index')->name('my-account');
     Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
@@ -344,17 +343,15 @@ Route::namespace('Front')->group(function () {
 
 
 
-	Route::group(['as' => 'app_products.', 'prefix' => 'app-products' ], function () {
+	Route::group(['as' => 'app_products.', 'prefix' => 'p' ], function () {
 
 
-		//Route::any('/details/{slug}', 'AppProductsController@getProductDetails')->name('details');
-		
-		Route::any('/details/{slug}', 'AppProductsController@getProductDetails')->name('details');
-		Route::any('/customfilter', 'AppProductsController@getCustomFilter')->name('customfilter');
-		Route::any('/customfilternew', 'AppProductsController@getCustomFilterNew')->name('customfilternew');
-		Route::any('/varitiondata', 'AppProductsController@getSelectedVariationsData')->name('varitiondata');
-		
-		
+		Route::any('/{category_slug}', 'AppProductsController@getProductList')->name('list'); // api for listing of products
+		Route::any('/detail/{product_slug}', 'AppProductsController@productDetails')->name('details'); // api for listing of products
+		// Route::any('/details/{slug}', 'AppProductsController@getProductDetails')->name('details');
+		// Route::any('/customfilter', 'AppProductsController@getCustomFilter')->name('customfilter');
+		// Route::any('/customfilternew', 'AppProductsController@getCustomFilterNew')->name('customfilternew');
+		// Route::any('/varitiondata', 'AppProductsController@getSelectedVariationsData')->name('varitiondata');
 		// Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 		// Route::any('/add', 'GlobalCombinationsController@add')->name('add');
 		// Route::any('/edit/{slug}', 'GlobalCombinationsController@edit')->name('edit');

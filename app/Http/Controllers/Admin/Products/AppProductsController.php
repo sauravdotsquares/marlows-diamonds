@@ -196,6 +196,8 @@ class AppProductsController extends Controller{
                         ]);
                     }
 
+
+
                     return redirect()->route('admin.app_products.variations', $new_product->slug)->with('success',__('Basic information saved successfully'));
                 }else{
                     return redirect()->route('admin.app_products.basic_information')->with('error',__('Something went wrong'));
@@ -448,9 +450,6 @@ class AppProductsController extends Controller{
             }
         }
 
-        // die;
-        // prd($product_vari);
-        // prd($product_vari->toArray());
 
         if($request->post()){
 
@@ -466,15 +465,22 @@ class AppProductsController extends Controller{
 
 
             $data = $request->all();
-
+            $valid_varitions_images = [];
             foreach ($data['variation_data'] as $data_key => $data_value) {
-                
+
                 $new_var = new AppProductAttributeVariations();
                 $new_var->product_id  = $product->id;
                 $new_var->sale_price = $data_value['price'];
                 $new_var->regular_price = $data_value['price'];
                 $new_var->in_stock = $data_value['in_stock'] ? $data_value['in_stock'] : 0 ;
                 $new_var->save();
+
+
+                if(!empty($data_value['image_id']) && $new_var->id){
+                    /** Update parent id of image */
+                    AppProductImages::where('id', $data_value['image_id'] )->update(['parent_id'=> $new_var->id ]);
+                    $valid_varitions_images[] = $data_value['image_id'];
+                }
 
                 foreach ($data_value['variations'] as $var_data_key => $var_data_value) {
                     $varData = Masters::where('id', $var_data_value['id'])->first();
@@ -492,6 +498,14 @@ class AppProductsController extends Controller{
                     }
                 }
             }
+            AppProductImages::whereIn('id', $valid_varitions_images)
+            ->where([ 'is_deleted'=>0, 'parent_id'=> $product->id, 'belongs_from' => 'md_app_product_attribute_variations'  ])
+            ->update([ 'is_deleted'=>1 ]);
+
+            /** Remove this product from draft */
+            AppProducts::where('id', $product->id)->update(['is_draft'=>0]);
+
+            
 
             return  redirect()->route('admin.app_products.list')->with('success',__('Product added successfully'));
 
@@ -536,37 +550,21 @@ class AppProductsController extends Controller{
             }
         }
 
-        // =>function($query){  $query->where() }
-        $productVariations = AppProductAttributeVariations::with('variations')->where(['is_deleted'=> 0, 'product_id'=> $product->id])
+        $productVariations = AppProductAttributeVariations::where(['is_deleted'=> 0, 'product_id'=> $product->id])
                             ->select(['regular_price as price', 'id', 'in_stock'])
                             ->get();
 
-        foreach ($productVariations as $key => $value) {
-            $productVariations[$key]->attribute = $attributeData;
+        $form = "";
+        foreach ($productVariations as $index => $item) {
+            $form .= View::make('admin.app_products.products.elements.variations_form', compact(['index','attributeData','item','product']));
         }
 
-        prd($productVariations->toArray());
-
-
-        // EXQUISITE_TIARA_AND_NECKLACE
-        // $product_vari = AppProductAttributeVariations::with(['variations'=>function($query){
-        //     $query->select(['attribute_variation_id','attribute_id','master_attribute_id as variations_attribute_id', 'variation_id as id', 'id as rowId']);
-        // }])->select(['regular_price as price', 'id', 'in_stock'])->where(['product_id'=> $product->id, 'is_deleted'=>0, 'is_active'=>1])->get();
-        // if($product_vari->count()){
-        //     $product_vari = $product_vari->toArray();
-        //     foreach ($product_vari as $key => $value) {
-        //         $product_vari[$key]['image'] = AppProductImages::image($value['id']);
-        //         $product_vari[$key]['variation_ids'] = array_map(function($element) { return  $element['id']; }, $value['variations'] );
-        //     }
-        // }
-        // die;
-        // prd($product_vari);
-        // prd($product_vari->toArray());
 
         if($request->post()){
 
              /** create validations */
              $validated = $request->validate([
+                'product_attribute_variations' => 'sometimes',
                 'variation_data.*.price' => 'required',
                 'variation_data.*.variations' => 'sometimes',
                 'variation_data.*.in_stock' => 'sometimes',
@@ -577,38 +575,84 @@ class AppProductsController extends Controller{
 
 
             $data = $request->all();
+            // prd($data);
 
+            $valid_varitions = [];
+            $valid_varitions_images = [];
             foreach ($data['variation_data'] as $data_key => $data_value) {
-                
-                $new_var = new AppProductAttributeVariations();
-                $new_var->product_id  = $product->id;
-                $new_var->sale_price = $data_value['price'];
-                $new_var->regular_price = $data_value['price'];
-                $new_var->in_stock = $data_value['in_stock'] ? $data_value['in_stock'] : 0 ;
-                $new_var->save();
 
-                foreach ($data_value['variations'] as $var_data_key => $var_data_value) {
-                    $varData = Masters::where('id', $var_data_value['id'])->first();
-                    if( !empty($varData) ){
-                        $new_var_des = new AppProductAttributeVariationDescripiton();
-                        $new_var_des->product_id = $product->id;
-                        $new_var_des->attribute_id = $var_data_value['attribute_id'];
-                        $new_var_des->master_attribute_id = $var_data_value['variations_attribute_id'];
-                        $new_var_des->attribute_variation_id = $new_var->id;
-                        $new_var_des->variation_id = $var_data_value['id'];
-                        $new_var_des->variation_parent_id = $varData['parent_id'];
-                        $new_var_des->variation_name = $varData['name'];
-                        $new_var_des->variation_data =  json_encode($varData);
-                        $new_var_des->save();
+                if(empty($data_value['product_attribute_variations'])){
+                    $var_record = new AppProductAttributeVariations();
+                }else{
+                    $var_record = AppProductAttributeVariations::where('id',$data_value['product_attribute_variations'])->first();
+                    if(empty($var_record)){
+                        $var_record = new AppProductAttributeVariations();
                     }
                 }
+
+                $var_record->product_id  = $product->id;
+                $var_record->sale_price = $data_value['price'];
+                $var_record->regular_price = $data_value['price'];
+                $var_record->in_stock = $data_value['in_stock'] ? $data_value['in_stock'] : 0 ;
+                $var_record->save();
+
+                $valid_varitions[] = $var_record->id;
+
+
+                if(!empty($data_value['image_id']) && $var_record->id){
+                    /** Update parent id of image */
+                    AppProductImages::where('id', $data_value['image_id'] )->update(['parent_id'=> $var_record->id] );
+                    $valid_varitions_images[] = $data_value['image_id'];
+                }
+
+                $valid_varition_items = [];
+                foreach ($data_value['variations'] as $var_data_key => $var_data_value) {
+
+                    $varData = Masters::where('id', $var_data_value['variation_id'])->first();
+
+                    if(!empty($varData)){
+                        if(empty($data_value['product_attribute_variations'])){
+                            $var_des_record = new AppProductAttributeVariationDescripiton();
+                        }else{
+                            $var_des_record = AppProductAttributeVariationDescripiton::where('id',$var_data_value['id'])->first();
+                            if(empty($var_des_record)){
+                                $var_des_record = new AppProductAttributeVariationDescripiton();
+                            }
+                        }
+                        $var_des_record->product_id = $product->id;
+                        $var_des_record->attribute_id = $var_data_value['attribute_id'];
+                        $var_des_record->master_attribute_id = $var_data_value['master_attribute_id'];
+                        $var_des_record->attribute_variation_id = $var_record->id;
+                        $var_des_record->variation_id = $var_data_value['variation_id'];
+                        $var_des_record->variation_parent_id = $varData['parent_id'];
+                        $var_des_record->variation_name = $varData['name'];
+                        $var_des_record->variation_data =  json_encode($varData);
+                        $var_des_record->save();
+
+                        $valid_varition_items[] = $var_des_record->id;
+                    }
+                }
+                
+                AppProductAttributeVariationDescripiton::where('attribute_variation_id',$var_record->id)
+                ->where(['product_id' => $product->id , 'is_deleted' => 0])
+                ->whereNotIn('id', $valid_varition_items)
+                ->update(['is_deleted'=>1]);
+
             }
 
-            return  redirect()->route('admin.app_products.list')->with('success',__('Product added successfully'));
+            /** Delete extra variations and variation description */
+            AppProductAttributeVariations::whereNotIn('id', $valid_varitions)->where(['product_id' => $product->id , 'is_deleted' => 0 ] )->update(['is_deleted'=>1]);
+            
+            AppProductImages::whereIn('id', $valid_varitions_images)
+            ->where([ 'is_deleted'=>0, 'parent_id'=> $product->id, 'belongs_from' => 'md_app_product_attribute_variations'  ])
+            ->update([ 'is_deleted'=>1 ]);
 
+            // AppProductAttributeVariationDescripiton::whereIn('attribute_variation_id',$valid_varitions)->where(['product_id' => $product->id , 'is_deleted' => 0])->update(['is_deleted'=>1]);
+
+            return  redirect()->route('admin.app_products.variations_edit', $product->slug)->with('success',__('Product added successfully'));
         }
 
-        return view($this->view_path . 'variations_edit' ,compact(['attributes','attributeData','product']) );
+        return view($this->view_path . 'variations_edit' ,compact(['attributes','attributeData','product','form']) );
     }//endof variationsSelection
 
 

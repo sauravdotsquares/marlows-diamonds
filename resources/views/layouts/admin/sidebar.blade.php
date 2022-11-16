@@ -144,6 +144,7 @@
 
             </ul>
           </li>
+
           <li class="nav-item @if(request()->segment(2) == 'products') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'products') active @endif">
               <i class="nav-icon fas fa-edit"></i>
@@ -179,6 +180,16 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="{{  route('admin.app_products.list') }}" class="nav-link ">
+              <i class="nav-icon fa fa-cart-plus"></i>
+              <p>
+                Products new
+              </p>
+            </a>
+          </li>
+
           <li class="nav-item @if(request()->segment(2) == 'users') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'users') active @endif">
               <i class="nav-icon fa fa-users"></i>

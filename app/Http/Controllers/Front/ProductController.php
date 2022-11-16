@@ -752,14 +752,34 @@ class ProductController extends Controller
 
 
                         $image = getProductVariationImage($productData->id, $request);
+
+                        /** Apply discount */
+                        // $prodCategoriesDJ
+                        // $disPercentage['end_date'] >= date('Y-m-d')
+                        //$checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
+                        $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
+                                                    $q->whereDate('end_date', '>', now());
+                                                })
+                                                ->with(['discount_data'])
+                                                ->whereIn('category_id', $prodCategoriesDJ)
+                                                ->whereRaw('"' . $price . '" between `from_price` and `to_price`')
+                                                ->first();
+                        
+                        if(!empty($getDiscountRange)){
+                            $price_after_discount = ($getDiscountRange->discount / 100) * $price;
+                        }else{
+                            $price_after_discount = 0;
+                        }
                        
                         $newArray['vari_image'] = !empty($image['vari_image']) ? $image['vari_image'] : '';
-                        $newArray['formula'] = true;
+                        //$newArray['formula'] = true;
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
-                        $newArray['regular_price'] = $price;
-
-                        $newArray['regular_price_with_vat'] = $totalPrice ? round($totalPrice) : '00';
-                        $newArray['regular_price_with_vat_discount'] = round($price);
+                        $newArray['regular_price'] = round($price);
+                        $newArray['discount_data'] =  $getDiscountRange;
+                        // $newArray['now'] =  now();
+                        $newArray['regular_price_with_vat'] = round($price);
+                        // $newArray['regular_price_with_vat_discount'] = round($price);
+                        $newArray['regular_price_with_vat_discount'] = round($price) - round($price_after_discount);
                         
                         // $newArray['regular_price_with_vat'] = $totalPrice ? number_format((float)$totalPrice, 2, '.', '') : '0.00';
                         // $newArray['regular_price_with_vat_discount'] = number_format((float)$price, 2, '.', '');

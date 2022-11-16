@@ -48,4 +48,19 @@ class AppProducts extends Model{
     public function getProductVariation(){
         return $this->hasMany(AppProductAttributeVariations::class,'product_id','id');
     }
+
+    /** Categories that are selected for products */
+    public function categories(){
+        return $this->hasMany(AppProductCategories::class,'product_id','id');
+    }
+
+    /** variations that are selected for products */
+    public function variations(){
+        return $this->hasMany(AppProductAttributeVariations::class,'product_id','id');
+    }
+
+    /** images that are selected for a product */
+    public function images(){
+        return $this->hasMany(AppProductImages::class,'parent_id','id');
+    }
 }
