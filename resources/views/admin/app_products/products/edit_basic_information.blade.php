@@ -264,7 +264,7 @@
             csrf : '{{ csrf_token() }}',
             removeImageUrl : `{{ route("admin.app_products.remove_images") }}`,
             imgBasePath: "{{ asset('uploads') }}",
-            selectedImages : <?php echo  !empty($product->productImages['thumb_image']) ? json_encode($product->productImages['thumb_image']) : [] ?>,
+            selectedImages : <?php echo !empty($product->productImages['thumb_image']) ? json_encode($product->productImages['thumb_image']) : json_encode([]); ?>,
             allowedExtensions : ['jpeg','png','jpg','webp']
         });
         imageUploader('#thumb_video', {
@@ -274,7 +274,7 @@
             csrf : '{{ csrf_token() }}',
             removeImageUrl : `{{ route("admin.app_products.remove_images") }}`,
             imgBasePath: "{{ asset('uploads') }}",
-            selectedImages : <?php echo  !empty($product->productImages['thumb_video']) ? json_encode($product->productImages['thumb_video']) : [] ?>,
+            selectedImages : <?php echo !empty($product->productImages['thumb_video']) ? json_encode($product->productImages['thumb_video']) : json_encode([]); ?>,
             allowedExtensions : ['mp4']
         });
         imageUploader('#featured_images', {
@@ -284,7 +284,7 @@
             csrf : '{{ csrf_token() }}',
             removeImageUrl : `{{ route("admin.app_products.remove_images") }}`,
             imgBasePath: "{{ asset('uploads') }}",
-            selectedImages : <?php echo  !empty($product->productImages['featured_image']) ? json_encode($product->productImages['featured_image']) : [] ?>,
+            selectedImages : <?php echo  !empty($product->productImages['featured_image']) ? json_encode($product->productImages['featured_image']) : json_encode([]); ?>,
             allowedExtensions : ['jpeg','png','jpg','webp']
         });
         imageUploader('#image_gallary', {
@@ -294,7 +294,7 @@
             csrf : '{{ csrf_token() }}',
             removeImageUrl : `{{ route("admin.app_products.remove_images") }}`,
             imgBasePath: "{{ asset('uploads') }}",
-            selectedImages :  <?php echo  !empty($product->productImages['product_gallery']) ? json_encode($product->productImages['product_gallery']) : [] ?>,
+            selectedImages :  <?php echo !empty($product->productImages['product_gallery']) ? json_encode($product->productImages['product_gallery']) : json_encode([]); ?>,
             allowedExtensions : ['jpeg','png','jpg','webp']
         });
 
