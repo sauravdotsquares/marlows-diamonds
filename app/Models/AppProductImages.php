@@ -26,4 +26,16 @@ class AppProductImages extends Model{
         'created_at',
         'updated_at',
     ];
+
+
+    public static function image($parent_id=null){
+        if($parent_id){
+            $parentData = self::where(['parent_id'=> $parent_id, 'is_deleted'=>0, 'is_active'=>1 ])->first();
+            if(!empty($parentData)){
+                return $parentData->toArray();
+            }
+            return null;
+        }
+        return '';
+    }
 }

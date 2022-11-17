@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\GlobalCombinations;
 use App\Models\AppProductAttributes;
+use App\Models\AppProductAttributeVariationDescripiton;
 
 class Masters extends Model
 { 
@@ -66,6 +67,21 @@ class Masters extends Model
             $attributes[$attributes_key]['variations'] = self::where(['is_deleted'=>0,'is_active'=>1, 'parent_id'=>$attributes_value['attribute_id'] ])->get()->toArray();
         }
         return $attributes;
+    }
+
+
+    public static function attribute_variations($attributeId=null, $product_id=null){
+        if(empty($product_id)){
+            return self::where(['parent_id'=> $attributeId, 'is_deleted'=>0 ])->select(['id','name','slug'])->get()->toArray();
+        }else{
+            $variations = self::where(['parent_id'=> $attributeId, 'is_deleted'=>0 ])->select(['id','name','slug'])->get();
+            foreach ($variations as $key => $value) {
+                $isSelected = AppProductAttributeVariationDescripiton::where(['product_id'=>$product_id, 'is_deleted'=> 0 ,'variation_id'=>$value['id'] ])->first();
+                $variations[$key]['selected'] = !empty($isSelected) ? true : false;
+                
+            }
+            return $variations->toArray();
+        }
     }
 
 }

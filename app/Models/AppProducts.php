@@ -33,11 +33,34 @@ class AppProducts extends Model{
         'updated_at',
     ];
 
-    public function getProductImages(){
-        return $this->hasOne(AppProductImages::class,'product_id','id')->where('image_type','image_type');
+    public function productMeta(){
+        return $this->hasOne(MetaInformation::class,'parent_id','id');
+    }
+
+    public function productAttributes(){
+        return $this->hasMany(AppProductAttributes::class,'product_id','id');
+    }
+
+    public function productImages(){
+        return $this->hasMany(AppProductImages::class,'parent_id','id');
     }
 
     public function getProductVariation(){
         return $this->hasMany(AppProductAttributeVariations::class,'product_id','id');
+    }
+
+    /** Categories that are selected for products */
+    public function categories(){
+        return $this->hasMany(AppProductCategories::class,'product_id','id');
+    }
+
+    /** variations that are selected for products */
+    public function variations(){
+        return $this->hasMany(AppProductAttributeVariations::class,'product_id','id');
+    }
+
+    /** images that are selected for a product */
+    public function images(){
+        return $this->hasMany(AppProductImages::class,'parent_id','id');
     }
 }
