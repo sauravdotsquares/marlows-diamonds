@@ -392,14 +392,14 @@ class ProductController extends Controller
 
     // }
 
-    public function getProductDetailsVariation(Request $request)
-    {
+    public function getProductDetailsVariation(Request $request){
+        
         $getVariations = ProductVariations::where('product_id',$request->id)->get()->toArray();
 
         // Get Product Attributes
 
         $attributes_val = ProductVariationAttributes::where('product_id',$request->id)->value('attr_values');
-
+        
         if($attributes_val!=''){
 
             $attributes = explode(',', $attributes_val);
@@ -415,6 +415,8 @@ class ProductController extends Controller
             }
 
         }
+        
+        
 
         //echo '<pre>';print_r($all_attrs); die;
 
@@ -433,6 +435,7 @@ class ProductController extends Controller
                 $variationArray[] = View::make('admin.products.variation',['index'=>$key,'section'=>$section,'variation'=>$variation,'all_attrs'=>$all_attrs,'prod_varitn'=>$prod_varitn])->render();
             }
         }
+        //prd($variationArray);
         return $variationArray;
     }
 

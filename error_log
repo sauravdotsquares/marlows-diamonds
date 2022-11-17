@@ -10,3 +10,7 @@ Stack trace:
 #4 /home/marlowsdiamondsc/public_html/marlows-diamond/app/Http/Controllers/Admin/XMLController.php(208): App\Http\Controller in /home/marlowsdiamondsc/public_html/marlows-diamond/app/Helpers/helper.php on line 343
 [09-Aug-2022 09:04:38 UTC] PHP Fatal error:  SOAP-ERROR: Parsing WSDL: Couldn't load from 'https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL' : failed to load external entity "https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL"
  in /home/marlowsdiamondsc/public_html/marlows-diamond/app/Helpers/helper.php on line 343
+[07-Oct-2022 09:02:34 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 135168 bytes) in /home/marlowsdiamondsc/public_html/marlows-diamond/vendor/nunomaduro/collision/src/Highlighter.php on line 195
+[07-Oct-2022 09:02:34 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in /home/marlowsdiamondsc/public_html/marlows-diamond/vendor/nunomaduro/collision/src/Highlighter.php on line 195
+[10-Nov-2022 09:07:05 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 16384 bytes) in /home/marlowsdiamondsc/public_html/marlows-diamond/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 373
+[10-Nov-2022 09:07:05 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 65536 bytes) in /home/marlowsdiamondsc/public_html/marlows-diamond/vendor/symfony/error-handler/Error/FatalError.php on line 89
