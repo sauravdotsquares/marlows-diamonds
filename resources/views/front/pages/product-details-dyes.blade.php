@@ -754,7 +754,7 @@
                         if(res.finalPrice == res.discountedPrice){
                             $('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
                         }else{
-                            $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                            $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price color-red" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
                         }
 						$('#selected_final_price').val(res.finalPrice);
 						$('#selected_diamond_price').val(res.diamondPrice);
@@ -826,11 +826,11 @@
 					if(res.finalPrice != ''){
 						// $('#finaldiamondprice').text(res);
                         if(res.finalPrice == res.discountedPrice){
-                            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
+                            $('#finaldiamondprice').html('<span class="price color-red" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
                             $('#selected_final_price').val(res.finalPrice);
                         }else{
                             // $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res+' </span>');
-                            $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                            $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price color-red" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
                             // $('#selected_final_price').val(res.finalPrice);
                         }
 
