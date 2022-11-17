@@ -826,7 +826,7 @@
 					if(res.finalPrice != ''){
 						// $('#finaldiamondprice').text(res);
                         if(res.finalPrice == res.discountedPrice){
-                            $('#finaldiamondprice').html('<span class="price color-red" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
+                            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
                             $('#selected_final_price').val(res.finalPrice);
                         }else{
                             // $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res+' </span>');
