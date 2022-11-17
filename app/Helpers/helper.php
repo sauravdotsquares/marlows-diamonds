@@ -915,5 +915,33 @@ if (!function_exists('validate_breadcrumb')) {
         return strlen($in) > $length ? substr($in,0,$length)."..." : $in;
     }
 
+    /**
+     * details about currency
+     */
+    function currency($query=[]){
+        return [
+            'symbol' => '£'
+        ];
+    } // endof currency
+
+    /** format of price how it shows */
+    function formatPrice($amount=''){
+        $currency = currency();
+
+        $symbol = "£";
+        if(!empty($currency['symbol'])){
+            $symbol = $currency['symbol'];
+        }
+
+        return $currency['symbol'] ." " . number_format($amount, 2);
+    } // endof formatPrice
+
+    /** 
+     * Function is use to return number of items that will need to show on products list page
+     */
+    function defaultProductPagination(){
+        return 20;
+    }// endof defaultProductPagination
+
 }
 

@@ -78,7 +78,7 @@
                                                             <i class="fa fa-check" aria-hidden="true"></i>
                                                         </a>
                                                     <?php } ?>
-                                                    <a title="{{ __('Edit') }}" href="javascript:;" class="btn btn-warning btn-sm">
+                                                    <a title="{{ __('Edit') }}" href="{{ route('admin.app_products.edit_basic_information', $data_value->slug) }}" class="btn btn-warning btn-sm">
                                                         <i class="fa fa-edit " aria-hidden="true"></i>
                                                     </a>
                                                     <a title="{{ __('Delete Product') }}" href="{{ route('admin.app_products.delete', $data_value->slug) }}" class="btn btn-danger btn-sm confirm_first">

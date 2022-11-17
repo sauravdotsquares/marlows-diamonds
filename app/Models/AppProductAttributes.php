@@ -24,6 +24,10 @@ class AppProductAttributes extends Model
         'updated_at',
     ];
 
+    public function info(){
+        return $this->hasOne(Masters::class,'id','attribute_id');
+    }
+
     // public function getInformationAttribute($value){
     //     if(gettype($value) == 'string'){
     //         return json_decode($value, true);

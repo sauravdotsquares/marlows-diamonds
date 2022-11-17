@@ -19,13 +19,21 @@ class AppProductAttributeVariations extends Model
         'product_id',
         'attribute_id',
         'sale_price',
-        'price',
-        'image',
-        'video',
-        'stock',
+        'regular_price',
+        'in_stock',
         'is_active',
         'is_deleted',
         'created_at',
         'updated_at',
     ];
+
+    public function variations(){
+        return $this->hasMany(AppProductAttributeVariationDescripiton::class,'attribute_variation_id','id');
+    }
+
+    public function images(){
+        return $this->hasMany(AppProductImages::class,'parent_id','id');//->where('belongs_from', 'md_app_product_attribute_variations');
+    }
+
+    
 }

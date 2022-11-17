@@ -20,6 +20,8 @@ class DiscountRange extends Model
         'status',
     ];
 
-
+    public function discount_data(){
+        return $this->hasOne(Discount::class,'id','discount_id');
+    }
 
 }
