@@ -396,7 +396,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-type label {display: inline-block;vertical-align: middle;margin: 0 12px 0 0;}
 .product-decriptions p {color: #404040;font-size: 14px;margin: 0;}
 .product-decriptions {margin: 20px 0 20px 0;}
-.product-finder-price .price {font-size: 26px;color: #8e2e65;font-weight: bold;}
+.product-finder-price .price {font-size: 26px;color: #eb0000;font-weight: bold;}
 .product-add-cart {display: flex;align-items: center;}
 .product-add-cart {display: flex;align-items: center;margin: 18px 0 0 0;}
 .product-to-wishlist a {font-size: 24px;color: #8e2e65;}
