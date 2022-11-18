@@ -1084,3 +1084,14 @@ a[disabled="disabled"] {pointer-events: none;}
 .exclusive-text{
 	font-weight:900;
 }
+@media(max-width:1400px){
+	.post-bar .post-bar-center p {
+		font-size: 12px;
+	}
+}
+	
+@media(max-width:1199px){
+	.post-bar .post-bar-center p {
+		font-size: 10px;
+	}
+}
