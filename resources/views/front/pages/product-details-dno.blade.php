@@ -38,11 +38,11 @@
 			<div class="product-info-media">
 				{{-- <a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
                 @if($plainbandMulti==false)
-                    <div id="carousel" class="owl-carousel ">
+                    <div id="carousel" class="owl-carousel">
                         @if($variationImages)
                             @foreach($variationImages as $images)
                                 <div class="item">
-                                    <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
+                                    <a data-type="variationImages" data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
                                         <img src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
                                     </a>
                                 </div>
@@ -58,7 +58,7 @@
                                     @endphp
                                     @if(isset($images->is_featured) && $images->is_featured != 1)
                                         <div class="item">
-                                            <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
+                                            <a data-type="productImage" data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
                                                 <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
                                             </a>
                                         </div>
