@@ -166,7 +166,7 @@ class ProductController extends Controller
                             'variationImages' => $variationDetails,
                             'requestData' => $requestData,
                             'all_categories_slug' => $all_categories_slug,
-                            // 'customSlider' => $customSlider
+                            'customSlider' => $customSlider
                         ]
                     );
                 }
