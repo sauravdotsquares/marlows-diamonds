@@ -41,13 +41,15 @@
                     <div id="carousel" class="owl-carousel">
                         @if($variationImages)
                             @foreach($variationImages as $images)
-                                <div class="item">
+                                <div class="item product-items-carousel">
                                     <a data-type="variationImages" data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
                                         <img src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
                                     </a>
                                 </div>
                             @endforeach
                         @endif
+							
+
 
                         @if(isset($prodImages) && $prodImages)
                             @foreach($prodImages as $images)
@@ -57,8 +59,8 @@
                                         $explode1 = explode('.',$explode[1]);
                                     @endphp
                                     @if(isset($images->is_featured) && $images->is_featured != 1)
-                                        <div class="item">
-                                            <a data-type="productImage" data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
+                                        <div class="item product-items-carousel">
+                                            <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
                                                 <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
                                             </a>
                                         </div>
@@ -414,6 +416,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
 
+		const imagesPath = "{{asset('/storage/')}}/";
+		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}"
+
         function blankForm(){
             $('input[name="title"]').val('');
             $('input[name="email"]').val('');
@@ -655,15 +660,57 @@
 					}
 
 
-					
 
-					if(res.vari_image!='' && res.vari_image!=null){
-						variation_image = data_slug+'/storage/'+res.vari_image;
+					if( parseInt(customSlider) && typeof res.vari_image!='undefined' && res.vari_image && res.vari_image!=null){
+						const items = $('#carousel').find('.owl-item');
+						const itemToAddInCarousel = `<div class="item product-items-carousel custom-item-carousel" data-position="${items.length+1}">
+															<a data-fancybox="gallery2" href="${imagesPath + res.vari_image}" data-caption="${res.vari_image}">
+																<img src="${imagesPath + res.vari_image}" alt="${res.vari_image}">
+															</a>
+													</div>`;
+						
 
-						var $speed = 0;
-						$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
+						// const items = $('#carousel').find('.owl-item');
+						$('#carousel').find('.owl-item').each((index, element)=>{
+							if($(element).find('.custom-item-carousel').length){
+								$('#carousel').trigger('remove.owl.carousel',index);
+							}
+						});
+						
+						const pendingItems = $('#carousel').find('.owl-item');
+						$('#carousel')
+						.trigger('add.owl.carousel', [itemToAddInCarousel])
+						.trigger('refresh.owl.carousel')
+						.trigger('to.owl.carousel', [pendingItems.length, 0])
+						.trigger('refresh.owl.carousel')
+						.trigger('stop.owl.autoplay')
+						.trigger('play.owl.autoplay',[7000, 300])
+					}else if(res.vari_image!='' && res.vari_image!=null){
+						// console.log('Im here')
 
+						const items = $('#carousel').find('.owl-item');
+						items.each((index, element)=>{
+							$(element).find('.product-items-carousel').attr('data-position', index);
+						});
+
+						console.log($("#carousel .owl-stage .owl-item").find('a[href*="'+res.vari_image+'"]').parent().data( 'position' ));
+
+						if(res.vari_image!='' && res.vari_image!=null){
+							variation_image = data_slug+'/storage/'+res.vari_image;
+							var $speed = 0;
+							$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
+						}
 					}
+
+					/** TODO: remove in carousel */
+					/** TODO: Add image in carousel */
+
+					// if(res.vari_image!='' && res.vari_image!=null){
+					// 	variation_image = data_slug+'/storage/'+res.vari_image;
+					// 	var $speed = 0;
+					// 	$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
+					// }
+
 				}
 			});
 		}

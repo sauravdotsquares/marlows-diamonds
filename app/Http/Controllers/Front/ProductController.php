@@ -139,10 +139,20 @@ class ProductController extends Controller
                         $all_categories_slug = [];
                     }
                     
-                    $variationDetails = ProductVariations::where('product_id', $getProduct->id)
+                    /** This code is for removing duplicate iamges */
+                    $prdIdsToRmvDplictImgs = duplicateProductRemoveIds();
+                    if(in_array($getProduct->id,$prdIdsToRmvDplictImgs)){
+                        $variationDetails = null;
+                        $customSlider = 1;
+                    }else{
+                        $variationDetails = ProductVariations::where('product_id', $getProduct->id)
                         ->select('vari_image')
                         ->groupBy('vari_image')
                         ->get();
+                        $customSlider = 0;
+                    }
+
+                    
 
                     return  view(
                         'front.pages.product-details-dno',
@@ -155,7 +165,8 @@ class ProductController extends Controller
                             'plainband' => $plainband,
                             'variationImages' => $variationDetails,
                             'requestData' => $requestData,
-                            'all_categories_slug' => $all_categories_slug
+                            'all_categories_slug' => $all_categories_slug,
+                            // 'customSlider' => $customSlider
                         ]
                     );
                 }
