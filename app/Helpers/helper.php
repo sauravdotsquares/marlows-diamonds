@@ -943,5 +943,24 @@ if (!function_exists('validate_breadcrumb')) {
         return 20;
     }// endof defaultProductPagination
 
+    /**
+     * getPercentage
+     * function is use to get amount after percentage
+     */
+    function getPercentage($total, $percentage=0, $decimal=0){
+        $percentageAmount = ($percentage / 100) * $total;
+        return  round($total - $percentageAmount, $decimal);
+    }// endof getPercentage
+
+
+    function duplicateProductRemoveIds(){
+        $productIdsToRemoveImages = Masters::where(['is_deleted'=>0, 'is_active'=>1, 'type'=> 'product_duplicate_image_remove'])->pluck('value');
+        if(!empty($productIdsToRemoveImages) && $productIdsToRemoveImages->count()){
+            return $productIdsToRemoveImages->toArray();
+        }else{
+            return [];
+        }
+    }
+
 }
 
