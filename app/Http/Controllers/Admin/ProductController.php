@@ -18,6 +18,7 @@ use App\Models\DiamondShapes;
 use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\Masters;
+use App\Models\ProductThumbVideos;
 
 use View;
 
@@ -632,7 +633,7 @@ class ProductController extends Controller
         $breadcrumb = [
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Products", "url" => route("admin.products-list"), "icon" => ""],
-            ["name" => "Product pricing", "url" => route("admin.product-pricing",[$request['slug']]), "icon" => ""],
+            ["name" => "Product file", "url" => route("admin.update_product_images",[$request['slug']]), "icon" => ""],
         ];
         $page_title = 'Product pricing';
         populate_breadcrumb($breadcrumb);
@@ -640,8 +641,6 @@ class ProductController extends Controller
         if(empty($product)){
             return redirect()->route('admin.products-list')->with('error','Products not identified');
         }
-
-
         if($request->post()){
 
             if($request->hasFile('image')){
@@ -651,7 +650,7 @@ class ProductController extends Controller
                 $file = $request->file('image');
 
                 if(!empty($image) && !empty($image)){
-                    $new_image = new ProductImages();
+                    $new_image = new ProductThumbVideos();
                     $new_image->product_id  = $product->id;
                     $new_image->image_url = $image;
                     $new_image->type = "thumbnail_rotation_image";
@@ -659,8 +658,8 @@ class ProductController extends Controller
                     $new_image->extension = $file->getClientOriginalExtension();;
                     $new_image->size = $file->getSize();
                     if( $new_image->save() ){
-
-                        ProductImages::where(['type'=>'thumbnail_rotation_image','product_id'=> $product->id])->where('id','!=',$new_image->id)->delete();
+                        
+                        ProductThumbVideos::where(['type'=>'thumbnail_rotation_image','product_id'=> $product->id])->where('id','!=',$new_image->id)->delete();
 
                         return redirect()->back()->with('success','File uploaded successfully');
                     }else{

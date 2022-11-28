@@ -24,6 +24,7 @@ use App\Models\Popups;
 use App\Models\ProductImages;
 use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
+use App\Models\ProductThumbVideos;
 
 
 //use SoapClient;
@@ -783,7 +784,7 @@ if (!function_exists('validate_breadcrumb')) {
 
 
     function getThumbnailGif($productId=""){
-        $image = ProductImages::where([
+        $image = ProductThumbVideos::where([
             'status'=>1,
             'type' => 'thumbnail_rotation_image',
             'product_id' => $productId
