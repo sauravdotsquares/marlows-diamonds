@@ -42,7 +42,7 @@
                         @if($variationImages)
                             @foreach($variationImages as $images)
                                 <div class="item product-items-carousel">
-                                    <a data-type="variationImages" data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
+                                    <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
                                         <img src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
                                     </a>
                                 </div>
