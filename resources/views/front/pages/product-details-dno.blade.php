@@ -60,7 +60,7 @@
                                     @endphp
                                     @if(isset($images->is_featured) && $images->is_featured != 1)
                                         <div class="item product-items-carousel">
-                                            <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
+                                            <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">
                                                 <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
                                             </a>
                                         </div>
