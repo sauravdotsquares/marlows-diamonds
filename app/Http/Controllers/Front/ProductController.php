@@ -60,13 +60,14 @@ class ProductController extends Controller
 
         $requestData = $request->query() ? $request->query() : [];
 
+        
+
         if ($productSlug != null) {
             $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $productSlug)->first();
 
             if (isset($getProduct) && !empty($getProduct)) {
                 // Product Categories
                 $prod_categories = explode(',', $getProduct->categories);
-
                 
 
                 $checkPlanCat = Category::select('id')->whereIn('id', $prod_categories)->where('name', 'LIKE', '%plain%')->get()->toArray();
@@ -152,6 +153,20 @@ class ProductController extends Controller
                         $customSlider = 0;
                     }
 
+                    /** Add videos for Exclusive to marlows detail page */
+                    $videosForProduct = [];
+                    $isExclusive = 0;
+                    if(in_array('exclusive-to-marlows', $all_categories_slug)){
+                        $videosForProduct = ProductVariations::where('product_id', $getProduct->id)
+                        ->whereNotNull('vari_video')
+                        ->select(['vari_video','product_id'])
+                        ->where('vari_video', 'like', "%.mp4%")
+                        ->groupBy('vari_video')
+                        ->get();
+                        $videosForProduct = $videosForProduct->count() ? $videosForProduct->toArray() : [];
+                        $isExclusive = 1;
+                    }
+
                     
 
                     return  view(
@@ -166,7 +181,9 @@ class ProductController extends Controller
                             'variationImages' => $variationDetails,
                             'requestData' => $requestData,
                             'all_categories_slug' => $all_categories_slug,
-                            'customSlider' => $customSlider
+                            'customSlider' => $customSlider,
+                            'videosForProduct' => $videosForProduct,
+                            'isExclusive' => $isExclusive
                         ]
                     );
                 }
