@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/clear-cache', function() {
 	Artisan::call('cache:clear');
-	// \Artisan::call('config:cache');
+	// Artisan::call('config:cache');
 	// Artisan::call('route:cache');
 	// Artisan::call('view:clear');
 	echo 'Application cache cleared';
@@ -40,7 +40,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 
 		//Route::group(['middleware' => ['role:superadmin|admin']], function () {
 		Route::get('/', 'DashboardController@index')->name('dashboard');
-		Route::any('/uploadEditorImage', 'PostController@uploadEditorImage');
+		Route::any('/uploadEditorImage', 'PostController@uploadEditorImage')->name('uploadEditorImage');
 		Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 		// Change Password Routes
 		Route::get('/change-password', 'PasswordController@index')->name('change-password');
@@ -345,9 +345,10 @@ Route::namespace('Front')->group(function () {
 
 	Route::group(['as' => 'app_products.', 'prefix' => 'p' ], function () {
 
+		Route::any('/detail/{product_slug}', 'AppProductsController@productDetails')->name('details');
+		Route::any('/price', 'AppProductsController@getVariationPrice')->name('price');
+		Route::any('/{category_slug}', 'AppProductsController@getProductList')->name('list');
 
-		Route::any('/{category_slug}', 'AppProductsController@getProductList')->name('list'); // api for listing of products
-		Route::any('/detail/{product_slug}', 'AppProductsController@productDetails')->name('details'); // api for listing of products
 		// Route::any('/details/{slug}', 'AppProductsController@getProductDetails')->name('details');
 		// Route::any('/customfilter', 'AppProductsController@getCustomFilter')->name('customfilter');
 		// Route::any('/customfilternew', 'AppProductsController@getCustomFilterNew')->name('customfilternew');
@@ -357,6 +358,10 @@ Route::namespace('Front')->group(function () {
 		// Route::any('/edit/{slug}', 'GlobalCombinationsController@edit')->name('edit');
 		// Route::any('/status/{slug}', 'GlobalCombinationsController@status')->name('status');
 		// Route::any('/view/{slug}', 'GlobalCombinationsController@view')->name('view');
+	});
+
+	Route::group(['as' => 'wishlist.', 'prefix' => 'w' ], function () {
+		Route::any('/add', 'AppWishListController@addToWishList')->name('wishlist_add');
 	});
 
 });
