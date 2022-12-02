@@ -180,8 +180,8 @@
 		console.log("checking");
         var form_data = new FormData();
 		   //var uploadUrl = $('#uploadUrl').attr('url');
-         // var uploadUrl = '{{ asset("/posts/uploadEditorImage") }}';
-		 var SITEURL = '/admin/uploadEditorImage';
+         var SITEURL = '{{ route("admin.uploadEditorImage") }}';
+		//  var SITEURL = '/admin/uploadEditorImage';
         form_data.append('file', file);
 		form_data.append('_token', '{{csrf_token()}}');
         $.ajax({
