@@ -103,7 +103,7 @@
 						<div class="blos-listbox-text">
 							<div class="blos-list-date">
 								<span><i class="fa fa-user" aria-hidden="true"></i> MarlowsDiamonds at </span>
-								<span><i class="fa fa-clock-o" aria-hidden="true"></i> December 13, 2021</span>
+								<span><i class="fa fa-clock-o" aria-hidden="true"></i> {{isset($post->created_at)?$post->created_at->format('M d, Y'):""}} </span>
 							</div>
 							<div class="blos-list-title">
 								<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}">{{isset($post->title)?$post->title:""}}</a>
