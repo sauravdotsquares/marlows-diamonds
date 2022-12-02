@@ -153,22 +153,6 @@ class ProductController extends Controller
                         $customSlider = 0;
                     }
 
-                    /** Add videos for Exclusive to marlows detail page */
-                    $videosForProduct = [];
-                    $isExclusive = 0;
-                    if(in_array('exclusive-to-marlows', $all_categories_slug)){
-                        $videosForProduct = ProductVariations::where('product_id', $getProduct->id)
-                        ->whereNotNull('vari_video')
-                        ->select(['vari_video','product_id'])
-                        ->where('vari_video', 'like', "%.mp4%")
-                        ->groupBy('vari_video')
-                        ->get();
-                        $videosForProduct = $videosForProduct->count() ? $videosForProduct->toArray() : [];
-                        $isExclusive = 1;
-                    }
-
-                    
-
                     return  view(
                         'front.pages.product-details-dno',
                         [
@@ -182,8 +166,6 @@ class ProductController extends Controller
                             'requestData' => $requestData,
                             'all_categories_slug' => $all_categories_slug,
                             'customSlider' => $customSlider,
-                            'videosForProduct' => $videosForProduct,
-                            'isExclusive' => $isExclusive
                         ]
                     );
                 }
