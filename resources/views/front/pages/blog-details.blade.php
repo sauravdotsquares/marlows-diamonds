@@ -98,7 +98,14 @@
 				<div class="item">
 			    	<div class="blos-listbox">
 						<div class="blos-listbox-img">
-							<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}"><img src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}"></a>
+							<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}">
+								{{-- <img src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}"> --}}
+								@if(!empty(($post->image)))
+									<img src="{{asset('storage/'.$post->image)}}"  alt="{{$post->title}}">
+								@else 
+									<img src="{{url('/images/marlowsdiamonds-logo.png')}}"  alt="{{$post->title}}">
+								@endif
+							</a>
 						</div>
 						<div class="blos-listbox-text">
 							<div class="blos-list-date">
