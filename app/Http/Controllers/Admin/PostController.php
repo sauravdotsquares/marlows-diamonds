@@ -95,7 +95,7 @@ class PostController extends Controller
 	
 	public function uploadEditorImage(Request $request) {
         if ($files = $request->file('file')) {
-            $image = single_storage_image_upload($request->file('file'),'PostsNew','500','300');
+            $image = single_storage_image_upload($request->file('file'),'PostsNew');
 			// echo $image;
 			// die;
             $file_path = \Storage::url($image);
