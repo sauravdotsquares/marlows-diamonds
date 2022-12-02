@@ -38,7 +38,7 @@
 			<div class="product-info-media">
 				{{-- <a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
 
-				<?php if($isExclusive && count($videosForProduct)){ ?>
+				{{-- <?php if($isExclusive && count($videosForProduct)){ ?>
 
 					<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 						@if(isset($videosForProduct) && !empty($videosForProduct[0]['vari_video']))
@@ -48,7 +48,7 @@
 						@endif
 					</video>
 				
-				<?php }else{ ?>
+				<?php }else{ ?> --}}
 
 					@if($plainbandMulti==false)
 						<div id="carousel" class="owl-carousel">
@@ -91,7 +91,7 @@
 							@endif
 						</video>
 					@endif
-				<?php } ?>
+				{{-- <?php } ?> --}}
 
 
 
