@@ -6,7 +6,7 @@
             color: #e74c3c !important;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
 @endsection
     <!-- home main-banner start -->
     <div class="home-main-banner">
@@ -14,7 +14,7 @@
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
                     <h1 class="123">Find the Perfect Diamond Rings from Marlow’s</h1>
-                    <p>A diamond is forever, so should be yours.</p>
+                    <p> <strong> A diamond is forever, so should be yours. </strong> </p>
                     <div class="shop-engage-btn">
                         <a class="btn-bg-large" href="{{ asset('engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
                     </div>
@@ -336,8 +336,8 @@
 @endsection
 @section('js')
 <script src='https://www.google.com/recaptcha/api.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
 <script>
     grecaptcha.ready(function() {
         grecaptcha.execute('6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN', {
