@@ -20,7 +20,8 @@
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
                     <h1 class="123">Find the Perfect Diamond Rings from Marlow’s</h1>
-                    <p> <strong> A diamond is forever, so should be yours. </strong> </p>
+                    {{-- <p> <strong> A diamond is forever, so should be yours. </strong> </p> --}}
+                    <p><strong>Over 2500 mined and lab grown diamonds in stock to take away at online prices</strong></p>
                     <div class="shop-engage-btn">
                         <a class="btn-bg-large" href="{{ asset('engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
                     </div>
