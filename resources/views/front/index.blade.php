@@ -153,7 +153,7 @@
                                 <img src="assets/images/warranty.png" alt="Lifetime Warranty">
                             </div>
                             <div class="whychoose-col-text">
-                                Lifetime Warranty
+                                Lifetime Warranty T&c Apply
                             </div>
                         </div>
                     </div>
@@ -170,10 +170,10 @@
                     <div class="whychoose-col">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/favourite.png" alt="50 Years Experience">
+                                <img src="assets/images/favourite.png" alt="70 Years Experience">
                             </div>
                             <div class="whychoose-col-text">
-                                50 Years Experience
+                                70 Years Experience
                             </div>
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                                 <img src="assets/images/exchange.png" alt="FREE 30 Day Returns">
                             </div>
                             <div class="whychoose-col-text">
-                                FREE 30 Day Returns
+                                FREE 30 Day Returns. T&c Apply
                             </div>
                         </div>
                     </div>
@@ -341,7 +341,7 @@
 
 @endsection
 @section('js')
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src='https://www.google.com/recaptcha/api.js' async></script>
 <script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
 <script>
