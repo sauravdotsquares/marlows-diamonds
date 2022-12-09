@@ -163,18 +163,35 @@
                   <div class="col-md-6">
                      <div class="form-group">
                         <label for="exampleInputFile">Product Gallery</label>
+                        
                         @if(isset($getProductData->getProductGallery) && !empty($getProductData->getProductGallery))
                             @foreach($getProductData->getProductGallery as $key => $gallery)
                                 @if(isset($gallery->is_featured) && $gallery->is_featured != 1)
-                                    <div class="img_wrp">
-                                        <img src="{{ asset('storage/'.$gallery->image_url) }}" id="imgeremovenew{{$gallery->id}}"  alt=""  class="gallery_image">
-                                        <a href="javascript:void(0);" id="imgeremove{{$gallery->id}}" data-productdt="{{$gallery->product_id}}">
-                                            <img class="close" id="imgeremovenewClose{{$gallery->id}}"  src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
-                                        </a>
-                                    </div>
+
+                                    <?php if (preg_match('/\.(mp4)$/i', $gallery->image_url)) { ?>
+                                       <div class="img_wrp">
+                                          <video class="gallery_image" muted autoplay>
+                                             <source src="{{ asset('storage/'.$gallery->image_url) }}" type="video/mp4">
+                                           </video>
+                                          {{-- <img src="{{ asset('storage/'.$gallery->image_url) }}" id="imgeremovenew{{$gallery->id}}"  alt=""  class="gallery_image"> --}}
+                                          <a href="javascript:void(0);" id="imgeremove{{$gallery->id}}" data-productdt="{{$gallery->product_id}}">
+                                              <img class="close" id="imgeremovenewClose{{$gallery->id}}"  src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
+                                          </a>
+                                      </div>
+                                    <?php }else{ ?>
+                                       <div class="img_wrp">
+                                          <img src="{{ asset('storage/'.$gallery->image_url) }}" id="imgeremovenew{{$gallery->id}}"  alt=""  class="gallery_image">
+                                          <a href="javascript:void(0);" id="imgeremove{{$gallery->id}}" data-productdt="{{$gallery->product_id}}">
+                                              <img class="close" id="imgeremovenewClose{{$gallery->id}}"  src="{{asset('admin\dist\img\cross.png')}}" height="10" width="10" />
+                                          </a>
+                                      </div>
+                                    <?php } ?>
+
+                                    
                                 @endif
                             @endforeach
                         @endif
+
                         <div class="input-group">
                            <div class="custom-file">
                               <input type="file" id="gallery_image" name="gallery_image[]" multiple
