@@ -199,6 +199,8 @@ class ProductController extends Controller
             }
         }
 
+        // prd($getParentHierarchy);
+
 
         // prd($getParentHierarchy);
 
@@ -238,6 +240,9 @@ class ProductController extends Controller
             }
         }
 
+        
+
+        
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
         /** Order by  */
@@ -254,8 +259,11 @@ class ProductController extends Controller
             }
         }
 
-
-        $getProductListFinal = Products::with('getProductImages')->orderBy($orderKey, $orderValue )->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
+        $getProductListFinal = Products::with('getProductImages')->orderBy($orderKey, $orderValue)->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
+        // prd($getProductListFinal->count());
+        // ->whereIn('id', $output)
+        // 
+        // prd($getProductListFinal->count());
         
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $notInList=0;
@@ -515,7 +523,30 @@ class ProductController extends Controller
             $certificate = explode(',', $request->certificate);
         }
 
-        $data = array('shape' => $request->shape, 'colorFrom' => $colorFrom, 'colorTo' => $colorTo, 'colour' => $colour, 'clarityFrom' => $clarityFrom, 'clarityTo' => $clarityTo, 'clarity' => $clarity, 'caratFrom' => $caratFrom, 'caratTo' => $caratTo, 'gradeFrom' => $gradeFrom, 'gradeTo' => $gradeTo, 'grade' => $grade, 'polishFrom' => $polishFrom, 'polishTo' => $polishTo, 'polish' => $polish, 'symmetryFrom' => $symmetryFrom, 'symmetryTo' => $symmetryTo, 'symmetry' => $symmetry, 'fluorescence' => $fluorescence, 'certificate' => $certificate, 'num_of_row' => 1, 'PageSize' => 2);
+        $data = [
+            'shape' => $request->shape, 
+            'colorFrom' => $colorFrom, 
+            'colorTo' => $colorTo, 
+            'colour' => $colour, 
+            'clarityFrom' => $clarityFrom, 
+            'clarityTo' => $clarityTo, 
+            'clarity' => $clarity, 
+            'caratFrom' => $caratFrom, 
+            'caratTo' => $caratTo, 
+            'gradeFrom' => $gradeFrom, 
+            'gradeTo' => $gradeTo, 
+            'grade' => $grade, 
+            'polishFrom' => $polishFrom, 
+            'polishTo' => $polishTo, 
+            'polish' => $polish, 
+            'symmetryFrom' => $symmetryFrom, 
+            'symmetryTo' => $symmetryTo, 
+            'symmetry' => $symmetry, 
+            'fluorescence' => $fluorescence, 
+            'certificate' => $certificate, 
+            'num_of_row' => 1, 
+            'PageSize' => 2
+        ];
 
         //echo '<pre>'; print_r($data); die;
 
@@ -764,9 +795,6 @@ class ProductController extends Controller
                         $image = getProductVariationImage($productData->id, $request);
 
                         /** Apply discount */
-                        // $prodCategoriesDJ
-                        // $disPercentage['end_date'] >= date('Y-m-d')
-                        //$checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
                         $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
                                                     $q->whereDate('end_date', '>', now());
                                                 })
@@ -774,15 +802,15 @@ class ProductController extends Controller
                                                 ->whereIn('category_id', $prodCategoriesDJ)
                                                 ->whereRaw('"' . $price . '" between `from_price` and `to_price`')
                                                 ->first();
-                        
+                                                
                         if(!empty($getDiscountRange)){
                             $price_after_discount = ($getDiscountRange->discount / 100) * $price;
                         }else{
                             $price_after_discount = 0;
                         }
-                       
+
                         $newArray['vari_image'] = !empty($image['vari_image']) ? $image['vari_image'] : '';
-                        //$newArray['formula'] = true;
+                        $newArray['formula'] = true;
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
                         $newArray['regular_price'] = round($price);
                         $newArray['discount_data'] =  $getDiscountRange;
@@ -918,7 +946,6 @@ class ProductController extends Controller
                             if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
                                 if ($getDiscountRange->discount > 1) {
                                     $discountPercentage = 1 + ($getDiscountRange->discount / 100);
-                                    //echo 'here: - ' . $discountPercentage;die;
                                 } else {
                                     $discountPercentage = 1;
                                 }
@@ -937,9 +964,6 @@ class ProductController extends Controller
                         } else {
                             $increaseDiscount = 1;
                         }
-
-                        
-
                         $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
                     }
                 }
@@ -949,12 +973,14 @@ class ProductController extends Controller
                 if($categorySlugs->count()){
                     $categorySlugs = $categorySlugs->toArray();
                 }
+
+                /** Discount not applicable to exclusive to marlows */
                 if(in_array('exclusive-to-marlows', $categorySlugs)){
-                    $newArray['vari_image'] = $getSelectedVariationVideoImages->regular_price;;
-                    $newArray['vari_video'] = $getSelectedVariationVideoImages->regular_price;;
-                    $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;;
-                    $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;;
-                    $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;;
+                    $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+                    $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                    $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
                     return response()->json($newArray);
                 }
 

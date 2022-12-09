@@ -21,6 +21,8 @@
 		.dropdown-menu:before{content: " ";position:absolute;top:-20px;right:50px;border:10px solid transparent;border-bottom-color:#fff;}span.price-not-found {font-size: 14px;color: #8e2e65;font-weight: bold;}
 		.error {color: #e74c3c !important;}
 		div#finaldiamondprice span del {font-size: 20px;}
+		/* .carousel-thumbnails li{ -webkit-filter: brightness(80%); filter:brightness(80%); border: 1px solid transparent;}
+		.carousel-thumbnails li.active {filter: brightness(100%); border: 1px solid #8e2e65; border-radius: 1px;} */
 	</style>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -56,13 +58,11 @@
 								@foreach($variationImages as $images)
 									<div class="item product-items-carousel">
 										<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
-											<img src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
+											<img class="thumbnail-src" src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
 										</a>
 									</div>
 								@endforeach
 							@endif
-								
-
 
 							@if(isset($prodImages) && $prodImages)
 								@foreach($prodImages as $images)
@@ -70,11 +70,21 @@
 										@php
 											$explode = explode('/',$images->image_url);
 											$explode1 = explode('.',$explode[1]);
+											$ext = pathinfo($images->image_url, PATHINFO_EXTENSION);
+											$video_extensions = ['mp4'];
 										@endphp
+
 										@if(isset($images->is_featured) && $images->is_featured != 1)
 											<div class="item product-items-carousel">
 												<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">
-													<img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
+
+													<?php if(in_array($ext,$video_extensions)){ ?>
+														<video style="width: 100%;" loop autoplay muted="1" playsinline>
+															<source class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" type="video/mp4" type="video/mp4" />
+														</video>
+													<?php }else{ ?>
+														<img class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
+													<?php } ?>
 												</a>
 											</div>
 										@endif
@@ -82,6 +92,17 @@
 								@endforeach
 							@endif
 						</div>
+						<?php 
+							$thumbailsAllowed =	getMasterValuesByType('slider_thumbnails');
+							if(in_array($data->id, $thumbailsAllowed)){
+						?>
+							<!-- Thumbnails -->
+							<ol class="carousel-indicators list-inline carousel-thumbnails" style="d-none">	
+							</ol>
+						<?php } ?>
+
+						
+
 					@else
 						<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
@@ -92,8 +113,6 @@
 						</video>
 					@endif
 				{{-- <?php } ?> --}}
-
-
 
 
 			</div>
@@ -172,7 +191,7 @@
 					</div>
 					<div class="product-req-appointment">
 						<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#requestAppointment">
-						Request an Appointment
+							Request an Appointment
 						</a>
 					</div>
 				</div>
@@ -435,7 +454,7 @@
 	<script>
 
 		const imagesPath = "{{asset('/storage/')}}/";
-		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}"
+		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
 
         function blankForm(){
             $('input[name="title"]').val('');
@@ -553,9 +572,11 @@
 				},
 				success: function (res) {
 					if(res.vari_video){
-						var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
-						$('#variationVideo').attr('src', videoUrl);
-						$("#variationVideo")[0].play();
+						if($('#variationVideo').length){
+							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+							$('#variationVideo').attr('src', videoUrl);
+							$("#variationVideo")[0].play();
+						}
 					}
 					if(res.regular_price!='' || res.regular_price!='0.00')
 						$('#selected_variation_price').val(res.regular_price);
@@ -595,9 +616,10 @@
 				success: function (res) {
 
 					if(typeof res.formula!='undefined' && res.formula){
-
+						
+						var regular_p = res.regular_price;
 						$('#selected_variation_price').val(res.regular_price);
-						$('#selected_final_price').val(Math.round(regular_p));
+						$('#selected_final_price').val(regular_p);
 
 						if(res.statusCode == 500){
 							$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
@@ -607,8 +629,7 @@
 							if(regular_p == res.regular_price_with_vat_discount){
 								$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ res.regular_price_with_vat_discount + ' </span>');
 							}else{
-								$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+ regular_p +'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ parseFloat(res.regular_price_with_vat_discount).toFixed(2) + ' </span>');
-
+								$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+ regular_p +'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ res.regular_price_with_vat_discount + ' </span>');
 								$('#selected_discounted_price').val(res.regular_price_with_vat_discount);
 							}
 						}
@@ -632,19 +653,18 @@
 							// if(jewellery == 1){
 							//     regular_p_final = regular_p_final* 1.1;
 							// }
+
 							$('#selected_variation_price').val(res.regular_price);
 							$('#selected_final_price').val(Math.round(regular_p));
 							if(res.statusCode == 500){
 								$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
 							}else if(!regular_p){
-								console.log('regular_p','regular_p', regular_p)
 								$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
 							}else{
 								if(regular_p == res.regular_price_with_vat_discount){
-									console.log('regular_p', regular_p)
 									$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
 								}else{
-									console.log('regular_p', regular_p, 1258)
+									
 									$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p)+'</del> </span> <span class="price color-red" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
 
 									$('#selected_discounted_price').val(res.regular_price_with_vat_discount);
@@ -687,7 +707,6 @@
 															</a>
 													</div>`;
 						
-
 						// const items = $('#carousel').find('.owl-item');
 						$('#carousel').find('.owl-item').each((index, element)=>{
 							if($(element).find('.custom-item-carousel').length){
@@ -704,15 +723,11 @@
 						.trigger('stop.owl.autoplay')
 						.trigger('play.owl.autoplay',[7000, 300])
 					}else if(res.vari_image!='' && res.vari_image!=null){
-						// console.log('Im here')
 
 						const items = $('#carousel').find('.owl-item');
 						items.each((index, element)=>{
 							$(element).find('.product-items-carousel').attr('data-position', index);
 						});
-
-						console.log($("#carousel .owl-stage .owl-item").find('a[href*="'+res.vari_image+'"]').parent().data( 'position' ));
-
 						if(res.vari_image!='' && res.vari_image!=null){
 							variation_image = data_slug+'/storage/'+res.vari_image;
 							var $speed = 0;
@@ -840,32 +855,57 @@
         }
 
         $(document).ready(function() {
-	      var $owl = $('#carousel');
-
+	      	var $owl = $('#carousel');
 			$owl.children().each( function( index ) {
 			  $(this).attr( 'data-position', index ); // NB: .attr() instead of .data()
 			});
 	        $owl.owlCarousel({
 			  autoplay: true,
-			  rewind: true, /* use rewind if you don't want loop */
-			  /*margin: 20,*/
-			   /*
-			  animateOut: 'fadeOut',
-			  animateIn: 'fadeIn',
-			  */
+			  rewind: true, 
 			  responsiveClass: true,
-			  //autoHeight: true,
 			  autoplayTimeout: 7000,
 			  smartSpeed: 300,
 			  nav: true,
 			  items : 1,
+			  	onInitialized: function() {
+					$owl.find('.owl-item').each((index, element)=>{
+						const src = $(element).find('.thumbnail-src').attr('src');
+						const video_extensions = ['mp4'];
+						const extension = src.split(/[#?]/)[0].split('.').pop().trim();
+						let thumbnailItem = `<li class="list-inline-item ${ index ? '' : 'active' }">`;
+						thumbnailItem += `<a href="javascript:;" id="carousel-selector-${index}" class="carousel-thumbnail-item ${ index ? '' : 'selected' }" data-slide-to="${index}" data-target="#carousel">`;
+						
+						if(video_extensions.includes(extension)){
+							thumbnailItem += `<video muted class="img-fluid" style="height:100px; width:100px;">`;
+							thumbnailItem += `<source src="${src}" type="video/mp4" type="video/mp4" />`;
+							thumbnailItem += `</video>`;
+						}else{
+							thumbnailItem += `<img src="${src}" class="img-fluid" style="height:100px; width:100px;">`;
+						}
+						thumbnailItem += `</li>`;
+
+						$(".carousel-thumbnails").append(thumbnailItem);
+
+					})
+    			},
+			}).on("changed.owl.carousel", function(el) {
+				var index = el.item.index;
+				$('.carousel-thumbnail-item').closest('li').removeClass('active');
+				$('#carousel-selector-'+index).closest('li').addClass('active');
 			});
 
             $(document).on('click','.product-gallery__trigger',function(e){
-                    e.preventDefault();
-                    $('#carousel-zoom .item:first-child a').click();
+				e.preventDefault();
+				$('#carousel-zoom .item:first-child a').click();
             });
 
+			$(document).on('click','.carousel-thumbnail-item', function(){
+				const itemPosition = $(this).data('slide-to');
+				$owl
+				.trigger('to.owl.carousel', [itemPosition, 0])
+				.trigger('stop.owl.autoplay')
+				.trigger('play.owl.autoplay',[7000, 300]);
+			});
 	    });
 	</script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
