@@ -20,7 +20,7 @@
                                 $getHtml .= '<select data-field="attri_'.$keyData.'" id="attri_'.$keyData.$key.'"
                                 name="data['.$key.'][attri_'.$keyData.']" clas="form-control"> <option value="">Select Any'.ucfirst(str_replace('-',' ',$keyData)).'</option>';
             
-                                foreach($getValues as $newKey => $valAnother){ 
+                                foreach($getValues as $newKey => $valAnother){
                                     if($getAttrId_arr[$i] == $data->get_vari_details_id[$i]->key){
                                         // echo "Key 1 ".$getAttrId_arr[$i];
                                         // echo "Key 2 ".$data->get_vari_details_id[$i]->key;
@@ -53,8 +53,7 @@
                                 @endif
                                 <div class="form-label-group">
                                     <label for="vari_image">Image</label>
-                                    <input data-field="vari_image" type="file" id="vari_image" name="data[{{$key}}][vari_image]"
-                                        class="form-control">
+                                    <input data-field="vari_image" type="file" id="vari_image" name="data[{{$key}}][vari_image]" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">

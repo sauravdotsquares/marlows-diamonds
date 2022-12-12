@@ -988,6 +988,15 @@ if (!function_exists('validate_breadcrumb')) {
         return  round($total - $percentageAmount, $decimal);
     }// endof getPercentage
 
+    /**
+     * getPercentageValue
+     * function is use to get amount after percentage
+     */
+    function getPercentageValue($total, $percentage=0, $decimal=0){
+        $percentageAmount = ($percentage / 100) * $total;
+        return  round($percentageAmount);
+    }// endof getPercentageValue
+
 
     function duplicateProductRemoveIds(){
         $productIdsToRemoveImages = Masters::where(['is_deleted'=>0, 'is_active'=>1, 'type'=> 'product_duplicate_image_remove'])->pluck('value');
@@ -995,6 +1004,42 @@ if (!function_exists('validate_breadcrumb')) {
             return $productIdsToRemoveImages->toArray();
         }else{
             return [];
+        }
+    }
+
+
+    function show_percentage($amount=0, $pricing_data=[] , $type="show"){
+         
+        if(empty($pricing_data)){
+           return $amount;
+        }
+        $percentageValue = getPercentageValue($amount, $pricing_data->percentage); 
+        switch ($type) {
+           case 'show':{
+              $toReturn = $amount;
+              if(!empty($pricing_data)){
+                 if($pricing_data->type == 'increase'){
+                    $toReturn .= " + $percentageValue ($pricing_data->percentage%)";
+                 }else{
+                    $toReturn .= " - $percentageValue ($pricing_data->percentage%)";
+                 }
+              }
+              return $toReturn;
+              break;
+           }
+           case 'action':{
+                 if($pricing_data->type == 'increase'){
+                    return $amount + $percentageValue;
+                 }else{
+                    return $amount - $percentageValue;
+                 }
+              break;
+           }
+           
+           default:{
+              return 'N/A';
+              break;
+           }
         }
     }
 

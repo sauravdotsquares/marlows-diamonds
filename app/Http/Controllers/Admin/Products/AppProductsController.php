@@ -26,6 +26,7 @@ use App\Models\Products\Combinations;
 
 use App\Models\AppProductAttributeVariations;
 use App\Models\AppProductAttributeVariationDescripiton;
+use App\Models\Queue;
 
 
 use Illuminate\Support\Facades\File; 
@@ -551,11 +552,22 @@ class AppProductsController extends Controller{
         }
 
         $productVariations = AppProductAttributeVariations::where(['is_deleted'=> 0, 'product_id'=> $product->id])
+                            ->with(['images'=>function($query){
+                                $query->where(['is_active'=>1, 'is_deleted'=> 0, 'belongs_from'=> 'md_app_product_attribute_variations' , 'image_type' => 'variation' ]);
+                            }])
                             ->select(['regular_price as price', 'id', 'in_stock'])
                             ->get();
 
+        // prd($productVariations->toArray());die;
+
         $form = "";
-        foreach ($productVariations as $index => $item) {
+        if($productVariations->count()){
+            foreach ($productVariations as $index => $item) {
+                $form .= View::make('admin.app_products.products.elements.variations_form', compact(['index','attributeData','item','product']));
+            }
+        }else{
+            $index = 0;
+            $item = [];
             $form .= View::make('admin.app_products.products.elements.variations_form', compact(['index','attributeData','item','product']));
         }
 
@@ -572,7 +584,6 @@ class AppProductsController extends Controller{
             ],[
                 'variation_data.*.price.required' => 'Please enter price',
             ]);
-
 
             $data = $request->all();
             // prd($data);
@@ -595,15 +606,39 @@ class AppProductsController extends Controller{
                 $var_record->regular_price = $data_value['price'];
                 $var_record->in_stock = $data_value['in_stock'] ? $data_value['in_stock'] : 0 ;
                 $var_record->save();
-
                 $valid_varitions[] = $var_record->id;
 
 
                 if(!empty($data_value['image_id']) && $var_record->id){
                     /** Update parent id of image */
                     AppProductImages::where('id', $data_value['image_id'] )->update(['parent_id'=> $var_record->id] );
-                    $valid_varitions_images[] = $data_value['image_id'];
+
+                    /** Delete previous image */
+                    $imagesToDelete = AppProductImages::where([ 
+                        'is_deleted'=>0, 
+                        'parent_id'=> $var_record->id, 
+                        'belongs_from' => 'md_app_product_attribute_variations' 
+                    ])
+                    ->where('id','!=',$data_value['image_id'])
+                    ->pluck('id');
+                    
+                    if($imagesToDelete->count()){
+                        $imagesToDelete = $imagesToDelete->toArray();
+                        AppProductImages::whereIn('id',$imagesToDelete)->update([ 'is_deleted'=>1 ]);
+
+                        $imagesModal = new AppProductImages();
+                        /** add task to do later for delete images  */
+                        $new_queue = new Queue();
+                        $new_queue->task = json_encode([
+                            'table' => $imagesModal->getTable(),
+                            'action' => 'delete',
+                            'perform_ids' => $imagesToDelete
+                        ]);
+                        $new_queue->save();
+                    }
                 }
+
+                
 
                 $valid_varition_items = [];
                 foreach ($data_value['variations'] as $var_data_key => $var_data_value) {
@@ -637,15 +672,31 @@ class AppProductsController extends Controller{
                 ->where(['product_id' => $product->id , 'is_deleted' => 0])
                 ->whereNotIn('id', $valid_varition_items)
                 ->update(['is_deleted'=>1]);
-
             }
 
             /** Delete extra variations and variation description */
             AppProductAttributeVariations::whereNotIn('id', $valid_varitions)->where(['product_id' => $product->id , 'is_deleted' => 0 ] )->update(['is_deleted'=>1]);
             
-            AppProductImages::whereIn('id', $valid_varitions_images)
-            ->where([ 'is_deleted'=>0, 'parent_id'=> $product->id, 'belongs_from' => 'md_app_product_attribute_variations'  ])
-            ->update([ 'is_deleted'=>1 ]);
+
+            
+            // $imagesToDelete = AppProductImages::whereNotIn('id', $valid_varitions_images)
+            // ->where([ 'is_deleted'=>0, 'parent_id'=> $product->id, 'belongs_from' => 'md_app_product_attribute_variations'  ])->pluck('id');
+            // prd($imagesToDelete);
+            // if($imagesToDelete->count()){
+            //     $imagesToDelete = $imagesToDelete->toArray();
+            //     AppProductImages::whereIn('id',$imagesToDelete)->update([ 'is_deleted'=>1 ]);
+
+            //     /** add task to do later for delete images  */
+            //     $new_queue = new Queue();
+            //     $new_queue->task = json_encode($imagesToDelete);
+            //     $new_queue->save();
+            // }
+
+            
+
+            
+
+            
 
             // AppProductAttributeVariationDescripiton::whereIn('attribute_variation_id',$valid_varitions)->where(['product_id' => $product->id , 'is_deleted' => 0])->update(['is_deleted'=>1]);
 

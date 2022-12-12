@@ -115,6 +115,12 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::post('/products/add-attribute-data','ProductController@addAttribute')->name('add-attribute');
 		Route::post('/products/get-attribute-data','ProductController@getAttribute')->name('get-attribute');
 		Route::post('/products/remove-product-images','ProductController@removeProductImages')->name('remove-product-images');
+		Route::get('/products/base-price-list','ProductController@basePriceList')->name('base-price-list');
+		Route::get('/products/export-base-price','ProductController@basePriceexportCsv')->name('export-base-price');
+		Route::any('/products/update-base-price','ProductController@basePriceUpdate')->name('update-base-price');
+		Route::get('/products/search','ProductController@productSearch')->name('product-search');
+		
+		
 
 		// Faqs Route list
 		Route::get('/faqs', 'FaqController@index')->name('faqs');
@@ -297,6 +303,7 @@ Route::namespace('Front')->group(function () {
 
 	Route::post('product/get-products-video','ProductController@getProductVideo')->name('get-product-video');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
+	Route::any('product-api/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data-api');
 	Route::post('post/get-data','PageController@myPost');
     Route::get('/blog-resources/{slug}', 'PageController@show');
 	Route::post('/visit-us', 'ContactUsFormController@ContactUsForm')->name('contact');

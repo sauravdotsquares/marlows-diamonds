@@ -31,8 +31,9 @@ class AppProductAttributeVariations extends Model
         return $this->hasMany(AppProductAttributeVariationDescripiton::class,'attribute_variation_id','id');
     }
 
+
     public function images(){
-        return $this->hasMany(AppProductImages::class,'parent_id','id');//->where('belongs_from', 'md_app_product_attribute_variations');
+        return $this->hasMany(AppProductImages::class,'parent_id','id');
     }
 
     

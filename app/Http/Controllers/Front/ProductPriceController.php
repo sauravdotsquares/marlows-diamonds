@@ -15,6 +15,7 @@ class ProductPriceController extends Controller
 
         // $variationPrice = $CurrentVariationPrice * 1.3;
         $settingPrice = $request->setting_price;
+        //1053+440 = 1493   
 
         $diamondPrice = $request->diamond_price;
 
@@ -76,7 +77,15 @@ class ProductPriceController extends Controller
             $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
 
-        	return json_encode(array('statuscode'=>'200','finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount']),'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$hkData[0]['Stock_NO'],'CertificateLink'=>$hkData[0]['CertificateLink']));
+        	return json_encode(array(
+                'statuscode'=>'200',
+                'finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),
+                'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount']),
+                'diamondPrice'=>$diamondPrice,
+                'settingPrice'=>$settingPrice,
+                'Stock_NO'=>$hkData[0]['Stock_NO'],
+                'CertificateLink'=>$hkData[0]['CertificateLink']
+            ));
         }else{
         	$rapnetData = getRapnetApiRecords($data,1);
 
@@ -95,7 +104,15 @@ class ProductPriceController extends Controller
                 $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
 
-                return json_encode(array('statuscode'=>'200','finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount']),'diamondPrice'=>$diamondPrice,'settingPrice'=>$settingPrice,'Stock_NO'=>$rapnetData[0]->DiamondID,'CertificateLink'=>$rapnetCertificateLink));
+                return json_encode(array(
+                    'statuscode'=>'200',
+                    'finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),
+                    'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount']),
+                    'diamondPrice'=>$diamondPrice,
+                    'settingPrice'=>$settingPrice,
+                    'Stock_NO'=>$rapnetData[0]->DiamondID,
+                    'CertificateLink'=>$rapnetCertificateLink
+                ));
             }else{
                 $finalPrice = 0;
                 return json_encode(array('statuscode'=>'500','finalPrice'=>'0'));
@@ -104,7 +121,7 @@ class ProductPriceController extends Controller
     }
 
     public function getActualSettingPrice($slug,$finalPrice)
-    {
+    { // 1493 
 
         $product_id = Products::where('slug',$slug)->value('id');
 
@@ -119,10 +136,10 @@ class ProductPriceController extends Controller
                             ->where('category_id',$checkPlanCatArray['id'])
                             ->where('status',1)
                             ->first();
-
+            // prd($disPercentage->toArray());
 
             $vat = getVAT();
-
+            // echo $vat;die; 
             $increaseDiscount = 1;
             $discountPercentage = 1;
 
