@@ -69,10 +69,10 @@ class DiamondFinderController
         	$hkData['last_page']=10;
         	$hkData['total']=100;
         }
-        //echo '<pre>'; print_r($hkData); die;
+        // echo '<pre>'; print_r($hkData); die;
         //echo $hkData['current_page'];
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
-        //echo '<pre>'; print_r($rapnetData); die;
+        // echo '<pre>'; print_r($rapnetData); die;
 
         $rapnetRecords = [];
         if(!empty($rapnetData)){
@@ -106,7 +106,6 @@ class DiamondFinderController
 	        }
     	  }
         //echo '<pre>'; print_r($rapnetRecords); die;
-
         $hkData['data'] = Arr::collapse([$hkData['data'], $rapnetRecords]);
 
         $hkData['VAT'] = getVAT();

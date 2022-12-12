@@ -23,7 +23,8 @@
 		.error {color: #e74c3c !important;}div#finaldiamondprice del {font-size: 20px;}
 	</style>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
+	<link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.css" rel="stylesheet" />
 
 @endsection
@@ -36,70 +37,27 @@
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 
+			{{-- Product images or videos --}}
 			<div class="product-info-media">
-				
                 <div id="carousel" class="owl-carousel">
                     @if($product->images)
                         @foreach($product->images as $images)
                             <div class="item">
-                                <a data-fancybox="gallery2" href="{{asset('/uploads/'.$images->image)}}" data-caption="{{isset($product->title)?$product->title:''}}">
+                                <a data-fancybox="gallery{{$images->id}}" href="{{asset('/uploads/'.$images->image)}}" data-caption="{{isset($product->title)?$product->title:''}}">
                                     <img src="{{asset('/uploads/'.$images->image)}}" alt="{{isset($product->title)?$product->title:''}}">
                                 </a>
                             </div>
                         @endforeach
                     @endif
-
-                    {{-- @if(isset($prodImages) && $prodImages)
-                        @foreach($prodImages as $images)
-                            @if(isset($images->image_url) && !empty($images->image_url))
-                                @php
-                                    $explode = explode('/',$images->image_url);
-                                    $explode1 = explode('.',$explode[1]);
-                                @endphp
-                                @if(isset($images->is_featured) && $images->is_featured != 1)
-                                    <div class="item">
-                                        <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
-                                            <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
-                                        </a>
-                                    </div>
-                                @endif
-                            @endif
-                        @endforeach
-                    @endif --}}
                 </div>
-                
 			</div>
 
+			{{-- Product detail --}}
 			<div class="product-info-main">
 				<div class="product-title-name">
 					<h1>{{isset($product->title)?$product->title:''}}</h1>
 				</div>
-
-				{{-- @if($plainband==false) --}}
-					<div class="diamond-type">
-						<label>Choose Your Diamond</label>
-						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
-							<div class="d-type-input">
-								<input type="radio" name="attribute_choose-your-diamond"  checked value="mined">
-								<span>Mined Diamond</span>
-							</div>
-							<div class="d-type-input">
-								<input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
-								<span>Lab Grown Diamond</span>
-							</div>
-						@else
-							<div class="d-type-input">
-								<input type="radio" name="attribute_choose-your-diamond" value="mined">
-								<span>Mined Diamond</span>
-							</div>
-							<div class="d-type-input">
-								<input type="radio" name="attribute_choose-your-diamond" checked value="lab_grown">
-								<span>Lab Grown Diamond</span>
-							</div>
-						@endif
-					</div>
-				{{-- @endif --}}
-
+				{!! $varitaions_html !!}
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
 					</div>
@@ -129,7 +87,9 @@
 								$wishListClass = "fa-heart";
 							}
 						@endphp
-						<a href="javascript:void(0);" id="productWishList"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" class="wishlist-button" id="productWishList">
+							<i class="fa {{$wishListClass}}" id="wishlist_icon" aria-hidden="true"></i>
+						</a>
 					</div>
 
 					<div class="product-to-basket">
@@ -152,9 +112,21 @@
 @endsection
 
 @section('js')
+
+
+<script>
+	const csrf = "{{ csrf_token() }}";
+	const addToWishlistUrl = "{{ route('wishlist.wishlist_add') }}";
+	const productSlug = '{{  $product->slug }}';
+</script>
+
+<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
+<script src="{{ asset('assets/js/custom/product_details.js') }}"></script>
 <script>
 $(document).ready(function() {
-    var $owl = $('#carousel');
+    var $owl = $('#carousel'); 
+	var uniqueId  = null;
+	const imageBaseUrl = "{{asset('/uploads/')}}/";
 
     $owl.children().each( function( index ) {
         $(this).attr( 'data-position', index );
@@ -173,6 +145,93 @@ $(document).ready(function() {
         e.preventDefault();
         $('#carousel-zoom .item:first-child a').click();
     });
+
+	getProductPrice();
+	function getProductPrice() {
+		$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+		const ids = getSelectedAttributeIds();
+		// var ids = [];
+		// $('.attr-selection').each((index,element)=>{
+		// 	if($(element).attr('type') == 'radio'){
+		// 		if($(element).is(':checked')){
+		// 			ids.push($(element).val());
+		// 		}
+		// 	}else{
+		// 		ids.push($(element).val());
+		// 	}			
+		// });
+		$.ajax({
+			url: '{{ route("app_products.price") }}',
+			type: "post",
+			data: {
+				'_token': "{{csrf_token()}}",
+				'productSlug':'{{  $product->slug }}',
+				'varitaion' : ids.join(',')
+			},
+			beforeSend: function(){
+				$('.ajax-load').show();
+			},
+			success: function(data) {
+				if(data.status){
+
+					if(data.price.price_after_combination == data.price.price_after_discount){
+						// If discounted price and main price are same
+						$('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+data.price.price_after_discount+' </span>');
+					}else{
+						$('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+data.price.price_after_combination+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+data.price.price_after_discount+' </span>');
+					}
+
+
+					if(typeof data.image!='undefined' && data.image && typeof data.image.image!='undefined' && data.image.image){
+						const imagesExtension = ['jpg','png','jpeg','webp'];
+						const extension = data.image.extension;
+						if(imagesExtension.includes(extension)){
+
+							const carouselItem = `<div class="item custom-item-carousel">
+                                <a data-fancybox="product_gallery" href="${imageBaseUrl + data.image.image }" data-caption="${data.image.original_name}">
+                                    <img src="${imageBaseUrl + data.image.image }" alt="${data.image.original_name}">
+                                </a>
+                            </div>`;
+
+							$('#carousel').find('.owl-item').each((index, element)=>{
+								if($(element).find('.custom-item-carousel').length){
+									$('#carousel').trigger('remove.owl.carousel',index);
+								}
+							});
+
+							const pendingItems = $owl.find('.owl-item');
+							$owl
+							.trigger('add.owl.carousel', [carouselItem])
+							.trigger('refresh.owl.carousel')
+							.trigger('to.owl.carousel', [pendingItems.length, 0])
+							.trigger('refresh.owl.carousel')
+							.trigger('stop.owl.autoplay')
+							.trigger('play.owl.autoplay',[7000, 300])
+
+						}else{
+							console.log('File is video');
+						}
+					}else{
+						console.log('Image not found');
+					}
+
+
+				}else{
+					// alert(data.message);
+				}
+			},
+			error: function(params) {
+				
+			}
+		})
+	}
+
+	/** get price */
+	$(document).on('change','.attr-selection',function(e){
+		getProductPrice();
+	});
+	
+
 });
 
 </script>
