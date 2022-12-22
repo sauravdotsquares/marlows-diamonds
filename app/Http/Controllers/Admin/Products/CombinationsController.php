@@ -4,24 +4,10 @@ namespace App\Http\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Http\Controllers\Admin\CategoryController;
-// use Illuminate\Support\Facades\Validator;
-// use Illuminate\Support\Facades\Redirect;
-// use App\Models\Products;
-// use App\Models\ProductImages;
-// use App\Models\ProductVariations;
-// use App\Models\ProductVariationAttributes;
-// use App\Models\ProductVariationDetails;
-// use App\Models\Attributes;
-// use Illuminate\Support\Arr;
-// use App\Models\DiamondShapes;
-// use App\Models\ProductVariationsMaster;
-// use App\Models\GlobalCombinationsVariations;
-
 use App\Models\Products\Combinations;
 use App\Models\Products\CombinationAttributes;
 use App\Models\Products\CombinationVaritions;
-
+use App\Models\Products\CombinationVariationDetails;
 use App\Models\Masters;
 
 use View;
@@ -95,10 +81,11 @@ class CombinationsController extends Controller{
                         $new_attribute = new CombinationAttributes();
                         $new_attribute->combination_id = $new_combination->id;
                         $new_attribute->attribute_id = $attributes_value;
-                        $new_attribute->attribute_data = $attributeData;
+                        // $new_attribute->attribute_data = $attributeData;
                         $new_attribute->save();
                     }
                 }
+
                 return redirect()->back()->with('success','Combination attributes saved successfully');
             }else{
                 return redirect()->back()->with('success','Something went wrong');
@@ -117,7 +104,7 @@ class CombinationsController extends Controller{
         if(empty($combinations)){
             return redirect()->back()->with('error','Record not identified');
         }
-        $productTypes = Masters::where(['type'=>'product_type','is_active'=>1,'is_deleted'=>0])->get();
+        // $productTypes = Masters::where(['type'=>'product_type','is_active'=>1,'is_deleted'=>0])->get();
         $attributes = CombinationAttributes::with(['attributeData','variationsData'])
                     ->whereHas('attributeData')
                     ->whereHas('variationsData')
@@ -138,23 +125,22 @@ class CombinationsController extends Controller{
         // =>function($query){
         //     $query->select(['id','varition_id']);
         // }
-        $CombinationVaritions = CombinationVaritions::with(
-            [ 
-                // 'attributeData'=>function($query){ $query->select(['id','name','value']); },
-                'attributeVariations'  =>function($query){ $query->select(['id','varition_id','attribute_id']); },
-                'attributeVariations.varitionData',//  =>function($query){ $query->select(['id','varition_id','attribute_id']); },
-            ],
-            )->select('id','attribute_id','price','product_type')->where('combination_id',$combinations->id)->groupBy('attribute_id')->get();
-            foreach ($CombinationVaritions as $key => $value) {
-                $CombinationVaritions[$key]['attribute_data'] = $value['attribute_variations'];
-            }
-            prd($CombinationVaritions->toArray());
+        // $CombinationVaritions = CombinationVaritions::with(
+        //     [ 
+        //         // 'attributeData'=>function($query){ $query->select(['id','name','value']); },
+        //         'attributeVariations'  =>function($query){ $query->select(['id','varition_id','attribute_id']); },
+        //         'attributeVariations.varitionData',//  =>function($query){ $query->select(['id','varition_id','attribute_id']); },
+        //     ],
+        //     )->select('id','attribute_id','price')->where('combination_id',$combinations->id)->groupBy('attribute_id')->get();
+        //     foreach ($CombinationVaritions as $key => $value) {
+        //         $CombinationVaritions[$key]['attribute_data'] = $value['attribute_variations'];
+        //     }
+        // prd($CombinationVaritions->toArray());
 
         if($request->post()){
-            prd($request->all());
+            
 
             $validated = $request->validate([
-                'data.*.product_type' => 'required|numeric',
                 'data.*.attribute_data.*.attribute_id' => 'required|numeric',
                 'data.*.attribute_data.*.varition_id' => 'required|numeric',
                 'data.*.attribute_data.*.combination_attribute_id' => 'required|numeric',
@@ -164,44 +150,34 @@ class CombinationsController extends Controller{
                 'data.*.price.numeric' => 'Please enter valid numbers in price',
                 'data.*.price.min' => 'Please enter minimum 1 percent',
                 'data.*.price.max' => 'Please enter upto 100 percent',
-                'data.*.product_type.required' => 'Please select product type',
-                'data.*.product_type.numeric' => 'Please select valid product type',
             ]);
-
-            
 
             if(!empty($validated['data'])){
                 foreach ($validated['data'] as $data_key => $data_value) {
+
+                    $new_cmb_vr = new CombinationVaritions();
+                    $new_cmb_vr->price = $data_value['price'];
+                    $new_cmb_vr->combination_id = $combinations->id;
+                    $new_cmb_vr->save();
+
                     if(!empty($data_value['attribute_data'])){
                         foreach ($data_value['attribute_data'] as $attribute_data_key => $attribute_datavalue) {
-                            
-                            $productType = Masters::where('id',$data_value['product_type'])->first();
-                            $variationData = Masters::where('id',$attribute_datavalue['varition_id'])->first();
-                            $attributeData = Masters::where('id',$attribute_datavalue['attribute_id'])->first();
-
-                            $new_combination = new CombinationVaritions();
-                            $new_combination->product_type = $data_value['product_type'];
-                            $new_combination->product_type_id = $productType->id;
-                            $new_combination->product_type_data = json_encode($productType);
-                            $new_combination->combination_id = $combinations->id;
-                            $new_combination->combination_attribute_id = $attribute_datavalue['combination_attribute_id'];
-                            $new_combination->varition_id = $attribute_datavalue['varition_id'];
-                            $new_combination->varition_data = json_encode($variationData);
-                            $new_combination->attribute_id = $attribute_datavalue['attribute_id'];
-                            $new_combination->attribute_data = json_encode($attributeData);
-                            $new_combination->price = $data_value['price'];
-                            $new_combination->save();
+                            $new_cmb_vr_detail = new CombinationVariationDetails();
+                            $new_cmb_vr_detail->combination_id = $combinations->id;
+                            $new_cmb_vr_detail->combination_varition_id = $new_cmb_vr->id;
+                            // $new_cmb_vr_detail->combination_attribute_id = $attribute_datavalue['combination_attribute_id'];
+                            $new_cmb_vr_detail->varition_id = $attribute_datavalue['varition_id'];
+                            $new_cmb_vr_detail->attribute_id = $attribute_datavalue['attribute_id'];
+                            $new_cmb_vr_detail->price = $data_value['price'];
+                            $new_cmb_vr_detail->save();
                         }
                     }
                 }
             }
-
-            // 
-
         }
 
 
-        return view($this->view_path . 'add_varitions', compact(['page_title','attributes','combinations','productTypes'])); 
+        return view($this->view_path . 'add_varitions', compact(['page_title','attributes','combinations'])); 
 
     }//endof addVariations
 

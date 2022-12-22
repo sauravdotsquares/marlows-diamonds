@@ -47,7 +47,7 @@
 									$explode = explode('/',$images->image_url);
 									$explode1 = explode('.',$explode[1]);
 								@endphp
-								<div class="item @if($key==0) active @endif">
+								<div class="item @if($key==0) active @endif"  >
 									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"></a>
 								</div>
 							@endforeach

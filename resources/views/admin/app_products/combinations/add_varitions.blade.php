@@ -27,7 +27,7 @@
                                     <div id="{{ $old_key ? 'record_'.$old_key : 'record_0' }}">
                                         <div class="row">
 
-                                            <div class="col-md-2">
+                                            {{-- <div class="col-md-2">
                                                 <div class="form-group">
                                                     <div class="form-label-group">
                                                         <label for="product_name">{{ __("Product type") }}</label>
@@ -41,7 +41,7 @@
                                                         @error('data.'. $old_key .'.product_type') <span class="custom-error">{{ $message }}</span>  @enderror
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <?php foreach ($attributes as $attributes_key => $attributes_value) { ?>
 
@@ -79,7 +79,7 @@
                                                 <div class="form-group">
                                                     <div class="form-label-group">
                                                         <label>&nbsp;</label>
-                                                        <a href="javascript:;" class="btn btn-success form-control add_more_button" >Add more  {{$old_key}} </a>
+                                                        <a href="javascript:;" class="btn btn-success form-control add_more_button" >Add more </a>
                                                     </div>
                                                 </div>
                                             </div>

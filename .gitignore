@@ -3,11 +3,11 @@
 /public/hot
 /public/storage
 /public/uploads
-/public/images
+/public/assets/images
+/public/assets/images_old
 /storage/*.key
 /storage/framework/cache
 /vendor
-/public/
 .env
 .env.backup
 .phpunit.result.cache

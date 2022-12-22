@@ -30,7 +30,11 @@
 	<div class="container">
 		<div class="perfect-certified-head">
 			<h1>{!!$data->subtitle!!}</h1>
-			<h2>{!!$data->short_description!!}</h2>
+			@if ($data->slug == "live-diamond-search")
+				{!!$data->short_description!!}
+			@else
+				<h2>{!!$data->short_description!!}</h2>
+			@endif
 		</div>
 		<div class="row">
 			<div class="col-lg-4">

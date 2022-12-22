@@ -40,6 +40,11 @@ class Masters extends Model
     // }
 
 
+    
+    public function info(){
+        return $this->hasOne(Masters::class,'id','id');
+    }
+
     public static function attributes(){
         $attributes = self::where('type','product_attributes')->latest()->where(['is_deleted'=>0, 'is_active'=>1])->get();
         if($attributes->count()){

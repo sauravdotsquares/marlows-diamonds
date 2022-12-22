@@ -12,8 +12,7 @@ class WishlistController extends Controller
         return view('front.pages.products-wishlists');
     }
 
-    public function addToWishlist(Request $request)
-    {
+    public function addToWishlist(Request $request){
         $productData = Products::with('getProductImages','getProductVariation')->where('slug',$request->slug)->first();
 
 
