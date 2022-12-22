@@ -4,7 +4,7 @@
     <style>
         .error {  color: #e74c3c !important; }
         .head-para-three p.second-para{padding-bottom: 25px;}
-        .head-para-three video#video{width: 80%; object-fit: inherit;}
+        .head-para-three video#video{width: 80%; object-fit: inherit;} 
     </style>
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
 @endsection
