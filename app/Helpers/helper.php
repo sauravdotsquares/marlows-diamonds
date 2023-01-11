@@ -293,6 +293,17 @@ if (!function_exists('validate_breadcrumb')) {
             return $featured;
         }
     }
+
+    function getFaqByCategory($category="", $in_array=false){
+        $category = empty($category) ? 0 : $category;
+        $faqs = Faqs::where(['categories'=>$category])->get();
+
+        if($in_array && $faqs->count()){
+            return $faqs->toArray();
+        }
+        return $faqs;
+    }
+
     /*
     ** Hari Krishna API function
     * @params : data as array
@@ -754,6 +765,25 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
+    function generateSlugProductPurpose($title="", $table="", $keyName="slug", $skip_id="" ,$number=0){
+        $slug = slugify($title);
+        $slug = $number ? $slug . '-'.$number : $slug;
+
+        $queryToCheck = $table::where($keyName, $slug);
+        if(!empty($skip_id)){
+            $queryToCheck = $queryToCheck->where('id','!=',$skip_id);
+        }
+        $isSlugExists = $queryToCheck->first();
+
+        if(!empty($isSlugExists)){
+            $number = $number+1;
+            return generateSlugProductPurpose($title,$table, $keyName, $skip_id, $number);
+        }else{
+            return $slug;
+        }
+    }
+
+
     function slugify($text, string $divider = '-'){
         $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
         $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
@@ -1042,6 +1072,49 @@ if (!function_exists('validate_breadcrumb')) {
            }
         }
     }
+
+    /**
+     * check extension of file type
+     */
+    function extensionChecker($extension='jpeg'){  
+
+        $validImageExtensions = ['jpeg','jpg','JPEG','JPG','png','PNG','webp','WEBP','gif','GIF'];
+        $validVideoExtensions = ['mp4','MP4'];
+        $validAudioExtensions = ['mp3','MP3'];
+
+        if(in_array($extension, $validImageExtensions)){
+            return 'image';
+        }else if(in_array($extension, $validVideoExtensions)){
+            return 'video';
+        }else if(in_array($extension, $validAudioExtensions)){
+            return 'audio';
+        }else{
+            return null;
+        }
+    }//endof extensionChecker
+
+    /**
+     * convert bytes to human readable file size
+     */
+    function humanFileSize($bytes,$dec = 2 ) {
+        $size   = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        $factor = floor((strlen($bytes) - 1) / 3);
+
+        return sprintf("%.{$dec}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
+    }//endof humanFileSize
+
+    /**
+     * 
+     */
+    function show_image($file_url=""){
+        
+        if(file_exists( public_path('/uploads/')  . $file_url )){
+            return true;
+        }else{
+            return false;
+        }
+
+    }// endof file_get_url
 
 }
 

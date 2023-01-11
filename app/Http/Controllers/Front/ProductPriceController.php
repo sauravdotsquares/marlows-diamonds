@@ -8,9 +8,14 @@ use App\Models\Products;
 use App\Models\Category;
 use App\Models\Discount;
 use App\Models\DiscountRange;
+use App\Models\LabPricesList;
+
 
 class ProductPriceController extends Controller
 {
+    /**
+     * all engagements rings price for lab grown and mined lab.
+     */
     public function getProductFinalPrice(Request $request){
 
         // $variationPrice = $CurrentVariationPrice * 1.3;
@@ -21,14 +26,45 @@ class ProductPriceController extends Controller
 
         $finalPrice = $settingPrice + $diamondPrice;
 
+        if($request['diamond_type'] == 'lab_grown'){
+            /** if diamond type is lab grown then calculation goes from here */
+            $variationPrice = $request['variation_price'];
+            $carat = $request['lab_grown_carat'];
+            $color = $request['lab_grown_colour'];
+            $clarity = $request['lab_grown_clarity'];
+
+            $carats = explode("-", trim($carat));
+            $startCarat = trim($carats[0]);
+            $endCarat = trim($carats[1]);
+
+            $newPrice = LabPricesList::whereBetween('carat', [$startCarat, $endCarat])->where(['color'=> $color, 'clarity'=>$clarity,'is_active'=>1, 'is_deleted'=>0])->first();
+            if(!empty($newPrice)){
+
+                $labPrice = $newPrice->price +  (float)$variationPrice;
+                
+                $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$labPrice);
+
+                return response()->json([
+                    'labPriceFormula' => true,
+                    'labPrice' => $newPrice->price,
+                    'variationPrice' => $variationPrice,
+                    'finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),
+                    'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount'])
+                ]);
+            }
+        }
+
         $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
         return response()->json([
             'finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),
-            'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount'])]); // round($getStatusSettingPrice);
+            'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount'])
+        ]); // round($getStatusSettingPrice);
     }
 
     public function getProductFinalPriceWithDiamond(Request $request){
+
+        // prd($request->all());
 
         $caratFrom = '0.30'; $caratTo = '0.39';
         if($request->carat!=''){
@@ -67,8 +103,12 @@ class ProductPriceController extends Controller
 
         //echo '<pre>'; print_r($data); die;
         $vat = getVAT();
+        // prd($vat);
+        
         $settingPrice = sprintf('%0.2f', $request->variation_price);
         $hkData = getHKApiRecords($data);
+
+        // prd($settingPrice);
 
         if(!empty($hkData)){
         	$diamondPrice = sprintf('%0.2f', ($hkData[0]['Amount']*1.25));
@@ -120,8 +160,10 @@ class ProductPriceController extends Controller
         }
     }
 
-    public function getActualSettingPrice($slug,$finalPrice)
-    { // 1493 
+    public function getActualSettingPrice($slug,$finalPrice){
+
+        // 1493 
+        // echo $finalPrice;die;
 
         $product_id = Products::where('slug',$slug)->value('id');
 

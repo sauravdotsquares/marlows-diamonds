@@ -18,6 +18,7 @@ use App\Models\DiscountRange;
 use App\Models\Masters;
 use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
+use App\Models\UrlRedirects;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -50,6 +51,9 @@ class ProductController extends Controller
     }
 
     public function productDetails(Request $request, $productSlug = null){
+
+        
+
         $dekoEnabled = true;
         $client = new DekoPayApiClient('', '', env('DEKOPAY_API_KEY'));
         $pay_url =  env('DEKOPAY_MODE');
@@ -63,7 +67,16 @@ class ProductController extends Controller
         
 
         if ($productSlug != null) {
+            // $productSlug = str_replace("_","-",$productSlug);
             $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $productSlug)->first();
+
+            if(empty($getProduct)){
+                /** If data not found with existing slug then check in redirections table and redirect */
+                $redirectTo = UrlRedirects::where('old_url', $productSlug)->where(['type'=>'product','is_active'=>1, 'is_deleted'=>0])->first();
+                if(!empty($redirectTo) && !empty($redirectTo->new_url)){
+                    return redirect()->route('product.details', $redirectTo->new_url);
+                }
+            }
 
             if (isset($getProduct) && !empty($getProduct)) {
                 // Product Categories
@@ -1024,9 +1037,70 @@ class ProductController extends Controller
         return response()->json(['html' => $view]);
     }
 
-
-
     public function exclusiveMarlows(Request $request){
         return View::make('front.pages.exclusive_products');
     }
+
+    public function productSlugs(Request $request){
+        /** TODO: 
+         * 1. get all previous slugs of products 
+         * 2. update new slug after checking duplication
+         */
+        // echo "Im here";
+
+        // $productSlugs = Products::pluck('old_slug','id')->toArray();
+        // $affectedRows = 0;
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+        //         $product_data->slug = $product_data->old_slug;
+        //         $product_data->save();
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+
+
+        // $productSlugs = Products::pluck('slug','id')->toArray();
+        // $dataToRevert = [];
+        // $affectedRows = 0;
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
+        //         $dataToRevert[$affectedRows]['id'] = $product_data->id;
+        //         $dataToRevert[$affectedRows]['old_slug'] = $value   ;
+        //         $dataToRevert[$affectedRows]['new_slug'] = $new_slug;
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($dataToRevert);
+
+
+        
+
+        // $affectedRows = 0;
+        // $productSlugs = Products::pluck('slug','id')->toArray();
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+
+        //         /** generate and save new slug */
+        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
+        //         $old_slug = $product_data->slug;
+        //         $product_data->slug = $new_slug;
+        //         $product_data->old_slug = $old_slug;
+        //         $product_data->save();
+
+        //         /** Save all old and new urls in redirections */
+        //         $new_redirect = new UrlRedirects();
+        //         $new_redirect->type = "product";
+        //         $new_redirect->old_url = $old_slug;
+        //         $new_redirect->new_url = $new_slug;
+        //         $new_redirect->save();
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($affectedRows);
+    }
+
 }

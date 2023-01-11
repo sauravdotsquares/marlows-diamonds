@@ -680,6 +680,96 @@ class ProductController extends Controller
      */
     public function basePriceList(Request $request){
 
+
+        /** Query to get all variations and products */
+        $dataToMarkup = ProductVariations::whereHas('product', function($query) {
+            $query->select(['id','status','categories','title','dfinder_status']);
+            $query->where(['status'=>1, 'dfinder_status'=>1]);
+        })->with(['product'=>function($query){
+            $query->select(['id','title','categories','slug']);
+        }])
+        ->get();
+
+        $fileName = date('d-m-Y') .'-products-markup.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        $vat = getVAT();
+        $columns = [
+            'Product', 
+            'Variations', 
+            'Markup price',
+            'Vat ' . '('.$vat.')',
+            'Total',
+        ];
+
+        $callback = function() use($dataToMarkup, $columns, $vat) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($dataToMarkup as $key => $value) {
+                if($value->regular_price > 0){
+                    $totalAmount = $value->regular_price * $vat;
+
+                    $Variations_data = [];
+                    foreach($value->get_vari_details_id as $key => $attribute){
+                        $att_key = str_replace("attri_","",$attribute->key);
+                        $Variations_data[] = $att_key. ":- " . ($attribute->value ? $attribute->value : 'All') ;
+                    }
+                    $row['Product'] = $value->product->title;
+                    $row['Variations'] = implode(', ',$Variations_data);
+                    $row['markup_price'] = $value->regular_price;
+                    $row['vat'] = round($totalAmount - $value->regular_price);
+                    $row['Total'] = round($totalAmount);
+                    fputcsv($file, $row);
+                }
+            }
+
+            // foreach ($product_variations as $task) {
+            //     $row['product']  = $task->product->title;
+            //     $Variations_data = [];
+            //     foreach($task->get_vari_details_id as $key => $attribute){
+            //         $att_key = str_replace("attri_","",$attribute->key);
+            //         $Variations_data[] = $att_key. ":- " . $attribute->value;
+            //     }
+            //     $row['variations'] = implode(', ',$Variations_data);
+            //     $row['base_price']  =  show_percentage($task->regular_price, $pricingData);
+            //     $row['mined_price']  = !empty($task['mined']['regular_price']) ?  show_percentage($task['mined']['regular_price'], $pricingData)  : 'N/A';
+            //     $row['lab_grown_price']  = !empty($task['lab_grown']['regular_price']) ? show_percentage($task['lab_grown']['regular_price'], $pricingData) : 'N/A';
+            //     $row['discounted']  = "N/A";
+            //     $row['new_price']  = show_percentage($task->regular_price,$pricingData,'action' );
+            //     $row['new_mined']  = !empty($task['mined']['regular_price']) ?  show_percentage($task['mined']['regular_price'],$pricingData,'action' ) : 'N/A' ;
+            //     $row['new_lab_grown']  = !empty($task['lab_grown']['regular_price']) ?  show_percentage($task['lab_grown']['regular_price'],$pricingData,'action' ) : 'N/A' ;;
+            //     fputcsv($file, $row);
+            // }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+
+
+        // $datatocheck = DB::raw('select * from md_products where FIND_IN_SET(2, categories) OR FIND_IN_SET(3, categories) OR FIND_IN_SET(4, categories) OR FIND_IN_SET(5, categories) OR FIND_IN_SET(6, categories)')->get();
+        // $to_data = [2,3,4,5,6];
+        // $notIn = 54;
+        // // $child_categories = Category::get_all_child_ids(2);
+        // // prd($child_categories);die;
+        // $productIdsQuery = Products::where('status',1);
+        // $category_custom_query = '';
+        // foreach ($to_data as $cat_key => $cat_value) {
+        //     if(!$cat_key){  $category_custom_query .= '( '; }
+        //     $category_custom_query .= " find_in_set('".$cat_value."',categories)";
+        //     if($cat_key+1 != count($to_data)){ $category_custom_query .= " OR "; }
+        //     else{ $category_custom_query .= ' ) '; }
+        // }
+        // $category_custom_query .= " AND NOT find_in_set($notIn, categories) ";
+
+        // $productIdsQuery->whereRaw(DB::raw($category_custom_query));
+        // $productIdsQuery = $productIdsQuery->pluck('id');
+        // prd($productIdsQuery);
+
         $data = $request->all();
         $search = true;
         $productId = "";
@@ -758,9 +848,8 @@ class ProductController extends Controller
             $product_variations = $query->get();
         }else{
             /** if this data is for listing */
-            $product_variations = $query->paginate(10);
+            $product_variations = $query->paginate(500);
         }
-
         
 
         if($product_variations->count()){
@@ -789,6 +878,9 @@ class ProductController extends Controller
                 $value->lab_grown = $lab_grown_pricing;
             }
         }
+
+        // prd($product_variations->toArray());die;
+
         if(!empty($request['export']) && $request['export']=='true'){
             $fileName = date('d-m-Y') .'-pricing.csv';
             $headers = array(
@@ -798,7 +890,8 @@ class ProductController extends Controller
                 "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
                 "Expires"             => "0"
             );
-            $columns = ['Product', 
+            $columns = [
+                'Product', 
                 'Variations', 
                 'Base Price',
                 'Mined Price',

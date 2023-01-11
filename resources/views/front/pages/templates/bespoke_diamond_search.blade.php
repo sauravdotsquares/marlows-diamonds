@@ -30,7 +30,11 @@
 	<div class="container">
 		<div class="perfect-certified-head">
 			<h1>{!!$data->subtitle!!}</h1>
-			<h2>{!!$data->short_description!!}</h2>
+			@if ($data->slug == "live-diamond-search")
+				{!!$data->short_description!!}
+			@else
+				<h2>{!!$data->short_description!!}</h2>
+			@endif
 		</div>
 		<div class="row">
 			<div class="col-lg-4">
@@ -154,7 +158,7 @@
 										    </div>
 									 </div>
 									<div class="diamond-filter-quote">
-										<div class="quote-icon-pop">
+										<div class="quote-icon-pop helping-text-container">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
 												{{CARAT_TOOLTIP}}
@@ -187,7 +191,7 @@
 										</div>
 									</div>
 									<div class="diamond-filter-quote">
-										<div class="quote-icon-pop">
+										<div class="quote-icon-pop helping-text-container ">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
 												{{COLOUR_TOOLTIP}}
@@ -260,7 +264,7 @@
 										</div>
 									</div>
 									<div class="diamond-filter-quote">
-										<div class="quote-icon-pop">
+										<div class="quote-icon-pop helping-text-container ">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
 												{{CLARITY_TOOLTIP}}
@@ -304,7 +308,7 @@
 										</div>
 									</div>
 									<div class="diamond-filter-quote">
-										<div class="quote-icon-pop">
+										<div class="quote-icon-pop helping-text-container ">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
 												{{CUT_GRADE_TOOLTIP}}
@@ -347,7 +351,7 @@
 										</div>
 									</div>
 									<div class="diamond-filter-quote">
-										<div class="quote-icon-pop">
+										<div class="quote-icon-pop helping-text-container ">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
 												{{POLISH_TOOLTIP}}
@@ -390,7 +394,7 @@
 										</div>
 									</div>
 									<div class="diamond-filter-quote">
-										<div class="quote-icon-pop">
+										<div class="quote-icon-pop helping-text-container ">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
 												{{SYMMETRY_TOOLTIP}}
@@ -446,7 +450,7 @@
 										</div>
 									</div>
 									<div class="diamond-filter-quote">
-										<div class="quote-icon-pop">
+										<div class="quote-icon-pop helping-text-container ">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
 												{{FLUORESCENCE_TOOLTIP}}
@@ -482,7 +486,7 @@
 										</div>
 									</div>
 									<div class="diamond-filter-quote">
-										<div class="quote-icon-pop">
+										<div class="quote-icon-pop helping-text-container ">
 											<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
 											<div class="m-quote-pop">
 												{{CERTIFICATE_TOOLTIP}}
@@ -784,9 +788,42 @@
         }
 
         // $('#slider .ui-corner-all:first-child').text('0.3');
-        $(".ma-info-icon").click(function(){
-			$(this).next(".m-quote-pop").toggle();
+        // $(".ma-info-icon").click(function(){
+		// 	$(this).next(".m-quote-pop").toggle();
+		// });
+
+		var popElement = document.getElementsByClassName("helping-text-container");
+		document.addEventListener('click', function(event) {
+			for(i=0; i < popElement.length; i++){
+				popEl = popElement[i];
+				var isClickInside = popEl.contains(event.target);
+
+				$('.m-quote-pop').css('display','none');
+
+				if (!isClickInside) {
+					$(popEl).find(".m-quote-pop").css('display','none');
+				} else {
+					if($(popEl).find('.m-quote-pop').is(':visible')){
+						$(popEl).find('.m-quote-pop').css('display','none');
+						// console.log('Visiable and removed');
+					}else{
+						$(popEl).find(".m-quote-pop").css('display','block');
+					}
+
+					break;
+				}
+			}
 		});
+
+		// $('body').on('click', function() {
+		// 	// if visiable then hide
+		// 	if($(".m-quote-pop").is(":visible")){
+		// 		console.log('visiable')
+		// 		$(".m-quote-pop").css('display','none');
+		// 	}
+		// })
+		// remove all .active classes when clicked anywhere
+
 
         $("#slider").slider({
             range: true,

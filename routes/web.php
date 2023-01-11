@@ -10,9 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\UrlRedirects;
+use Illuminate\Http\Request;
 
 Route::get('/clear-cache', function() {
 	Artisan::call('cache:clear');
@@ -210,6 +212,15 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/delete/{type}/{slug}', 'MastersController@delete')->name('delete');
 		});
 
+
+		Route::group(['as' => 'lab_price_variations.', 'prefix' => 'lab_price_variations' ], function () {
+			Route::any('/', 'ProductController@labPriceList')->name('list');
+			Route::any('/change-status/{id}', 'ProductController@labPriceChangeStatus')->name('change_status');
+			Route::any('/delete/{id}', 'ProductController@labPriceDelete')->name('delete');
+			Route::any('/add', 'ProductController@labPriceAdd')->name('add');
+			Route::any('/edit/{id}', 'ProductController@labPriceEdit')->name('edit');
+		});
+
 		Route::group(['as' => 'product_combinations.', 'prefix' => 'product_combinations' ], function () {
 			Route::any('', 'GlobalCombinationsController@index')->name('index');
 			Route::any('/add', 'GlobalCombinationsController@add')->name('add');
@@ -249,6 +260,17 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		});
 
 
+		Route::group(['as' => 'image_gallery.', 'prefix' => 'image_gallery' ], function () {
+			Route::any('', 'ImageGalleryController@index')->name('index');
+			Route::any('/add', 'ImageGalleryController@add')->name('add');
+			Route::any('/upload-file', 'ImageGalleryController@uploadImages')->name('uploadImages');
+			Route::any('/remove-file', 'ImageGalleryController@removeImage')->name('removeImage');
+			Route::any('/delete/{id}', 'ImageGalleryController@deleteFile')->name('deleteFile');
+			Route::any('/files-list', 'ImageGalleryController@getFilesList')->name('getFilesList');
+			
+		});
+
+
 
 	});
 
@@ -271,12 +293,27 @@ Route::group(['middleware' => ['customer']], function () {
 	});
 });
 
+// ->middleware(['SiteMapSaver'])
 Route::namespace('Front')->group(function () {
 
     Route::get('/', 'PageController@page')->name('home');
 
-	Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
+	/** Change after SEO discuss 05Jan2023 seo_change */
+	Route::get('/blog/{slug}', 'PageController@show');
+	Route::get('/blog/category/{slug}', 'PageController@blogList')->name('blog_list');
+	Route::get('product/{slug?}','ProductController@productDetails')->name('product.details');
 
+	/** Route use to redirect blog-resources to blog */
+	Route::get('/blog-resources/{any?}',function(){
+		$url = str_replace("blog-resources","blog",request()->path());
+		return redirect('/'. $url, 301);
+	})->where('any', '.*');
+
+
+	/** Change slugs of all products from previous to new one */
+	// Route::get('product-slugs-update','ProductController@productSlugs');
+
+	Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
     Route::get('/my-account', 'LoginController@index')->name('my-account');
     Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
     Route::post('/login-customers', 'LoginController@loginCustomer')->name('login-customers');
@@ -291,7 +328,8 @@ Route::namespace('Front')->group(function () {
 
 
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
-	Route::get('product/{slug?}','ProductController@productDetails');
+	
+
 	//Route::post('product/{slug?}','ContactUsFormController@ContactUsForm')->name('contact');
 	Route::post('product/get-product-list','ProductController@getProductList');
 
@@ -305,7 +343,7 @@ Route::namespace('Front')->group(function () {
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
 	Route::any('product-api/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data-api');
 	Route::post('post/get-data','PageController@myPost');
-    Route::get('/blog-resources/{slug}', 'PageController@show');
+    // Route::get('/blog-resources/{slug}', 'PageController@show');
 	Route::post('/visit-us', 'ContactUsFormController@ContactUsForm')->name('contact');
 	Route::post('/', 'MailListFormController@MailListForm')->name('maillist');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');

@@ -56,6 +56,7 @@ class DiscountController extends Controller
                         'end_date'=> $request->end_date,
                         'is_login_users'=>$isDicountForLoginUsers,
                         'status'=> $request->status,
+                        'diamond_type' => !empty($request->diamond_type) ? $request->diamond_type : null
                     ]);
                     $this->addDiscountRanges($request->all(),$insDiscountData->id);
                 }else{
@@ -72,6 +73,7 @@ class DiscountController extends Controller
                     'end_date'=> $request->end_date,
                     'status'=> $request->status,
                     'is_login_users'=>$isDicountForLoginUsers,
+                    'diamond_type' => !empty($request->diamond_type) ? $request->diamond_type : null
                 ]);
 
                 $this->addDiscountRanges($request->all(),$insDiscountData->id);
@@ -126,6 +128,7 @@ class DiscountController extends Controller
             $arrayNew[$i]['to'] = isset($getDiscountRangeArray['range'.$i.'_to'])?$getDiscountRangeArray['range'.$i.'_to']:0;
             $arrayNew[$i]['discount'] = isset($getDiscountRangeArray['discount_range'.$i])?$getDiscountRangeArray['discount_range'.$i]:0;
             $arrayNew[$i]['discount_id'] = isset($discountId)?$discountId:0;
+            $arrayNew[$i]['diamond_type'] = !empty($getDiscountRangeArray['diamond_type']) ? $getDiscountRangeArray['diamond_type'] : null;
         }
         DiscountRange::where('category_id',$getDiscountRangeArray['category_id'])->delete();
         foreach($arrayNew as $key => $value){
@@ -135,6 +138,7 @@ class DiscountController extends Controller
                 'from_price'=> $value['from'],
                 'to_price'=> $value['to'],
                 'discount'=> $value['discount'],
+                'diamond_type'=> $value['diamond_type'],
                 'status'=> 1,
             ]);
         }

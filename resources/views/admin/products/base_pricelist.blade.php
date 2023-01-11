@@ -104,7 +104,7 @@
                               }else{$percentageValue=0;}
                              ?>
                                  <tr>
-                                    <td>{{$product_variations->firstItem() + $key}}</td>
+                                    <td>{{$product_variations->firstItem() + $key}}  ({{ $value->id }}) </td>
                                     <td>
                                        {{ $value['product']->title }}
                                     </td>

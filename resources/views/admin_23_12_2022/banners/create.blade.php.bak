@@ -1,0 +1,239 @@
+@extends('layouts.admin.app')
+@section('content')
+<div class="content">
+   <!-- Breadcrumbs-->
+   @if(session()->has('alert-danger'))
+   <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session()->get('alert-danger') }}
+   </div>
+   @endif
+   @if ($errors->has('title'))
+   <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('title') }}
+   </div>
+   @endif
+   @if ($errors->has('description'))
+   <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('description') }}
+   </div>
+   @endif
+   @if ($errors->has('status'))
+   <div class="alert alert-danger">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ $errors->first('status') }}
+   </div>
+   @endif
+   <!-- DataTables Example -->
+   <section class="content">
+      <div class="container-fluid">
+         <form id="cmsForm" action="{{ url('admin/banners/add') }}" enctype="multipart/form-data" method="post" >
+            @csrf
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="card card-primary">
+                     <div class="card-header">
+                        <h3 class="card-title">Add Banner</h3>
+                     </div>
+                     <div class="card-body">
+					 <div class="row">
+					 <div class="col-md-5">
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Title</label>
+                              <input type="text" id="title" name="title" class="form-control" placeholder="Title" >
+                           </div>
+                        </div>
+					 </div>
+					 <div class="col-md-5">
+						<div class="form-group">
+							<div class="form-label-group">
+							<label for="product_name">Select Page</label>
+							  <select id="page_id" name="page_id" class="form-control" autofocus="autofocus">
+								<option value="0">Select Page</option>
+								@foreach($pages as $page)
+								  <option value = {{ $page->id }} >{{ $page->title }}</option>
+								@endforeach
+							  </select>
+							</div>
+						</div>
+					 </div>
+					 <div class="col-md-2">
+					 <div class="form-group">
+                        <div class="form-label-group">
+						<label for="product_name">Status</label>
+                           <select id="status" name="status" class="form-control">
+                              <option value="">Select Status</option>
+                              <option value="1">Enable</option>
+                              <option value="0">Disable</option>
+                           </select>
+                        </div>
+						</div>
+					 </div>
+					 </div>
+					 <div class="row">
+
+					 <div class="col-md-5">
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="product_name">Description</label>
+                              <textarea id="description" name="description[]" rows="20" class="form-control description"></textarea>
+                           </div>
+                        </div>
+                     </div>
+                       <div class="col-md-5">
+						 <div class="form-group">
+							<label for="exampleInputFile">Banner Image</label>
+							<div class="input-group">
+							   <div class="custom-file">
+								  <input type="file" id="image" name="image[]" class="custom-file-input" accept="image/*">
+								  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+							   </div>
+							</div>
+						 </div>
+					   </div>
+					   <div class="col-md-2">
+					    <div class="form-group"><label for="exampleInputFile"> &nbsp;</label>
+					   <div class="input-group"><button type="button" name="add" id="add" class="btn btn-success">Add More</button>
+					   </div>
+					   </div>
+					   </div>
+					</div>
+                      <div class="" id="dynamic_field" >
+					  </div>
+
+
+                     <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                     </div>
+
+                     </div>
+                  </div>
+               </div>
+
+
+               </div>
+
+         </form>
+      </div>
+   </section>
+</div>
+@endsection
+<!-- Sticky Footer -->
+@section('js')
+<script>
+   $(function () {
+     // Summernote
+     $('.description').summernote({
+		 height:250
+	 })
+
+   })
+</script>
+<script>
+
+    $(document).ready(function(){
+
+      var postURL = "<?php echo url('addmore'); ?>";
+
+      var i=1;
+
+
+      $('#add').click(function(){
+
+           i++;
+
+           $('#dynamic_field').append('<div class="row" id="row'+i+'" class="dynamic-added"><div class="col-md-5"><div class="form-group"><div class="form-label-group"><label for="product_name">Description</label><textarea id="description'+i+'" name="description[]" class="form-control description"></textarea></div></div></div><div class="col-md-5"><div class="form-group"><label for="exampleInputFile">Banner Image</label><div class="input-group"><div class="custom-file"><input type="file" id="image'+i+'" name="image[]" class="custom-file-input" accept="image/*"><label class="custom-file-label" for="exampleInputFile">Choose file</label></div></div></div></div><div class="col-md-2"><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove">X</button></div></div>');
+			$('.description').summernote({
+			height:250
+			})
+
+      });
+
+
+      $(document).on('click', '.btn_remove', function(){
+
+           var button_id = $(this).attr("id");
+
+           $('#row'+button_id+'').remove();
+
+      });
+
+
+      $.ajaxSetup({
+
+          headers: {
+
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+          }
+
+      });
+
+
+      $('#submit').click(function(){
+
+           $.ajax({
+
+                url:postURL,
+
+                method:"POST",
+
+                data:$('#add_name').serialize(),
+
+                type:'json',
+
+                success:function(data)
+
+                {
+
+                    if(data.error){
+
+                        printErrorMsg(data.error);
+
+                    }else{
+
+                        i=1;
+
+                        $('.dynamic-added').remove();
+
+                        $('#add_name')[0].reset();
+
+                        $(".print-success-msg").find("ul").html('');
+
+                        $(".print-success-msg").css('display','block');
+
+                        $(".print-error-msg").css('display','none');
+
+                        $(".print-success-msg").find("ul").append('<li>Record Inserted Successfully.</li>');
+
+                    }
+
+                }
+
+           });
+
+      });
+
+
+      function printErrorMsg (msg) {
+
+         $(".print-error-msg").find("ul").html('');
+
+         $(".print-error-msg").css('display','block');
+
+         $(".print-success-msg").css('display','none');
+
+         $.each( msg, function( key, value ) {
+
+            $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+
+         });
+
+      }
+
+    });
+
+</script>
+
+
+@endsection
+
