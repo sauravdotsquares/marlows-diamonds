@@ -193,7 +193,7 @@ class PayPalPaymentController extends Controller
                     $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
                     $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
                 });
-
+                
                 $result = [
                     'pay' => $getOrderDetailsMail,
                     'response' => 'Your Order number('.$getOrderDetailsMail['custom_order_id'].') has been successfully paid',

@@ -1087,6 +1087,8 @@ class ProductController extends Controller
         //         $affectedRows = $affectedRows + 1;
         //     }
         // }
+
+
         // $productSlugs = Products::pluck('slug','id')->toArray();
         // $dataToRevert = [];
         // $affectedRows = 0;
@@ -1101,6 +1103,10 @@ class ProductController extends Controller
         //     }
         // }
         // prd($dataToRevert);
+
+
+        
+
         // $affectedRows = 0;
         // $productSlugs = Products::pluck('slug','id')->toArray();
         // foreach ($productSlugs as $key => $value) {

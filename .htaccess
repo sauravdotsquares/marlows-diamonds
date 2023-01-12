@@ -1,5 +1,59 @@
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+Header always set Content-Security-Policy "upgrade-insecure-requests;"
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
 
 #Redirect 301 /engagement-rings  /product-category/engagement-rings
+
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^example.com$ [OR]
+  RewriteCond %{HTTP_HOST} ^www.example.com$
+  RewriteRule (.*)$ https://devstaging.marlows-diamonds.co.uk/$1 [R=301,L]
+
+#Redirect /product/lucia-2 /product/lucia_2
+#Redirect /product/lucia-3 /product/lucia_3
+#Redirect /product/wed015-f-g-vs-si /product/wed015_f_g_vs_si
+#Redirect /product/baguette-and-round-diamond-hoops /product/baguette_and_round_diamond_hoops
+#Redirect /product/bubble-style-diamond-bangle /product/bubble_style_diamond_bangle
+#Redirect /product/d-s017 /product/d_s017
+#Redirect /product/d-s001-2 /product/d_s001_2
+#Redirect /product/d-s006 /product/d_s006
+#Redirect /product/d-s028 /product/d_s028
+#Redirect /product/designer-contemprorary-diamond-bangle /product/designer_contemprorary_diamond_bangle
+#Redirect /product/d-s016 /product/d_s016
+#Redirect /product/d-s026 /product/d_s026
+#Redirect /product/d-s002 /product/d_s002
+#Redirect /product/d-s024 /product/d_s024
+#Redirect /product/d-s012-2 /product/d_s012_2
+#Redirect /product/d-s021 /product/d_s021
+#Redirect /product/d-s022 /product/d_s022
+#Redirect /product/d-s010 /product/d_s010
+#Redirect /product/d-s015 /product/d_s015
+#Redirect /product/d-s009 /product/d_s009
+#Redirect /product/d-s007 /product/d_s007
+#Redirect /product/d-s025 /product/d_s025
+#Redirect /product/d-s023 /product/d_s023
+#Redirect /product/d-s020 /product/d_s020
+#Redirect /product/d-s019 /product/d_s019
+#Redirect /product/d-s005 /product/d_s005
+#Redirect /product/exquisite-tiara-and-necklace /product/exquisite_tiara_and_necklace
+#Redirect /product/extremely-rare-round-argyle-pink-diamond-ring /product/extremely_rare_round_argyle_pink_diamond_ring
+#Redirect /product/extremely-rare-unheated-burma-ruby-ring /product/extremely_rare_unheated_burma_ruby_ring
+#Redirect /product/d-s011 /product/d_s011
+#Redirect /product/oval-fancy-yellow-diamond-ring /product/oval_fancy_yellow_diamond_ring
+#Redirect /product/rare-old-unheated-ceylon-sapphire-ring /product/rare_old_unheated_ceylon_sapphire_ring
+#Redirect /product/rare-pink-diamond-cluster-ring /product/rare_pink_diamond_cluster_ring
+#Redirect /product/rubover-style-twist-diamond-hoops /product/rubover_style_twist_diamond_hoops
+#Redirect /product/stunning-twist-diamond-hoops /product/stunning_twist_diamond_hoops
+#Redirect /product/three-row-vintage-pearl-necklace /product/three_row_vintage_pearl_necklace
+#Redirect /product/unusual-yellow-tanzanite-ring /product/unusual_yellow_tanzanite_ring
+#Redirect /product/vivid-yellow-diamond-cluster-ring /product/vivid_yellow_diamond_cluster_ring
+#Redirect /product/yellow-gold-tiara /product/yellow_gold_tiara
+
+</IfModule>

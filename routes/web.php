@@ -313,6 +313,9 @@ Route::namespace('Front')->group(function () {
 	/** Change slugs of all products from previous to new one */
 	// Route::get('product-slugs','ProductController@productSlugs');
 
+	/** Change slugs of all products from previous to new one */
+	// Route::get('product-slugs-update','ProductController@productSlugs');
+
 	Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
     Route::get('/my-account', 'LoginController@index')->name('my-account');
     Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
