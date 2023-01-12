@@ -59,16 +59,14 @@ use App\Models\AppProductAttributeVariationDescripiton;
         </div>
     </div>
 
-
     <div class="form-group row">
 
         <div class="form-label-group col-sm-12 col-md-6">
-            <button type="button" class="btn btn-primary btn-block file-selector"> Select variation Image / video </button>
-            <input type="file" id="variation_image" name="variation_data[{{$index}}][image]" class="form-control d-none variation_image file-field">
-            <input type="text" id="variation_image_id" name="variation_data[{{$index}}][image_id]" value="{{ !empty($item['images'][0]) ? $item['images'][0]['id'] : '' }}">
-
-            @if (!empty($item['images']) && count($item['images']))
-                @include('admin.app_products.products.elements.product_img', ['image'=>$item['images'][0], 'height'=> '100px', 'width'=> '100px'] )
+            <input type="text" id="variation_image" name="variation_data[{{$index}}][image]" class="form-control" placeholder="Image id"
+                value="{{ !empty($images) && !empty($images['variation_img_id']) ? implode(',', $images['variation_img_id']) : '' }}"
+            >
+            @if (!empty($images) && count($images['variation'])  )
+                @include('admin.app_products.products.elements.product_img', ['image'=>$images['variation'][0], 'height'=> '100px', 'width'=> '100px'] )
             @else
                 <img class="d-none" src="" height="120" width="120"/>
                 <video height="120" width="120" class="d-none">

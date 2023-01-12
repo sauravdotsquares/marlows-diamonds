@@ -18,6 +18,7 @@ use App\Models\DiscountRange;
 use App\Models\Masters;
 use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
+use App\Models\UrlRedirects;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -50,6 +51,9 @@ class ProductController extends Controller
     }
 
     public function productDetails(Request $request, $productSlug = null){
+
+        
+
         $dekoEnabled = true;
         $client = new DekoPayApiClient('', '', env('DEKOPAY_API_KEY'));
         $pay_url =  env('DEKOPAY_MODE');
@@ -63,7 +67,16 @@ class ProductController extends Controller
         
 
         if ($productSlug != null) {
+            // $productSlug = str_replace("_","-",$productSlug);
             $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $productSlug)->first();
+
+            if(empty($getProduct)){
+                /** If data not found with existing slug then check in redirections table and redirect */
+                $redirectTo = UrlRedirects::where('old_url', $productSlug)->where(['type'=>'product','is_active'=>1, 'is_deleted'=>0])->first();
+                if(!empty($redirectTo) && !empty($redirectTo->new_url)){
+                    return redirect()->route('product.details', $redirectTo->new_url);
+                }
+            }
 
             if (isset($getProduct) && !empty($getProduct)) {
                 // Product Categories
@@ -1024,9 +1037,134 @@ class ProductController extends Controller
         return response()->json(['html' => $view]);
     }
 
-
-
     public function exclusiveMarlows(Request $request){
         return View::make('front.pages.exclusive_products');
     }
+
+    public function productSlugs(Request $request){
+        /** TODO: 
+         * 1. get all previous slugs of products 
+         * 2. update new slug after checking duplication
+         */
+        // echo "Im here";
+
+        $productSlugs = Products::select(['slug','id','old_slug'])->get();
+        $fileName = date('d-m-Y') .'-product-new-urls.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        
+        $columns = array('id', 'Current url', 'Old url');
+        $baseUrl = "https://marlows-diamonds.co.uk/product/";
+        $callback = function() use($productSlugs, $columns, $baseUrl) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($productSlugs as $key => $value) {
+                $row['id']  = $value->id;
+                $row['product']  = $baseUrl . $value->slug;
+                $row['old_url']  = $baseUrl . $value->old_slug;
+                fputcsv($file, array($row['id'],$row['product'], $row['old_url']));
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+
+        prd($productSlugs);
+
+        // $productSlugs = Products::pluck('old_slug','id')->toArray();
+        // $affectedRows = 0;
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+        //         $product_data->slug = $product_data->old_slug;
+        //         $product_data->save();
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // $productSlugs = Products::pluck('slug','id')->toArray();
+        // $dataToRevert = [];
+        // $affectedRows = 0;
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
+        //         $dataToRevert[$affectedRows]['id'] = $product_data->id;
+        //         $dataToRevert[$affectedRows]['old_slug'] = $value   ;
+        //         $dataToRevert[$affectedRows]['new_slug'] = $new_slug;
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($dataToRevert);
+        // $affectedRows = 0;
+        // $productSlugs = Products::pluck('slug','id')->toArray();
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+
+        //         /** generate and save new slug */
+        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
+        //         $old_slug = $product_data->slug;
+        //         $product_data->slug = $new_slug;
+        //         $product_data->old_slug = $old_slug;
+        //         $product_data->save();
+
+        //         /** Save all old and new urls in redirections */
+        //         $new_redirect = new UrlRedirects();
+        //         $new_redirect->type = "product";
+        //         $new_redirect->old_url = $old_slug;
+        //         $new_redirect->new_url = $new_slug;
+        //         $new_redirect->save();
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($affectedRows);
+    }
+
+
+    public function multiCategoryProductsList(Request $request){
+
+        // echo ;die;
+        $pageNo = !empty($request['page']) ? $request['page'] : 1;
+
+        $categoryIds = [
+            1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54
+        ];
+    
+        $query = Products::with('getProductImages')->where('status',1);
+        
+
+        $category_custom_query = "";
+        foreach ($categoryIds as $cat_key => $cat_value) {
+            if(!$cat_key){  $category_custom_query .= '( '; }
+            $category_custom_query .= " find_in_set('".$cat_value."',categories)";
+            if($cat_key+1 != count($categoryIds)){ $category_custom_query .= " OR "; }
+            else{ $category_custom_query .= ' ) '; }
+        }
+
+        $getProductListFinal = $query->whereRaw(DB::raw($category_custom_query))->paginate(16,['*'],'page',$pageNo);
+
+        $productItems = "";
+        if($getProductListFinal->count()){
+            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+        }
+        $nextPage = $pageNo+1;
+        $token = csrf_token();
+        if($request->ajax()){
+            return response()->json([
+                'status' => $getProductListFinal->count() ? true : false,
+                'html' => $productItems,
+                'nextPage' => $nextPage,
+                'token' => $token
+            ]);
+        }
+
+        return view('front.pages.multi-category-product-listing', compact(['productItems','nextPage']));
+    }
+
 }

@@ -1,32 +1,81 @@
 @extends('layouts.front.app')
 @section('content')
 
-{{-- Header --}}
-<div class="category-banner" style="background-image:url({{asset('assets/images/engagement-rings-banner.png')}})">
+<?php
+
+    // echo "checking<pre>";
+    // print_r($getProduct);
+    // die;
+
+?>
+
+<!-- category header banner start -->
+<div class="category-banner" style="background-image:url({{asset('')}}assets/images/engagement-rings-banner.png)">
     <div class="container">
         <div class="category-banner-text">
-            <h1>{!! isset($category->title)?$category->title:'' !!}</h1>
-            <p>{!! isset($category->short_description)?$category->short_description:'' !!}</p>
+            <h1>{!! isset($data->title)?$data->title:'' !!}</h1>
+            <!-- <h2>AVAILABLE IN A VARIETY OF CUTS AND STYLES</h2> -->
+            <p>{!! isset($data->short_description)?$data->short_description:'' !!}</p>
         </div>
     </div>
 </div>
+<!-- category header banner end -->
 
-{{-- Products list and right sidebar --}}
-<div class="category-listing-wrap">
-    <div class="container">
-
+<!-- Category Listing Wrap Start -->
+<div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
+    <div class="container"  ng-init="productCatFilters('{{$cat1}}','{{$cat2}}','{{$cat3}}')">
         <div class="category-listing-row">
             <div class="category-list-wrap">
-                
-                <div class="product-grid-wrap">
-                    <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">                        
+                <div class="category-product-filter flexed flex-flex-wrap <%showsubCatOnly%>" ng-if="display_filter">
+                    <div class="product-filter-col" ng-if="subCats.length>0">
+                        <div class="pr-filter-title" ng-if="parent_cat=='engagement-rings'">
+                            Ring Style
+                        </div>
+                        <div class="filter-tags-row flexed flex-flex-wrap ">
+                            <div class="filter-tags-col <%subCat.active_status%>" ng-repeat="subCat in subCats">
+                                <div class="category-product-filter-icon">
+                                    <a href="<%subCat.url%>"><img src="{{asset('storage')}}<%subCat.hover_icon%>" alt="icon"></a>
+                                </div>
+                                <div class="category-product-filter-text">
+                                    <a href="<%subCat.url%>"><%subCat.name%></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="product-filter-col"  ng-if="subSubCats.length>0">
+                        <div class="pr-filter-title" ng-if="parent_cat=='engagement-rings'">
+                            Diamond Cut
+                        </div>
+                        <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags <%parent_cat%>">
+                            <div class="filter-tags-col <%subSubCat.active_status%>"  ng-repeat="subSubCat in subSubCats">
+                                <div class="category-product-filter-icon">
+                                    <a href="<%subSubCat.url%>"><img src="{{asset('storage')}}<%subSubCat.hover_icon%>" alt="icon"></a>
+                                </div>
+                                <div class="category-product-filter-text">
+                                    <a href="<%subSubCat.url%>"><%subSubCat.name%> </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="show-more-button">
-                </div>
-                {!! isset($category->description)?$category->description:'' !!}
-            </div>
 
+                <!-- Category listing -->
+                <div class="product-grid-wrap">
+                    <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
+
+                    </div>
+                    <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
+                    <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
+                </div>
+
+                <div class="ajax-load text-center" style="display:block">
+                    <img src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More Products</p>
+                </div>
+
+                {!! isset($data->description)?$data->description:'' !!}
+            </div>
+            <!-- Category SIdebar start -->
             <div class="category-sidebar-wrap">
 
                 <div class="sidebar-main-cart">
@@ -74,6 +123,7 @@
                     </div>
                     @else
                         <div class="shopping_cart_content">
+
                             <p class="mini-cart__empty-message">No products in the basket.</p>
 
 
@@ -101,55 +151,21 @@
                 </div>
                 @endif
             </div>
-
+            <!-- Category SIdebar end -->
         </div>
     </div>
 </div>
 <input type="hidden" id="pagescroll" value="1">
 
 @section('js')
-<script src="{{ asset('admin/js/list_view.js') }}"></script>
+
 <script>
-    var data_not_found_image = "";
-    
-    initViewForList({
-        csrf: "{{ csrf_token() }}",
-        url: "{{ route('app_products.list', $category->slug) }}",
-        noRecords:".item-box",
-        contentAppendAt: $("#showProductList"),
-        showMoreAppendAt: $(".show-more-button"),
-        html: function(data) {
-
-            const imageBaseUrl = "<?php echo asset('uploads'); ?>";
-            if(typeof data.thumb_image!='undefined' && typeof data.thumb_image.image!='undefined'){
-                var thumbImg = imageBaseUrl + '/' + data.thumb_image.image;
-            }else{
-                var thumbImg = "<?php echo asset('images/waiting_img.png'); ?>";
-            }
-
-            const detailUrl = `<?php echo url()->to('p/detail/') ; ?>/${data.slug}`;
-
-            return `<div class="product-grid-items-item item-box">
-                    <div class="product-items-item-info">
-                        <div class="product-items-item-image">
-                            <a href="${detailUrl}">
-                                <img src="${thumbImg}" alt="${data.title}">
-                            </a>
-                        </div>
-                        <div class="product-items-item-details">
-                            <div class="product-items-item-name">
-                                <a href="${detailUrl}">${data.title}</a>
-                                <p> 
-                                    <strong>Price</strong> 
-                                    <span> ${data.minimum} - ${data.maximum}</span> 
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-            </div>`;
-        },
+$(document).ready(function(){
+    $('.show-more-content').hide();
+    $('.show-more').click(function(){
+        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
     });
-
+});
 
 </script>
     <script>
@@ -168,6 +184,13 @@
     })
     
     $(document).on('touchstart','.product-hover-affect',function() {
+
+        // console.log('touchstart', $(this).find('video'));
+        //display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff;
+        // a.product-hov {
+        //     -webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
+        // -ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);}
+
         $(this).find('a.product-hov').css({
             '-webkit-transition' : 'all 200ms ease-in',
             '-webkit-transform' : 'scale(1.2)',
@@ -191,9 +214,17 @@
             $(this).find('video')[0].play()
         }
     })
+    // .on('touchend' ,function() {
+    //     console.log('touchend');
+    //     if($(this).find('video').length){
+    //         $(this).find('video')[0].play()
+    //     }
+    // })
 
-        // var page = 1;
-        // loadMoreData(page);
+
+        var page = 1;
+        loadMoreData(page);
+
 
         $(window).scroll(function() {
             var scroll = $('#scrollFlag').val();
@@ -211,7 +242,7 @@
                     type: "post",
                     data: {
                         '_token': "{{csrf_token()}}",
-                        'cate_id':'{{ !empty($data) ? $data->id : ''}}',
+                        'cate_id':'{{$data->id}}',
                         'page':page,
                     },
                     beforeSend: function()
@@ -222,6 +253,8 @@
                 .done(function(data)
                 {
                     $('#pagescroll').val(data.page.current_page+1);
+                    // console.log(data.page.current_page);
+
                     if(data.html == ""){
                         $('.ajax-load').html("No more products found");
                         return false;

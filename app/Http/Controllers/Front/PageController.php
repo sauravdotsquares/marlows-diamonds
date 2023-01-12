@@ -18,15 +18,16 @@ class PageController
      */
     public function page($slug=null)
     {
+        
         if($slug!=null){
             $pageData = Pages::where('slug',$slug)->where('status',1)->first();
             $pageCategory = PostCategory::where('slug',$slug)->first();
 			//$blogdata= Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
-
             if($pageData){
                 return view('front.pages.templates.'.$pageData->template.'',['data'=>$pageData]);//,'showdata'=>$blogdata]);
             }elseif($pageCategory){
-				return view('front.pages.templates.blog_template',['data'=>$pageCategory, 'blog_details' => 1]);//,'showdata'=>$blogdata]);
+                return redirect()->route('blog_list',$pageCategory->slug);
+				// return view('front.pages.templates.blog_template',['data'=>$pageCategory, 'blog_details' => 1]);//,'showdata'=>$blogdata]);
 			}
 
             return view('layouts.errors.404');
@@ -44,7 +45,7 @@ class PageController
 
         if(isset($getPostCategory) && !empty($getPostCategory)){
             $posts = Posts::orderBy('id','DESC')->where('status', 1)->whereRaw("find_in_set('".$getPostCategory."',categories)")->paginate(6);
-        }elseif(isset($request->slug) && $request->slug == 'blog-resources'){
+        }elseif(isset($request->slug)  && ($request->slug == 'blog-resources' || $request->slug == 'blog') ){
             $posts = Posts::orderBy('id','DESC')->where('status', 1)->paginate(6);
         }
 
@@ -56,11 +57,28 @@ class PageController
     }
 
 	// For single blog post
-	public function show(Request $request,$slug)
-    {
+	public function show(Request $request,$slug){
 		$posts = Posts::where('slug',$slug)->first();
+        if(empty($posts)){
+            return view('errors.404');
+        }
+
     	return view('front.pages.blog-details',['data'=>$posts]);
-		// echo "<pre>";
-		// print_r($posts); die();
+        
     }
+
+    /** List of blogs */
+    public function blogList(Request $request, $slug){
+        /** If category found */
+        $getPostCategory = PostCategory::where('slug',$slug)->pluck('id')->first();
+        if(!empty($getPostCategory)){
+            $posts = Posts::orderBy('id','DESC')->where('status', 1)->whereRaw("find_in_set('".$getPostCategory."',categories)")->paginate(6);
+            if($posts->count()){
+                $pageCategory = PostCategory::where('slug',$slug)->first();
+                return view('front.pages.templates.blog_template',['data'=>$pageCategory, 'blog_details' => 1 ,'blogCategorySlug' => $slug ]);
+            }
+        }
+        return view('errors.404');
+    }
+
 }

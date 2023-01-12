@@ -5,8 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
+    <title>404 Not found</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
+    <meta name="robots" content="noindex, nofollow">
+
     @include('layouts.front.seo_header')
 
 	  <link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />

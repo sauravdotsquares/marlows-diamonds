@@ -43,7 +43,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/diamond-jewellery.png" alt="Diamond Jewellery"></a>
+                                <a href="{{ asset('product-category/diamond-jewellery') }}"><img src="assets/images/diamond-jewellery.png" alt="Diamond Jewellery"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -63,7 +63,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/engagement-ring.png" alt="Engagement Ring"></a>
+                                <a href="{{ asset('engagement-rings') }}"><img src="assets/images/engagement-ring.png" alt="Engagement Ring"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -82,7 +82,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/wedding-ring.png" alt="Wedding Rings"></a>
+                                <a href="{{ asset('product-category/wedding-rings') }}"><img src="assets/images/wedding-ring.png" alt="Wedding Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -102,7 +102,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/multi-stone.png" alt="Multi Stone Rings"></a>
+                                <a href="{{ asset('product-category/engagement-rings/multi-stone') }}"><img src="assets/images/multi-stone.png" alt="Multi Stone Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">

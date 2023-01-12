@@ -13,11 +13,8 @@
                         </div>
 
                         <?php
-                            $request_data = $product_vari->count() ? $product_vari : [1];// request()->old() ? request()->old() : [1];
-                            //$request_data = !empty($request_data['variation_data']) ? $request_data['variation_data'] : [1];
-
-                            
-
+                            // prd($product_vari);
+                            $request_data = [1];
                         ?>
 
                         <div class="card-body" id="append-data">
@@ -47,8 +44,7 @@
                                                         <option value="">{{ __('Select') .' '. $attributeData_value['name'] }}</option>
                                                         <?php if(!empty($attributeData_value['variations']) && count($attributeData_value['variations'])){ ?>
                                                             <?php foreach ($attributeData_value['variations'] as $variations_key => $variations_value) { ?>
-                                                                <option     value="{{ $variations_value['id'] }}">{{ $variations_value['name'] }}</option>
-                                                                {{-- {{ in_array($variations_value['id'], $data_value['variation_ids']) ? 'selected' : '' }} --}}
+                                                                <option value="{{ $variations_value['id'] }}">{{ $variations_value['name'] }}</option>
                                                             <?php } ?>
                                                         <?php } ?>
                                                     </select>
@@ -74,9 +70,8 @@
                                     <div class="form-group row">
     
                                         <div class="form-label-group col-sm-12 col-md-6">
-                                            <button type="button" class="btn btn-primary btn-block file-selector"> Select variation Image / video </button>
-                                            <input type="file" id="variation_image" name="variation_data[{{$index}}][image]" class="form-control d-none variation_image file-field">
-                                            <input type="hidden" id="variation_image_id" name="variation_data[{{$index}}][image_id]" value="{{ !empty($data_value['image']) ? $data_value['image']['id'] : '' }}">
+
+                                            <input type="text" id="variation_image" name="variation_data[{{$index}}][image]" class="form-control" placeholder="Image id">
 
                                             <?php if(!empty($data_value['image'])){ ?>
                                             <?php $images = [$data_value['image']]; ?>
@@ -116,9 +111,10 @@
 
 @section('js')
 <script>
-    $(document).on('click','.file-selector', function() {
-        $(this).siblings('.file-field').trigger('click');
-    });
+
+    // $(document).on('click','.file-selector', function() {
+    //     $(this).siblings('.file-field').trigger('click');
+    // });
     
     $(document).on('click','.add-btn', function(event) {
         const uniqueId = new Date().getTime() +''+ Math.floor(Math.random() * 100000);
@@ -142,110 +138,101 @@
             }
         });
     });
-
     $(document).on('click','.remove-btn', function(event) {
         $(this).parents('.data-information').remove();
     });
 
 
-    $(document).on('change','.variation_image', function(event) {
+    // $(document).on('change','.variation_image', function(event) {
+    //     const $item = $(this);
+    //     var reader = new FileReader();
+    //     reader.readAsDataURL(event.target.files[0]);
+    //     reader.onload = function(){
+    //         /** extension check */
+    //         const validFormats = ['jpg','jpeg','png','mp4','webp'];
+    //         var extension = $item[0].files[0].name.split('.').pop().toLowerCase()
+    //         if(!validFormats.includes(extension)){
+    //             alert('Invalid file extension please choose ' + validFormats.join(', ') )
+    //             return;
+    //         }
+    //         $item.siblings('video').addClass('d-none');
+    //         $item.siblings('img').addClass('d-none');
+    //         if(extension == 'mp4'){
+    //             var video = $item.siblings('video');
+    //             video.removeClass('d-none');
+    //             video[0].src = reader.result;
+    //             video[0].load();
+    //             video[0].play();
+    //         }else{
+    //             $item.siblings('img').attr('src',reader.result).removeClass('d-none');
+    //         }
+    //         /** Set form data */
+    //         var formData = new FormData();
+    //         formData.append("file", $item[0].files[0]);
+    //         /** Upload file */
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "{{ route('admin.app_products.upload_images') }}",
+    //             headers: {
+    //                 'IMAGE-TYPE' : 'variation',
+    //                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //                 'IMAGE-FROM': 'md_app_product_attribute_variations',
+    //             },
+    //             success: function (data) {
+    //                 console.log('data', data)
+    //                 if(data){
+    //                     $item.siblings('#variation_image_id').val(data);
+    //                 }
+    //                 $item.val('');
+    //             },
+    //             error: function (error) {
+    //                 alert('Something went wrong');
+    //             },
+    //             async: true,
+    //             data: formData,
+    //             cache: false,
+    //             contentType: false,
+    //             processData: false,
+    //             timeout: 60000
+    //         });
+    //     }
+    // });
 
-        const $item = $(this);
+    // $(document).on('submit','#variations_form_remoe', function(event) {
 
-        var reader = new FileReader();
-        reader.readAsDataURL(event.target.files[0]);
-        reader.onload = function(){
+    //     const form = $(this);
 
-            /** extension check */
-            const validFormats = ['jpg','jpeg','png','mp4','webp'];
-            var extension = $item[0].files[0].name.split('.').pop().toLowerCase()
-            if(!validFormats.includes(extension)){
-                alert('Invalid file extension please choose ' + validFormats.join(', ') )
-                return;
-            }
+    //     let clientInfo= form.serialize();
+    //     const searchParams = new URLSearchParams(clientInfo);
+    //     clientInfo = Object.fromEntries(searchParams);
+    //     const form_data = new FormData();
+    //     form_data.append('data', JSON.stringify(clientInfo) )
 
-            $item.siblings('video').addClass('d-none');
-            $item.siblings('img').addClass('d-none');
+    //     // console.log('form', form.serialize());
+    //     event.preventDefault();
 
-            if(extension == 'mp4'){
-                var video = $item.siblings('video');
-                video.removeClass('d-none');
-                video[0].src = reader.result;
-                video[0].load();
-                video[0].play();
-            }else{
-                $item.siblings('img').attr('src',reader.result).removeClass('d-none');
-            }
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "{{ route('admin.app_products.variations',  $product->slug ) }}",
+    //         headers: {
+    //             'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //         },
+    //         data: form_data,
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             console.log('data', data);
+    //         },
+    //         error: function (error) {
+    //             console.log('error', error)
+    //             // alert('Something went wrong');
+    //         },
+    //         async: true,
+    //         cache: false,
+    //         contentType: false,
+    //         processData: false,
+    //         timeout: 60000
+    //     });
 
-            /** Set form data */
-            var formData = new FormData();
-            formData.append("file", $item[0].files[0]);
-
-            /** Upload file */
-            $.ajax({
-                type: "POST",
-                url: "{{ route('admin.app_products.upload_images') }}",
-                headers: {
-                    'IMAGE-TYPE' : 'variation',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'IMAGE-FROM': 'md_app_product_attribute_variations',
-                },
-                success: function (data) {
-                    console.log('data', data)
-                    if(data){
-                        $item.siblings('#variation_image_id').val(data);
-                    }
-                    $item.val('');
-                },
-                error: function (error) {
-                    alert('Something went wrong');
-                },
-                async: true,
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                timeout: 60000
-            });
-        }
-
-    });
-
-    $(document).on('submit','#variations_form_remoe', function(event) {
-
-        const form = $(this);
-
-        let clientInfo= form.serialize();
-        const searchParams = new URLSearchParams(clientInfo);
-        clientInfo = Object.fromEntries(searchParams);
-        const form_data = new FormData();
-        form_data.append('data', JSON.stringify(clientInfo) )
-
-        // console.log('form', form.serialize());
-        event.preventDefault();
-
-        $.ajax({
-            type: "POST",
-            url: "{{ route('admin.app_products.variations',  $product->slug ) }}",
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            },
-            data: form_data,
-            dataType: 'json',
-            success: function (data) {
-                console.log('data', data);
-            },
-            error: function (error) {
-                console.log('error', error)
-                // alert('Something went wrong');
-            },
-            async: true,
-            cache: false,
-            contentType: false,
-            processData: false,
-            timeout: 60000
-        });
-
-    });
+    // });
 </script>
 @endsection

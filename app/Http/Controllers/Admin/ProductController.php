@@ -21,11 +21,18 @@ use App\Models\Masters;
 use App\Models\ProductThumbVideos;
 use App\Models\Category;
 use App\Models\ProductPricingUpdates;
+use App\Models\LabPricesList;
+
 
 use View, DB;
 
 class ProductController extends Controller
 {
+
+    
+    public function __construct(){
+        $this->lab_price_path = "admin.products.lab_price_variations.";
+    }
 
     public function index(Request $request){
         $breadcrumb = [
@@ -680,6 +687,96 @@ class ProductController extends Controller
      */
     public function basePriceList(Request $request){
 
+
+        /** Query to get all variations and products */
+        $dataToMarkup = ProductVariations::whereHas('product', function($query) {
+            $query->select(['id','status','categories','title','dfinder_status']);
+            $query->where(['status'=>1, 'dfinder_status'=>1]);
+        })->with(['product'=>function($query){
+            $query->select(['id','title','categories','slug']);
+        }])
+        ->get();
+
+        $fileName = date('d-m-Y') .'-products-markup.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        $vat = getVAT();
+        $columns = [
+            'Product', 
+            'Variations', 
+            'Markup price',
+            'Vat ' . '('.$vat.')',
+            'Total',
+        ];
+
+        $callback = function() use($dataToMarkup, $columns, $vat) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($dataToMarkup as $key => $value) {
+                if($value->regular_price > 0){
+                    $totalAmount = $value->regular_price * $vat;
+
+                    $Variations_data = [];
+                    foreach($value->get_vari_details_id as $key => $attribute){
+                        $att_key = str_replace("attri_","",$attribute->key);
+                        $Variations_data[] = $att_key. ":- " . ($attribute->value ? $attribute->value : 'All') ;
+                    }
+                    $row['Product'] = $value->product->title;
+                    $row['Variations'] = implode(', ',$Variations_data);
+                    $row['markup_price'] = $value->regular_price;
+                    $row['vat'] = round($totalAmount - $value->regular_price);
+                    $row['Total'] = round($totalAmount);
+                    fputcsv($file, $row);
+                }
+            }
+
+            // foreach ($product_variations as $task) {
+            //     $row['product']  = $task->product->title;
+            //     $Variations_data = [];
+            //     foreach($task->get_vari_details_id as $key => $attribute){
+            //         $att_key = str_replace("attri_","",$attribute->key);
+            //         $Variations_data[] = $att_key. ":- " . $attribute->value;
+            //     }
+            //     $row['variations'] = implode(', ',$Variations_data);
+            //     $row['base_price']  =  show_percentage($task->regular_price, $pricingData);
+            //     $row['mined_price']  = !empty($task['mined']['regular_price']) ?  show_percentage($task['mined']['regular_price'], $pricingData)  : 'N/A';
+            //     $row['lab_grown_price']  = !empty($task['lab_grown']['regular_price']) ? show_percentage($task['lab_grown']['regular_price'], $pricingData) : 'N/A';
+            //     $row['discounted']  = "N/A";
+            //     $row['new_price']  = show_percentage($task->regular_price,$pricingData,'action' );
+            //     $row['new_mined']  = !empty($task['mined']['regular_price']) ?  show_percentage($task['mined']['regular_price'],$pricingData,'action' ) : 'N/A' ;
+            //     $row['new_lab_grown']  = !empty($task['lab_grown']['regular_price']) ?  show_percentage($task['lab_grown']['regular_price'],$pricingData,'action' ) : 'N/A' ;;
+            //     fputcsv($file, $row);
+            // }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+
+
+        // $datatocheck = DB::raw('select * from md_products where FIND_IN_SET(2, categories) OR FIND_IN_SET(3, categories) OR FIND_IN_SET(4, categories) OR FIND_IN_SET(5, categories) OR FIND_IN_SET(6, categories)')->get();
+        // $to_data = [2,3,4,5,6];
+        // $notIn = 54;
+        // // $child_categories = Category::get_all_child_ids(2);
+        // // prd($child_categories);die;
+        // $productIdsQuery = Products::where('status',1);
+        // $category_custom_query = '';
+        // foreach ($to_data as $cat_key => $cat_value) {
+        //     if(!$cat_key){  $category_custom_query .= '( '; }
+        //     $category_custom_query .= " find_in_set('".$cat_value."',categories)";
+        //     if($cat_key+1 != count($to_data)){ $category_custom_query .= " OR "; }
+        //     else{ $category_custom_query .= ' ) '; }
+        // }
+        // $category_custom_query .= " AND NOT find_in_set($notIn, categories) ";
+
+        // $productIdsQuery->whereRaw(DB::raw($category_custom_query));
+        // $productIdsQuery = $productIdsQuery->pluck('id');
+        // prd($productIdsQuery);
+
         $data = $request->all();
         $search = true;
         $productId = "";
@@ -758,9 +855,8 @@ class ProductController extends Controller
             $product_variations = $query->get();
         }else{
             /** if this data is for listing */
-            $product_variations = $query->paginate(10);
+            $product_variations = $query->paginate(500);
         }
-
         
 
         if($product_variations->count()){
@@ -789,6 +885,9 @@ class ProductController extends Controller
                 $value->lab_grown = $lab_grown_pricing;
             }
         }
+
+        // prd($product_variations->toArray());die;
+
         if(!empty($request['export']) && $request['export']=='true'){
             $fileName = date('d-m-Y') .'-pricing.csv';
             $headers = array(
@@ -798,7 +897,8 @@ class ProductController extends Controller
                 "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
                 "Expires"             => "0"
             );
-            $columns = ['Product', 
+            $columns = [
+                'Product', 
                 'Variations', 
                 'Base Price',
                 'Mined Price',
@@ -957,5 +1057,138 @@ class ProductController extends Controller
         $productsCount = $productsCount->take(15)->get();
         return response()->json($productsCount);
     }// endof productSearch
+
+
+
+    /** START:: lab price crud work */
+    public function labPriceList(Request $request){
+        
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Engagement lab price", "url" => route("admin.lab_price_variations.list"), "icon" => "fas fa-dollar-sign"],
+
+        ];
+        populate_breadcrumb($breadcrumb);
+        $page_title = "Engagement lab price";
+
+        $query = LabPricesList::orderBy('id','DESC')->where(['is_deleted'=>0]);
+
+        $query = getFilter(LabPricesList::class, $query, $request->query());
+
+        $data = $query->paginate(10);
+
+        return view($this->lab_price_path . 'index', compact(['data','page_title']));
+    }//endof 
+
+    public function labPriceAdd(Request $request){
+        
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Engagement lab price", "url" => route("admin.lab_price_variations.list"), "icon" => "fas fa-dollar-sign"],
+            ["name" => "Add", "url" => route("admin.lab_price_variations.add"), "icon" => "fa fa-plus"],
+
+        ];
+        populate_breadcrumb($breadcrumb);
+        $page_title = "Add engagement lab price variation";
+
+        if($request->isMethod('post')){
+
+            /** create validations */
+            $validated = $request->validate([
+                'clarity' => 'required',
+                'color' => 'required',
+                'carat' => 'required',
+                "price" => "required",
+            ],[
+                'clarity.required' => 'Please enter clarity',
+                'color.required' =>  'Please enter color',
+                'carat.required' =>  'Please enter carat',
+                'price.required' =>  'Please enter price',
+            ]);
+
+            $new_record = new LabPricesList();
+            $new_record->clarity = $validated['clarity'];
+            $new_record->color = $validated['color'];
+            $new_record->carat = $validated['carat'];
+            $new_record->price = $validated['price'];
+            $new_record->save();
+            return redirect()->route('admin.lab_price_variations.list')->with('success','Record has been created successfully');
+        }
+
+
+        return view($this->lab_price_path . 'add', compact(['page_title']));
+    }//endof 
+
+    public function labPriceChangeStatus(Request $request){
+    
+        $id = $request['id'];
+        $record = LabPricesList::where('id', $id)->first();
+
+        if(!empty($record)){
+            $record->is_active = $record->is_active ? 0 : 1;
+            $record->save();
+            return  response()->json(['status'=>'success', 'message'=> 'Status has been updated successfully' ]);
+        }
+        return  response()->json(['status'=>'error', 'message'=> 'Record not identified' ]);
+    }//endof 
+
+
+    public function labPriceDelete(Request $request){
+    
+        $id = $request['id'];
+        $record = LabPricesList::where('id', $id)->first();
+
+        if(!empty($record)){
+            $record->is_deleted = 1;
+            $record->save();
+            return  response()->json(['status'=>'success', 'message'=> 'Record has been deleted successfully' ]);
+        }
+        return  response()->json(['status'=>'error', 'message'=> 'Record not identified' ]);
+    }//endof 
+
+
+    public function labPriceEdit(Request $request){
+        
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Engagement lab price", "url" => route("admin.lab_price_variations.list"), "icon" => "fas fa-dollar-sign"],
+            ["name" => "edit", "url" => route("admin.lab_price_variations.add"), "icon" => "fa fa-edit"],
+
+        ];
+        populate_breadcrumb($breadcrumb);
+        $page_title = "Edit engagement lab price variation";
+
+        $id = $request['id'];
+        $data = LabPricesList::where('id',$id)->first();
+        if(empty($data)){
+            return redirect()->route('admin.lab_price_variations.list')->with('error','Record is not identified');
+        }
+
+        if($request->isMethod('post')){
+
+            /** create validations */
+            $validated = $request->validate([
+                'clarity' => 'required',
+                'color' => 'required',
+                'carat' => 'required',
+                "price" => "required",
+            ],[
+                'clarity.required' => 'Please enter clarity',
+                'color.required' =>  'Please enter color',
+                'carat.required' =>  'Please enter carat',
+                'price.required' =>  'Please enter price',
+            ]);
+
+            $data->clarity = $validated['clarity'];
+            $data->color = $validated['color'];
+            $data->carat = $validated['carat'];
+            $data->price = $validated['price'];
+            $data->save();
+            return redirect()->route('admin.lab_price_variations.list')->with('success','Record has been updated successfully');
+        }
+
+
+        return view($this->lab_price_path . 'edit',compact(['data','page_title']));
+    }//endof 
 
 }

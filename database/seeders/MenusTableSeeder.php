@@ -177,7 +177,7 @@ class MenusTableSeeder extends Seeder
         Menus::create([
 	            'parent' => 0,
 	            'title' => 'Blog',
-	            'slug' => '/blog-resources/',
+	            'slug' => '/blog/', // Change after SEO discuss 05Jan2023 seo_change
 	            'icon' => 'fas fa-align-justify',
 	            'target' => '_self',
 	            'tooltip' => 'Blog'

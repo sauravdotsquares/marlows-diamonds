@@ -21,7 +21,7 @@ class Products extends Model
     protected $table = 'products';
 
     protected $fillable = [
-        'title','slug','tags','is_variable','diamond_shape','short_description','description','categories','sale_price','regular_price','meta_title','meta_keyword','meta_description','status','dfinder_status','is_featured','is_taxable','stock_status'
+        'title','slug','old_slug','tags','is_variable','diamond_shape','short_description','description','categories','sale_price','regular_price','meta_title','meta_keyword','meta_description','status','dfinder_status','is_featured','is_taxable','stock_status'
     ];
 
     protected $appends = ['cat_details','ProductVariationMinMaxPrice'];
@@ -55,6 +55,8 @@ class Products extends Model
         $productData = self::where('slug', $data['slug'])->first();
         $runOldCode = true;
 
+        $priceUpdateBy = 35;
+
         if(!empty($productData)){
             $prodCategoriesDJ = explode(',', $productData->categories);
             if(in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)){
@@ -81,12 +83,11 @@ class Products extends Model
                     }
                 }
 
-
                 $combinations = ProductVariationsMaster::with(['masterData'])
                                 ->whereHas('masterData', function($q) use ($carat) { $q->where('name',$carat); })
                                 ->where(['product_id'=> $productData->id, 'is_deleted'=> 0, 'is_active'=>1 ])
                                 ->first();
-
+                
                 if(!empty($combinations)){
                     $combinations = $combinations->toArray();
 
@@ -104,28 +105,13 @@ class Products extends Model
                         $runOldCode = false;
 
 
-                        // $image = getProductVariationImage($productData->id, $request);
-
-                        /** Apply discount */
-                        // $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
-                        //                             $q->whereDate('end_date', '>', now());
-                        //                         })
-                        //                         ->with(['discount_data'])
-                        //                         ->whereIn('category_id', $prodCategoriesDJ)
-                        //                         ->whereRaw('"' . $price . '" between `from_price` and `to_price`')
-                        //                         ->first();
-                                                
-                        // if(!empty($getDiscountRange)){
-                        //     $price_after_discount = ($getDiscountRange->discount / 100) * $price;
-                        // }else{
-                        //     $price_after_discount = 0;
-                        // }
+                        // $priceUpdateBy
 
                         $newArray['formula'] = true;
                         $newArray['regular_price'] = round($price);
-                        // $newArray['discount_data'] =  $getDiscountRange;
                         $newArray['regular_price_with_vat'] = round($price);
-                        // $newArray['regular_price_with_vat_discount'] = round($price) - round($price_after_discount);
+                        $newArray['combination_total_price'] = $combinations['price'];
+                        $newArray['master_varitation_id'] = $combinations['id'];
                         
                         return $newArray;
                     }
@@ -148,11 +134,6 @@ class Products extends Model
             } else {
                 $checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
             }
-
-            // $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date','is_login_users')
-            //                 ->where('category_id', $checkPlanCatArray['id'])
-            //                 ->where('status', 1)
-            //                 ->first();
 
             $getProductVariationId = ProductVariations::where('product_id', $product_id)
                                     ->pluck('id')
@@ -214,65 +195,6 @@ class Products extends Model
                 $discountPercentage = 1;
                 
                 $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
-
-
-                // if (isset($disPercentage) && !empty($disPercentage)) {
-                //     $disPercentage = $disPercentage->toArray();
-
-                //     if($disPercentage['is_login_users']){
-                //         $isDiscountApplicable = auth()->guard('customer')->check();
-                //     }else{
-                //         $isDiscountApplicable = true;
-                //     }
-
-                //     if ( $isDiscountApplicable ) {
-
-                //         if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
-                //             $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
-                //         } else {
-                //             $increaseDiscount = 1;
-                //         }
-
-                //         // echo $regular_p_final * $increaseDiscount;
-                //         // echo (($regular_p_final) * $increaseDiscount);die;
-                        
-                //         $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
-                        
-                //         if ($disPercentage['end_date'] >= date('Y-m-d')) {
-
-                //             $getDiscountRange = DiscountRange::select('category_id', 'from_price', 'to_price', 'discount')
-                //                                 ->where('category_id', $checkPlanCatArray['id'])
-                //                                 ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
-                //                                 ->first();
-
-                            
-                //             $discountPercentage = 1 + ($disPercentage['discount'] / 100);
-                            
-                //             if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
-                //                 if ($getDiscountRange->discount > 1) {
-                //                     $discountPercentage = 1 + ($getDiscountRange->discount / 100);
-                //                 } else {
-                //                     $discountPercentage = 1;
-                //                 }
-                //             } else {
-                //                 $discountPercentage = 1;
-                //             }
-
-                //         } else {
-                //             $discountPercentage = 1;
-                //         }
-                        
-
-                //     } else {
-                //         if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
-                //             $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
-                //         } else {
-                //             $increaseDiscount = 1;
-                //         }
-                //         $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
-                //     }
-                // }
-
 
                 $categorySlugs = Category::whereIn('id',$prod_categories )->pluck('slug');
                 if($categorySlugs->count()){

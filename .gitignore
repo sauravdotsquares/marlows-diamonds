@@ -1,12 +1,7 @@
 /node_modules
 /live_backup
-/public/hot
-/public/storage
-/public/uploads
-/public/assets/images
-/public/assets/images_old
-/storage/*.key
-/storage/framework/cache
+/public
+/storage
 /vendor
 .env
 .env.backup

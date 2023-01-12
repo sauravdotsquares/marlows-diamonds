@@ -5,7 +5,7 @@ function imagePreview($item, event, img, inputName='file', limit=1, dataId='') {
         let imageToPrint = `<div class="file_uploader-container">`;
         imageToPrint +=    `<i class="image-remover nav-icon fas fa fa-times"></i>`;
         if(extension == 'mp4'){
-            imageToPrint += `<video autoplay muted class="file_uploader-video"> <source src="${img}" /> </video>`;
+            imageToPrint += `<video autoplay muted class="file_uploader-video img-thumbnail"> <source src="${img}" /> </video>`;
         }else{
             imageToPrint += `<img class="file_uploader-img img-thumbnail" src="${img}" />`;
         }
@@ -36,7 +36,7 @@ function imageUploader($element, options) {
         let imageToPrint = `<div class="file_uploader-container">`;
         imageToPrint +=    `<i class="image-remover nav-icon fas fa fa-times"></i>`;
         if(extension == 'mp4'){
-            imageToPrint += `<video autoplay muted loop class="file_uploader-video"> <source src="${imgBasePath+element.image}" /> </video>`;
+            imageToPrint += `<video autoplay muted loop class="file_uploader-video img-thumbnail"> <source src="${imgBasePath+element.image}" /> </video>`;
         }else{
             imageToPrint += `<img class="file_uploader-img img-thumbnail" src="${imgBasePath+element.image}" />`;
         }
@@ -47,11 +47,18 @@ function imageUploader($element, options) {
 
     
     $(document).on('change', $element,  function(event) {
+
+        $($element).attr('disabled',true);
+
         const globalExtensions = allowedExtensions.length ? allowedExtensions :  ['jpeg','png','jpg','png','webp','mp4','pdf'];
         const $item = $(this);
         const extension = event.target.files[0].name.split('.').pop().toLowerCase();
 
-        if(!globalExtensions.includes(extension)){ alert('Please select valid extension ' + globalExtensions.join(', ')); return false; };
+        if(!globalExtensions.includes(extension)){ 
+            alert('Please select valid extension ' + globalExtensions.join(', ')); 
+            $($element).removeAttr('disabled');
+            return false; 
+        };
     
         var reader = new FileReader();
         reader.onload = function(){
@@ -74,9 +81,11 @@ function imageUploader($element, options) {
                         imagePreview($item, event, reader.result,inputName, limit , data);
                     }
                     $item.val('');
+                    $($element).removeAttr('disabled');
                 },
                 error: function (error) {
                     alert('Something went wrong');
+                    $($element).removeAttr('disabled');
                 },
                 async: true,
                 data: formData,

@@ -18,23 +18,12 @@ use App\Models\GlobalCombinations;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\Discount;
 use App\Models\DiscountRange;
-
 use App\Models\Products\Combinations;
 use App\Models\Products\CombinationVaritions;
 use App\Models\Products\CombinationAttributes;
 use App\Models\Products\CombinationVariationDetails;
 
-
-// use App\Models\Products;
-// use App\Models\ProductVariationAttributes;
-// use App\Models\Attributes;
-// use App\Models\ProductVariations;
-// use App\Models\ProductVariationDetails;
-
 use View, Validator;
-
-// use billythekid\dekopay\Core\DekoPayApiClient;
-// use App\Models\AppProducts;
 
 class AppProductsController extends Controller{
 
@@ -87,11 +76,17 @@ class AppProductsController extends Controller{
                     $products[$p_key]->maximum = "0";
                 }
 
+                $products[$p_key]['images'] = AppProductImages::getImages([
+                    'belongs_from' => 'md_app_products',
+                    'parent_id' => $p_value->id
+                ]);
+
                 /** Add thumb image and thumb video  */
-                $products[$p_key]->thumb_image  = AppProductImages::where(['is_deleted'=>0, 'is_active'=>1, 'parent_id'=> $p_value->id, 'belongs_from'=> 'md_app_products', 'image_type'=> 'thumb_image'])->first();
-                $products[$p_key]->thumb_video  = AppProductImages::where(['is_deleted'=>0, 'is_active'=>1, 'parent_id'=> $p_value->id, 'belongs_from'=> 'md_app_products', 'image_type'=> 'thumb_video'])->first();
+                // $products[$p_key]->thumb_image  = AppProductImages::where(['is_deleted'=>0, 'is_active'=>1, 'parent_id'=> $p_value->id, 'belongs_from'=> 'md_app_products', 'image_type'=> 'thumb_image'])->first();
+                // $products[$p_key]->thumb_video  = AppProductImages::where(['is_deleted'=>0, 'is_active'=>1, 'parent_id'=> $p_value->id, 'belongs_from'=> 'md_app_products', 'image_type'=> 'thumb_video'])->first();
             }
 
+            // prd($products->toArray());
             $response = [
                 'status' => true,
                 'data' => $products->items(),
