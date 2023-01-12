@@ -40,35 +40,9 @@ class ProductPriceController extends Controller
             $newPrice = LabPricesList::whereBetween('carat', [$startCarat, $endCarat])->where(['color'=> $color, 'clarity'=>$clarity,'is_active'=>1, 'is_deleted'=>0])->first();
             if(!empty($newPrice)){
 
-                $vat = getVAT();
-                $labPrice = $newPrice->price +  (float)$variationPrice; // lab price
-                $labPriceWithVat = $labPrice * $vat; // Lab price with vat
-
-                /** Add discount for product */
-                // $product = Products::select(['categories','id','slug'])->where('slug',$request->slug)->first();
-                // if(!empty($product)){
-                //     $productCategories = explode(',',$product->categories);
-                //     $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
-                //         $q->whereDate('end_date', '>', now())->where('diamond_type','lab_grown');
-                //     })
-                //     ->with(['discount_data'])
-                //     ->whereIn('category_id', $productCategories)
-                //     ->whereRaw('"' . $labPriceWithVat . '" between `from_price` and `to_price`')
-                //     ->first();
-                //     if(!empty($getDiscountRange)){
-                //         $price_after_discount = ($getDiscountRange->discount / 100) * $labPriceWithVat;
-                //         return response()->json([
-                //             'labPriceFormula' => true,
-                //             'discountApplied' => true,
-                //             'labPrice' => $price_after_discount,
-                //             'variationPrice' => $variationPrice,
-                //             'finalPrice'=> $labPriceWithVat,
-                //             'discountedPrice' => (float)$labPriceWithVat - $price_after_discount,
-                //         ]);
-                //     }
-                // }
-
-                $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$labPrice, $request['diamond_type']);
+                $labPrice = $newPrice->price +  (float)$variationPrice;
+                
+                $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$labPrice);
 
                 return response()->json([
                     'labPriceFormula' => true,
@@ -80,7 +54,7 @@ class ProductPriceController extends Controller
             }
         }
 
-        $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice, $request['diamond_type']);
+        $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
         return response()->json([
             'finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),
@@ -89,6 +63,8 @@ class ProductPriceController extends Controller
     }
 
     public function getProductFinalPriceWithDiamond(Request $request){
+
+        // prd($request->all());
 
         $caratFrom = '0.30'; $caratTo = '0.39';
         if($request->carat!=''){
@@ -138,7 +114,7 @@ class ProductPriceController extends Controller
         	$diamondPrice = sprintf('%0.2f', ($hkData[0]['Amount']*1.25));
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
 
-            $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice, $request['diamond_type']);
+            $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
 
         	return json_encode(array(
@@ -165,7 +141,7 @@ class ProductPriceController extends Controller
 
                 $finalPrice = round((float)$settingPrice+(float)$diamondPrice);
 
-                $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice, $request['diamond_type']);
+                $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice);
 
 
                 return json_encode(array(
@@ -184,7 +160,7 @@ class ProductPriceController extends Controller
         }
     }
 
-    public function getActualSettingPrice($slug,$finalPrice, $diamondType=null){
+    public function getActualSettingPrice($slug,$finalPrice){
 
         // 1493 
         // echo $finalPrice;die;
@@ -198,20 +174,11 @@ class ProductPriceController extends Controller
 
             $checkPlanCatArray = Category::whereIn('id',$prod_categories)->where('parent_id',0)->first()->toArray();
 
-            $disPercentageQuery = Discount::select('category_id','discount','inc_percentage','end_date','is_login_users')
+            $disPercentage = Discount::select('category_id','discount','inc_percentage','end_date','is_login_users')
                             ->where('category_id',$checkPlanCatArray['id'])
-                            ->where('status',1);
-
-            if(!empty($diamondType)){
-                $diamondType = !empty($diamondType) ? $diamondType : null;
-                $disPercentageQuery->whereNull('diamond_type')->orWhere('diamond_type', $diamondType);
-                // $disPercentageQuery = $disPercentageQuery->whereIn('diamond_type',[$diamondType, null] );
-                // echo $disPercentageQuery->toSql();die;
-            }
-
-
-            $disPercentage = $disPercentageQuery->first();
-            
+                            ->where('status',1)
+                            ->first();
+            // prd($disPercentage->toArray());
 
             $vat = getVAT();
             // echo $vat;die; 
@@ -243,8 +210,7 @@ class ProductPriceController extends Controller
 
                     if($disPercentage['end_date'] >= date('Y-m-d')){
 
-                        $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')
-                        ->where('category_id', $checkPlanCatArray['id'])
+                        $getDiscountRange = DiscountRange::select('category_id','from_price','to_price','discount')->where('category_id', $checkPlanCatArray['id'])
                         ->whereRaw('"'.$settingPriceWithVat.'" between `from_price` and `to_price`')
                         ->first();
 
