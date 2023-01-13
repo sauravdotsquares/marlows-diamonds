@@ -7,6 +7,7 @@
     }
     .post-bar-center{
         width: 38.33%;
+        font-weight: 800;
     }
 </style>
 <!-- Header Start here -->

@@ -850,6 +850,8 @@ class ProductController extends Controller
 
             $prod_categories = explode(',', $getProduct->categories);
 
+            // prd($prod_categories);
+
             if (in_array("18", $prod_categories)) {
                 $prod_categories = ['18'];
                 $checkPlanCatArray = Category::whereIn('id', $prod_categories)->first()->toArray();
@@ -857,10 +859,15 @@ class ProductController extends Controller
                 $checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
             }
 
+            // prd($checkPlanCatArray);
+
             $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date','is_login_users')
                             ->where('category_id', $checkPlanCatArray['id'])
                             ->where('status', 1)
                             ->first();
+
+            // echo 'asdf';
+            // prd($disPercentage);
 
             $getProductVariationId = ProductVariations::where('product_id', $product_id)
                                     ->pluck('id')
@@ -923,7 +930,7 @@ class ProductController extends Controller
                 
                 $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
 
-
+                prd($disPercentage);
                 if (isset($disPercentage) && !empty($disPercentage)) {
                     $disPercentage = $disPercentage->toArray();
 
