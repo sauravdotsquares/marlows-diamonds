@@ -15,15 +15,15 @@ class CombinationVaritions extends Model
     use HasFactory;
 
 	protected $fillable = [
-        'product_type',
-        'product_type_id',
-        'product_type_data',
+        // 'product_type',
+        // 'product_type_id',
+        // 'product_type_data',
         'combination_id',
-        'combination_attribute_id',
-        'varition_id',
-        'varition_data',
-        'attribute_id',
-        'attribute_data',
+        // 'combination_attribute_id',
+        // 'varition_id',
+        // 'varition_data',
+        // 'attribute_id',
+        // 'attribute_data',
         'price',
         'is_active',
         'is_deleted',
@@ -43,7 +43,6 @@ class CombinationVaritions extends Model
     public function combinationData(){
         return $this->hasOne(Combinations::class,'id' ,'combination_id');
     }
-
     public function attributeVariations(){
         return $this->hasMany(CombinationVaritions::class,'attribute_id' ,'attribute_id');
     }

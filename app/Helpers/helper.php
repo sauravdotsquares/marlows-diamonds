@@ -293,6 +293,17 @@ if (!function_exists('validate_breadcrumb')) {
             return $featured;
         }
     }
+
+    function getFaqByCategory($category="", $in_array=false){
+        $category = empty($category) ? 0 : $category;
+        $faqs = Faqs::where(['categories'=>$category])->get();
+
+        if($in_array && $faqs->count()){
+            return $faqs->toArray();
+        }
+        return $faqs;
+    }
+
     /*
     ** Hari Krishna API function
     * @params : data as array
@@ -335,15 +346,14 @@ if (!function_exists('validate_breadcrumb')) {
             }
 
             $results = $results->orderBy('id','ASC');
-            //echo $results->toSql(); die;
+            
             if(isset($data['paging']))
                 $results = $results->paginate($data['paging']);
-                //$results = $results->get();
             else if(isset($data['num_of_row']))
                 $results = $results->take($data['num_of_row'])->get();
             else
                $results = $results->get();
-           // echo '<pre>'; print_r($results->toArray()); die;
+
             return $results->toArray();
         }
 
@@ -695,29 +705,48 @@ if (!function_exists('validate_breadcrumb')) {
     // }
 
     if (!function_exists("final_image_upload_array_function")) {
-        function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null)
-        {   
+
+        function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null){ 
             $modulePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
+            $video_extensions = ['mp4'];
+            $file_extensions = [];
             if (!file_exists(storage_path($modulePath))) {
                 mkdir(storage_path($modulePath), 777, true);
             }
-
             if(is_array($imageUrlArray)){
                 $data= [];
                 foreach($imageUrlArray as $key => $file) {
-
+                    $extension = $file->getClientOriginalExtension();
+                    $file_extensions[] = $extension;
                     $imageName = $file->getClientOriginalName();
                     $fileName =  rand().slugify($imageName);
                     $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
-                    Image::make($file)->save(storage_path($modulePath . $fileName));
-                    Image::make($file)->resize($height,$width)->save(storage_path( $modulePath .$fileNameThumb));
+                    
 
-                    $data[$key]['R'] = $modelName .'/'. $fileName;
-                    $data[$key]['T'] = $modelName .'/'. $fileNameThumb;
+                    if(in_array($extension,$video_extensions)){
+
+                        $fileName = product_video_upload($file,$modelName);
+                        $data[$key]['R'] = $fileName;
+                        $data[$key]['T'] = '';
+                        // Storage::disk('public')->put($modulePath. $fileName . '.'.$extension, $file);
+                        // $data[$key]['R'] = $modelName .'/'. $fileName . '.'.$extension;
+                        // $data[$key]['T'] = '';
+                        // Image::save(storage_path($modulePath . $fileName));
+                        // $file->store($modulePath .$fileName.'.'.$extension );
+                        // Image::make($file)->resize($height,$width)->save(storage_path( $modulePath .$fileNameThumb));
+                    }else{
+                        Image::make($file)->save(storage_path($modulePath . $fileName));
+                        Image::make($file)->resize($height,$width)->save(storage_path( $modulePath .$fileNameThumb));
+                        $data[$key]['R'] = $modelName .'/'. $fileName;
+                        $data[$key]['T'] = $modelName .'/'. $fileNameThumb;
+                    }
+
+                    
                 }
             }
+            // print_r($file_extensions);die;
             return $data;
         }
     }
@@ -730,6 +759,25 @@ if (!function_exists('validate_breadcrumb')) {
         if(!empty($isSlugExists)){
             $number = $number+1;
             return generateSlug($title,$table, $keyName, $number);
+        }else{
+            return $slug;
+        }
+    }
+
+
+    function generateSlugProductPurpose($title="", $table="", $keyName="slug", $skip_id="" ,$number=0){
+        $slug = slugify($title);
+        $slug = $number ? $slug . '-'.$number : $slug;
+
+        $queryToCheck = $table::where($keyName, $slug);
+        if(!empty($skip_id)){
+            $queryToCheck = $queryToCheck->where('id','!=',$skip_id);
+        }
+        $isSlugExists = $queryToCheck->first();
+
+        if(!empty($isSlugExists)){
+            $number = $number+1;
+            return generateSlugProductPurpose($title,$table, $keyName, $skip_id, $number);
         }else{
             return $slug;
         }
@@ -761,6 +809,15 @@ if (!function_exists('validate_breadcrumb')) {
 
     function getMasterById($id=''){
         return  Masters::where('id',$id)->first()->toArray();
+    }
+
+    function getMasterValuesByType($type=''){
+        $data =  Masters::where('type',$type)->pluck('value');
+        if($data->count()){
+            return $data->toArray(); 
+        }else{
+            return [];
+        }
     }
 
 
@@ -961,6 +1018,15 @@ if (!function_exists('validate_breadcrumb')) {
         return  round($total - $percentageAmount, $decimal);
     }// endof getPercentage
 
+    /**
+     * getPercentageValue
+     * function is use to get amount after percentage
+     */
+    function getPercentageValue($total, $percentage=0, $decimal=0){
+        $percentageAmount = ($percentage / 100) * $total;
+        return  round($percentageAmount);
+    }// endof getPercentageValue
+
 
     function duplicateProductRemoveIds(){
         $productIdsToRemoveImages = Masters::where(['is_deleted'=>0, 'is_active'=>1, 'type'=> 'product_duplicate_image_remove'])->pluck('value');
@@ -970,6 +1036,85 @@ if (!function_exists('validate_breadcrumb')) {
             return [];
         }
     }
+
+
+    function show_percentage($amount=0, $pricing_data=[] , $type="show"){
+         
+        if(empty($pricing_data)){
+           return $amount;
+        }
+        $percentageValue = getPercentageValue($amount, $pricing_data->percentage); 
+        switch ($type) {
+           case 'show':{
+              $toReturn = $amount;
+              if(!empty($pricing_data)){
+                 if($pricing_data->type == 'increase'){
+                    $toReturn .= " + $percentageValue ($pricing_data->percentage%)";
+                 }else{
+                    $toReturn .= " - $percentageValue ($pricing_data->percentage%)";
+                 }
+              }
+              return $toReturn;
+              break;
+           }
+           case 'action':{
+                 if($pricing_data->type == 'increase'){
+                    return $amount + $percentageValue;
+                 }else{
+                    return $amount - $percentageValue;
+                 }
+              break;
+           }
+           
+           default:{
+              return 'N/A';
+              break;
+           }
+        }
+    }
+
+    /**
+     * check extension of file type
+     */
+    function extensionChecker($extension='jpeg'){  
+
+        $validImageExtensions = ['jpeg','jpg','JPEG','JPG','png','PNG','webp','WEBP','gif','GIF'];
+        $validVideoExtensions = ['mp4','MP4'];
+        $validAudioExtensions = ['mp3','MP3'];
+
+        if(in_array($extension, $validImageExtensions)){
+            return 'image';
+        }else if(in_array($extension, $validVideoExtensions)){
+            return 'video';
+        }else if(in_array($extension, $validAudioExtensions)){
+            return 'audio';
+        }else{
+            return null;
+        }
+    }//endof extensionChecker
+
+    /**
+     * convert bytes to human readable file size
+     */
+    function humanFileSize($bytes,$dec = 2 ) {
+        $size   = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        $factor = floor((strlen($bytes) - 1) / 3);
+
+        return sprintf("%.{$dec}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
+    }//endof humanFileSize
+
+    /**
+     * 
+     */
+    function show_image($file_url=""){
+        
+        if(file_exists( public_path('/uploads/')  . $file_url )){
+            return true;
+        }else{
+            return false;
+        }
+
+    }// endof file_get_url
 
 }
 

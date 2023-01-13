@@ -45,7 +45,7 @@
 	</div>
 </div>
 <div class="ajax-load text-center" style="display:none">
-	<p><img src="/images/spinner.gif">Loading More post</p>
+	<p><img src="{{ asset('/images/spinner.gif') }}">Loading More post</p>
 </div>
 <!-- Section Reviews -->
 <div class="container">
@@ -61,6 +61,7 @@
 
 
 <script>
+	const slugForData = "<?php echo !empty($blogCategorySlug) ? $blogCategorySlug : request()->segment(1) ?>"
 	var page = 1;
 	$( document ).ready(function() {
 	    loadMoreData(page);
@@ -82,7 +83,8 @@
 				data: {
                         '_token': "{{csrf_token()}}",
                         'page':page,
-                        'slug':'{{request()->segment(1)}}'
+						'slug' : slugForData
+                        // 'slug':'{{request()->segment(1)}}'
                     },
 	            beforeSend: function()
 	            {

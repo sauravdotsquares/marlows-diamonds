@@ -47,7 +47,7 @@
 									$explode = explode('/',$images->image_url);
 									$explode1 = explode('.',$explode[1]);
 								@endphp
-								<div class="item @if($key==0) active @endif">
+								<div class="item @if($key==0) active @endif"  >
 									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"></a>
 								</div>
 							@endforeach
@@ -69,27 +69,72 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
-				<!-- <div class="diamond-type">
+				
+				<div class="diamond-type">
 					<label>Diamond Type</label>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" checked value="Mined Diamond">
+						<input type="radio" name="attribute_choose-your-diamond" value="mined_diamond"  id="mined_item" class="diamond_type" checked>
 						<span>Mined Diamond</span>
 					</div>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" value="Lab Grown Diamonds">
-						<span>Lab Grow Diamond</span>
+						<input type="radio" name="attribute_choose-your-diamond" value="lab_grown" id="lab_item" class="diamond_type">
+						<span>Lab Grown Diamond</span>
 					</div>
-				</div> -->
+				</div>
+
+
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
-
 					</div>
 				</div>
                 @if($plainbandMulti==false)
+
+				{{-- Show items for lab grown only --}}
 				<div id="apiCustomDesign">
-					<div class="type-variations-row">
+					<div class="type-variations-row lab_item mined_lab_items">
 						<div class="type-variations-col">
-							<label class="label"> Carat </label>
+							<label class="label"> Central Diamond Weight </label>
+							<select class="form-control lab_price_update_items " name="carat" id="lab_grown_carat">
+								{{-- <option value="">Choose an option</option> --}}
+								<option value="0.30-0.39" selected="selected">0.30-0.39</option>
+								<option value="0.50-0.59">0.50-0.59</option>
+								<option value="0.70-0.79">0.70-0.79</option>
+								<option value="1.00-1.19" selected>1.00-1.19</option>
+								<option value="1.50-1.69">1.50-1.69</option>
+								<option value="2.00-2.49">2.00-2.49</option>
+								<option value="3.00-3.99">3.00-3.99</option>
+							</select>
+						</div>
+						<div class="type-variations-col">
+							<label class="label"> Colour </label>
+							<select class="form-control lab_price_update_items " name="diamond-colour" id="lab_grown_colour">
+                    			{{-- <option value="">Choose an option</option> --}}
+								<option value="D" selected="selected">D - Exceptional White +</option>
+								<option value="E">E - Exceptional White</option>
+								<option value="F">F - Rare White +</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				{{-- Show items for lab grown only --}}
+				<div class="type-variations-row lab_item mined_lab_items">
+					<div class="type-variations-col">
+						<label class="label"> Clarity </label>
+						<select class="form-control lab_price_update_items " name="diamond-clarity" id="lab_grown_clarity">
+							{{-- <option value="">Choose an option</option> --}}
+							<option value="VS1">VS1 - Very Small Inclusions</option>
+							<option value="VS2" selected>VS2 - Very Small Inclusions</option>
+							<option value="VVS1">VVS1 - Minute Inclusions</option>
+							<option value="VVS2">VVS2 - Minute Inclusions</option>	
+						</select>
+					</div>
+				</div>
+
+				{{-- Show items for mined only --}}
+				<div id="apiCustomDesign">
+					<div class="type-variations-row  mined_item mined_lab_items">
+						<div class="type-variations-col">
+							<label class="label"> Central Diamond Weight </label>
 							<select class="form-control" name="carat" id="carat">
 								<option value="">Choose an option</option>
 								<option value="0.30-0.39" selected="selected">0.30-0.39</option>
@@ -124,7 +169,7 @@
 						</div>
 					</div>
 
-					<div class="type-variations-row">
+					<div class="type-variations-row mined_item mined_lab_items">
 						<div class="type-variations-col">
 							<label class="label"> Clarity </label>
 							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
@@ -158,7 +203,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="type-variations-row">
+					<div class="type-variations-row mined_item mined_lab_items">
 						{{-- <div class="type-variations-col{{($data->diamond_shape == 'ROUND')?'-one':''}}">
 							<label class="label"> Certificate </label>
 							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
@@ -168,7 +213,7 @@
 							</select>
 						</div> --}}
 					</div>
-					<div class="view-diamond-sec">
+					<div class="view-diamond-sec mined_item_block mined_lab_items">
 						<div class="viewall-diamond-btn"><a class="btn-bg-large viewdiamond-btn"
 								href="javascript:void(0)">View Available Diamonds</a></div>
 						<div class="diamond-table">
@@ -199,9 +244,18 @@
 					</div>
 				</div>
                 @endif
-				<div class="product-decriptions">
+				
+				<div class="product-decriptions mined_lab_items lab_item">
+					{{-- {!!$data->description!!} --}}
+					All of our sustainable diamonds in this section come with independent diamond reports (GIA/IGI/WGI/GCAL) for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost. Our diamonds are manufactured under our Trademark (pending) Green Earth Diamonds
+					{{-- All of our sustainable diamonds in this section come with independent diamond reports for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost.  --}}
+				</div>
+
+				{{-- mined_lab_items mined_item lab_item --}}
+				<div class="product-decriptions ">
 					{!!$data->description!!}
 				</div>
+
 				<div class="product-finder-price" id="finaldiamondprice">
 
 				</div>
@@ -501,6 +555,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
 
+		function changeDiamondType(classToPerform="") {
+			$(".mined_lab_items").css('display','none');
+			$("." + classToPerform).css('display','flex');
+			$("." + classToPerform + "_block").css('display','block');
+			getFinalPrice();
+		}
+
+		$(".lab_item").css('display','none');
+		$(".lab_price_update_items").on('change', function() {
+			changeDiamondType($('.diamond_type:checked').attr("id"));
+		});
+
+		
+		$(document).on('change', '.diamond_type' , function(event) {
+			changeDiamondType($(event.target).attr("id"));
+		});
+
+
         function blankForm(){
             $('input[name="title"]').val('');
             $('input[name="email"]').val('');
@@ -510,8 +582,6 @@
             $('#requestAppointment').modal('hide');
             grecaptcha.reset();
         }
-
-
 
 		$(document).ready(function(){
             $('form#contactForm').validate({
@@ -586,9 +656,11 @@
 			});
 
 			getSelectedAttributePrice();
+			// setTimeout(() => {
+			// 	changeDiamondType('lab_item');
+			// }, 1000);
 
 			$('#carat').on('change',function(){
-                console.log("checking");
 				getSelectedAttributePrice();
 			});
 			$('#diamond-colour').on('change',function(){
@@ -603,8 +675,6 @@
 			$('#diamond-certificate').on('change',function(){
 				getSelectedAttributePrice();
 			});
-
-
 
 			$('#addtobasket').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}');
@@ -627,9 +697,7 @@
 				getFinalPrice();
 
 			});
-		})
-
-
+		});
 
 		function getCustomFilter(){
 
@@ -718,9 +786,8 @@
             });
 		}
 
+		var triggerLab = true;
 		function getSelectedAttributePrice(){
-
-
 
 			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$('#addtobasket').addClass('disabledAnchor');
@@ -745,9 +812,19 @@
 					'grade' : diamondGrade,
 					'certificate' : diamondCertificate,
 					'shape' : diamondShape,
-					'slug': '{{$data->slug}}'
+					'slug': '{{$data->slug}}',
+					'diamond_type' : $('.diamond_type:checked').val()
                 },
                 success: function (res) {
+					console.log('triggerLab', triggerLab);
+					if(triggerLab){
+						triggerLab = false;
+						$('input:radio[name="attribute_choose-your-diamond"]')
+						.filter(`[value="lab_grown"]`)
+						.prop('checked', true)
+						.trigger("change");
+					}
+
 					$('#finaldiamondprice').html("");
                     if(res.statuscode == 200){
                         // $('#finaldiamondprice').html(res.finalPrice);
@@ -792,6 +869,7 @@
 					'slug': '{{$data->slug}}'
                 },
                 success: function (res) {
+
 					$('#refineSearchData').html("");
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);
@@ -803,8 +881,11 @@
             });
 		}
 
+		// getFinalPrice()
+
 
 		function getFinalPrice(){
+
 			$('#addtobasket').addClass('disabledAnchor');
             $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$.ajax({
@@ -816,10 +897,17 @@
 					'setting_price' : parseFloat($('#selected_setting_price').val().split(",").join("")),
 					'discounted_price' : parseFloat($('#selected_discounted_price').val().split(",").join("")),
 					'diamond_price' : parseFloat($('#selected_diamond_price').val().split(",").join("")),
-					'slug': '{{$data->slug}}'
+					'slug': '{{$data->slug}}',
+
+					/** new pricing */
+					'diamond_type' : $('.diamond_type:checked').val(),
+					'lab_grown_carat': $("#lab_grown_carat").val(),
+					'lab_grown_colour': $("#lab_grown_colour").val(),
+					'lab_grown_clarity': $("#lab_grown_clarity").val(),
+
                 },
                 success: function (res) {
-                    // console.log("res");
+                    // console.log("res", res);
                     // console.log(res);
                     // return false;
 					$('#finaldiamondprice').html("");

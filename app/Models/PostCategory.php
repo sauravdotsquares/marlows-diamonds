@@ -19,7 +19,7 @@ class PostCategory extends Model
 
     public function getBlogTitleDetailsAttribute()
     {
-        return Pages::where('slug','blog-resources')->first();
+        return Pages::where('slug','blog')->first(); // Change after SEO discuss 05Jan2023 seo_change
     }
 
 }

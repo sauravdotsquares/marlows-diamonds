@@ -1,10 +1,24 @@
 
-<?php if(count($images)){ foreach ($images as $key => $value) { ?>
-    <?php if($value['extension'] == 'mp4'){ ?>
-        <video style="height: 100px; width:100px;" autoplay muted>
-            <source src="{{ asset( 'uploads/'.  $value['image']) }}">
+@php
+    $valid_video_extensions = ['mp4'];
+@endphp
+
+@if (!empty($image) && $image)
+
+    <?php 
+    $style = '';
+    $style .= !empty($height) ? 'height:'.$height.';' : '100px';
+    $style .= !empty($width) ? 'width:'.$width.';' : '100px';
+    ?>
+    
+    @if (in_array($image['extension'], $valid_video_extensions))
+        {{-- If file is video --}}
+        <video style="<?php echo $style ?>" autoplay muted>
+            <source src="{{ asset( 'uploads/'.  $image['image']) }}">
         </video>
-    <?php }else{ ?>
-        <img height="100" width="100" src="{{ asset( 'uploads/'.  $value['image']) }}">  
-    <?php } ?>
-<?php } } ?>
+    @else
+        {{-- If file is image --}}
+        <img style="<?php echo $style ?>" src="{{ asset( 'uploads/'.  $image['image']) }}"> 
+    @endif
+
+@endif

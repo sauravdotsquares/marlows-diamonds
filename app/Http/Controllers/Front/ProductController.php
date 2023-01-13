@@ -18,6 +18,7 @@ use App\Models\DiscountRange;
 use App\Models\Masters;
 use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
+use App\Models\UrlRedirects;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -50,6 +51,9 @@ class ProductController extends Controller
     }
 
     public function productDetails(Request $request, $productSlug = null){
+
+        
+
         $dekoEnabled = true;
         $client = new DekoPayApiClient('', '', env('DEKOPAY_API_KEY'));
         $pay_url =  env('DEKOPAY_MODE');
@@ -63,7 +67,16 @@ class ProductController extends Controller
         
 
         if ($productSlug != null) {
+            // $productSlug = str_replace("_","-",$productSlug);
             $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $productSlug)->first();
+
+            if(empty($getProduct)){
+                /** If data not found with existing slug then check in redirections table and redirect */
+                $redirectTo = UrlRedirects::where('old_url', $productSlug)->where(['type'=>'product','is_active'=>1, 'is_deleted'=>0])->first();
+                if(!empty($redirectTo) && !empty($redirectTo->new_url)){
+                    return redirect()->route('product.details', $redirectTo->new_url);
+                }
+            }
 
             if (isset($getProduct) && !empty($getProduct)) {
                 // Product Categories
@@ -199,6 +212,8 @@ class ProductController extends Controller
             }
         }
 
+        // prd($getParentHierarchy);
+
 
         // prd($getParentHierarchy);
 
@@ -238,6 +253,9 @@ class ProductController extends Controller
             }
         }
 
+        
+
+        
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
         /** Order by  */
@@ -254,8 +272,11 @@ class ProductController extends Controller
             }
         }
 
-
-        $getProductListFinal = Products::with('getProductImages')->orderBy($orderKey, $orderValue )->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
+        $getProductListFinal = Products::with('getProductImages')->orderBy($orderKey, $orderValue)->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
+        // prd($getProductListFinal->count());
+        // ->whereIn('id', $output)
+        // 
+        // prd($getProductListFinal->count());
         
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $notInList=0;
@@ -515,7 +536,30 @@ class ProductController extends Controller
             $certificate = explode(',', $request->certificate);
         }
 
-        $data = array('shape' => $request->shape, 'colorFrom' => $colorFrom, 'colorTo' => $colorTo, 'colour' => $colour, 'clarityFrom' => $clarityFrom, 'clarityTo' => $clarityTo, 'clarity' => $clarity, 'caratFrom' => $caratFrom, 'caratTo' => $caratTo, 'gradeFrom' => $gradeFrom, 'gradeTo' => $gradeTo, 'grade' => $grade, 'polishFrom' => $polishFrom, 'polishTo' => $polishTo, 'polish' => $polish, 'symmetryFrom' => $symmetryFrom, 'symmetryTo' => $symmetryTo, 'symmetry' => $symmetry, 'fluorescence' => $fluorescence, 'certificate' => $certificate, 'num_of_row' => 1, 'PageSize' => 2);
+        $data = [
+            'shape' => $request->shape, 
+            'colorFrom' => $colorFrom, 
+            'colorTo' => $colorTo, 
+            'colour' => $colour, 
+            'clarityFrom' => $clarityFrom, 
+            'clarityTo' => $clarityTo, 
+            'clarity' => $clarity, 
+            'caratFrom' => $caratFrom, 
+            'caratTo' => $caratTo, 
+            'gradeFrom' => $gradeFrom, 
+            'gradeTo' => $gradeTo, 
+            'grade' => $grade, 
+            'polishFrom' => $polishFrom, 
+            'polishTo' => $polishTo, 
+            'polish' => $polish, 
+            'symmetryFrom' => $symmetryFrom, 
+            'symmetryTo' => $symmetryTo, 
+            'symmetry' => $symmetry, 
+            'fluorescence' => $fluorescence, 
+            'certificate' => $certificate, 
+            'num_of_row' => 1, 
+            'PageSize' => 2
+        ];
 
         //echo '<pre>'; print_r($data); die;
 
@@ -764,9 +808,6 @@ class ProductController extends Controller
                         $image = getProductVariationImage($productData->id, $request);
 
                         /** Apply discount */
-                        // $prodCategoriesDJ
-                        // $disPercentage['end_date'] >= date('Y-m-d')
-                        //$checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
                         $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
                                                     $q->whereDate('end_date', '>', now());
                                                 })
@@ -774,15 +815,15 @@ class ProductController extends Controller
                                                 ->whereIn('category_id', $prodCategoriesDJ)
                                                 ->whereRaw('"' . $price . '" between `from_price` and `to_price`')
                                                 ->first();
-                        
+                                                
                         if(!empty($getDiscountRange)){
                             $price_after_discount = ($getDiscountRange->discount / 100) * $price;
                         }else{
                             $price_after_discount = 0;
                         }
-                       
+
                         $newArray['vari_image'] = !empty($image['vari_image']) ? $image['vari_image'] : '';
-                        //$newArray['formula'] = true;
+                        $newArray['formula'] = true;
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
                         $newArray['regular_price'] = round($price);
                         $newArray['discount_data'] =  $getDiscountRange;
@@ -918,7 +959,6 @@ class ProductController extends Controller
                             if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
                                 if ($getDiscountRange->discount > 1) {
                                     $discountPercentage = 1 + ($getDiscountRange->discount / 100);
-                                    //echo 'here: - ' . $discountPercentage;die;
                                 } else {
                                     $discountPercentage = 1;
                                 }
@@ -937,9 +977,6 @@ class ProductController extends Controller
                         } else {
                             $increaseDiscount = 1;
                         }
-
-                        
-
                         $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
                     }
                 }
@@ -949,12 +986,14 @@ class ProductController extends Controller
                 if($categorySlugs->count()){
                     $categorySlugs = $categorySlugs->toArray();
                 }
+
+                /** Discount not applicable to exclusive to marlows */
                 if(in_array('exclusive-to-marlows', $categorySlugs)){
-                    $newArray['vari_image'] = $getSelectedVariationVideoImages->regular_price;;
-                    $newArray['vari_video'] = $getSelectedVariationVideoImages->regular_price;;
-                    $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;;
-                    $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;;
-                    $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;;
+                    $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+                    $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                    $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
                     return response()->json($newArray);
                 }
 
@@ -998,9 +1037,97 @@ class ProductController extends Controller
         return response()->json(['html' => $view]);
     }
 
-
-
     public function exclusiveMarlows(Request $request){
         return View::make('front.pages.exclusive_products');
     }
+
+    public function productSlugs(Request $request){
+        /** TODO: 
+         * 1. get all previous slugs of products 
+         * 2. update new slug after checking duplication
+         */
+        // echo "Im here";
+
+        $productSlugs = Products::select(['slug','id','old_slug'])->get();
+        $fileName = date('d-m-Y') .'-product-new-urls.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        
+        $columns = array('id', 'Current url', 'Old url');
+        $baseUrl = "https://marlows-diamonds.co.uk/product/";
+        $callback = function() use($productSlugs, $columns, $baseUrl) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($productSlugs as $key => $value) {
+                $row['id']  = $value->id;
+                $row['product']  = $baseUrl . $value->slug;
+                $row['old_url']  = $baseUrl . $value->old_slug;
+                fputcsv($file, array($row['id'],$row['product'], $row['old_url']));
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+
+        prd($productSlugs);
+
+        // $productSlugs = Products::pluck('old_slug','id')->toArray();
+        // $affectedRows = 0;
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+        //         $product_data->slug = $product_data->old_slug;
+        //         $product_data->save();
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+
+
+        // $productSlugs = Products::pluck('slug','id')->toArray();
+        // $dataToRevert = [];
+        // $affectedRows = 0;
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
+        //         $dataToRevert[$affectedRows]['id'] = $product_data->id;
+        //         $dataToRevert[$affectedRows]['old_slug'] = $value   ;
+        //         $dataToRevert[$affectedRows]['new_slug'] = $new_slug;
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($dataToRevert);
+
+
+        // $affectedRows = 0;
+        // $productSlugs = Products::pluck('slug','id')->toArray();
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+
+        //         /** generate and save new slug */
+        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
+        //         $old_slug = $product_data->slug;
+        //         $product_data->slug = $new_slug;
+        //         $product_data->old_slug = $old_slug;
+        //         $product_data->save();
+
+        //         /** Save all old and new urls in redirections */
+        //         $new_redirect = new UrlRedirects();
+        //         $new_redirect->type = "product";
+        //         $new_redirect->old_url = $old_slug;
+        //         $new_redirect->new_url = $new_slug;
+        //         $new_redirect->save();
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($affectedRows);
+    }
+
 }

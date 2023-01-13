@@ -19,8 +19,10 @@ use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\Masters;
 use App\Models\ProductThumbVideos;
+use App\Models\Category;
+use App\Models\ProductPricingUpdates;
 
-use View;
+use View, DB;
 
 class ProductController extends Controller
 {
@@ -136,7 +138,7 @@ class ProductController extends Controller
         //print_r($imagefeatured_image); die;
         if($request->hasFile('gallery_image')) {
             $imagegallery_image = final_image_upload_array_function($request->file('gallery_image'),'Products',$productDetails->id,'230','230');
-        }else{
+        }else{ 
             $imagegallery_image = [];
         }
 
@@ -393,14 +395,14 @@ class ProductController extends Controller
 
     // }
 
-    public function getProductDetailsVariation(Request $request){
-        
+    public function getProductDetailsVariation(Request $request)
+    {
         $getVariations = ProductVariations::where('product_id',$request->id)->get()->toArray();
 
         // Get Product Attributes
 
         $attributes_val = ProductVariationAttributes::where('product_id',$request->id)->value('attr_values');
-        
+
         if($attributes_val!=''){
 
             $attributes = explode(',', $attributes_val);
@@ -416,8 +418,6 @@ class ProductController extends Controller
             }
 
         }
-        
-        
 
         //echo '<pre>';print_r($all_attrs); die;
 
@@ -436,7 +436,6 @@ class ProductController extends Controller
                 $variationArray[] = View::make('admin.products.variation',['index'=>$key,'section'=>$section,'variation'=>$variation,'all_attrs'=>$all_attrs,'prod_varitn'=>$prod_varitn])->render();
             }
         }
-        //prd($variationArray);
         return $variationArray;
     }
 
@@ -448,8 +447,7 @@ class ProductController extends Controller
 
     }
 
-    public function getProductExcelReport()
-    {
+    public function getProductExcelReport(){
         // Excel file name for download
         $fileName = "product-data_" . date('Y-m-d') . ".xls";
 
@@ -676,5 +674,381 @@ class ProductController extends Controller
         return view('admin.products.upload_files', compact(['product']));
     }
 
+    /**
+     * basePriceList
+     * List of prices of all prices
+     */
+    public function basePriceList(Request $request){
+
+
+        /** Query to get all variations and products */
+        $dataToMarkup = ProductVariations::whereHas('product', function($query) {
+            $query->select(['id','status','categories','title','dfinder_status']);
+            $query->where(['status'=>1, 'dfinder_status'=>1]);
+        })->with(['product'=>function($query){
+            $query->select(['id','title','categories','slug']);
+        }])
+        ->get();
+
+        $fileName = date('d-m-Y') .'-products-markup.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        $vat = getVAT();
+        $columns = [
+            'Product', 
+            'Variations', 
+            'Markup price',
+            'Vat ' . '('.$vat.')',
+            'Total',
+        ];
+
+        $callback = function() use($dataToMarkup, $columns, $vat) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($dataToMarkup as $key => $value) {
+                if($value->regular_price > 0){
+                    $totalAmount = $value->regular_price * $vat;
+
+                    $Variations_data = [];
+                    foreach($value->get_vari_details_id as $key => $attribute){
+                        $att_key = str_replace("attri_","",$attribute->key);
+                        $Variations_data[] = $att_key. ":- " . ($attribute->value ? $attribute->value : 'All') ;
+                    }
+                    $row['Product'] = $value->product->title;
+                    $row['Variations'] = implode(', ',$Variations_data);
+                    $row['markup_price'] = $value->regular_price;
+                    $row['vat'] = round($totalAmount - $value->regular_price);
+                    $row['Total'] = round($totalAmount);
+                    fputcsv($file, $row);
+                }
+            }
+
+            // foreach ($product_variations as $task) {
+            //     $row['product']  = $task->product->title;
+            //     $Variations_data = [];
+            //     foreach($task->get_vari_details_id as $key => $attribute){
+            //         $att_key = str_replace("attri_","",$attribute->key);
+            //         $Variations_data[] = $att_key. ":- " . $attribute->value;
+            //     }
+            //     $row['variations'] = implode(', ',$Variations_data);
+            //     $row['base_price']  =  show_percentage($task->regular_price, $pricingData);
+            //     $row['mined_price']  = !empty($task['mined']['regular_price']) ?  show_percentage($task['mined']['regular_price'], $pricingData)  : 'N/A';
+            //     $row['lab_grown_price']  = !empty($task['lab_grown']['regular_price']) ? show_percentage($task['lab_grown']['regular_price'], $pricingData) : 'N/A';
+            //     $row['discounted']  = "N/A";
+            //     $row['new_price']  = show_percentage($task->regular_price,$pricingData,'action' );
+            //     $row['new_mined']  = !empty($task['mined']['regular_price']) ?  show_percentage($task['mined']['regular_price'],$pricingData,'action' ) : 'N/A' ;
+            //     $row['new_lab_grown']  = !empty($task['lab_grown']['regular_price']) ?  show_percentage($task['lab_grown']['regular_price'],$pricingData,'action' ) : 'N/A' ;;
+            //     fputcsv($file, $row);
+            // }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+
+
+        // $datatocheck = DB::raw('select * from md_products where FIND_IN_SET(2, categories) OR FIND_IN_SET(3, categories) OR FIND_IN_SET(4, categories) OR FIND_IN_SET(5, categories) OR FIND_IN_SET(6, categories)')->get();
+        // $to_data = [2,3,4,5,6];
+        // $notIn = 54;
+        // // $child_categories = Category::get_all_child_ids(2);
+        // // prd($child_categories);die;
+        // $productIdsQuery = Products::where('status',1);
+        // $category_custom_query = '';
+        // foreach ($to_data as $cat_key => $cat_value) {
+        //     if(!$cat_key){  $category_custom_query .= '( '; }
+        //     $category_custom_query .= " find_in_set('".$cat_value."',categories)";
+        //     if($cat_key+1 != count($to_data)){ $category_custom_query .= " OR "; }
+        //     else{ $category_custom_query .= ' ) '; }
+        // }
+        // $category_custom_query .= " AND NOT find_in_set($notIn, categories) ";
+
+        // $productIdsQuery->whereRaw(DB::raw($category_custom_query));
+        // $productIdsQuery = $productIdsQuery->pluck('id');
+        // prd($productIdsQuery);
+
+        $data = $request->all();
+        $search = true;
+        $productId = "";
+        $pricingData=null;
+        $productName = !empty($data['title']) ? $data['title'] : '';
+
+        $isExport  = (!empty($request['export']) && $request['export']=='true') ? true : false;
+
+        /** filter according to update pricing id */
+        if(!empty($request['pricing-id'])){
+            $pricingData = ProductPricingUpdates::where('id', $request['pricing-id'])->first();
+            if(!empty($pricingData)){
+                $search = false;
+                $data['category'] = !empty($pricingData->category_id) ? $pricingData->category_id : '';
+                $productId = !empty($pricingData->product_id) ? $pricingData->product_id : '';
+                $productName = "";
+            }
+        }
+
+        $product_pricing_ids = ProductPricingUpdates::where(['is_deleted'=>0, 'is_active'=>1])->get();
+        $categories = Category::category_options();
+        /** breadcrumb */
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Products", "url" => route("admin.products-list"), "icon" => ""],
+            ["name" => "Product pricing", "url" => route("admin.base-price-list"), "icon" => ""],
+        ];
+        $page_title = 'Product pricing';
+        populate_breadcrumb($breadcrumb);
+
+        
+        $category = !empty($data['category']) ? Category::get_all_child_ids($data['category']) : [];
+
+        $category_custom_query = "";
+        foreach ($category as $cat_key => $cat_value) {
+            if(!$cat_key){  $category_custom_query .= '( '; }
+            $category_custom_query .= " find_in_set('".$cat_value."',categories)";
+            if($cat_key+1 != count($category)){ $category_custom_query .= " OR "; }
+            else{ $category_custom_query .= ' ) '; }
+        }
+
+        /** Query to count total products */
+        $productsCount = Products::where('status',1)->select(['id','status','categories']);
+
+        if(!empty($productId)){
+            $productsCount->where('id', $productId);
+        }
+        if(!empty($category) && !empty($category_custom_query)){
+            $productsCount->whereRaw(DB::raw($category_custom_query));
+        }
+        if(!empty($productName)){
+            $productsCount->where('title', 'like' , "%$productName%");
+        }
+        $productsCount = $productsCount->count();
+
+        /** Query to get all variations and products */
+        $query = ProductVariations::whereHas('product', function($query) use ($category_custom_query, $productId,$productName) {
+            if(!empty($category_custom_query)){
+                $query->whereRaw(DB::raw($category_custom_query));
+            }
+            $query->select(['id','status','categories','title']);
+            if(!empty($productId)){
+                $query->where('id', $productId);
+            }
+            if(!empty($productName)){
+            $query->where('title', 'like' , "%$productName%");
+        }
+        })
+        ->with(['product'=>function($query) use ($data) {
+            $query->select(['id','title','categories','slug']);
+        }])
+        ->select(['id','product_id','sale_price','regular_price']);
+
+        if($isExport){
+            /** if this data is for export */
+            $product_variations = $query->get();
+        }else{
+            /** if this data is for listing */
+            $product_variations = $query->paginate(500);
+        }
+        
+
+        if($product_variations->count()){
+            
+            /** Update prices according to static calculations */
+            foreach ($product_variations as $key => $value) {
+
+                $selected_variation =  [];
+                foreach ($value->get_vari_details_id as $var_key => $var_value) {
+                    $selected_variation[] = $var_value->value;
+                }
+
+                $pricing = Products::product_pricing([
+                    "slug" => $value->product->slug,
+                    "variations" => $selected_variation,
+                    "diamond_type" => 'mined'
+                ]);
+
+                $lab_grown_pricing = Products::product_pricing([
+                    "slug" => $value->product->slug,
+                    "variations" => $selected_variation,
+                    "diamond_type" => 'lab_grown'
+                ]);
+
+                $value->mined = $pricing;
+                $value->lab_grown = $lab_grown_pricing;
+            }
+        }
+
+        // prd($product_variations->toArray());die;
+
+        if(!empty($request['export']) && $request['export']=='true'){
+            $fileName = date('d-m-Y') .'-pricing.csv';
+            $headers = array(
+                "Content-type"        => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma"              => "no-cache",
+                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                "Expires"             => "0"
+            );
+            $columns = [
+                'Product', 
+                'Variations', 
+                'Base Price',
+                'Mined Price',
+                'Lab grown Price',
+                'Discounted',
+                'New Price',
+                'New Mined',
+                'New Lab grown'
+            ];
+
+            $callback = function() use($product_variations, $columns, $pricingData) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+    
+                foreach ($product_variations as $task) {
+                    $row['product']  = $task->product->title;
+                    $Variations_data = [];
+                    foreach($task->get_vari_details_id as $key => $attribute){
+                        $att_key = str_replace("attri_","",$attribute->key);
+                        $Variations_data[] = $att_key. ":- " . $attribute->value;
+                    }
+                    $row['variations'] = implode(', ',$Variations_data);
+                    $row['base_price']  =  show_percentage($task->regular_price, $pricingData);
+                    $row['mined_price']  = !empty($task['mined']['regular_price']) ?  show_percentage($task['mined']['regular_price'], $pricingData)  : 'N/A';
+                    $row['lab_grown_price']  = !empty($task['lab_grown']['regular_price']) ? show_percentage($task['lab_grown']['regular_price'], $pricingData) : 'N/A';
+                    $row['discounted']  = "N/A";
+                    $row['new_price']  = show_percentage($task->regular_price,$pricingData,'action' );
+                    $row['new_mined']  = !empty($task['mined']['regular_price']) ?  show_percentage($task['mined']['regular_price'],$pricingData,'action' ) : 'N/A' ;
+                    $row['new_lab_grown']  = !empty($task['lab_grown']['regular_price']) ?  show_percentage($task['lab_grown']['regular_price'],$pricingData,'action' ) : 'N/A' ;;
+                    fputcsv($file, $row);
+                }
+                fclose($file);
+            };
+    
+            return response()->stream($callback, 200, $headers);
+
+        }else{
+            return view('admin.products.base_pricelist', compact([
+                'product_variations',
+                'categories',
+                'productsCount',
+                'search',
+                'product_pricing_ids',
+                'pricingData'
+            ]));
+        }
+
+        
+    } // endof basePriceList
+
+    public function basePriceexportCsv(Request $request){
+
+        $product_variations = ProductVariations::whereHas('product')->with(['product'=>function($query){
+            $query->select(['id','title']);
+        }])->select(['id','product_id','sale_price','regular_price'])->get(); 
+
+        $fileName = date('d-m-Y') .'-pricing.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        
+        $columns = array('Product', 'Variations', 'Base Price','Discounted','New Price');
+        $callback = function() use($product_variations, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($product_variations as $task) {
+                $row['product']  = $task->product->title;
+                $row['base_price']  = $task->regular_price;
+               
+                $Variations_data = [];
+                foreach($task->get_vari_details_id as $key => $attribute){
+                    $att_key = str_replace("attri_","",$attribute->key);
+                    $Variations_data[] = $att_key. ":- " . $attribute->value;
+                }
+                $row['variations'] = implode(', ',$Variations_data);
+                $row['discounted']  = "N/A";
+                $row['new_price']  = "N/A";
+                fputcsv($file, array($row['product'],$row['variations'], $row['base_price'],$row['discounted'],$row['new_price']));
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+
+    }
+
+    /**
+     * basePriceUpdate
+     * This function is use to create new addition and remove product
+     */
+    public function basePriceUpdate(Request $request){
+
+        $categories = Category::category_options();
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Products", "url" => route("admin.products-list"), "icon" => ""],
+            ["name" => "Update product pricing", "url" => route("admin.base-price-list"), "icon" => ""],
+        ];
+        $page_title = 'Product pricing';
+        populate_breadcrumb($breadcrumb);
+
+        
+        if($request->isMethod('post')){
+
+            /** create validations */
+            $validated = $request->validate([
+                'product_id' => 'sometimes',
+                'category_id' => 'sometimes',
+                'product_name' => 'sometimes',
+                'percentage' => 'required|integer|between:1,100',
+                'type' => 'required',
+                
+            ],[
+                'product_id.required' => 'Please select product',
+                'category_id.required' => 'Please select product',
+                'percentage.required' => 'Please enter percentage',
+                'percentage.integer' => 'Please enter valid integer',
+                'percentage.between' => 'Percentage must between 1 to 100',
+                'type.required' => 'Please select valid type',
+            ]);
+
+            /** Create price updates */
+            $pricing_update = new ProductPricingUpdates();
+            $pricing_update->product_id = $validated['product_id'];
+            $pricing_update->category_id = $validated['category_id'];
+            $pricing_update->type = $validated['type'];
+            $pricing_update->percentage = $validated['percentage'];
+            if($pricing_update->save()){
+                return redirect()->route('admin.base-price-list',['pricing-id'=>$pricing_update->id])->with('success','Pricing created successfully');
+            }else{
+                return redirect()->back()->with('error','Something went wrong');
+            }
+        }
+
+        return view('admin.products.base_price_update',compact(['categories'])); 
+    }// endof basePriceUpdate
+
+    /**
+     * productSearch
+     * this function is use to get products using search keyword
+     */
+    public function productSearch(Request $request){
+
+        $productsCount = Products::where('status',1)->select(['id','status','title']);
+
+        if(!empty($request['term'])){
+            $term = $request['term'];
+            $productsCount = $productsCount->where('title','like','%'.$term.'%');
+        }
+
+        $productsCount = $productsCount->take(15)->get();
+        return response()->json($productsCount);
+    }// endof productSearch
 
 }
