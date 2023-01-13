@@ -279,7 +279,26 @@ h3,.heading-h-three{font-size:28px}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one.show-menus .inner-submenu{display: block;}
 
 .search-suggestion {width: 98%;margin: auto; left: 0;}
-.post-bar{display:none}
+.post-bar{
+	/* display:none */
+	display: inline-block;
+    width: 100%;
+    height: auto;
+}
+
+.header-post-bar-left {
+	width: 100% !important;
+	text-align: center !important;
+	display: none;
+}
+.post-bar .post-bar-center {
+	height: auto !important;
+	width: auto;
+	margin: 15px 0;
+}
+.header-post-bar-wraper{
+	justify-content: center;
+}
 
 }
 

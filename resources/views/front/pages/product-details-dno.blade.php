@@ -699,6 +699,9 @@
 
 
 
+					
+
+
 					if( parseInt(customSlider) && typeof res.vari_image!='undefined' && res.vari_image && res.vari_image!=null){
 						const items = $('#carousel').find('.owl-item');
 						const itemToAddInCarousel = `<div class="item product-items-carousel custom-item-carousel" data-position="${items.length+1}">
@@ -733,6 +736,15 @@
 							var $speed = 0;
 							$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
 						}
+					}else if(typeof res.vari_video!='undefined' && res.vari_video && res.vari_video!=''){
+						// console.log('first',res.vari_video);
+
+						if($('#variationVideo').length){
+							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+							$('#variationVideo').attr('src', videoUrl);
+							$("#variationVideo")[0].play();
+						}
+
 					}
 
 					/** TODO: remove in carousel */
