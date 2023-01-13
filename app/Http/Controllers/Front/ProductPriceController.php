@@ -45,28 +45,35 @@ class ProductPriceController extends Controller
                 $labPriceWithVat = $labPrice * $vat; // Lab price with vat
 
                 /** Add discount for product */
-                // $product = Products::select(['categories','id','slug'])->where('slug',$request->slug)->first();
-                // if(!empty($product)){
-                //     $productCategories = explode(',',$product->categories);
-                //     $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
-                //         $q->whereDate('end_date', '>', now())->where('diamond_type','lab_grown');
-                //     })
-                //     ->with(['discount_data'])
-                //     ->whereIn('category_id', $productCategories)
-                //     ->whereRaw('"' . $labPriceWithVat . '" between `from_price` and `to_price`')
-                //     ->first();
-                //     if(!empty($getDiscountRange)){
-                //         $price_after_discount = ($getDiscountRange->discount / 100) * $labPriceWithVat;
-                //         return response()->json([
-                //             'labPriceFormula' => true,
-                //             'discountApplied' => true,
-                //             'labPrice' => $price_after_discount,
-                //             'variationPrice' => $variationPrice,
-                //             'finalPrice'=> $labPriceWithVat,
-                //             'discountedPrice' => (float)$labPriceWithVat - $price_after_discount,
-                //         ]);
-                //     }
-                // }
+                $product = Products::select(['categories','id','slug'])->where('slug',$request->slug)->first();
+                //prd($product->toArray());
+                if(!empty($product)){
+                    $productCategories = explode(',',$product->categories);
+                    $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
+                        $q->whereDate('end_date', '>', now())->where('diamond_type','lab_grown');
+                    })
+                    ->with(['discount_data'])
+                    ->whereIn('category_id', $productCategories)
+                    ->whereRaw('"' . $labPriceWithVat . '" between `from_price` and `to_price`')
+                    ->first();
+
+                    // prd($getDiscountRange->toArray());
+
+                    if(!empty($getDiscountRange)){
+                        $price_after_discount = ($getDiscountRange->discount / 100) * $labPriceWithVat;
+
+                        // prd($labPriceWithVat);
+
+                        return response()->json([
+                            'labPriceFormula' => true,
+                            'discountApplied' => true,
+                            'labPrice' => $price_after_discount,
+                            'variationPrice' => $variationPrice,
+                            'finalPrice'=> $labPriceWithVat,
+                            'discountedPrice' =>  round((float)$labPriceWithVat - $price_after_discount),
+                        ]);
+                    }
+                }
 
                 $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$labPrice, $request['diamond_type']);
 
