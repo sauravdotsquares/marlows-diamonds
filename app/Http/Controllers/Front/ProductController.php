@@ -930,7 +930,7 @@ class ProductController extends Controller
                 
                 $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
 
-                prd($disPercentage);
+                // prd($disPercentage);
                 if (isset($disPercentage) && !empty($disPercentage)) {
                     $disPercentage = $disPercentage->toArray();
 
