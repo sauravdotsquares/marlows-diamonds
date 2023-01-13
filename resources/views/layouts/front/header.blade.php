@@ -269,7 +269,7 @@
                         {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}
                         <span class="header-heighlight-text discount_timer"></span>
                         <br>
-                        Shower your Valentine with love Up to 30% off 
+                        Upto 30% off - In time for Valentine
                     </p>
                 </div>
                 <div class="post-bar-right header-post-bar-left">
