@@ -1,3 +1,6 @@
+<?php
+use App\Models\SitemapUrls;
+?>
 @extends('layouts.front.error_page')
 @section('content')
 @section('css')
@@ -9,6 +12,9 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
 @endsection
 
+    <?php
+    SitemapUrls::deleteRecordByUrl(request()->path());
+    ?>
     <!-- Not found data -->
     <div class="home-main-banner">
         <div class="main-banner-wraper">

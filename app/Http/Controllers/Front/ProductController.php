@@ -19,6 +19,7 @@ use App\Models\Masters;
 use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\UrlRedirects;
+use App\Models\SitemapUrls;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -1054,35 +1055,64 @@ class ProductController extends Controller
          * 2. update new slug after checking duplication
          */
         // echo "Im here";
+        SitemapUrls::generateXml();
 
-        $productSlugs = Products::select(['slug','id','old_slug'])->get();
-        $fileName = date('d-m-Y') .'-product-new-urls.csv';
-        $headers = array(
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        );
+        /** Import all redirect urls */
+        // $filePath = public_path('exports/redirects.csv');
+        // $file = fopen($filePath, "r");
+        // // $getData = fgetcsv($file);
+        // $totalRecordsAdded = 0;
+        // // $data = [];
+        // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+
+
+        //     $old =  $getData[0];
+        //     $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
+
+        //     $data = UrlRedirects::where(['old_url'=> $old, 'is_deleted'=>0])->first();
+        //     if(empty($data)){
+        //         $newRedirect = new UrlRedirects();
+        //         $newRedirect->old_url = $old;
+        //         $newRedirect->new_url = $new;
+        //         $newRedirect->type = "other";
+        //         $newRedirect->save();
+        //         $totalRecordsAdded++;
+        //     }
+            
+        // }
+        // echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+
+        // prd($totalRecords);
+
+        /** Export all products urls */
+        // $productSlugs = Products::select(['slug','id','old_slug'])->get();
+        // $fileName = date('d-m-Y') .'-product-new-urls.csv';
+        // $headers = array(
+        //     "Content-type"        => "text/csv",
+        //     "Content-Disposition" => "attachment; filename=$fileName",
+        //     "Pragma"              => "no-cache",
+        //     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        //     "Expires"             => "0"
+        // );
         
-        $columns = array('id', 'Current url', 'Old url');
-        $baseUrl = "https://marlows-diamonds.co.uk/product/";
-        $callback = function() use($productSlugs, $columns, $baseUrl) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
+        // $columns = array('id', 'Current url', 'Old url');
+        // $baseUrl = "https://marlows-diamonds.co.uk/product/";
+        // $callback = function() use($productSlugs, $columns, $baseUrl) {
+        //     $file = fopen('php://output', 'w');
+        //     fputcsv($file, $columns);
 
-            foreach ($productSlugs as $key => $value) {
-                $row['id']  = $value->id;
-                $row['product']  = $baseUrl . $value->slug;
-                $row['old_url']  = $baseUrl . $value->old_slug;
-                fputcsv($file, array($row['id'],$row['product'], $row['old_url']));
-            }
-            fclose($file);
-        };
+        //     foreach ($productSlugs as $key => $value) {
+        //         $row['id']  = $value->id;
+        //         $row['product']  = $baseUrl . $value->slug;
+        //         $row['old_url']  = $baseUrl . $value->old_slug;
+        //         fputcsv($file, array($row['id'],$row['product'], $row['old_url']));
+        //     }
+        //     fclose($file);
+        // };
 
-        return response()->stream($callback, 200, $headers);
+        // return response()->stream($callback, 200, $headers);
 
-        prd($productSlugs);
+        // prd($productSlugs);
 
         // $productSlugs = Products::pluck('old_slug','id')->toArray();
         // $affectedRows = 0;
