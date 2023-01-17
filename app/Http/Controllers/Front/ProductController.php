@@ -40,7 +40,11 @@ class ProductController extends Controller
             // echo "cat2";
             $getCatId = Category::where('slug', $cat2)->first();
         } elseif ($cat1 != null) {
-            // echo "cat1<pre>";
+
+            $to404 = ['all-products'];
+            if(in_array($cat1, $to404)){
+                return view('layouts.errors.404');    
+            }
             $getCatId = Category::where('slug', $cat1)->first();
         } else {
             return view('layouts.errors.404');
