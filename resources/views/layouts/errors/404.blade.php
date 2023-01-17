@@ -1,5 +1,11 @@
 <?php
-use App\Models\SitemapUrls;
+    use App\Models\SitemapUrls;
+    SitemapUrls::deleteRecordByUrl(request()->path());
+    $pageRedirect = pageRedirects(request()->path());
+    if($pageRedirect){
+        header("Location: $pageRedirect", true, 301);
+        exit();
+    }
 ?>
 @extends('layouts.front.error_page')
 @section('content')
@@ -13,7 +19,12 @@ use App\Models\SitemapUrls;
 @endsection
 
     <?php
-    SitemapUrls::deleteRecordByUrl(request()->path());
+        // SitemapUrls::deleteRecordByUrl(request()->path());
+        // $pageRedirect = pageRedirects(request()->path());
+        // if($pageRedirect){
+        //     header("Location: $pageRedirect", true, 301);
+        //     exit();
+        // }
     ?>
     <!-- Not found data -->
     <div class="home-main-banner">

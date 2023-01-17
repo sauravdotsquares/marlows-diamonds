@@ -14,9 +14,9 @@
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/developer.css?').env('VERSION') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/responsive.css?').env('VERSION') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">
 
     @yield('css')
 
@@ -26,14 +26,7 @@
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
     <style>
-<<<<<<< HEAD
-      [ng-cloak]
-      { 
-        display: none !important;
-      }
-=======
       [ng-cloak] {  display: none !important; }
->>>>>>> 22743909e32b6922ef23041bb7d5df0d42591f98
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1365164-1"></script>

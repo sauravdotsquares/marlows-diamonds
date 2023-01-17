@@ -1055,25 +1055,56 @@ class ProductController extends Controller
          * 2. update new slug after checking duplication
          */
         // echo "Im here";
-        SitemapUrls::generateXml();
+
+
+        // %2Fblog-resources%2Fpage%2F9
+        // $data = UrlRedirects::where(['type'=>'other', 'is_active'=>1 ])->get();
+        // foreach ($data as $key => $value) {
+        //     // $data
+        //     $value->old_url = urlencode($value->old_url);
+        //     $value->new_url = urlencode($value->new_url);
+        //     $value->is_active = 0;
+        //     $value->save();
+        // }
+        // echo $data->count();
+
+        // SitemapUrls::generateXml();
 
         /** Import all redirect urls */
-        // $filePath = public_path('exports/redirects.csv');
-        // $file = fopen($filePath, "r");
-        // // $getData = fgetcsv($file);
-        // $totalRecordsAdded = 0;
-        // // $data = [];
+        $filePath = public_path('exports/redirects.csv');
+        $file = fopen($filePath, "r");
+        $totalRecordsAdded = 0;
+        
+        try {
+            while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+                $old =  $getData[0];
+                $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
+    
+                $data = UrlRedirects::where(['old_url'=>urlencode($old), 'is_deleted'=>0])->first();
+                if(empty($data)){
+                    $newRedirect = new UrlRedirects();
+                    $newRedirect->old_url = urlencode($old);
+                    $newRedirect->new_url = urlencode($new);
+                    $newRedirect->type = "other";
+                    $newRedirect->save();
+                    $totalRecordsAdded++;
+                }
+                
+            }
+            echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        } catch (\Exception $th) {
+            echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        }
+
         // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
-
-
         //     $old =  $getData[0];
         //     $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
 
         //     $data = UrlRedirects::where(['old_url'=> $old, 'is_deleted'=>0])->first();
         //     if(empty($data)){
         //         $newRedirect = new UrlRedirects();
-        //         $newRedirect->old_url = $old;
-        //         $newRedirect->new_url = $new;
+        //         $newRedirect->old_url = urlencode($old);
+        //         $newRedirect->new_url = urlencode($new);
         //         $newRedirect->type = "other";
         //         $newRedirect->save();
         //         $totalRecordsAdded++;
