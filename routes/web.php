@@ -305,6 +305,10 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 
 	/** Route use to redirect blog-resources to blog */
 	Route::get('/blog-resources/{any?}',function(){
+		$redirectTo = pageRedirects(request()->path());
+		if(!empty($redirectTo)){
+			return redirect($redirectTo, 301);
+		}
 		$url = str_replace("blog-resources","blog",request()->path());
 		return redirect('/'. $url, 301);
 	})->where('any', '.*');
