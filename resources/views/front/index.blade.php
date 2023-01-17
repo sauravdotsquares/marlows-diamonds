@@ -151,7 +151,7 @@
                     <img src="assets/images/top2.png" alt="rating star">
                 </div>
                 <div class="whychoose-rows flex-flex-wrap flexed">
-                    <div class="whychoose-col">
+                    <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="assets/images/warranty.png" alt="Lifetime Warranty">
@@ -160,8 +160,8 @@
                                 Lifetime Warranty T&c Apply
                             </div>
                         </div>
-                    </div>
-                    <div class="whychoose-col">
+                    </a>
+                    <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="assets/images/diamond.png" alt="GIA Certified Diamonds">
@@ -170,8 +170,8 @@
                                 GIA Certified Diamonds
                             </div>
                         </div>
-                    </div>
-                    <div class="whychoose-col">
+                    </a>
+                    <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="assets/images/favourite.png" alt="70 Years Experience">
@@ -180,8 +180,8 @@
                                 70 Years Experience
                             </div>
                         </div>
-                    </div>
-                    <div class="whychoose-col">
+                    </a>
+                    <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="assets/images/exchange.png" alt="FREE 30 Day Returns">
@@ -190,7 +190,7 @@
                                 FREE 30 Day Returns. T&c Apply
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                 </div>
 

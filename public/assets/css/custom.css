@@ -1101,3 +1101,6 @@ a[disabled="disabled"] {pointer-events: none;}
 		font-size: 10px;
 	}
 }
+.whychoose-link{
+	text-decoration: none;
+}
