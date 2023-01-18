@@ -20,6 +20,9 @@ use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\UrlRedirects;
 use App\Models\SitemapUrls;
+use App\Models\Posts;
+use App\Models\PostCategory;
+use App\Models\Pages;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -1243,6 +1246,33 @@ class ProductController extends Controller
         }
 
         return view('front.pages.multi-category-product-listing', compact(['productItems','nextPage']));
+    }
+
+
+    public function generateSitemap(Request $request){
+        
+        $products = Products::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
+        $posts = Posts::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
+        $posts_categories = PostCategory::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
+        $pages = Pages::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
+        
+        $otherPages = [
+            'product/wishlist',
+            '/',
+            'my-account',
+            'products/cart',
+            'products/wishlist',
+            '/users/forget-password',
+        ];
+
+        return response()->view('front.sitemap', [
+            'products' => $products,
+            'posts' => $posts,
+            'posts_categories' => $posts_categories,
+            'pages' => $pages,
+            'otherPages' => $otherPages
+        ])->header('Content-Type', 'text/xml');
+        
     }
 
 }

@@ -303,6 +303,9 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 	Route::get('/blog/category/{slug}', 'PageController@blogList')->name('blog_list');
 	Route::get('product/{slug?}','ProductController@productDetails')->name('product.details');
 
+	/** generate sitemap */
+	Route::get('sitemap.xml', 'ProductController@generateSitemap')->name('sitemap');
+
 	/** Route use to redirect blog-resources to blog */
 	Route::get('/blog-resources/{any?}',function(){
 		$redirectTo = pageRedirects(request()->path());
