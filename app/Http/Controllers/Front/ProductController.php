@@ -1265,14 +1265,59 @@ class ProductController extends Controller
             '/users/forget-password',
         ];
 
+        $categorySitemap = $this->categoriesSitemap();
+        $dataOfCategories = explode(',', $categorySitemap);
+        $categoryUrlsList = [];
+        foreach ($dataOfCategories as $category_key => $category_value) {
+            if(!empty($category_value)){
+                $categoryItem = explode('@',$category_value);
+                $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
+                $categoryUrlsList[$category_key]['url'] = url( 'product-category/' . $categoryUrl);
+                $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
+            }
+        }
+
         return response()->view('front.sitemap', [
             'products' => $products,
             'posts' => $posts,
             'posts_categories' => $posts_categories,
             'pages' => $pages,
-            'otherPages' => $otherPages
+            'otherPages' => $otherPages,
+            'categoryUrlsList' => $categoryUrlsList
         ])->header('Content-Type', 'text/xml');
         
+    }
+
+
+    public function categoriesSitemap($level=0, $prefix="" ){
+        
+        $rows = Category::select(['name','title','id','parent_id','slug','updated_at'])
+        ->where('slug','!=','all-products')
+        ->where('parent_id',$level)->get();
+        $html = '';
+        if($rows->count()){
+            $rows = $rows->toArray();
+            foreach ($rows as $row) {
+                $html .= $row['slug'] . '@' . $row['updated_at'] . ',';
+                $html .= $this->categoriesSitemap($row['id']);
+            }
+        }
+        return $html;
+    }
+
+
+    public function attachParentSlugToCategory($categorySlugs="", $dataToReturn=""){
+
+        $dataToReturn = $categorySlugs . '/' . $dataToReturn;
+        $categoryInfo = Category::where('slug', $categorySlugs )->first();
+        
+        if(!empty($categoryInfo)){
+            $data = Category::where('id', $categoryInfo->parent_id )->first();
+            if(!empty($data)){
+                return $this->attachParentSlugToCategory($data->slug,  $dataToReturn );
+            }   
+        }
+        return $dataToReturn;
     }
 
 }

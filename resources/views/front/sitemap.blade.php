@@ -47,4 +47,14 @@
         </url>
     @endforeach
 
+
+    {{-- All other pages --}}
+    @foreach ($categoryUrlsList as $categoryUrlPages)
+        <url>
+            <loc>{{ url( $categoryUrlPages['url'] ) }}</loc>
+            <lastmod>{{ Carbon\Carbon::parse($categoryUrlPages['updated_at'])->tz('UTC')->toAtomString() }}</lastmod>
+            <priority>0.8</priority>
+        </url>
+    @endforeach
+
 </urlset>

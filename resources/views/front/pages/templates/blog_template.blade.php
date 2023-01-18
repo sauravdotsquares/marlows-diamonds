@@ -37,9 +37,114 @@
 <!-- Blog Listing -->
 <div class="bloglist-wraper">
 	<div class="container">
-	<div class="row" id="post-data">
+	<div class="row">
+		<div class="col-md-9">
+			<div id="post-data" class="post-data-col"></div>
+		</div>
+		<div class="col-lg-3">
+			<div class="blog-search-field">
+				<div class="formgroup">
+					<input type="text" name="search" class="typeahead ng-pristine ng-valid ng-empty ng-touched" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
+					<button class="seach-btn" type="button"><img src="http://127.0.0.1:8000/assets/images/search.png" alt="search"></button>
+				</div>
+			</div>
 
-	</div>
+			<div class="blogdetails-sidebar">
+				<div class="blogall-categ">
+					<div class="sidebar-title">
+						All Categories
+					</div>
+					<ul>
+																				
+						<li><a href="http://127.0.0.1:8000/blog/category/diamond-wedding-rings">Wedding Rings</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/uncategorized">Uncategorized</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/princess-cut-engagement-ring">Princess Cut Engagement Ring</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/precious-stones">Precious Stones</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/other-jewellery">Other Jewellery</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/multi-stone-diamond-rings">Multi Stone Diamond Rings</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/loose-diamonds">Loose Diamonds</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/gold-jewellery">Gold Jewellery</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/gia-certified-diamond-rings">GIA Certified Diamond Rings</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/fancy-shaped-diamond-rings">Fancy Shaped Diamond Rings</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/diamond-eternity-rings">Eternity Rings</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/essential-guide-to-diamonds">Essential Guide to Diamonds</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/diamonds">Diamonds</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/diamond-rings">Diamond Rings</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/diamond-pendants">Diamond Pendants</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/diamond-industry-insight">Diamond Industry Insight</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/diamond-eternity-ring">Diamond Eternity Ring</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/diamond-engagement-ring">Diamond Engagement Ring</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/diamond-earrings">Diamond Earrings</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/custom-engagement-rings">Custom Engagement Rings</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/category/certified-diamonds">Certified Diamonds</a></li>
+						
+												</ul>
+				</div>
+				<div class="blogall-latest-resc">
+					<div class="sidebar-title">
+						Latest Resources
+					</div>
+					<ul>
+																				
+						<li><a href="http://127.0.0.1:8000/blog/why-round-shape-diamond-is-preferred-choice-for-engagement-rings">Why round shape diamond is preferred choice for engagement rings?</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/5-engagement-ring-trends-to-look-out-for-in-2022">5 Engagement Ring Trends to Look Out for in 2022</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/value-comparison-lab-grown-diamonds-vs-earth-mined-diamonds">Value Comparison – Lab Grown Diamonds vs. Earth Mined Diamonds</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/oval-engagement-rings-are-trending-heres-why">Oval Engagement Rings Are Trending – Here’s Why?</a></li>
+						
+													
+						<li><a href="http://127.0.0.1:8000/blog/astrological-benefits-of-diamond-you-didnt-know-about">Astrological Benefits of Diamond You Didn’t Know About</a></li>
+						
+												</ul>
+				</div>
+			</div>
+		</div>
+	</div> 
 	<input type="hidden" id="sectionHeight" value="">
 	<input type="hidden" id="scrollFlag" value="">
 	</div>
