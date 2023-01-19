@@ -27,6 +27,7 @@ class ProductPriceController extends Controller
         $finalPrice = $settingPrice + $diamondPrice;
 
         if($request['diamond_type'] == 'lab_grown'){
+            
             /** if diamond type is lab grown then calculation goes from here */
             $variationPrice = $request['variation_price'];
             $carat = $request['lab_grown_carat'];
@@ -46,7 +47,6 @@ class ProductPriceController extends Controller
 
                 /** Add discount for product */
                 $product = Products::select(['categories','id','slug'])->where('slug',$request->slug)->first();
-                //prd($product->toArray());
                 if(!empty($product)){
                     $productCategories = explode(',',$product->categories);
                     $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
@@ -57,12 +57,8 @@ class ProductPriceController extends Controller
                     ->whereRaw('"' . $labPriceWithVat . '" between `from_price` and `to_price`')
                     ->first();
 
-                    // prd($getDiscountRange->toArray());
-
                     if(!empty($getDiscountRange)){
                         $price_after_discount = ($getDiscountRange->discount / 100) * $labPriceWithVat;
-
-                        // prd($labPriceWithVat);
 
                         return response()->json([
                             'labPriceFormula' => true,

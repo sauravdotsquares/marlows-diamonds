@@ -43,10 +43,23 @@ class PageController
 
     	$getPostCategory = PostCategory::where('slug',$request->slug)->pluck('id')->first();
 
+        // prd($request->all());
+        
+
         if(isset($getPostCategory) && !empty($getPostCategory)){
-            $posts = Posts::orderBy('id','DESC')->where('status', 1)->whereRaw("find_in_set('".$getPostCategory."',categories)")->paginate(6);
+            $query = Posts::orderBy('id','DESC')->where('status', 1)->whereRaw("find_in_set('".$getPostCategory."',categories)");
+            if(!empty($request['searchKeyword'])){
+                $search = $request['searchKeyword'];
+                $query = $query->where('title','LIKE',"%$search%");
+            }
+            $posts = $query->paginate(6);
         }elseif(isset($request->slug)  && ($request->slug == 'blog-resources' || $request->slug == 'blog') ){
-            $posts = Posts::orderBy('id','DESC')->where('status', 1)->paginate(6);
+            $query = Posts::orderBy('id','DESC')->where('status', 1);
+            if(!empty($request['searchKeyword'])){
+                $search = $request['searchKeyword'];
+                $query = $query->where('title','LIKE',"%$search%");
+            }
+            $posts = $query->paginate(6);
         }
 
     	if ($request->ajax() && isset($posts) && !empty($posts)) {

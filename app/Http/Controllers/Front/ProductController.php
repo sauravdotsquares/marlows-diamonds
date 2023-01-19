@@ -1251,8 +1251,10 @@ class ProductController extends Controller
 
     public function generateSitemap(Request $request){
         
-        $products = Products::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
-        $posts = Posts::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
+        // ->where('status',1)
+        // ->where('status',1)
+        $products = Products::select('slug','updated_at')->groupBy('slug')->get();
+        $posts = Posts::select('slug','updated_at')->groupBy('slug')->get();
         $posts_categories = PostCategory::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
         $pages = Pages::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
         
