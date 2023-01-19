@@ -55,8 +55,8 @@
 			</div>
 
 			
-			<div class="blogdetails-sidebar">
-				<div class="blogall-categ">
+			<div class="blogdetails-sidebar blog-list-sidebar blog-list-sidebar-first">
+				<div class="blogall-latest-resc">
 					<div class="sidebar-title">
 						All Categories
 					</div>
@@ -69,6 +69,9 @@
 						@endforeach
 					</ul>
 				</div>
+			</div>
+
+			<div class="blogdetails-sidebar blog-list-sidebar">
 				<div class="blogall-latest-resc">
 					<div class="sidebar-title">
 						Latest Resources
@@ -184,11 +187,11 @@
 					$("#post-data").empty();
 				}
 
+				$(".search-icon").attr('src',searchIcon);
 	            if(data.html == ""){
 	                $('.ajax-load').html("No more records found");
 	                return;
 	            }else{
-					
 					$('.ajax-load').html(`<p><img src="${loadingDataImg}">Loading More post</p>`)
 				}
 
@@ -198,7 +201,6 @@
 	            $("#post-data").append(data.html);
 	            $('#sectionHeight').val($('#post-data').height());
                 $('#scrollFlag').val(0);
-				$(".search-icon").attr('src',searchIcon);
 	        }).fail(function(jqXHR, ajaxOptions, thrownError){
 	            alert('server not responding...');
 				$(".search-icon").attr('src',searchIcon);
