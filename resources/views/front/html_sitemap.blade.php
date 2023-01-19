@@ -56,7 +56,7 @@
             <h1>Product categories</h1>
             <ul>
                 @foreach ($categoryUrlsList as  $category)
-                    <li><a href="{{ url($category['url']) }}">{!! $category['name'] !!}</a></li>
+                    <li><a href="{{ url($category['url']) }}">{!! strip_tags($category['name']) !!}</a></li>
                 @endforeach        
             </ul>
         </div>
