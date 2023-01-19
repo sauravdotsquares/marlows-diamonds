@@ -9,6 +9,13 @@
         margin: 0px 70px;
     }
 </style>
+<div class="category-banner" style="background-image:url({{asset('assets/images/engagement-rings-banner.png')}})">
+    <div class="container">
+        <div class="category-banner-text">
+            <h1>SITEMAP</h1>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="category-banner-text-1">
