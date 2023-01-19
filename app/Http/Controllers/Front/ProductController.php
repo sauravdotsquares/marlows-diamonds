@@ -1316,7 +1316,7 @@ class ProductController extends Controller
         if($rows->count()){
             $rows = $rows->toArray();
             foreach ($rows as $row) {
-                $html .= $row['slug'] . '@' . $row['name'] . ',';
+                $html .= $row['slug'] . '@' . $row['title'] . ',';
                 $html .= $this->categoriesHtmlSitemap($row['id']);
             }
         }
