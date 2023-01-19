@@ -1307,6 +1307,22 @@ class ProductController extends Controller
         return $html;
     }
 
+    public function categoriesHtmlSitemap($level=0, $prefix="" ){
+        
+        $rows = Category::select(['name','title','id','parent_id','slug','updated_at'])
+        ->where('slug','!=','all-products')
+        ->where('parent_id',$level)->get();
+        $html = '';
+        if($rows->count()){
+            $rows = $rows->toArray();
+            foreach ($rows as $row) {
+                $html .= $row['slug'] . '@' . $row['name'] . ',';
+                $html .= $this->categoriesHtmlSitemap($row['id']);
+            }
+        }
+        return $html;
+    }
+
 
     public function attachParentSlugToCategory($categorySlugs="", $dataToReturn=""){
 
@@ -1320,6 +1336,49 @@ class ProductController extends Controller
             }   
         }
         return $dataToReturn;
+    }
+
+
+    public function htmlSiteMap(Request $request){
+        
+        // ->where('status',1)
+        // ->where('status',1)
+        $products = Products::select('slug','updated_at','title')->groupBy('slug')->get();
+        $posts = Posts::select('slug','updated_at','title')->groupBy('slug')->get();
+        $posts_categories = PostCategory::select('slug','updated_at','name')->groupBy('slug')->where('status',1)->get();
+        $pages = Pages::select('slug','updated_at','title')->groupBy('slug')->where('status',1)->get();
+        
+        $otherPages = [
+            'Wishlist'=> 'product/wishlist',
+            'Homepage'=>'/',
+            'My Account'=> 'my-account',
+            'Cart'=>'products/cart',
+            'Forgot password'=> '/users/forget-password',
+        ];
+
+        $categorySitemap = $this->categoriesHtmlSitemap();
+        $dataOfCategories = explode(',', $categorySitemap);
+        $categoryUrlsList = [];
+        foreach ($dataOfCategories as $category_key => $category_value) {
+            if(!empty($category_value)){
+                $categoryItem = explode('@',$category_value);
+                $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
+                $categoryUrlsList[$category_key]['url'] = url( 'product-category/' . $categoryUrl);
+                $categoryUrlsList[$category_key]['name'] = $categoryItem[1];
+            }
+        }
+
+        $data =  (object)['image'=>''];
+
+        return view('front.html_sitemap', compact([
+            'products',
+            'posts',
+            'pages',
+            'otherPages',
+            'posts_categories',
+            'categoryUrlsList',
+            'data'
+        ]));
     }
 
 }
