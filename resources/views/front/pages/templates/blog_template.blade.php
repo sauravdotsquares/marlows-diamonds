@@ -54,8 +54,59 @@
 				</div>
 			</div>
 
+			<div class="blogdetails-sidebar blog-list-sidebar blog-list-sidebar-first mobile-sidebar">
+				<div class="blogall-latest-resc">
+				<div class="accordion" id="accordion_categoreis">
+					<div class="accordion-item">
+					  <h2 class="accordion-header" id="headingOne">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							All Categories
+						</button>
+					  </h2>
+					  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion_categoreis">
+						<div class="accordion-body">
+							<ul>
+								@php
+									$getCategories = getCategories();
+								@endphp
+								@foreach($getCategories as $category)	
+									<li><a href="{{ route('blog_list', $category->slug) }}">{{isset($category->name)?$category->name:""}}</a></li>
+								@endforeach
+							</ul>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
+
+			<div class="blogdetails-sidebar blog-list-sidebar blog-list-sidebar-first mobile-sidebar">
+				<div class="blogall-latest-resc">
+				<div class="accordion" id="accordion_posts">
+					<div class="accordion-item">
+					  <h2 class="accordion-header" id="headingOne">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+							Latest Resources
+						</button>
+					  </h2>
+					  <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion_posts">
+						<div class="accordion-body">
+							<ul>
+								@php
+									$getRecentPosts = getRecentPosts();
+								@endphp
+								@foreach($getRecentPosts as $post)
+									<li><a href="{{  url('/blog/'. (isset($post->slug)? $post->slug : "") ) }}">{{isset($post->title)?$post->title:""}}</a></li>
+								@endforeach
+							</ul>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			</div>
 			
-			<div class="blogdetails-sidebar blog-list-sidebar blog-list-sidebar-first">
+			<div class="blogdetails-sidebar blog-list-sidebar blog-list-sidebar-first desktop-sidebar">
 				<div class="blogall-latest-resc">
 					<div class="sidebar-title">
 						All Categories
@@ -71,7 +122,7 @@
 				</div>
 			</div>
 
-			<div class="blogdetails-sidebar blog-list-sidebar">
+			<div class="blogdetails-sidebar blog-list-sidebar desktop-sidebar">
 				<div class="blogall-latest-resc">
 					<div class="sidebar-title">
 						Latest Resources
@@ -86,6 +137,7 @@
 					</ul>
 				</div>
 			</div>
+			
 		</div>
 	</div> 
 	<input type="hidden" id="sectionHeight" value="">

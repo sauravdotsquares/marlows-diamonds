@@ -82,7 +82,8 @@ class ProductController extends Controller
                 /** If data not found with existing slug then check in redirections table and redirect */
                 $redirectTo = UrlRedirects::where('old_url', $productSlug)->where(['type'=>'product','is_active'=>1, 'is_deleted'=>0])->first();
                 if(!empty($redirectTo) && !empty($redirectTo->new_url)){
-                    return redirect()->route('product.details', $redirectTo->new_url);
+                    $redirectTo = route('product.details', $redirectTo->new_url);
+                    return redirect($redirectTo, 301);
                 }
             }
 
@@ -1078,30 +1079,30 @@ class ProductController extends Controller
         // SitemapUrls::generateXml();
 
         /** Import all redirect urls */
-        $filePath = public_path('exports/redirects.csv');
-        $file = fopen($filePath, "r");
-        $totalRecordsAdded = 0;
+        // $filePath = public_path('exports/redirects.csv');
+        // $file = fopen($filePath, "r");
+        // $totalRecordsAdded = 0;
         
-        try {
-            while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
-                $old =  $getData[0];
-                $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
+        // try {
+        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+        //         $old =  $getData[0];
+        //         $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
     
-                $data = UrlRedirects::where(['old_url'=>urlencode($old), 'is_deleted'=>0])->first();
-                if(empty($data)){
-                    $newRedirect = new UrlRedirects();
-                    $newRedirect->old_url = urlencode($old);
-                    $newRedirect->new_url = urlencode($new);
-                    $newRedirect->type = "other";
-                    $newRedirect->save();
-                    $totalRecordsAdded++;
-                }
+        //         $data = UrlRedirects::where(['old_url'=>urlencode($old), 'is_deleted'=>0])->first();
+        //         if(empty($data)){
+        //             $newRedirect = new UrlRedirects();
+        //             $newRedirect->old_url = urlencode($old);
+        //             $newRedirect->new_url = urlencode($new);
+        //             $newRedirect->type = "other";
+        //             $newRedirect->save();
+        //             $totalRecordsAdded++;
+        //         }
                 
-            }
-            echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
-        } catch (\Exception $th) {
-            echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
-        }
+        //     }
+        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        // } catch (\Exception $th) {
+        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        // }
 
         // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
         //     $old =  $getData[0];
@@ -1180,31 +1181,48 @@ class ProductController extends Controller
         // prd($dataToRevert);
 
 
-        
+        $productSlugs = [
+            "wed002" => "d-shaped-wedding-band-wed002",
+            "wed004" => "court-shape-wedding-band-wed004",
+            "wed005" => "rounded-inner-flatter-style-wedding-band-wed005",
+            "wed006" => "rounded-inner-flatter-style-wedding-band-wed006",
+            "wed007" => "chunky-wedding-bands-wed007",
+            "wed010" => "court-shape-wedding-ring-wed010",
+            "wed021" => "court-shape-wedding-ring-wed021",
+            "wed022" => "d-shaped-wedding-band-wed022",
+            "wed023" => "modern-6mm-wedding-band-wed023",
+            "wed026" => "cut-out-diamond-wedding-band-wed026",
+            "wed027" => "6mm-court-shaped-round-wedding-band-wed027",
+            "wed028" => "5mm-flat-round-cut-diamond-wedding-band-wed028",
+            "wed029" => "7mm-princess-cut-diamonds-wedding-band-wed029",
+            "wed030" => "6mm-court-shaped-wedding-band-wed030",
+        ];
 
-        // $affectedRows = 0;
+        $affectedRows = 0;
         // $productSlugs = Products::pluck('slug','id')->toArray();
-        // foreach ($productSlugs as $key => $value) {
-        //     $product_data = Products::where('id', $key)->first();
-        //     if(!empty($product_data)){
+        foreach ($productSlugs as $key => $value) {
+            $product_data = Products::where('slug', $key)->first();
+            if(!empty($product_data)){
 
-        //         /** generate and save new slug */
-        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
-        //         $old_slug = $product_data->slug;
-        //         $product_data->slug = $new_slug;
-        //         $product_data->old_slug = $old_slug;
-        //         $product_data->save();
+                $product_data->slug = $value;
+                $product_data->old_slug = $key;
+                $product_data->save();
 
-        //         /** Save all old and new urls in redirections */
-        //         $new_redirect = new UrlRedirects();
-        //         $new_redirect->type = "product";
-        //         $new_redirect->old_url = $old_slug;
-        //         $new_redirect->new_url = $new_slug;
-        //         $new_redirect->save();
-        //         $affectedRows = $affectedRows + 1;
-        //     }
-        // }
-        // prd($affectedRows);
+                $url_data = UrlRedirects::where('old_url', $key)->first();
+                if(!empty($url_data)){
+                    $url_data->new_url = $value;
+                    $url_data->save();
+                }else{
+                    $new_redirect = new UrlRedirects();
+                    $new_redirect->type = "product";
+                    $new_redirect->old_url = $old_slug;
+                    $new_redirect->new_url = $new_slug;
+                    $new_redirect->save();
+                }
+                $affectedRows = $affectedRows + 1;
+            }
+        }
+        prd($affectedRows);
     }
 
 
