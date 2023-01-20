@@ -150,8 +150,7 @@ class PayPalPaymentController extends Controller
             Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request,$admin_email, $transaction_emails ){
             $message->from('hello@marlows-diamonds.co.uk');
 
-            $admin_email_london = "amit.kumar1@dotsquares.com"; //"london@marlows-diamonds.co.uk";
-            // TODO: revert amit.kumar1@dotsquares.com
+            $admin_email_london = "london@marlows-diamonds.co.uk";
             $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
             
             /** add cc for more users */
@@ -189,9 +188,7 @@ class PayPalPaymentController extends Controller
 
                 $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first()->toArray();
 
-                // $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
-                // TODO: revert amit.kumar1@dotsquares.com
-                $admin_email = "amit.kumar1@dotsquares.com"; //Settings::where("option_name",'admin_email')->value('option_value');
+                $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
                 $transaction_emails = Settings::where("option_name",'transaction_emails')->value('option_value');
 
                 $data = [
