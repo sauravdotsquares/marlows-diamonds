@@ -1182,20 +1182,20 @@ class ProductController extends Controller
 
 
         $productSlugs = [
-            "d-shaped-wedding-band-wed002"  => "wed002"  ,
-            "court-shape-wedding-band-wed004"  => "wed004"  ,
-            "rounded-inner-flatter-style-wedding-band-wed005"  => "wed005"  ,
-            "rounded-inner-flatter-style-wedding-band-wed006"  => "wed006"  ,
-            "chunky-wedding-bands-wed007"  => "wed007"  ,
-            "court-shape-wedding-ring-wed010"  => "wed010"  ,
-            "court-shape-wedding-ring-wed021"  => "wed021"  ,
-            "d-shaped-wedding-band-wed022"  => "wed022"  ,
-            "modern-6mm-wedding-band-wed023"  => "wed023"  ,
-            "cut-out-diamond-wedding-band-wed026"  => "wed026"  ,
-            "6mm-court-shaped-round-wedding-band-wed027"  => "wed027"  ,
-            "5mm-flat-round-cut-diamond-wedding-band-wed028"  => "wed028"  ,
-            "7mm-princess-cut-diamonds-wedding-band-wed029"  => "wed029"  ,
-            "6mm-court-shaped-wedding-band-wed030"  => "wed030"  ,
+            "wed002" => "D Shaped Wedding Band | Wed002",
+            "wed004" => "Court Shape Wedding Band | Wed004",
+            "wed005" => "Rounded Inner Flatter Style Wedding Band | Wed005",
+            "wed006" => "Rounded Inner Flatter Style Wedding Band | Wed006",
+            "wed007" => "Chunky Wedding Bands | Wed007",
+            "wed010" => "Court Shape Wedding Ring | Wed010",
+            "wed021" => "Court Shape Wedding Ring | Wed021",
+            "wed022" => "D Shaped Wedding Band | Wed022",
+            "wed023" => "Modern 6mm Wedding Band | Wed023",
+            "wed026" => "Cut Out Diamond Wedding Band | Wed026",
+            "wed027" => "6mm Court Shaped Round Wedding Band | Wed027",
+            "wed028" => "5mm Flat Round Cut Diamond Wedding Band | Wed028",
+            "wed029" => "7mm Princess Cut Diamonds Wedding Band | Wed029",
+            "wed030" => "6mm Court Shaped Wedding Band | Wed030",
         ];
 
         $affectedRows = 0;
@@ -1204,19 +1204,22 @@ class ProductController extends Controller
             $product_data = Products::where('slug', $key)->first();
             if(!empty($product_data)){
 
-                $product_data->slug = $value;
+                $new_slug = generateSlugProductPurpose($value,Products::class, "slug",$product_data->id);
+
+                $product_data->slug = $new_slug;
                 $product_data->old_slug = $key;
+                $product_data->title = $value;
                 $product_data->save();
 
                 $url_data = UrlRedirects::where('old_url', $key)->first();
                 if(!empty($url_data)){
-                    $url_data->new_url = $value;
+                    $url_data->new_url = $new_slug;
                     $url_data->save();
                 }else{
                     $new_redirect = new UrlRedirects();
                     $new_redirect->type = "product";
                     $new_redirect->old_url = $key;
-                    $new_redirect->new_url = $value;
+                    $new_redirect->new_url = $new_slug;
                     $new_redirect->save();
                 }
                 $affectedRows = $affectedRows + 1;
