@@ -20,13 +20,18 @@ class PageController
     {
         
         if($slug!=null){
+
+
             $pageData = Pages::where('slug',$slug)->where('status',1)->first();
             $pageCategory = PostCategory::where('slug',$slug)->first();
 			//$blogdata= Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
             if($pageData){
                 return view('front.pages.templates.'.$pageData->template.'',['data'=>$pageData]);//,'showdata'=>$blogdata]);
             }elseif($pageCategory){
-                return redirect()->route('blog_list',$pageCategory->slug);
+
+                $redirectTo = route('blog_list', $pageCategory->slug);
+                return redirect($redirectTo, 301);
+                // return redirect()->route('blog_list', $pageCategory->slug);
 				// return view('front.pages.templates.blog_template',['data'=>$pageCategory, 'blog_details' => 1]);//,'showdata'=>$blogdata]);
 			}
 
