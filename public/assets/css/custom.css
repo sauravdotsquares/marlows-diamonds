@@ -28,8 +28,7 @@ button:focus,input:focus, button, button:focus-within, a:focus, a:focus-within{b
 	box-shadow: none;
 }
 
-.ajax-load {background: #e1e1e1;padding: 10px 0px;width: 100%;height: 20%;display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;
-align-items: center;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;font-size: 24px;color: #000;}
+
 
 a.grey-btn-large{color:#fff;}
 .grey-btn-large{background-color:#101010;color:#fff;font-size:15px;padding:14px 26px;text-transform:uppercase;text-decoration:none;font-weight:700;display:inline-block; border: 1px solid #101010; text-align:center}
@@ -1164,7 +1163,6 @@ a[disabled="disabled"] {pointer-events: none;}
 
 
 @media(max-width:991px){
-.ajax-load{ height: 100%; }
 .bloglist-wraper .col-md-9 {width: 100%; order: 2;} 
 .post-data-col {
     display: flex;
