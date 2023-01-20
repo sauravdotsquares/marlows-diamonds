@@ -1182,20 +1182,20 @@ class ProductController extends Controller
 
 
         $productSlugs = [
-            "wed002" => "d-shaped-wedding-band-wed002",
-            "wed004" => "court-shape-wedding-band-wed004",
-            "wed005" => "rounded-inner-flatter-style-wedding-band-wed005",
-            "wed006" => "rounded-inner-flatter-style-wedding-band-wed006",
-            "wed007" => "chunky-wedding-bands-wed007",
-            "wed010" => "court-shape-wedding-ring-wed010",
-            "wed021" => "court-shape-wedding-ring-wed021",
-            "wed022" => "d-shaped-wedding-band-wed022",
-            "wed023" => "modern-6mm-wedding-band-wed023",
-            "wed026" => "cut-out-diamond-wedding-band-wed026",
-            "wed027" => "6mm-court-shaped-round-wedding-band-wed027",
-            "wed028" => "5mm-flat-round-cut-diamond-wedding-band-wed028",
-            "wed029" => "7mm-princess-cut-diamonds-wedding-band-wed029",
-            "wed030" => "6mm-court-shaped-wedding-band-wed030",
+            "d-shaped-wedding-band-wed002"  => "wed002"  ,
+            "court-shape-wedding-band-wed004"  => "wed004"  ,
+            "rounded-inner-flatter-style-wedding-band-wed005"  => "wed005"  ,
+            "rounded-inner-flatter-style-wedding-band-wed006"  => "wed006"  ,
+            "chunky-wedding-bands-wed007"  => "wed007"  ,
+            "court-shape-wedding-ring-wed010"  => "wed010"  ,
+            "court-shape-wedding-ring-wed021"  => "wed021"  ,
+            "d-shaped-wedding-band-wed022"  => "wed022"  ,
+            "modern-6mm-wedding-band-wed023"  => "wed023"  ,
+            "cut-out-diamond-wedding-band-wed026"  => "wed026"  ,
+            "6mm-court-shaped-round-wedding-band-wed027"  => "wed027"  ,
+            "5mm-flat-round-cut-diamond-wedding-band-wed028"  => "wed028"  ,
+            "7mm-princess-cut-diamonds-wedding-band-wed029"  => "wed029"  ,
+            "6mm-court-shaped-wedding-band-wed030"  => "wed030"  ,
         ];
 
         $affectedRows = 0;
