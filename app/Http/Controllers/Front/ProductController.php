@@ -1215,8 +1215,8 @@ class ProductController extends Controller
                 }else{
                     $new_redirect = new UrlRedirects();
                     $new_redirect->type = "product";
-                    $new_redirect->old_url = $old_slug;
-                    $new_redirect->new_url = $new_slug;
+                    $new_redirect->old_url = $key;
+                    $new_redirect->new_url = $value;
                     $new_redirect->save();
                 }
                 $affectedRows = $affectedRows + 1;
