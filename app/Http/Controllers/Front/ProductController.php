@@ -1274,7 +1274,7 @@ class ProductController extends Controller
             if(!empty($category_value)){
                 $categoryItem = explode('@',$category_value);
                 $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
-                $categoryUrlsList[$category_key]['url'] = url( 'product-category/' . $categoryUrl);
+                $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') . '/product-category/' . $categoryUrl;
                 $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
             }
         }
