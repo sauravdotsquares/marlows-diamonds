@@ -59,11 +59,11 @@
 				<div class="accordion" id="accordion_categoreis">
 					<div class="accordion-item">
 					  <h2 class="accordion-header" id="headingOne">
-						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 							All Categories
 						</button>
 					  </h2>
-					  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion_categoreis">
+					  <div id="collapseOne" class="accordion-collapse collapse hide" aria-labelledby="headingOne" data-bs-parent="#accordion_categoreis">
 						<div class="accordion-body">
 							<ul>
 								@php
@@ -89,7 +89,7 @@
 							Latest Resources
 						</button>
 					  </h2>
-					  <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion_posts">
+					  <div id="collapseTwo" class="accordion-collapse collapse hide" aria-labelledby="headingOne" data-bs-parent="#accordion_posts">
 						<div class="accordion-body">
 							<ul>
 								@php
@@ -137,7 +137,7 @@
 					</ul>
 				</div>
 			</div>
-			
+
 		</div>
 	</div> 
 	<input type="hidden" id="sectionHeight" value="">
