@@ -202,7 +202,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::get('xmlpage','XMLController@XMLFunction')->name('xml-page');
 
 		/* Sitemap Route*/
-		Route::get('/sitemap', 'SitemapController@sitemapFunction')->name('sitemap');
+		// Route::get('/sitemap', 'SitemapController@sitemapFunction')->name('sitemap');
 
 		Route::group(['as' => 'masters.', 'prefix' => 'masters' ], function () {
 			Route::any('/{type}', 'MastersController@index')->name('index');
@@ -320,7 +320,7 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 	Route::any('diamonds-rings','ProductController@multiCategoryProductsList');
 	/** Change slugs of all products from previous to new one */
 
-	Route::get('import-redirects','ProductController@productSlugs');
+	// Route::get('import-redirects','ProductController@productSlugs');
 	
 	// Route::get('product-slugs','ProductController@productSlugs');
 

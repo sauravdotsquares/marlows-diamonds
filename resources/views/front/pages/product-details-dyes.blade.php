@@ -95,7 +95,6 @@
 						<div class="type-variations-col">
 							<label class="label"> Central Diamond Weight </label>
 							<select class="form-control lab_price_update_items " name="carat" id="lab_grown_carat">
-								{{-- <option value="">Choose an option</option> --}}
 								<option value="0.30-0.39" selected="selected">0.30-0.39</option>
 								<option value="0.50-0.59">0.50-0.59</option>
 								<option value="0.70-0.79">0.70-0.79</option>
@@ -108,7 +107,6 @@
 						<div class="type-variations-col">
 							<label class="label"> Colour </label>
 							<select class="form-control lab_price_update_items " name="diamond-colour" id="lab_grown_colour">
-                    			{{-- <option value="">Choose an option</option> --}}
 								<option value="D" selected="selected">D - Exceptional White +</option>
 								<option value="E">E - Exceptional White</option>
 								<option value="F">F - Rare White +</option>
@@ -116,12 +114,12 @@
 						</div>
 					</div>
 				</div>
+
 				{{-- Show items for lab grown only --}}
 				<div class="type-variations-row lab_item mined_lab_items">
 					<div class="type-variations-col">
 						<label class="label"> Clarity </label>
 						<select class="form-control lab_price_update_items " name="diamond-clarity" id="lab_grown_clarity">
-							{{-- <option value="">Choose an option</option> --}}
 							<option value="VS1">VS1 - Very Small Inclusions</option>
 							<option value="VS2" selected>VS2 - Very Small Inclusions</option>
 							<option value="VVS1">VVS1 - Minute Inclusions</option>
@@ -333,7 +331,6 @@
 	</div>
 </div>
 <!-- Related Product end heRe -->
-
 
 <!-- FAQ Section start here -->
 <div class="faq-section">
@@ -748,6 +745,12 @@
 		}
 
 		function addtobasketFunction(getUrl){
+
+			let lab_grown_price = $("#finaldiamondprice").find('.price').text();
+			if(lab_grown_price){
+				lab_grown_price = lab_grown_price.replace(/[^0-9]/g, "");
+			}
+
 			$.ajax({
                 type: 'POST',
                 url: getUrl,
@@ -766,7 +769,17 @@
 					'certificatelink': $('#certificate_url').val() || '',
 					'shape': $('#selected_diamond_shape').val() || '',
 					'certificate': $('#selected_diamond_certno').val() || '',
-                    'jsondata':$('input[name="selectrefinedata"]:checked').data('jsonvalue'),
+
+
+					/**  Add lab information in cart */
+					'lab_grown_clarity' : $("#lab_grown_clarity").val(),
+					'lab_grown_colour' : $("#lab_grown_colour").val(),
+					'lab_grown_carat' : $("#lab_grown_carat").val(),
+					'diamond_type' : $(".diamond_type:checked").val(),
+					'lab_grown_price' : getNumberFromCurrency(lab_grown_price),
+
+                    'jsondata' : $('input[name="selectrefinedata"]:checked').data('jsonvalue'),
+
                 },
                 success: function (res) {
 					// console.log(res);
