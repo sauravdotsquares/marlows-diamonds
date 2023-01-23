@@ -38,10 +38,10 @@ class SitemapCron extends Command
      */
     public function handle()
     {
-        \Log::info("Sitemap Cron is working fine Start!");
+        \Log::info("Sitemap Cron is working fine Start! 001");
 
-        $sitemapController = new SitemapController;
-        $sitemapController->sitemapFunction();
+        //$sitemapController = new SitemapController;
+        //$sitemapController->sitemapFunction();
         // return 0;
         \Log::info("Sitemap Cron is working fine End!");
     }
