@@ -4,7 +4,8 @@ $interpolateProvider.endSymbol('%>');
 
 });
 
-var base_url = "/api/v1/";
+// var base_url = "/api/v1/";
+var base_url = systemBaseUrl + 'api/v1/';
 
 /******** Define the Common controller  ***************/
 

@@ -18,7 +18,16 @@ use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
 use App\Models\Products;
 use App\Models\InstagramData;
+use App\Models\Masters;
+use App\Models\Category;
 use App\Models\Popups;
+use App\Models\ProductImages;
+use App\Models\ProductVariations;
+use App\Models\ProductVariationDetails;
+use App\Models\ProductThumbVideos;
+use App\Models\UrlRedirects;
+
+
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
 
@@ -82,7 +91,7 @@ if (!function_exists("single_image_upload")) {
 }
 
 if (!function_exists("single_storage_image_upload")) {
-    function single_storage_image_upload($imageUrl,$folderName,$height,$width)
+    function single_storage_image_upload($imageUrl,$folderName,$height=0,$width=0)
     {
         if (!file_exists(storage_path('app/public/' . $folderName))) {
             mkdir(storage_path('app/public/' . $folderName), 0777);
@@ -92,8 +101,16 @@ if (!function_exists("single_storage_image_upload")) {
 		$image = $imageUrl;
         // echo '<pre>';print_r($image); die;
 		$imageName = $image->getClientOriginalName();
-		$fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
-		Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
+
+        if(!empty($height) && !empty($width)){
+            $fileName =  $folderName.'/' . time() . '-'.$height.'x'.$width. $imageName;
+            Image::make($image)->resize($height,$width)->save(storage_path('app/public/' . $fileName));
+        }else{
+            $fileName =  $folderName.'/' . time() . $imageName;
+            Image::make($image)->save(storage_path('app/public/' . $fileName));
+        }
+
+		
 		return $fileName;
 
     }
@@ -277,6 +294,17 @@ if (!function_exists('validate_breadcrumb')) {
             return $featured;
         }
     }
+
+    function getFaqByCategory($category="", $in_array=false){
+        $category = empty($category) ? 0 : $category;
+        $faqs = Faqs::where(['categories'=>$category])->get();
+
+        if($in_array && $faqs->count()){
+            return $faqs->toArray();
+        }
+        return $faqs;
+    }
+
     /*
     ** Hari Krishna API function
     * @params : data as array
@@ -319,15 +347,14 @@ if (!function_exists('validate_breadcrumb')) {
             }
 
             $results = $results->orderBy('id','ASC');
-            //echo $results->toSql(); die;
+            
             if(isset($data['paging']))
                 $results = $results->paginate($data['paging']);
-                //$results = $results->get();
             else if(isset($data['num_of_row']))
                 $results = $results->take($data['num_of_row'])->get();
             else
                $results = $results->get();
-           // echo '<pre>'; print_r($results->toArray()); die;
+
             return $results->toArray();
         }
 
@@ -459,7 +486,6 @@ if (!function_exists('validate_breadcrumb')) {
 
             $params = array('Username'=>'95503', 'Password'=>'@diamond1');
             $client->__soapCall("Login", array($params), NULL, NULL, $output_headers);
-
             $ticket = $output_headers["AuthenticationTicketHeader"]->Ticket;
 
            // $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
@@ -608,52 +634,499 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
+    // if (!function_exists("final_image_upload_single_function")) {
+    //     function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
+    //     {
+    //         $modelId = base64_encode($modelId);
+    //         if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
+    //             mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+    //         }
+
+    //         $imageName = $imageUrl->getClientOriginalName();
+    //         $fileName =  rand().$imageName;
+    //         $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
+
+    //         Image::make($imageUrl)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
+    //         Image::make($imageUrl)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+
+    //         $data['f2']['R'] = $modelName.'/'.$modelId.'/'.$fileName;
+    //         $data['f2']['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+
+    //         return $data;
+    //     }
+    // }
+
     if (!function_exists("final_image_upload_single_function")) {
         function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
-        {
+        {   
+            $imagePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
-            if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
-                mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+            if (!file_exists(storage_path($imagePath ))) {
+                mkdir(storage_path($imagePath), 777, true);
             }
 
             $imageName = $imageUrl->getClientOriginalName();
-            $fileName =  rand().$imageName;
+            $fileName =  rand().slugify($imageName);
             $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
-            Image::make($imageUrl)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
-            Image::make($imageUrl)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+            Image::make($imageUrl)->save(storage_path($imagePath . $fileName));
+            Image::make($imageUrl)->resize($height,$width)->save(storage_path($imagePath . $fileNameThumb));
 
-            $data['f2']['R'] = $modelName.'/'.$modelId.'/'.$fileName;
-            $data['f2']['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+            $data['f2']['R'] = $modelName .'/' . $fileName;
+            $data['f2']['T'] = $modelName .'/' . $fileNameThumb;
 
             return $data;
         }
     }
 
-    if (!function_exists("final_image_upload_array_function")) {
-        function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null)
-        {
-            $modelId = base64_encode($modelId);
-            if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
-                mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
-            }
+    // if (!function_exists("final_image_upload_array_function")) {
+    //     function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null)
+    //     {
+    //         $modelId = base64_encode($modelId);
+    //         if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
+    //             mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
+    //         }
 
+    //         if(is_array($imageUrlArray)){
+    //             $data= [];
+    //             foreach($imageUrlArray as $key => $file) {
+    //                 $imageName = $file->getClientOriginalName();
+    //                 $fileName =  rand().$imageName;
+    //                 $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
+
+    //                 Image::make($file)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
+    //                 Image::make($file)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+
+    //                 $data[$key]['R'] = $modelName.'/'.$modelId.'/'.$fileName;
+    //                 $data[$key]['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+    //             }
+    //         }
+    //         return $data;
+    //     }
+    // }
+
+    if (!function_exists("final_image_upload_array_function")) {
+
+        function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null){ 
+            $modulePath = 'app/public/' . $modelName.'/';
+            $modelId = base64_encode($modelId);
+            $video_extensions = ['mp4'];
+            $file_extensions = [];
+            if (!file_exists(storage_path($modulePath))) {
+                mkdir(storage_path($modulePath), 777, true);
+            }
             if(is_array($imageUrlArray)){
                 $data= [];
                 foreach($imageUrlArray as $key => $file) {
+                    $extension = $file->getClientOriginalExtension();
+                    $file_extensions[] = $extension;
                     $imageName = $file->getClientOriginalName();
-                    $fileName =  rand().$imageName;
+                    $fileName =  rand().slugify($imageName);
                     $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
-                    Image::make($file)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
-                    Image::make($file)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
+                    
 
-                    $data[$key]['R'] = $modelName.'/'.$modelId.'/'.$fileName;
-                    $data[$key]['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
+                    if(in_array($extension,$video_extensions)){
+
+                        $fileName = product_video_upload($file,$modelName);
+                        $data[$key]['R'] = $fileName;
+                        $data[$key]['T'] = '';
+                        // Storage::disk('public')->put($modulePath. $fileName . '.'.$extension, $file);
+                        // $data[$key]['R'] = $modelName .'/'. $fileName . '.'.$extension;
+                        // $data[$key]['T'] = '';
+                        // Image::save(storage_path($modulePath . $fileName));
+                        // $file->store($modulePath .$fileName.'.'.$extension );
+                        // Image::make($file)->resize($height,$width)->save(storage_path( $modulePath .$fileNameThumb));
+                    }else{
+                        Image::make($file)->save(storage_path($modulePath . $fileName));
+                        Image::make($file)->resize($height,$width)->save(storage_path( $modulePath .$fileNameThumb));
+                        $data[$key]['R'] = $modelName .'/'. $fileName;
+                        $data[$key]['T'] = $modelName .'/'. $fileNameThumb;
+                    }
+
+                    
                 }
             }
+            // print_r($file_extensions);die;
             return $data;
         }
+    }
+
+
+    function generateSlug($title="", $table="", $keyName="slug" ,$number=0){
+        $slug = slugify($title);
+        $slug = $number ? $slug . '-'.$number : $slug;
+        $isSlugExists = $table::where($keyName, $slug)->first();
+        if(!empty($isSlugExists)){
+            $number = $number+1;
+            return generateSlug($title,$table, $keyName, $number);
+        }else{
+            return $slug;
+        }
+    }
+
+
+    function generateSlugProductPurpose($title="", $table="", $keyName="slug", $skip_id="" ,$number=0){
+        $slug = slugify($title);
+        $slug = $number ? $slug . '-'.$number : $slug;
+
+        $queryToCheck = $table::where($keyName, $slug);
+        if(!empty($skip_id)){
+            $queryToCheck = $queryToCheck->where('id','!=',$skip_id);
+        }
+        $isSlugExists = $queryToCheck->first();
+
+        if(!empty($isSlugExists)){
+            $number = $number+1;
+            return generateSlugProductPurpose($title,$table, $keyName, $skip_id, $number);
+        }else{
+            return $slug;
+        }
+    }
+
+
+    function slugify($text, string $divider = '-'){
+        $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = preg_replace('~[^-\w]+~', '', $text);
+        $text = trim($text, $divider);
+        $text = preg_replace('~-+~', $divider, $text);
+        $text = strtolower($text);
+        if (empty($text)) {
+            return 'n-a';
+        }
+        return $text;
+    }
+
+
+    function prd($data=''){
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+        die();
+    }
+
+
+
+    function getMasterById($id=''){
+        return  Masters::where('id',$id)->first()->toArray();
+    }
+
+    function getMasterValuesByType($type=''){
+        $data =  Masters::where('type',$type)->pluck('value');
+        if($data->count()){
+            return $data->toArray(); 
+        }else{
+            return [];
+        }
+    }
+
+
+    function getFilter($table, $query, $filter=[]){
+        if(count($filter)){
+            foreach ($filter as $key => $value) {
+                if(Schema::hasColumn( app($table)->getTable(), $key)){
+                    $query = $query->where($key, 'like', '%' . $filter[$key] . '%');
+                }
+            }
+        }
+        return $query;
+    }
+
+
+    function unique_code($limit=30){
+        return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
+    }
+
+    function in_array_multi($needle, $haystack, $strict = false) {
+        foreach ($haystack as $item) {
+            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+                return true;
+            }
+        }
+    
+        return false;
+    }
+
+
+    function getThumbnailGif($productId=""){
+        $image = ProductThumbVideos::where([
+            'status'=>1,
+            'type' => 'thumbnail_rotation_image',
+            'product_id' => $productId
+        ])->first();
+
+        if(!empty($image)){
+            return $image;
+        }else{
+            return null;
+        }
+    }
+
+
+    function getProductVariationImage($productId="", $request=[]){
+        
+        $getProductVariationId = ProductVariations::where('product_id', $productId)->pluck('id');
+        if(!empty($getProductVariationId) && $getProductVariationId->count()){
+            $getProductVariationId = $getProductVariationId->toArray();
+
+            // Statement 2
+            // $getVariDetails = ProductVariationDetails::groupBy('value')
+            //                     ->whereIn('variation_id', $getProductVariationId)
+            //                     ->whereIn('value', $request['variations'])
+            //                     ->get();
+            // if(!empty($getVariDetails) && $getVariDetails->count()){
+            //     $getVariDetails = $getVariDetails->toArray();
+            // }
+            // // endof statement 2
+
+            $variationDetails = [];
+            $attributeCount = count($request->variations);
+            foreach ($getProductVariationId as $key1 => $productVariationId) {
+                $variationDetails = array();
+                foreach ($request->variations as $key2 => $variations) {
+                    $getVariDetails =   ProductVariationDetails::where('variation_id', $productVariationId)
+                                        ->where('value', $variations)
+                                        ->get()
+                                        ->toArray();
+
+                    if (!empty($getVariDetails))
+                        $variationDetails[] = $getVariDetails;
+                }
+                if ($attributeCount == count($variationDetails)){ break; }
+            }
+
+
+            $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
+                ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'regular_price', 'sale_price')
+                ->first();
+            
+            return $getSelectedVariationVideoImages->toArray();
+        }else{
+            return null;
+        }
+
+    }
+
+    function getCategoriesTree($exsitingCategories=[], $parentId=0){
+
+
+        //return Category::with(['childCategories'])->get()->toArray();
+
+        // if(!count($exsitingCategories)){
+        //     $parent_categories = Category::where('parent_id',0)->where(['status'=>1])->get();
+        //     if($parent_categories->count()){
+
+        //         /** Check if child category exists */
+        //         $isChildExists = false;
+        //         foreach ($parent_categories as $key => $value) {
+        //             $childCount = Category::where('parent_id',$value->id)->where(['status'=>1])->count();
+        //             if($childCount){
+        //                 $isChildExists = true;
+        //                 break;
+        //             }
+        //         }
+        //         if($isChildExists){
+        //             return getCategoriesTree($parent_categories->toArray());
+        //         }else{
+        //             return $parent_categories->toArray();
+        //         }
+        //     }
+        // }else{
+
+
+        //     foreach ($exsitingCategories as $key => $value) {
+        //         # code...
+        //     }
+
+
+        // }
+
+        // $parent_categories = Category::where('parent_id',$parentId)->where(['status'=>1])->get();
+        // foreach ($parent_categories as $key => $value) {
+        //     $childExist = Category::where('parent_id',$value->id)->where(['status'=>1])->count();
+        //     if($childExist){
+        //         $parent_categories->child = Category::where('parent_id',$value->id)->where(['status'=>1])->get();
+        //     }
+        // }
+    }
+
+
+    function upload_file($file, $path=""){
+        
+        try {
+            $originalName = $file->getClientOriginalName();
+            $size = $file->getSize();
+            $extension = $file->getClientOriginalExtension();
+            $mimeType = $file->getMimeType();
+    
+            $fileName = time().uniqid().'_'.$originalName;
+    
+            $destinationPath = 'uploads/'.$path .'/';
+            $toReturn = $file->move($destinationPath,$fileName);
+            return [
+                'name' => $path .'/'. $fileName,
+                'size' => $size,
+                'extension' => $extension,
+                'mimeType' => $mimeType,
+                'original_name' => $originalName,
+            ];
+        } catch (\Throwable $th) {
+            return null;
+        }
+
+       
+    }
+
+    function show_dots($in, $length=30){
+        return strlen($in) > $length ? substr($in,0,$length)."..." : $in;
+    }
+
+    /**
+     * details about currency
+     */
+    function currency($query=[]){
+        return [
+            'symbol' => '£'
+        ];
+    } // endof currency
+
+    /** format of price how it shows */
+    function formatPrice($amount=''){
+        $currency = currency();
+
+        $symbol = "£";
+        if(!empty($currency['symbol'])){
+            $symbol = $currency['symbol'];
+        }
+
+        return $currency['symbol'] ." " . number_format($amount, 2);
+    } // endof formatPrice
+
+    /** 
+     * Function is use to return number of items that will need to show on products list page
+     */
+    function defaultProductPagination(){
+        return 20;
+    }// endof defaultProductPagination
+
+    /**
+     * getPercentage
+     * function is use to get amount after percentage
+     */
+    function getPercentage($total, $percentage=0, $decimal=0){
+        $percentageAmount = ($percentage / 100) * $total;
+        return  round($total - $percentageAmount, $decimal);
+    }// endof getPercentage
+
+    /**
+     * getPercentageValue
+     * function is use to get amount after percentage
+     */
+    function getPercentageValue($total, $percentage=0, $decimal=0){
+        $percentageAmount = ($percentage / 100) * $total;
+        return  round($percentageAmount);
+    }// endof getPercentageValue
+
+
+    function duplicateProductRemoveIds(){
+        $productIdsToRemoveImages = Masters::where(['is_deleted'=>0, 'is_active'=>1, 'type'=> 'product_duplicate_image_remove'])->pluck('value');
+        if(!empty($productIdsToRemoveImages) && $productIdsToRemoveImages->count()){
+            return $productIdsToRemoveImages->toArray();
+        }else{
+            return [];
+        }
+    }
+
+
+    function show_percentage($amount=0, $pricing_data=[] , $type="show"){
+         
+        if(empty($pricing_data)){
+           return $amount;
+        }
+        $percentageValue = getPercentageValue($amount, $pricing_data->percentage); 
+        switch ($type) {
+           case 'show':{
+              $toReturn = $amount;
+              if(!empty($pricing_data)){
+                 if($pricing_data->type == 'increase'){
+                    $toReturn .= " + $percentageValue ($pricing_data->percentage%)";
+                 }else{
+                    $toReturn .= " - $percentageValue ($pricing_data->percentage%)";
+                 }
+              }
+              return $toReturn;
+              break;
+           }
+           case 'action':{
+                 if($pricing_data->type == 'increase'){
+                    return $amount + $percentageValue;
+                 }else{
+                    return $amount - $percentageValue;
+                 }
+              break;
+           }
+           
+           default:{
+              return 'N/A';
+              break;
+           }
+        }
+    }
+
+    /**
+     * check extension of file type
+     */
+    function extensionChecker($extension='jpeg'){  
+
+        $validImageExtensions = ['jpeg','jpg','JPEG','JPG','png','PNG','webp','WEBP','gif','GIF'];
+        $validVideoExtensions = ['mp4','MP4'];
+        $validAudioExtensions = ['mp3','MP3'];
+
+        if(in_array($extension, $validImageExtensions)){
+            return 'image';
+        }else if(in_array($extension, $validVideoExtensions)){
+            return 'video';
+        }else if(in_array($extension, $validAudioExtensions)){
+            return 'audio';
+        }else{
+            return null;
+        }
+    }//endof extensionChecker
+
+    /**
+     * convert bytes to human readable file size
+     */
+    function humanFileSize($bytes,$dec = 2 ) {
+        $size   = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+        $factor = floor((strlen($bytes) - 1) / 3);
+
+        return sprintf("%.{$dec}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
+    }//endof humanFileSize
+
+    /**
+     * 
+     */
+    function show_image($file_url=""){
+        
+        if(file_exists( public_path('/uploads/')  . $file_url )){
+            return true;
+        }else{
+            return false;
+        }
+
+    }// endof file_get_url
+
+
+    function pageRedirects($path=""){
+        $path = $path[0] == '/' ? $path : '/' . $path;
+        $path = urlencode($path);
+
+        $dataToRedirect = UrlRedirects::where(['old_url'=> $path, 'is_deleted' => 0 ])->first();
+        if(!empty($dataToRedirect) && !empty($dataToRedirect->new_url) ){
+            return urldecode($dataToRedirect->new_url);
+        }
+        return null;
     }
 
 }

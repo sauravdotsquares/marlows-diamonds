@@ -1,20 +1,27 @@
 @extends('layouts.front.app')
 @section('content')
+
+    @section('css')
+        <style> .error { color: #e74c3c !important; } </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    @endsection
+
 @section('css')
     <style>
         .error {
             color: #e74c3c !important;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
 @endsection
     <!-- home main-banner start -->
     <div class="home-main-banner">
         <div class="main-banner-wraper flex-flex-wrap flexed">
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
-                    <h1>Find the Perfect Diamond Rings from Marlow’s</h1>
-                    <p>A diamond is forever, so should be yours.</p>
+                    <h1 class="123">Find the Perfect Diamond Rings from Marlow’s</h1>
+                    {{-- <p> <strong> A diamond is forever, so should be yours. </strong> </p> --}}
+                    <p><strong>Over 2500 mined and lab grown diamonds in stock to take away at online prices</strong></p>
                     <div class="shop-engage-btn">
                         <a class="btn-bg-large" href="{{ asset('engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
                     </div>
@@ -22,7 +29,7 @@
             </div>
             <div class="main-banner-col banner-ryt-col">
                 <div class="main-banner-ryt-img">
-                    <img src="{{ asset('assets/images/ring-img.webp') }}" alt="ring img">
+                    <img src="{{ asset('assets/images/ring-img.webp') }}" alt="Ring image">
                 </div>
             </div>
         </div>
@@ -31,7 +38,6 @@
 
 
     <!-- Shop from the Best start here -->
-
     <div class="shopfrom-best">
         <div class="container">
             <div class="head-para-three">
@@ -42,7 +48,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/diamond-jewellery.png" alt="rings"></a>
+                                <a href="{{ asset('product-category/diamond-jewellery') }}"><img src="assets/images/diamond-jewellery.png" alt="Diamond Jewellery"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -62,7 +68,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/engagement-ring.png" alt="rings"></a>
+                                <a href="{{ asset('engagement-rings') }}"><img src="assets/images/engagement-ring.png" alt="Engagement Ring"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -81,7 +87,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/wedding-ring.png" alt="rings"></a>
+                                <a href="{{ asset('product-category/wedding-rings') }}"><img src="assets/images/wedding-ring.png" alt="Wedding Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -101,7 +107,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="#"><img src="assets/images/multi-stone.png" alt="rings"></a>
+                                <a href="{{ asset('product-category/engagement-rings/multi-stone') }}"><img src="assets/images/multi-stone.png" alt="Multi Stone Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -133,54 +139,58 @@
                 <div class="head-para-three">
                     <div class="heading-h-three">
                         Why Choose Marlow’s Diamonds?
+                        <p style="font-weight: 800;line-height: 2;">Because we are specialists in affordable luxury-the one stop jewellery superstore</p>
                     </div>
-                    <p>For over three generations, we’ve been helping countless happy couples express love and commitment
-                        and we believe in quality and commitment as much as you do..</p>
+                    <p>For over three generations, we’ve been helping countless happy couples express love and commitment and we believe in quality and commitment as much as you do..</p>
+                    <p class="second-para">Our diamonds and gemstones are better valued than any like-for-like comparison with any other UK jeweller. Our fancy shape diamonds like ovals, marquises, emeralds cuts, and cushion shapes are polished to the highest standards. We guarantee most of our diamonds visually appear larger than their carat weight. Our polishers create each diamond to maximize its proportions and not its carat weight, hence our 1ct will look like anyone else's 1.25ct. Come into any of our stores to learn more about the way we choose our rough diamonds so that the polished end product gets the best yield to maximise visual sparkle and appearance. This ensures you get the best visual appearance and sparkle for your budget. As we cannot be beaten on price, if you have seen something elsewhere, just send us a link and we will beat the price if cost is your deciding factor.</p>
+                    <video src="/storage/HomePageVideos/homeopagevideo.mp4" controls id="video" poster="/storage/HomePageVideos/homeopagevideo.png"></video>
                 </div>
+                
+
                 <div class="rating-img">
                     <img src="assets/images/top2.png" alt="rating star">
                 </div>
                 <div class="whychoose-rows flex-flex-wrap flexed">
-                    <div class="whychoose-col">
+                    <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/warranty.png" alt="">
+                                <img src="assets/images/warranty.png" alt="Lifetime Warranty">
                             </div>
                             <div class="whychoose-col-text">
-                                Lifetime Warranty
+                                Lifetime Warranty T&c Apply
                             </div>
                         </div>
-                    </div>
-                    <div class="whychoose-col">
+                    </a>
+                    <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/diamond.png" alt="">
+                                <img src="assets/images/diamond.png" alt="GIA Certified Diamonds">
                             </div>
                             <div class="whychoose-col-text">
                                 GIA Certified Diamonds
                             </div>
                         </div>
-                    </div>
-                    <div class="whychoose-col">
+                    </a>
+                    <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/favourite.png" alt="">
+                                <img src="assets/images/favourite.png" alt="70 Years Experience">
                             </div>
                             <div class="whychoose-col-text">
-                                50 Years Experience
+                                70 Years Experience
                             </div>
                         </div>
-                    </div>
-                    <div class="whychoose-col">
+                    </a>
+                    <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/exchange.png" alt="">
+                                <img src="assets/images/exchange.png" alt="FREE 30 Day Returns">
                             </div>
                             <div class="whychoose-col-text">
-                                FREE 30 Day Returns
+                                FREE 30 Day Returns. T&c Apply
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                 </div>
 
@@ -191,14 +201,14 @@
 
 
     <!-- Marlow's start here -->
-    <div class="marlows-diamond">
+    <!-- <div class="marlows-diamond">
         <div class="container">
             <div class="marlows-diamond-title heading-h-two">
                 Marlow's Diamonds: Inspiring a Generation of Love.
             </div>
         </div>
 
-    </div>
+    </div> -->
 
 
     <!-- Marlow's End here -->
@@ -217,7 +227,7 @@
                     Shop from Marlow’s GIA Certified Diamond Rings
                 </h3>
                 <p>Diamond rings are more than just jewellery. We understand the symbolism that they represent. So that they
-                    can witstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality
+                    can withstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality
                     and longevity.</p>
                 <div class="explore-btn">
                     <a class="btn-bg-small" href="/product-category/engagement-rings">EXPLORE ENGAGEMENT RINGS</a>
@@ -307,6 +317,7 @@
     </div>
     <!-- Join our mailing list section End -->
     @include('front.includes.instagram-section')
+    @include('front.includes.location_section')
 
     <!-- insta photos section end -->
     @php
@@ -334,9 +345,9 @@
 
 @endsection
 @section('js')
-<script src='https://www.google.com/recaptcha/api.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js' async></script>
+<script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
 <script>
     grecaptcha.ready(function() {
         grecaptcha.execute('6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN', {

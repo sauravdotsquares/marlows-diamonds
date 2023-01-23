@@ -14,7 +14,8 @@
 				<a href="{{asset($data->cat_name->slug)}}">{{isset($data->cat_name->name)?$data->cat_name->name:'Uncategorized'}}</a>
 			</li>
 			<li>
-				<a href="{{asset('blog-resources/'.$data->slug)}}">{{isset($data->title)?$data->title:'Title'}}</a>
+				{{--  Change after SEO discuss 05Jan2023 seo_change --}}
+				<a href="{{asset('blog/'.$data->slug)}}">{{isset($data->title)?$data->title:'Title'}}</a>
 			</li>
 
 		</ul>
@@ -37,7 +38,7 @@
 						</div>
 					<div class="blog-main-img">
 						@if(!empty(($data->image)))
-                           <img src="{{asset('storage/'.$data->image)}}" alt="1">
+                           <img src="{{asset('storage/'.$data->image)}}" alt="{{$data->title}}">
                         @endif
 					</div>
 					<div class="blogdetail-desc">
@@ -56,7 +57,9 @@
 								$getCategories = getCategories();
 							@endphp
 							@foreach($getCategories as $category)
-							<li><a href="/{{isset($category->slug)?$category->slug:""}}">{{isset($category->name)?$category->name:""}}</a></li>
+							{{--  Change after SEO discuss 05Jan2023 seo_change --}}
+							<li><a href="{{ route('blog_list', $category->slug) }}">{{isset($category->name)?$category->name:""}}</a></li>
+							{{-- <li><a href="{{ url( 'blog/' . (isset($category->slug)?$category->slug:"")) }}">{{isset($category->name)?$category->name:""}}</a></li> --}}
 							@endforeach
 						</ul>
 					</div>
@@ -69,7 +72,9 @@
 								$getRecentPosts = getRecentPosts();
 							@endphp
 							@foreach($getRecentPosts as $post)
-							<li><a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}">{{isset($post->title)?$post->title:""}}</a></li>
+							{{--  Change after SEO discuss 05Jan2023 seo_change --}}
+							<li><a href="{{  url('/blog/'. (isset($post->slug)? $post->slug : "") ) }}">{{isset($post->title)?$post->title:""}}</a></li>
+							{{-- <li><a href="/blog/{{isset($post->slug)?$post->slug:""}}">{{isset($post->title)?$post->title:""}}</a></li> --}}
 							@endforeach
 						</ul>
 					</div>
@@ -98,29 +103,39 @@
 				<div class="item">
 			    	<div class="blos-listbox">
 						<div class="blos-listbox-img">
-							<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}"><img src="{{asset('storage/'.$post->image)}}" alt="1"></a>
+							{{--  Change after SEO discuss 05Jan2023 seo_change --}}
+							{{-- <a href="/blog/{{isset($post->slug)?$post->slug:""}}"> --}}
+							<a href="{{ url('/blog/' . (isset($post->slug)?$post->slug:"")) }}">
+								{{-- <img src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}"> --}}
+								@if(!empty(($post->image)))
+									<img src="{{asset('storage/'.$post->image)}}"  alt="{{$post->title}}">
+								@else 
+									<img src="{{url('/images/marlowsdiamonds-logo.png')}}"  alt="{{$post->title}}">
+								@endif
+							</a>
 						</div>
 						<div class="blos-listbox-text">
 							<div class="blos-list-date">
 								<span><i class="fa fa-user" aria-hidden="true"></i> MarlowsDiamonds at </span>
-								<span><i class="fa fa-clock-o" aria-hidden="true"></i> December 13, 2021</span>
+								<span><i class="fa fa-clock-o" aria-hidden="true"></i> {{isset($post->created_at)?$post->created_at->format('M d, Y'):""}} </span>
 							</div>
 							<div class="blos-list-title">
-								<a href="/blog-resources/{{isset($post->slug)?$post->slug:""}}">{{isset($post->title)?$post->title:""}}</a>
+								{{--  Change after SEO discuss 05Jan2023 seo_change --}}
+								<a href="{{ url('/blog/' . (isset($post->slug)?$post->slug:"")) }}">{{isset($post->title)?$post->title:""}}</a>
+								{{-- <a href="/blog/{{isset($post->slug)?$post->slug:""}}">{{isset($post->title)?$post->title:""}}</a> --}}
 							</div>
 							<div class="blos-list-desc">
 								{{isset($post->short_description)?$post->short_description:""}}
 							</div>
 							<div class="blog-readmore">
-								<a class="btn-bg-small" href="/blog-resources/{{isset($post->slug)?$post->slug:""}}">Read More</a>
+								{{--  Change after SEO discuss 05Jan2023 seo_change --}}
+								<a class="btn-bg-small" href="{{ url('/blog/' . (isset($post->slug)?$post->slug:"")) }}">Read More</a>
+								{{-- <a class="btn-bg-small" href="/blog/{{isset($post->slug)?$post->slug:""}}">Read More</a> --}}
 							</div>
 						</div>
 					</div>
 			    </div>
 				@endforeach
-
-
-
 			</div>
 		</div>
 	</div>

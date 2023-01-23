@@ -1,57 +1,477 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Service Unavailable</title>
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet">
-
-    <!-- Styles -->
+<?php
+    use App\Models\SitemapUrls;
+    SitemapUrls::deleteRecordByUrl(request()->path());
+    $pageRedirect = pageRedirects(request()->path());
+    if($pageRedirect){
+        header("Location: $pageRedirect", true, 301);
+        exit();
+    }
+?>
+@extends('layouts.front.error_page')
+@section('content')
+@section('css')
     <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Raleway', sans-serif;
-            font-weight: 100;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .full-height {
-            height: 100vh;
-        }
-
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
+        .error {  color: #e74c3c !important; }
+        .head-para-three p.second-para{padding-bottom: 25px;}
+        .head-para-three video#video{width: 80%; object-fit: inherit;} 
     </style>
-</head>
-<body>
-<div class="flex-center position-ref full-height">
-    <div class="content">
-        <div class="title error404">
-            Ooops, we cannot find what you are looking for. Please try again.
+    <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
+@endsection
+
+    <?php
+        // SitemapUrls::deleteRecordByUrl(request()->path());
+        // $pageRedirect = pageRedirects(request()->path());
+        // if($pageRedirect){
+        //     header("Location: $pageRedirect", true, 301);
+        //     exit();
+        // }
+    ?>
+    <!-- Not found data -->
+    <div class="home-main-banner">
+        <div class="main-banner-wraper">
+            <div class="container">
+                <div class="main-banner-col">
+                    <p  style="color: #8e2e65; font-size: 25px;padding: 20px 0px;" ><strong>Ooops, we cannot find what you are looking for.</strong></p>
+                </div>
+            </div>
         </div>
-        <a href="{{ route('home') }}" class="btn btn-default">Go back</a>
     </div>
-</div>
-</body>
-</html>
+
+    <!-- home main-banner start -->
+    <div class="home-main-banner">
+        <div class="main-banner-wraper flex-flex-wrap flexed">
+            <div class="main-banner-col banner-left-col">
+                <div class="main-banner-left-text">
+                    <h1 class="123">Find the Perfect Diamond Rings from Marlow’s</h1>
+                    {{-- <p> <strong> A diamond is forever, so should be yours. </strong> </p> --}}
+                    <p><strong>Over 2500 mined and lab grown diamonds in stock to take away at online prices</strong></p>
+                    <div class="shop-engage-btn">
+                        <a class="btn-bg-large" href="{{ asset('engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
+                    </div>
+                </div>
+            </div>
+            <div class="main-banner-col banner-ryt-col">
+                <div class="main-banner-ryt-img">
+                    <img src="{{ asset('assets/images/ring-img.webp') }}" alt="Ring image">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- home main-banner endt -->
+
+
+
+    
+
+
+    <!-- Shop from the Best start here -->
+    <div class="shopfrom-best">
+        <div class="container">
+            <div class="head-para-three">
+                <h2 class="heading-h-three">Shop from the Best</h2>
+            </div>
+            <div class="product-item-slider">
+                <div class="owl-carousel owl-theme owlsliderone st-arrows">
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('product-category/diamond-jewellery') }}"><img src="assets/images/diamond-jewellery.png" alt="Diamond Jewellery"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Diamond Jewellery
+                                </div>
+                                <div class="product-description">
+                                    Select your favourite diamond jewellery from a range of GIA certified diamonds for your
+                                    most special moments.
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small" href="{{ asset('product-category/diamond-jewellery') }}">Shop
+                                        Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('engagement-rings') }}"><img src="assets/images/engagement-ring.png" alt="Engagement Ring"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Engagement Ring
+                                </div>
+                                <div class="product-description">
+                                    Choose from an exotic range of diamond Rings or have your very own bespoke design made
+                                    for your special day.
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small" href="{{ asset('engagement-rings') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('product-category/wedding-rings') }}"><img src="assets/images/wedding-ring.png" alt="Wedding Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Wedding Rings
+                                </div>
+                                <div class="product-description">
+                                    Something everlasting and as special as the marriage itself. Shop bespoke wedding rings
+                                    from our collection.
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small" href="{{ asset('product-category/wedding-rings') }}">Shop
+                                        Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('product-category/engagement-rings/multi-stone') }}"><img src="assets/images/multi-stone.png" alt="Multi Stone Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Multi Stone Rings
+                                </div>
+                                <div class="product-description">
+                                    Why stick to classic solitaires when you can have a stunning multi-stone ring in a
+                                    unique arrangement?
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small"
+                                        href="{{ asset('product-category/engagement-rings/multi-stone') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop from the Best end here -->
+
+
+    <!-- whay choose marlows start here -->
+    <div class="whychoose-marlows">
+        <div class="container">
+            <div class="whychoose-wraper">
+                <div class="head-para-three">
+                    <div class="heading-h-three">
+                        Why Choose Marlow’s Diamonds?
+                    </div>
+                    <p>For over three generations, we’ve been helping countless happy couples express love and commitment and we believe in quality and commitment as much as you do..</p>
+                    <p class="second-para">Our diamonds and gemstones are better value than any like-for-like comparison with any other UK jeweller. Our fancy shape diamonds like ovals, marquises, emeralds cuts, and cushion shapes are polished to the highest standards. We guarantee most of our diamonds visually appear larger than their carat weight. Our polishers create each diamond to maximize its proportions and not its carat weight, hence our 1ct will look like anyone else's 1.25ct. Come into any of our stores to learn more about the way we choose our rough diamonds so that the polished end product gets the best yield to maximise visual sparkle and appearance. This ensures you get the best visual appearance and sparkle for your budget. As we cannot be beaten on price, if you have seen something elsewhere, just send us a link and we will beat the price if cost is your deciding factor.</p>
+                    <video id="video" poster="/storage/HomePageVideos/homeopagevideo.png" controls muted>
+                        <source src="{{ asset('/storage/HomePageVideos/homeopagevideo.mp4') }}" />
+                    </video>
+                    {{-- <script>
+                    $(window).scroll(function(e)
+                      {
+                        var offsetRange = $(window).height() / 3,
+                            offsetTop = $(window).scrollTop() + offsetRange + $(".header-main").outerHeight(true),
+                            offsetBottom = offsetTop + offsetRange;
+                    
+                        $("#video").each(function () { 
+                          var y1 = $(this).offset().top;
+                          var y2 = offsetTop;
+                          if (y1 + $(this).outerHeight(true) < y2 || y1 > offsetBottom) {
+                            this.pause(); 
+                          } else {
+                          this.play(); 
+                          }
+                        });
+                    });
+                    </script> --}}
+                </div>
+                <div class="rating-img">
+                    <img src="assets/images/top2.png" alt="rating star">
+                </div>
+                <div class="whychoose-rows flex-flex-wrap flexed">
+                    <div class="whychoose-col">
+                        <div class="whychoose-col-inner">
+                            <div class="whychoose-col-img">
+                                <img src="assets/images/warranty.png" alt="Lifetime Warranty">
+                            </div>
+                            <div class="whychoose-col-text">
+                                Lifetime Warranty T&c Apply
+                            </div>
+                        </div>
+                    </div>
+                    <div class="whychoose-col">
+                        <div class="whychoose-col-inner">
+                            <div class="whychoose-col-img">
+                                <img src="assets/images/diamond.png" alt="GIA Certified Diamonds">
+                            </div>
+                            <div class="whychoose-col-text">
+                                GIA Certified Diamonds
+                            </div>
+                        </div>
+                    </div>
+                    <div class="whychoose-col">
+                        <div class="whychoose-col-inner">
+                            <div class="whychoose-col-img">
+                                <img src="assets/images/favourite.png" alt="70 Years Experience">
+                            </div>
+                            <div class="whychoose-col-text">
+                                70 Years Experience
+                            </div>
+                        </div>
+                    </div>
+                    <div class="whychoose-col">
+                        <div class="whychoose-col-inner">
+                            <div class="whychoose-col-img">
+                                <img src="assets/images/exchange.png" alt="FREE 30 Day Returns">
+                            </div>
+                            <div class="whychoose-col-text">
+                                FREE 30 Day Returns. T&c Apply
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- whay choose marlows end here -->
+
+
+    <!-- Marlow's start here -->
+   <!-- <div class="marlows-diamond">
+        <div class="container">
+            <div class="marlows-diamond-title heading-h-two">
+                Marlow's Diamonds: Inspiring a Generation of Love.
+            </div>
+        </div>
+
+    </div>-->
+
+
+    <!-- Marlow's End here -->
+
+
+    <!-- Best Selling Marlow's Diamond Jewellery start here -->
+    @include('front.includes.featuredproduct')
+    <!-- Best Selling Marlow's Diamond Jewellery end here -->
+
+
+    <!--Shop from Marlow’s GIA Certified Diamond Rings start -->
+    <div class="shopfrom-block">
+        <div class="container">
+            <div class="head-para-three">
+                <h3 class="heading-h-three">
+                    Shop from Marlow’s GIA Certified Diamond Rings
+                </h3>
+                <p>Diamond rings are more than just jewellery. We understand the symbolism that they represent. So that they
+                    can withstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality
+                    and longevity.</p>
+                <div class="explore-btn">
+                    <a class="btn-bg-small" href="/product-category/engagement-rings">EXPLORE ENGAGEMENT RINGS</a>
+                </div>
+            </div>
+            <div class="rating-img">
+                <img src="assets/images/top3.png" alt="rating star">
+            </div>
+
+            <div class="rating-review-block">
+                <div class="owl-carousel owl-theme slider-review">
+                    @include('front.pages.reviews')
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Shop from Marlow’s GIA Certified Diamond Rings end -->
+    {!! isset($data->description) ? $data->description : '' !!}
+    <!-- Join our mailing list section start -->
+    <div class="joinour-mailing">
+        <div class="container">
+            <div class="joinour-wraper">
+                <div class="joinour-heading">
+                    <div class="heading-h-two white-text">
+                        Join our mailing list
+                    </div>
+                    <p>Join our world full of diamonds and we’ll sparkle your inbox by keeping you up-to-date.</p>
+                </div>
+                <div class="joinour-mailing-form">
+                    <form id="contactForm">
+                        @csrf
+                        <div class="form-rows flexed flex-flex-wrap">
+                            <input type="hidden" name="custom_url" id="custom_url" value="{{ url()->full() }}">
+                            <div class="form-col width-50">
+                                <label>Your Name<sup>*</sup></label>
+                                <input required="required"
+                                    class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text"
+                                    name="title" placeholder="Your Name">
+                                <!-- Error -->
+                                @if ($errors->has('title'))
+                                    <div class="error">
+                                        {{ $errors->first('title') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-col width-50">
+                                <label>Email<sup>*</sup></label>
+                                <input required="required"
+                                    class="input-control {{ $errors->has('email') ? 'error' : '' }}" type="text"
+                                    name="email" placeholder="Email Address">
+                                @if ($errors->has('email'))
+                                    <div class="error">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-rows flexed flex-flex-wrap">
+                            <div class="form-col">
+                                <label>Message</label>
+                                <textarea required="required" name="description"
+                                    class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
+                            </div>
+                        </div>
+                        <div class="google-capatcha form-controls">
+                            <div class="g-recaptcha"
+                                data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
+                            </div>
+                            @if ($errors->has('g-recaptcha-response'))
+                                <div class="error">
+                                    {{ $errors->first('g-recaptcha-response') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="action-btn">
+                            <button class="white-bg-btn" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+                @if (Session::has('success'))
+                    <div class="alert alert-success">
+                        {{ Session::get('success') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <!-- Join our mailing list section End -->
+    @include('front.includes.instagram-section')
+    @include('front.includes.location_section')
+
+    <!-- insta photos section end -->
+    @php
+        $getPopups = getPromotionalPOPup();
+    @endphp
+    @if(isset($getPopups) && !empty($getPopups))
+        <!-- Modal -->
+        <div class="modal fade" id="showPromotionPopup" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ isset($getPopups->title)?$getPopups->title:'' }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12">
+                            {!! isset($getPopups->description)?$getPopups->description:'' !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+@endsection
+@section('js')
+<script src='https://www.google.com/recaptcha/api.js' async></script>
+<script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN', {
+            action: 'contact'
+        }).then(function(token) {
+            if (token) {
+                document.getElementById('recaptcha').value = token;
+            }
+        });
+    });
+
+    $(document).ready(function(){
+        $('#showPromotionPopup').modal('show');
+    });
+
+
+    function blankForm() {
+        $('input[name="title"]').val('');
+        $('input[name="email"]').val('');
+        $('textarea[name="description"]').val('');
+        $("button[type='submit']").prop('disabled', false);
+        grecaptcha.reset();
+    }
+
+    $('form#contactForm').validate({
+        rules: {
+            title: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            description: {
+                required: true,
+            }
+        },
+        messages: {
+            title: {
+                required: 'Name is required',
+            },
+            email: {
+                required: 'Email is required',
+                email: 'Valid email is required',
+            },
+            description: {
+                required: 'Description is required',
+            }
+        },
+        submitHandler: function(form) {
+            if (grecaptcha.getResponse()) {
+                var form_data = new FormData(form);
+                $(form).find("button[type='submit']").prop('disabled', true);
+                $("button[type='submit']").text("Please Wait...");
+                $.ajax({
+                    url: "{{ route('maillist') }}",
+                    method: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    success: function(response) {
+                        blankForm();
+                        $("button[type='submit']").text("Subscribe");
+                        // $(this).find("button[type='submit']").prop('disabled',true);
+                        // console.log(response);
+                        // return false;
+                        if (response.status == 200) {
+                            toastr.success(response.success);
+                            // window.location.reload();
+                        } else {
+                            toastr.info(response.error);
+                        }
+                    }
+                });
+            } else {
+                alert('Please confirm captcha to proceed')
+            }
+
+        }
+    });
+</script>
+@endsection

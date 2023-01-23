@@ -1,5 +1,15 @@
 @inject('header_settings', 'App\Models\Settings')
-
+<style>
+    .discount_timer{
+        font-weight: 800;
+        letter-spacing: 2px;
+        display: none;
+    }
+    .post-bar-center{
+        width: 38.33%;
+        font-weight: 800;
+    }
+</style>
 <!-- Header Start here -->
 <header class="header-main">
     <!-- Mobile Top Start here -->
@@ -7,7 +17,7 @@
         <div class="container">
             <div class="owl-carousel owl-theme mobil-bar">
                 <div class="item">
-                    <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=+447535425059"><i class="fa fa-whatsapp" aria-hidden="true"></i>{{WHATSAPP_TITLE}}: {!!$header_settings->get_options('field1')!!}</a>
+                    <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447535425059"><i class="fa fa-whatsapp" aria-hidden="true"></i>{{WHATSAPP_TITLE}}: {!!$header_settings->get_options('field1')!!}</a>
                 </div>
                 <div class="item">
                     <div class="addr-number">
@@ -39,7 +49,7 @@
             <div class="middle-topbar-wrap flexed flex-justify-between">
                 <div class="middle-topbar-left">
                     <div class="whatsapp-top-h">
-                        <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=+447535425059">
+                        <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447535425059">
                             <i class="fa fa-whatsapp" aria-hidden="true"></i> {{WHATSAPP_TITLE}} {{$header_settings->get_options('whatsapp')}}
                         </a>
                     </div>
@@ -150,7 +160,7 @@
                     </div>
                     <div class="mobile-cart">
                         <a href="{{ route('product.cart') }}">
-                            <img src="/assets/images/cart-color-black.png" alt="cart">
+                            <img src="{{asset('')}}/assets/images/cart-color-black.png" alt="cart">
                             <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
                         <span class="mob-cart-number cartcount">{{ count((array) session('cart')) }}</span>
                         </a>
@@ -186,9 +196,9 @@
                                 @foreach($navbars as $navbarItem)
                                     <li class="level-zero submenu {{$navbarItem['class_level']}}">
                                         <span>
-                                        <a href="{{url($navbarItem['href'])}}">{{$navbarItem['text']}}
-
-                                        </a>
+                                            <a href="{{url($navbarItem['href'])}}">
+                                                {!! $navbarItem['text'] !!}
+                                            </a>
                                         @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
                                             <i class="fa fa-angle-down {{$navbarItem['class_level']}}" aria-hidden="true"></i>
                                         @endif
@@ -245,14 +255,24 @@
 
     <div class="post-bar">
         <div class="container">
-            <div class="post-bar-wraper flexed flex-justify-between flex-items-center">
-                <div class="post-bar-left">
+            <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
+                <div class="post-bar-left header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
                 </div>
-                <div class="post-bar-center">
-                    {!!$header_settings->get_options('header-center')!!}
+                <div class="post-bar-center" style="height: 40px;">
+                    {{-- <a href="{{ route('products.exclusive') }}" >
+                        <span> Exclusive to Marlows </span>
+                    </a> --}}
+                    {{-- <p> The Marlow's Black Friday Sale is here. Up to  </p> --}} 
+                    <p>
+                        
+                        {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}
+                        <span class="header-heighlight-text discount_timer"></span>
+                        <br>
+                        Upto 30% off - In time for Valentine
+                    </p>
                 </div>
-                <div class="post-bar-right">
+                <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
                 </div>
             </div>
@@ -262,3 +282,40 @@
 
 </header>
 <!-- Header end here -->
+
+
+<script>
+
+        var countDownDate = new Date("01/31/2023 23:59:59").getTime();
+        var myfunc = setInterval(function() {
+
+        var now = new Date().getTime();
+        var timeleft = countDownDate - now;
+            
+        // Calculating the days, hours, minutes and seconds left
+        var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+            
+        // Result is output to the specific element
+        const daysToShow = days + "d "
+        const hoursToShow = hours + "h " 
+        const minutesToShow = minutes + "m " 
+        const secondsToShow = seconds + "s " 
+
+        const timerToShow = daysToShow+' '+ hoursToShow+' '+ minutesToShow+' '+ secondsToShow;
+        $(".discount_timer").css('display','inline-block');
+        $(".discount_timer").text(timerToShow);
+        // console.log('first', hoursToShow);
+        // console.log('first', minutesToShow);
+        // console.log('first', secondsToShow);
+            
+        // Display the message when countdown is over
+        if (timeleft < 0) {
+            clearInterval(myfunc);
+            $(".discount_timer").text('');
+            $(".discount_timer").css('display','none');
+        }
+        }, 1000);
+</script>

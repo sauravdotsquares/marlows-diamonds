@@ -93,10 +93,7 @@
                               <div class="form-group">
                                  <div class="form-label-group">
                                     <label for="categories">Categories</label>
-                                    <select name="categories[]" id="categories" class="select2 select2-hidden-accessible"
-                                       multiple="" data-dropdown-css-class="select2-purple" style="width: 100%;"
-                                       data-select2-id="7" tabindex="-1" aria-hidden="true">
-
+                                    <select name="categories[]" id="categories" class="select2 select2-hidden-accessible"  multiple="" data-dropdown-css-class="select2-purple" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true">
                                     </select>
                                  </div>
                               </div>
@@ -504,12 +501,8 @@
 
    $(function () {
       // Summernote
-      $('#short_description').summernote({
-         height: 100,
-      })
-      $('#description').summernote({
-         height: 200,
-      })
+      $('#short_description').summernote({ height: 100 })
+      $('#description').summernote({ height: 200 })
 
    });
 
@@ -537,6 +530,7 @@
       return false;
    });
    getAttribute();
+
    function getAttribute() {
       $.ajax({
          type: 'POST',
@@ -636,7 +630,7 @@
 
       $(document).on('click','#add_item',function () {
          var button = $('#item_details').clone(true);
-         var attr_key = $( ".attr_section:last-child" ).data( "attr-key" );
+         var attr_key = $( ".attr_section:last-child" ).data("attr-key");
          attr_key++;
          var is_update = 'is_update';
          button.find('input').val('');

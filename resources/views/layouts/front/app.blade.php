@@ -1,54 +1,40 @@
 @inject('header_settings', 'App\Models\Settings')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name = "viewport" content = "width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no">
     <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
+    @include('layouts.front.seo_header')
 
-    <link rel="canonical" href="{{url()->current()}}" />
-
-    <meta property="og:locale" content="en_GB" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="{!! isset($data->meta_title)?$data->meta_title:'' !!}" />
-    <meta property="og:description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
-    <meta property="og:url" content="{{url()->current()}}" />
-    <meta property="og:site_name" content="{!! config('app.name') !!}" />
-    <meta property="og:image" content="" />
-    <meta property="og:image:width" content="120" />
-    <meta property="og:image:height" content="120" />
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@marlowsdiamonds" />
-	<link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
-	<link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
+	  <link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
+	  <link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/custom.css?').env('VERSION') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/responsive.css?').env('VERSION') }}" rel="stylesheet">
-
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/developer.css?').env('VERSION') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">
 
     @yield('css')
 
+    <script>
+      var systemBaseUrl = '<?php echo url("/"); ?>/';
+    </script>
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
     <style>
-      [ng-cloak]
-      {
-        display: none !important;
-      }
+      [ng-cloak] {  display: none !important; }
     </style>
-   
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1365164-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'UA-1365164-1');
     </script>
     
@@ -60,11 +46,6 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WBT3LKH');</script>
     <!-- End Google Tag Manager -->
-    
-    
-   
-    
-
 
 </head>
 <body ng-app="MarlowsAPP">
@@ -87,19 +68,42 @@
 
     @include('layouts.front.footer')
 
+
+    <script>
+      const mapMarker = '{{ asset("images/map_marker.png") }}';
+    </script>
+
 <script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.js"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
-<script src="{{ asset('assets/js/custom.js?').env('VERSION') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
+{{-- .env('VERSION') --}}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU" defer ></script>
+
+
 @yield('js')
 <script>
+
+
+
   $(document).ready(function(){
+    
       $('.show-more-content').hide();
       $('.show-more').click(function(){
-          $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
+
+        const element = $(this).parents('.reviewr-review-text');
+        if(element.hasClass('show-text-col')){
+          $(this).text('Read more');
+          element.removeClass('show-text-col');
+        }else{
+          $(this).text('Read less');
+          element.addClass('show-text-col');
+        }
+
+        // $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
       });
 
     // Zopim zendesk Chat JS function Call start
@@ -164,9 +168,9 @@ $(document).ready(function(){
 <script>
   if($(window).innerWidth() <= 767) {
     $(document).ready(function() {
-      $('.accordian-toggle').click(function() {
-      $(this).parents('.column-one-fifth').toggleClass('show-collapse');
-          });
+        $('.accordian-toggle').click(function() {
+          $(this).parents('.column-one-fifth').toggleClass('show-collapse');
+        });
       });
   }
 </script>

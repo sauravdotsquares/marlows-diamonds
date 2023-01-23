@@ -35,7 +35,7 @@ class FooterSettingsTableSeeder extends Seeder
 	        ]);
 		Settings::create([
 	            'option_name' => 'resources',
-	            'option_value' => '<ul><li><a href="/covid-19-policy/">COVID-19 Policy</a></li><li><a href="/visit-us/">Locations</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/certificates-explained/">Certificates Explained</a></li><li><a href="/finance-options/">Finance</a></li><li><a href="/blog-resources/">Blog</a></li></ul>',
+	            'option_value' => '<ul><li><a href="/covid-19-policy/">COVID-19 Policy</a></li><li><a href="/visit-us/">Locations</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/certificates-explained/">Certificates Explained</a></li><li><a href="/finance-options/">Finance</a></li><li><a href="/blog/">Blog</a></li></ul>', // Change after SEO discuss 05Jan2023 seo_change
 	        ]);	
 		Settings::create([
 			'option_name' => 'footer_sec4-title',

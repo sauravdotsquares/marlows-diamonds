@@ -44,6 +44,7 @@
                                 <h3 class="card-title">Add Discount</h3>
                             </div>
                             <div class="card-body">
+                                
                                 <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="category_id">Choose Category</label>
@@ -56,24 +57,48 @@
                                         </select>
                                     </div>
                                 </div>
+                                
+
+                                <div class="form-group">
+                                    <div class="form-label-group">
+                                        <label for="diamond_type">Diamond type</label>
+                                        <select class="form-control" name="diamond_type" id="diamond_type">
+                                            <option value="" selected>Select diamond type</option>
+                                            <option value="mined"  {{ !empty($getDiscountData) && $getDiscountData->diamond_type=="mined" ? 'selected' : '' }}  >Mined</option>
+                                            <option value="lab_grown" {{ !empty($getDiscountData) && $getDiscountData->diamond_type=="lab_grown" ? 'selected' : '' }}>Lab grown</option>
+                                        </select>
+                                        {{-- <input type="text" id="discount" name="discount" class="form-control" placeholder="Discount" value="{{isset($getDiscountData->discount)?$getDiscountData->discount:''}}"> --}}
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="discount">Discount(%)</label>
                                         <input type="text" id="discount" name="discount" class="form-control" placeholder="Discount" value="{{isset($getDiscountData->discount)?$getDiscountData->discount:''}}">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="inc_percentage">Increase(%)</label>
                                         <input type="text" id="inc_percentage" name="inc_percentage" class="form-control" placeholder="Increase" value="{{isset($getDiscountData->inc_percentage)?$getDiscountData->inc_percentage:''}}">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="title">End Date</label>
                                         <input type="date" id="end_date" name="end_date" class="form-control" placeholder="End Date" value="{{isset($getDiscountData->end_date)?$getDiscountData->end_date:''}}">
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input name="is_login_users" class="custom-control-input custom-control-input-success custom-control-input-outline" type="checkbox" id="is_login_users" {{  empty($getDiscountData->is_login_users)  ? '' : 'checked' }}>
+                                        <label for="is_login_users" class="custom-control-label">Is this discount is applicable for login users only</label>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="card card-primary">

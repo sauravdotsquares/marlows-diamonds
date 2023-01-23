@@ -3,7 +3,7 @@
 
         <li class="level-one {{$sub['class_level']}}">
 			<span>
-        	<a href="{{url($sub['href'])}}">{{$sub['text']}}
+        		<a href="{{url($sub['href'])}}">{!!$sub['text']!!}
         		
         	</a>
 			@if(isset($sub['children']) && count($sub['children']) > 0)
