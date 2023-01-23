@@ -19,6 +19,10 @@ use App\Models\Masters;
 use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\UrlRedirects;
+use App\Models\SitemapUrls;
+use App\Models\Posts;
+use App\Models\PostCategory;
+use App\Models\Pages;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -39,7 +43,11 @@ class ProductController extends Controller
             // echo "cat2";
             $getCatId = Category::where('slug', $cat2)->first();
         } elseif ($cat1 != null) {
-            // echo "cat1<pre>";
+
+            $to404 = ['all-products'];
+            if(in_array($cat1, $to404)){
+                return view('layouts.errors.404');    
+            }
             $getCatId = Category::where('slug', $cat1)->first();
         } else {
             return view('layouts.errors.404');
@@ -74,7 +82,8 @@ class ProductController extends Controller
                 /** If data not found with existing slug then check in redirections table and redirect */
                 $redirectTo = UrlRedirects::where('old_url', $productSlug)->where(['type'=>'product','is_active'=>1, 'is_deleted'=>0])->first();
                 if(!empty($redirectTo) && !empty($redirectTo->new_url)){
-                    return redirect()->route('product.details', $redirectTo->new_url);
+                    $redirectTo = route('product.details', $redirectTo->new_url);
+                    return redirect($redirectTo, 301);
                 }
             }
 
@@ -850,6 +859,8 @@ class ProductController extends Controller
 
             $prod_categories = explode(',', $getProduct->categories);
 
+            // prd($prod_categories);
+
             if (in_array("18", $prod_categories)) {
                 $prod_categories = ['18'];
                 $checkPlanCatArray = Category::whereIn('id', $prod_categories)->first()->toArray();
@@ -857,10 +868,15 @@ class ProductController extends Controller
                 $checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
             }
 
+            // prd($checkPlanCatArray);
+
             $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date','is_login_users')
                             ->where('category_id', $checkPlanCatArray['id'])
                             ->where('status', 1)
                             ->first();
+
+            // echo 'asdf';
+            // prd($disPercentage);
 
             $getProductVariationId = ProductVariations::where('product_id', $product_id)
                                     ->pluck('id')
@@ -923,7 +939,7 @@ class ProductController extends Controller
                 
                 $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
 
-
+                // prd($disPercentage);
                 if (isset($disPercentage) && !empty($disPercentage)) {
                     $disPercentage = $disPercentage->toArray();
 
@@ -1048,34 +1064,94 @@ class ProductController extends Controller
          */
         // echo "Im here";
 
-        $productSlugs = Products::select(['slug','id','old_slug'])->get();
-        $fileName = date('d-m-Y') .'-product-new-urls.csv';
-        $headers = array(
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        );
+
+        // %2Fblog-resources%2Fpage%2F9
+        // $data = UrlRedirects::where(['type'=>'other', 'is_active'=>1 ])->get();
+        // foreach ($data as $key => $value) {
+        //     // $data
+        //     $value->old_url = urlencode($value->old_url);
+        //     $value->new_url = urlencode($value->new_url);
+        //     $value->is_active = 0;
+        //     $value->save();
+        // }
+        // echo $data->count();
+
+        // SitemapUrls::generateXml();
+
+        /** Import all redirect urls */
+        // $filePath = public_path('exports/redirects.csv');
+        // $file = fopen($filePath, "r");
+        // $totalRecordsAdded = 0;
         
-        $columns = array('id', 'Current url', 'Old url');
-        $baseUrl = "https://marlows-diamonds.co.uk/product/";
-        $callback = function() use($productSlugs, $columns, $baseUrl) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
+        // try {
+        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+        //         $old =  $getData[0];
+        //         $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
+    
+        //         $data = UrlRedirects::where(['old_url'=>urlencode($old), 'is_deleted'=>0])->first();
+        //         if(empty($data)){
+        //             $newRedirect = new UrlRedirects();
+        //             $newRedirect->old_url = urlencode($old);
+        //             $newRedirect->new_url = urlencode($new);
+        //             $newRedirect->type = "other";
+        //             $newRedirect->save();
+        //             $totalRecordsAdded++;
+        //         }
+                
+        //     }
+        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        // } catch (\Exception $th) {
+        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        // }
 
-            foreach ($productSlugs as $key => $value) {
-                $row['id']  = $value->id;
-                $row['product']  = $baseUrl . $value->slug;
-                $row['old_url']  = $baseUrl . $value->old_slug;
-                fputcsv($file, array($row['id'],$row['product'], $row['old_url']));
-            }
-            fclose($file);
-        };
+        // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+        //     $old =  $getData[0];
+        //     $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
 
-        return response()->stream($callback, 200, $headers);
+        //     $data = UrlRedirects::where(['old_url'=> $old, 'is_deleted'=>0])->first();
+        //     if(empty($data)){
+        //         $newRedirect = new UrlRedirects();
+        //         $newRedirect->old_url = urlencode($old);
+        //         $newRedirect->new_url = urlencode($new);
+        //         $newRedirect->type = "other";
+        //         $newRedirect->save();
+        //         $totalRecordsAdded++;
+        //     }
+            
+        // }
+        // echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
 
-        prd($productSlugs);
+        // prd($totalRecords);
+
+        /** Export all products urls */
+        // $productSlugs = Products::select(['slug','id','old_slug'])->get();
+        // $fileName = date('d-m-Y') .'-product-new-urls.csv';
+        // $headers = array(
+        //     "Content-type"        => "text/csv",
+        //     "Content-Disposition" => "attachment; filename=$fileName",
+        //     "Pragma"              => "no-cache",
+        //     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        //     "Expires"             => "0"
+        // );
+        
+        // $columns = array('id', 'Current url', 'Old url');
+        // $baseUrl = "https://marlows-diamonds.co.uk/product/";
+        // $callback = function() use($productSlugs, $columns, $baseUrl) {
+        //     $file = fopen('php://output', 'w');
+        //     fputcsv($file, $columns);
+
+        //     foreach ($productSlugs as $key => $value) {
+        //         $row['id']  = $value->id;
+        //         $row['product']  = $baseUrl . $value->slug;
+        //         $row['old_url']  = $baseUrl . $value->old_slug;
+        //         fputcsv($file, array($row['id'],$row['product'], $row['old_url']));
+        //     }
+        //     fclose($file);
+        // };
+
+        // return response()->stream($callback, 200, $headers);
+
+        // prd($productSlugs);
 
         // $productSlugs = Products::pluck('old_slug','id')->toArray();
         // $affectedRows = 0;
@@ -1105,29 +1181,225 @@ class ProductController extends Controller
         // prd($dataToRevert);
 
 
-        // $affectedRows = 0;
+        $productSlugs = [
+            "wed002" => "D Shaped Wedding Band | Wed002",
+            "wed004" => "Court Shape Wedding Band | Wed004",
+            "wed005" => "Rounded Inner Flatter Style Wedding Band | Wed005",
+            "wed006" => "Rounded Inner Flatter Style Wedding Band | Wed006",
+            "wed007" => "Chunky Wedding Bands | Wed007",
+            "wed010" => "Court Shape Wedding Ring | Wed010",
+            "wed021" => "Court Shape Wedding Ring | Wed021",
+            "wed022" => "D Shaped Wedding Band | Wed022",
+            "wed023" => "Modern 6mm Wedding Band | Wed023",
+            "wed026" => "Cut Out Diamond Wedding Band | Wed026",
+            "wed027" => "6mm Court Shaped Round Wedding Band | Wed027",
+            "wed028" => "5mm Flat Round Cut Diamond Wedding Band | Wed028",
+            "wed029" => "7mm Princess Cut Diamonds Wedding Band | Wed029",
+            "wed030" => "6mm Court Shaped Wedding Band | Wed030",
+        ];
+
+        $affectedRows = 0;
         // $productSlugs = Products::pluck('slug','id')->toArray();
-        // foreach ($productSlugs as $key => $value) {
-        //     $product_data = Products::where('id', $key)->first();
-        //     if(!empty($product_data)){
+        foreach ($productSlugs as $key => $value) {
+            $product_data = Products::where('slug', $key)->first();
+            if(!empty($product_data)){
 
-        //         /** generate and save new slug */
-        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
-        //         $old_slug = $product_data->slug;
-        //         $product_data->slug = $new_slug;
-        //         $product_data->old_slug = $old_slug;
-        //         $product_data->save();
+                $new_slug = generateSlugProductPurpose($value,Products::class, "slug",$product_data->id);
 
-        //         /** Save all old and new urls in redirections */
-        //         $new_redirect = new UrlRedirects();
-        //         $new_redirect->type = "product";
-        //         $new_redirect->old_url = $old_slug;
-        //         $new_redirect->new_url = $new_slug;
-        //         $new_redirect->save();
-        //         $affectedRows = $affectedRows + 1;
-        //     }
-        // }
-        // prd($affectedRows);
+                $product_data->slug = $new_slug;
+                $product_data->old_slug = $key;
+                $product_data->title = $value;
+                $product_data->save();
+
+                $url_data = UrlRedirects::where('old_url', $key)->first();
+                if(!empty($url_data)){
+                    $url_data->new_url = $new_slug;
+                    $url_data->save();
+                }else{
+                    $new_redirect = new UrlRedirects();
+                    $new_redirect->type = "product";
+                    $new_redirect->old_url = $key;
+                    $new_redirect->new_url = $new_slug;
+                    $new_redirect->save();
+                }
+                $affectedRows = $affectedRows + 1;
+            }
+        }
+        prd($affectedRows);
+    }
+
+
+    public function multiCategoryProductsList(Request $request){
+
+        // echo ;die;
+        $pageNo = !empty($request['page']) ? $request['page'] : 1;
+
+        $categoryIds = [
+            1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54
+        ];
+    
+        $query = Products::with('getProductImages')->where('status',1);
+        
+
+        $category_custom_query = "";
+        foreach ($categoryIds as $cat_key => $cat_value) {
+            if(!$cat_key){  $category_custom_query .= '( '; }
+            $category_custom_query .= " find_in_set('".$cat_value."',categories)";
+            if($cat_key+1 != count($categoryIds)){ $category_custom_query .= " OR "; }
+            else{ $category_custom_query .= ' ) '; }
+        }
+
+        $getProductListFinal = $query->whereRaw(DB::raw($category_custom_query))->paginate(16,['*'],'page',$pageNo);
+
+        $productItems = "";
+        if($getProductListFinal->count()){
+            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+        }
+        $nextPage = $pageNo+1;
+        $token = csrf_token();
+        if($request->ajax()){
+            return response()->json([
+                'status' => $getProductListFinal->count() ? true : false,
+                'html' => $productItems,
+                'nextPage' => $nextPage,
+                'token' => $token
+            ]);
+        }
+
+        return view('front.pages.multi-category-product-listing', compact(['productItems','nextPage']));
+    }
+
+
+    public function generateSitemap(Request $request){
+        
+        // ->where('status',1)
+        // ->where('status',1)
+        $products = Products::select('slug','updated_at')->groupBy('slug')->get();
+        $posts = Posts::select('slug','updated_at')->groupBy('slug')->get();
+        $posts_categories = PostCategory::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
+        $pages = Pages::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
+        
+        $otherPages = [
+            'product/wishlist',
+            '/',
+            'my-account',
+            'products/cart',
+            'products/wishlist',
+            '/users/forget-password',
+        ];
+
+        $categorySitemap = $this->categoriesSitemap();
+        $dataOfCategories = explode(',', $categorySitemap);
+        $categoryUrlsList = [];
+        foreach ($dataOfCategories as $category_key => $category_value) {
+            if(!empty($category_value)){
+                $categoryItem = explode('@',$category_value);
+                $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
+                $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') . '/product-category/' . $categoryUrl;
+                $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
+            }
+        }
+
+        return response()->view('front.sitemap', [
+            'products' => $products,
+            'posts' => $posts,
+            'posts_categories' => $posts_categories,
+            'pages' => $pages,
+            'otherPages' => $otherPages,
+            'categoryUrlsList' => $categoryUrlsList
+        ])->header('Content-Type', 'text/xml');
+        
+    }
+
+
+    public function categoriesSitemap($level=0, $prefix="" ){
+        
+        $rows = Category::select(['name','title','id','parent_id','slug','updated_at'])
+        ->where('slug','!=','all-products')
+        ->where('parent_id',$level)->get();
+        $html = '';
+        if($rows->count()){
+            $rows = $rows->toArray();
+            foreach ($rows as $row) {
+                $html .= $row['slug'] . '@' . $row['updated_at'] . ',';
+                $html .= $this->categoriesSitemap($row['id']);
+            }
+        }
+        return $html;
+    }
+
+    public function categoriesHtmlSitemap($level=0, $prefix="" ){
+        
+        $rows = Category::select(['name','title','id','parent_id','slug','updated_at'])
+        ->where('slug','!=','all-products')
+        ->where('parent_id',$level)->get();
+        $html = '';
+        if($rows->count()){
+            $rows = $rows->toArray();
+            foreach ($rows as $row) {
+                $html .= $row['slug'] . '@' . $row['title'] . ',';
+                $html .= $this->categoriesHtmlSitemap($row['id']);
+            }
+        }
+        return $html;
+    }
+
+
+    public function attachParentSlugToCategory($categorySlugs="", $dataToReturn=""){
+
+        $dataToReturn = $categorySlugs . '/' . $dataToReturn;
+        $categoryInfo = Category::where('slug', $categorySlugs )->first();
+        
+        if(!empty($categoryInfo)){
+            $data = Category::where('id', $categoryInfo->parent_id )->first();
+            if(!empty($data)){
+                return $this->attachParentSlugToCategory($data->slug,  $dataToReturn );
+            }   
+        }
+        return $dataToReturn;
+    }
+
+
+    public function htmlSiteMap(Request $request){
+        
+        // ->where('status',1)
+        // ->where('status',1)
+        $products = Products::select('slug','updated_at','title')->groupBy('slug')->get();
+        $posts = Posts::select('slug','updated_at','title')->groupBy('slug')->get();
+        $posts_categories = PostCategory::select('slug','updated_at','name')->groupBy('slug')->where('status',1)->get();
+        $pages = Pages::select('slug','updated_at','title')->groupBy('slug')->where('status',1)->get();
+        
+        $otherPages = [
+            'Wishlist'=> 'product/wishlist',
+            'Homepage'=>'/',
+            'My Account'=> 'my-account',
+            'Cart'=>'products/cart',
+            'Forgot password'=> '/users/forget-password',
+        ];
+
+        $categorySitemap = $this->categoriesHtmlSitemap();
+        $dataOfCategories = explode(',', $categorySitemap);
+        $categoryUrlsList = [];
+        foreach ($dataOfCategories as $category_key => $category_value) {
+            if(!empty($category_value)){
+                $categoryItem = explode('@',$category_value);
+                $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
+                $categoryUrlsList[$category_key]['url'] = url( 'product-category/' . $categoryUrl);
+                $categoryUrlsList[$category_key]['name'] = $categoryItem[1];
+            }
+        }
+
+        $data =  (object)['image'=>''];
+
+        return view('front.html_sitemap', compact([
+            'products',
+            'posts',
+            'pages',
+            'otherPages',
+            'posts_categories',
+            'categoryUrlsList',
+            'data'
+        ]));
     }
 
 }

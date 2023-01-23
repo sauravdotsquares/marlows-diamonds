@@ -1,3 +1,12 @@
+<?php
+    use App\Models\SitemapUrls;
+    SitemapUrls::deleteRecordByUrl(request()->path());
+    $pageRedirect = pageRedirects(request()->path());
+    if($pageRedirect){
+        header("Location: $pageRedirect", true, 301);
+        exit();
+    }
+?>
 @extends('layouts.front.error_page')
 @section('content')
 @section('css')
@@ -9,6 +18,14 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
 @endsection
 
+    <?php
+        // SitemapUrls::deleteRecordByUrl(request()->path());
+        // $pageRedirect = pageRedirects(request()->path());
+        // if($pageRedirect){
+        //     header("Location: $pageRedirect", true, 301);
+        //     exit();
+        // }
+    ?>
     <!-- Not found data -->
     <div class="home-main-banner">
         <div class="main-banner-wraper">

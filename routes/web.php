@@ -202,7 +202,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::get('xmlpage','XMLController@XMLFunction')->name('xml-page');
 
 		/* Sitemap Route*/
-		Route::get('/sitemap', 'SitemapController@sitemapFunction')->name('sitemap');
+		// Route::get('/sitemap', 'SitemapController@sitemapFunction')->name('sitemap');
 
 		Route::group(['as' => 'masters.', 'prefix' => 'masters' ], function () {
 			Route::any('/{type}', 'MastersController@index')->name('index');
@@ -294,7 +294,7 @@ Route::group(['middleware' => ['customer']], function () {
 });
 
 // ->middleware(['SiteMapSaver'])
-Route::namespace('Front')->group(function () {
+Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 
     Route::get('/', 'PageController@page')->name('home');
 
@@ -303,15 +303,29 @@ Route::namespace('Front')->group(function () {
 	Route::get('/blog/category/{slug}', 'PageController@blogList')->name('blog_list');
 	Route::get('product/{slug?}','ProductController@productDetails')->name('product.details');
 
+	/** generate sitemap */
+	Route::get('sitemap.xml', 'ProductController@generateSitemap')->name('sitemap');
+	Route::get('sitemap', 'ProductController@htmlSiteMap')->name('htmlSiteMap');
+
 	/** Route use to redirect blog-resources to blog */
 	Route::get('/blog-resources/{any?}',function(){
+		$redirectTo = pageRedirects(request()->path());
+		if(!empty($redirectTo)){
+			return redirect($redirectTo, 301);
+		}
 		$url = str_replace("blog-resources","blog",request()->path());
 		return redirect('/'. $url, 301);
 	})->where('any', '.*');
 
+	Route::any('diamonds-rings','ProductController@multiCategoryProductsList');
+	/** Change slugs of all products from previous to new one */
+
+	// Route::get('import-redirects','ProductController@productSlugs');
+	
+	// Route::get('product-slugs','ProductController@productSlugs');
 
 	/** Change slugs of all products from previous to new one */
-	Route::get('product-slugs','ProductController@productSlugs');
+	// Route::get('product-slugs-update','ProductController@productSlugs');
 
 	Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
     Route::get('/my-account', 'LoginController@index')->name('my-account');

@@ -1,5 +1,15 @@
 @inject('header_settings', 'App\Models\Settings')
-
+<style>
+    .discount_timer{
+        font-weight: 800;
+        letter-spacing: 2px;
+        display: none;
+    }
+    .post-bar-center{
+        width: 38.33%;
+        font-weight: 800;
+    }
+</style>
 <!-- Header Start here -->
 <header class="header-main">
     <!-- Mobile Top Start here -->
@@ -253,8 +263,14 @@
                     {{-- <a href="{{ route('products.exclusive') }}" >
                         <span> Exclusive to Marlows </span>
                     </a> --}}
-                    {{-- <p> The Marlow's Black Friday Sale is here. Up to  </p> --}}
-                    {{-- <p> <span class="header-heighlight-text">30%</span> Off throughout </p> --}}
+                    {{-- <p> The Marlow's Black Friday Sale is here. Up to  </p> --}} 
+                    <p>
+                        
+                        {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}
+                        <span class="header-heighlight-text discount_timer"></span>
+                        <br>
+                        Upto 30% off - In time for Valentine
+                    </p>
                 </div>
                 <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
@@ -266,3 +282,40 @@
 
 </header>
 <!-- Header end here -->
+
+
+<script>
+
+        var countDownDate = new Date("01/31/2023 23:59:59").getTime();
+        var myfunc = setInterval(function() {
+
+        var now = new Date().getTime();
+        var timeleft = countDownDate - now;
+            
+        // Calculating the days, hours, minutes and seconds left
+        var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+            
+        // Result is output to the specific element
+        const daysToShow = days + "d "
+        const hoursToShow = hours + "h " 
+        const minutesToShow = minutes + "m " 
+        const secondsToShow = seconds + "s " 
+
+        const timerToShow = daysToShow+' '+ hoursToShow+' '+ minutesToShow+' '+ secondsToShow;
+        $(".discount_timer").css('display','inline-block');
+        $(".discount_timer").text(timerToShow);
+        // console.log('first', hoursToShow);
+        // console.log('first', minutesToShow);
+        // console.log('first', secondsToShow);
+            
+        // Display the message when countdown is over
+        if (timeleft < 0) {
+            clearInterval(myfunc);
+            $(".discount_timer").text('');
+            $(".discount_timer").css('display','none');
+        }
+        }, 1000);
+</script>

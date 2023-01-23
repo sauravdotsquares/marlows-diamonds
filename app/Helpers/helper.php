@@ -25,6 +25,7 @@ use App\Models\ProductImages;
 use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
 use App\Models\ProductThumbVideos;
+use App\Models\UrlRedirects;
 
 
 //use SoapClient;
@@ -1115,6 +1116,18 @@ if (!function_exists('validate_breadcrumb')) {
         }
 
     }// endof file_get_url
+
+
+    function pageRedirects($path=""){
+        $path = $path[0] == '/' ? $path : '/' . $path;
+        $path = urlencode($path);
+
+        $dataToRedirect = UrlRedirects::where(['old_url'=> $path, 'is_deleted' => 0 ])->first();
+        if(!empty($dataToRedirect) && !empty($dataToRedirect->new_url) ){
+            return urldecode($dataToRedirect->new_url);
+        }
+        return null;
+    }
 
 }
 
