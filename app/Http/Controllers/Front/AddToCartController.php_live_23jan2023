@@ -30,53 +30,10 @@ class AddToCartController extends Controller
      */
     public function addToCart(Request $request)
     {
-        if(!empty($request['diamond_type']) && $request['diamond_type']=='lab_grown' && !empty($request->slug) ){
-            /** Add item in cart for lab grown */
-            $productData = Products::with('getProductImages','getProductVariation')->where('slug',$request->slug)->first();
-            if(!empty($productData)){
 
-                /** If product already exists then show exit message */
-                $cart = session()->get('cart', []);
-                if(isset($cart[$productData->id])) {
-                    return response()->json(['error'=>'This product is already exists in cart']);
-                }
-
-                $customArray = [];
-                foreach($request->all('') as $key => $value){
-                    $customArray[$key]=$value;
-                    if(isset($key) && $key == 'jsondata'){
-                        foreach($value as $key2 => $value2){
-                            $customArray[$key2]=$value2;
-                        }
-                    }
-                }
-                $customArray['Clarity'] = !empty($request['lab_grown_clarity']) ? $request['lab_grown_clarity'] : '';
-                $customArray['Color'] = !empty($request['lab_grown_colour']) ? $request['lab_grown_colour'] : '';
-                $customArray['Carat'] = !empty($request['lab_grown_carat']) ? $request['lab_grown_carat'] : '';
-                $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : '';
-                
-                unset($customArray['jsondata']);
-                unset($customArray['_token']);
-                unset($customArray['CertificateLink']);
-                unset($customArray['ImageLink']);
-                unset($customArray['CERT_NO']);
-                unset($customArray['Lab']);
-                
-                $cart[$productData->id] = [
-                    "name" => $productData->title,
-                    'customArray'=> $customArray,
-                    "quantity" => 1,
-                    "price" => $request['lab_grown_price'],
-                    "vat" => getVATPriceFunction($request['setting_price']),
-                    "image" => $productData->getProductImages->image_url
-                ];
-
-                session()->put('cart', $cart);
-                return response()->json(['cartcount'=>count((array) session('cart')),'success'=>'Product added to cart successfully!']);
-            }
-
-            
-        }
+        // echo "<pre>";
+        // print_r($request->all(''));
+        // die;
 
         if(isset($request['price']) && !empty($request['price'])){
 
@@ -108,6 +65,8 @@ class AddToCartController extends Controller
                 // $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'/'.'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
                 $selectedAttributes = [];
                 foreach($request->all('') as $key => $finalVal){
+                    // prefunc($key);
+
                     $selectedAttributes['title'] = $productData->title;
                     $selectedAttributes[$key] = $finalVal;
                     if($key == 'certificatelink'){
@@ -124,12 +83,13 @@ class AddToCartController extends Controller
                 $titleHtml .= ' </dl>';
 
                 $cart = session()->get('cart', []);
-                
+
+
+
                 if(isset($cart[$productData->id])) {
                     return response()->json(['error'=>'This product is already exists in cart']);
                     // $cart[$productData->id]['quantity']++;
                 } else {
-                    $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : '';
                     $cart[$productData->id] = [
                         "name" => $productData->title,
                         // "selected_parameter"=> $selectedAttributes,

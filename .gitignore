@@ -1,13 +1,8 @@
 /node_modules
 /live_backup
-/public/hot
-/public/storage
-/public/uploads
-/public/images
-/storage/*.key
-/storage/framework/cache
+/public
+/storage
 /vendor
-/public/
 .env
 .env.backup
 .phpunit.result.cache
