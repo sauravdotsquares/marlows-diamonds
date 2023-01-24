@@ -294,8 +294,8 @@
 						Reviews
 					</a>
 					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
-					<a class="store-locator" href="{{asset('visit-us')}}">Store Locator</a>
-					<a target="_blank" id="productCertificateLink" class="view-certificate" href="#">View Certificate</a>
+					<a class="store-locator store-locator-border-right" href="{{asset('visit-us')}}">Store Locator</a>
+					<a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a>
 				</div>
 				{{-- <div class="finance-available" ng-controller="DekopayController">
 					<a href="javascript:void(0)" ng-click="financeOptions()">
@@ -553,6 +553,15 @@
 	<script>
 
 		function changeDiamondType(classToPerform="") {
+
+			if(classToPerform == 'mined_item'){
+				$(".mined-certificate").removeAttr('style');
+				$(".store-locator-border-right").css('border-right','1px solid #B0B0B0')
+			}else{
+				$(".mined-certificate").css('display','none');
+				$(".store-locator-border-right").css('border-right','none')
+			}
+
 			$(".mined_lab_items").css('display','none');
 			$("." + classToPerform).css('display','flex');
 			$("." + classToPerform + "_block").css('display','block');
