@@ -554,8 +554,13 @@ class AppProductsController extends Controller{
         }
 
         $productVariations = AppProductAttributeVariations::where(['is_deleted'=> 0, 'product_id'=> $product->id])
+                            ->with(['images'=>function($query){
+                                $query->where(['is_active'=>1, 'is_deleted'=> 0, 'belongs_from'=> 'md_app_product_attribute_variations' , 'image_type' => 'variation' ]);
+                            }])
                             ->select(['regular_price as price', 'id', 'in_stock'])
                             ->get();
+
+        // prd($productVariations->toArray());die;
 
         $form = "";
         if($productVariations->count()){
