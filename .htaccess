@@ -1,8 +1,14 @@
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+Header always set Content-Security-Policy "upgrade-insecure-requests;"
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
 
 #Redirect 301 /engagement-rings  /product-category/engagement-rings
+
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
@@ -13,6 +19,7 @@ RewriteRule ^ index.php [L]
 #Redirect /product/lucia-2 /product/lucia_2
 #Redirect /product/lucia-3 /product/lucia_3
 #Redirect /product/wed015-f-g-vs-si /product/wed015_f_g_vs_si
+#Redirect /product/baguette-and-round-diamond-hoops /product/baguette_and_round_diamond_hoops
 #Redirect /product/bubble-style-diamond-bangle /product/bubble_style_diamond_bangle
 #Redirect /product/d-s017 /product/d_s017
 #Redirect /product/d-s001-2 /product/d_s001_2

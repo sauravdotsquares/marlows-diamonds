@@ -57,6 +57,10 @@ class AddToCartController extends Controller
                 
                 unset($customArray['jsondata']);
                 unset($customArray['_token']);
+                unset($customArray['CertificateLink']);
+                unset($customArray['ImageLink']);
+                unset($customArray['CERT_NO']);
+                unset($customArray['Lab']);
                 
                 $cart[$productData->id] = [
                     "name" => $productData->title,

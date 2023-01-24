@@ -22,6 +22,7 @@ use App\Models\Masters;
 use App\Models\AppProductCategories;
 use App\Models\AppProductAttributes;
 use App\Models\MetaInformation;
+use App\Models\ImageGallery;
 use App\Models\Products\Combinations;
 
 use App\Models\AppProductAttributeVariations;
@@ -90,6 +91,9 @@ class AppProductsController extends Controller{
 
         if($request->post()){
 
+
+            
+
             /** create validations */
             $validated = $request->validate([
                 'title' => 'required',
@@ -105,10 +109,7 @@ class AppProductsController extends Controller{
                 "dfinder_status" => "sometimes",
                 "diamond_shape" => "sometimes",
                 "is_featured" => "sometimes",
-                "thumb_image" => "sometimes",
-                "featured_images" => "sometimes",
-                "image_gallary" => "sometimes",
-                "thumb_video" => "sometimes",
+                "media.*" => "sometimes",
                 "attributes" => "required",
                 "combination_id" => "sometimes",
             ],[
@@ -120,6 +121,7 @@ class AppProductsController extends Controller{
                 'meta_description.required' =>  'Please enter meta description',
                 "attributes.required" => "Please select attributes"
             ]);
+
 
             try {
                 /** create new product */
@@ -171,31 +173,36 @@ class AppProductsController extends Controller{
                         'meta_keyword' =>$validated['meta_keyword'],
                     ]);
 
-                    /** Update featured image */
-                    if(!empty($validated['featured_images'])){
-                        AppProductImages::where('id',$validated['featured_images'] )->update([
-                            'parent_id' => $new_product->id
-                        ]);
-                    }
-                    /** Update thumb image */
-                    if(!empty($validated['thumb_image'])){
-                        AppProductImages::where('id',$validated['thumb_image'] )->update([
-                            'parent_id' => $new_product->id
-                        ]);
-                    }
-                    /** Update image gallary */
-                    if(!empty($validated['image_gallary'])){
-                        AppProductImages::whereIn('id',$validated['image_gallary'] )->update([
-                            'parent_id' => $new_product->id
-                        ]);
+
+                    /** save media from gallery to useful place */
+                    foreach ($validated['media'] as $media_key => $media_value) {
+                        ImageGallery::saveMedia(AppProductImages::class, $new_product->id, 'md_app_products', $media_key, $media_value);
                     }
 
-                    /** Update thumbnail video */
-                    if(!empty($validated['thumb_video'])){
-                        AppProductImages::where('id',$validated['thumb_video'] )->update([
-                            'parent_id' => $new_product->id
-                        ]);
-                    }
+                    // /** Update featured image */
+                    // if(!empty($validated['featured_images'])){
+                    //     AppProductImages::where('id',$validated['featured_images'] )->update([
+                    //         'parent_id' => $new_product->id
+                    //     ]);
+                    // }
+                    // /** Update thumb image */
+                    // if(!empty($validated['thumb_image'])){
+                    //     AppProductImages::where('id',$validated['thumb_image'] )->update([
+                    //         'parent_id' => $new_product->id
+                    //     ]);
+                    // }
+                    // /** Update image gallary */
+                    // if(!empty($validated['image_gallary'])){
+                    //     AppProductImages::whereIn('id',$validated['image_gallary'] )->update([
+                    //         'parent_id' => $new_product->id
+                    //     ]);
+                    // }
+                    // /** Update thumbnail video */
+                    // if(!empty($validated['thumb_video'])){
+                    //     AppProductImages::where('id',$validated['thumb_video'] )->update([
+                    //         'parent_id' => $new_product->id
+                    //     ]);
+                    // }
 
 
 
@@ -223,9 +230,6 @@ class AppProductsController extends Controller{
             'productMeta',
             'productAttributes'=>function($query){
                 $query->select('id','product_id','attribute_id')->where(['is_deleted'=>0, 'is_active'=>1]);
-            },
-            'productImages' => function($query){
-                $query->select('id','parent_id','image','image_type','extension');
             }
         ])
         ->where('slug',$request['slug'])->first();
@@ -235,14 +239,12 @@ class AppProductsController extends Controller{
         if( !empty($product->productAttributes) && $product->productAttributes->count()){
             $product->product_attributes_ids = array_map(function($element) { return $element['attribute_id'];}, $product->productAttributes->toArray());
         }
-        if( !empty($product->productImages) && $product->productImages->count() ){
-            $product->productImages = $product->productImages->toArray();
-            $new_data_ar = [];
-            foreach ($product->productImages as $key => $value) {
-                $new_data_ar[$value['image_type']][] = $value;
-            }
-            $product->productImages = $new_data_ar;
-        }
+
+        /** get images */
+        $product->productImages  = AppProductImages::getImages([
+            'belongs_from' => 'md_app_products',
+            'parent_id' => $product->id
+        ]);
 
         $categories = AppProductCategories::where(['product_id'=>$product->id , 'is_deleted'=>0, 'is_active'=>1 ] )->pluck('category_id');
         $categories = $categories->count() ? $categories->toArray() : [];
@@ -278,10 +280,7 @@ class AppProductsController extends Controller{
                 "dfinder_status" => "sometimes",
                 "diamond_shape" => "sometimes",
                 "is_featured" => "sometimes",
-                "thumb_image" => "sometimes",
-                "featured_images" => "sometimes",
-                "image_gallary" => "sometimes",
-                "thumb_video" => "sometimes",
+                "media.*" => "sometimes",
                 "attributes" => "required",
                 "combination_id" => "sometimes",
             ],[
@@ -294,11 +293,12 @@ class AppProductsController extends Controller{
                 "attributes.required" => "Please select attributes"
             ]);
 
+            // prd($validated);
+
             try {
                 /** create new product */
                 $update_product = AppProducts::where('id',$product->id)->first();
                 $update_product->title = $validated['title'];
-                // $update_product->slug = generateSlug($validated['title'],AppProducts::class, 'slug');
                 $update_product->tags = $validated['tags'];
                 $update_product->short_description = $validated['short_description'];
                 $update_product->description = $validated['description'];
@@ -306,8 +306,6 @@ class AppProductsController extends Controller{
                 $update_product->dfinder_status = !empty($validated['dfinder_status']) ? (int)$validated['dfinder_status'] : 0;
                 $update_product->diamond_shape = !empty($validated['diamond_shape']) ? $validated['diamond_shape'] : null;
                 $update_product->is_featured = !empty($validated['is_featured']) ? (int)$validated['is_featured'] : 0;
-                // $update_product->status = !empty($validated['status']) ? (int)$validated['status'] : 0 ;
-                // $update_product->is_draft = 1;
                 $update_product->combination_id = !empty($validated['combination_id']) ? $validated['combination_id'] : null ;
                 if($update_product->save()){
 
@@ -361,31 +359,37 @@ class AppProductsController extends Controller{
                         'meta_keyword' =>$validated['meta_keyword'],
                     ]);
 
-                    /** Update featured image */
-                    if(!empty($validated['featured_images'])){
-                        AppProductImages::where('id',$validated['featured_images'] )->update([
-                            'parent_id' => $update_product->id
-                        ]);
-                    }
-                    /** Update thumb image */
-                    if(!empty($validated['thumb_image'])){
-                        AppProductImages::where('id',$validated['thumb_image'] )->update([
-                            'parent_id' => $update_product->id
-                        ]);
-                    }
-                    /** Update image gallary */
-                    if(!empty($validated['image_gallary'])){
-                        AppProductImages::whereIn('id',$validated['image_gallary'] )->update([
-                            'parent_id' => $update_product->id
-                        ]);
+                    /** save media from gallery to useful place */
+                    foreach ($validated['media'] as $media_key => $media_value) {
+                        ImageGallery::saveMedia(AppProductImages::class, $update_product->id, 'md_app_products', $media_key, $media_value);
                     }
 
-                    /** Update thumbnail video */
-                    if(!empty($validated['thumb_video'])){
-                        AppProductImages::where('id',$validated['thumb_video'] )->update([
-                            'parent_id' => $update_product->id
-                        ]);
-                    }
+
+                    // /** Update featured image */
+                    // if(!empty($validated['featured_images'])){
+                    //     AppProductImages::where('id',$validated['featured_images'] )->update([
+                    //         'parent_id' => $update_product->id
+                    //     ]);
+                    // }
+                    // /** Update thumb image */
+                    // if(!empty($validated['thumb_image'])){
+                    //     AppProductImages::where('id',$validated['thumb_image'] )->update([
+                    //         'parent_id' => $update_product->id
+                    //     ]);
+                    // }
+                    // /** Update image gallary */
+                    // if(!empty($validated['image_gallary'])){
+                    //     AppProductImages::whereIn('id',$validated['image_gallary'] )->update([
+                    //         'parent_id' => $update_product->id
+                    //     ]);
+                    // }
+
+                    // /** Update thumbnail video */
+                    // if(!empty($validated['thumb_video'])){
+                    //     AppProductImages::where('id',$validated['thumb_video'] )->update([
+                    //         'parent_id' => $update_product->id
+                    //     ]);
+                    // }
 
                     return redirect()->route('admin.app_products.variations_edit', $update_product->slug)->with('success',__('Basic information saved successfully'));
                 }else{
@@ -459,12 +463,12 @@ class AppProductsController extends Controller{
                 'variation_data.*.price' => 'required',
                 'variation_data.*.variations' => 'sometimes',
                 'variation_data.*.in_stock' => 'sometimes',
-                'variation_data.*.image_id' => 'sometimes',
+                'variation_data.*.image' => 'sometimes',
             ],[
                 'variation_data.*.price.required' => 'Please enter price',
             ]);
 
-
+            // prd($validated);
             $data = $request->all();
             $valid_varitions_images = [];
             foreach ($data['variation_data'] as $data_key => $data_value) {
@@ -476,11 +480,9 @@ class AppProductsController extends Controller{
                 $new_var->in_stock = $data_value['in_stock'] ? $data_value['in_stock'] : 0 ;
                 $new_var->save();
 
-
-                if(!empty($data_value['image_id']) && $new_var->id){
-                    /** Update parent id of image */
-                    AppProductImages::where('id', $data_value['image_id'] )->update(['parent_id'=> $new_var->id ]);
-                    $valid_varitions_images[] = $data_value['image_id'];
+                /** Update image */
+                if(!empty($data_value['image']) && $new_var->id){
+                    ImageGallery::saveMedia(AppProductImages::class, $new_var->id, 'md_app_product_attribute_variations', 'variation', $data_value['image']);
                 }
 
                 foreach ($data_value['variations'] as $var_data_key => $var_data_value) {
@@ -507,8 +509,8 @@ class AppProductsController extends Controller{
             AppProducts::where('id', $product->id)->update(['is_draft'=>0]);
 
             
-
-            return  redirect()->route('admin.app_products.list')->with('success',__('Product added successfully'));
+            // ->route('admin.app_products.list')
+            return  redirect()->back()->with('success',__('Product added successfully'));
 
         }
 
@@ -563,7 +565,11 @@ class AppProductsController extends Controller{
         $form = "";
         if($productVariations->count()){
             foreach ($productVariations as $index => $item) {
-                $form .= View::make('admin.app_products.products.elements.variations_form', compact(['index','attributeData','item','product']));
+                $images  = AppProductImages::getImages([
+                    'belongs_from' => 'md_app_product_attribute_variations',
+                    'parent_id' => $item->id
+                ]);
+                $form .= View::make('admin.app_products.products.elements.variations_form', compact(['index','attributeData','item','product','images']));
             }
         }else{
             $index = 0;
@@ -574,13 +580,15 @@ class AppProductsController extends Controller{
 
         if($request->post()){
 
+            // prd($request->all());
+
              /** create validations */
              $validated = $request->validate([
                 'product_attribute_variations' => 'sometimes',
                 'variation_data.*.price' => 'required',
                 'variation_data.*.variations' => 'sometimes',
                 'variation_data.*.in_stock' => 'sometimes',
-                'variation_data.*.image_id' => 'sometimes',
+                'variation_data.*.image' => 'sometimes',
             ],[
                 'variation_data.*.price.required' => 'Please enter price',
             ]);
@@ -609,33 +617,31 @@ class AppProductsController extends Controller{
                 $valid_varitions[] = $var_record->id;
 
 
-                if(!empty($data_value['image_id']) && $var_record->id){
-                    /** Update parent id of image */
-                    AppProductImages::where('id', $data_value['image_id'] )->update(['parent_id'=> $var_record->id] );
-
-                    /** Delete previous image */
-                    $imagesToDelete = AppProductImages::where([ 
-                        'is_deleted'=>0, 
-                        'parent_id'=> $var_record->id, 
-                        'belongs_from' => 'md_app_product_attribute_variations' 
-                    ])
-                    ->where('id','!=',$data_value['image_id'])
-                    ->pluck('id');
-                    
-                    if($imagesToDelete->count()){
-                        $imagesToDelete = $imagesToDelete->toArray();
-                        AppProductImages::whereIn('id',$imagesToDelete)->update([ 'is_deleted'=>1 ]);
-
-                        $imagesModal = new AppProductImages();
-                        /** add task to do later for delete images  */
-                        $new_queue = new Queue();
-                        $new_queue->task = json_encode([
-                            'table' => $imagesModal->getTable(),
-                            'action' => 'delete',
-                            'perform_ids' => $imagesToDelete
-                        ]);
-                        $new_queue->save();
-                    }
+                if(!empty($data_value['image']) && $var_record->id){
+                    ImageGallery::saveMedia(AppProductImages::class, $var_record->id, 'md_app_product_attribute_variations', 'variation', $data_value['image']);
+                    // /** Update parent id of image */
+                    // AppProductImages::where('id', $data_value['image_id'] )->update(['parent_id'=> $var_record->id] );
+                    // /** Delete previous image */
+                    // $imagesToDelete = AppProductImages::where([ 
+                    //     'is_deleted'=>0, 
+                    //     'parent_id'=> $var_record->id, 
+                    //     'belongs_from' => 'md_app_product_attribute_variations' 
+                    // ])
+                    // ->where('id','!=',$data_value['image_id'])
+                    // ->pluck('id');
+                    // if($imagesToDelete->count()){
+                    //     $imagesToDelete = $imagesToDelete->toArray();
+                    //     AppProductImages::whereIn('id',$imagesToDelete)->update([ 'is_deleted'=>1 ]);
+                    //     $imagesModal = new AppProductImages();
+                    //     /** add task to do later for delete images  */
+                    //     $new_queue = new Queue();
+                    //     $new_queue->task = json_encode([
+                    //         'table' => $imagesModal->getTable(),
+                    //         'action' => 'delete',
+                    //         'perform_ids' => $imagesToDelete
+                    //     ]);
+                    //     $new_queue->save();
+                    // }
                 }
 
                 

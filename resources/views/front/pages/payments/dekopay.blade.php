@@ -6,7 +6,7 @@
     </label>
     <div class="payment-box-main-drop deko-pay-box " style="display:none;">
         <div class="finance-available-options">
-            <input type="hidden" value="{{ $totalAmount }}" id="totalOrder">
+            <input type="hidden" value="10" id="totalOrder">
             <input type="hidden" value="ONIB12-16.9" id="default_code">
             <input type="hidden" value="10" id="default_perc">
             <input type="hidden" value="{{env('DEKOPAY_API_KEY')}}" id="myapi">
@@ -28,7 +28,7 @@
                         Price :
                     </div>
                     <div class="payment-cc-details-values">
-                        {{MY_CURRENCY_SYMBOL}} <span id="totalP">{{ $totalAmount }}</span>
+                        {{MY_CURRENCY_SYMBOL}} <span id="totalP">10</span>
                     </div>
                 </div>
                 <div class="payment-cc-details-inner">
