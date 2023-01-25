@@ -1079,7 +1079,7 @@ class ProductController extends Controller
             "Expires"             => "0"
         );
         
-        $columns = array('id', 'Slug','title', 'Description','Lab description');
+        $columns = array('id', 'Slug','title', 'Description','Lab description','Html description','Html lab description');
         $callback = function() use($productSlugs, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
@@ -1110,7 +1110,9 @@ class ProductController extends Controller
                 $row['title']  = $value->title;
                 $row['description']  = strip_tags($value->description);
                 $row['lab_description']  = strip_tags($lab_description);
-                fputcsv($file, array($row['id'],$row['slug'],$row['title'], $row['description'], $row['lab_description']));
+                $row['description_with_html']  = $value->description;
+                $row['lab_description_with_html']  = $lab_description;
+                fputcsv($file, array($row['id'],$row['slug'],$row['title'], $row['description'], $row['lab_description'], $row['description_with_html'], $row['lab_description_with_html']));
             }
             fclose($file);
         };
