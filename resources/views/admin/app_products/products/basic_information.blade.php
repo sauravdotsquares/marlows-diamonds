@@ -162,26 +162,35 @@
                             <h3 class="card-title">{{ __("Image gallary")}}</h3>
                         </div>
                         <div class="card-body">
-                            
+
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Thumbnail image")}}</label>
-                                <input type="file" id="thumb_image" name="thumb_image" >
+                                <input type="text" id="thumb_image" name="media[thumb_image]" class="form-control file_uploader"
+                                    value="{{ !empty($dataToFill['thumb_image']) && $dataToFill['thumb_image'] ? $dataToFill['thumb_image'] : ''  }}"
+                                >
                             </div>
 
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Thumbnail video")}}</label>
-                                <input type="file" id="thumb_video" name="thumb_video" >
+                                <input type="text" id="thumb_video" name="media[thumb_video]" class="form-control" 
+                                value="{{ !empty($dataToFill['thumb_video']) && $dataToFill['thumb_video'] ? $dataToFill['thumb_video'] : ''  }}"
+                                >
                             </div>
 
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Featured image")}}</label>
-                                <input type="file" id="featured_images" name="featured_images" >
+                                <input type="text" id="featured_image" name="media[featured_image]" class="form-control" 
+                                value="{{ !empty($dataToFill['featured_image']) && $dataToFill['featured_image'] ? $dataToFill['featured_image'] : ''  }}"
+                                >
                             </div>
 
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Image gallary")}}</label>
-                                <input type="file" id="image_gallary" name="image_gallary" >
+                                <input type="text" id="product_gallery" name="media[product_gallery]" class="form-control" 
+                                value="{{ !empty($dataToFill['product_gallery']) && $dataToFill['product_gallery'] ? $dataToFill['product_gallery'] : ''  }}"
+                                >
                             </div>
+                            
                             
                         </div>
 
@@ -223,8 +232,6 @@
 <link rel="stylesheet" href="{{asset('/admin/custom_plugins/jquery-tags/dist/jquery.tagsinput.min.css')}}">
 <link rel="stylesheet" href="{{asset('/admin/plugins/select2/css/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
-<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
 <style>
    div.tagsinput{ padding: 0px; }
    .filepond--credits{  display: none; }
@@ -234,11 +241,6 @@
 @section('js')
 <script src="{{asset('/admin/custom_plugins/jquery-tags/dist/jquery.tagsinput.min.js')}}"></script>
 <script src="{{asset('/admin/plugins/select2/js/select2.full.min.js')}}"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
-<script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
 
 
 <script>
@@ -261,72 +263,6 @@
         $('#categories').select2();
         $('#short_description').summernote({height:50, ...summernote_options});
         $('#description').summernote({height:100, ...summernote_options});
-
-        $.fn.filepond.registerPlugin(FilePondPluginFileValidateSize);
-        $.fn.filepond.registerPlugin(FilePondPluginFileValidateType);
-        $.fn.filepond.registerPlugin(FilePondPluginImagePreview);
-        imagePicker($('#thumb_image'), {
-            imagePreviewHeight: 100,
-            imagePreviewTransparencyIndicator: "grid",
-            allowMultiple:false,
-            placeholder: "Thumbnail image",
-            server: {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'IMAGE-TYPE': "thumb_image"
-                },
-                process: '{{ route("admin.app_products.upload_images") }}',
-                revert: '{{ route("admin.app_products.remove_images") }}',
-            },
-        });
-        imagePicker($('#featured_images'), {
-            imagePreviewHeight: 100,
-            imagePreviewTransparencyIndicator: "grid",
-            allowMultiple:false,
-            server: {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'IMAGE-TYPE': "featured_image"
-                },
-                process: '{{ route("admin.app_products.upload_images") }}',
-                revert: '{{ route("admin.app_products.remove_images") }}',
-            },
-        });
-
-        imagePicker($('#image_gallary'), {
-            allowMultiple:true,
-            placeholder: "Image gallary",
-            imagePreviewHeight: 100,
-            imagePreviewTransparencyIndicator: "grid",
-            isMultipleUploading: true,
-            inputName: "image_gallary",
-            server: {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'IMAGE-TYPE': "product_gallery"
-                },
-                process: '{{ route("admin.app_products.upload_images") }}',
-                revert: '{{ route("admin.app_products.remove_images") }}',
-            },
-        });
-
-        videoPicker($('#thumb_video'), {
-            allowMultiple:false,
-            placeholder: "Thumbnail Video",
-            imagePreviewHeight: 100,
-            imagePreviewTransparencyIndicator: "grid",
-            isMultipleUploading: false,
-            inputName: "thumb_video",
-            server: {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'IMAGE-TYPE': "thumb_video"
-                },
-                process: '{{ route("admin.app_products.upload_images") }}',
-                revert: '{{ route("admin.app_products.remove_images") }}',
-            },
-        });
-
     });
 
       

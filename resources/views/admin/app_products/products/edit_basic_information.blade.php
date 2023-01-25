@@ -160,25 +160,46 @@
                             <h3 class="card-title">{{ __("Image gallary")}}</h3>
                         </div>
                         <div class="card-body">
-                            
+
+
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Thumbnail image")}}</label>
-                                <input type="file" id="thumb_image" name="thumb_image" class="form-control file_uploader">
+                                <input type="text" id="thumb_image" name="media[thumb_image]" class="form-control file_uploader"
+                                    value="{{ 
+                                        !empty($product->productImages) && !empty($product->productImages['thumb_image_img_id'])
+                                        ? implode(',', $product->productImages['thumb_image_img_id']) : ''
+                                    }}"
+                                >
                             </div>
 
                             <div class="form-label-group col-sm-12 col-md-12">
-                                <label>{{ __("Thumbnail video")}}</label>
-                                <input type="file" id="thumb_video" name="thumb_video" class="form-control" >
+                                <label>{{ __("Thumbnail hover image/video")}}</label>
+                                <input type="text" id="thumb_video" name="media[thumb_video]" class="form-control" 
+                                    value="{{ 
+                                        !empty($product->productImages) && !empty($product->productImages['thumb_video_img_id'])
+                                        ? implode(',', $product->productImages['thumb_video_img_id']) : ''
+                                    }}"
+                                >
                             </div>
 
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Featured image")}}</label>
-                                <input type="file" id="featured_images" name="featured_images" class="form-control" >
+                                <input type="text" id="featured_image" name="media[featured_image]" class="form-control" 
+                                    value="{{ 
+                                        !empty($product->productImages) && !empty($product->productImages['featured_image_img_id'])
+                                        ? implode(',', $product->productImages['featured_image_img_id']) : ''
+                                    }}"
+                                >
                             </div>
 
                             <div class="form-label-group col-sm-12 col-md-12">
                                 <label>{{ __("Image gallary")}}</label>
-                                <input type="file" id="image_gallary" name="image_gallary" class="form-control" >
+                                <input type="text" id="product_gallery" name="media[product_gallery]" class="form-control" 
+                                    value="{{ 
+                                        !empty($product->productImages) && !empty($product->productImages['product_gallery_img_id'])
+                                        ? implode(',', $product->productImages['product_gallery_img_id']) : ''
+                                    }}"
+                                >
                             </div>
                             
                         </div>
@@ -224,17 +245,17 @@
 <link rel="stylesheet" href="{{asset('/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 <style>
    div.tagsinput{ padding: 0px; }
-   .filepond--credits{  display: none; }
+   /* .filepond--credits{  display: none; }
    .file_uploader-container { display: inline-block; position: relative; margin: 20px; margin-left: 0px; }
    .file_uploader-container i { z-index: 10; position: absolute; font-size: 22px;  color: #973e71; right: 0; cursor: pointer; right: -7px; top: -9px;  }
-   .file_uploader-img, .file_uploader-video { height:100px; width:100px; }
+   .file_uploader-img, .file_uploader-video { height:100px; width:100px; } */
 </style>
 @endsection
 
 @section('js')
 <script src="{{asset('/admin/custom_plugins/jquery-tags/dist/jquery.tagsinput.min.js')}}"></script>
 <script src="{{asset('/admin/plugins/select2/js/select2.full.min.js')}}"></script>
-<script src="{{asset('/admin/js/file_uploader.js')}}"></script>
+{{-- <script src="{{asset('/admin/js/file_uploader.js')}}"></script> --}}
 <script>
 
     var summernote_options = {
@@ -256,48 +277,6 @@
         $('#categories').select2();
         $('#short_description').summernote({height:50, ...summernote_options});
         $('#description').summernote({height:100, ...summernote_options});
-
-        imageUploader('#thumb_image', {
-            limit : 1,
-            inputName : 'thumb_image', 
-            addImageUrl : "{{ route('admin.app_products.upload_images') }}",
-            csrf : '{{ csrf_token() }}',
-            removeImageUrl : `{{ route("admin.app_products.remove_images") }}`,
-            imgBasePath: "{{ asset('uploads') }}",
-            selectedImages : <?php echo !empty($product->productImages['thumb_image']) ? json_encode($product->productImages['thumb_image']) : json_encode([]); ?>,
-            allowedExtensions : ['jpeg','png','jpg','webp']
-        });
-        imageUploader('#thumb_video', {
-            limit : 1,
-            inputName : 'thumb_video', 
-            addImageUrl : "{{ route('admin.app_products.upload_images') }}",
-            csrf : '{{ csrf_token() }}',
-            removeImageUrl : `{{ route("admin.app_products.remove_images") }}`,
-            imgBasePath: "{{ asset('uploads') }}",
-            selectedImages : <?php echo !empty($product->productImages['thumb_video']) ? json_encode($product->productImages['thumb_video']) : json_encode([]); ?>,
-            allowedExtensions : ['mp4']
-        });
-        imageUploader('#featured_images', {
-            limit : 1,
-            inputName : 'featured_image', 
-            addImageUrl : "{{ route('admin.app_products.upload_images') }}",
-            csrf : '{{ csrf_token() }}',
-            removeImageUrl : `{{ route("admin.app_products.remove_images") }}`,
-            imgBasePath: "{{ asset('uploads') }}",
-            selectedImages : <?php echo  !empty($product->productImages['featured_image']) ? json_encode($product->productImages['featured_image']) : json_encode([]); ?>,
-            allowedExtensions : ['jpeg','png','jpg','webp']
-        });
-        imageUploader('#image_gallary', {
-            limit : 10,
-            inputName : 'product_gallery', 
-            addImageUrl : "{{ route('admin.app_products.upload_images') }}",
-            csrf : '{{ csrf_token() }}',
-            removeImageUrl : `{{ route("admin.app_products.remove_images") }}`,
-            imgBasePath: "{{ asset('uploads') }}",
-            selectedImages :  <?php echo !empty($product->productImages['product_gallery']) ? json_encode($product->productImages['product_gallery']) : json_encode([]); ?>,
-            allowedExtensions : ['jpeg','png','jpg','webp']
-        });
-
     });
 
       

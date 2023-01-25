@@ -190,6 +190,13 @@
             </a>
           </li>
 
+          <li class="nav-item">
+            <a href="{{  route('admin.image_gallery.index') }}" class="nav-link ">
+              <i class="nav-icon fa fa-cart-plus"></i>
+              <p> Image gallery </p>
+            </a>
+          </li>
+
           <li class="nav-item @if(request()->segment(2) == 'users') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'users') active @endif">
               <i class="nav-icon fa fa-users"></i>

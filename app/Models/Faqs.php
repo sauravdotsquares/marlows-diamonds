@@ -15,8 +15,5 @@ class Faqs extends Model
     use HasFactory;
 	
 	protected $fillable = ['title','categories','description','status'];
-	
-	// public function categories() {
-        // return $this->belongsTo('App\FaqCategory','categories');
-    // }
+
 }

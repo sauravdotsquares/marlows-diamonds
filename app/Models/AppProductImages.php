@@ -38,4 +38,23 @@ class AppProductImages extends Model{
         }
         return '';
     }
+
+    public static function getImages($conditions){
+        $productImages = AppProductImages::where([
+            'is_deleted' => 0,
+            ...$conditions
+        ])->get();
+
+        if( !empty($productImages) && $productImages->count() ){
+            $productImages = $productImages->toArray();
+            $new_data_ar = [];
+            foreach ($productImages as $key => $value) {
+                $imageType = $value['image_type'];
+                $new_data_ar[$imageType][] = $value;
+                $new_data_ar[$imageType.'_img_id'][] = $value['image_id'];
+            }
+            return $new_data_ar;
+        }
+        return [];
+    }
 }

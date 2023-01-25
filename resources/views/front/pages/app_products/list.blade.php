@@ -111,6 +111,7 @@
 <script src="{{ asset('admin/js/list_view.js') }}"></script>
 <script>
     var data_not_found_image = "";
+    
     initViewForList({
         csrf: "{{ csrf_token() }}",
         url: "{{ route('app_products.list', $category->slug) }}",
