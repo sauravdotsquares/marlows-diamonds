@@ -33,6 +33,11 @@
 
 @section('content')
 
+
+<?php
+// prd($data);
+?>
+
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
@@ -155,9 +160,28 @@
 				<div id="apiCustomDesign">
 
 				</div>
-				<div class="product-decriptions">
-					{!!$data->description!!}
-				</div>
+
+				@if( (!$plainband) &&  (!in_array('exclusive-to-marlows', $all_categories_slug)))
+					@if(!in_array('exclusive-to-marlows', $all_categories_slug) )
+						<div style="display: none;" class="product-decriptions  product-decriptions_varitions product-decriptions-mined ">
+							{!! $data->description !!}
+						</div>
+						<div class="product-decriptions product-decriptions_varitions product-decriptions-lab_grown">
+							{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
+						</div>
+					@else
+						<div class="product-decriptions">
+							{!!$data->old_description ? $data->old_description :$data->description !!}
+						</div>
+					@endif
+				@else
+					<div class="product-decriptions">
+						{!!$data->old_description ? $data->old_description : $data->description!!}
+					</div>
+				@endif
+				
+				
+				
                 <div class="product-finder-price"  id="discountedTotalPrice">
 
                 </div>
@@ -549,8 +573,18 @@
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
-				getSelectedVariationsData();
 
+				// console.log($(this).val());
+				const selectedDiamondType = $(this).val();
+				if(selectedDiamondType == 'mined'){
+					$(".product-decriptions_varitions").css('display','none')
+					$(".product-decriptions-mined").css('display','block')
+				}else if(selectedDiamondType == 'lab_grown'){
+					$(".product-decriptions_varitions").css('display','none')
+					$(".product-decriptions-lab_grown").css('display','block')
+				}
+
+				getSelectedVariationsData();
 			});
 
             $(document).on('change','#metal-type',function(){
@@ -594,6 +628,15 @@
 		function getSelectedVariationsData(){
 			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
+			console.log('diamond_type', diamond_type);
+			if(diamond_type == 'mined'){
+				$(".product-decriptions_varitions").css('display','none')
+				$(".product-decriptions-mined").css('display','block')
+			}else if(diamond_type == 'lab_grown'){
+				$(".product-decriptions_varitions").css('display','none')
+				$(".product-decriptions-lab_grown").css('display','block')
+			}
+
 			var variations = [];
 			$('.type-variations-row select').each(function(i, sel){
 
