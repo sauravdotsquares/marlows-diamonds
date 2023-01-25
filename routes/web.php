@@ -267,6 +267,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/remove-file', 'ImageGalleryController@removeImage')->name('removeImage');
 			Route::any('/delete/{id}', 'ImageGalleryController@deleteFile')->name('deleteFile');
 			Route::any('/files-list', 'ImageGalleryController@getFilesList')->name('getFilesList');
+			Route::any('/use-media', 'ImageGalleryController@useImage')->name('useImage');
 			
 		});
 

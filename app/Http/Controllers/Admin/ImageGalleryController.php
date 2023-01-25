@@ -46,7 +46,7 @@ class ImageGalleryController extends Controller
         // ];
         // populate_breadcrumb($breadcrumb);
 
-        $images = ImageGallery::where(['is_deleted'=>0])->orderBy('id','DESC')->paginate(10);
+        $images = ImageGallery::where(['is_deleted'=>0])->orderBy('id','DESC')->paginate(3);
         return response()->json(['status'=>'success','data'=>$images]);
         // $routePath = $this->route_path;
         // return view($this->default_view_path.'list',compact(['images','routePath']));
@@ -136,4 +136,16 @@ class ImageGalleryController extends Controller
         }
         return response()->json(['status'=> 'error', 'message'=>'Something went successfully']);
     } // endof removeImage
+
+
+    public function useImage(Request $request){
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard")],
+            ["name" => $this->module_name , "url" => route($this->route_path . "index" )],
+            ["name" => "Add new file" , "url" => route($this->route_path . "add" )],
+        ];
+        populate_breadcrumb($breadcrumb);
+        return view($this->default_view_path.'use');
+
+    }
 }
