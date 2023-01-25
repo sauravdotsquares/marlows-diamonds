@@ -30,6 +30,7 @@ class AddToCartController extends Controller
      */
     public function addToCart(Request $request)
     {
+
         if(!empty($request['diamond_type']) && $request['diamond_type']=='lab_grown' && !empty($request->slug) ){
             /** Add item in cart for lab grown */
             $productData = Products::with('getProductImages','getProductVariation')->where('slug',$request->slug)->first();
@@ -101,6 +102,9 @@ class AddToCartController extends Controller
             unset($request['_token']);
             unset($request['jsondata']);
 
+
+            // prd($customArray);
+
             $titleHtml = '';
 
 
@@ -129,7 +133,9 @@ class AddToCartController extends Controller
                     return response()->json(['error'=>'This product is already exists in cart']);
                     // $cart[$productData->id]['quantity']++;
                 } else {
-                    $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : '';
+                    
+                    $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : $request['choose_diamond']  ;
+                    
                     $cart[$productData->id] = [
                         "name" => $productData->title,
                         // "selected_parameter"=> $selectedAttributes,
