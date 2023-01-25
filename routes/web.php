@@ -321,7 +321,7 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 	Route::any('diamonds-rings','ProductController@multiCategoryProductsList');
 	/** Change slugs of all products from previous to new one */
 
-	// Route::get('import-redirects','ProductController@productSlugs');
+	Route::get('import-products','ProductController@productSlugs');
 	
 	// Route::get('product-slugs','ProductController@productSlugs');
 
