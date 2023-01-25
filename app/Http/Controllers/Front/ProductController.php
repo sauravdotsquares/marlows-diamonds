@@ -1063,61 +1063,62 @@ class ProductController extends Controller
          * 2. update new slug after checking duplication
          */
 
-        $productSlugs = 
-        Products::select(['slug','id','title','description','lab_description','categories'])
-        ->whereRaw('FIND_IN_SET(2, categories) OR FIND_IN_SET(47, categories)')
-        ->get();
-        // ;
-        // prd($productSlugs->toSql());
 
-        $fileName = date('d-m-Y') .'-product-new-urls.csv';
-        $headers = array(
-            "Content-type"        => "text/csv; charset=utf-8",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        );
+        // $productSlugs = 
+        // Products::select(['slug','id','title','description','lab_description','categories'])
+        // ->whereRaw('FIND_IN_SET(2, categories) OR FIND_IN_SET(47, categories)')
+        // ->get();
+        // // ;
+        // // prd($productSlugs->toSql());
+
+        // $fileName = date('d-m-Y') .'-product-new-urls.csv';
+        // $headers = array(
+        //     "Content-type"        => "text/csv; charset=utf-8",
+        //     "Content-Disposition" => "attachment; filename=$fileName",
+        //     "Pragma"              => "no-cache",
+        //     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        //     "Expires"             => "0"
+        // );
         
-        $columns = array('id', 'Slug','title', 'Description','Lab description','Html description','Html lab description');
-        $callback = function() use($productSlugs, $columns) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
+        // $columns = array('id', 'Slug','title', 'Description','Lab description','Html description','Html lab description');
+        // $callback = function() use($productSlugs, $columns) {
+        //     $file = fopen('php://output', 'w');
+        //     fputcsv($file, $columns);
 
-            foreach ($productSlugs as $key => $value) {
+        //     foreach ($productSlugs as $key => $value) {
 
-                $replaceText = [
-                    "Diamond Color F-G Clarity VS-SI",
-                    "Diamond Colour F-G Clarity VS-SI",
-                    "Diamond quality is FVS",
-                    "Diamond colour F, Clarity VS",
-                    "Diamond color F-G diamond clarity VS-SI",
-                    "Diamond colour F-G diamond clarity VS-SI",
-                    "Diamond Colour G-H Clarity SI",
-                    "Diamond Clarity G-H SI",
-                    "Diamond Color G-H Clarity SI",
-                    "G SI Quality",
-                ];
+        //         $replaceText = [
+        //             "Diamond Color F-G Clarity VS-SI",
+        //             "Diamond Colour F-G Clarity VS-SI",
+        //             "Diamond quality is FVS",
+        //             "Diamond colour F, Clarity VS",
+        //             "Diamond color F-G diamond clarity VS-SI",
+        //             "Diamond colour F-G diamond clarity VS-SI",
+        //             "Diamond Colour G-H Clarity SI",
+        //             "Diamond Clarity G-H SI",
+        //             "Diamond Color G-H Clarity SI",
+        //             "G SI Quality",
+        //         ];
 
-                $lab_description =  $value->description;
-                foreach ($replaceText as $replace_key => $replace_value) {
-                    $lab_description = str_replace($replace_value, 'Diamond Color D-E Clarity VVS',$lab_description );
-                }
+        //         $lab_description =  $value->description;
+        //         foreach ($replaceText as $replace_key => $replace_value) {
+        //             $lab_description = str_replace($replace_value, 'Diamond Color D-E Clarity VVS',$lab_description );
+        //         }
 
 
-                $row['id']  = $value->id;
-                $row['slug']  = $value->slug;
-                $row['title']  = $value->title;
-                $row['description']  = strip_tags($value->description);
-                $row['lab_description']  = strip_tags($lab_description);
-                $row['description_with_html']  = $value->description;
-                $row['lab_description_with_html']  = $lab_description;
-                fputcsv($file, array($row['id'],$row['slug'],$row['title'], $row['description'], $row['lab_description'], $row['description_with_html'], $row['lab_description_with_html']));
-            }
-            fclose($file);
-        };
+        //         $row['id']  = $value->id;
+        //         $row['slug']  = $value->slug;
+        //         $row['title']  = $value->title;
+        //         $row['description']  = strip_tags($value->description);
+        //         $row['lab_description']  = strip_tags($lab_description);
+        //         $row['description_with_html']  = $value->description;
+        //         $row['lab_description_with_html']  = $lab_description;
+        //         fputcsv($file, array($row['id'],$row['slug'],$row['title'], $row['description'], $row['lab_description'], $row['description_with_html'], $row['lab_description_with_html']));
+        //     }
+        //     fclose($file);
+        // };
 
-        return response()->stream($callback, 200, $headers);
+        // return response()->stream($callback, 200, $headers);
 
 
         // %2Fblog-resources%2Fpage%2F9
@@ -1134,30 +1135,33 @@ class ProductController extends Controller
         // SitemapUrls::generateXml();
 
         /** Import all redirect urls */
-        // $filePath = public_path('exports/redirects.csv');
-        // $file = fopen($filePath, "r");
-        // $totalRecordsAdded = 0;
+        // TODO: 
+        $filePath = public_path('exports/products_description_live.csv');
+        $file = fopen($filePath, "r");
+        $totalRecordsAdded = 0;
         
-        // try {
-        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
-        //         $old =  $getData[0];
-        //         $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
-    
-        //         $data = UrlRedirects::where(['old_url'=>urlencode($old), 'is_deleted'=>0])->first();
-        //         if(empty($data)){
-        //             $newRedirect = new UrlRedirects();
-        //             $newRedirect->old_url = urlencode($old);
-        //             $newRedirect->new_url = urlencode($new);
-        //             $newRedirect->type = "other";
-        //             $newRedirect->save();
-        //             $totalRecordsAdded++;
-        //         }
+        try {
+            $records = [];
+            while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+
+                $product = Products::where('id', $getData[0])->first();
+                // $records[] = $getData;
+                if(!empty($product)){  
+                    $product->old_description = $product->description;
+                    $product->description = '<p>' . $getData[3] . '</p>';
+                    $product->lab_description = '<p>'. $getData[4] . '</p>';
+                    $product->save();
+                    $totalRecordsAdded++;
+                }
                 
-        //     }
-        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
-        // } catch (\Exception $th) {
-        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
-        // }
+            }
+            // prd($records);
+            echo 'totalRecordsAdded- success:- '. $totalRecordsAdded;die;
+        } catch (\Exception $th) {
+            prd($th);
+            echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        }die;
+        // TODO:
 
         // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
         //     $old =  $getData[0];
