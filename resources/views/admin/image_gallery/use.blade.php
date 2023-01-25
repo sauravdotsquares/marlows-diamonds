@@ -2,174 +2,199 @@
 @section('content')
 
 <div class="rm-file-picker"></div>
-<div class="rm-file-picker"></div>
 
 
 
 
 @endsection
 
+@section('css')
+<style>
+    .data-list.active{
+        background: red;
+    }
+</style>
+@endsection
 
 @section('js')
 <script>
 
 
-const createButton = (pickerId='', btnClasses='') => {
-    return $('<button/>', {
-        text: 'Choose file',
-        id: 'file-picker-btn_' + pickerId,
-        class: btnClasses ? btnClasses : 'btn btn-success'
-    });
-}
 
-const createInputField = (pickerId='', inputName='',value='') => {
-    return $('<input/>', {
-        type: 'text',
-        name: inputName ? inputName : 'media-id',
-        id: 'file-picker-input_' + pickerId,
-        value: value
-    });
-}
+(function ( $ ) {
+    const createButton = (settings={}) => {
+        return $('<button/>', {
+            text: settings.fileSelectorBtnText,
+            id: 'file-picker-btn_',
+            class: settings.btnClasses ? settings.btnClasses : 'btn btn-success'
+        });
+    }
 
-const createUniqueId = () => {
-    return (new Date()).getTime();
-}
+    const createInputField = (inputId,inputName='',value='') => {
+        return $('<input/>', {
+            type: 'hidden',
+            name: inputName ? inputName : 'media-id',
+            id:  inputId ? inputId : 'file-picker-input_',
+            value: value
+        });
+    }
 
-const showModal = (modalId="") => {
-    $("#" + modalId).modal('show');
-}
+    const createUniqueId = () => {
+        return (new Date()).getTime();
+    }
 
-const hideModal = (modalId="") => {
-    $("#" + modalId).modal('hide');
-}
+    const createModalHtml = (pickerId="", settings={}) => {
+        const modalFullId = `file-picker-modal_`;
 
-const createModalHtml = (pickerId="", modalHeading="") => {
-    const modalFullId = `file-picker-modal_${pickerId}`;
-
-    modalHeading = modalHeading ? modalHeading : 'Media picker';
-
-    return `<div>
-        <div class="modal fade" id="${modalFullId}">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">${modalHeading}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="dataToAppend"></div>
-                        <div class="load-more-container">
-                            <button class="btn btn-success btn-block load-more-data">More data ${pickerId}</button>
+        return `<div class="modal fade" id="${modalFullId}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">${settings.modalHeading}</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="dataToAppend"></div>
+                            <div class="load-more-container">
+                                <button class="btn btn-success btn-block load-more-data">${settings.moreButtonText}</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-right">
+                            <button type="button" class="btn btn-primary close-btn">${settings.okButtonText}</button>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" onclick="hideModal('${modalFullId}')" >Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div> `;
-}
-
-
-const getData = (currentElement, url, data, callback) => {
-
-    const getParams = queryString(data);
-
-    $.ajax({
-        type: "POST",
-        url: url + '?' + getParams,
-        dataType: 'json',
-        data: {
-            _token: '{{ csrf_token() }}'
-        },
-        success: function(data){
-
-            if(data.status && data.data.data){
-                const currentPage = data.data.current_page;
-                const dataToAppend = data.data.data;
-
-                /** Hide and show load more button */
-                if(!data.data.next_page_url){
-                    currentElement.find(".load-more-data").css('display','none');
-                }else{
-                    currentElement.find(".load-more-data").css('display','block');
-                }
-                currentElement.find('input[name="currentPage"]').val(currentPage);
-                if(dataToAppend.length){
-                    dataToAppend.forEach(( element)=>{
-                        const html = htmlToAppend(element);
-                        currentElement.find('.dataToAppend').append(html);
-                    });
-                }
-            }
-            
-            callback(data);
-        },
-        error: function(error){
-            console.log('error', error);
-        }
-    });
-}
-
-const htmlToAppend = (data) => {
-
-    return `
-        <div>${data.original_name}</div>
-    `;
-
-}
-
-const queryString = function(obj) {
-  var str = [];
-  for (var p in obj)
-    if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            </div>`;
     }
-  return str.join("&");
-}
 
+    const getData = (currentElement, settings, data) => {
 
-$.fn.rmFilePicker = function(options={}){
+        const getParams = queryString(data);
+        currentElement.find(".load-more-data").attr('disabled','disabled');
 
-    $(this).each(function(index,element){
-        var currentItem = $(element);
-        const pickerId = createUniqueId();
-        
-        const button = createButton(pickerId, options.btnClasses);
-        const pickerInput = createInputField(pickerId, options.inputName);
-        const currentPageInput = createInputField(pickerId + '-page', 'currentPage');
-        const pickerModal = createModalHtml(pickerId);
+        $.ajax({
+            type: "POST",
+            url: settings.url + '?' + getParams,
+            dataType: 'json',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(data){
 
-        currentItem.append(button); // create button 
-        currentItem.append(pickerInput); // create hidden input
-        currentItem.append(currentPageInput); // create hidden input
-        currentItem.append(pickerModal); // create hidden input
-
-        const modalId = 'file-picker-modal_' + pickerId;
-        const inputId = 'file-picker-input_' + pickerId;
-        const buttonId = 'file-picker-btn_' + pickerId;
-
-        currentItem.find('#'+buttonId).on('click', function(){
-            currentItem.find('.dataToAppend').empty();
-            getData(currentItem, options.url, {}, ()=>{});
-            currentItem.find(`#${modalId}`).modal('show');
+                if(data.status && data.data.data){
+                    const currentPage = data.data.current_page;
+                    const dataToAppend = data.data.data;
+                    /** Hide and show load more button */
+                    if(!data.data.next_page_url){
+                        currentElement.find(".load-more-data").css('display','none');
+                    }else{
+                        currentElement.find(".load-more-data").css('display','block');
+                    }
+                    currentElement.find('input[name="currentPage"]').val(currentPage);
+                    if(dataToAppend.length){
+                        dataToAppend.forEach(( element)=>{
+                            const html = htmlToAppend(element);
+                            currentElement.find('.dataToAppend').append(html);
+                        });
+                    }
+                }
+                currentElement.find(".load-more-data").removeAttr('disabled');
+            },
+            error: function(error){
+                console.log('error', error);
+                currentElement.find(".load-more-data").removeAttr('disabled');
+            }
         });
+    }
 
-        currentItem.find(".load-more-data").on('click', function(){
-            const currentPage = currentItem.find('input[name="currentPage"]').val();
-            getData(currentItem, options.url, {
-                page: parseInt(currentPage) + 1,
-            }, ()=>{});
+    const htmlToAppend = (data) => {
+        return `<div class="data-list" data-value="${data.id}">${data.original_name}</div>`;
+    }
+
+    const queryString = function(obj) {
+        var str = [];
+        for (var p in obj)
+            if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+    }
+
+    $.fn.rmFilePicker = function(options){
+
+        /** This is the easiest way to have default options. */
+        var settings = $.extend({
+            btnClasses: "#556b2f",
+            inputName: "white",
+            url: "",
+            moreButtonText: "More data",
+            modalHeading: "Media information",
+            fileSelectorBtnText: "Select file",
+            okButtonText: "Ok!",
+            onDataReceive: () => {}
+        }, options);
+
+
+        this.each(function(index,element){
+            var currentItem = $(element);
+            const pickerId = createUniqueId();
+            
+            const button = createButton(settings);
+            const pickerInput = createInputField('', settings.inputName);
+            const currentPageInput = createInputField( 'current-page-input', 'currentPage');
+            const pickerModal = createModalHtml(pickerId, settings);
+
+            currentItem.append(button); // create button 
+            currentItem.append(pickerInput); // create hidden input
+            currentItem.append(currentPageInput); // create hidden input
+            currentItem.append(pickerModal); // create hidden input
+
+            const modalId = 'file-picker-modal_';
+            const inputId = 'file-picker-input_';
+            const buttonId = 'file-picker-btn_';
+
+            currentItem.find('#'+buttonId).on('click', function(){
+                currentItem.find('.dataToAppend').empty();
+                getData(currentItem, settings);
+                currentItem.find(`#${modalId}`).modal('show');
+            });
+
+            currentItem.find(".load-more-data").on('click', function(){
+                const currentPage = currentItem.find('input[name="currentPage"]').val();
+                getData(currentItem, settings, {
+                    page: parseInt(currentPage) + 1,
+                });
+            });
+
+            currentItem.find(".close-btn").on('click',function(){
+                currentItem.find(`#${modalId}`).modal('hide');
+            });
+
+            currentItem.on('click',".data-list", function(){
+                const selectedValue = $(this).attr('data-value');
+                $(this).toggleClass('active');
+
+                let selected_elements = [];
+                currentItem.find(".data-list.active").each((index, element)=>{
+                    const selectedId = $(element).attr('data-value');
+                    selected_elements.push(selectedId);
+                });
+                
+                currentItem.find("#"+inputId).val(selected_elements);
+            });
+
         })
-    })
-}
+    }
+}( jQuery ));
 
 
 $(".rm-file-picker").rmFilePicker({
     btnClasses : "btn btn-success",
     inputName: "media-ids",
-    url: "{{  route('admin.image_gallery.getFilesList') }}"
+    url: "{{  route('admin.image_gallery.getFilesList') }}",
+    okButtonText: "Save selections",
+    onDataReceive: function(data){
+        console.log('first', data);
+    }
 });
 
 </script>

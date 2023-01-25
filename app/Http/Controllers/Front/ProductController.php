@@ -1062,7 +1062,60 @@ class ProductController extends Controller
          * 1. get all previous slugs of products 
          * 2. update new slug after checking duplication
          */
-        // echo "Im here";
+
+        $productSlugs = 
+        Products::select(['slug','id','title','description','lab_description','categories'])
+        ->whereRaw('FIND_IN_SET(2, categories) OR FIND_IN_SET(47, categories)')
+        ->get();
+        // ;
+        // prd($productSlugs->toSql());
+
+        $fileName = date('d-m-Y') .'-product-new-urls.csv';
+        $headers = array(
+            "Content-type"        => "text/csv; charset=utf-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        
+        $columns = array('id', 'Slug','title', 'Description','Lab description');
+        $callback = function() use($productSlugs, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($productSlugs as $key => $value) {
+
+                $replaceText = [
+                    "Diamond Color F-G Clarity VS-SI",
+                    "Diamond Colour F-G Clarity VS-SI",
+                    "Diamond quality is FVS",
+                    "Diamond colour F, Clarity VS",
+                    "Diamond color F-G diamond clarity VS-SI",
+                    "Diamond colour F-G diamond clarity VS-SI",
+                    "Diamond Colour G-H Clarity SI",
+                    "Diamond Clarity G-H SI",
+                    "Diamond Color G-H Clarity SI",
+                    "G SI Quality",
+                ];
+
+                $lab_description =  $value->description;
+                foreach ($replaceText as $replace_key => $replace_value) {
+                    $lab_description = str_replace($replace_value, 'Diamond Color D-E Clarity VVS',$lab_description );
+                }
+
+
+                $row['id']  = $value->id;
+                $row['slug']  = $value->slug;
+                $row['title']  = $value->title;
+                $row['description']  = strip_tags($value->description);
+                $row['lab_description']  = strip_tags($lab_description);
+                fputcsv($file, array($row['id'],$row['slug'],$row['title'], $row['description'], $row['lab_description']));
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
 
 
         // %2Fblog-resources%2Fpage%2F9
@@ -1181,51 +1234,51 @@ class ProductController extends Controller
         // prd($dataToRevert);
 
 
-        $productSlugs = [
-            "wed002" => "D Shaped Wedding Band | Wed002",
-            "wed004" => "Court Shape Wedding Band | Wed004",
-            "wed005" => "Rounded Inner Flatter Style Wedding Band | Wed005",
-            "wed006" => "Rounded Inner Flatter Style Wedding Band | Wed006",
-            "wed007" => "Chunky Wedding Bands | Wed007",
-            "wed010" => "Court Shape Wedding Ring | Wed010",
-            "wed021" => "Court Shape Wedding Ring | Wed021",
-            "wed022" => "D Shaped Wedding Band | Wed022",
-            "wed023" => "Modern 6mm Wedding Band | Wed023",
-            "wed026" => "Cut Out Diamond Wedding Band | Wed026",
-            "wed027" => "6mm Court Shaped Round Wedding Band | Wed027",
-            "wed028" => "5mm Flat Round Cut Diamond Wedding Band | Wed028",
-            "wed029" => "7mm Princess Cut Diamonds Wedding Band | Wed029",
-            "wed030" => "6mm Court Shaped Wedding Band | Wed030",
-        ];
+        // $productSlugs = [
+        //     "wed002" => "D Shaped Wedding Band | Wed002",
+        //     "wed004" => "Court Shape Wedding Band | Wed004",
+        //     "wed005" => "Rounded Inner Flatter Style Wedding Band | Wed005",
+        //     "wed006" => "Rounded Inner Flatter Style Wedding Band | Wed006",
+        //     "wed007" => "Chunky Wedding Bands | Wed007",
+        //     "wed010" => "Court Shape Wedding Ring | Wed010",
+        //     "wed021" => "Court Shape Wedding Ring | Wed021",
+        //     "wed022" => "D Shaped Wedding Band | Wed022",
+        //     "wed023" => "Modern 6mm Wedding Band | Wed023",
+        //     "wed026" => "Cut Out Diamond Wedding Band | Wed026",
+        //     "wed027" => "6mm Court Shaped Round Wedding Band | Wed027",
+        //     "wed028" => "5mm Flat Round Cut Diamond Wedding Band | Wed028",
+        //     "wed029" => "7mm Princess Cut Diamonds Wedding Band | Wed029",
+        //     "wed030" => "6mm Court Shaped Wedding Band | Wed030",
+        // ];
 
-        $affectedRows = 0;
-        // $productSlugs = Products::pluck('slug','id')->toArray();
-        foreach ($productSlugs as $key => $value) {
-            $product_data = Products::where('slug', $key)->first();
-            if(!empty($product_data)){
+        // $affectedRows = 0;
+        // // $productSlugs = Products::pluck('slug','id')->toArray();
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('slug', $key)->first();
+        //     if(!empty($product_data)){
 
-                $new_slug = generateSlugProductPurpose($value,Products::class, "slug",$product_data->id);
+        //         $new_slug = generateSlugProductPurpose($value,Products::class, "slug",$product_data->id);
 
-                $product_data->slug = $new_slug;
-                $product_data->old_slug = $key;
-                $product_data->title = $value;
-                $product_data->save();
+        //         $product_data->slug = $new_slug;
+        //         $product_data->old_slug = $key;
+        //         $product_data->title = $value;
+        //         $product_data->save();
 
-                $url_data = UrlRedirects::where('old_url', $key)->first();
-                if(!empty($url_data)){
-                    $url_data->new_url = $new_slug;
-                    $url_data->save();
-                }else{
-                    $new_redirect = new UrlRedirects();
-                    $new_redirect->type = "product";
-                    $new_redirect->old_url = $key;
-                    $new_redirect->new_url = $new_slug;
-                    $new_redirect->save();
-                }
-                $affectedRows = $affectedRows + 1;
-            }
-        }
-        prd($affectedRows);
+        //         $url_data = UrlRedirects::where('old_url', $key)->first();
+        //         if(!empty($url_data)){
+        //             $url_data->new_url = $new_slug;
+        //             $url_data->save();
+        //         }else{
+        //             $new_redirect = new UrlRedirects();
+        //             $new_redirect->type = "product";
+        //             $new_redirect->old_url = $key;
+        //             $new_redirect->new_url = $new_slug;
+        //             $new_redirect->save();
+        //         }
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($affectedRows);
     }
 
 
