@@ -196,24 +196,25 @@ class ApiController extends Controller
             
 
             $end_time = microtime(true);
-            $execution_time2 = ($end_time - $start_time);
-            echo " Execution time of script = ".$execution_time2." sec<br />";
+            $execution_time = ($end_time - $start_time);
+            echo " Execution time of script = ".$execution_time." sec<br />";
             echo 'Records added:- ' . $recordsAdded;
 
             $end_date_time = date('Y-m-d H:i:s');
             Log::info("SUCCESS:- Harekrishna API work start at:- ". $end_date_time);
             Log::info("SUCCESS:- Harekrishna Total records added:- ". $recordsAdded);
+            Log::info("SUCCESS:- Harekrishna Total time take:- ". $execution_time. " Seconds");
             Log::info("-------------");
             die;
-
         }else{
             $end_time = microtime(true);
-            $execution_time2 = ($end_time - $start_time);
-            echo " Execution time of script = ".$execution_time2." sec<br />";
+            $execution_time = ($end_time - $start_time);
+            echo " Execution time of script = ".$execution_time." sec<br />";
             print_r($resp);
             $end_date_time = date('Y-m-d H:i:s');
-            Log::info("ERROR:- Harekrishna API work start at:- ". $end_date_time);
-            Log::info("ERROR:- Harekrishna :- ". $resp);
+            Log::info("ERROR:- Harekrishna API work end at:- ". $end_date_time);
+            Log::info("ERROR:- Harekrishna Total execution time:- ". $execution_time. " Seconds");
+            Log::info("ERROR:- Harekrishna :- ". trim(preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", strip_tags (preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $resp)))));
             Log::info("-------------");
             die;
         }
