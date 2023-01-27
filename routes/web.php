@@ -299,6 +299,9 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 
     Route::get('/', 'PageController@page')->name('home');
 
+
+	Route::get('hk-data-fetch', 'ApiController@getHariKrishnaFunction');
+
 	/** Change after SEO discuss 05Jan2023 seo_change */
 	Route::get('/blog/{slug}', 'PageController@show');
 	Route::get('/blog/category/{slug}', 'PageController@blogList')->name('blog_list');
@@ -400,6 +403,14 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 
 	Route::post('download-pdf','HomeController@downloadPDF')->name('download-pdf');
 	Route::get('deko-api/dekopay', 'DekoPayController@check_response');
+
+
+	Route::get('deko-api/dekopay', 'DekoPayController@check_response');
+
+
+	
+	
+	
 
 
 
