@@ -140,61 +140,66 @@ class ApiController extends Controller
     public function getHariKrishnaFunction(){
 
         ini_set('max_execution_time', 1200);
+
         $start_time = microtime(true); 
         $json_file_path = public_path('imports/hare_krishna.json');
-        $recordsAdded = 0;
-        if(file_exists($json_file_path)){
-            $fileData = file_get_contents($json_file_path);
-            $isValid = isValidJson($fileData);
-            if($isValid){
 
-                $arData = json_decode($fileData, true);
-                 
-                $dataToInsert = [];
-                foreach($arData as $key => $stock){
-                    $stock['Sr_No'] = $stock['Sr_No_'];
-                    $stock['Flourescent'] = $stock['Fluorescent'];
-                    $stock['Measurements'] = $stock['Measurement'];
-                    $stock['ImportIdx'] = 7;
-                    unset($stock['Sr_No_']);
-                    unset($stock['Fluorescent']);
-                    unset($stock['Measurement']);
-                    $dataToInsert[$key] = $stock;
-                }
-                
-                $collection = collect($dataToInsert);
-                foreach ($collection->chunk(100) as  $chunk) {
-                    HKDiamondStock::insert($chunk->toArray());
-                    $recordsAdded = $recordsAdded+100;
-                }
-            }
-        }
-        $end_time = microtime(true);
-        $execution_time2 = ($end_time - $start_time);
-        echo " Execution time of script = ".$execution_time2." sec<br />";
-        echo 'Records added:- ' . $recordsAdded;die;
-
-        // /** Curl for getting data from hare karishna API */
-        // $curl = curl_init();
-        // curl_setopt_array($curl, [
-        //     CURLOPT_RETURNTRANSFER => 1,
-        //     CURLOPT_URL => $this->hare_krishna_api,
-        //     CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-        // ]);
-        // $resp = curl_exec($curl);
-        // curl_close($curl);
-
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => $this->hare_krishna_api,
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ]);
+        $resp = curl_exec($curl);
+        curl_close($curl);
+        $isValid = isValidJson($resp);
+        // $resp = file_get_contents($json_file_path);
         // $isValid = isValidJson($resp);
-        // if($isValid){
 
-        // }else{
-        //     prd($resp);
-        // }
+        if($isValid){
+            
+            /** Delete order file */
+            if(file_exists($json_file_path)){
+                unlink($json_file_path);
+            }
+            /** Create new file and put json content */
+            $putFile = file_put_contents($json_file_path, $resp);
+            
+            /** Make data to save accordingly */
+            $arData = json_decode($resp, true);  
+            $dataToInsert = [];
+            foreach($arData as $key => $stock){
+                $stock['Sr_No'] = $stock['Sr_No_'];
+                $stock['Flourescent'] = $stock['Fluorescent'];
+                $stock['Measurements'] = $stock['Measurement'];
+                $stock['ImportIdx'] = 7;
+                unset($stock['Sr_No_']);
+                unset($stock['Fluorescent']);
+                unset($stock['Measurement']);
+                $dataToInsert[$key] = $stock;
+            }
+            
+            // Delete old data with truncate
+            HKDiamondStock::truncate();
 
+            // Save all data using chunks
+            $recordsAdded = 0;
+            $collection = collect($dataToInsert);
+            foreach ($collection->chunk(100) as  $chunk) {
+                HKDiamondStock::insert($chunk->toArray());
+                $recordsAdded = $recordsAdded + $chunk->count();
+            }
 
-
-        
-
+            $end_time = microtime(true);
+            $execution_time2 = ($end_time - $start_time);
+            echo " Execution time of script = ".$execution_time2." sec<br />";
+            echo 'Records added:- ' . $recordsAdded;die;
+        }else{
+            $end_time = microtime(true);
+            $execution_time2 = ($end_time - $start_time);
+            echo " Execution time of script = ".$execution_time2." sec<br />";
+            prd($resp);
+        }
     }
 
 }
