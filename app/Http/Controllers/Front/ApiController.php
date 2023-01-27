@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\HKDiamondStock;
-use SoapClient;
+use SoapClient,Log;
 
 class ApiController extends Controller
 {
@@ -141,6 +141,9 @@ class ApiController extends Controller
 
         ini_set('max_execution_time', 1200);
 
+        $start_date_time = date('Y-m-d H:i:s');
+        Log::info("Harekrishna API work start at:- ". $start_date_time);
+
         $start_time = microtime(true); 
         $json_file_path = public_path('imports/hare_krishna.json');
 
@@ -190,15 +193,29 @@ class ApiController extends Controller
                 $recordsAdded = $recordsAdded + $chunk->count();
             }
 
+            
+
             $end_time = microtime(true);
             $execution_time2 = ($end_time - $start_time);
             echo " Execution time of script = ".$execution_time2." sec<br />";
-            echo 'Records added:- ' . $recordsAdded;die;
+            echo 'Records added:- ' . $recordsAdded;
+
+            $end_date_time = date('Y-m-d H:i:s');
+            Log::info("SUCCESS:- Harekrishna API work start at:- ". $end_date_time);
+            Log::info("SUCCESS:- Harekrishna Total records added:- ". $recordsAdded);
+            Log::info("-------------");
+            die;
+
         }else{
             $end_time = microtime(true);
             $execution_time2 = ($end_time - $start_time);
             echo " Execution time of script = ".$execution_time2." sec<br />";
-            prd($resp);
+            print_r($resp);
+            $end_date_time = date('Y-m-d H:i:s');
+            Log::info("ERROR:- Harekrishna API work start at:- ". $end_date_time);
+            Log::info("ERROR:- Harekrishna :- ". $resp);
+            Log::info("-------------");
+            die;
         }
     }
 
