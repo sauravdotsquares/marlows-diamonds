@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\HKDiamondStock;
 use SoapClient;
 
 class ApiController extends Controller
 {
+
+    public function __construct(Request $request){
+        $this->hare_krishna_api = "https://service.hk.co/apihkstock?user=fd0c4f55-3a3b-46db-a1ce-ac178cfe8d59&type=json";
+    }
+
     public function getRepnetApiFunction($filterArray)
     {
 
@@ -131,34 +137,64 @@ class ApiController extends Controller
 
     }
 
-    public function getHariKrishnaFunction($getFilterData)
-    {
+    public function getHariKrishnaFunction(){
 
-        $info = getdate();
-        $date = $info['mday'];
-        $month = $info['mon'];
-        $year = $info['year'];
-        $hour = $info['hours'];
-        $min = $info['minutes'];
-        $sec = $info['seconds'];
+        ini_set('max_execution_time', 1200);
+        $start_time = microtime(true); 
+        $json_file_path = public_path('imports/hare_krishna.json');
+        $recordsAdded = 0;
+        if(file_exists($json_file_path)){
+            $fileData = file_get_contents($json_file_path);
+            $isValid = isValidJson($fileData);
+            if($isValid){
 
-        $current_date = "$date/$month/$year == $hour:$min:$sec";
+                $arData = json_decode($fileData, true);
+                 
+                $dataToInsert = [];
+                foreach($arData as $key => $stock){
+                    $stock['Sr_No'] = $stock['Sr_No_'];
+                    $stock['Flourescent'] = $stock['Fluorescent'];
+                    $stock['Measurements'] = $stock['Measurement'];
+                    $stock['ImportIdx'] = 7;
+                    unset($stock['Sr_No_']);
+                    unset($stock['Fluorescent']);
+                    unset($stock['Measurement']);
+                    $dataToInsert[$key] = $stock;
+                }
+                
+                $collection = collect($dataToInsert);
+                foreach ($collection->chunk(100) as  $chunk) {
+                    HKDiamondStock::insert($chunk->toArray());
+                    $recordsAdded = $recordsAdded+100;
+                }
+            }
+        }
+        $end_time = microtime(true);
+        $execution_time2 = ($end_time - $start_time);
+        echo " Execution time of script = ".$execution_time2." sec<br />";
+        echo 'Records added:- ' . $recordsAdded;die;
 
-        // Get cURL resource
-        $curl = curl_init();
-        // Set some options - we are passing in a useragent too here
-        curl_setopt_array($curl, [
-            CURLOPT_RETURNTRANSFER => 1,
-            //CURLOPT_URL => 'http://web.hkerp.co/apihkstock?user=fd0c4f55-3a3b-46db-a1ce-ac178cfe8d59&type=json',
-            CURLOPT_URL => 'https://service.hk.co/apihkstock?user=fd0c4f55-3a3b-46db-a1ce-ac178cfe8d59&type=json',
-            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-        ]);
-        // Send the request & save response to $resp
-        $resp = curl_exec($curl);
+        // /** Curl for getting data from hare karishna API */
+        // $curl = curl_init();
+        // curl_setopt_array($curl, [
+        //     CURLOPT_RETURNTRANSFER => 1,
+        //     CURLOPT_URL => $this->hare_krishna_api,
+        //     CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        // ]);
+        // $resp = curl_exec($curl);
+        // curl_close($curl);
 
-        echo "<pre>";
-        print_r($resp);
-        die;
+        // $isValid = isValidJson($resp);
+        // if($isValid){
+
+        // }else{
+        //     prd($resp);
+        // }
+
+
+
+        
+
     }
 
 }
