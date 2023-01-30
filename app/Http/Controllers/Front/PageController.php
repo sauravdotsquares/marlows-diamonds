@@ -17,7 +17,7 @@ class PageController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function page($slug=null)
+    public function page($slug=null,$slug2=null, $slug3=null)
     {
         
         if($slug!=null){
