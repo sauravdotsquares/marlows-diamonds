@@ -321,7 +321,7 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 		return redirect('/'. $url, 301);
 	})->where('any', '.*');
 
-	Route::any('diamonds-rings','ProductController@multiCategoryProductsList');
+	Route::any('product-listing-data','ProductController@productListingData');
 	/** Change slugs of all products from previous to new one */
 
 	Route::get('import-products','ProductController@productSlugs');
@@ -342,8 +342,8 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
 	Route::any('/exclusive', 'ProductController@exclusiveMarlows')->name('products.exclusive');
-    Route::get('{page}', 'PageController@page')->name('page');
 
+	// Route::any('{slug}','ProductController@productListPage');
 
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
 	
@@ -413,7 +413,7 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 	
 
 
-
+	Route::get('{page}/{slug2?}/{slug3?}', 'PageController@page')->name('page');
 	Route::group(['as' => 'app_products.', 'prefix' => 'p' ], function () {
 
 		Route::any('/detail/{product_slug}', 'AppProductsController@productDetails')->name('details');

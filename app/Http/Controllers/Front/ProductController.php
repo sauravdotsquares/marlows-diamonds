@@ -1288,42 +1288,67 @@ class ProductController extends Controller
     }
 
 
-    public function multiCategoryProductsList(Request $request){
+    public function productListingData(Request $request){
 
-        // echo ;die;
-        $pageNo = !empty($request['page']) ? $request['page'] : 1;
-
-        $categoryIds = [
-            1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54
-        ];
-    
-        $query = Products::with('getProductImages')->where('status',1);
-        
-
-        $category_custom_query = "";
-        foreach ($categoryIds as $cat_key => $cat_value) {
-            if(!$cat_key){  $category_custom_query .= '( '; }
-            $category_custom_query .= " find_in_set('".$cat_value."',categories)";
-            if($cat_key+1 != count($categoryIds)){ $category_custom_query .= " OR "; }
-            else{ $category_custom_query .= ' ) '; }
-        }
-
-        $getProductListFinal = $query->whereRaw(DB::raw($category_custom_query))->paginate(16,['*'],'page',$pageNo);
-
-        $productItems = "";
-        if($getProductListFinal->count()){
-            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
-        }
-        $nextPage = $pageNo+1;
-        $token = csrf_token();
-        if($request->ajax()){
+        $productListingData = getProductListing($request['slug'], $request['slug2'], $request['slug3'],$request->all());
+        if($productListingData['status'] == 404){
+            // return view('layouts.errors.404');
             return response()->json([
-                'status' => $getProductListFinal->count() ? true : false,
-                'html' => $productItems,
-                'nextPage' => $nextPage,
-                'token' => $token
+                'status'=> false,
+                'message' => "Something went wrong"
+            ]);
+        }else if($productListingData['status'] == 200){
+            return response()->json([
+                'status'=> true,
+                'productItems'=> $productListingData['productItems'],
+                'isNextPage' => $productListingData['isNextPage'],
+                'nextPage' => $productListingData['nextPage'],
+                "slug"=>$request['slug'], 
+                "slug2" => $request['slug2'], 
+                "slug3" => $request['slug3']
+            ]);
+        }else{
+            return response()->json([
+                'status'=> false,
+                'message' => "Something went wrong"
             ]);
         }
+        // prd($productListingData);
+
+        // // echo ;die;
+        // $pageNo = !empty($request['page']) ? $request['page'] : 1;
+
+        // // $categoryIds = [
+        // //     1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54
+        // // ];
+    
+        // $query = Products::with('getProductImages')->where('status',1);
+        
+
+        // $category_custom_query = "";
+        // foreach ($categoryIds as $cat_key => $cat_value) {
+        //     if(!$cat_key){  $category_custom_query .= '( '; }
+        //     $category_custom_query .= " find_in_set('".$cat_value."',categories)";
+        //     if($cat_key+1 != count($categoryIds)){ $category_custom_query .= " OR "; }
+        //     else{ $category_custom_query .= ' ) '; }
+        // }
+
+        // $getProductListFinal = $query->whereRaw(DB::raw($category_custom_query))->paginate(16,['*'],'page',$pageNo);
+
+        // $productItems = "";
+        // if($getProductListFinal->count()){
+        //     $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+        // }
+        // $nextPage = $pageNo+1;
+        // $token = csrf_token();
+        // if($request->ajax()){
+        //     return response()->json([
+        //         'status' => $getProductListFinal->count() ? true : false,
+        //         'html' => $productItems,
+        //         'nextPage' => $nextPage,
+        //         'token' => $token
+        //     ]);
+        // }
 
         return view('front.pages.multi-category-product-listing', compact(['productItems','nextPage']));
     }
@@ -1459,6 +1484,11 @@ class ProductController extends Controller
             'categoryUrlsList',
             'data'
         ]));
+    }
+
+
+    public function productListPage(Request $request){
+        prd('This is product list page');
     }
 
 }

@@ -1135,5 +1135,45 @@ if (!function_exists('validate_breadcrumb')) {
         return json_last_error() === JSON_ERROR_NONE;
      }
 
+
+    function getProductListing($slug=null, $slug2=null, $slug3=null, $requestData=[]){
+        /** Slug belongs to product category */
+        $category_custom_query = "";
+
+        if(!empty($slug)){
+            $slugCategory = Category::where('slug',$slug)->first();
+            if(!empty($slugCategory)){  $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) "; }
+            else{  return ['status'=>404]; };
+        }
+
+        if(!empty($slug2)){
+            $slug2Category = Category::where('slug',$slug2)->first();
+            if(!empty($slug2Category)){  $category_custom_query .= " OR find_in_set('".$slug2Category->id."',categories) "; }
+            else{  return ['status'=>404];  };
+        }
+
+        if(!empty($slug3)){
+            $slug3Category = Category::where('slug',$slug3)->first();
+            if(!empty($slug3Category)){  $category_custom_query .= " OR find_in_set('".$slug3Category->id."',categories) "; }
+            else{ return ['status'=>404];  }
+        }
+
+        $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
+        $getProductListFinal = Products::where('status',1)->whereRaw(DB::raw($category_custom_query))->paginate(10,['*'],'page',$pageNo);
+        $productItems = "";
+        if($getProductListFinal->count()){
+            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+        }
+        $isNextPage = $getProductListFinal->hasMorePages();
+        $nextPage = $getProductListFinal->currentPage() + 1;
+
+        return [
+            'status'=>200,
+            'productItems' => $productItems,
+            'isNextPage' => $isNextPage,
+            'nextPage' => $nextPage,
+        ];
+    }
+
 }
 
