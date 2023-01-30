@@ -8,7 +8,8 @@ use App\Models\Pages;
 use App\Models\Posts;
 use App\Models\PostCategory;
 use App\Models\Products;
-//use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
+use App\Models\Category;
+use DB;
 
 class PageController
 {
@@ -16,7 +17,7 @@ class PageController
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function page($slug=null)
+    public function page($slug=null,$slug2=null, $slug3=null)
     {
         
         if($slug!=null){
@@ -24,16 +25,35 @@ class PageController
 
             $pageData = Pages::where('slug',$slug)->where('status',1)->first();
             $pageCategory = PostCategory::where('slug',$slug)->first();
-			//$blogdata= Posts::take(5)->orderBy('id','DESC')->where('status', 1)->get();
+            $productCategories = Category::where('slug',$slug)->first();
+            
             if($pageData){
+                /** Slug belongs to page */
                 return view('front.pages.templates.'.$pageData->template.'',['data'=>$pageData]);//,'showdata'=>$blogdata]);
             }elseif($pageCategory){
-
+                /** Slug belongs to blog Category */
                 $redirectTo = route('blog_list', $pageCategory->slug);
                 return redirect($redirectTo, 301);
-                // return redirect()->route('blog_list', $pageCategory->slug);
-				// return view('front.pages.templates.blog_template',['data'=>$pageCategory, 'blog_details' => 1]);//,'showdata'=>$blogdata]);
-			}
+			}elseif($productCategories){
+                $productListingData = getProductListing($slug, $slug2, $slug3, request()->all());
+                if($productListingData['status'] == 404){
+                    return view('layouts.errors.404');
+                }else if($productListingData['status'] == 200){
+                    $productItems = $productListingData['productItems'];
+                    $isNextPage = $productListingData['isNextPage'];
+                    $nextPage = $productListingData['nextPage'];
+                    return view('front.pages.product_listing_page',compact([
+                        'productItems',
+                        'isNextPage',
+                        'nextPage',
+                        "slug", 
+                        "slug2", 
+                        "slug3"
+                    ]));
+                }else{
+                    return view('layouts.errors.404');
+                }
+            }
 
             return view('layouts.errors.404');
         }else{
