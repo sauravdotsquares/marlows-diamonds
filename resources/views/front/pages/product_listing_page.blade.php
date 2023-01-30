@@ -20,8 +20,10 @@
                         {!! $productItems !!}
                     </div>
                 </div>
-                <div class="ajax-load text-center" style="display:{{ $isNextPage ? 'block' : 'none' }};">
-                    <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
+
+                <div class="loading-data-element"></div>
+                <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
+                <div class="ajax-load text-center" style="display:none;">
                     <img src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More Products</p>
                     <button style="display: none;" class="ajax-load-btn">Load more data</button>
                 </div>
@@ -30,6 +32,8 @@
             </div>
             
             <div class="category-sidebar-wrap">
+
+                <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
 
                 <div class="sidebar-main-cart">
                     <div class="sidebar-title">
@@ -122,7 +126,6 @@ $(document).ready(function(){
 
 
     $(document).on('mouseenter','.product-hover-affect', function (event) {
-        console.log('mouse enter')
         if($(this).find('video').length){
             $(this).find('video')[0].play()
         }
@@ -155,8 +158,33 @@ $(document).ready(function(){
         if($(this).find('video').length){
             $(this).find('video')[0].play()
         }
-    });   
+    });
 
+    // $(document).on('keyup','.search-item', function(){
+    //     $("#showProductList").empty();
+    //     $("#nextPageNumber").val(1);
+    //     loadMoreData();
+    //     // console.log('first', $(this).val());
+    // });
+
+    var typingTimer;                //timer identifier
+	var doneTypingInterval = 1000;  //time in ms, 5 seconds for example
+	var $input = ".search-item";
+
+
+    $(document).on('keyup',$input, function(){
+        // $(".search-icon").attr('src',searchLoadingIcon);
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    });
+
+    function doneTyping () {
+		$("#showProductList").empty();
+        $("#nextPageNumber").val(1);
+        clearTimeout(typingTimer);
+        loadMoreData();
+        
+	}
 
         // loadMoreData();
 
@@ -165,7 +193,7 @@ $(document).ready(function(){
         $(document).ready(function() {
             $(document).on('scroll',function(){
                 if(triggerScrollEvent){
-                    if($(".ajax-load").isInViewport()){
+                    if($(".loading-data-element").isInViewport()){
                         triggerScrollEvent = false;
                         $(".ajax-load-btn").trigger('click');
                     }
@@ -201,7 +229,6 @@ $(document).ready(function(){
 
                 if(!data.isNextPage){
                     triggerScrollEvent = false;
-
                 }
 
             }).fail(function(jqXHR, ajaxOptions, thrownError){
