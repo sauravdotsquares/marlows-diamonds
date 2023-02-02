@@ -114,6 +114,9 @@ class ProductController extends Controller
         if($validator->fails()){
             return Redirect::back()->withErrors($validator->errors())->withInput();
         }else{
+
+            //prd($request->all());
+
             $productDetails = Products::updateOrCreate(['id'=>$request->table_id],[
                 'title'=> $request->title,
                 'slug'=> strtolower($newCustomSlug),
@@ -176,8 +179,7 @@ class ProductController extends Controller
         return redirect()->back()->with('success', $msg);
     }
 
-    public function updateProductVariation($productId,$getVariationArray)
-    {
+    public function updateProductVariation($productId,$getVariationArray){
 
         $getProductVariation = ProductVariations::where('product_id',$productId)->pluck('id');
         //ProductVariationDetails::whereIn('variation_id',$getProductVariation)->delete();
@@ -386,20 +388,15 @@ class ProductController extends Controller
     // {
     //     $getVariationId = ProductVariations::where('product_id',$request->id)->pluck('id');
     //     $getVariationData = ProductVariations::where('product_id',$request->id)->get();
-
     //     $getVariationDetails = ProductVariationDetails::select('variation_id','key','value')->whereIn('variation_id',$getVariationId)->get();
-
     //     $getData = Attributes::latest()->get();
-
     //     $result = [
     //         'getVariationId' => $getVariationId,
     //         'getVariationData' => $getVariationData,
     //         'getVariationDetails' => $getVariationDetails,
     //         'getData'=>$getData
     //     ];
-
     //     return response()->json($result);
-
     // }
 
     public function getProductDetailsVariation(Request $request)
