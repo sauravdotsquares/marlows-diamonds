@@ -548,14 +548,6 @@
                getDropdownDesign(res.getData);
             }
             return false;
-            // console.log(res);
-            // if (res.length) {
-            //    $('#show_attributes').empty();
-            //    $.each(res, function (key, value) {
-            //       $("#show_attributes").append('<div><input type="checkbox" id="attributevari' + value.id + '" name="selected_attribute_name[]" data-name="' + value.name + '" data-value="' + value.values + '" value="attri_' + value.slug + '">' + value.name + '</div>');
-            //    });
-            // }
-            // return false;
          }
       });
    }

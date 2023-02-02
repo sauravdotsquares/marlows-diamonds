@@ -412,8 +412,8 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 	
 	
 
-
-	Route::get('{page}/{slug2?}/{slug3?}', 'PageController@page')->name('page');
+	// {slug2?}/{slug3?}
+	Route::get('{page}', 'PageController@page')->name('page');
 	Route::group(['as' => 'app_products.', 'prefix' => 'p' ], function () {
 
 		Route::any('/detail/{product_slug}', 'AppProductsController@productDetails')->name('details');
