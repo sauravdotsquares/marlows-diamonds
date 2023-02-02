@@ -200,18 +200,26 @@ $(document).ready(function(){
             'transition' : 'all 200ms ease-in',
             'transform': 'scale(1.2)'
         });
-        $(this).find('.product-hover-video').css({
-            'display': "block",
-            'position': "absolute",
-            'top': "0",
-            "width": "100%",
-            "height" : "100%",
-            "background" : "#fff"
-        });
+
         const isIosDevice = isIOS();
-        if($(this).find('video').length && isIosDevice){
-            $(this).find('video')[0].play()
+        if(!isIosDevice){
+            $(this).find('.product-hover-video').css({
+                'display': "block",
+                'position': "absolute",
+                'top': "0",
+                "width": "100%",
+                "height" : "100%",
+                "background" : "#fff"
+            });
+        
+            if($(this).find('video').length){
+                console.log('This is android or other device');
+                $(this).find('video')[0].play()
+            }
         }
+
+        
+
     })
     // .on('touchend' ,function() {
     //     console.log('touchend');
