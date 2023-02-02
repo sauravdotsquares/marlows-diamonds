@@ -187,7 +187,7 @@ $(document).ready(function(){
         }
 
     $(document).on('mouseenter','.product-hover-affect', function (event) {
-        addVideoHoverCss($(this));
+        //addVideoHoverCss($(this));
         // $(this).find('a.product-hov').css({
         //     '-webkit-transition' : 'all 200ms ease-in',
         //     '-webkit-transform' : 'scale(1.2)',
@@ -202,7 +202,7 @@ $(document).ready(function(){
             $(this).find('video')[0].play()
         }
     }).on('mouseleave','.top-level',  function(){
-        addVideoHoverCss($(this));
+        //addVideoHoverCss($(this));
         // $(this).find('a.product-hov').css({
         //     '-webkit-transition' : 'all 200ms ease-in',
         //     '-webkit-transform' : 'scale(1.2)',
@@ -219,13 +219,6 @@ $(document).ready(function(){
     });
 
     $(document).on('touchstart','.product-hover-affect',function() {
-
-        // console.log('touchstart', $(this).find('video'));
-        //display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff;
-        // a.product-hov {
-        //     -webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
-        // -ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);}
-
         const isIosDevice = isIOS();
         if(!isIosDevice){
             addVideoHoverCss($(this));
@@ -252,6 +245,8 @@ $(document).ready(function(){
             if($(this).find('video').length){
                 $(this).find('video')[0].play()
             }
+        }else{
+            $(this).find('a.product-hov').removeClass('product-hov');
         }
     })
     // .on('touchend' ,function() {

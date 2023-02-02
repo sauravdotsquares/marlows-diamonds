@@ -1049,7 +1049,8 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 
 
 .product-grid-items-item.product-hover-affect .product-items-item-info .product-hover-video {display: none;}
-/** .product-grid-items-item.product-hover-affect .product-items-item-info:hover a.product-hov {-webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in; -ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);} */
+.product-grid-items-item.product-hover-affect .product-items-item-info:hover a.product-hov {-webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
+-ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);}
 .product-grid-items-item.product-hover-affect .product-items-item-info:hover .product-hover-video {display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff;}
 
 .blog-list-sidebar{
