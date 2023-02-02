@@ -172,7 +172,6 @@ $(document).ready(function(){
 
 
     $(document).on('mouseenter','.product-hover-affect', function (event) {
-        console.log('mouse enter')
         if($(this).find('video').length){
             $(this).find('video')[0].play()
         }
@@ -181,8 +180,8 @@ $(document).ready(function(){
         if($(this).find('video').length){
             $(this).find('video')[0].pause()
         }
-    })
-    
+    });
+
     $(document).on('touchstart','.product-hover-affect',function() {
 
         // console.log('touchstart', $(this).find('video'));
@@ -209,8 +208,8 @@ $(document).ready(function(){
             "height" : "100%",
             "background" : "#fff"
         });
-
-        if($(this).find('video').length){
+        const isIosDevice = isIOS();
+        if($(this).find('video').length && isIosDevice){
             $(this).find('video')[0].play()
         }
     })
