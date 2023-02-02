@@ -190,19 +190,19 @@ $(document).ready(function(){
         //     -webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
         // -ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);}
 
-        $(this).find('a.product-hov').css({
-            '-webkit-transition' : 'all 200ms ease-in',
-            '-webkit-transform' : 'scale(1.2)',
-            '-ms-transition' : 'all 200ms ease-in',
-            '-ms-transform' : 'scale(1.2)',
-            '-moz-transition' : 'all 200ms ease-in',
-            '-moz-transform' : 'scale(1.2)',
-            'transition' : 'all 200ms ease-in',
-            'transform': 'scale(1.2)'
-        });
-
         const isIosDevice = isIOS();
         if(!isIosDevice){
+            $(this).find('a.product-hov').css({
+                '-webkit-transition' : 'all 200ms ease-in',
+                '-webkit-transform' : 'scale(1.2)',
+                '-ms-transition' : 'all 200ms ease-in',
+                '-ms-transform' : 'scale(1.2)',
+                '-moz-transition' : 'all 200ms ease-in',
+                '-moz-transform' : 'scale(1.2)',
+                'transition' : 'all 200ms ease-in',
+                'transform': 'scale(1.2)'
+            });
+
             $(this).find('.product-hover-video').css({
                 'display': "block",
                 'position': "absolute",
@@ -217,9 +217,6 @@ $(document).ready(function(){
                 $(this).find('video')[0].play()
             }
         }
-
-        
-
     })
     // .on('touchend' ,function() {
     //     console.log('touchend');
