@@ -170,48 +170,83 @@ $(document).ready(function(){
 </script>
     <script>
 
+        function addVideoHoverCss($element=null){
+            if($element){
+                $element.find('a.product-hov').css({
+                    '-webkit-transition' : 'all 200ms ease-in',
+                    '-webkit-transform' : 'scale(1.2)',
+                    '-ms-transition' : 'all 200ms ease-in',
+                    '-ms-transform' : 'scale(1.2)',
+                    '-moz-transition' : 'all 200ms ease-in',
+                    '-moz-transform' : 'scale(1.2)',
+                    'transition' : 'all 200ms ease-in',
+                    'transform': 'scale(1.2)'
+                });
+            }
+            return true;
+        }
 
     $(document).on('mouseenter','.product-hover-affect', function (event) {
-        console.log('mouse enter')
+        //addVideoHoverCss($(this));
+        // $(this).find('a.product-hov').css({
+        //     '-webkit-transition' : 'all 200ms ease-in',
+        //     '-webkit-transform' : 'scale(1.2)',
+        //     '-ms-transition' : 'all 200ms ease-in',
+        //     '-ms-transform' : 'scale(1.2)',
+        //     '-moz-transition' : 'all 200ms ease-in',
+        //     '-moz-transform' : 'scale(1.2)',
+        //     'transition' : 'all 200ms ease-in',
+        //     'transform': 'scale(1.2)'
+        // });
         if($(this).find('video').length){
             $(this).find('video')[0].play()
         }
     }).on('mouseleave','.top-level',  function(){
-        console.log('mouse leave')
+        //addVideoHoverCss($(this));
+        // $(this).find('a.product-hov').css({
+        //     '-webkit-transition' : 'all 200ms ease-in',
+        //     '-webkit-transform' : 'scale(1.2)',
+        //     '-ms-transition' : 'all 200ms ease-in',
+        //     '-ms-transform' : 'scale(1.2)',
+        //     '-moz-transition' : 'all 200ms ease-in',
+        //     '-moz-transform' : 'scale(1.2)',
+        //     'transition' : 'all 200ms ease-in',
+        //     'transform': 'scale(1.2)'
+        // });
         if($(this).find('video').length){
             $(this).find('video')[0].pause()
         }
-    })
-    
+    });
+
     $(document).on('touchstart','.product-hover-affect',function() {
+        const isIosDevice = isIOS();
+        if(!isIosDevice){
+            addVideoHoverCss($(this));
+            // $(this).find('a.product-hov').css({
+            //     '-webkit-transition' : 'all 200ms ease-in',
+            //     '-webkit-transform' : 'scale(1.2)',
+            //     '-ms-transition' : 'all 200ms ease-in',
+            //     '-ms-transform' : 'scale(1.2)',
+            //     '-moz-transition' : 'all 200ms ease-in',
+            //     '-moz-transform' : 'scale(1.2)',
+            //     'transition' : 'all 200ms ease-in',
+            //     'transform': 'scale(1.2)'
+            // });
 
-        // console.log('touchstart', $(this).find('video'));
-        //display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff;
-        // a.product-hov {
-        //     -webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
-        // -ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);}
-
-        $(this).find('a.product-hov').css({
-            '-webkit-transition' : 'all 200ms ease-in',
-            '-webkit-transform' : 'scale(1.2)',
-            '-ms-transition' : 'all 200ms ease-in',
-            '-ms-transform' : 'scale(1.2)',
-            '-moz-transition' : 'all 200ms ease-in',
-            '-moz-transform' : 'scale(1.2)',
-            'transition' : 'all 200ms ease-in',
-            'transform': 'scale(1.2)'
-        });
-        $(this).find('.product-hover-video').css({
-            'display': "block",
-            'position': "absolute",
-            'top': "0",
-            "width": "100%",
-            "height" : "100%",
-            "background" : "#fff"
-        });
-
-        if($(this).find('video').length){
-            $(this).find('video')[0].play()
+            $(this).find('.product-hover-video').css({
+                'display': "block",
+                'position': "absolute",
+                'top': "0",
+                "width": "100%",
+                "height" : "100%",
+                "background" : "#fff"
+            });
+        
+            if($(this).find('video').length){
+                $(this).find('video')[0].play()
+            }
+        }else{
+            $(this).find('a.product-hov').removeClass('product-hov');
         }
     })
     // .on('touchend' ,function() {
