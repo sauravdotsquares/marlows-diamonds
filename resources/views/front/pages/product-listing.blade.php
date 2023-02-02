@@ -172,6 +172,7 @@ $(document).ready(function(){
 
 
     $(document).on('mouseenter','.product-hover-affect', function (event) {
+        console.log('mouseenter');
         if($(this).find('video').length){
             $(this).find('video')[0].play()
         }
@@ -213,7 +214,6 @@ $(document).ready(function(){
             });
         
             if($(this).find('video').length){
-                console.log('This is android or other device');
                 $(this).find('video')[0].play()
             }
         }
