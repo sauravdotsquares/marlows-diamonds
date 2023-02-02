@@ -286,7 +286,7 @@
 
 <script>
 
-        var countDownDate = new Date("01/31/2023 23:59:59").getTime();
+        var countDownDate = new Date("02/12/2023 23:59:59").getTime();
         var myfunc = setInterval(function() {
 
         var now = new Date().getTime();
@@ -309,8 +309,7 @@
         $(".discount_timer").text(timerToShow);
         // console.log('first', hoursToShow);
         // console.log('first', minutesToShow);
-        // console.log('first', secondsToShow);
-            
+        // console.log('first', secondsToShow);  
         // Display the message when countdown is over
         if (timeleft < 0) {
             clearInterval(myfunc);

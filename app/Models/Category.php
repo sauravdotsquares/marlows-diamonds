@@ -11,7 +11,7 @@ class Category extends Model
 
     protected $table = 'categories';
 
-    protected $fillable = ['name','title','slug','parent_id','short_description','description','image_url','meta_title','meta_keyword','meta_description','enable_filter','sort_order','active_icon','hover_icon','status'];
+    protected $fillable = ['name','title','slug','parent_id','short_description','description','image_url','meta_title','meta_keyword','meta_description','enable_filter','sort_order','active_icon','hover_icon','status','is_category_page'];
 
     protected $appends = ['parent_details','parent_cate'];
 
