@@ -9,6 +9,8 @@ use App\Models\Posts;
 use App\Models\PostCategory;
 use App\Models\Products;
 use App\Models\Category;
+use App\Models\Attributes;
+use App\Models\CategoryPageFilter;
 use DB;
 
 class PageController
@@ -42,13 +44,25 @@ class PageController
                     $productItems = $productListingData['productItems'];
                     $isNextPage = $productListingData['isNextPage'];
                     $nextPage = $productListingData['nextPage'];
+
+                    $path = request()->path();                    
+                    $categoiresForFilter = CategoryPageFilter::where('page',$path)->pluck('category_id');
+                    $metalTypesForFilter = Attributes::where('slug','metal-type')->first();
+                    $metalTypesForFilter = explode('|',$metalTypesForFilter->values);
+                    
+                    $categories = Category::select(['name','id','status','parent_id'])
+                    ->whereIn('id', $categoiresForFilter)
+                    ->where(['is_category_page'=>0, 'status'=>1,'parent_id'=> 0 ])->get();
+
                     return view('front.pages.product_listing_page',compact([
                         'productItems',
                         'isNextPage',
                         'nextPage',
                         "slug", 
                         "slug2", 
-                        "slug3"
+                        "slug3",
+                        "categories",
+                        "metalTypesForFilter"
                     ]));
                 }else{
                     return view('layouts.errors.404');
@@ -67,9 +81,6 @@ class PageController
     {
 
     	$getPostCategory = PostCategory::where('slug',$request->slug)->pluck('id')->first();
-
-        // prd($request->all());
-        
 
         if(isset($getPostCategory) && !empty($getPostCategory)){
             $query = Posts::orderBy('id','DESC')->where('status', 1)->whereRaw("find_in_set('".$getPostCategory."',categories)");

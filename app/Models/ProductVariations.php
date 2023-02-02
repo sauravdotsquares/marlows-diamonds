@@ -26,6 +26,11 @@ class ProductVariations extends Model
         // $getVariId = self::where('product_id',$this->product_id)->pluck('id');
         return ProductVariationDetails::where('variation_id',$this->id)->select('variation_id','key','value')->get();
     }
+    
+    public function variDetails(){
+        return $this->hasMany(ProductVariationDetails::class,'variation_id', 'id' );
+        // return ProductVariationDetails::where('variation_id',$this->id)->select('variation_id','key','value')->get();
+    }
 
     public function product(){
         return $this->hasOne(Products::class, 'id', 'product_id');

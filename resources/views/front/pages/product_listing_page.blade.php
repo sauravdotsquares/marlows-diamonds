@@ -33,7 +33,34 @@
             
             <div class="category-sidebar-wrap">
 
-                <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
+                
+
+                <div class="filter-container">
+
+                    <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
+                    <div class="category-filter-title">
+                        <h3>Filter by category</h3>
+                    </div>
+                    <ul>
+                        @foreach ($categories as $category_item)
+                            <li><a class="category-filter-item" data-id="{{$category_item->id}}" href="javascript:;">{{ $category_item->name }}</a></li>
+                        @endforeach
+                    </ul>
+
+                    <div class="metal-type-filter-title">
+                        <h3>Filter by metal type</h3>
+                    </div>
+                    <ul>
+                        @foreach ($metalTypesForFilter as $metal_type)
+                            <li><a class="metal-type-filter-item" data-id="{{ trim($metal_type)}}" href="javascript:;">{{ $metal_type }}</a></li>
+                        @endforeach
+                    </ul>
+
+                    <div class="reset-filer-container">
+                        <button class="reset-filer-btn">Reset search</button>
+                    </div>
+
+                </div>
 
                 <div class="sidebar-main-cart">
                     <div class="sidebar-title">
@@ -125,6 +152,8 @@ $(document).ready(function(){
     <script>
 
 
+
+
     $(document).on('mouseenter','.product-hover-affect', function (event) {
         if($(this).find('video').length){
             $(this).find('video')[0].play()
@@ -160,12 +189,6 @@ $(document).ready(function(){
         }
     });
 
-    // $(document).on('keyup','.search-item', function(){
-    //     $("#showProductList").empty();
-    //     $("#nextPageNumber").val(1);
-    //     loadMoreData();
-    //     // console.log('first', $(this).val());
-    // });
 
     var typingTimer;                //timer identifier
 	var doneTypingInterval = 1000;  //time in ms, 5 seconds for example
@@ -173,20 +196,36 @@ $(document).ready(function(){
 
 
     $(document).on('keyup',$input, function(){
-        // $(".search-icon").attr('src',searchLoadingIcon);
         clearTimeout(typingTimer);
         typingTimer = setTimeout(doneTyping, doneTypingInterval);
     });
+
+    $(document).on('click','.category-filter-item', function(){
+        $('.category-filter-item').removeClass('active');
+        $(this).addClass('active');
+        setTimeout(()=>{
+            doneTyping();
+        },100)
+    });
+
+    $(document).on('click','.metal-type-filter-item', function(){
+        $('.metal-type-filter-item').removeClass('active');
+        $(this).addClass('active');
+        setTimeout(()=>{
+            doneTyping();
+        },100)
+    });
+
+
+    
+
 
     function doneTyping () {
 		$("#showProductList").empty();
         $("#nextPageNumber").val(1);
         clearTimeout(typingTimer);
         loadMoreData();
-        
 	}
-
-        // loadMoreData();
 
         /** On scroll get more data */
         var triggerScrollEvent = true;
@@ -207,8 +246,74 @@ $(document).ready(function(){
             loadMoreData();
         });
 
-        function loadMoreData(){
+        
+        $(".reset-filer-btn").on('click', function(){
+            $("#nextPageNumber").val('1');
+            $(".search-item").val('');
+            $(".category-filter-item").removeClass('active');
+            $(".metal-type-filter-item").removeClass('active');
+            setTimeout(()=>{
+                $("#showProductList").empty();
+                $("#nextPageNumber").val(1);
+                loadMoreData(true);
+            },100)
+        });
+
+
+        function loadMorePassData () {
             const page = $("#nextPageNumber").val();
+            const searchKeyword = $(".search-item").val();
+            const categorySearch = $(".category-filter-item.active").attr('data-id');
+            const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
+
+            var url = new URL(location.href);
+            url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
+            url.searchParams.set('category', (categorySearch ? categorySearch : ''));
+            url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
+            if (history.pushState) {
+                window.history.pushState({path:url.href},'',url.href);
+            }
+            return {
+                '_token': "{{csrf_token()}}",
+                keyword: searchKeyword,
+                category: categorySearch,
+                metal_type : metalTypeSearch,
+                slug : "{{ $slug }}",
+                slug2 : "{{ $slug2 }}",
+                slug3 : "{{ $slug3 }}",
+                page: page
+            };
+
+
+        }
+
+        function loadMoreData(resetSearch=false){
+
+            // const dataToPass = loadMorePassData(resetSearch);
+            const page = $("#nextPageNumber").val();
+            const searchKeyword = $(".search-item").val();
+            const categorySearch = $(".category-filter-item.active").attr('data-id');
+            const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
+
+            var url = new URL(location.href);
+            url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
+            url.searchParams.set('category', (categorySearch ? categorySearch : ''));
+            url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
+            if (history.pushState) {
+                window.history.pushState({path:url.href},'',url.href);
+            }
+
+            if(resetSearch){
+                var url = {
+                    href: window.location.href.split('?')[0]
+                }
+                if (history.pushState) {
+                    window.history.pushState({path:url.href},'',url.href);
+                }
+            }
+
+
+
             $.ajax({
                 url: '{{url("product-listing-data")}}?page='+page,
                 type: "post",
@@ -217,7 +322,10 @@ $(document).ready(function(){
                     'page':page,
                     "slug" : "{{ $slug }}",
                     "slug2" : "{{ $slug2 }}",
-                    "slug3" : "{{ $slug3 }}"
+                    "slug3" : "{{ $slug3 }}",
+                    "keyword": searchKeyword,
+                    "category": categorySearch,
+                    "metal_type" : metalTypeSearch
                 },
             }).done(function(data){
                 triggerScrollEvent = true;

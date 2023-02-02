@@ -327,7 +327,7 @@ input.input-control{height:38px}
 .cols-ryt-tags:not(.wedding-rings, .diamond-jewellery) .filter-tags-col {max-width: 12%;flex: 0 0 12%;-ms-flex: 0 0 12%;}
 
 .product-filter-col:first-child {border-right: 2px solid #EFEFEF;max-width: 45%;flex: 0 0 45%;-ms-flex: 0 0 45%;}
-.category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top; background: #f2f2f7; padding: 12px 18px 20px;}
+.category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top; background: #f2f2f7; padding:22px 18px 20px; margin-top: 9px;}
 .category-list-wrap {width: 76%;display: inline-block;vertical-align: top;padding-right: 30px;}
 .is-active .category-product-filter-icon img, .category-product-filter-icon:hover img { filter: brightness(0) saturate(100%) invert(19%) sepia(95%) saturate(1175%) hue-rotate(293deg) brightness(98%) contrast(87%) }
 .product-grid-items-item {flex: 0 0 25%;max-width: 25%;-ms-flex: 0 0 25%;width: 100%;padding: 10px 10px; text-align: center;}
@@ -373,7 +373,8 @@ input.input-control{height:38px}
 .sidebar-main-cart {margin: 0 0 44px 0;}
 .side-recently-item .side-recently-pr-img img {max-width: 40px;}
 .side-recently-item .side-recently-pr-name {text-decoration: none;display: block;color: #8e2e65;font-size: 14px; padding-right: 10px;}
-.side-recently-col {display: flex;border-bottom: 1px solid #D0D0D0;padding: 0 0 8px 0;margin: 0 0 20px 0; justify-content: space-between;}
+.side-recently-col {display: flex;border-bottom: 1px solid #D0D0D0;padding: 0 0 8px 0;margin: 0 0 20px 0; justify-content: space-between;
+-webkit-box-align: center;-ms-flex-align: center;align-items: center;}
 
 /** Product details page css start**/
 .product-image-text-sec .leftright-imt-col {max-height: 500px;overflow: hidden;}
@@ -465,7 +466,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .blogdetail-desc {margin: 19px 0 0 0;}
 .blogbold-heading {font-size: 16px;font-weight: bold;margin: 24px 0 5px 0;color: #464646;}
 .blogdetails-sidebar {background: #f2f2f7;padding: 12px 18px 20px;}
-.sidebar-title {font-size: 18px;color: #902f66;font-weight: bold;border-bottom: 1px solid #ccc;padding: 6px 0 8px;margin: 0 0 18px 0;}
+.sidebar-title {font-size: 18px;color: #902f66;font-weight: bold;border-bottom: 1px solid #ccc;padding: 6px 0 8px;margin: 0 0 8px 0;}
 .blogall-categ ul li{ display: block; }
 .blogall-categ ul li a {text-decoration: none;color: #505050;display: block;border-bottom: 1px solid #CFCFCF;padding: 8px 0;}
 .blogall-categ ul li a:hover{ color: #8e2e65 }
@@ -1014,6 +1015,16 @@ a[disabled="disabled"] {pointer-events: none;}
 	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;  
 }
 
+/*filter design css*/
+.category-sidebar-wrap .filter-container input#search {width: 100%;border: 1px solid #ccc;padding: 7px 15px;border-radius: 6px;margin: 0 0 15px;}
+.category-sidebar-wrap h3 {font-weight: bold;font-size: 24px;}
+.category-sidebar-wrap .filter-container ul {margin: 0 0 20px;}
+.category-sidebar-wrap .filter-container ul li {margin: 0 0 0;list-style: none;line-height: 35px;}
+.category-sidebar-wrap .filter-container ul li a {color:#383838;text-decoration: none;font-size: 15px;}
+.category-sidebar-wrap .reset-filer-container button.reset-filer-btn {width: 100%;background-color: #8e2e65;color: #fff;font-size: 15px;padding: 14px 26px;text-transform: uppercase;text-decoration: none;
+font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15px;}
+.category-sidebar-wrap .reset-filer-container button.reset-filer-btn:hover {box-shadow: 5px 5px 0 rgb(0 0 0 / 80%);color: #fff;}
+/*filter design css end*/
 
 @media(max-width:1300px){
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu {

@@ -1159,7 +1159,29 @@ if (!function_exists('validate_breadcrumb')) {
         }
 
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
-        $getProductListFinal = Products::where('status',1)->whereRaw(DB::raw($category_custom_query))->paginate(8,['*'],'page',$pageNo);
+        $query = Products::where('status',1)->whereRaw(DB::raw($category_custom_query));
+
+        /** Search filter */
+        if(!empty($requestData['keyword'])){
+            $keyword = $requestData['keyword'];
+            $query = $query->where('title','LIKE',"%$keyword%");
+        }
+
+        if(!empty($requestData['category']) && $requestData['category']!='undefined'){
+            $getPostCategory = $requestData['category'];
+            $query = $query->whereRaw("find_in_set('".$getPostCategory."',categories)");
+        }
+
+        if(!empty($requestData['metal_type']) && $requestData['metal_type']!='undefined'){
+            $metal_type = $requestData['metal_type'];
+            $query->whereHas('getProductVariation.variDetails', function($query) use ($metal_type){
+                $query->where('value',$metal_type);
+            });
+        }
+        
+        $getProductListFinal = $query->paginate(50,['*'],'page',$pageNo);
+        
+
         $productItems = "";
         if($getProductListFinal->count()){
             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
