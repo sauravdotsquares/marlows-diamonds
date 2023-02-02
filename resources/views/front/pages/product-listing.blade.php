@@ -170,14 +170,49 @@ $(document).ready(function(){
 </script>
     <script>
 
+        function addVideoHoverCss($element=null){
+            if($element){
+                $element.find('a.product-hov').css({
+                    '-webkit-transition' : 'all 200ms ease-in',
+                    '-webkit-transform' : 'scale(1.2)',
+                    '-ms-transition' : 'all 200ms ease-in',
+                    '-ms-transform' : 'scale(1.2)',
+                    '-moz-transition' : 'all 200ms ease-in',
+                    '-moz-transform' : 'scale(1.2)',
+                    'transition' : 'all 200ms ease-in',
+                    'transform': 'scale(1.2)'
+                });
+            }
+            return true;
+        }
 
     $(document).on('mouseenter','.product-hover-affect', function (event) {
-        console.log('mouseenter');
+        addVideoHoverCss($(this));
+        // $(this).find('a.product-hov').css({
+        //     '-webkit-transition' : 'all 200ms ease-in',
+        //     '-webkit-transform' : 'scale(1.2)',
+        //     '-ms-transition' : 'all 200ms ease-in',
+        //     '-ms-transform' : 'scale(1.2)',
+        //     '-moz-transition' : 'all 200ms ease-in',
+        //     '-moz-transform' : 'scale(1.2)',
+        //     'transition' : 'all 200ms ease-in',
+        //     'transform': 'scale(1.2)'
+        // });
         if($(this).find('video').length){
             $(this).find('video')[0].play()
         }
     }).on('mouseleave','.top-level',  function(){
-        console.log('mouse leave')
+        addVideoHoverCss($(this));
+        // $(this).find('a.product-hov').css({
+        //     '-webkit-transition' : 'all 200ms ease-in',
+        //     '-webkit-transform' : 'scale(1.2)',
+        //     '-ms-transition' : 'all 200ms ease-in',
+        //     '-ms-transform' : 'scale(1.2)',
+        //     '-moz-transition' : 'all 200ms ease-in',
+        //     '-moz-transform' : 'scale(1.2)',
+        //     'transition' : 'all 200ms ease-in',
+        //     'transform': 'scale(1.2)'
+        // });
         if($(this).find('video').length){
             $(this).find('video')[0].pause()
         }
@@ -193,16 +228,17 @@ $(document).ready(function(){
 
         const isIosDevice = isIOS();
         if(!isIosDevice){
-            $(this).find('a.product-hov').css({
-                '-webkit-transition' : 'all 200ms ease-in',
-                '-webkit-transform' : 'scale(1.2)',
-                '-ms-transition' : 'all 200ms ease-in',
-                '-ms-transform' : 'scale(1.2)',
-                '-moz-transition' : 'all 200ms ease-in',
-                '-moz-transform' : 'scale(1.2)',
-                'transition' : 'all 200ms ease-in',
-                'transform': 'scale(1.2)'
-            });
+            addVideoHoverCss($(this));
+            // $(this).find('a.product-hov').css({
+            //     '-webkit-transition' : 'all 200ms ease-in',
+            //     '-webkit-transform' : 'scale(1.2)',
+            //     '-ms-transition' : 'all 200ms ease-in',
+            //     '-ms-transform' : 'scale(1.2)',
+            //     '-moz-transition' : 'all 200ms ease-in',
+            //     '-moz-transform' : 'scale(1.2)',
+            //     'transition' : 'all 200ms ease-in',
+            //     'transform': 'scale(1.2)'
+            // });
 
             $(this).find('.product-hover-video').css({
                 'display': "block",
