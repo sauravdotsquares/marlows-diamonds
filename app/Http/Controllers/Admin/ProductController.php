@@ -115,8 +115,6 @@ class ProductController extends Controller
             return Redirect::back()->withErrors($validator->errors())->withInput();
         }else{
 
-            //prd($request->all());
-
             $productDetails = Products::updateOrCreate(['id'=>$request->table_id],[
                 'title'=> $request->title,
                 'slug'=> strtolower($newCustomSlug),
@@ -131,6 +129,7 @@ class ProductController extends Controller
                 'categories'=>isset($request->categories)?implode(",",$request->categories):0,
                 'short_description'=> $request->short_description,
                 'description'=> $request->description,
+                'lab_description' => (!empty($request->lab_description) ? $request->lab_description : null),
                 'sale_price'=> $request->sale_price,
                 'regular_price'=> $request->regular_price,
                 'meta_title'=> $request->meta_title,

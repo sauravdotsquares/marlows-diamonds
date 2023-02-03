@@ -134,6 +134,14 @@
                                  class="form-control ckeditor">{{isset($getProductData->description)?$getProductData->description:''}}</textarea>
                            </div>
                         </div>
+
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="lab_description">Lab description</label>
+                              <textarea id="lab_description" name="lab_description" class="form-control summernote-editor">{{isset($getProductData->lab_description)?$getProductData->lab_description:''}}</textarea>
+                           </div>
+                        </div>
+
                      </div>
                   </div>
                </div>
@@ -578,11 +586,12 @@
    $(function () {
       // Summernote
       $('#short_description').summernote({
-         height: 100,
+         height: 50,
       })
       $('#description').summernote({
-         height: 200,
-      })
+         height: 100,
+      });
+      $('.summernote-editor').summernote({ height: 100 });
 
    });
 

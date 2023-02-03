@@ -20,7 +20,7 @@
 						  	<?php if($thumbnailGif->extension == "gif"){ ?>
 						  		<img src="{{ asset('storage/' . $thumbnailGif->image_url )}}" class="product-hover-video" >
 						  	<?php }else if($thumbnailGif->extension == "mp4"){ ?>
-								<video class="product-hover-video" muted="muted">
+								<video class="product-hover-video" muted="muted" playsinline >
 									<source src="{{ asset('storage/'.  $thumbnailGif->image_url)}}" type="video/mp4">
 								</video>
 							<?php } ?>
