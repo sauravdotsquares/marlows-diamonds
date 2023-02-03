@@ -127,7 +127,7 @@
 				</div>
 
 				@if($plainband==false)
-					@if(!in_array('exclusive-to-marlows', $all_categories_slug) )
+					@if(!in_array('exclusive-to-marlows', $all_categories_slug))
 					<div class="diamond-type">
 						<label>Choose Your Diamond</label>
 						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
@@ -158,10 +158,22 @@
 					</div>
 				</div>
 				<div id="apiCustomDesign">
-
 				</div>
 
-				@if( (!$plainband) &&  (!in_array('exclusive-to-marlows', $all_categories_slug)))
+				@if($plainband==false)
+					<div class="product-decriptions product-description-common product-description-common_mined" style="display: none;">
+						{!!$data->description ? $data->description : $data->description!!}
+					</div>
+					<div class="product-decriptions product-description-common product-description-common_lab_grown">
+						{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
+					</div>
+				@else
+					<div class="product-decriptions product-description-common product-description-common_mined">
+						{!!$data->description ? $data->description : $data->description!!}
+					</div>
+				@endif
+
+				{{-- @if( (!$plainband) &&  (!in_array('exclusive-to-marlows', $all_categories_slug)))
 					@if(!in_array('exclusive-to-marlows', $all_categories_slug) )
 						<div style="display: none;" class="product-decriptions  product-decriptions_varitions product-decriptions-mined ">
 							{!! $data->description !!}
@@ -178,12 +190,11 @@
 					<div class="product-decriptions">
 						{!!$data->old_description ? $data->old_description : $data->description!!}
 					</div>
-				@endif
+				@endif --}}
 				
 				
 				
                 <div class="product-finder-price"  id="discountedTotalPrice">
-
                 </div>
                 <div class="product-finder-price" id="finaldiamondprice">
 
@@ -490,6 +501,20 @@
             grecaptcha.reset();
         }
 
+
+		const totalDescription = $(".product-description-common");
+		console.log('totalDescription', totalDescription);
+
+		function changeDescription($element=null){
+			if($element){
+				const selectedElement = $element.val();
+				if(selectedElement == 'mined' || selectedElement == 'lab_grown'){
+					$(".product-description-common").css('display','none');
+					$(".product-description-common_"+selectedElement).css('display','block');
+				}
+			}
+		}
+
 		$(document).ready(function(){
 
             $('form#contactForm').validate({
@@ -573,17 +598,7 @@
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
-
-				// console.log($(this).val());
-				const selectedDiamondType = $(this).val();
-				if(selectedDiamondType == 'mined'){
-					$(".product-decriptions_varitions").css('display','none')
-					$(".product-decriptions-mined").css('display','block')
-				}else if(selectedDiamondType == 'lab_grown'){
-					$(".product-decriptions_varitions").css('display','none')
-					$(".product-decriptions-lab_grown").css('display','block')
-				}
-
+				changeDescription($(this));
 				getSelectedVariationsData();
 			});
 
@@ -627,15 +642,8 @@
 
 		function getSelectedVariationsData(){
 			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
-			console.log('diamond_type', diamond_type);
-			if(diamond_type == 'mined'){
-				$(".product-decriptions_varitions").css('display','none')
-				$(".product-decriptions-mined").css('display','block')
-			}else if(diamond_type == 'lab_grown'){
-				$(".product-decriptions_varitions").css('display','none')
-				$(".product-decriptions-lab_grown").css('display','block')
-			}
 
 			var variations = [];
 			$('.type-variations-row select').each(function(i, sel){

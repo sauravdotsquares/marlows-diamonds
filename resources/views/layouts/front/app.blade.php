@@ -9,6 +9,12 @@
     {{-- <meta name = "viewport" content = "width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no"> --}}
     <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
+
+
+    @if (request()->path() == "engagement-rings")
+      @include('layouts.front.engagement_rings_sechma')
+    @endif
+
     @include('layouts.front.seo_header')
 
 	  <link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />

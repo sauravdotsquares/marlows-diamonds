@@ -243,17 +243,13 @@
 				</div>
                 @endif
 				
-				<div class="product-decriptions mined_lab_items lab_item">
-					{{-- {!!$data->description!!} --}}
-					All of our sustainable diamonds in this section come with independent diamond reports (GIA/IGI/WGI/GCAL) for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost. Our diamonds are manufactured under our Trademark (pending) Green Earth Diamonds
-					{{-- All of our sustainable diamonds in this section come with independent diamond reports for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost.  --}}
-				</div>
 
-				{{-- mined_lab_items mined_item lab_item --}}
-				<div class="product-decriptions ">
-					{!!$data->description!!}
+				<div class="product-decriptions product-description-common product-description-common_mined_item" style="display: none;">
+					{!!$data->description ? $data->description : $data->description!!}
 				</div>
-
+				<div class="product-decriptions product-description-common product-description-common_lab_item">
+					{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
+				</div>
 				<div class="product-finder-price" id="finaldiamondprice">
 
 				</div>
@@ -565,6 +561,12 @@
 			$(".mined_lab_items").css('display','none');
 			$("." + classToPerform).css('display','flex');
 			$("." + classToPerform + "_block").css('display','block');
+
+
+			/** show and hide description */
+			$(".product-description-common").css('display','none');
+			$(".product-description-common_"+classToPerform).css('display','block');
+			
 			getFinalPrice();
 		}
 
