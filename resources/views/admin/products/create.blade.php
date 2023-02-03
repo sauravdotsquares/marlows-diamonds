@@ -108,6 +108,7 @@
                                  class="form-control ckeditor">{{isset($getData->short_description)?$getData->short_description:''}}</textarea>
                            </div>
                         </div>
+
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="description">Description</label>
@@ -115,6 +116,14 @@
                                  class="form-control ckeditor">{{isset($getData->description)?$getData->description:''}}</textarea>
                            </div>
                         </div>
+
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="lab_description">Lab description</label>
+                              <textarea id="lab_description" name="lab_description" class="form-control summernote-editor">{{isset($getData->lab_description)?$getData->lab_description:''}}</textarea>
+                           </div>
+                        </div>
+
                      </div>
                   </div>
                </div>
@@ -488,7 +497,7 @@
 
 @section('js')
 <!-- Select2 -->
-<script src="{{asset('')}}/admin/plugins/select2/js/select2.full.min.js"></script>
+<script src="{{asset('')}}admin/plugins/select2/js/select2.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
 
@@ -501,9 +510,9 @@
 
    $(function () {
       // Summernote
-      $('#short_description').summernote({ height: 100 })
-      $('#description').summernote({ height: 200 })
-
+      $('#short_description').summernote({ height: 50 })
+      $('#description').summernote({ height: 100 })
+      $('.summernote-editor').summernote({ height: 100 });
    });
 
    //validation and form submission function here
