@@ -1136,31 +1136,42 @@ class ProductController extends Controller
 
         /** Import all redirect urls */
         // TODO: 
-        $filePath = public_path('exports/products_description_live.csv');
-        $file = fopen($filePath, "r");
-        $totalRecordsAdded = 0;
-        
-        try {
-            $records = [];
-            while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+        //SELECT * FROM `md_products` WHERE dfinder_status=1 AND lab_description is null;
+        $add_description = "<div>All of our sustainable diamonds in this section come with independent diamond reports (GIA/IGI/WGI/GCAL) for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost. Our diamonds are manufactured under our Trademark (pending) Green Earth Diamonds</div>";
+        $products = Products::where('dfinder_status',1)->whereNull('lab_description')->get();
+        $totalUpdated = 0;
+        foreach ($products as $product_key => $product_value) {
+            $product_value->lab_description = $add_description .'<br />'. $product_value->description;
+            if($product_value->save()){$totalUpdated++;}
+        }
+        echo 'Total updated:- ' . $totalUpdated;
+        prd();
 
-                $product = Products::where('id', $getData[0])->first();
-                // $records[] = $getData;
-                if(!empty($product)){  
-                    $product->old_description = $product->description;
-                    $product->description = '<p>' . $getData[3] . '</p>';
-                    $product->lab_description = '<p>'. $getData[4] . '</p>';
-                    $product->save();
-                    $totalRecordsAdded++;
-                }
+        // $filePath = public_path('exports/products_description_live.csv');
+        // $file = fopen($filePath, "r");
+        // $totalRecordsAdded = 0;
+        
+        // try {
+        //     $records = [];
+        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+
+        //         $product = Products::where('id', $getData[0])->first();
+        //         // $records[] = $getData;
+        //         if(!empty($product)){  
+        //             $product->old_description = $product->description;
+        //             $product->description = '<p>' . $getData[3] . '</p>';
+        //             $product->lab_description = '<p>'. $getData[4] . '</p>';
+        //             $product->save();
+        //             $totalRecordsAdded++;
+        //         }
                 
-            }
-            // prd($records);
-            echo 'totalRecordsAdded- success:- '. $totalRecordsAdded;die;
-        } catch (\Exception $th) {
-            prd($th);
-            echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
-        }die;
+        //     }
+        //     // prd($records);
+        //     echo 'totalRecordsAdded- success:- '. $totalRecordsAdded;die;
+        // } catch (\Exception $th) {
+        //     prd($th);
+        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        // }die;
         // TODO:
 
         // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
