@@ -127,7 +127,7 @@
 				</div>
 
 				@if($plainband==false)
-					@if(!in_array('exclusive-to-marlows', $all_categories_slug) )
+					@if(!in_array('exclusive-to-marlows', $all_categories_slug))
 					<div class="diamond-type">
 						<label>Choose Your Diamond</label>
 						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
@@ -160,12 +160,18 @@
 				<div id="apiCustomDesign">
 				</div>
 
-				<div class="product-decriptions product-description-common product-description-common_mined" style="display: none;">
-					{!!$data->description ? $data->description : $data->description!!}
-				</div>
-				<div class="product-decriptions product-description-common product-description-common_lab_grown">
-					{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
-				</div>
+				@if($plainband==false)
+					<div class="product-decriptions product-description-common product-description-common_mined" style="display: none;">
+						{!!$data->description ? $data->description : $data->description!!}
+					</div>
+					<div class="product-decriptions product-description-common product-description-common_lab_grown">
+						{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
+					</div>
+				@else
+					<div class="product-decriptions product-description-common product-description-common_mined">
+						{!!$data->description ? $data->description : $data->description!!}
+					</div>
+				@endif
 
 				{{-- @if( (!$plainband) &&  (!in_array('exclusive-to-marlows', $all_categories_slug)))
 					@if(!in_array('exclusive-to-marlows', $all_categories_slug) )
@@ -494,6 +500,10 @@
             $('#requestAppointment').modal('hide');
             grecaptcha.reset();
         }
+
+
+		const totalDescription = $(".product-description-common");
+		console.log('totalDescription', totalDescription);
 
 		function changeDescription($element=null){
 			if($element){
