@@ -1064,6 +1064,25 @@ class ProductController extends Controller
          */
 
 
+
+        $filePath = public_path('revert_redirect.json');
+        $fileData = file_get_contents($filePath, "r");
+        $urls = json_decode($fileData);
+        
+        $totalAffectedRecords = 0;
+        foreach($urls as $url){
+            $old_url =  urlencode($url);
+            $redirectInfo = UrlRedirects::where('old_url',$old_url)->where('is_deleted',0)->first();
+            if(!empty($redirectInfo)){
+                $redirectInfo->is_deleted = 1;
+                $redirectInfo->save();
+                $totalAffectedRecords++;
+            }
+        }
+
+        echo 'totalAffectedRecords:- ' . $totalAffectedRecords . '<br>';
+        echo 'totalRecords:- ' . count($urls);die;
+
         // $productSlugs = 
         // Products::select(['slug','id','title','description','lab_description','categories'])
         // ->whereRaw('FIND_IN_SET(2, categories) OR FIND_IN_SET(47, categories)')
@@ -1137,15 +1156,15 @@ class ProductController extends Controller
         /** Import all redirect urls */
         // TODO: 
         //SELECT * FROM `md_products` WHERE dfinder_status=1 AND lab_description is null;
-        $add_description = "<div>All of our sustainable diamonds in this section come with independent diamond reports (GIA/IGI/WGI/GCAL) for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost. Our diamonds are manufactured under our Trademark (pending) Green Earth Diamonds</div>";
-        $products = Products::where('dfinder_status',1)->whereNull('lab_description')->get();
-        $totalUpdated = 0;
-        foreach ($products as $product_key => $product_value) {
-            $product_value->lab_description = $add_description .'<br />'. $product_value->description;
-            if($product_value->save()){$totalUpdated++;}
-        }
-        echo 'Total updated:- ' . $totalUpdated;
-        prd();
+        // $add_description = "<div>All of our sustainable diamonds in this section come with independent diamond reports (GIA/IGI/WGI/GCAL) for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost. Our diamonds are manufactured under our Trademark (pending) Green Earth Diamonds</div>";
+        // $products = Products::where('dfinder_status',1)->whereNull('lab_description')->get();
+        // $totalUpdated = 0;
+        // foreach ($products as $product_key => $product_value) {
+        //     $product_value->lab_description = $add_description .'<br />'. $product_value->description;
+        //     if($product_value->save()){$totalUpdated++;}
+        // }
+        // echo 'Total updated:- ' . $totalUpdated;
+        // prd();
 
         // $filePath = public_path('exports/products_description_live.csv');
         // $file = fopen($filePath, "r");
