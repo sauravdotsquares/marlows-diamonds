@@ -324,7 +324,7 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
 	Route::any('product-listing-data','ProductController@productListingData');
 	/** Change slugs of all products from previous to new one */
 
-	Route::get('import-products','ProductController@productSlugs');
+	Route::get('revert-redirects','ProductController@productSlugs');
 	
 	// Route::get('product-slugs','ProductController@productSlugs');
 
