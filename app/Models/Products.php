@@ -12,7 +12,9 @@ use App\Models\Category;
 use App\Models\Discount;
 use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
+use App\Models\LabPricesList;
 use DB;
+
 
 class Products extends Model
 {
@@ -225,6 +227,74 @@ class Products extends Model
                 return ['statusCode' => '500', 'msg' => 'No Variation Found'];
             }
         }
+    }
+
+
+    public static function getMinMaxPrice($productId=""){
+
+        /** Check if product is valid or not */
+        $product = Products::where('id',$productId)->first();
+        if(empty($product)){
+            return null;
+        }
+
+        /** Check if product belongs to a specific combintaion */
+        $combinations = ProductVariationsMaster::where(['product_id'=> $productId, 'is_deleted'=> 0, 'is_active'=>1 ])
+        ->orderBy('price','DESC')
+        ->pluck('price');
+
+        if(!empty($combinations) && $combinations && $combinations->count()){
+            $combinations = $combinations->toArray();
+            $min = min($combinations);
+            $max = max($combinations);
+            
+            $minimumValue = (55/ 100) * $min;
+            $maximumValue = $max;
+
+            return [
+                'minimumValue' => $minimumValue,
+                'maximumValue' => $maximumValue,
+            ];
+        }else{
+            $categories = explode(',', $product->categories);
+
+            $categorySlgs = Category::whereIn('id',$categories)->pluck('slug');
+            if($categorySlgs->count()){
+                $categorySlgs = $categorySlgs->toArray();
+            }
+
+            /** If categories is not enagement ring and exclusive to marlows */
+            if(!in_array('8', $categories) && !in_array('exclusive-to-marlows', $categorySlgs) ){
+                $product_variations = ProductVariations::where(['product_id'=> $product->id])->pluck('regular_price');
+                if(!empty($product_variations) && $product_variations->count()){
+                    $product_variations = $product_variations->toArray();
+                    return [
+                        'minimumValue' =>  min($product_variations),
+                        'maximumValue' =>  max($product_variations),
+                    ];
+                }
+            }
+
+
+            /** If category belongs to engagment rings */
+            if($product->dfinder_status == 1){
+                $product_variations = ProductVariations::where(['product_id'=> $product->id])->where('regular_price', '>', 0 )->pluck('regular_price');
+                if(!empty($product_variations) && $product_variations->count()){
+
+                    /** get variation price */
+                    $all_prices = LabPricesList::where(['is_deleted'=>0,'is_active'=>1])->pluck('price');
+                    $vat = getVAT();
+                    $product_variations = $product_variations->toArray();
+                    return [
+                        'minimumValue' => round((min($product_variations) + min($all_prices->toArray())) * $vat),
+                        'maximumValue' => round((max($product_variations) + max($all_prices->toArray())) * $vat),
+                    ];
+                }
+            }
+
+        }
+        return null;
+
     }
 
 }
