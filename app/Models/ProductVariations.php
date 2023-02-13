@@ -12,7 +12,14 @@ class ProductVariations extends Model
     protected $table = 'product_variations';
 
     protected $fillable = [
-        'product_id','sale_price','regular_price','stock_status','vari_image','vari_video'
+        'product_id',
+        'sale_price',
+        'regular_price',
+        'stock_status',
+        'vari_image',
+        'vari_video',
+        'multi_vari_video',
+        'multi_vari_img',
     ];
 
     protected $appends = ['get_vari_attri_id','get_vari_details_id'];

@@ -108,7 +108,6 @@
                                  class="form-control ckeditor">{{isset($getData->short_description)?$getData->short_description:''}}</textarea>
                            </div>
                         </div>
-
                         <div class="form-group">
                            <div class="form-label-group">
                               <label for="description">Description</label>
@@ -116,14 +115,6 @@
                                  class="form-control ckeditor">{{isset($getData->description)?$getData->description:''}}</textarea>
                            </div>
                         </div>
-
-                        <div class="form-group">
-                           <div class="form-label-group">
-                              <label for="lab_description">Lab description</label>
-                              <textarea id="lab_description" name="lab_description" class="form-control summernote-editor">{{isset($getData->lab_description)?$getData->lab_description:''}}</textarea>
-                           </div>
-                        </div>
-
                      </div>
                   </div>
                </div>
@@ -427,8 +418,8 @@
                                                       <div class="form-group">
                                                          <div class="form-label-group">
                                                             <label for="vari_image">Image</label>
-                                                            <input data-field="vari_image" type="file" id="vari_image" name="data[0][vari_image]"
-                                                               class="form-control">
+                                                            <input data-field="vari_image" type="file" id="vari_image" name="data[0][vari_image][]"
+                                                               class="form-control" multiple>
                                                          </div>
                                                       </div>
                                                    </div>
@@ -436,8 +427,8 @@
                                                       <div class="form-group">
                                                          <div class="form-label-group">
                                                             <label for="vari_video">Video</label>
-                                                            <input data-field="vari_video" type="file" id="vari_video" name="data[0][vari_video]"
-                                                               class="form-control">
+                                                            <input data-field="vari_video" type="file" id="vari_video" name="data[0][vari_video][]"
+                                                               class="form-control" multiple>
                                                          </div>
                                                       </div>
                                                    </div>
@@ -497,7 +488,7 @@
 
 @section('js')
 <!-- Select2 -->
-<script src="{{asset('')}}admin/plugins/select2/js/select2.full.min.js"></script>
+<script src="{{asset('')}}/admin/plugins/select2/js/select2.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
 
@@ -510,9 +501,9 @@
 
    $(function () {
       // Summernote
-      $('#short_description').summernote({ height: 50 })
-      $('#description').summernote({ height: 100 })
-      $('.summernote-editor').summernote({ height: 100 });
+      $('#short_description').summernote({ height: 100 })
+      $('#description').summernote({ height: 200 })
+
    });
 
    //validation and form submission function here
@@ -631,8 +622,9 @@
 
       $(document).on('click','#add_item',function () {
          var button = $('#item_details').clone(true);
-         var attr_key = $( ".attr_section:last-child" ).data("attr-key");
+         var attr_key = parseInt($(".attr_section:last-child").attr("data-attr-key"));
          attr_key++;
+         id=attr_key;
          var is_update = 'is_update';
          button.find('input').val('');
          button.removeAttr('id');
@@ -642,23 +634,27 @@
          button.find('.vari_add_update').attr('id','is_update_'+attr_key);
          button.find('input').each(function() {
                const fieldname = $(this).attr('data-field');
-               $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
+               // $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
+               if($(this).attr('type') == 'file'){
+                  $(this).attr('name', 'data[' + attr_key + '][' + fieldname + '][]');
+               }else{
+                  $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
+               }
          });
          button.find('.vari_add_update').attr('name','data[' + attr_key + '][' + is_update + ']');
          button.find('select').each(function() {
                const fieldname = $(this).attr('data-field');
                $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
          });
-
-
-      });
-
-      $('.remove').click(function(e){
-         $("#new_"+id).remove();
-         id--;
-         e.preventDefault();
       });
    });
+
+
+   $(document).on('click', '.remove', function(e){
+      $(e.target).parent().closest(".attr_section").remove();
+   });
+
+
 
 $("#dfinder_status").on('change',function(){
    if($(this).find(":selected").val()==1){

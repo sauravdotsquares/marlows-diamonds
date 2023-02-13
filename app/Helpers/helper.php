@@ -898,7 +898,7 @@ if (!function_exists('validate_breadcrumb')) {
 
 
             $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
-                ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'regular_price', 'sale_price')
+                ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image','multi_vari_img','multi_vari_video', 'vari_video', 'regular_price', 'sale_price')
                 ->first();
             
             return $getSelectedVariationVideoImages->toArray();

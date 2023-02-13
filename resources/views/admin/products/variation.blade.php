@@ -3,8 +3,8 @@
 ?>
 <div id="{{$section}}" class="attr_section" data-attr-key="{{$index}}">
     <input type="hidden" class="vari_add_update" id="is_update_{{$index}}" name="data[{{$index}}][is_update]" value="{{$variation['id']}}">
-    <input type="hidden" name="data[{{$index}}][vari_image_exist]" value="{{$variation['vari_image']}}">
-    <input type="hidden" name="data[{{$index}}][vari_video_exist]" value="{{$variation['vari_video']}}">
+    <input type="hidden" name="data[{{$index}}][vari_image_exist]" value="{{$variation['multi_vari_img']}}">
+    <input type="hidden" name="data[{{$index}}][vari_video_exist]" value="{{$variation['multi_vari_video']}}">
     <div class="card-header" id="headingOne">
         <div id="dropdownVariation">
             @if(!empty($all_attrs))
@@ -51,13 +51,21 @@
                     <div class="form-group">
                         <div class="form-label-group">
                             <label for="vari_image">Image</label>
-                            @if($variation['vari_image']!=null || $variation['vari_image']!='')
-                            <img class="variation_image" src="{{asset('/storage/'.$variation['vari_image'])}}"/>
+
+                            <?php
+                                $varImages = !empty($variation['multi_vari_img']) ? $variation['multi_vari_img'] : $variation['vari_image'];
+                            ?>
+
+                            @if(!empty($varImages))
+                                <?php $varImagesAr = explode(',',$varImages); ?>
+                                @foreach ($varImagesAr as $varImage)
+                                <img class="variation_image" src="{{asset('/storage/'.$varImage)}}"/>
+                                @endforeach
                             @else
-                            <img class="variation_image" src="{{asset('assets/images/no-image.png')}}"/>
+                                <img class="variation_image" src="{{asset('assets/images/no-image.png')}}"/>
                             @endif
-                            <input data-field="vari_image" type="file" id="vari_image" name="data[{{$index}}][vari_image]"
-                                class="form-control">
+                            <input data-field="vari_image" type="file" id="vari_image" name="data[{{$index}}][vari_image][]"
+                                class="form-control"  multiple>
                         </div>
                     </div>
                 </div>
@@ -65,13 +73,21 @@
                     <div class="form-group">
                         <div class="form-label-group">
                             <label for="vari_video">Video</label>
-                            @if($variation['vari_video']!=null || $variation['vari_video']!='')
-                            <video class="variation_video" src="{{asset('/storage/'.$variation['vari_video'])}}"></video>
+
+                            <?php
+                                $varVideos = !empty($variation['multi_vari_video']) ? $variation['multi_vari_video'] : $variation['vari_video'];
+                            ?>
+
+                            @if(!empty($varVideos))
+                                <?php $varVideosAr = explode(',',$varVideos); ?>
+                                @foreach ($varVideosAr as $varVideo)
+                                <video class="variation_video" src="{{asset('/storage/'.$varVideo)}}"></video>
+                                @endforeach
                             @else
                             <img class="variation_image" src="{{asset('assets/images/no-video.png')}}"/>
                             @endif
-                            <input data-field="vari_video" type="file" id="vari_video" name="data[{{$index}}][vari_video]"
-                                class="form-control">
+                            <input data-field="vari_video" type="file" id="vari_video" name="data[{{$index}}][vari_video][]"
+                                class="form-control" multiple>
                         </div>
                     </div>
                 </div>
