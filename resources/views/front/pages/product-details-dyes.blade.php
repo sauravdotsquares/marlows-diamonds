@@ -21,6 +21,10 @@
 		.dropdown-menu:before{content:" ";position:absolute;top:-20px;right:50px;border:10px solid transparent;border-bottom-color:#fff}
 		.disabledAnchor a{pointer-events:none !important;cursor:default;color:#fff}span.price-not-found{font-size:14px;color:#8e2e65;font-weight:700}
 		.error{color:#e74c3c !important}div#finaldiamondprice del{font-size:20px}
+
+
+        .hide-items{ display: none; }
+        .show-items{  display: flex; }
 	</style>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -73,14 +77,15 @@
 				<div class="diamond-type">
 					<label>Diamond Type</label>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" value="mined_diamond"  id="mined_item" class="diamond_type" checked>
+						<input type="radio" name="attribute_choose-your-diamond" value="mined_diamond"  id="mined_item" class="diamond_type">
 						<span>Mined Diamond</span>
 					</div>
 					<div class="d-type-input">
-						<input type="radio" name="attribute_choose-your-diamond" value="lab_grown" id="lab_item" class="diamond_type">
+						<input type="radio" name="attribute_choose-your-diamond" value="lab_grown" id="lab_item" class="diamond_type" checked>
 						<span>Lab Grown Diamond</span>
 					</div>
 				</div>
+                <?php $default = "lab_grown"; ?>
 
 
 				<div class="product-type-variations" id="filterDataDesign">
@@ -91,7 +96,7 @@
 
 				{{-- Show items for lab grown only --}}
 				<div id="apiCustomDesign">
-					<div class="type-variations-row lab_item mined_lab_items">
+					<div class="type-variations-row lab_item mined_lab_items {{ $default == "lab_grown" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
 							<label class="label"> Central Diamond Weight </label>
 							<select class="form-control lab_price_update_items " name="carat" id="lab_grown_carat">
@@ -116,7 +121,7 @@
 				</div>
 
 				{{-- Show items for lab grown only --}}
-				<div class="type-variations-row lab_item mined_lab_items">
+				<div class="type-variations-row lab_item mined_lab_items {{ $default == "lab_grown" ? 'show-items' : 'hide-items' }}">
 					<div class="type-variations-col">
 						<label class="label"> Clarity </label>
 						<select class="form-control lab_price_update_items " name="diamond-clarity" id="lab_grown_clarity">
@@ -130,7 +135,7 @@
 
 				{{-- Show items for mined only --}}
 				<div id="apiCustomDesign">
-					<div class="type-variations-row  mined_item mined_lab_items">
+					<div class="type-variations-row mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
 							<label class="label"> Central Diamond Weight </label>
 							<select class="form-control" name="carat" id="carat">
@@ -167,7 +172,7 @@
 						</div>
 					</div>
 
-					<div class="type-variations-row mined_item mined_lab_items">
+					<div class="type-variations-row mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
 							<label class="label"> Clarity </label>
 							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
@@ -201,7 +206,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="type-variations-row mined_item mined_lab_items">
+					<div class="type-variations-row mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						{{-- <div class="type-variations-col{{($data->diamond_shape == 'ROUND')?'-one':''}}">
 							<label class="label"> Certificate </label>
 							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
@@ -211,7 +216,7 @@
 							</select>
 						</div> --}}
 					</div>
-					<div class="view-diamond-sec mined_item_block mined_lab_items">
+					<div class="view-diamond-sec mined_item_block mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						<div class="viewall-diamond-btn"><a class="btn-bg-large viewdiamond-btn"
 								href="javascript:void(0)">View Available Diamonds</a></div>
 						<div class="diamond-table">
@@ -549,6 +554,7 @@
 	<script>
 
 		function changeDiamondType(classToPerform="") {
+            console.log('classToPerform', classToPerform);
 
 			if(classToPerform == 'mined_item'){
 				$(".mined-certificate").removeAttr('style');
@@ -557,11 +563,9 @@
 				$(".mined-certificate").css('display','none');
 				$(".store-locator-border-right").css('border-right','none')
 			}
-
 			$(".mined_lab_items").css('display','none');
 			$("." + classToPerform).css('display','flex');
 			$("." + classToPerform + "_block").css('display','block');
-
 
 			/** show and hide description */
 			$(".product-description-common").css('display','none');
@@ -569,14 +573,21 @@
 			
 			getFinalPrice();
 		}
+        //console.log('first', $('.diamond_type:checked').attr("id"))
+        // $(document).ready(function(){
+        //     changeDiamondType($('.diamond_type:checked').attr("id"));
+        // })
 
-		$(".lab_item").css('display','none');
+		//$(".lab_item").css('display','none');
+
 		$(".lab_price_update_items").on('change', function() {
+            // console.log('two')
 			changeDiamondType($('.diamond_type:checked').attr("id"));
 		});
 
 		
 		$(document).on('change', '.diamond_type' , function(event) {
+            console.log('first')
 			changeDiamondType($(event.target).attr("id"));
 		});
 
@@ -656,33 +667,36 @@
             });
 
             getRelatedProduct();
-
 			getCustomFilter(); //getProdVideo();
 
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
 			});
 
-			getSelectedAttributePrice();
+			// TODO: getSelectedAttributePrice();
+
 			// setTimeout(() => {
 			// 	changeDiamondType('lab_item');
 			// }, 1000);
+			// $('#carat').on('change',function(){
+			// 	getSelectedAttributePrice();
+			// });
+			// $('#diamond-colour').on('change',function(){
+			// 	getSelectedAttributePrice();
+			// });
+			// $('#diamond-clarity').on('change',function(){
+			// 	getSelectedAttributePrice();
+			// });
+			// $('#diamond-grade').on('change',function(){
+			// 	getSelectedAttributePrice();
+			// });
+			// $('#diamond-certificate').on('change',function(){
+			// 	getSelectedAttributePrice();
+			// });
 
-			$('#carat').on('change',function(){
-				getSelectedAttributePrice();
-			});
-			$('#diamond-colour').on('change',function(){
-				getSelectedAttributePrice();
-			});
-			$('#diamond-clarity').on('change',function(){
-				getSelectedAttributePrice();
-			});
-			$('#diamond-grade').on('change',function(){
-				getSelectedAttributePrice();
-			});
-			$('#diamond-certificate').on('change',function(){
-				getSelectedAttributePrice();
-			});
+            $(document).on('change', "#carat,#diamond-colour,#diamond-clarity,#diamond-grade,#diamond-certificate", function(){
+                getSelectedAttributePrice();
+            });
 
 			$('#addtobasket').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}');
@@ -691,19 +705,15 @@
 			$("#productWishList").on('click',function(){
 				addtobasketFunction('{{route("set-product-wishlist")}}')
 			});
-
 			$(document).on('change','#metal-type',function(){
 				getProdVideo('onChange');
-
 			});
+            
 			$(document).on('click','.refinedata',function(){
-
 				$("#selected_diamond_price").val($(this).data('price'));
 				$("#certificate_url").val($(this).data('certurl'));
 				$("#productCertificateLink").attr('href',$(this).data('certurl'));
-
 				getFinalPrice();
-
 			});
 		});
 
@@ -718,13 +728,11 @@
                     'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
                 },
                 success: function (res) {
-
 					$('#filterDataDesign .type-variations-row').html(res);
-                    //getProdVideo();
-
                 }
             });
 		}
+
 		function getProdVideo(action=null){
 			var metal_type = $('#metal-type :selected').val();
 
@@ -810,6 +818,7 @@
             });
 		}
 
+        getSelectedAttributePrice();
 		var triggerLab = true;
 		function getSelectedAttributePrice(){
 
@@ -840,23 +849,26 @@
 					'diamond_type' : $('.diamond_type:checked').val()
                 },
                 success: function (res) {
-					console.log('triggerLab', triggerLab);
-					if(triggerLab){
-						triggerLab = false;
-						$('input:radio[name="attribute_choose-your-diamond"]')
-						.filter(`[value="lab_grown"]`)
-						.prop('checked', true)
-						.trigger("change");
-					}
+					// console.log('triggerLab', triggerLab);
+					
 
 					$('#finaldiamondprice').html("");
                     if(res.statuscode == 200){
-                        // $('#finaldiamondprice').html(res.finalPrice);
-                        if(res.finalPrice == res.discountedPrice){
-                            $('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                        
+                        if(triggerLab){
+                            triggerLab = false;
+                            getFinalPrice();
                         }else{
-                            $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price color-red" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                            // $('#finaldiamondprice').html(res.finalPrice);
+                            if(res.finalPrice == res.discountedPrice){
+                                $('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                            }else{
+                                $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price color-red" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+                            }
                         }
+
+
+
 						$('#selected_final_price').val(res.finalPrice);
 						$('#selected_diamond_price').val(res.diamondPrice);
 						$('#selected_discounted_price').val(res.discountedPrice);
@@ -931,19 +943,13 @@
 
                 },
                 success: function (res) {
-                    // console.log("res", res);
-                    // console.log(res);
-                    // return false;
 					$('#finaldiamondprice').html("");
 					if(res.finalPrice != ''){
-						// $('#finaldiamondprice').text(res);
                         if(res.finalPrice == res.discountedPrice){
                             $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
                             $('#selected_final_price').val(res.finalPrice);
                         }else{
-                            // $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res+' </span>');
                             $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price color-red" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
-                            // $('#selected_final_price').val(res.finalPrice);
                         }
 
 						$('#addtobasket').removeClass('disabledAnchor');
@@ -977,6 +983,7 @@
 	      		e.preventDefault();
 	      		$('#carousel .item.active a').click();
 	      });
-	</script>
+	
+    </script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection
