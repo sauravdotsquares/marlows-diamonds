@@ -264,13 +264,12 @@
                         <span> Exclusive to Marlows </span>
                     </a> --}}
                     {{-- <p> The Marlow's Black Friday Sale is here. Up to  </p> --}} 
-                    <p>
-                        
+                    {{-- <p> --}}
                         {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}
-                        <span class="header-heighlight-text discount_timer"></span>
-                        <br>
-                        Upto 30% off - In time for Valentine
-                    </p>
+                        {{-- <span class="header-heighlight-text discount_timer"></span> --}}
+                        {{-- <br> --}}
+                        {{-- Upto 30% off - In time for Valentine --}}
+                    {{-- </p> --}}
                 </div>
                 <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>

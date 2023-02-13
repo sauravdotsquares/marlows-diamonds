@@ -221,49 +221,13 @@ class ProductController extends Controller
             }
         }
 
-        // prd($getParentHierarchy);
-
-
-        // prd($getParentHierarchy);
-
-        // prd($getParentHierarchy);
-        // return response()->json($getParentHierarchy);
-        // $blankArray = [];
-        // foreach($getParentData as $key1 => $valueArray1){
-        //     if($key1 == 'id'){
-        //         array_push($blankArray,$valueArray1);
-        //     }
-        //     if($key1 == 'parent_cate'){
-        //         if(is_array($valueArray1)){
-        //             foreach($valueArray1 as $key2 => $valueArray2){
-        //                 if($key2 == 'id'){
-        //                     array_push($blankArray,$valueArray2);
-        //                 }
-        //                 if($key2 == 'parent_cate'){
-        //                     if(is_array($valueArray2)){
-        //                         foreach($valueArray2 as $key3 => $valueArray3){
-        //                             if($key3 == 'id'){
-        //                                 array_push($blankArray,$valueArray3);
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
         $getCateProductId = array();
-
         if (count($getParentHierarchy)) {
             foreach ($getParentHierarchy as $prKey => $proVal) {
                 $getProductList = Products::whereRaw("find_in_set('" . $proVal . "',categories)")->pluck('id')->toArray();
                 array_push($getCateProductId, $getProductList);
             }
         }
-
-        
-
         
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
@@ -282,53 +246,47 @@ class ProductController extends Controller
         }
 
         $getProductListFinal = Products::with('getProductImages')->orderBy($orderKey, $orderValue)->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
-        // prd($getProductListFinal->count());
-        // ->whereIn('id', $output)
-        // 
-        // prd($getProductListFinal->count());
+       
         
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $notInList=0;
             foreach ($getProductListFinal as $product_list_key => $product_list_value) {
 
-                $categories = explode(',', $product_list_value->categories);
 
-                $combinations = ProductVariationsMaster::where(['product_id'=> $product_list_value->id, 'is_deleted'=> 0, 'is_active'=>1 ])
-                                ->orderBy('price','DESC')
-                                ->pluck('price');
-
-                if(!empty($combinations) && $combinations && $combinations->count()){
-                    $combinations = $combinations->toArray();
-                    $min = min($combinations);
-                    $max = max($combinations);
-                    
-                    $minimumValue = (55/ 100) * $min;
-                    $maximumValue = $max;
-
-                    /** Inside this */
-                    $getProductListFinal[$product_list_key]->minimumValue = $minimumValue;
-                    $getProductListFinal[$product_list_key]->maximumValue = $maximumValue;
-                }else{
-
-                    $categorySlgs = Category::whereIn('id',$categories)->pluck('slug');
-                    if($categorySlgs->count()){
-                        $categorySlgs = $categorySlgs->toArray();
-                    }
-
-                    if(!in_array('8', $categories) && !in_array('exclusive-to-marlows', $categorySlgs) ){
-
-                        $product_variations = ProductVariations::where(['product_id'=> $product_list_value->id])->pluck('regular_price');
-                        if(!empty($product_variations) && $product_variations->count()){
-                            $product_variations = $product_variations->toArray();
-                            $getProductListFinal[$product_list_key]->minimumValue = min($product_variations);
-                            $getProductListFinal[$product_list_key]->maximumValue = max($product_variations);
-                        }
-                    }
-                    
-
+                $minMaxPrice = Products::getMinMaxPrice($product_list_value->id);
+                if($minMaxPrice){
+                    $getProductListFinal[$product_list_key]->minimumValue = $minMaxPrice['minimumValue'];
+                    $getProductListFinal[$product_list_key]->maximumValue = $minMaxPrice['maximumValue'];
                 }
+                // $categories = explode(',', $product_list_value->categories);
+                // $combinations = ProductVariationsMaster::where(['product_id'=> $product_list_value->id, 'is_deleted'=> 0, 'is_active'=>1 ])
+                //                 ->orderBy('price','DESC')
+                //                 ->pluck('price');
+                // if(!empty($combinations) && $combinations && $combinations->count()){
+                //     $combinations = $combinations->toArray();
+                //     $min = min($combinations);
+                //     $max = max($combinations);
+                //     $minimumValue = (55/ 100) * $min;
+                //     $maximumValue = $max;
+                //     /** Inside this */
+                //     $getProductListFinal[$product_list_key]->minimumValue = $minimumValue;
+                //     $getProductListFinal[$product_list_key]->maximumValue = $maximumValue;
+                // }else{
+                //     $categorySlgs = Category::whereIn('id',$categories)->pluck('slug');
+                //     if($categorySlgs->count()){
+                //         $categorySlgs = $categorySlgs->toArray();
+                //     }
+                //     if(!in_array('8', $categories) && !in_array('exclusive-to-marlows', $categorySlgs) ){
+                //         $product_variations = ProductVariations::where(['product_id'=> $product_list_value->id])->pluck('regular_price');
+                //         if(!empty($product_variations) && $product_variations->count()){
+                //             $product_variations = $product_variations->toArray();
+                //             $getProductListFinal[$product_list_key]->minimumValue = min($product_variations);
+                //             $getProductListFinal[$product_list_key]->maximumValue = max($product_variations);
+                //         }
+                //     }
+                // }
             }
-            // prd($notInList);
+            
             $view = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
         } else {
             $view = '';
@@ -491,7 +449,7 @@ class ProductController extends Controller
             }
 
             if (isset($getVariDetails) && !empty($getVariDetails)) {
-                $getSelectedVariationVideoImages = ProductVariations::where('id', $getVariDetails->variation_id)->select('vari_image', 'vari_video', 'regular_price', 'sale_price')->first();
+                $getSelectedVariationVideoImages = ProductVariations::where('id', $getVariDetails->variation_id)->select('vari_image','multi_vari_video','multi_vari_img', 'vari_video', 'regular_price', 'sale_price')->first();
 
                 return response()->json($getSelectedVariationVideoImages);
             }
@@ -832,6 +790,8 @@ class ProductController extends Controller
                         }
 
                         $newArray['vari_image'] = !empty($image['vari_image']) ? $image['vari_image'] : '';
+                        $newArray['multi_vari_img'] =  !empty($image['multi_vari_img']) ? $image['multi_vari_img'] : '';
+                        $newArray['multi_vari_video'] =  !empty($image['multi_vari_video']) ? $image['multi_vari_video'] : '';
                         $newArray['formula'] = true;
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
                         $newArray['regular_price'] = round($price);
@@ -922,7 +882,7 @@ class ProductController extends Controller
 
                 // Get product variation price
                 $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
-                                                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'regular_price', 'sale_price')
+                                                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video','multi_vari_img','multi_vari_video', 'regular_price', 'sale_price')
                                                     ->first();
                 
                 /** Price change for lab grown */
@@ -1006,6 +966,8 @@ class ProductController extends Controller
                 /** Discount not applicable to exclusive to marlows */
                 if(in_array('exclusive-to-marlows', $categorySlugs)){
                     $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+                    $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
+                    $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                     $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
                     $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                     $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
@@ -1017,6 +979,8 @@ class ProductController extends Controller
                 $regular_p_discount_final = $regular_p_final / $discountPercentage;
                 $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
                 $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
+                $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                 $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                 $newArray['regular_price_with_vat'] = round($regular_p_final);
                 $newArray['regular_price_with_vat_discount'] = round($regular_p_discount_final);
