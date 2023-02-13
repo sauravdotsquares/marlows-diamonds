@@ -34,10 +34,6 @@
 @section('content')
 
 
-<?php
-// prd($data);
-?>
-
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
@@ -82,7 +78,6 @@
 										@if(isset($images->is_featured) && $images->is_featured != 1)
 											<div class="item product-items-carousel">
 												<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">
-
 													<?php if(in_array($ext,$video_extensions)){ ?>
 														<video style="width: 100%;" loop autoplay muted="1" playsinline>
 															<source class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" type="video/mp4" type="video/mp4" />
@@ -101,13 +96,9 @@
 							$thumbailsAllowed =	getMasterValuesByType('slider_thumbnails');
 							if(in_array($data->id, $thumbailsAllowed)){
 						?>
-							<!-- Thumbnails -->
 							<ol class="carousel-indicators list-inline carousel-thumbnails" style="d-none">	
 							</ol>
 						<?php } ?>
-
-						
-
 					@else
 						<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
@@ -487,7 +478,6 @@
 	<script src="{{ asset('assets/vendors/fancybox-master/dist/jquery.fancybox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
-
 		const imagesPath = "{{asset('/storage/')}}/";
 		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
 
@@ -503,7 +493,6 @@
 
 
 		const totalDescription = $(".product-description-common");
-		console.log('totalDescription', totalDescription);
 
 		function changeDescription($element=null){
 			if($element){
@@ -632,7 +621,6 @@
 					else
 						$('#selected_variation_price').val(res.sale_price);
 					if(action!=null && action=='onChange'){
-
                         // getSelectedVariationsData();
                     }
 						// getFinalPrice();
@@ -749,10 +737,6 @@
 					}
 
 
-
-					
-
-
 					if( parseInt(customSlider) && typeof res.vari_image!='undefined' && res.vari_image && res.vari_image!=null){
 						const items = $('#carousel').find('.owl-item');
 						const itemToAddInCarousel = `<div class="item product-items-carousel custom-item-carousel" data-position="${items.length+1}">
@@ -787,8 +771,8 @@
 							var $speed = 0;
 							$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
 						}
+						
 					}else if(typeof res.vari_video!='undefined' && res.vari_video && res.vari_video!=''){
-						// console.log('first',res.vari_video);
 
 						if($('#variationVideo').length){
 							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;

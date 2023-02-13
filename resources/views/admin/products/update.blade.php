@@ -475,8 +475,8 @@
                                                       <div class="form-group">
                                                          <div class="form-label-group">
                                                             <label for="vari_image">Image</label>
-                                                            <input data-field="vari_image" type="file" id="vari_image" name="data[0][vari_image]"
-                                                               class="form-control">
+                                                            <input data-field="vari_image" type="file" id="vari_image" name="data[0][vari_image][]"
+                                                               class="form-control" multiple>
                                                          </div>
                                                       </div>
                                                    </div>
@@ -484,8 +484,8 @@
                                                       <div class="form-group">
                                                          <div class="form-label-group">
                                                             <label for="vari_video">Video</label>
-                                                            <input data-field="vari_video" type="file" id="vari_video" name="data[0][vari_video]"
-                                                               class="form-control">
+                                                            <input data-field="vari_video" type="file" id="vari_video" name="data[0][vari_video][]"
+                                                               class="form-control" multiple>
                                                          </div>
                                                       </div>
                                                    </div>
@@ -805,7 +805,13 @@
          button.find('.vari_add_update').attr('id','is_update_'+attr_key);
          button.find('input').each(function() {
                const fieldname = $(this).attr('data-field');
-               $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
+               // $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
+
+               if($(this).attr('type') == 'file'){
+                  $(this).attr('name', 'data[' + attr_key + '][' + fieldname + '][]');
+               }else{
+                  $(this).attr('name', 'data[' + attr_key + '][' + fieldname + ']');
+               }
          });
          button.find('.vari_add_update').attr('name','data[' + attr_key + '][' + is_update + ']');
 

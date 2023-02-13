@@ -115,6 +115,14 @@ class ProductController extends Controller
             return Redirect::back()->withErrors($validator->errors())->withInput();
         }else{
 
+            // prd($request->all());die;
+            // if(isset($request->data) && !empty($request->data)){
+            //     $getVariationArray = [
+            //         'variationData' => $request->data,
+            //     ];
+            //     $this->updateProductVariation("10",$getVariationArray);
+            // }die;
+
             $productDetails = Products::updateOrCreate(['id'=>$request->table_id],[
                 'title'=> $request->title,
                 'slug'=> strtolower($newCustomSlug),
@@ -180,6 +188,8 @@ class ProductController extends Controller
 
     public function updateProductVariation($productId,$getVariationArray){
 
+        // prd($getVariationArray);
+
         $getProductVariation = ProductVariations::where('product_id',$productId)->pluck('id');
         //ProductVariationDetails::whereIn('variation_id',$getProductVariation)->delete();
         //ProductVariations::where('product_id',$productId)->delete();
@@ -187,21 +197,45 @@ class ProductController extends Controller
         foreach($getVariationArray['variationData'] as $key => $value){
 
             if(isset($value['vari_image']) && $value['vari_image']) {
-                $imageVariImage = product_image_upload($value['vari_image'],'ProductsVariImages');
+                $uploadedImages = [];
+                if(gettype($value['vari_image']) == 'array'){
+                    foreach ($value['vari_image'] as $vari_image_key => $vari_image_value) {
+                        $uploadedImages[] = product_image_upload($vari_image_value,'ProductsVariImages');
+                    }
+                }else{
+                    $uploadedImages[] = product_image_upload($value['vari_image'],'ProductsVariImages');
+                }
+
+                // prd($uploadedImages);
+                // $imageVariImage = product_image_upload($value['vari_image'],'ProductsVariImages');
+                
             }else if(isset($value['vari_image_exist']) && $value['vari_image_exist']){
-                $imageVariImage = $value['vari_image_exist'];
+                $uploadedImages = explode(',',$value['vari_image_exist']);
+                // $imageVariImage = $value['vari_image_exist'];
             }else{
-                $imageVariImage = null;
+                $uploadedImages = [];
+                // $imageVariImage = null;
             }
 
 
             if(isset($value['vari_video']) && $value['vari_video']) {
-                $imageVariVideo = product_video_upload($value['vari_video'],'ProductsVariVideos');
+                // $imageVariVideo = product_video_upload($value['vari_video'],'ProductsVariVideos');
+                $uploadedVideos = [];
+                if(gettype($value['vari_video']) == 'array'){
+                    foreach ($value['vari_video'] as $vari_video_key => $vari_video_value) {
+                        $uploadedVideos[] = product_video_upload($vari_video_value,'ProductsVariVideos');
+                    }
+                }else{
+                    $uploadedVideos[] = product_video_upload($value['vari_video'],'ProductsVariVideos');
+                }
+
             }else if(isset($value['vari_video_exist']) && $value['vari_video_exist']) {
-                $imageVariVideo = $value['vari_video_exist'];
+                $uploadedVideos = explode(',',$value['vari_video_exist']);
             }else{
-                $imageVariVideo = null;
+                $uploadedVideos = [];
             }
+
+            // prd($uploadedImages);
 
            if(isset($value['is_update']) && $value['is_update']!=''){
 
@@ -210,8 +244,12 @@ class ProductController extends Controller
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                     'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
                     'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
-                    'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
-                    'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
+                    // 'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
+                    'vari_image'=> !empty($uploadedImages) ? $uploadedImages[0] : null,
+                    'multi_vari_img' => !empty($uploadedImages) ? implode(',',$uploadedImages) : null,
+                    // 'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
+                    'vari_video'=>!empty($uploadedVideos) ? $uploadedVideos[0] : null,
+                    'multi_vari_video'=>!empty($uploadedVideos) ? implode(',',$uploadedVideos)  : null,
                 ]);
            }else{
                 $getProductDataVariation = ProductVariations::create([
@@ -219,8 +257,11 @@ class ProductController extends Controller
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                     'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
                     'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
-                    'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
-                    'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
+                    'vari_image'=>!empty($uploadedImages) ? $uploadedImages[0] : null,
+                    'multi_vari_img' => !empty($uploadedImages) ? implode(',',$uploadedImages) : null,
+                    // 'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
+                    'vari_video'=>!empty($uploadedVideos) ? $uploadedVideos[0] : null,
+                    'multi_vari_video'=>!empty($uploadedVideos) ? implode(',',$uploadedVideos)  : null,
                 ]);
             }
 
