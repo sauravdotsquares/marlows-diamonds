@@ -26,9 +26,9 @@
 							<a href="/product-category/engagement-rings/solitaire/"><img src="assets/images/CR10-SE45_0003.jpg" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
-							<div class="ring-pr-title">
+							<h3 class="ring-pr-title">
 								SOLITAIRE ENGAGEMENT RINGS
-							</div>
+							</h3>
 							<div class="ring-pr-desc">
 								<p>Solitaire rings are classics for a reason. Their single stone setting exudes beauty like no other with a jaw-dropping centrepiece. This is the best of all diamond engagement rings if you want a flashy simple design.</p>
 							</div>
@@ -44,9 +44,9 @@
 							<a href="/product-category/engagement-rings/halo/"><img src="assets/images/DSR21-Images_0003.jpg" alt="HALO ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
-							<div class="ring-pr-title">
+							<h3 class="ring-pr-title">
 								HALO ENGAGEMENT RINGS
-							</div>
+							</h3>
 							<div class="ring-pr-desc">
 								<p>Halo rings are solitaires made better! Complimented by a halo of smaller diamonds, the centre stone looks gorgeous in every way. If you love solitaires but want something extra, then this is the diamond ring for you.</p>
 							</div>
@@ -62,9 +62,9 @@
 							<a href="/product-category/engagement-rings/shoulder-set/"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
-							<div class="ring-pr-title">
+							<h3 class="ring-pr-title">
 								SHOULDER SET ENGAGEMENT RINGS
-							</div>
+							</h3>
 							<div class="ring-pr-desc">
 								<p>Want more sparkle? Go for shoulder set rings with a band of encrusted diamonds that make your ring all the more special. A dazzling solitaire with little diamonds along the way can make all the difference.</p>
 							</div>
@@ -80,9 +80,9 @@
 							<a href="/product-category/engagement-rings/multi-stone/"><img src="assets/images/R3-143_0003.jpg" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
-							<div class="ring-pr-title">
+							<h3 class="ring-pr-title">
 								MULTI-STONE ENGAGEMENT RINGS
-							</div>
+							</h3>
 							<div class="ring-pr-desc">
 								<p>Why stop at one when you can have many? Make a statement with diamond engagement rings in multi-stone settings. Unique styles and combinations are waiting for you.</p>
 							</div>
@@ -111,9 +111,9 @@
 					<img src="assets/images/banner-hand.jpg" alt="banner-hand">
 				</div>
 				<div class="leftright-imt-col leftright-text">
-					<div class="leftright-heading heading-h-three">
+					<h2 class="leftright-heading heading-h-three">
 						Find Your Perfect Match
-					</div>
+					</h2>
 					<p>You found your perfect match so the engagement ring you propose with should also be a perfect match for your partner. Marlow’s Diamonds brings to you a curated assortment of diamond engagement rings in the most beautiful designs, stone settings, diamonds shapes, and ring sizes.</p>
 					<p>Why us? Because our diamonds are as special as your relationship. Our engagement rings are made only with ethically sourced diamonds. With us, you can be assured of quality because our diamonds are graded by the GIA. Adorning our sparkling stones will bring you joy and warmth for the rest of your lives.</p>
 					<div class="viewguide-btn">
@@ -146,10 +146,10 @@
 <div class="faq-section engagement-ring-faq">
 	<div class="container">
 		<div class="head-para-three">
-			<div class="heading-h-three">
+			<h2 class="heading-h-three">
 				Engagement Ring FAQ’s
-			</div>
-			<p>Some of the most common Engagement Ring Q&A's</p>
+			</h2>
+			<h3 style="font-size: 15px;">Some of the most common Engagement Ring Q&A's</h3>
 		</div>
 		<div class="faq-list">
 			<div class="accordion" id="accordionExample">
