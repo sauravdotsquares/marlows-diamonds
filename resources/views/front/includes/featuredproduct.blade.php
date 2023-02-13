@@ -6,7 +6,7 @@
 <div class="best-selling-marlows">
     <div class="container">
         <div class="head-para-three">
-            <h3 class="heading-h-three">Best Selling Marlow's Diamond Jewellery</h3>
+            <h2 class="heading-h-three">Best Selling Marlow's Diamond Jewellery</h2>
         </div>
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
