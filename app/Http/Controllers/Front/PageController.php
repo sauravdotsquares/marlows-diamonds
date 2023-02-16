@@ -107,13 +107,19 @@ class PageController
 
 	// For single blog post
 	public function show(Request $request,$slug){
+		
 		$posts = Posts::where('slug',$slug)->first();
+		if($posts->status == 0){
+		$request->session()->flash('error', 'Invalid Request');
+        return redirect('/blog/');
+		
+		}else{
         if(empty($posts)){
             return view('errors.404');
         }
 
     	return view('front.pages.blog-details',['data'=>$posts]);
-        
+        }
     }
 
     /** List of blogs */
