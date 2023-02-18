@@ -198,14 +198,14 @@
             </ul>
           </li>
 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="{{  route('admin.app_products.list') }}" class="nav-link ">
               <i class="nav-icon fa fa-cart-plus"></i>
               <p>
                 Products new
               </p>
             </a>
-          </li>
+          </li> --}}
 
           {{-- <li class="nav-item">
             <a href="{{  route('admin.image_gallery.index') }}" class="nav-link ">
