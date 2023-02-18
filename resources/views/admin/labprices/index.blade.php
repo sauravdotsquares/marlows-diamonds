@@ -2,14 +2,6 @@
 
 @section('content')
 
-      @if(Session::has('success'))
-         <div class="alert alert-success">
-            {{ Session::get('success') }}
-            @php
-                  Session::forget('success');
-            @endphp
-         </div>
-      @endif
 
    <section class="content search-container  {{ request()->search_open == 'open' ? '' : 'd-none' }}">
       <div class="container-fluid">
@@ -67,7 +59,7 @@
                               <th>Clarity</th>
                               <th>Color</th>
                               <th>Carat</th>
-                              <th>price</th>
+                              <th>Price</th>
                               <th>Created</th>
                               <th>Status</th>
                               <th>Action</th>
@@ -106,18 +98,6 @@
                               No record found
                            @endif
                         </tbody>
-                        {{-- <tfoot>
-                           <tr>
-                              <th>Sr No</th>
-                              <th>Clarity</th>
-                              <th>Color</th>
-                              <th>Carat</th>
-                              <th>price</th>
-                              <th>Created</th>
-                              <th>Status</th>
-                              <th>Action</th>
-                           </tr>
-                        </tfoot> --}}
                      </table>
                      <div class="pagination-container float-right">
                         {{ $data->appends($_GET)->links('layouts.pagination') }}
