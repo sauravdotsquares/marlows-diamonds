@@ -34,6 +34,13 @@
               <p> Dashboard </p>
             </a>
           </li>
+
+          <li class="nav-item menu-open">
+            <a href="{{route('admin.dashboard')}}" class="nav-link @if(request()->segment(2) == 'dashboard') active @endif">
+              <i class="nav-icon fas fa-dollar-sign"></i>
+              <p> Lab Price </p>
+            </a>
+          </li>
           <li class="nav-item @if(request()->segment(2) == 'banners') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'banners') active @endif">
               <i class="nav-icon fas fa fa-image"></i>

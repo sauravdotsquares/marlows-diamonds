@@ -272,6 +272,12 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		});
 
 
+		Route::group(['as' => 'lab_price_variants.', 'prefix' => 'lab-price-variants' ], function () {
+			Route::any('', 'LabPricesListController@index')->name('list');
+			
+		});
+
+
 
 	});
 
