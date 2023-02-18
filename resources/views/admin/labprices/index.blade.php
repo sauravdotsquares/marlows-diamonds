@@ -2,8 +2,16 @@
 
 @section('content')
 
-     
-<section class="content search-container  {{ request()->search_open == 'open' ? '' : 'd-none' }}">
+      @if(Session::has('success'))
+         <div class="alert alert-success">
+            {{ Session::get('success') }}
+            @php
+                  Session::forget('success');
+            @endphp
+         </div>
+      @endif
+
+   <section class="content search-container  {{ request()->search_open == 'open' ? '' : 'd-none' }}">
       <div class="container-fluid">
          <div class="row">
             <div class="col-md-12">
@@ -39,9 +47,10 @@
          </div>
       </div>
    </section>
+
       
    <section class="content">
-   <div class="container-fluid">
+      <div class="container-fluid">
          <div class="row">
             <div class="col-12">
                <div class="card">
@@ -50,16 +59,16 @@
                      <a href="javascript:;"><button type="button" class="btn btn-primary search-button"><i class="fa fa-search"></i></button></a>
                   </div>
 
-                 
                   <div class="card-body">
                      <table id="" class="table table-bordered table-hover">
                         <thead>
                            <tr>
-                              <th> S. No</th>
+                              <th>Sr No</th>
                               <th>Clarity</th>
                               <th>Color</th>
                               <th>Carat</th>
                               <th>price</th>
+                              <th>Created</th>
                               <th>Status</th>
                               <th>Action</th>
                            </tr>
@@ -73,6 +82,7 @@
                                     <td>{{$value->color }}</td>
                                     <td>{{$value->carat }}</td>
                                     <td>{{$value->price }}</td>
+                                    <td>{{date('d M Y H:i:s', strtotime($value->created_at))}}</td>
                                     <td>
                                         @if ($value->is_active == 1)
                                             <small class="badge badge-success">Active</small>
@@ -82,26 +92,35 @@
                                     </td>
                                     <td>
                                         @if ($value->is_active == 1)
-                                            <a  href="" type="button" class="btn btn-danger btn-sm confirm_first">In-Activate</a>
+                                            <a title="Update status ?" href="{{ route('admin.lab_price_variations.change_status', $value->id) }}" type="button" class="btn btn-danger btn-sm confirm_first">In-Activate</a>
                                         @else
-                                            <a  href="" type="button" class="btn btn-primary btn-sm confirm_first">Activate</a>
+                                            <a title="Update status ?" href="{{ route('admin.lab_price_variations.change_status', $value->id) }}" type="button" class="btn btn-primary btn-sm confirm_first">Activate</a>
                                         @endif
-                                        <a type="button" href="" class="btn btn-warning btn-sm">Edit</a>
-                                        <a type="button"  href="" class="btn btn-danger btn-sm confirm_first">Delete</a>
+                                        <a type="button" href="{{ route('admin.lab_price_variations.edit', $value->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                        <a type="button" title="Delete record ?" href="{{ route('admin.lab_price_variations.delete', $value->id) }}" class="btn btn-danger btn-sm confirm_first">Delete</a>
                                     </td>
                                     
                                  </tr>
                               @endforeach
                            @else
-                            
+                              No record found
                            @endif
                         </tbody>
-                       
+                        <tfoot>
+                           <tr>
+                              <th>Sr No</th>
+                              <th><span class="wc-image tips">Image</span></th>
+                              <th>Title</th>
+                              <th>Stock</th>
+                              <th>Category</th>
+                              <th>Created</th>
+                              <th>Action</th>
+                           </tr>
+                        </tfoot>
                      </table>
                      <div class="pagination-container float-right">
                         {{ $data->appends($_GET)->links('layouts.pagination') }}
                   </div>
-                     
                   </div>
                </div>
             </div>
