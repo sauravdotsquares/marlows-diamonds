@@ -106,17 +106,18 @@
                               No record found
                            @endif
                         </tbody>
-                        <tfoot>
+                        {{-- <tfoot>
                            <tr>
                               <th>Sr No</th>
-                              <th><span class="wc-image tips">Image</span></th>
-                              <th>Title</th>
-                              <th>Stock</th>
-                              <th>Category</th>
+                              <th>Clarity</th>
+                              <th>Color</th>
+                              <th>Carat</th>
+                              <th>price</th>
                               <th>Created</th>
+                              <th>Status</th>
                               <th>Action</th>
                            </tr>
-                        </tfoot>
+                        </tfoot> --}}
                      </table>
                      <div class="pagination-container float-right">
                         {{ $data->appends($_GET)->links('layouts.pagination') }}
