@@ -48,6 +48,17 @@
 				</div>
 			</div>
 			<div class="col-lg-3">
+				<div class="blog-search-field">
+					<div class="formgroup blog-detail-search-field">
+						{{-- <form> --}}
+							<input type="text" name="search" class="blog-search-input blog-details-search-input" placeholder="Search for blog.." autocomplete="off">
+							<button class="seach-btn blog-detail-search-button"  type="button">
+								<img class="search-icon" src="{{ asset('assets/images/search.png') }}" alt="search">
+							</button>
+						{{-- </form> --}}
+					</div>
+				</div>
+
 				<div class="blogdetails-sidebar">
 					<div class="blogall-categ">
 						<div class="sidebar-title">
@@ -145,4 +156,31 @@
 <!-- Related Blog Section End -->
 
 
+@endsection
+
+
+@section('js')
+<script>
+	const searchRedirect = "{{ url('blog') }}";
+	$(document).ready(function() {
+		$(document).on('click','.blog-detail-search-button', function(){
+			redirectToBlog();
+		});
+
+		$(".blog-details-search-input").keyup(function(event) {
+			if (event.keyCode === 13) { redirectToBlog(); }
+		});
+
+	});
+
+
+	function redirectToBlog(){
+		const searchKeyword = $(".blog-details-search-input").val();
+		if(typeof searchKeyword!='undefined' && searchKeyword && searchKeyword!=''){
+			const fullUrl = searchRedirect + '?searchKeyword=' + searchKeyword;
+			window.location = fullUrl;
+		}
+	}
+
+</script>
 @endsection

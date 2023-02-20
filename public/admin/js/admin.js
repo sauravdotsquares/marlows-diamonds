@@ -34,6 +34,26 @@ $(document).on('click','.confirm_first', function(e) {
 });
 
 
+
+$(document).on('click','.confirm-and-reload', function(e) {
+    e.preventDefault();
+    
+    const text = `Are you sure you want to ${$(this).attr('title')}`;
+    Swal.fire({
+        title: "Are you sure?",
+        text: text,
+        showCancelButton: true,
+        confirmButtonText: 'Ok',
+        icon: "warning",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const url =  $(this).attr('href');
+            window.location = url;
+        }
+    })
+});
+
+
 $(document).ready(function() {
     $('.date-format').each(function(event){
         const date = $(this).attr('date');

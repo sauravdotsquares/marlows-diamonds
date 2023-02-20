@@ -25,7 +25,7 @@ class PageController
         if($slug!=null){
 
 
-            $pageData = Pages::where('slug',$slug)->where('status',1)->first();
+            $pageData = Pages::where('slug',$slug)->where(['status'=>1, 'is_deleted'=>0])->first();
             $pageCategory = PostCategory::where('slug',$slug)->first();
             $productCategories = Category::where('slug',$slug)->first();
             

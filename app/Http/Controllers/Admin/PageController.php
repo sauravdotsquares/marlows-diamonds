@@ -16,15 +16,21 @@ class PageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(Request $request){
         $breadcrumb = [
             ["name" => "Pages", "url" => route("admin.pages"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
-		$pages = Pages::all();
+
+
+
+		$query = Pages::orderBy('id','DESC');
+        $query = getFilter(Pages::class,$query, $request->all());
+
+        $pages =  $query->paginate(10);
+
 		return view('admin.pages.index', compact('pages'));
 		
     }
@@ -193,10 +199,24 @@ class PageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($pageid) {
+    public function delete(Request $request, $pageid) {
         $id = base64_decode($pageid);
-        Pages::find($id)->delete(); 
-		return redirect()->action('Admin\PageController@index')->with('alert-success', 'Page Deleted Successfully');
+
+        $record = Pages::where('id', $id)->first();
+        if(!empty($record)){
+
+            if(!empty($request['revert']) && $request['revert']=='true'){
+                $record->is_deleted = 0;
+                $message = "Page restored from trash";
+            }else{
+                $record->is_deleted = 1;
+                $message = 'Page Deleted Successfully';
+            }
+
+            $record->save();
+        }
+
+		return redirect()->action('Admin\PageController@index')->with('success',$message );
     }
 	 /**
      * Status

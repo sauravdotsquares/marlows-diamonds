@@ -1207,3 +1207,12 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 @media(max-width:575px){
 .post-data-col .col-lg-4.col-sm-6 {width: 100%;}
     }
+
+
+.blog-detail-search-field .blog-details-search-input{
+	padding: 0 10px 0 10px !important;
+}
+.blog-detail-search-field .seach-btn{
+	left: revert;
+	right: 10px !important;
+}
