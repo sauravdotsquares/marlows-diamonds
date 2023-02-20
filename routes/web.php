@@ -213,13 +213,13 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		});
 
 
-		Route::group(['as' => 'lab_price_variations.', 'prefix' => 'lab_price_variations' ], function () {
-			Route::any('/', 'ProductController@labPriceList')->name('list');
-			Route::any('/change-status/{id}', 'ProductController@labPriceChangeStatus')->name('change_status');
-			Route::any('/delete/{id}', 'ProductController@labPriceDelete')->name('delete');
-			Route::any('/add', 'ProductController@labPriceAdd')->name('add');
-			Route::any('/edit/{id}', 'ProductController@labPriceEdit')->name('edit');
-		});
+		// Route::group(['as' => 'lab_price_variations.', 'prefix' => 'lab_price_variations' ], function () {
+		// 	Route::any('/', 'ProductController@labPriceList')->name('list');
+		// 	Route::any('/change-status/{id}', 'ProductController@labPriceChangeStatus')->name('change_status');
+		// 	Route::any('/delete/{id}', 'ProductController@labPriceDelete')->name('delete');
+		// 	Route::any('/add', 'ProductController@labPriceAdd')->name('add');
+		// 	Route::any('/edit/{id}', 'ProductController@labPriceEdit')->name('edit');
+		// });
 
 		Route::group(['as' => 'product_combinations.', 'prefix' => 'product_combinations' ], function () {
 			Route::any('', 'GlobalCombinationsController@index')->name('index');
@@ -269,6 +269,16 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/files-list', 'ImageGalleryController@getFilesList')->name('getFilesList');
 			Route::any('/use-media', 'ImageGalleryController@useImage')->name('useImage');
 			
+		});
+
+
+		Route::group(['as' => 'lab_price_variations.', 'prefix' => 'products/lab-price-variants' ], function () {
+			// Route::any('', 'LabPricesListController@index')->name('list');
+			Route::any('/', 'LabPricesListController@labPriceList')->name('list');
+			Route::any('/change-status/{id}', 'LabPricesListController@labPriceChangeStatus')->name('change_status');
+			Route::any('/delete/{id}', 'LabPricesListController@labPriceDelete')->name('delete');
+			Route::any('/add', 'LabPricesListController@labPriceAdd')->name('add');
+			Route::any('/edit/{id}', 'LabPricesListController@labPriceEdit')->name('edit');
 		});
 
 

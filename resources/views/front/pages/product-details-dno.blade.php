@@ -736,16 +736,27 @@
 						}
 					}
 
-
-					if( parseInt(customSlider) && typeof res.vari_image!='undefined' && res.vari_image && res.vari_image!=null){
+					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!=''){
+						const multipleImages = res.multi_vari_img.split(',');
+						const carouselItem = $('#carousel');
+						itemToAddInCarousel = "";
+						multipleImages.forEach((element,index) => {
+							itemToAddInCarousel += `<div class="item product-items-carousel custom-item-carousel" data-position="${index+1}">
+														<a data-fancybox="gallery2" href="${imagesPath + element}" data-caption="${element}">
+															<img src="${imagesPath + element}" alt="${element}">
+														</a>
+												</div>`;
+						});
+						carouselItem
+						.trigger('replace.owl.carousel',itemToAddInCarousel)
+						.trigger('refresh.owl.carousel');
+					}else if( parseInt(customSlider) && typeof res.vari_image!='undefined' && res.vari_image && res.vari_image!=null){
 						const items = $('#carousel').find('.owl-item');
 						const itemToAddInCarousel = `<div class="item product-items-carousel custom-item-carousel" data-position="${items.length+1}">
 															<a data-fancybox="gallery2" href="${imagesPath + res.vari_image}" data-caption="${res.vari_image}">
 																<img src="${imagesPath + res.vari_image}" alt="${res.vari_image}">
 															</a>
 													</div>`;
-						
-						// const items = $('#carousel').find('.owl-item');
 						$('#carousel').find('.owl-item').each((index, element)=>{
 							if($(element).find('.custom-item-carousel').length){
 								$('#carousel').trigger('remove.owl.carousel',index);
@@ -773,24 +784,20 @@
 						}
 						
 					}else if(typeof res.vari_video!='undefined' && res.vari_video && res.vari_video!=''){
-
 						if($('#variationVideo').length){
 							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
 							$('#variationVideo').attr('src', videoUrl);
 							$("#variationVideo")[0].play();
 						}
-
 					}
 
 					/** TODO: remove in carousel */
 					/** TODO: Add image in carousel */
-
 					// if(res.vari_image!='' && res.vari_image!=null){
 					// 	variation_image = data_slug+'/storage/'+res.vari_image;
 					// 	var $speed = 0;
 					// 	$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
 					// }
-
 				}
 			});
 		}

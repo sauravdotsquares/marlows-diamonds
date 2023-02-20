@@ -25,21 +25,24 @@
                         @if(!empty($posts))  
                         @php ($i = 1)  
                         @foreach($posts as $post)
-                        <tr>
+						
+						<tr  class="<?php if($post->status == 0){ echo "bg-danger"; }  ?>" >
                            <td>{{$post->title}}</td>
                            <td>{{$post->slug}}</td>
 						    <td>{{isset($post->cat_details)?$post->cat_details:''}}</td>
                            <td>{{$post->created_at}}</td>
                            <td>
                               @if($post->status == 1) 
-                              <a title="Change Status" href="{{ url('admin/posts/status/'.base64_encode($post->id).'/0')}}"><i class="fa fa-check " aria-hidden="true"></i></a>
+                              <a title="Delete" href="{{ url('admin/posts/status/'.base64_encode($post->id).'/0')}}" onclick="return confirm('Are you sure?')" > <i class="fa fa-trash " aria-hidden="true"></i></a>
                               @else
-                              <a title="Change Status" href="{{ url('admin/posts/status/'.base64_encode($post->id).'/1')}}"><i class="fa fa-times " aria-hidden="true"></i></a>  
+                              <a title="Undo" href="{{ url('admin/posts/status/'.base64_encode($post->id).'/1')}}" onclick="return confirm('Are you sure?')"><i class="fa fa-check " aria-hidden="true"></i></a>  
                               @endif  
                               <a title="Edit" href="{{ url('admin/posts/update/'.base64_encode($post->id))}}"><i class="fa fa-edit " aria-hidden="true"></i></a>
-                              <a title="Delete" href="{{ url('admin/delete-post/'.base64_encode($post->id))}}" onclick="return myFunction()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                             <!-- <a title="Delete" href="{{ url('admin/delete-post/'.base64_encode($post->id))}}" onclick="return myFunction()"><i class="fa fa-trash" aria-hidden="true"></i></a> -->
                            </td>
                         </tr>
+
+
                         @php ($i++)  
                         @endforeach
                         @endif

@@ -34,6 +34,14 @@
               <p> Dashboard </p>
             </a>
           </li>
+
+          {{-- <li class="nav-item menu-open">
+            <a href="{{route('admin.dashboard')}}" class="nav-link @if(request()->segment(2) == 'dashboard') active @endif">
+              <i class="nav-icon fas fa-dollar-sign"></i>
+              <p> Lab Price </p>
+            </a>
+          </li> --}}
+
           <li class="nav-item @if(request()->segment(2) == 'banners') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'banners') active @endif">
               <i class="nav-icon fas fa fa-image"></i>
@@ -172,30 +180,38 @@
                   <p>Categories</p>
                 </a>
               </li>
+
               <li class="nav-item">
                 <a href="{{asset('admin/products/categories/create')}}" class="nav-link @if(request()->segment(2) == 'products' && request()->segment(3) == 'categories' && request()->segment(4) == 'create') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create category</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="{{asset('admin/products/lab-price-variants')}}" class="nav-link  {{  request()->is('*products/lab-price-variants*') ? 'active' : '' }} ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Engagement lab prices</p>
+                </a>
+              </li>
             </ul>
           </li>
 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="{{  route('admin.app_products.list') }}" class="nav-link ">
               <i class="nav-icon fa fa-cart-plus"></i>
               <p>
                 Products new
               </p>
             </a>
-          </li>
+          </li> --}}
 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="{{  route('admin.image_gallery.index') }}" class="nav-link ">
               <i class="nav-icon fa fa-cart-plus"></i>
               <p> Image gallery </p>
             </a>
-          </li>
+          </li> --}}
 
           <li class="nav-item @if(request()->segment(2) == 'users') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link @if(request()->segment(2) == 'users') active @endif">

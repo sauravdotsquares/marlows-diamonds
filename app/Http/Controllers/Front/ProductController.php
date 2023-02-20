@@ -1353,7 +1353,7 @@ class ProductController extends Controller
         // ->where('status',1)
         // ->where('status',1)
         $products = Products::select('slug','updated_at')->groupBy('slug')->get();
-        $posts = Posts::select('slug','updated_at')->groupBy('slug')->get();
+        $posts = Posts::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
         $posts_categories = PostCategory::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
         $pages = Pages::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
         
@@ -1443,7 +1443,7 @@ class ProductController extends Controller
         // ->where('status',1)
         // ->where('status',1)
         $products = Products::select('slug','updated_at','title')->groupBy('slug')->get();
-        $posts = Posts::select('slug','updated_at','title')->groupBy('slug')->get();
+        $posts = Posts::select('slug','updated_at','title')->groupBy('slug')->where('status',1)->get();
         $posts_categories = PostCategory::select('slug','updated_at','name')->groupBy('slug')->where('status',1)->get();
         $pages = Pages::select('slug','updated_at','title')->groupBy('slug')->where('status',1)->get();
         

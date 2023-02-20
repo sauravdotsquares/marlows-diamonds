@@ -107,8 +107,11 @@ class PageController
 
 	// For single blog post
 	public function show(Request $request,$slug){
+		
 		$posts = Posts::where('slug',$slug)->first();
-        if(empty($posts)){
+		
+		
+        if(empty($posts) || $posts->status == 0){
             return view('errors.404');
         }
 
