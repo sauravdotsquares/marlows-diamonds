@@ -47,7 +47,7 @@
 		<div class="col-lg-3">
 			<div class="blog-search-field">
 				<div class="formgroup">
-					<input type="text" name="search" class="blog-search-input" placeholder="Search for blog.." autocomplete="off">
+					<input value="{{ request()->searchKeyword }}" type="text" name="search" class="blog-search-input" placeholder="Search for blog.." autocomplete="off">
 					<button class="seach-btn" type="button">
 						<img class="search-icon"
 						src="{{ asset('assets/images/search.png') }}" alt="search"></button>
