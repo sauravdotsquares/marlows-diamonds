@@ -34,7 +34,7 @@
                            <td>{{$appointment->created_at}}</td>
                            <td>
                               <a title="Edit" href="{{ url('admin/appointments/update/'.base64_encode($appointment->id))}}"><i class="fa fa-edit " aria-hidden="true"></i></a>
-                              <a title="Delete" href="{{ url('admin/delete-appointment/'.base64_encode($appointment->id))}}" onclick="return myFunction()"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                              <a class="confirm-and-reload" title="Permanent Delete this record?" href="{{ url('admin/delete-appointment/'.base64_encode($appointment->id))}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
                            </td>
                         </tr>
                         @php ($i++)  

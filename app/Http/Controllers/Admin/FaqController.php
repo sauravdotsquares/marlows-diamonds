@@ -16,7 +16,7 @@ class FaqController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $breadcrumb = [
             ["name" => "Faqs", "url" => route("admin.faqs"), "icon" => "fa fa-dashboard"],
@@ -24,7 +24,12 @@ class FaqController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-		$faqs = Faqs::all();
+		
+        $query = Faqs::orderBy('id','DESC');
+        $query = getFilter(Faqs::class,$query, $request->all());
+
+        $faqs = $query->paginate(10);
+
 		return view('admin.faqs.index', compact('faqs'));
 		
     }
@@ -147,7 +152,14 @@ class FaqController extends Controller
     public function delete($faqid) {
         $id = base64_decode($faqid);
         Faqs::find($id)->delete(); 
-		return redirect()->action('Admin\FaqController@index')->with('alert-success', 'Faq Deleted Successfully');
+        
+        // $faq = Faqs::where('id', $id)->first();
+        // if(!empty($faq)){
+        //     $faq->is_deleted = $faq->is_deleted ? 0 : 1;
+        //     $faq->save();
+        // }
+
+		return redirect()->action('Admin\FaqController@index')->with('success', 'Faq Deleted Successfully');
     }
 	 /**
      * Status

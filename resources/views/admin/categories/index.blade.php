@@ -66,7 +66,7 @@
                                        class="fa fa-times" aria-hidden="true"></i></a>
                                  @endif
                                  <a title="Edit" href="{{asset('admin/products/categories/create/'.$value->slug)}}" class="btn btn-warning btn-sm"><i class="fa fa-edit " aria-hidden="true"></i></a>
-                                 <a title="Delete" href="javascript:void(0);" class="delete-modal btn btn-danger btn-sm" data-value="{{$value}}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                 <a title="Permanent Delete this record?" href="{{asset("admin/delete-categories")}}?id={{$value->id}}" class="confirm-and-reload btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
                               </td>
                            </tr>
                         @endforeach

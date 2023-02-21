@@ -1026,26 +1026,97 @@ class ProductController extends Controller
          * 1. get all previous slugs of products 
          * 2. update new slug after checking duplication
          */
+        // redirects
 
+        $page = (!empty($request['page'])) ? (int)$request['page'] : 1 ;
+        //echo $page;die;
 
-
-        $filePath = public_path('revert_redirect.json');
-        $fileData = file_get_contents($filePath, "r");
-        $urls = json_decode($fileData);
-        
-        $totalAffectedRecords = 0;
-        foreach($urls as $url){
-            $old_url =  urlencode($url);
-            $redirectInfo = UrlRedirects::where('old_url',$old_url)->where('is_deleted',0)->first();
-            if(!empty($redirectInfo)){
-                $redirectInfo->is_deleted = 1;
-                $redirectInfo->save();
-                $totalAffectedRecords++;
+        $filePath = public_path("imports/redirection_phase_2.csv");
+        $file = fopen($filePath, "r");
+        $newItemsAdded = 0;
+        $existingItems = 0;
+        $totalRecords = 0;
+        //ini_set('memory_limit', '-1');
+        set_time_limit(500); 
+         try {
+            $records = [];
+            while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+                $totalRecords++;
+                // $old_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0]));
+                // $new_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1]));
+                $records[] = [
+                    'old_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0])),
+                    'new_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1])),
+                ];
+                // $item = UrlRedirects::where('old_url', $old_url)->first();
+                // if(!empty($item)){
+                //     $item->new_url = $new_url;
+                //     $item->is_deleted = 0;
+                //     $item->save();
+                //     $existingItems++;
+                // }else{
+                //     $new_url = new UrlRedirects();
+                //     $new_url->old_url = $old_url;
+                //     $new_url->new_url = $new_url;
+                //     $new_url->save();
+                //     $newItemsAdded++;
+                // }
             }
+
+            $collection = collect($records);
+
+            foreach ($collection->chunk(100) as  $chunk) {
+                $chunk = $chunk->toArray();
+                foreach ($chunk as $key => $value) {
+                    $item = UrlRedirects::where('old_url', $value['old_url'])->first();
+                    if(!empty($item)){
+                        $item->new_url = $value['new_url'];
+                        $item->is_deleted = 0;
+                        $item->save();
+                        $existingItems++;
+                    }else{
+                        $new_url = new UrlRedirects();
+                        $new_url->old_url = $value['old_url'];
+                        $new_url->new_url = $value['new_url'];
+                        $new_url->save();
+                        $newItemsAdded++;
+                    }
+                }
+
+                // HKDiamondStock::insert($chunk->toArray());
+                // $recordsAdded = $recordsAdded + $chunk->count();
+            }
+
+            echo 'existingItems:- ' . $existingItems;
+            echo '<br>';
+            echo 'newItemsAdded:- ' . $newItemsAdded;
+            echo '<br>';
+            echo 'Total itmes :- ' . $totalRecords;
+            //prd($records);
+        } catch (\Exception $th) {
+            prd($th);
+            echo 'totalRecordsAdded:- '. $newItemsAdded;die;
         }
 
-        echo 'totalAffectedRecords:- ' . $totalAffectedRecords . '<br>';
-        echo 'totalRecords:- ' . count($urls);die;
+
+
+        // $filePath = public_path('revert_redirect.json');
+        // $fileData = file_get_contents($filePath, "r");
+        // $urls = json_decode($fileData);
+        
+        // $totalAffectedRecords = 0;
+        // foreach($urls as $url){
+        //     $old_url =  urlencode($url);
+        //     $redirectInfo = UrlRedirects::where('old_url',$old_url)->where('is_deleted',0)->first();
+        //     if(!empty($redirectInfo)){
+        //         $redirectInfo->is_deleted = 1;
+        //         $redirectInfo->save();
+        //         $totalAffectedRecords++;
+        //     }
+        // }
+
+        // echo 'totalAffectedRecords:- ' . $totalAffectedRecords . '<br>';
+        // echo 'totalRecords:- ' . count($urls);die;
 
         // $productSlugs = 
         // Products::select(['slug','id','title','description','lab_description','categories'])
