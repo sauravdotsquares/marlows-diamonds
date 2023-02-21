@@ -1031,7 +1031,7 @@ class ProductController extends Controller
         $page = (!empty($request['page'])) ? (int)$request['page'] : 1 ;
         //echo $page;die;
 
-        $filePath = public_path("imports/redirection_phase_$page.csv");
+        $filePath = public_path("imports/redirection_phase_2.csv");
         $file = fopen($filePath, "r");
         $newItemsAdded = 0;
         $existingItems = 0;
