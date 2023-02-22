@@ -218,16 +218,24 @@ class PayPalPaymentController extends Controller
                 ];
                 return view('front.pages.success-page',$result);
             }
+        }else{
+            return view('front.pages.cancel-page',[]);
         }
 
-        $getOrderDetails = Order::where('token',$request->token)->update(['status'=>3]);
+        // $getOrderDetails = Order::where('token',$request->token)->update(['status'=>3]);
+        // // prd($getOrderDetails);
+        // if(!empty($getOrderDetails)){
+        //     $result = [
+        //         'response' => 'Your Order number('.$getOrderDetails->id.') has been cancelled',
+        //         'getOrderDetails' => $getOrderDetails
+        //     ];
+    
+        //     return view('front.pages.cancel-page',$result);
+        // }else{
+        //     return view('front.pages.cancel-page',[]);
+        // }
 
-        $result = [
-            'response' => 'Your Order number('.$getOrderDetails->id.') has been cancelled',
-            'getOrderDetails' => $getOrderDetails
-        ];
-
-        return view('front.pages.cancel-page',$result);
+        
 
         dd('Error occured!');
     }
