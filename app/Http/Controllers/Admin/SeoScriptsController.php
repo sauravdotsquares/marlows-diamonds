@@ -33,6 +33,22 @@ class SeoScriptsController extends Controller{
         ];
         populate_breadcrumb($breadcrumb);
 
+        if($request->isMethod('post')){
+            // prd($request->all());
+
+            $validated = $request->validate([
+                'page' => 'required',
+                'header_script' => 'required_without_all:footer_script',
+                'footer_script' => 'required_without_all:header_script',
+            ],
+            [
+                'page.required' => 'Please select page url',
+                'header_script.required_without_all' => 'Please type scripts for header or footer',
+                'footer_script.required_without_all' => 'Please type scripts for header or footer',
+            ]);
+
+        }
+
         return view($this->view_path . 'add');
     }
 
