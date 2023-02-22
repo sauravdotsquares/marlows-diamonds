@@ -5,7 +5,9 @@
     <div class="category-banner" style="background-image:url(../assets/images/cart-bg.jpg)">
         <div class="container">
             <div class="category-banner-text">
-                <h1>Order Cancelled</h1>
+                <h1>
+                    Thank you for visiting. Check out more products <a href="{{ url('/') }}"> here</a>.
+                </h1> 
             </div>
         </div>
     </div>
