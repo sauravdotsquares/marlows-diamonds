@@ -69,7 +69,7 @@ use App\Models\AppProductAttributeVariationDescripiton;
             @if (!empty($images) && count($images['variation'])  )
                 @include('admin.app_products.products.elements.product_img', ['image'=>$images['variation'][0], 'height'=> '100px', 'width'=> '100px'] )
             @else
-                <img class="d-none" src="" height="120" width="120"/>
+                <img class="d-none" src="" height="120" width="120" alt="Waiting image"/>
                 <video height="120" width="120" class="d-none">
                 </video>
             @endif

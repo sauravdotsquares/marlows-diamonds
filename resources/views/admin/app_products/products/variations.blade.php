@@ -77,7 +77,7 @@
                                             <?php $images = [$data_value['image']]; ?>
                                                 @include('admin.app_products.products.elements.product_img' )
                                             <?php }else{ ?>
-                                                <img class="d-none" src="" height="120" width="120"/>
+                                                <img alt="variation image" class="d-none" src="" height="120" width="120"/>
                                             <?php } ?>
                                             <video height="120" width="120" class="d-none">
                                             </video>

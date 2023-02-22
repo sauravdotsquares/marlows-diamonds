@@ -93,7 +93,7 @@
 							<div class="input-group">
 							   <div class="custom-file">
                               @if($banners->getBannerDetails[0]->image!='')
-								<img src="{{url('/').'/images/banners/'.$banners->getBannerDetails[0]->image}}" width="150px;">
+								<img alt="{{$banners->getBannerDetails[0]->image}}" src="{{url('/').'/images/banners/'.$banners->getBannerDetails[0]->image}}" width="150px;">
                               @endif
                               <input type="file" id="image" name="image" value="{{ $banners->getBannerDetails[0]->image }}" class="custom-file-input" accept="image/*">
                               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
