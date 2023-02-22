@@ -1028,75 +1028,121 @@ class ProductController extends Controller
          */
         // redirects
 
-        $page = (!empty($request['page'])) ? (int)$request['page'] : 1 ;
-        //echo $page;die;
-
-        $filePath = public_path("imports/redirection_phase_2.csv");
-        $file = fopen($filePath, "r");
-        $newItemsAdded = 0;
-        $existingItems = 0;
-        $totalRecords = 0;
-        //ini_set('memory_limit', '-1');
-        set_time_limit(500); 
-         try {
-            $records = [];
-            while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
-                $totalRecords++;
-                // $old_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0]));
-                // $new_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1]));
-                $records[] = [
-                    'old_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0])),
-                    'new_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1])),
-                ];
-                // $item = UrlRedirects::where('old_url', $old_url)->first();
-                // if(!empty($item)){
-                //     $item->new_url = $new_url;
-                //     $item->is_deleted = 0;
-                //     $item->save();
-                //     $existingItems++;
-                // }else{
-                //     $new_url = new UrlRedirects();
-                //     $new_url->old_url = $old_url;
-                //     $new_url->new_url = $new_url;
-                //     $new_url->save();
-                //     $newItemsAdded++;
-                // }
+        $blog_categories_slugs = [
+            "certified-diamonds",
+            "custom-engagement-rings",
+            "diamond-earrings",
+            "diamond-engagement-ring",
+            "diamond-eternity-ring",
+            "diamond-eternity-rings",
+            "diamond-industry-insight",
+            "diamond-pendants",
+            "diamond-rings",
+            "diamond-wedding-rings",
+            "diamonds",
+            "essential-guide-to-diamonds",
+            "fancy-shaped-diamond-rings",
+            "gia-certified-diamond-rings",
+            "gold-jewellery",
+            "loose-diamonds",
+            "multi-stone-diamond-rings",
+            "other-jewellery",
+            "precious-stones",
+            "princess-cut-engagement-ring",
+            "uncategorized"
+        ];
+        $blog_affected_records = 0;
+        $blog_category_meta_description = "Get idea about the latest ITEM_TO_CHANGE by read the latest news and resources from the Marlows Diamond blog.";
+        
+        foreach ($blog_categories_slugs as $blog_slug_key => $blog_slug_value) {
+            $categorySlugItem = PostCategory::where('slug', $blog_slug_value)->first();
+            if(!empty($categorySlugItem)){
+                $categorySlugItem->meta_description = str_replace('ITEM_TO_CHANGE',$categorySlugItem->name, $blog_category_meta_description);
+                $categorySlugItem->save();
+                $blog_affected_records++; 
             }
-
-            $collection = collect($records);
-
-            foreach ($collection->chunk(100) as  $chunk) {
-                $chunk = $chunk->toArray();
-                foreach ($chunk as $key => $value) {
-                    $item = UrlRedirects::where('old_url', $value['old_url'])->first();
-                    if(!empty($item)){
-                        $item->new_url = $value['new_url'];
-                        $item->is_deleted = 0;
-                        $item->save();
-                        $existingItems++;
-                    }else{
-                        $new_url = new UrlRedirects();
-                        $new_url->old_url = $value['old_url'];
-                        $new_url->new_url = $value['new_url'];
-                        $new_url->save();
-                        $newItemsAdded++;
-                    }
-                }
-
-                // HKDiamondStock::insert($chunk->toArray());
-                // $recordsAdded = $recordsAdded + $chunk->count();
-            }
-
-            echo 'existingItems:- ' . $existingItems;
-            echo '<br>';
-            echo 'newItemsAdded:- ' . $newItemsAdded;
-            echo '<br>';
-            echo 'Total itmes :- ' . $totalRecords;
-            //prd($records);
-        } catch (\Exception $th) {
-            prd($th);
-            echo 'totalRecordsAdded:- '. $newItemsAdded;die;
         }
+        echo 'Blog affected records:- ' . $blog_affected_records;
+
+        /** Product categories */
+        $product_categories_slugs = [
+            "engagement-rings",
+            "halo-cushion",
+            "emerald-multi-stone-rings",
+            "heart-multi-stone-rings",
+            "marquise-multi-stone-rings",
+            "multi-stone-cushion",
+            "oval-multi-stone-rings",
+            "pear-multi-stone-rings",
+            "princess-multi-stone-rings",
+            "shoulder-cushion",
+            "solitaire-cushion",
+            "diamond"
+        ];
+        $product_categories_total_updated = 0;
+        $product_categories_description = "Browse our stunning range of Round cut ITEM_TO_CHANGE_TWO Stunning certified diamond rings available online and in store.";
+        foreach ($product_categories_slugs as $product_cateogry_slug_key => $product_cateogry_slug_value) {
+            $categorySlugItem = Category::where('slug', $product_cateogry_slug_value)->first();
+            if(!empty($categorySlugItem)){
+                $categorySlugItem->meta_description = str_replace('ITEM_TO_CHANGE_TWO',$categorySlugItem->name, $product_categories_description);
+                $categorySlugItem->save();
+                $product_categories_total_updated++; 
+            }
+        }
+
+        echo '<br>';
+        echo "product categories total updated:- " . $product_categories_total_updated;
+        die;
+
+        // $filePath = public_path("imports/redirection_phase_2.csv");
+        // $file = fopen($filePath, "r");
+        // $newItemsAdded = 0;
+        // $existingItems = 0;
+        // $totalRecords = 0;
+        // //ini_set('memory_limit', '-1');
+        // set_time_limit(500); 
+        //  try {
+        //     $records = [];
+        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+        //         $totalRecords++;
+        //         // $old_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0]));
+        //         // $new_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1]));
+        //         $records[] = [
+        //             'old_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0])),
+        //             'new_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1])),
+        //         ];
+        //     }
+        //     $collection = collect($records);
+        //     foreach ($collection->chunk(100) as  $chunk) {
+        //         $chunk = $chunk->toArray();
+        //         foreach ($chunk as $key => $value) {
+        //             $item = UrlRedirects::where('old_url', $value['old_url'])->first();
+        //             if(!empty($item)){
+        //                 $item->new_url = $value['new_url'];
+        //                 $item->is_deleted = 0;
+        //                 $item->save();
+        //                 $existingItems++;
+        //             }else{
+        //                 $new_url = new UrlRedirects();
+        //                 $new_url->old_url = $value['old_url'];
+        //                 $new_url->new_url = $value['new_url'];
+        //                 $new_url->save();
+        //                 $newItemsAdded++;
+        //             }
+        //         }
+        //         // HKDiamondStock::insert($chunk->toArray());
+        //         // $recordsAdded = $recordsAdded + $chunk->count();
+        //     }
+        //     echo 'existingItems:- ' . $existingItems;
+        //     echo '<br>';
+        //     echo 'newItemsAdded:- ' . $newItemsAdded;
+        //     echo '<br>';
+        //     echo 'Total itmes :- ' . $totalRecords;
+        //     //prd($records);
+        // } catch (\Exception $th) {
+        //     prd($th);
+        //     echo 'totalRecordsAdded:- '. $newItemsAdded;die;
+        // }
 
 
 
