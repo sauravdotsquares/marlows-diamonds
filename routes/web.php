@@ -282,6 +282,15 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		});
 
 
+		Route::group(['as' => 'seo_scripts.', 'prefix' => 'seo-scripts' ], function () {
+			Route::any('/', 'SeoScriptsController@list')->name('list');
+			Route::any('/add', 'SeoScriptsController@add')->name('add');
+			Route::any('/edit/{id}', 'SeoScriptsController@edit')->name('edit');
+			Route::any('/change-status/{id}', 'SeoScriptsController@changeStatus')->name('change_status');
+			Route::any('/delete/{id}', 'SeoScriptsController@delete')->name('delete');
+		});
+
+
 
 	});
 
