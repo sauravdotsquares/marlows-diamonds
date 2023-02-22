@@ -351,7 +351,7 @@ Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
     Route::post('/check-email-id', 'LoginController@checkEmailId')->name('check.email.id');
 
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
-	Route::any('/exclusive', 'ProductController@exclusiveMarlows')->name('products.exclusive');
+	//Route::any('/exclusive', 'ProductController@exclusiveMarlows')->name('products.exclusive');
 
 	// Route::any('{slug}','ProductController@productListPage');
 
