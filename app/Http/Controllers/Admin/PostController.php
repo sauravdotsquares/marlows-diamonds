@@ -100,7 +100,7 @@ class PostController extends Controller
 			// die;
             $file_path = \Storage::url($image);
             $url = asset($file_path);
-            $imgURL = '<img src="'.$url.'" />';
+            $imgURL = '<img alt="Upload item" src="'.$url.'" />';
             echo '/storage/'.$image;
             exit();
         }

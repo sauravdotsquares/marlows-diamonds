@@ -93,7 +93,7 @@
 							<input type="hidden" name="ids[]" value="{{$banners->getBannerDetails[0]->id}}">
 							<div class="input-group">
 							    @if($banners->getBannerDetails[0]->image!='')
-								    <img src="{{asset('storage').'/banners/'.$banners->getBannerDetails[0]->image}}" width="50px;">
+								    <img alt="{{$banners->getBannerDetails[0]->image}}" src="{{asset('storage').'/banners/'.$banners->getBannerDetails[0]->image}}" width="50px;">
                                 @endif
 							   <div class="custom-file">
                               <input type="file" id="image" name="image[]" value="{{ $banners->getBannerDetails[0]->image }}" class="custom-file-input" accept="image/*">
@@ -135,7 +135,7 @@
 										<div class="form-group">
 											<label for="exampleInputFile">Banner Image</label>
 											<div class="input-group">
-												<img width="50px;" src="{{asset('storage').'/banners/'.$bannerDetails->image}}" >
+												<img alt="{{ $bannerDetails->image }}" width="50px;" src="{{asset('storage').'/banners/'.$bannerDetails->image}}" >
 												<div class="custom-file">
 													<input type="file" id="image{{$i}}" name="image[]" class="custom-file-input" accept="image/*">
 														<label class="custom-file-label" for="exampleInputFile">Choose file</label>

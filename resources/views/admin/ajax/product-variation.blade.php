@@ -49,7 +49,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 @if(isset($data->vari_image))
-                                    <img src="{{ asset('storage/'.$data->vari_image) }}" alt="" height="50px" width="50px">
+                                    <img src="{{ asset('storage/'.$data->vari_image) }}" alt="Variation image" height="50px" width="50px">
                                 @endif
                                 <div class="form-label-group">
                                     <label for="vari_image">Image</label>
@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <div class="form-label-group">
                                     @if(isset($data->vari_video))
-                                        <img src="{{ asset('storage/'.$data->vari_video) }}" alt="">
+                                        <img src="{{ asset('storage/'.$data->vari_video) }}" alt="Variation image">
                                     @endif
 
                                     <label for="vari_video">Video</label>

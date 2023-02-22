@@ -18,7 +18,7 @@
         </video>
     @else
         {{-- If file is image --}}
-        <img style="<?php echo $style ?>" src="{{ asset( 'uploads/'.  $image['image']) }}"> 
+        <img alt="{{$image['image']}}" style="<?php echo $style ?>" src="{{ asset( 'uploads/'.  $image['image']) }}"> 
     @endif
 
 @endif

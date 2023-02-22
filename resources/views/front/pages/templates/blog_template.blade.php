@@ -41,7 +41,7 @@
 		<div class="col-md-9">
 			<div id="post-data" class="post-data-col"></div>
 			<div class="ajax-load text-center" style="display:none">
-				<p><img src="{{ asset('/images/spinner.gif') }}">Loading More post</p>
+				<p><img alt="Loader image" src="{{ asset('/images/spinner.gif') }}">Loading More post</p>
 			</div>
 		</div>
 		<div class="col-lg-3">
@@ -146,7 +146,7 @@
 	</div>
 </div>
 {{-- <div class="ajax-load text-center" style="display:none">
-	<p><img src="{{ asset('/images/spinner.gif') }}">Loading More post</p>
+	<p><img alt="Loader image" src="{{ asset('/images/spinner.gif') }}">Loading More post</p>
 </div> --}}
 <!-- Section Reviews -->
 <div class="container">
