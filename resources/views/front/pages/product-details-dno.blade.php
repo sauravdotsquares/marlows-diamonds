@@ -736,7 +736,7 @@
 						}
 					}
 
-					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!=''){
+					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
 						const multipleImages = res.multi_vari_img.split(',');
 						const carouselItem = $('#carousel');
 						itemToAddInCarousel = "";
