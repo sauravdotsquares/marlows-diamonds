@@ -36,38 +36,40 @@ class PageController
                 /** Slug belongs to blog Category */
                 $redirectTo = route('blog_list', $pageCategory->slug);
                 return redirect($redirectTo, 301);
-			}elseif($productCategories){
-                $productListingData = getProductListing($slug, $slug2, $slug3, request()->all());
-                if($productListingData['status'] == 404){
-                    return view('layouts.errors.404');
-                }else if($productListingData['status'] == 200){
-                    $productItems = $productListingData['productItems'];
-                    $isNextPage = $productListingData['isNextPage'];
-                    $nextPage = $productListingData['nextPage'];
+			}
+            // elseif($productCategories){
+            //     $productListingData = getProductListing($slug, $slug2, $slug3, request()->all());
+            //     if($productListingData['status'] == 404){
+            //         return view('layouts.errors.404');
+            //     }else if($productListingData['status'] == 200){
+            //         $productItems = $productListingData['productItems'];
+            //         $isNextPage = $productListingData['isNextPage'];
+            //         $nextPage = $productListingData['nextPage'];
 
-                    $path = request()->path();                    
-                    $categoiresForFilter = CategoryPageFilter::where('page',$path)->pluck('category_id');
-                    $metalTypesForFilter = Attributes::where('slug','metal-type')->first();
-                    $metalTypesForFilter = explode('|',$metalTypesForFilter->values);
+            //         $path = request()->path();                    
+            //         $categoiresForFilter = CategoryPageFilter::where('page',$path)->pluck('category_id');
+            //         $metalTypesForFilter = Attributes::where('slug','metal-type')->first();
+            //         $metalTypesForFilter = explode('|',$metalTypesForFilter->values);
                     
-                    $categories = Category::select(['name','id','status','parent_id'])
-                    ->whereIn('id', $categoiresForFilter)
-                    ->where(['is_category_page'=>0, 'status'=>1,'parent_id'=> 0 ])->get();
+            //         $categories = Category::select(['name','id','status','parent_id'])
+            //         ->whereIn('id', $categoiresForFilter)
+            //         ->where(['is_category_page'=>0, 'status'=>1,'parent_id'=> 0 ])->get();
 
-                    return view('front.pages.product_listing_page',compact([
-                        'productItems',
-                        'isNextPage',
-                        'nextPage',
-                        "slug", 
-                        "slug2", 
-                        "slug3",
-                        "categories",
-                        "metalTypesForFilter"
-                    ]));
-                }else{
-                    return view('layouts.errors.404');
-                }
-            }
+            //         return view('front.pages.product_listing_page',compact([
+            //             'productItems',
+            //             'isNextPage',
+            //             'nextPage',
+            //             "slug", 
+            //             "slug2", 
+            //             "slug3",
+            //             "categories",
+            //             "metalTypesForFilter"
+            //         ]));
+            //     }
+            //     else{
+            //         return view('layouts.errors.404');
+            //     }
+            // }
 
             return view('layouts.errors.404');
         }else{
