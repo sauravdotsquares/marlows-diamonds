@@ -1233,7 +1233,8 @@ function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
                         "country"        => @$ipdat->geoplugin_countryName,
                         "country_code"   => @$ipdat->geoplugin_countryCode,
                         "continent"      => @$continents[strtoupper($ipdat->geoplugin_continentCode)],
-                        "continent_code" => @$ipdat->geoplugin_continentCode
+                        "continent_code" => @$ipdat->geoplugin_continentCode,
+                        "ip" => $ip
                     );
                     break;
                 case "address":

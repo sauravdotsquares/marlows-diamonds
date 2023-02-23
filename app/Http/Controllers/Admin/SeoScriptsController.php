@@ -18,7 +18,7 @@ class SeoScriptsController extends Controller{
      */
     public function list(Request $request){
         
-        echo ip_info("Visitor", "Country");die;
+        echo ip_info("Visitor");die;
 
         $page_title = "Seo Scripts";
         $breadcrumb = [
