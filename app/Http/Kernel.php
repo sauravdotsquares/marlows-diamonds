@@ -64,7 +64,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'employee' => \App\Http\Middleware\RedirectIfNotEmployee::class,
-        'SiteMapSaver' => \App\Http\Middleware\SiteMapSaver::class,
+        'WebCommonHandler' => \App\Http\Middleware\WebCommonHandler::class,
         'customer' => \App\Http\Middleware\RedirectIfNotCustomerUsers::class,
         'checkout' => \App\Http\Middleware\RedirectIfNotCustomer::class,
         'role' => \App\Http\Middleware\RoleChecker::class

@@ -288,6 +288,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/edit/{id}', 'SeoScriptsController@edit')->name('edit');
 			Route::any('/change-status/{id}', 'SeoScriptsController@changeStatus')->name('change_status');
 			Route::any('/delete/{id}', 'SeoScriptsController@delete')->name('delete');
+			Route::any('/view/{id}', 'SeoScriptsController@view')->name('view');
 		});
 
 
@@ -313,8 +314,8 @@ Route::group(['middleware' => ['customer']], function () {
 	});
 });
 
-// ->middleware(['SiteMapSaver'])
-Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
+
+Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 
     Route::get('/', 'PageController@page')->name('home');
 
