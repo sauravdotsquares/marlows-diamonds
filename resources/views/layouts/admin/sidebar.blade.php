@@ -378,6 +378,16 @@
 
             </ul>
           </li>
+          
+          <li class="nav-item">
+            <a href="{{ route('admin.seo_scripts.list') }}" class="nav-link {{ request()->is('*/seo-scripts*') ? 'active' : '' }}">
+              <i class="nav-icon 	fas fa-bullhorn"></i>
+              <p>
+                SEO 
+              </p>
+            </a>
+          </li>
+
           <li class="nav-item">
             <a href="/admin/settings" class="nav-link @if(request()->segment(2) == 'settings') active @endif">
               <i class="nav-icon fas fa fa-cog"></i>
