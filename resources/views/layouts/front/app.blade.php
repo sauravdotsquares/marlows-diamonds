@@ -31,6 +31,7 @@
     <script>
       var systemBaseUrl = '<?php echo url("/"); ?>/';
     </script>
+    
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
     <style>
@@ -53,7 +54,7 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WBT3LKH');</script>
     <!-- End Google Tag Manager -->
-
+    {!! (!empty($seoScriptData) && !empty($seoScriptData->header_script)) ? $seoScriptData->header_script : '' !!}
 </head>
 <body ng-app="MarlowsAPP">
     
@@ -227,5 +228,6 @@ $(document).ready(function(){
         }
     });*/
 </script>
+{!! (!empty($seoScriptData) && !empty($seoScriptData->footer_script)) ? $seoScriptData->footer_script : '' !!}
 </body>
 </html>

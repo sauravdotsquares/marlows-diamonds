@@ -6,12 +6,18 @@ use Closure;
 use Auth;
 use App\Models\SitemapUrls;
 use App\Models\VisitorPageTracking;
+use App\Models\SeoScripts;
 use Redirect;
 
 class WebCommonHandler{
 
     public function handle($request, Closure $next){
 
+        $fullUrl = $request->url();
+        $seoScriptData = SeoScripts::where(['page'=> $fullUrl, 'is_deleted'=>0, 'is_active'=>1 ])->first();
+        if(!empty($seoScriptData)){
+            view()->share('seoScriptData', $seoScriptData);
+        }
         // 
         // if($request->isMethod('get') && (!str_contains($url, 'storage'))  ){
         //     $exist = SitemapUrls::where(['is_deleted'=>0, 'url'=> $url ])->first();
@@ -33,7 +39,7 @@ class WebCommonHandler{
 
                 $new_log = new VisitorPageTracking();
                 $new_log->page_url = $url;
-                $new_log->user_agent = !empty($browserInfo) ? $browserInfo['userAgent'] : '' ;;
+                $new_log->user_agent = !empty($browserInfo) ? $browserInfo['userAgent'] : '' ;
                 $new_log->browser = !empty($browserInfo) ? $browserInfo['name'] : '' ;
                 $new_log->browser_version = !empty($browserInfo) ? $browserInfo['version'] : '' ;
                 $new_log->platform = !empty($browserInfo) ? $browserInfo['platform'] : '' ;

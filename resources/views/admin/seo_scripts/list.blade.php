@@ -54,7 +54,7 @@
                                         @foreach($data as $key => $record)
                                             <tr >
                                                 <td>{{$data->firstItem() + $key}}</td>
-                                                <td>{{ $record->page }}</td>
+                                                <td>  <a target="_blank" href="{{ $record->page }}">  {{ $record->page }} </a> </td>
                                                 <td>{{ $record->created_at }}</td>
                                                 <td>{!! $record->is_active ? '<small class="badge badge-success">Activated</small>' : '<small class="badge badge-danger">Deactivated</small>' !!}</td>
                                                 <td>
