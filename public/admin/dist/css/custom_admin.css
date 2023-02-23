@@ -196,3 +196,6 @@ textarea#attribute_value {
     padding: 10px;
     margin-bottom: 10px;
 }
+.callout a:hover {
+    color: #495057 !important;
+}
