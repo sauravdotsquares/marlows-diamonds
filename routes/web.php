@@ -314,8 +314,8 @@ Route::group(['middleware' => ['customer']], function () {
 	});
 });
 
-// ->middleware(['SiteMapSaver'])
-Route::namespace('Front')->middleware(['SiteMapSaver'])->group(function () {
+
+Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 
     Route::get('/', 'PageController@page')->name('home');
 
