@@ -239,19 +239,22 @@ class ProductController extends Controller
 
            if(isset($value['is_update']) && $value['is_update']!=''){
 
+                $variationItem = ProductVariations::where('id',$value['is_update'])->first();
+
                 $getProductDataVariation = ProductVariations::where('id',$value['is_update'])
                 ->update([
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                     'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
                     'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
                     // 'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
-                    'vari_image'=> !empty($uploadedImages) ? $uploadedImages[0] : null,
-                    'multi_vari_img' => !empty($uploadedImages) ? implode(',',$uploadedImages) : null,
+                    'vari_image'=> !empty($uploadedImages) ? $uploadedImages[0] : $variationItem->vari_image,
+                    'multi_vari_img' => !empty($uploadedImages) ? implode(',',$uploadedImages) : $variationItem->multi_vari_img,
                     // 'vari_video'=>isset($imageVariVideo)?$imageVariVideo:null,
-                    'vari_video'=>!empty($uploadedVideos) ? $uploadedVideos[0] : null,
-                    'multi_vari_video'=>!empty($uploadedVideos) ? implode(',',$uploadedVideos)  : null,
+                    'vari_video'=>!empty($uploadedVideos) ? $uploadedVideos[0] : $variationItem->vari_video,
+                    'multi_vari_video'=>!empty($uploadedVideos) ? implode(',',$uploadedVideos)  : $variationItem->multi_vari_video,
                 ]);
            }else{
+
                 $getProductDataVariation = ProductVariations::create([
                     'product_id'=>$productId,
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
