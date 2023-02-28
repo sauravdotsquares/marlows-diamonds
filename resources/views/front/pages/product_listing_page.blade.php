@@ -4,8 +4,8 @@
 <div class="category-banner" style="background-image:url({{asset('')}}assets/images/engagement-rings-banner.png)">
     <div class="container">
         <div class="category-banner-text">
-            <h1>{!! isset($data->title)?$data->title:'' !!}</h1>
-            <p>{!! isset($data->short_description)?$data->short_description:'' !!}</p>
+            <h1>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h1>
+            <p>{!! !empty($categoryData->short_description) ? $categoryData->short_description : '' !!}</p>
         </div>
     </div>
 </div>
@@ -14,21 +14,18 @@
     <div class="container" >
         <div class="category-listing-row">
             <div class="category-list-wrap">
-                
                 <div class="product-grid-wrap">
                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
                         {!! $productItems !!}
                     </div>
                 </div>
-
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
                     <img alt="Product loader" src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More Products</p>
                     <button style="display: none;" class="ajax-load-btn">Load more data</button>
                 </div>
-
-                {!! isset($data->description)?$data->description:'' !!}
+                {!! isset($categoryData->description)?$categoryData->description:'' !!}
             </div>
             
             <div class="category-sidebar-wrap">
@@ -38,23 +35,21 @@
                 <div class="filter-container">
 
                     <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
-                    <div class="category-filter-title">
-                        <h3>Filter by category</h3>
-                    </div>
-                    <ul>
-                        @foreach ($categories as $category_item)
-                            <li><a class="category-filter-item" data-id="{{$category_item->id}}" href="javascript:;">{{ $category_item->name }}</a></li>
-                        @endforeach
-                    </ul>
+                    
+                    @foreach($filter_items as $filter_key => $filter_item)
+                        <div class="filter-item">
+                            <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{$filter_item->slug}}" /> 
+                            <div class="category-filter-title">
+                                <h3>{{ $filter_item->name }}</h3>
+                            </div>
+                            <ul>
+                                @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
+                                    <li><a class="filter-item-data" data-id="{{$product_item_item->item_id}}" href="javascript:;">{{ $product_item_item->item_name }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
 
-                    <div class="metal-type-filter-title">
-                        <h3>Filter by metal type</h3>
-                    </div>
-                    <ul>
-                        @foreach ($metalTypesForFilter as $metal_type)
-                            <li><a class="metal-type-filter-item" data-id="{{ trim($metal_type)}}" href="javascript:;">{{ $metal_type }}</a></li>
-                        @endforeach
-                    </ul>
 
                     <div class="reset-filer-container">
                         <button class="reset-filer-btn">Reset search</button>
@@ -136,6 +131,19 @@
         </div>
     </div>
 </div>
+<!-- Section Reviews -->
+<div class="container">
+	<div class="rating-review-block">
+		<div class="owl-carousel owl-theme slider-review">
+		@include('front.pages.reviews')
+		</div>
+	</div>
+</div>
+
+@endsection
+
+
+
 
 
 @section('js')
@@ -150,9 +158,6 @@ $(document).ready(function(){
 
 </script>
     <script>
-
-
-
 
     $(document).on('mouseenter','.product-hover-affect', function (event) {
         if($(this).find('video').length){
@@ -189,191 +194,206 @@ $(document).ready(function(){
         }
     });
 
-
-    var typingTimer;                //timer identifier
-	var doneTypingInterval = 1000;  //time in ms, 5 seconds for example
-	var $input = ".search-item";
-
-
-    $(document).on('keyup',$input, function(){
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    $(document).on('click','.filter-item-data',function() {
+        $(this).toggleClass('active');
+        getFilterValues();
     });
-
-    $(document).on('click','.category-filter-item', function(){
-        $('.category-filter-item').removeClass('active');
-        $(this).addClass('active');
-        setTimeout(()=>{
-            doneTyping();
-        },100)
-    });
-
-    $(document).on('click','.metal-type-filter-item', function(){
-        $('.metal-type-filter-item').removeClass('active');
-        $(this).addClass('active');
-        setTimeout(()=>{
-            doneTyping();
-        },100)
-    });
-
-
-    
-
-
-    function doneTyping () {
-		$("#showProductList").empty();
-        $("#nextPageNumber").val(1);
-        clearTimeout(typingTimer);
-        loadMoreData();
-	}
-
-        /** On scroll get more data */
-        var triggerScrollEvent = true;
-        $(document).ready(function() {
-            $(document).on('scroll',function(){
-                if(triggerScrollEvent){
-                    if($(".loading-data-element").isInViewport()){
-                        triggerScrollEvent = false;
-                        $(".ajax-load-btn").trigger('click');
+    function getFilterValues() {
+        let dataToSend = {};
+        const filterItem = $('.filter-item-data.active');
+        for(var item in filterItem){
+            if( typeof  filterItem[item] =='object'){
+                const itemRef =  $(filterItem[item]);
+                const itemValue = itemRef.attr('data-id');
+                const itemName = itemRef.parents('.filter-item').find('.filter_item_slug').val();
+                if(itemName && itemValue){
+                    if(dataToSend[itemName]){
+                        const existingItems = dataToSend[itemName].split();
+                        existingItems.push(itemValue);
+                        dataToSend[itemName] = existingItems.join(',');
+                    }else{
+                        dataToSend[itemName] = itemValue;
                     }
                 }
-            });
-        });
+            }
+        }
+        var size = Object.keys(dataToSend).length;
+        if(size){
+            const keyword = $(".search-item").val();
+            let path = window.location.href.split('?')[0];
+            console.log('path', path);
+            window.history.pushState({...dataToSend, keyword: keyword },'',path);
+            const newData = new URLSearchParams({...dataToSend, keyword: keyword }).toString();
+            return newData;
+        }else{
+            return null;
+        }
+    }
 
-        $(document).on('click',".ajax-load-btn", function(){
-            triggerScrollEvent = false;
-            $('.ajax-load').show();
-            loadMoreData();
-        });
+
+    // var typingTimer;                //timer identifier
+	// var doneTypingInterval = 1000;  //time in ms, 5 seconds for example
+	// var $input = ".search-item";
+
+    // $(document).on('keyup',$input, function(){
+    //     clearTimeout(typingTimer);
+    //     typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    // });
+
+    // $(document).on('click','.category-filter-item', function(){
+    //     // $('.category-filter-item').removeClass('active');
+    //     $(this).addClass('active');
+    //     setTimeout(()=>{
+    //         doneTyping();
+    //     },100)
+    // });
+
+    // $(document).on('click','.metal-type-filter-item', function(){
+    //     // $('.metal-type-filter-item').removeClass('active');
+    //     $(this).toggleClass('active');
+
+
+
+    //     setTimeout(()=>{
+    //         doneTyping();
+    //     },100)
+    // });
+
+    // function doneTyping () {
+	// 	$("#showProductList").empty();
+    //     $("#nextPageNumber").val(1);
+    //     clearTimeout(typingTimer);
+    //     loadMoreData();
+	// }
+
+    //     /** On scroll get more data */
+    //     var triggerScrollEvent = true;
+    //     $(document).ready(function() {
+    //         $(document).on('scroll',function(){
+    //             if(triggerScrollEvent){
+    //                 if($(".loading-data-element").isInViewport()){
+    //                     triggerScrollEvent = false;
+    //                     $(".ajax-load-btn").trigger('click');
+    //                 }
+    //             }
+    //         });
+    //     });
+
+    //     $(document).on('click',".ajax-load-btn", function(){
+    //         triggerScrollEvent = false;
+    //         $('.ajax-load').show();
+    //         loadMoreData();
+    //     });
 
         
-        $(".reset-filer-btn").on('click', function(){
-            $("#nextPageNumber").val('1');
-            $(".search-item").val('');
-            $(".category-filter-item").removeClass('active');
-            $(".metal-type-filter-item").removeClass('active');
-            setTimeout(()=>{
-                $("#showProductList").empty();
-                $("#nextPageNumber").val(1);
-                loadMoreData(true);
-            },100)
-        });
+    //     $(".reset-filer-btn").on('click', function(){
+    //         $("#nextPageNumber").val('1');
+    //         $(".search-item").val('');
+    //         $(".category-filter-item").removeClass('active');
+    //         $(".metal-type-filter-item").removeClass('active');
+    //         setTimeout(()=>{
+    //             $("#showProductList").empty();
+    //             $("#nextPageNumber").val(1);
+    //             loadMoreData(true);
+    //         },100)
+    //     });
 
 
-        function loadMorePassData () {
-            const page = $("#nextPageNumber").val();
-            const searchKeyword = $(".search-item").val();
-            const categorySearch = $(".category-filter-item.active").attr('data-id');
-            const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
+    //     function loadMorePassData () {
+    //         const page = $("#nextPageNumber").val();
+    //         const searchKeyword = $(".search-item").val();
+    //         const categorySearch = $(".category-filter-item.active").attr('data-id');
+    //         const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
 
-            var url = new URL(location.href);
-            url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
-            url.searchParams.set('category', (categorySearch ? categorySearch : ''));
-            url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
-            if (history.pushState) {
-                window.history.pushState({path:url.href},'',url.href);
-            }
-            return {
-                '_token': "{{csrf_token()}}",
-                keyword: searchKeyword,
-                category: categorySearch,
-                metal_type : metalTypeSearch,
-                slug : "{{ $slug }}",
-                slug2 : "{{ $slug2 }}",
-                slug3 : "{{ $slug3 }}",
-                page: page
-            };
+    //         var url = new URL(location.href);
+    //         url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
+    //         url.searchParams.set('category', (categorySearch ? categorySearch : ''));
+    //         url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
+    //         if (history.pushState) {
+    //             window.history.pushState({path:url.href},'',url.href);
+    //         }
+    //         return {
+    //             '_token': "{{csrf_token()}}",
+    //             keyword: searchKeyword,
+    //             category: categorySearch,
+    //             metal_type : metalTypeSearch,
+    //             page: page
+    //         };
+    //     }
 
+    //     function getFilterData () {
 
-        }
+    //     }
 
-        function loadMoreData(resetSearch=false){
+    //     function loadMoreData(resetSearch=false){
 
-            // const dataToPass = loadMorePassData(resetSearch);
-            const page = $("#nextPageNumber").val();
-            const searchKeyword = $(".search-item").val();
-            const categorySearch = $(".category-filter-item.active").attr('data-id');
-            const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
+    //         // const dataToPass = loadMorePassData(resetSearch);
+    //         const page = $("#nextPageNumber").val();
+    //         const searchKeyword = $(".search-item").val();
+    //         const categorySearch = $(".category-filter-item.active").attr('data-id');
+    //         const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
 
-            var url = new URL(location.href);
-            url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
-            url.searchParams.set('category', (categorySearch ? categorySearch : ''));
-            url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
-            if (history.pushState) {
-                window.history.pushState({path:url.href},'',url.href);
-            }
+    //         var url = new URL(location.href);
+    //         url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
+    //         url.searchParams.set('category', (categorySearch ? categorySearch : ''));
+    //         url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
+    //         if (history.pushState) {
+    //             window.history.pushState({path:url.href},'',url.href);
+    //         }
 
-            if(resetSearch){
-                var url = {
-                    href: window.location.href.split('?')[0]
-                }
-                if (history.pushState) {
-                    window.history.pushState({path:url.href},'',url.href);
-                }
-            }
-
+    //         if(resetSearch){
+    //             var url = {
+    //                 href: window.location.href.split('?')[0]
+    //             };
+    //             if (history.pushState) {
+    //                 window.history.pushState({path:url.href},'',url.href);
+    //             }
+    //         }
 
 
-            $.ajax({
-                url: '{{url("product-listing-data")}}?page='+page,
-                type: "post",
-                data: {
-                    '_token': "{{csrf_token()}}",
-                    'page':page,
-                    "slug" : "{{ $slug }}",
-                    "slug2" : "{{ $slug2 }}",
-                    "slug3" : "{{ $slug3 }}",
-                    "keyword": searchKeyword,
-                    "category": categorySearch,
-                    "metal_type" : metalTypeSearch
-                },
-            }).done(function(data){
-                triggerScrollEvent = true;
-                if(data.status){
-                    $('.ajax-load').hide();
-                }
-                $("#showProductList").append(data.productItems);
-                $("#nextPageNumber").val(data.nextPage);
 
-                if(!data.isNextPage){
-                    triggerScrollEvent = false;
-                }
+    //         $.ajax({
+    //             url: encodeURI(window.location.href),
+    //             type: "post",
+    //             data: {
+    //                 '_token': "{{csrf_token()}}",
+    //                 'page':page
+    //             },
+    //         }).done(function(data){
+    //             triggerScrollEvent = true;
+    //             if(data.status){
+    //                 $('.ajax-load').hide();
+    //             }
+    //             $("#showProductList").append(data.productItems);
+    //             $("#nextPageNumber").val(data.nextPage);
 
-            }).fail(function(jqXHR, ajaxOptions, thrownError){
-                triggerScrollEvent = true;
-                alert('server not responding...');
-            });
-        }
+    //             if(!data.isNextPage){
+    //                 triggerScrollEvent = false;
+    //             }
 
-        $(".remove-from-cart").click(function (e) {
-            e.preventDefault();
-            var ele = $(this);
-            if(confirm("Are you sure want to remove?")) {
-                $.ajax({
-                    url: '{{ route("remove.from.cart") }}',
-                    method: "DELETE",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: $(this).attr("data-id")
-                    },
-                    success: function (response) {
-                        window.location.reload();
-                    }
-                });
-            }
-        });
+    //         }).fail(function(jqXHR, ajaxOptions, thrownError){
+    //             triggerScrollEvent = true;
+    //             alert('server not responding...');
+    //         });
+    //     }
+
+    //     $(".remove-from-cart").click(function (e) {
+    //         e.preventDefault();
+    //         var ele = $(this);
+    //         if(confirm("Are you sure want to remove?")) {
+    //             $.ajax({
+    //                 url: '{{ route("remove.from.cart") }}',
+    //                 method: "DELETE",
+    //                 data: {
+    //                     _token: '{{ csrf_token() }}',
+    //                     id: $(this).attr("data-id")
+    //                 },
+    //                 success: function (response) {
+    //                     window.location.reload();
+    //                 }
+    //             });
+    //         }
+    //     });
     </script>
 @endsection
-<!-- Category Listing Wrap end -->
-<!-- Section Reviews -->
-<div class="container">
-	<div class="rating-review-block">
-		<div class="owl-carousel owl-theme slider-review">
-		@include('front.pages.reviews')
-		</div>
-	</div>
-</div>
-
-@endsection
-
 

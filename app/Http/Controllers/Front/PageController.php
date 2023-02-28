@@ -10,8 +10,9 @@ use App\Models\PostCategory;
 use App\Models\Products;
 use App\Models\Category;
 use App\Models\Attributes;
-use App\Models\CategoryPageFilter;
+// use App\Models\CategoryPageFilter;
 use DB;
+use App\Http\Controllers\Front\ProductController;
 
 class PageController
 {
@@ -36,7 +37,13 @@ class PageController
                 /** Slug belongs to blog Category */
                 $redirectTo = route('blog_list', $pageCategory->slug);
                 return redirect($redirectTo, 301);
-			}
+			}elseif($productCategories && env('APP_DEBUG') ){
+                $productController = new ProductController();
+                return $productController->productListPage(request()->path());
+            }else{
+                return view('layouts.errors.404');
+            }
+
             // elseif($productCategories){
             //     $productListingData = getProductListing($slug, $slug2, $slug3, request()->all());
             //     if($productListingData['status'] == 404){
@@ -71,7 +78,7 @@ class PageController
             //     }
             // }
 
-            return view('layouts.errors.404');
+            
         }else{
 
             $pageData = Pages::where('slug','home')->first();
