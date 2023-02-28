@@ -23,6 +23,7 @@ use App\Models\SitemapUrls;
 use App\Models\Posts;
 use App\Models\PostCategory;
 use App\Models\Pages;
+use App\Models\ProductFilter;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -1598,8 +1599,82 @@ class ProductController extends Controller
     }
 
 
-    public function productListPage(Request $request){
-        prd('This is product list page');
+    public function productListPage($all){
+        $request = request();
+        $path =  $request->path();
+        $slugs = explode('/', $path);
+        $productListingData = getProductListing($slugs, request()->all());
+        if(!empty($productListingData)){
+
+            $productItems = $productListingData['productItems'];
+            $isNextPage = $productListingData['isNextPage'];
+            $nextPage = $productListingData['nextPage'];
+            $categoryData = $productListingData['categoryData'];
+
+            $path = request()->path();
+
+            /** Items for filter */
+            $filter_items = ProductFilter::whereHas('product_items', function($query){
+                $query->where(['is_deleted'=>0, 'is_active'=>1]);
+            })
+            ->with('product_items')
+            ->where(['is_deleted'=>0, 'is_active'=>1])
+            ->get();
+            
+
+            if($request->isMethod('POST')){
+                return response()->json([
+                    "status" => true,
+                    "productItems" => $productItems,
+                    "isNextPage" => $isNextPage,
+                    "nextPage" => $nextPage
+                ]);
+            }
+            
+            return view('front.pages.product_listing_page',compact([
+                'productItems',
+                'isNextPage',
+                'nextPage',
+                'filter_items',
+                'categoryData'
+            ]));
+
+        }else{
+            return view('layouts.errors.404');
+        }
+
+        // prd($productListingData);
+        // if($productListingData['status'] == 404){
+        //     return view('layouts.errors.404');
+        // }else if($productListingData['status'] == 200){
+        //     $productItems = $productListingData['productItems'];
+        //     $isNextPage = $productListingData['isNextPage'];
+        //     $nextPage = $productListingData['nextPage'];
+
+        //     $path = request()->path();                    
+        //     $categoiresForFilter = CategoryPageFilter::where('page',$path)->pluck('category_id');
+        //     $metalTypesForFilter = Attributes::where('slug','metal-type')->first();
+        //     $metalTypesForFilter = explode('|',$metalTypesForFilter->values);
+            
+        //     $categories = Category::select(['name','id','status','parent_id'])
+        //     ->whereIn('id', $categoiresForFilter)
+        //     ->where(['is_category_page'=>0, 'status'=>1,'parent_id'=> 0 ])->get();
+
+        //     return view('front.pages.product_listing_page',compact([
+        //         'productItems',
+        //         'isNextPage',
+        //         'nextPage',
+        //         "slug", 
+        //         "slug2", 
+        //         "slug3",
+        //         "categories",
+        //         "metalTypesForFilter"
+        //     ]));
+        // }
+        // else{
+        //     return view('layouts.errors.404');
+        // }
+        // prd('This is product list page');
     }
 
 }

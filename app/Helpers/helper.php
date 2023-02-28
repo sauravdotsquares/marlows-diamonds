@@ -1136,28 +1136,32 @@ if (!function_exists('validate_breadcrumb')) {
      }
 
 
-    function getProductListing($slug=null, $slug2=null, $slug3=null, $requestData=[]){
-        /** Slug belongs to product category */
+    function getProductListing($queryString=null, $requestData=[]){
+
+        /** generate custom query for categories */
         $category_custom_query = "";
+        $is404 = false;
+        $categoryData = null;
+        // echo end($queryString);die;
 
-        if(!empty($slug)){
-            $slugCategory = Category::where('slug',$slug)->first();
-            if(!empty($slugCategory)){  $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) "; }
-            else{  return ['status'=>404]; };
+        if(!empty($queryString)){
+            foreach ($queryString as $queryString_key => $queryString_value) {
+                $slugCategory = Category::where('slug',$queryString_value)->first();
+                if(!empty($slugCategory)){
+                    if(!$queryString_key){  $category_custom_query .= '( '; }
+                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) "; 
+                    if($queryString_key+1 != count($queryString)){ $category_custom_query .= " AND "; }
+                    else{ $category_custom_query .= ' ) '; }
+                }else{
+                    $is404 = true;
+                }
+
+                if(end($queryString) == $queryString_value){  $categoryData=$slugCategory; }
+            }
         }
+        if($is404){ return null; }
 
-        if(!empty($slug2)){
-            $slug2Category = Category::where('slug',$slug2)->first();
-            if(!empty($slug2Category)){  $category_custom_query .= " OR find_in_set('".$slug2Category->id."',categories) "; }
-            else{  return ['status'=>404];  };
-        }
-
-        if(!empty($slug3)){
-            $slug3Category = Category::where('slug',$slug3)->first();
-            if(!empty($slug3Category)){  $category_custom_query .= " OR find_in_set('".$slug3Category->id."',categories) "; }
-            else{ return ['status'=>404];  }
-        }
-
+        
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
         $query = Products::where('status',1)->whereRaw(DB::raw($category_custom_query));
 
@@ -1179,7 +1183,8 @@ if (!function_exists('validate_breadcrumb')) {
             });
         }
         
-        $getProductListFinal = $query->paginate(50,['*'],'page',$pageNo);
+        //echo $query->toSql();die;
+        $getProductListFinal = $query->paginate(12,['*'],'page',$pageNo);
         
 
         $productItems = "";
@@ -1194,6 +1199,7 @@ if (!function_exists('validate_breadcrumb')) {
             'productItems' => $productItems,
             'isNextPage' => $isNextPage,
             'nextPage' => $nextPage,
+            'categoryData' => $categoryData
         ];
     }
 

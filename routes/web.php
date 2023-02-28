@@ -31,6 +31,7 @@ Route::get('/phpinfo', function() {
     return phpinfo();
 });
 Route::namespace('Admin')->group(function () {
+    Route::get('/admin', 'LoginController@showLoginForm')->name('admin.direct.login');
     Route::get('admin/login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('admin/login', 'LoginController@login')->name('admin.login');
     Route::get('admin/logout', 'LoginController@logout')->name('admin.logout');
@@ -341,7 +342,7 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 		return redirect('/'. $url, 301);
 	})->where('any', '.*');
 
-	Route::any('product-listing-data','ProductController@productListingData');
+	//Route::any('product-listing-data','ProductController@productListingData');
 	/** Change slugs of all products from previous to new one */
 
 	Route::get('redirects','ProductController@productSlugs');
@@ -467,4 +468,6 @@ Route::group(['prefix' => 'api/v1'], function() {
 		Route::post('searchProducts','ProductController@searchProducts');
 	});
 });
+
+Route::any('{all}','Front\ProductController@productListPage')->where('all', '.*');
 
