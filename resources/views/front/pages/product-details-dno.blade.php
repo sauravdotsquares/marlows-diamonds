@@ -50,7 +50,7 @@
 							<source src="" type="video/mp4" type="video/mp4" />
 						@endif
 					</video>
-				
+
 				<?php }else{ ?> --}}
 
 					@if($plainbandMulti==false)
@@ -92,11 +92,11 @@
 								@endforeach
 							@endif
 						</div>
-						<?php 
+						<?php
 							$thumbailsAllowed =	getMasterValuesByType('slider_thumbnails');
 							if(in_array($data->id, $thumbailsAllowed)){
 						?>
-							<ol class="carousel-indicators list-inline carousel-thumbnails" style="d-none">	
+							<ol class="carousel-indicators list-inline carousel-thumbnails" style="d-none">
 							</ol>
 						<?php } ?>
 					@else
@@ -182,9 +182,9 @@
 						{!!$data->old_description ? $data->old_description : $data->description!!}
 					</div>
 				@endif --}}
-				
-				
-				
+
+
+
                 <div class="product-finder-price"  id="discountedTotalPrice">
                 </div>
                 <div class="product-finder-price" id="finaldiamondprice">
@@ -438,7 +438,7 @@
 							</div>
 							@endif
 						</div>
-						<div class="google-capatcha form-controls">
+						{{-- <div class="google-capatcha form-controls">
 						<div class="g-recaptcha" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
 						</div>
 						@if ($errors->has('g-recaptcha-response'))
@@ -446,7 +446,7 @@
 								{{ $errors->first('g-recaptcha-response') }}
 							</div>
 							@endif
-						</div>
+						</div> --}}
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
@@ -655,7 +655,7 @@
 				success: function (res) {
 
 					if(typeof res.formula!='undefined' && res.formula){
-						
+
 						var regular_p = res.regular_price;
 						$('#selected_variation_price').val(res.regular_price);
 						$('#selected_final_price').val(regular_p);
@@ -675,9 +675,9 @@
 
 					}else{
 						if(res.regular_price!='' || res.regular_price!='0.00'){
-							
+
 							var regular_p = Math.round(res.regular_price_with_vat);
-							
+
 							// console.log('regular_p',regular_p)
 							// if(diamond_type=='lab_grown' && regular_p<=3000){
 							// 	regular_p_final = regular_p-(regular_p*0.35);
@@ -703,7 +703,7 @@
 								if(regular_p == res.regular_price_with_vat_discount){
 									$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
 								}else{
-									
+
 									$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p)+'</del> </span> <span class="price color-red" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
 
 									$('#selected_discounted_price').val(res.regular_price_with_vat_discount);
@@ -762,7 +762,7 @@
 								$('#carousel').trigger('remove.owl.carousel',index);
 							}
 						});
-						
+
 						const pendingItems = $('#carousel').find('.owl-item');
 						$('#carousel')
 						.trigger('add.owl.carousel', [itemToAddInCarousel])
@@ -782,7 +782,7 @@
 							var $speed = 0;
 							$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
 						}
-						
+
 					}else if(typeof res.vari_video!='undefined' && res.vari_video && res.vari_video!=''){
 						if($('#variationVideo').length){
 							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
@@ -915,7 +915,7 @@
 			});
 	        $owl.owlCarousel({
 			  autoplay: true,
-			  rewind: true, 
+			  rewind: true,
 			  responsiveClass: true,
 			  autoplayTimeout: 7000,
 			  smartSpeed: 300,
@@ -928,7 +928,7 @@
 						const extension = src.split(/[#?]/)[0].split('.').pop().trim();
 						let thumbnailItem = `<li class="list-inline-item ${ index ? '' : 'active' }">`;
 						thumbnailItem += `<a href="javascript:;" id="carousel-selector-${index}" class="carousel-thumbnail-item ${ index ? '' : 'selected' }" data-slide-to="${index}" data-target="#carousel">`;
-						
+
 						if(video_extensions.includes(extension)){
 							thumbnailItem += `<video muted class="img-fluid" style="height:100px; width:100px;">`;
 							thumbnailItem += `<source src="${src}" type="video/mp4" type="video/mp4" />`;

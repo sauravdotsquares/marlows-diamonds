@@ -73,7 +73,7 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
-				
+
 				<div class="diamond-type">
 					<label>Diamond Type</label>
 					<div class="d-type-input">
@@ -128,7 +128,7 @@
 							<option value="VS1">VS1 - Very Small Inclusions</option>
 							<option value="VS2" selected>VS2 - Very Small Inclusions</option>
 							<option value="VVS1">VVS1 - Minute Inclusions</option>
-							<option value="VVS2">VVS2 - Minute Inclusions</option>	
+							<option value="VVS2">VVS2 - Minute Inclusions</option>
 						</select>
 					</div>
 				</div>
@@ -247,7 +247,7 @@
 					</div>
 				</div>
                 @endif
-				
+
 
 				<div class="product-decriptions product-description-common product-description-common_mined_item" style="display: none;">
 					{!!$data->description ? $data->description : $data->description!!}
@@ -514,15 +514,15 @@
 							</div>
 							@endif
 						</div>
-						<div class="google-capatcha form-controls">
-						<div class="g-recaptcha" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
-						</div>
-						@if ($errors->has('g-recaptcha-response'))
-							<div class="error">
-								{{ $errors->first('g-recaptcha-response') }}
-							</div>
+						{{-- <div class="google-capatcha form-controls">
+                            <div class="g-recaptcha" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
+                            </div>
+						    @if ($errors->has('g-recaptcha-response'))
+                                <div class="error">
+                                    {{ $errors->first('g-recaptcha-response') }}
+                                </div>
 							@endif
-						</div>
+						</div> --}}
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
@@ -570,7 +570,7 @@
 			/** show and hide description */
 			$(".product-description-common").css('display','none');
 			$(".product-description-common_"+classToPerform).css('display','block');
-			
+
 			getFinalPrice();
 		}
         //console.log('first', $('.diamond_type:checked').attr("id"))
@@ -585,7 +585,7 @@
 			changeDiamondType($('.diamond_type:checked').attr("id"));
 		});
 
-		
+
 		$(document).on('change', '.diamond_type' , function(event) {
             console.log('first')
 			changeDiamondType($(event.target).attr("id"));
@@ -708,7 +708,7 @@
 			$(document).on('change','#metal-type',function(){
 				getProdVideo('onChange');
 			});
-            
+
 			$(document).on('click','.refinedata',function(){
 				$("#selected_diamond_price").val($(this).data('price'));
 				$("#certificate_url").val($(this).data('certurl'));
@@ -850,11 +850,11 @@
                 },
                 success: function (res) {
 					// console.log('triggerLab', triggerLab);
-					
+
 
 					$('#finaldiamondprice').html("");
                     if(res.statuscode == 200){
-                        
+
                         if(triggerLab){
                             triggerLab = false;
                             getFinalPrice();
@@ -983,7 +983,7 @@
 	      		e.preventDefault();
 	      		$('#carousel .item.active a').click();
 	      });
-	
+
     </script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection

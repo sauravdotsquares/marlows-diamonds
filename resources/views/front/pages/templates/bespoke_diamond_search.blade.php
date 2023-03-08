@@ -643,7 +643,7 @@
 							</div>
 							@endif
 						</div>
-                        <div class="google-capatcha form-controls">
+                        {{-- <div class="google-capatcha form-controls">
                             <div class="g-recaptcha" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
                             </div>
                             @if ($errors->has('g-recaptcha-response'))
@@ -651,7 +651,7 @@
                                     {{ $errors->first('g-recaptcha-response') }}
                                 </div>
                                 @endif
-                            </div>
+                            </div> --}}
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
