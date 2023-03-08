@@ -87,17 +87,17 @@ class DiamondFinderController
 	        	$rapnetRecords[$key]['Lab'] = $result->LabTitle;
 	        	$rapnetRecords[$key]['Amount'] = $result->FinalPrice;
 	        	$rapnetRecords[$key]['Stock_NO'] = $result->DiamondID;
-                $rapnetRecords[$key]['CERT_NO'] = $result->CertificateNumber;
+                $rapnetRecords[$key]['CERT_NO'] = !empty($result->CertificateNumber) ? $result->CertificateNumber : '';
 
 
 	        	if($result->LabTitle=='GIA'){
-    					$rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$result->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$rapnetRecords[$key]['CERT_NO'].'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
     				}
     				else if($result->LabTitle=='IGI'){
-    					$rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$result->CertificateNumber;
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$rapnetRecords[$key]['CERT_NO'];
     				}
     				else if($result->LabTitle=='HRD'){
-    					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$result->CertificateNumber.'&weight='.$result->Weight;
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$rapnetRecords[$key]['CERT_NO'].'&weight='.$result->Weight;
     				}
     				else {
     					$rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID;
