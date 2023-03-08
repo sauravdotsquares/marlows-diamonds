@@ -21,7 +21,7 @@ class ContactUsFormController extends Controller {
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'description' => 'required',
             'custom_url' => 'required',
-            'g-recaptcha-response' => 'required'
+            // 'g-recaptcha-response' => 'required'
         ]);
         //  Store data in database
         Appointments::create($request->all());
