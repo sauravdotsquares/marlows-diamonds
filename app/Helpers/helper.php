@@ -110,7 +110,7 @@ if (!function_exists("single_storage_image_upload")) {
             Image::make($image)->save(storage_path('app/public/' . $fileName));
         }
 
-		
+
 		return $fileName;
 
     }
@@ -347,7 +347,7 @@ if (!function_exists('validate_breadcrumb')) {
             }
 
             $results = $results->orderBy('id','ASC');
-            
+
             if(isset($data['paging']))
                 $results = $results->paginate($data['paging']);
             else if(isset($data['num_of_row']))
@@ -658,7 +658,7 @@ if (!function_exists('validate_breadcrumb')) {
 
     if (!function_exists("final_image_upload_single_function")) {
         function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
-        {   
+        {
             $imagePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
             if (!file_exists(storage_path($imagePath ))) {
@@ -707,7 +707,7 @@ if (!function_exists('validate_breadcrumb')) {
 
     if (!function_exists("final_image_upload_array_function")) {
 
-        function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null){ 
+        function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null){
             $modulePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
             $video_extensions = ['mp4'];
@@ -724,7 +724,7 @@ if (!function_exists('validate_breadcrumb')) {
                     $fileName =  rand().slugify($imageName);
                     $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
-                    
+
 
                     if(in_array($extension,$video_extensions)){
 
@@ -744,7 +744,7 @@ if (!function_exists('validate_breadcrumb')) {
                         $data[$key]['T'] = $modelName .'/'. $fileNameThumb;
                     }
 
-                    
+
                 }
             }
             // print_r($file_extensions);die;
@@ -815,7 +815,7 @@ if (!function_exists('validate_breadcrumb')) {
     function getMasterValuesByType($type=''){
         $data =  Masters::where('type',$type)->pluck('value');
         if($data->count()){
-            return $data->toArray(); 
+            return $data->toArray();
         }else{
             return [];
         }
@@ -844,7 +844,7 @@ if (!function_exists('validate_breadcrumb')) {
                 return true;
             }
         }
-    
+
         return false;
     }
 
@@ -865,7 +865,7 @@ if (!function_exists('validate_breadcrumb')) {
 
 
     function getProductVariationImage($productId="", $request=[]){
-        
+
         $getProductVariationId = ProductVariations::where('product_id', $productId)->pluck('id');
         if(!empty($getProductVariationId) && $getProductVariationId->count()){
             $getProductVariationId = $getProductVariationId->toArray();
@@ -900,7 +900,7 @@ if (!function_exists('validate_breadcrumb')) {
             $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
                 ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image','multi_vari_img','multi_vari_video', 'vari_video', 'regular_price', 'sale_price')
                 ->first();
-            
+
             return $getSelectedVariationVideoImages->toArray();
         }else{
             return null;
@@ -953,15 +953,15 @@ if (!function_exists('validate_breadcrumb')) {
 
 
     function upload_file($file, $path=""){
-        
+
         try {
             $originalName = $file->getClientOriginalName();
             $size = $file->getSize();
             $extension = $file->getClientOriginalExtension();
             $mimeType = $file->getMimeType();
-    
+
             $fileName = time().uniqid().'_'.$originalName;
-    
+
             $destinationPath = 'uploads/'.$path .'/';
             $toReturn = $file->move($destinationPath,$fileName);
             return [
@@ -975,7 +975,7 @@ if (!function_exists('validate_breadcrumb')) {
             return null;
         }
 
-       
+
     }
 
     function show_dots($in, $length=30){
@@ -1003,7 +1003,7 @@ if (!function_exists('validate_breadcrumb')) {
         return $currency['symbol'] ." " . number_format($amount, 2);
     } // endof formatPrice
 
-    /** 
+    /**
      * Function is use to return number of items that will need to show on products list page
      */
     function defaultProductPagination(){
@@ -1040,11 +1040,11 @@ if (!function_exists('validate_breadcrumb')) {
 
 
     function show_percentage($amount=0, $pricing_data=[] , $type="show"){
-         
+
         if(empty($pricing_data)){
            return $amount;
         }
-        $percentageValue = getPercentageValue($amount, $pricing_data->percentage); 
+        $percentageValue = getPercentageValue($amount, $pricing_data->percentage);
         switch ($type) {
            case 'show':{
               $toReturn = $amount;
@@ -1066,7 +1066,7 @@ if (!function_exists('validate_breadcrumb')) {
                  }
               break;
            }
-           
+
            default:{
               return 'N/A';
               break;
@@ -1077,7 +1077,7 @@ if (!function_exists('validate_breadcrumb')) {
     /**
      * check extension of file type
      */
-    function extensionChecker($extension='jpeg'){  
+    function extensionChecker($extension='jpeg'){
 
         $validImageExtensions = ['jpeg','jpg','JPEG','JPG','png','PNG','webp','WEBP','gif','GIF'];
         $validVideoExtensions = ['mp4','MP4'];
@@ -1105,10 +1105,10 @@ if (!function_exists('validate_breadcrumb')) {
     }//endof humanFileSize
 
     /**
-     * 
+     *
      */
     function show_image($file_url=""){
-        
+
         if(file_exists( public_path('/uploads/')  . $file_url )){
             return true;
         }else{
@@ -1178,9 +1178,9 @@ if (!function_exists('validate_breadcrumb')) {
                 $query->where('value',$metal_type);
             });
         }
-        
+
         $getProductListFinal = $query->paginate(50,['*'],'page',$pageNo);
-        
+
 
         $productItems = "";
         if($getProductListFinal->count()){
@@ -1202,7 +1202,7 @@ if (!function_exists('validate_breadcrumb')) {
 
 function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
     $output = NULL;
-    
+
     if (filter_var($ip, FILTER_VALIDATE_IP) === FALSE) {
         $ip = $_SERVER["REMOTE_ADDR"];
         if ($deep_detect) {
@@ -1224,7 +1224,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
         "NA" => "North America",
         "SA" => "South America"
     );
-    
+
     if (filter_var($ip, FILTER_VALIDATE_IP) && in_array($purpose, $support)) {
         $ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $ip));
         if (@strlen(trim($ipdat->geoplugin_countryCode)) == 2) {
@@ -1242,12 +1242,12 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
     return $output;
 }
 
-function getBrowser() { 
+function getBrowser() {
     $u_agent = $_SERVER['HTTP_USER_AGENT'];
     $bname = 'Unknown';
     $platform = 'Unknown';
     $version= "";
-    
+
     if (preg_match('/linux/i', $u_agent)) {
       $platform = 'linux';
     }elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
@@ -1280,7 +1280,7 @@ function getBrowser() {
       $bname = 'Internet Explorer';
       $ub = "MSIE";
     }
-  
+
     // finally get the correct version number
     $known = array('Version', $ub, 'other');
     $pattern = '#(?<browser>' . join('|', $known) .
@@ -1301,10 +1301,10 @@ function getBrowser() {
     }else {
       $version= $matches['version'][0];
     }
-  
+
     // check if we have a number
     if ($version==null || $version=="") {$version="?";}
-  
+
     return array(
       'userAgent' => $u_agent,
       'name'      => $bname,
@@ -1312,4 +1312,4 @@ function getBrowser() {
       'platform'  => $platform,
       'pattern'    => $pattern
     );
-  } 
+  }
