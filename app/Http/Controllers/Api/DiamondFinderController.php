@@ -57,9 +57,11 @@ class DiamondFinderController
        	}
 
         $data = array('shape'=>$request->shape,'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'paging'=>5,'PageSize'=>5);
-        //echo '<pre>'; print_r($data); die;
+
 
         $hkData = getHKApiRecords($data);
+        $hkData['data'] = array_map(array($this, "amountChange"), $hkData['data']);
+
         if(empty($hkData['data'])){
         	$hkData['to']=5;
         	$hkData['last_page']=10;
@@ -69,10 +71,8 @@ class DiamondFinderController
         	$hkData['last_page']=10;
         	$hkData['total']=100;
         }
-        // echo '<pre>'; print_r($hkData); die;
-        //echo $hkData['current_page'];
+
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
-        // echo '<pre>'; print_r($rapnetData); die;
 
         $rapnetRecords = [];
         if(!empty($rapnetData)){
@@ -85,7 +85,7 @@ class DiamondFinderController
 	        		$rapnetRecords[$key]['Cut'] = $result->CutLongTitle;
 
 	        	$rapnetRecords[$key]['Lab'] = $result->LabTitle;
-	        	$rapnetRecords[$key]['Amount'] = $result->FinalPrice;
+	        	$rapnetRecords[$key]['Amount'] = ($result->FinalPrice*getVAT())/1.2;
 	        	$rapnetRecords[$key]['Stock_NO'] = $result->DiamondID;
                 $rapnetRecords[$key]['CERT_NO'] = !empty($result->CertificateNumber) ? $result->CertificateNumber : '';
 
@@ -105,13 +105,19 @@ class DiamondFinderController
 
 	        }
     	  }
-        //echo '<pre>'; print_r($rapnetRecords); die;
+
         $hkData['data'] = Arr::collapse([$hkData['data'], $rapnetRecords]);
 
         $hkData['VAT'] = getVAT();
         $hkData['firstDiamondAmount'] = $hkData['data'][0]['Amount'];
-       // $hkData =
+
 		return response($hkData);
     }
 
+    public function amountChange($num){
+        if(isset($num['Amount']))
+            $num['Amount'] *= getVAT();
+
+        return $num;
+    }
 }
