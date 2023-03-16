@@ -16,6 +16,9 @@ class ProductFilterItems extends Model
         'item_name',
         'item_slug',
         'item_id',
+        'item_value',
+        'min_price',
+        'max_price',
         'is_active',
         'is_deleted'
     ];
