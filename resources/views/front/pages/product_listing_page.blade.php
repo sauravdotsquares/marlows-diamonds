@@ -27,24 +27,33 @@
                 </div>
                 {!! isset($categoryData->description)?$categoryData->description:'' !!}
             </div>
-            
+
             <div class="category-sidebar-wrap">
 
-                
+
 
                 <div class="filter-container">
 
                     <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
-                    
+
                     @foreach($filter_items as $filter_key => $filter_item)
                         <div class="filter-item">
-                            <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{$filter_item->slug}}" /> 
+                            <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{$filter_item->slug}}" />
                             <div class="category-filter-title">
                                 <h3>{{ $filter_item->name }}</h3>
                             </div>
                             <ul>
+                                <?php
+                                    $i = 1;
+                                ?>
                                 @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
-                                    <li><a class="filter-item-data" data-id="{{$product_item_item->item_id}}" href="javascript:;">{{ $product_item_item->item_name }}</a></li>
+                                    <li>
+                                        @if(isset($product_item_item->item_type) && $product_item_item->item_type == 'categories')
+                                            <a class="filter-item-data" data-id="{{$product_item_item->item_id}}" href="{{asset('/'.$product_item_item->item_slug)}}">{{ $product_item_item->item_name }}</a>
+                                        @else
+                                            <input type="checkbox" name="filter-item-data[]" value="{{$filter_item->slug}}-{{$product_item_item->item_id}}" class="filter-item-data"> {{ $product_item_item->item_name }}
+                                        @endif
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
@@ -127,7 +136,7 @@
                 </div>
                 @endif
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -169,7 +178,7 @@ $(document).ready(function(){
             $(this).find('video')[0].pause()
         }
     })
-    
+
     $(document).on('touchstart','.product-hover-affect',function() {
         $(this).find('a.product-hov').css({
             '-webkit-transition' : 'all 200ms ease-in',
@@ -194,24 +203,68 @@ $(document).ready(function(){
         }
     });
 
+
+    $(document).on('change', ".filter-item-data", function () {
+        // var index = parseInt($(this).attr("id").replace("filter-item-data-Array", ''));
+
+        $.ajax({
+            type: 'GET',
+            url: '{{route("getfilteredproducts")}}',
+            dataType: "json",
+            data: {
+                '_token': "{{csrf_token()}}",
+                'ids': $('.filter-item-data:checked').serializeArray(),
+            },
+            success: function (res) {
+                console.log(res);
+                return false;
+                if(res.status == 200){
+                    // removed msg
+                    $('#imgeremovenew'+index).remove();
+                    $('#imgeremovenewClose'+index).remove();
+                }
+                // getAttribute();
+                return false;
+            }
+        });
+        // var dataString = 'ids='+ ids;
+        // console.log(dataString);
+    });
+
+    function sendDataValues(){
+
+    }
+
     $(document).on('click','.filter-item-data',function() {
+
         $(this).toggleClass('active');
         getFilterValues();
     });
     function getFilterValues() {
         let dataToSend = {};
         const filterItem = $('.filter-item-data.active');
+        // console.log("check detailsadasd dadsd");
+        // console.log(filterItem);
         for(var item in filterItem){
             if( typeof  filterItem[item] =='object'){
                 const itemRef =  $(filterItem[item]);
+                // console.log("itemRef"+itemRef);
                 const itemValue = itemRef.attr('data-id');
+                console.log("itemValue "+itemValue);
                 const itemName = itemRef.parents('.filter-item').find('.filter_item_slug').val();
+                // console.log("itemName"+itemName);
                 if(itemName && itemValue){
                     if(dataToSend[itemName]){
                         const existingItems = dataToSend[itemName].split();
+                        console.log("existingItems"+existingItems);
+                        console.log(existingItems);
                         existingItems.push(itemValue);
                         dataToSend[itemName] = existingItems.join(',');
+                        console.log("checki ");
+                        console.log(dataToSend[itemName]);
+                        console.log("check if");
                     }else{
+                        console.log("check else");
                         dataToSend[itemName] = itemValue;
                     }
                 }
@@ -221,9 +274,10 @@ $(document).ready(function(){
         if(size){
             const keyword = $(".search-item").val();
             let path = window.location.href.split('?')[0];
-            console.log('path', path);
+            // console.log('path', path);
             window.history.pushState({...dataToSend, keyword: keyword },'',path);
             const newData = new URLSearchParams({...dataToSend, keyword: keyword }).toString();
+            console.log("testing"+newData);
             return newData;
         }else{
             return null;
@@ -285,7 +339,7 @@ $(document).ready(function(){
     //         loadMoreData();
     //     });
 
-        
+
     //     $(".reset-filer-btn").on('click', function(){
     //         $("#nextPageNumber").val('1');
     //         $(".search-item").val('');

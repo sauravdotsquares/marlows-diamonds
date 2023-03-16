@@ -393,6 +393,8 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/get-products-video','ProductController@getProductVideo')->name('get-product-video');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
 	Route::any('product-api/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data-api');
+    Route::get('get-filtered-data','ProductController@getProductListData')->name('getfilteredproducts');
+
 	Route::post('post/get-data','PageController@myPost');
     // Route::get('/blog-resources/{slug}', 'PageController@show');
 	Route::post('/visit-us', 'ContactUsFormController@ContactUsForm')->name('contact');
@@ -404,6 +406,10 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/add-to-cart', 'AddToCartController@addToCart')->name('add.to.cart');
 	Route::post('product/add-to-cart-diamond', 'AddToCartController@addToCartDiamond')->name('add.to.cart.diamond');
 	Route::patch('product/update-cart', 'AddToCartController@updateCart')->name('update.cart');
+
+    Route::patch('product/get-filtered-data', 'AddToCartController@updateCart')->name('update.cart');
+
+
 	Route::delete('product/remove-from-cart', 'AddToCartController@removeCart')->name('remove.from.cart');
 
 	Route::get('products/checkout', 'AddToCartController@checkoutOrder')->name('product.checkout');
