@@ -426,6 +426,23 @@ class ProductController extends Controller
 
                         if ($is_empty){
                             $final_attr['attri_' . $attribute['slug']] = $explode_attr;
+
+                            if($request->typeName && $attribute['slug'] == 'finger-size'){
+                                $alphaRange = range('I', 'M');
+                                $result = preg_replace("/[^A-Z]+/", "", $final_attr['attri_' . $attribute['slug']]);
+                                $finalAlphaData = [];
+                                foreach($result as $keyName => $valueData){
+                                    if(in_array($valueData,$alphaRange)){
+                                        if($keyName%2 == 0){
+                                            array_push($finalAlphaData,$valueData);
+                                        }elseif($keyName%2 == 1){
+                                            array_push($finalAlphaData,$valueData.'-1/2');
+                                        }
+                                    }
+                                }
+                                $final_attr['attri_' . $attribute['slug']] = $finalAlphaData;
+                            }
+
                         }else{
                             $final_attr['attri_' . $attribute['slug']] = $found;
                         }
