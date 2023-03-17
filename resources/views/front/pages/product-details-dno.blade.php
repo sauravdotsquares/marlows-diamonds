@@ -810,6 +810,7 @@
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
                     'type' : '{{$plainbandMulti}}',
+                    'typeName' : '{{$plainband}}',
                     'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
                     'carat' : '{{ isset($requestData["carat"]) ? $requestData["carat"] : "" }}',
                     'width-mm': '{{ isset($requestData["width-mm"]) ? $requestData["width-mm"] : "" }}',
