@@ -96,10 +96,12 @@
                     <div class="card-body p-0">
                         <ul class="products-list product-list-in-card pl-2 pr-2">
 
-                            <?php foreach ($latestProducts as $productsKey => $productsValue) { ?>
+                            <?php foreach ($latestProducts as $productsKey => $productsValue) { 
+                            //  print_r($productsValue);
+                              ?>
                                 <li class="item">
                                     <div class="product-img">
-                                        <img src="{{asset('storage') . $productsValue->get_product_images }}" alt="Product Image" class="img-size-50">
+                                        <img src="{{ asset('storage/'.$productsValue->getProductImages->image_url) }}" alt="Product Image" class="img-size-50">
                                     </div>
                                     <div class="product-info">
                                         <a href="javascript:void(0)" class="product-title">{{ $productsValue['get_product_images'] }}
