@@ -19,7 +19,7 @@
           <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{isset(auth()->user()->nicename)?auth()->user()->nicename:''}}</a>
+          <a class="d-block">{{isset(auth()->user()->nicename)?auth()->user()->nicename:''}}</a>
         </div>
       </div>
 

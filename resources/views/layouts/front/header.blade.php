@@ -263,13 +263,13 @@
                     {{-- <a href="{{ route('products.exclusive') }}" >
                         <span> Exclusive to Marlows </span>
                     </a> --}}
-                    {{-- <p> The Marlow's Black Friday Sale is here. Up to  </p> --}} 
-                    {{-- <p> --}}
-                        {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}
-                        {{-- <span class="header-heighlight-text discount_timer"></span> --}}
-                        {{-- <br> --}}
-                        {{-- Upto 30% off - In time for Valentine --}}
-                    {{-- </p> --}}
+                    <p>Mid Season Sale - Up to 30% off </p> 
+                    <p> 
+                    {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}
+                         <span class="header-heighlight-text discount_timer"></span> 
+                        <br> 
+                     
+                    </p> 
                 </div>
                 <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
@@ -285,7 +285,7 @@
 
 <script>
 
-        var countDownDate = new Date("02/12/2023 23:59:59").getTime();
+        var countDownDate = new Date("03/20/2023 23:59:59").getTime();
         var myfunc = setInterval(function() {
 
         var now = new Date().getTime();
