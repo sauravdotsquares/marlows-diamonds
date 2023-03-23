@@ -1144,7 +1144,7 @@ if (!function_exists('validate_breadcrumb')) {
         $categoryData = null;
 
         // echo end($queryString);die;
-        if($queryString[0] == 'all-engagement-rings'){
+        if($queryString[0] == 'diamond-engagement-rings'){
             $queryString[0] = 'engagement-rings';
         }
 
@@ -1218,104 +1218,6 @@ if (!function_exists('validate_breadcrumb')) {
         return [
             'status'=>200,
             'productItems' => $productItems,
-            'isNextPage' => $isNextPage,
-            'nextPage' => $nextPage,
-            'categoryData' => $categoryData
-        ];
-    }
-
-    function getProductListingFinalQuery($queryString=null, $requestData=[]){
-
-        /** generate custom query for categories */
-        $category_custom_query = "";
-        $is404 = false;
-        $categoryData = null;
-        // echo "adsa sdfdf in helper asdfdasf sdfadf dsasdf <pre>";
-        // print_r($requestData['filter-by-shape']);
-        // die;
-        // echo end($queryString);die;
-
-        if($queryString[0] == 'all-engagement-rings'){
-            $queryString[0] = 'engagement-rings';
-        }
-
-        // echo "sfasdf<pre>";
-        // print_r($queryString);
-        // die;
-
-        if(!empty($queryString)){
-            foreach ($queryString as $queryString_key => $queryString_value) {
-                $slugCategory = Category::where('slug',$queryString_value)->first();
-                if(!empty($slugCategory)){
-                    if(!$queryString_key){  $category_custom_query .= '( '; }
-                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
-                    if($queryString_key+1 != count($queryString)){ $category_custom_query .= " AND "; }
-                    else{ $category_custom_query .= ' ) '; }
-                }else{
-                    $is404 = true;
-                }
-
-                if(end($queryString) == $queryString_value){  $categoryData=$slugCategory; }
-            }
-        }
-
-        if($is404){ return null; }
-
-
-        $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
-        $query = Products::where('status',1);
-
-        /** Search filter */
-        if(!empty($requestData['keyword'])){
-            $keyword = $requestData['keyword'];
-            $query = $query->where('title','LIKE',"%$keyword%");
-        }
-
-        /** Search filter */
-        if(!empty($requestData['filter-by-shape'])){
-            $shape = $requestData['filter-by-shape'];
-            $query = $query->orWhereIn('diamond_shape',$shape);
-        }
-
-        if(!empty($requestData['category']) && $requestData['category']!='undefined'){
-            $getPostCategory = $requestData['category'];
-            $query = $query->whereRaw("find_in_set('".$getPostCategory."',categories)");
-        }
-
-        if(!empty($requestData['metal_type']) && $requestData['metal_type']!='undefined'){
-            $metal_type = $requestData['metal_type'];
-            $query->whereHas('getProductVariation.variDetails', function($query) use ($metal_type){
-                $query->where('value',$metal_type);
-            });
-        }
-        if(!empty($requestData['carat']) && $requestData['carat']!='undefined'){
-            $carat = $requestData['carat'];
-            $query->whereHas('getProductVariation.variDetails', function($query) use ($carat){
-                $query->where('value',$carat);
-            });
-        }
-
-        // echo "checked ".$query->toSql();die;
-        $getProductListFinal = $query->paginate(12,['*'],'page',$pageNo);
-
-        // echo "sfs sdf<pre>";
-        // print_r($getProductListFinal->count());
-        // die;
-
-        $productItems = "";
-        if($getProductListFinal->count()){
-            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
-        }
-        $isNextPage = $getProductListFinal->hasMorePages();
-        $nextPage = $getProductListFinal->currentPage() + 1;
-
-        // echo "<pre>";
-        // print_r($productItems);
-        // die;
-
-        return [
-            'status'=>200,
-            'productItems' => $getProductListFinal,
             'isNextPage' => $isNextPage,
             'nextPage' => $nextPage,
             'categoryData' => $categoryData
@@ -1442,10 +1344,6 @@ function getBrowser() {
 
   function getRepnetAPIPattern($data=array(),$pageNumber=null){
 
-    // echo "<pre>";
-    // print_r($data);
-    // die;
-
     if(isset($data['gradeFrom'])){
         if($data['gradeFrom'] == 'EX'){ $gradeFrom = 'EXCELLENT';
         } elseif($data['gradeFrom'] == 'VG'){ $gradeFrom = 'VERY_GOOD';
@@ -1509,9 +1407,6 @@ function getBrowser() {
     $dataNew['request']['body']["page_number"] = $pageNumber;
     $dataNew['request']['body']["page_size"] = $data['PageSize'];
 
-    echo "<pre>";
-    print_r($dataNew);
-    die;
 
     $curl = curl_init();
 
@@ -1535,15 +1430,9 @@ function getBrowser() {
     $response = curl_exec($curl);
 
     curl_close($curl);
-    // echo $response;
     echo "Final Check with array fasdfs<pre>";
     print_r(json_decode($response));
     die;
-    // echo "<pre>";
-    // print_r("Check again");
-    // print_r($data);
-    // print_r($pageNumber);
-    // die;
 
   }
 
