@@ -23,7 +23,9 @@
   <link rel="stylesheet" href="{{ asset('admin/dist/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css')}}">
   <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('admin/plugins/sweetalert2/sweetalert2.min.css')}}">
-  
+  <link rel="shortcut icon" type="image/x-icon" href="{{ asset('admin/dist/img/image_2023_03_17T10_13_17_718Z.png') }}">
+
+
   @yield('css')
   <!-- jQuery -->
     <script src="{{ asset('admin/plugins/jquery/jquery.min.js')}}"></script>

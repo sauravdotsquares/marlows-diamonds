@@ -49,19 +49,19 @@
 						 <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Username</label>
-                              <input type="text" id="nicename" name="nicename" value="{{ $users->nicename }}" class="form-control" placeholder="Name">
+                              <input type="text" id="nicename" name="nicename" value="{{ $users->nicename }}" class="form-control" placeholder="User Name">
                            </div>
                         </div>
 						 <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Password</label>
-                              <input type="password" id="password" name="password" value="{{ $users->password }}" class="form-control" placeholder="Name">
+                              <input type="password" id="password" name="password" value="{{ $users->password }}" class="form-control" placeholder="Password">
                            </div>
                         </div>
 						 <div class="form-group">
                            <div class="form-label-group">
                               <label for="product_name">Confirm Password</label>
-                              <input type="password" id="confirm_password" name="confirm_password" value="{{ $users->confirm_password }}" class="form-control" placeholder="Name">
+                              <input type="password" id="confirm_password" name="confirm_password" value="{{ $users->confirm_password }}" class="form-control" placeholder="Confirm Password">
                            </div>
                         </div>
                         <div class="form-group">

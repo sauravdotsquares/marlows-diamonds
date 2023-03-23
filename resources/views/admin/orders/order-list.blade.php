@@ -22,7 +22,7 @@
                <table class="table m-0">
                     <thead>
                     <tr>
-                      <th>Order ID</th>
+                      <th>Order IDs</th>
                       <th>User Email</th>
                       <th>Total Payment</th>
                       <th>Payment Method</th>
@@ -34,7 +34,7 @@
                     <tbody>
                     @foreach($getOrderDetails as $key => $order)
                     <tr>
-                      <td><a href="pages/examples/invoice.html">{{isset($order->token)?$order->token:''}}</a></td>
+                      <td><a href="{{route('admin.order.product.details',[$order->id])}}">{{isset($order->token)?$order->token:''}}</a></td>
                       <td>{{isset($order->user_details->email)?$order->user_details->email:''}}</td>
                       <td>{{isset($order->final_price)?$order->final_price:''}}</td>
                       <td>{{isset($order->payment_type)?$order->payment_type:''}}</td>
