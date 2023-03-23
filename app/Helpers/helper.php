@@ -110,7 +110,7 @@ if (!function_exists("single_storage_image_upload")) {
             Image::make($image)->save(storage_path('app/public/' . $fileName));
         }
 
-		
+
 		return $fileName;
 
     }
@@ -347,7 +347,7 @@ if (!function_exists('validate_breadcrumb')) {
             }
 
             $results = $results->orderBy('id','ASC');
-            
+
             if(isset($data['paging']))
                 $results = $results->paginate($data['paging']);
             else if(isset($data['num_of_row']))
@@ -658,7 +658,7 @@ if (!function_exists('validate_breadcrumb')) {
 
     if (!function_exists("final_image_upload_single_function")) {
         function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
-        {   
+        {
             $imagePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
             if (!file_exists(storage_path($imagePath ))) {
@@ -707,7 +707,7 @@ if (!function_exists('validate_breadcrumb')) {
 
     if (!function_exists("final_image_upload_array_function")) {
 
-        function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null){ 
+        function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null){
             $modulePath = 'app/public/' . $modelName.'/';
             $modelId = base64_encode($modelId);
             $video_extensions = ['mp4'];
@@ -724,7 +724,7 @@ if (!function_exists('validate_breadcrumb')) {
                     $fileName =  rand().slugify($imageName);
                     $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
 
-                    
+
 
                     if(in_array($extension,$video_extensions)){
 
@@ -744,7 +744,7 @@ if (!function_exists('validate_breadcrumb')) {
                         $data[$key]['T'] = $modelName .'/'. $fileNameThumb;
                     }
 
-                    
+
                 }
             }
             // print_r($file_extensions);die;
@@ -815,7 +815,7 @@ if (!function_exists('validate_breadcrumb')) {
     function getMasterValuesByType($type=''){
         $data =  Masters::where('type',$type)->pluck('value');
         if($data->count()){
-            return $data->toArray(); 
+            return $data->toArray();
         }else{
             return [];
         }
@@ -844,7 +844,7 @@ if (!function_exists('validate_breadcrumb')) {
                 return true;
             }
         }
-    
+
         return false;
     }
 
@@ -865,7 +865,7 @@ if (!function_exists('validate_breadcrumb')) {
 
 
     function getProductVariationImage($productId="", $request=[]){
-        
+
         $getProductVariationId = ProductVariations::where('product_id', $productId)->pluck('id');
         if(!empty($getProductVariationId) && $getProductVariationId->count()){
             $getProductVariationId = $getProductVariationId->toArray();
@@ -900,7 +900,7 @@ if (!function_exists('validate_breadcrumb')) {
             $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
                 ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image','multi_vari_img','multi_vari_video', 'vari_video', 'regular_price', 'sale_price')
                 ->first();
-            
+
             return $getSelectedVariationVideoImages->toArray();
         }else{
             return null;
@@ -953,15 +953,15 @@ if (!function_exists('validate_breadcrumb')) {
 
 
     function upload_file($file, $path=""){
-        
+
         try {
             $originalName = $file->getClientOriginalName();
             $size = $file->getSize();
             $extension = $file->getClientOriginalExtension();
             $mimeType = $file->getMimeType();
-    
+
             $fileName = time().uniqid().'_'.$originalName;
-    
+
             $destinationPath = 'uploads/'.$path .'/';
             $toReturn = $file->move($destinationPath,$fileName);
             return [
@@ -975,7 +975,7 @@ if (!function_exists('validate_breadcrumb')) {
             return null;
         }
 
-       
+
     }
 
     function show_dots($in, $length=30){
@@ -1003,7 +1003,7 @@ if (!function_exists('validate_breadcrumb')) {
         return $currency['symbol'] ." " . number_format($amount, 2);
     } // endof formatPrice
 
-    /** 
+    /**
      * Function is use to return number of items that will need to show on products list page
      */
     function defaultProductPagination(){
@@ -1040,11 +1040,11 @@ if (!function_exists('validate_breadcrumb')) {
 
 
     function show_percentage($amount=0, $pricing_data=[] , $type="show"){
-         
+
         if(empty($pricing_data)){
            return $amount;
         }
-        $percentageValue = getPercentageValue($amount, $pricing_data->percentage); 
+        $percentageValue = getPercentageValue($amount, $pricing_data->percentage);
         switch ($type) {
            case 'show':{
               $toReturn = $amount;
@@ -1066,7 +1066,7 @@ if (!function_exists('validate_breadcrumb')) {
                  }
               break;
            }
-           
+
            default:{
               return 'N/A';
               break;
@@ -1077,7 +1077,7 @@ if (!function_exists('validate_breadcrumb')) {
     /**
      * check extension of file type
      */
-    function extensionChecker($extension='jpeg'){  
+    function extensionChecker($extension='jpeg'){
 
         $validImageExtensions = ['jpeg','jpg','JPEG','JPG','png','PNG','webp','WEBP','gif','GIF'];
         $validVideoExtensions = ['mp4','MP4'];
@@ -1105,10 +1105,10 @@ if (!function_exists('validate_breadcrumb')) {
     }//endof humanFileSize
 
     /**
-     * 
+     *
      */
     function show_image($file_url=""){
-        
+
         if(file_exists( public_path('/uploads/')  . $file_url )){
             return true;
         }else{
@@ -1142,14 +1142,18 @@ if (!function_exists('validate_breadcrumb')) {
         $category_custom_query = "";
         $is404 = false;
         $categoryData = null;
+
         // echo end($queryString);die;
+        if($queryString[0] == 'all-engagement-rings'){
+            $queryString[0] = 'engagement-rings';
+        }
 
         if(!empty($queryString)){
             foreach ($queryString as $queryString_key => $queryString_value) {
                 $slugCategory = Category::where('slug',$queryString_value)->first();
                 if(!empty($slugCategory)){
                     if(!$queryString_key){  $category_custom_query .= '( '; }
-                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) "; 
+                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
                     if($queryString_key+1 != count($queryString)){ $category_custom_query .= " AND "; }
                     else{ $category_custom_query .= ' ) '; }
                 }else{
@@ -1159,9 +1163,12 @@ if (!function_exists('validate_breadcrumb')) {
                 if(end($queryString) == $queryString_value){  $categoryData=$slugCategory; }
             }
         }
+
+
+
         if($is404){ return null; }
 
-        
+
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
         $query = Products::where('status',1)->whereRaw(DB::raw($category_custom_query));
 
@@ -1173,7 +1180,7 @@ if (!function_exists('validate_breadcrumb')) {
 
         if(!empty($requestData['category']) && $requestData['category']!='undefined'){
             $getPostCategory = $requestData['category'];
-            $query = $query->whereRaw("find_in_set('".$getPostCategory."',categories)");
+            $query = $query->whereRaw("find_in_set('".implode(",", $getPostCategory)."',categories)");
         }
 
         if(!empty($requestData['metal_type']) && $requestData['metal_type']!='undefined'){
@@ -1182,10 +1189,24 @@ if (!function_exists('validate_breadcrumb')) {
                 $query->where('value',$metal_type);
             });
         }
-        
-        //echo $query->toSql();die;
+        if(!empty($requestData['carat']) && $requestData['carat']!='undefined'){
+            $carat = $requestData['carat'];
+            $query->whereHas('getProductVariation.variDetails', function($query) use ($carat){
+                $query->where('value',$carat);
+            });
+        }
+        /** Search filter */
+        if(!empty($requestData['filter-by-shape'])){
+            $shape = $requestData['filter-by-shape'];
+            $query = $query->whereIn('diamond_shape', $shape);
+        }
+
+        // echo "checked ".$query->toSql();die;
         $getProductListFinal = $query->paginate(12,['*'],'page',$pageNo);
-        
+
+        // echo "sfs sdf<pre>";
+        // print_r($getProductListFinal);
+        // die;
 
         $productItems = "";
         if($getProductListFinal->count()){
@@ -1203,12 +1224,110 @@ if (!function_exists('validate_breadcrumb')) {
         ];
     }
 
+    function getProductListingFinalQuery($queryString=null, $requestData=[]){
+
+        /** generate custom query for categories */
+        $category_custom_query = "";
+        $is404 = false;
+        $categoryData = null;
+        // echo "adsa sdfdf in helper asdfdasf sdfadf dsasdf <pre>";
+        // print_r($requestData['filter-by-shape']);
+        // die;
+        // echo end($queryString);die;
+
+        if($queryString[0] == 'all-engagement-rings'){
+            $queryString[0] = 'engagement-rings';
+        }
+
+        // echo "sfasdf<pre>";
+        // print_r($queryString);
+        // die;
+
+        if(!empty($queryString)){
+            foreach ($queryString as $queryString_key => $queryString_value) {
+                $slugCategory = Category::where('slug',$queryString_value)->first();
+                if(!empty($slugCategory)){
+                    if(!$queryString_key){  $category_custom_query .= '( '; }
+                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
+                    if($queryString_key+1 != count($queryString)){ $category_custom_query .= " AND "; }
+                    else{ $category_custom_query .= ' ) '; }
+                }else{
+                    $is404 = true;
+                }
+
+                if(end($queryString) == $queryString_value){  $categoryData=$slugCategory; }
+            }
+        }
+
+        if($is404){ return null; }
+
+
+        $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
+        $query = Products::where('status',1);
+
+        /** Search filter */
+        if(!empty($requestData['keyword'])){
+            $keyword = $requestData['keyword'];
+            $query = $query->where('title','LIKE',"%$keyword%");
+        }
+
+        /** Search filter */
+        if(!empty($requestData['filter-by-shape'])){
+            $shape = $requestData['filter-by-shape'];
+            $query = $query->orWhereIn('diamond_shape',$shape);
+        }
+
+        if(!empty($requestData['category']) && $requestData['category']!='undefined'){
+            $getPostCategory = $requestData['category'];
+            $query = $query->whereRaw("find_in_set('".$getPostCategory."',categories)");
+        }
+
+        if(!empty($requestData['metal_type']) && $requestData['metal_type']!='undefined'){
+            $metal_type = $requestData['metal_type'];
+            $query->whereHas('getProductVariation.variDetails', function($query) use ($metal_type){
+                $query->where('value',$metal_type);
+            });
+        }
+        if(!empty($requestData['carat']) && $requestData['carat']!='undefined'){
+            $carat = $requestData['carat'];
+            $query->whereHas('getProductVariation.variDetails', function($query) use ($carat){
+                $query->where('value',$carat);
+            });
+        }
+
+        // echo "checked ".$query->toSql();die;
+        $getProductListFinal = $query->paginate(12,['*'],'page',$pageNo);
+
+        // echo "sfs sdf<pre>";
+        // print_r($getProductListFinal->count());
+        // die;
+
+        $productItems = "";
+        if($getProductListFinal->count()){
+            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+        }
+        $isNextPage = $getProductListFinal->hasMorePages();
+        $nextPage = $getProductListFinal->currentPage() + 1;
+
+        // echo "<pre>";
+        // print_r($productItems);
+        // die;
+
+        return [
+            'status'=>200,
+            'productItems' => $getProductListFinal,
+            'isNextPage' => $isNextPage,
+            'nextPage' => $nextPage,
+            'categoryData' => $categoryData
+        ];
+    }
+
 }
 
 
 function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
     $output = NULL;
-    
+
     if (filter_var($ip, FILTER_VALIDATE_IP) === FALSE) {
         $ip = $_SERVER["REMOTE_ADDR"];
         if ($deep_detect) {
@@ -1230,7 +1349,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
         "NA" => "North America",
         "SA" => "South America"
     );
-    
+
     if (filter_var($ip, FILTER_VALIDATE_IP) && in_array($purpose, $support)) {
         $ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $ip));
         if (@strlen(trim($ipdat->geoplugin_countryCode)) == 2) {
@@ -1248,12 +1367,12 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
     return $output;
 }
 
-function getBrowser() { 
+function getBrowser() {
     $u_agent = $_SERVER['HTTP_USER_AGENT'];
     $bname = 'Unknown';
     $platform = 'Unknown';
     $version= "";
-    
+
     if (preg_match('/linux/i', $u_agent)) {
       $platform = 'linux';
     }elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
@@ -1286,7 +1405,7 @@ function getBrowser() {
       $bname = 'Internet Explorer';
       $ub = "MSIE";
     }
-  
+
     // finally get the correct version number
     $known = array('Version', $ub, 'other');
     $pattern = '#(?<browser>' . join('|', $known) .
@@ -1307,10 +1426,10 @@ function getBrowser() {
     }else {
       $version= $matches['version'][0];
     }
-  
+
     // check if we have a number
     if ($version==null || $version=="") {$version="?";}
-  
+
     return array(
       'userAgent' => $u_agent,
       'name'      => $bname,
@@ -1318,4 +1437,113 @@ function getBrowser() {
       'platform'  => $platform,
       'pattern'    => $pattern
     );
-  } 
+  }
+
+
+  function getRepnetAPIPattern($data=array(),$pageNumber=null){
+
+    // echo "<pre>";
+    // print_r($data);
+    // die;
+
+    if(isset($data['gradeFrom'])){
+        if($data['gradeFrom'] == 'EX'){ $gradeFrom = 'EXCELLENT';
+        } elseif($data['gradeFrom'] == 'VG'){ $gradeFrom = 'VERY_GOOD';
+        } elseif($data['gradeFrom'] == 'GD'){ $gradeFrom = 'GOOD';
+        }
+    }
+    if(isset($data['gradeTo'])){
+        if($data['gradeTo'] == 'EX'){ $gradeTo = 'EXCELLENT';
+        } elseif($data['gradeTo'] == 'VG'){ $gradeTo = 'VERY_GOOD';
+        } elseif($data['gradeTo'] == 'GD'){ $gradeTo = 'GOOD';
+        }
+    }
+    if(isset($data['symmetryFrom'])){
+        if($data['symmetryFrom'] == 'EX'){ $symmetryFrom = 'Excellent';
+        } elseif($data['symmetryFrom'] == 'VG'){ $symmetryFrom = 'Very_Good';
+        } elseif($data['symmetryFrom'] == 'GD'){ $symmetryFrom = 'Good';
+        }
+    }
+    if(isset($data['symmetryTo'])){
+        if($data['symmetryTo'] == 'EX'){ $symmetryTo = 'Excellent';
+        } elseif($data['symmetryTo'] == 'VG'){ $symmetryTo = 'Very_Good';
+        } elseif($data['symmetryTo'] == 'GD'){ $symmetryTo = 'Good';
+        }
+    }
+    if(isset($data['polishFrom'])){
+        if($data['polishFrom'] == 'EX'){ $polishFrom = 'Excellent';
+        } elseif($data['polishFrom'] == 'VG'){ $polishFrom = 'Very_Good';
+        } elseif($data['polishFrom'] == 'GD'){ $polishFrom = 'Good';
+        }
+    }
+    if(isset($data['polishTo'])){
+        if($data['polishTo'] == 'EX'){ $polishTo = 'Excellent';
+        } elseif($data['polishTo'] == 'VG'){ $polishTo = 'Very_Good';
+        } elseif($data['polishTo'] == 'GD'){ $polishTo = 'Good';
+        }
+    }
+
+    $dataNew['request']['header'] = [
+        "username" => "cdf1xxse9ynns85lwkxl7heviq8vlo",
+        "password" => "zoDi5QNW"
+    ];
+
+    $dataNew['request']['body']["shapes"] = array($data['shape']);
+    $dataNew['request']['body']["labs"] = array($data['certificate']);
+    $dataNew['request']['body']["fluorescence_intensities"] = array($data['fluorescence']);
+    $dataNew['request']['body']["search_type"] = "White";
+    $dataNew['request']['body']["size_from"] = $data['caratFrom'];
+    $dataNew['request']['body']["size_to"] = $data['caratTo'];
+    $dataNew['request']['body']["color_from"] = $data['colorFrom'];
+    $dataNew['request']['body']["color_to"] = $data['colorTo'];
+    $dataNew['request']['body']["clarity_from"] = $data['clarityFrom'];
+    $dataNew['request']['body']["clarity_to"] = $data['clarityTo'];
+    $dataNew['request']['body']["cut_from"] = $gradeFrom;
+    $dataNew['request']['body']["cut_to"] = $gradeTo;
+    $dataNew['request']['body']["polish_from"] = $polishFrom;
+    $dataNew['request']['body']["polish_to"] = $polishTo;
+    $dataNew['request']['body']["symmetry_from"] = $symmetryFrom;
+    $dataNew['request']['body']["symmetry_to"] = $symmetryTo;
+    $dataNew['request']['body']["sort_by"] = "Price";
+    $dataNew['request']['body']["sort_direction"] = "Asc";
+    $dataNew['request']['body']["page_number"] = $pageNumber;
+    $dataNew['request']['body']["page_size"] = $data['PageSize'];
+
+    echo "<pre>";
+    print_r($dataNew);
+    die;
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://technet.rapaport.com/HTTP/JSON/RetailFeed/GetDiamonds.aspx',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS =>json_encode($dataNew),
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type: Application/x-www-form-urlencoded',
+        'Authorization: Basic Y2RmMXh4c2U5eW5uczg1bHdreGw3aGV2aXE4dmxvOnpvRGk1UU5X',
+        'Cookie: ASP.NET_SessionId=y3dkpr4cgnpf3mvs2w314du4'
+    ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    // echo $response;
+    echo "Final Check with array fasdfs<pre>";
+    print_r(json_decode($response));
+    die;
+    // echo "<pre>";
+    // print_r("Check again");
+    // print_r($data);
+    // print_r($pageNumber);
+    // die;
+
+  }
+
