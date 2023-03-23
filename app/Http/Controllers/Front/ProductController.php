@@ -1111,313 +1111,12 @@ class ProductController extends Controller
         echo '<br>';
         echo "product categories total updated:- " . $product_categories_total_updated;
         die;
-
-        // $filePath = public_path("imports/redirection_phase_2.csv");
-        // $file = fopen($filePath, "r");
-        // $newItemsAdded = 0;
-        // $existingItems = 0;
-        // $totalRecords = 0;
-        // //ini_set('memory_limit', '-1');
-        // set_time_limit(500);
-        //  try {
-        //     $records = [];
-        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
-        //         $totalRecords++;
-        //         // $old_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0]));
-        //         // $new_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1]));
-        //         $records[] = [
-        //             'old_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0])),
-        //             'new_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1])),
-        //         ];
-        //     }
-        //     $collection = collect($records);
-        //     foreach ($collection->chunk(100) as  $chunk) {
-        //         $chunk = $chunk->toArray();
-        //         foreach ($chunk as $key => $value) {
-        //             $item = UrlRedirects::where('old_url', $value['old_url'])->first();
-        //             if(!empty($item)){
-        //                 $item->new_url = $value['new_url'];
-        //                 $item->is_deleted = 0;
-        //                 $item->save();
-        //                 $existingItems++;
-        //             }else{
-        //                 $new_url = new UrlRedirects();
-        //                 $new_url->old_url = $value['old_url'];
-        //                 $new_url->new_url = $value['new_url'];
-        //                 $new_url->save();
-        //                 $newItemsAdded++;
-        //             }
-        //         }
-        //         // HKDiamondStock::insert($chunk->toArray());
-        //         // $recordsAdded = $recordsAdded + $chunk->count();
-        //     }
-        //     echo 'existingItems:- ' . $existingItems;
-        //     echo '<br>';
-        //     echo 'newItemsAdded:- ' . $newItemsAdded;
-        //     echo '<br>';
-        //     echo 'Total itmes :- ' . $totalRecords;
-        //     //prd($records);
-        // } catch (\Exception $th) {
-        //     prd($th);
-        //     echo 'totalRecordsAdded:- '. $newItemsAdded;die;
-        // }
-
-
-
-        // $filePath = public_path('revert_redirect.json');
-        // $fileData = file_get_contents($filePath, "r");
-        // $urls = json_decode($fileData);
-
-        // $totalAffectedRecords = 0;
-        // foreach($urls as $url){
-        //     $old_url =  urlencode($url);
-        //     $redirectInfo = UrlRedirects::where('old_url',$old_url)->where('is_deleted',0)->first();
-        //     if(!empty($redirectInfo)){
-        //         $redirectInfo->is_deleted = 1;
-        //         $redirectInfo->save();
-        //         $totalAffectedRecords++;
-        //     }
-        // }
-
-        // echo 'totalAffectedRecords:- ' . $totalAffectedRecords . '<br>';
-        // echo 'totalRecords:- ' . count($urls);die;
-
-        // $productSlugs =
-        // Products::select(['slug','id','title','description','lab_description','categories'])
-        // ->whereRaw('FIND_IN_SET(2, categories) OR FIND_IN_SET(47, categories)')
-        // ->get();
-        // // ;
-        // // prd($productSlugs->toSql());
-
-        // $fileName = date('d-m-Y') .'-product-new-urls.csv';
-        // $headers = array(
-        //     "Content-type"        => "text/csv; charset=utf-8",
-        //     "Content-Disposition" => "attachment; filename=$fileName",
-        //     "Pragma"              => "no-cache",
-        //     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-        //     "Expires"             => "0"
-        // );
-
-        // $columns = array('id', 'Slug','title', 'Description','Lab description','Html description','Html lab description');
-        // $callback = function() use($productSlugs, $columns) {
-        //     $file = fopen('php://output', 'w');
-        //     fputcsv($file, $columns);
-
-        //     foreach ($productSlugs as $key => $value) {
-
-        //         $replaceText = [
-        //             "Diamond Color F-G Clarity VS-SI",
-        //             "Diamond Colour F-G Clarity VS-SI",
-        //             "Diamond quality is FVS",
-        //             "Diamond colour F, Clarity VS",
-        //             "Diamond color F-G diamond clarity VS-SI",
-        //             "Diamond colour F-G diamond clarity VS-SI",
-        //             "Diamond Colour G-H Clarity SI",
-        //             "Diamond Clarity G-H SI",
-        //             "Diamond Color G-H Clarity SI",
-        //             "G SI Quality",
-        //         ];
-
-        //         $lab_description =  $value->description;
-        //         foreach ($replaceText as $replace_key => $replace_value) {
-        //             $lab_description = str_replace($replace_value, 'Diamond Color D-E Clarity VVS',$lab_description );
-        //         }
-
-
-        //         $row['id']  = $value->id;
-        //         $row['slug']  = $value->slug;
-        //         $row['title']  = $value->title;
-        //         $row['description']  = strip_tags($value->description);
-        //         $row['lab_description']  = strip_tags($lab_description);
-        //         $row['description_with_html']  = $value->description;
-        //         $row['lab_description_with_html']  = $lab_description;
-        //         fputcsv($file, array($row['id'],$row['slug'],$row['title'], $row['description'], $row['lab_description'], $row['description_with_html'], $row['lab_description_with_html']));
-        //     }
-        //     fclose($file);
-        // };
-
-        // return response()->stream($callback, 200, $headers);
-
-
-        // %2Fblog-resources%2Fpage%2F9
-        // $data = UrlRedirects::where(['type'=>'other', 'is_active'=>1 ])->get();
-        // foreach ($data as $key => $value) {
-        //     // $data
-        //     $value->old_url = urlencode($value->old_url);
-        //     $value->new_url = urlencode($value->new_url);
-        //     $value->is_active = 0;
-        //     $value->save();
-        // }
-        // echo $data->count();
-
-        // SitemapUrls::generateXml();
-
-        /** Import all redirect urls */
-        // TODO:
-        //SELECT * FROM `md_products` WHERE dfinder_status=1 AND lab_description is null;
-        // $add_description = "<div>All of our sustainable diamonds in this section come with independent diamond reports (GIA/IGI/WGI/GCAL) for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost. Our diamonds are manufactured under our Trademark (pending) Green Earth Diamonds</div>";
-        // $products = Products::where('dfinder_status',1)->whereNull('lab_description')->get();
-        // $totalUpdated = 0;
-        // foreach ($products as $product_key => $product_value) {
-        //     $product_value->lab_description = $add_description .'<br />'. $product_value->description;
-        //     if($product_value->save()){$totalUpdated++;}
-        // }
-        // echo 'Total updated:- ' . $totalUpdated;
-        // prd();
-
-        // $filePath = public_path('exports/products_description_live.csv');
-        // $file = fopen($filePath, "r");
-        // $totalRecordsAdded = 0;
-
-        // try {
-        //     $records = [];
-        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
-
-        //         $product = Products::where('id', $getData[0])->first();
-        //         // $records[] = $getData;
-        //         if(!empty($product)){
-        //             $product->old_description = $product->description;
-        //             $product->description = '<p>' . $getData[3] . '</p>';
-        //             $product->lab_description = '<p>'. $getData[4] . '</p>';
-        //             $product->save();
-        //             $totalRecordsAdded++;
-        //         }
-
-        //     }
-        //     // prd($records);
-        //     echo 'totalRecordsAdded- success:- '. $totalRecordsAdded;die;
-        // } catch (\Exception $th) {
-        //     prd($th);
-        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
-        // }die;
-        // TODO:
-
-        // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
-        //     $old =  $getData[0];
-        //     $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
-
-        //     $data = UrlRedirects::where(['old_url'=> $old, 'is_deleted'=>0])->first();
-        //     if(empty($data)){
-        //         $newRedirect = new UrlRedirects();
-        //         $newRedirect->old_url = urlencode($old);
-        //         $newRedirect->new_url = urlencode($new);
-        //         $newRedirect->type = "other";
-        //         $newRedirect->save();
-        //         $totalRecordsAdded++;
-        //     }
-
-        // }
-        // echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
-
-        // prd($totalRecords);
-
-        /** Export all products urls */
-        // $productSlugs = Products::select(['slug','id','old_slug'])->get();
-        // $fileName = date('d-m-Y') .'-product-new-urls.csv';
-        // $headers = array(
-        //     "Content-type"        => "text/csv",
-        //     "Content-Disposition" => "attachment; filename=$fileName",
-        //     "Pragma"              => "no-cache",
-        //     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-        //     "Expires"             => "0"
-        // );
-
-        // $columns = array('id', 'Current url', 'Old url');
-        // $baseUrl = "https://marlows-diamonds.co.uk/product/";
-        // $callback = function() use($productSlugs, $columns, $baseUrl) {
-        //     $file = fopen('php://output', 'w');
-        //     fputcsv($file, $columns);
-
-        //     foreach ($productSlugs as $key => $value) {
-        //         $row['id']  = $value->id;
-        //         $row['product']  = $baseUrl . $value->slug;
-        //         $row['old_url']  = $baseUrl . $value->old_slug;
-        //         fputcsv($file, array($row['id'],$row['product'], $row['old_url']));
-        //     }
-        //     fclose($file);
-        // };
-
-        // return response()->stream($callback, 200, $headers);
-
-        // prd($productSlugs);
-
-        // $productSlugs = Products::pluck('old_slug','id')->toArray();
-        // $affectedRows = 0;
-        // foreach ($productSlugs as $key => $value) {
-        //     $product_data = Products::where('id', $key)->first();
-        //     if(!empty($product_data)){
-        //         $product_data->slug = $product_data->old_slug;
-        //         $product_data->save();
-        //         $affectedRows = $affectedRows + 1;
-        //     }
-        // }
-
-
-        // $productSlugs = Products::pluck('slug','id')->toArray();
-        // $dataToRevert = [];
-        // $affectedRows = 0;
-        // foreach ($productSlugs as $key => $value) {
-        //     $product_data = Products::where('id', $key)->first();
-        //     if(!empty($product_data)){
-        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
-        //         $dataToRevert[$affectedRows]['id'] = $product_data->id;
-        //         $dataToRevert[$affectedRows]['old_slug'] = $value   ;
-        //         $dataToRevert[$affectedRows]['new_slug'] = $new_slug;
-        //         $affectedRows = $affectedRows + 1;
-        //     }
-        // }
-        // prd($dataToRevert);
-
-
-        // $productSlugs = [
-        //     "wed002" => "D Shaped Wedding Band | Wed002",
-        //     "wed004" => "Court Shape Wedding Band | Wed004",
-        //     "wed005" => "Rounded Inner Flatter Style Wedding Band | Wed005",
-        //     "wed006" => "Rounded Inner Flatter Style Wedding Band | Wed006",
-        //     "wed007" => "Chunky Wedding Bands | Wed007",
-        //     "wed010" => "Court Shape Wedding Ring | Wed010",
-        //     "wed021" => "Court Shape Wedding Ring | Wed021",
-        //     "wed022" => "D Shaped Wedding Band | Wed022",
-        //     "wed023" => "Modern 6mm Wedding Band | Wed023",
-        //     "wed026" => "Cut Out Diamond Wedding Band | Wed026",
-        //     "wed027" => "6mm Court Shaped Round Wedding Band | Wed027",
-        //     "wed028" => "5mm Flat Round Cut Diamond Wedding Band | Wed028",
-        //     "wed029" => "7mm Princess Cut Diamonds Wedding Band | Wed029",
-        //     "wed030" => "6mm Court Shaped Wedding Band | Wed030",
-        // ];
-
-        // $affectedRows = 0;
-        // // $productSlugs = Products::pluck('slug','id')->toArray();
-        // foreach ($productSlugs as $key => $value) {
-        //     $product_data = Products::where('slug', $key)->first();
-        //     if(!empty($product_data)){
-
-        //         $new_slug = generateSlugProductPurpose($value,Products::class, "slug",$product_data->id);
-
-        //         $product_data->slug = $new_slug;
-        //         $product_data->old_slug = $key;
-        //         $product_data->title = $value;
-        //         $product_data->save();
-
-        //         $url_data = UrlRedirects::where('old_url', $key)->first();
-        //         if(!empty($url_data)){
-        //             $url_data->new_url = $new_slug;
-        //             $url_data->save();
-        //         }else{
-        //             $new_redirect = new UrlRedirects();
-        //             $new_redirect->type = "product";
-        //             $new_redirect->old_url = $key;
-        //             $new_redirect->new_url = $new_slug;
-        //             $new_redirect->save();
-        //         }
-        //         $affectedRows = $affectedRows + 1;
-        //     }
-        // }
-        // prd($affectedRows);
     }
 
 
     public function productListingData(Request $request){
+
+
 
         $productListingData = getProductListing($request['slug'], $request['slug2'], $request['slug3'],$request->all());
         if($productListingData['status'] == 404){
@@ -1442,42 +1141,6 @@ class ProductController extends Controller
                 'message' => "Something went wrong"
             ]);
         }
-        // prd($productListingData);
-
-        // // echo ;die;
-        // $pageNo = !empty($request['page']) ? $request['page'] : 1;
-
-        // // $categoryIds = [
-        // //     1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54
-        // // ];
-
-        // $query = Products::with('getProductImages')->where('status',1);
-
-
-        // $category_custom_query = "";
-        // foreach ($categoryIds as $cat_key => $cat_value) {
-        //     if(!$cat_key){  $category_custom_query .= '( '; }
-        //     $category_custom_query .= " find_in_set('".$cat_value."',categories)";
-        //     if($cat_key+1 != count($categoryIds)){ $category_custom_query .= " OR "; }
-        //     else{ $category_custom_query .= ' ) '; }
-        // }
-
-        // $getProductListFinal = $query->whereRaw(DB::raw($category_custom_query))->paginate(16,['*'],'page',$pageNo);
-
-        // $productItems = "";
-        // if($getProductListFinal->count()){
-        //     $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
-        // }
-        // $nextPage = $pageNo+1;
-        // $token = csrf_token();
-        // if($request->ajax()){
-        //     return response()->json([
-        //         'status' => $getProductListFinal->count() ? true : false,
-        //         'html' => $productItems,
-        //         'nextPage' => $nextPage,
-        //         'token' => $token
-        //     ]);
-        // }
 
         return view('front.pages.multi-category-product-listing', compact(['productItems','nextPage']));
     }
@@ -1653,97 +1316,31 @@ class ProductController extends Controller
                 'isNextPage',
                 'nextPage',
                 'filter_items',
-                'categoryData'
+                'categoryData',
+                'path'
             ]));
 
         }else{
             return view('layouts.errors.404');
         }
 
-        // prd($productListingData);
-        // if($productListingData['status'] == 404){
-        //     return view('layouts.errors.404');
-        // }else if($productListingData['status'] == 200){
-        //     $productItems = $productListingData['productItems'];
-        //     $isNextPage = $productListingData['isNextPage'];
-        //     $nextPage = $productListingData['nextPage'];
 
-        //     $path = request()->path();
-        //     $categoiresForFilter = CategoryPageFilter::where('page',$path)->pluck('category_id');
-        //     $metalTypesForFilter = Attributes::where('slug','metal-type')->first();
-        //     $metalTypesForFilter = explode('|',$metalTypesForFilter->values);
-
-        //     $categories = Category::select(['name','id','status','parent_id'])
-        //     ->whereIn('id', $categoiresForFilter)
-        //     ->where(['is_category_page'=>0, 'status'=>1,'parent_id'=> 0 ])->get();
-
-        //     return view('front.pages.product_listing_page',compact([
-        //         'productItems',
-        //         'isNextPage',
-        //         'nextPage',
-        //         "slug",
-        //         "slug2",
-        //         "slug3",
-        //         "categories",
-        //         "metalTypesForFilter"
-        //     ]));
-        // }
-        // else{
-        //     return view('layouts.errors.404');
-        // }
-        // prd('This is product list page');
     }
 
     public function getProductListData(Request $request)
     {
-        // echo "In the controller<pre>";
-        // print_r($request->ids);
-        $catArray = [];
-        $catmetalTypeArray = [];
-        if(isset($request->ids) && !empty($request->ids)){
-            foreach($request->ids as $key => $filterValue){
-                $filterValue = explode('-',$filterValue['value']);
-                if($filterValue['0'] == 'category'){
-                    array_push($catArray,$filterValue['1']);
-                } elseif ($filterValue['0'] == 'metal_types') {
-                    array_push($catmetalTypeArray,$filterValue['1']);
-                }
-            }
+        $dataArray = [];
+        foreach($request->ids as $key => $value){
+            $dataArray[$value['name']][] = $value['value'];
         }
 
-        // $getProductData = Products::whereRaw("find_in_set('" . $catArray . "',categories)")->get()->toArray();
+        if(isset($dataArray['filter-by-style']))
+        $dataArray['category'] = $dataArray['filter-by-style'];
+        $slugs = explode('/', $request->path);
+        $productListingData = getProductListing($slugs, $dataArray);
 
-        // $getCatIdArray = explode(',', $request->catid);
+        return view('front.includes.productCard', $productListingData);
 
-        if(isset($catArray) && !empty($catArray)){
-            echo "Cat id shown";
-            print_r($catArray);
-            die;
-        }elseif(isset($catmetalTypeArray) && !empty($catmetalTypeArray)){
-            // echo "sadfs <pre>";
-            $getProductId = ProductVariationDetails::with('getProductId')->where('value',$catmetalTypeArray)
-                //->select('variation_id', 'key','value')
-                ->groupBy('variation_id')
-                ->get()->toArray();
-
-            $productIds = array_column($getProductId, 'product_id');
-            $productIdsNew = array_values($productIds);
-            // print_r($getProductId);
-            $getProductId123 = [];
-            foreach($getProductId as $key => $valueId){
-                if(isset($valueId['get_product_id']) && !empty($valueId['get_product_id'])){
-                    array_push($getProductId123,$valueId['get_product_id']['product_id']);
-                }
-            }
-            $getValueProductId = array_unique($getProductId123);
-
-            $getProductListArray = Products::whereIn('id',$getValueProductId)->get();
-            echo "check <pre>";
-            print_r($getProductListArray);
-            print_r($getValueProductId);
-            die;
-
-        }
     }
 
 }

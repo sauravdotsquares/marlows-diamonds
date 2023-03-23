@@ -19,9 +19,9 @@ class DiamondFinderController
     {
     	$colorFrom = 'D'; $colorTo = 'K'; $colour=array();
     	if($request->colour!=''){
-         $colour = explode(',',$request->colour);
-			   $colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
-      }
+            $colour = explode(',',$request->colour);
+                $colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
+        }
 
        	$clarityFrom = 'IF'; $clarityTo = 'SI2'; $clarity=array();
     	if($request->clarity!=''){
@@ -69,10 +69,13 @@ class DiamondFinderController
         	$hkData['last_page']=10;
         	$hkData['total']=100;
         }
-        // echo '<pre>'; print_r($hkData); die;
-        //echo $hkData['current_page'];
+
+        $rapnetData = getRepnetAPIPattern($data,$hkData['current_page']);
+
+
+
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
-        // echo '<pre>'; print_r($rapnetData); die;
+
 
         $rapnetRecords = [];
         if(!empty($rapnetData)){
