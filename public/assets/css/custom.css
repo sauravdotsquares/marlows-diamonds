@@ -1049,8 +1049,8 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 
 @media (max-width:420px) {
 .labo-textblock table.table.table-bordered {position: relative;left: -20px;}
-.labo-textblock table.table.table-bordered tr td {padding: 10px 0px;}
-.labo-textblock table.table.table-bordered tr:first-child td p{padding: 0 8px;}
+.labo-textblock table.table.table-bordered tr td {padding: 10px 10px;}
+.labo-textblock table.table.table-bordered tr:first-child td p{padding: 0 8px; font-size: 12px !important;}
 .labo-textblock table.table.table-bordered tr:first-child td p b {  font-size: 12px !important;}
 .labo-textblock table.table.table-bordered tr td p span {  font-size: 12px !important;}
 }
