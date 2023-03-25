@@ -253,7 +253,7 @@
 					{!!$data->description ? $data->description : $data->description!!}
 				</div>
 				<div class="product-decriptions product-description-common product-description-common_lab_item">
-					{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
+					{!! $data->lab_description ? $data->lab_description.'<br>'.$data->description :  $data->description  !!}
 				</div>
 				<div class="product-finder-price" id="finaldiamondprice">
 
