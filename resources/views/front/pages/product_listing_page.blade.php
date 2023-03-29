@@ -72,33 +72,8 @@
                                             @if (isset($product_item_item->item_type) && $product_item_item->item_type == 'categories')
                                                 <a class="filter-item-data" data-id="{{ $product_item_item->item_id }}"
                                                     href="{{ asset('/' . $product_item_item->item_slug) }}">{{ $product_item_item->item_name }}</a>
-                                            {{-- @elseif(isset($product_item_item->item_type) && $product_item_item->item_type == 'filter-by-price') --}}
-                                                {{-- <div class="choose-diaond-fields row diamond-carat">
-                                                    <div class="diamond-field-contens col-lg-9">
-                                                        <div class="diamond-field-inner-bar">
-                                                            <div class="range_carat_wap">
-                                                                <div class="srchniput-fil">
-                                                                    <div class="minrange">
-                                                                        <span>Min</span>
-                                                                        <input id="sliderRangeSetMin" disabled data-index="0" class="sliderValue" value="{{$product_item_item->min_price}}"/>
-                                                                    </div>
-                                                                    <div class="maxrange">
-                                                                    <span>Max</span>
-                                                                        <input id="sliderRangeSetMax" disabled data-index="1" class="sliderValue" value="{{$product_item_item->max_price}}"/>
-                                                                    </div>
-                                                                </div>
-                                                                <div id="slider"></div>
-
-                                                                    <div class="srchniput-fil">
-                                                                        <input type="hidden" class="sliderValue" data-index="0" value="{{$product_item_item->min_price}}" id="input-carat-min" name="carat">
-                                                                        <input type="hidden" class="sliderValue" data-index="1" value="{{$product_item_item->max_price}}" id="input-carat-max" name="carat-max">
-                                                                    </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
                                             @else
-                                                <input type="{{$filter_item->input_type}}" name="{{ $filter_item->slug }}"
+                                                <input type="{{$filter_item->input_type}}" name="{{ $filter_item->slug }}" {{(in_array(Str::lower($product_item_item->item_value),$slugs)) ? ' checked ' : ''}} {{(in_array(Str::lower(Str::replace(' ','-',$product_item_item->item_name)),$slugs)) ? ' checked ' : ''}}
                                                     value="{{ $product_item_item->item_value }}"
                                                     class="filter-item-data"> {{ $product_item_item->item_name }}
                                             @endif

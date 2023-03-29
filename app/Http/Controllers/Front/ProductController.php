@@ -1317,7 +1317,8 @@ class ProductController extends Controller
                 'nextPage',
                 'filter_items',
                 'categoryData',
-                'path'
+                'path',
+                'slugs'
             ]));
 
         }else{
