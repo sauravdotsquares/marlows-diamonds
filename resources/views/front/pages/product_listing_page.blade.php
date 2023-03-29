@@ -1,5 +1,30 @@
 @extends('layouts.front.app')
 @section('content')
+@section('css')
+<link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+<style>
+    .ui-slider-handle{
+        width: 35px !important;
+        font-size: small !important;
+        color: #FF0000 !important;
+        text-align: center !important;
+    }
+
+    .ui-slider .ui-slider-handle{
+        height: 1.5em; color: #8e2e65 !important;}
+.ui-widget-header{background: #8e2e65 !important;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{
+    border-color: #8e2e65 !important; outline: none; box-shadow: none; background: #fff !important;
+    }
+    .error {
+        color: #e74c3c !important;
+    }
+</style>
+
+
+@endsection
 
     <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
         <div class="container">
@@ -22,7 +47,7 @@
                         <p>Loading More Products</p>
                         <button style="display: none;" class="ajax-load-btn">Load more data</button>
                     </div>
-                    {!! isset($categoryData->description) ? $categoryData->description : '' !!}
+                    {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
                 </div>
 
                 <div class="category-sidebar-wrap">
@@ -42,16 +67,38 @@
                                     <h3>{{ $filter_item->name }}</h3>
                                 </div>
                                 <ul>
-                                    <?php
-                                    $i = 1;
-                                    ?>
                                     @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
                                         <li>
                                             @if (isset($product_item_item->item_type) && $product_item_item->item_type == 'categories')
                                                 <a class="filter-item-data" data-id="{{ $product_item_item->item_id }}"
                                                     href="{{ asset('/' . $product_item_item->item_slug) }}">{{ $product_item_item->item_name }}</a>
+                                            {{-- @elseif(isset($product_item_item->item_type) && $product_item_item->item_type == 'filter-by-price') --}}
+                                                {{-- <div class="choose-diaond-fields row diamond-carat">
+                                                    <div class="diamond-field-contens col-lg-9">
+                                                        <div class="diamond-field-inner-bar">
+                                                            <div class="range_carat_wap">
+                                                                <div class="srchniput-fil">
+                                                                    <div class="minrange">
+                                                                        <span>Min</span>
+                                                                        <input id="sliderRangeSetMin" disabled data-index="0" class="sliderValue" value="{{$product_item_item->min_price}}"/>
+                                                                    </div>
+                                                                    <div class="maxrange">
+                                                                    <span>Max</span>
+                                                                        <input id="sliderRangeSetMax" disabled data-index="1" class="sliderValue" value="{{$product_item_item->max_price}}"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="slider"></div>
+
+                                                                    <div class="srchniput-fil">
+                                                                        <input type="hidden" class="sliderValue" data-index="0" value="{{$product_item_item->min_price}}" id="input-carat-min" name="carat">
+                                                                        <input type="hidden" class="sliderValue" data-index="1" value="{{$product_item_item->max_price}}" id="input-carat-max" name="carat-max">
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> --}}
                                             @else
-                                                <input type="checkbox" name="{{ $filter_item->slug }}"
+                                                <input type="{{$filter_item->input_type}}" name="{{ $filter_item->slug }}"
                                                     value="{{ $product_item_item->item_value }}"
                                                     class="filter-item-data"> {{ $product_item_item->item_name }}
                                             @endif
@@ -166,8 +213,64 @@
 
 
 @section('js')
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script>
+
+
+
         $(document).ready(function() {
+
+
+            console.log($('#sliderRangeSetMin').val());
+        console.log($('#sliderRangeSetMax').val());
+
+$("#slider").slider({
+            range: true,
+            min: $('#sliderRangeSetMin').val(),
+            max: $('#sliderRangeSetMax').val(),
+            step: 1,
+            values: [$('#sliderRangeSetMin').val(), $('#sliderRangeSetMax').val()],
+            slide: function(event, ui) {
+                var value1 = $("#slider").slider("values", 0);
+                var value2 = $("#slider").slider("values", 1);
+                $("#sliderRangeSetMin").val(value1);
+                $("#sliderRangeSetMax").val(value2);
+
+
+                for (var i = 0; i < ui.values.length; ++i) {
+                    // console.log('Checking');
+                    $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
+                }
+
+            },
+            change: function(){
+
+                var value1 = $("#slider").slider("values", 0);
+                var value2 = $("#slider").slider("values", 1);
+                // $("#slider").find(".ui-slider-handle:first").text(value1);
+                // $("#slider").find(".ui-slider-handle:last").text(value2);
+
+                angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
+            },
+        });
+
+        $("#sliderRangeSetMin").change(function (event) {
+            var value1 = parseFloat($("#sliderRangeSetMin").val());
+            var highVal = value1 * 2;
+            $("#slider").slider("option", {"max": highVal, "value": value1});
+        });
+
+        $("#sliderRangeSetMax").change(function (event) {
+            var value1 = parseFloat($("#sliderRangeSetMax").val());
+            var highVal = value1 * 2;
+            $("#slider").slider("option", {"max": highVal, "value": value1});
+        });
+
+		var stepsSlider = document.getElementById('range-slider');
+		var input0 = document.getElementById('input-carat-min');
+		var input1 = document.getElementById('input-carat-max');
+		var inputs = [input0, input1];
+
             $('.show-more-content').hide();
             $('.show-more').click(function() {
                 $(this).parents('.reviewr-review-text').toggleClass("show-text-col");

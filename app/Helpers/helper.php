@@ -1148,6 +1148,7 @@ if (!function_exists('validate_breadcrumb')) {
             $queryString[0] = 'engagement-rings';
         }
 
+
         if(!empty($queryString)){
             foreach ($queryString as $queryString_key => $queryString_value) {
                 $slugCategory = Category::where('slug',$queryString_value)->first();
@@ -1159,15 +1160,15 @@ if (!function_exists('validate_breadcrumb')) {
                 }else{
                     $is404 = true;
                 }
-
                 if(end($queryString) == $queryString_value){  $categoryData=$slugCategory; }
             }
         }
 
-
-
         if($is404){ return null; }
 
+        if($queryString[0] == 'diamonds-rings'){
+            $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
+        }
 
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
         $query = Products::where('status',1)->whereRaw(DB::raw($category_custom_query));
@@ -1202,13 +1203,10 @@ if (!function_exists('validate_breadcrumb')) {
         }
 
         // echo "checked ".$query->toSql();die;
-        $getProductListFinal = $query->paginate(12,['*'],'page',$pageNo);
+        $getProductListFinal = $query->paginate(100,['*'],'page',$pageNo);
 
-        // echo "sfs sdf<pre>";
-        // print_r($getProductListFinal);
-        // die;
 
-        $productItems = "";
+        $productItems = "No record Found";
         if($getProductListFinal->count()){
             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
         }
