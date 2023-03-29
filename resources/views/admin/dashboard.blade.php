@@ -96,12 +96,13 @@
                     <div class="card-body p-0">
                         <ul class="products-list product-list-in-card pl-2 pr-2">
 
-                            <?php foreach ($latestProducts as $productsKey => $productsValue) { 
+                            <?php foreach ($latestProducts as $productsKey => $productsValue) {
                             //  print_r($productsValue);
+                            $imageURL = isset($productsValue->getProductImages->image_url)?$productsValue->getProductImages->image_url:'';
                               ?>
                                 <li class="item">
                                     <div class="product-img">
-                                        <img src="{{ asset('storage/'.$productsValue->getProductImages->image_url) }}" alt="Product Image" class="img-size-50">
+                                        <img src="{{ asset('storage/'.$imageURL) }}" alt="Product Image" class="img-size-50">
                                     </div>
                                     <div class="product-info">
                                         <a href="javascript:void(0)" class="product-title">{{ $productsValue['get_product_images'] }}
@@ -123,7 +124,7 @@
     </section>
     <!-- <section class="content">
       <div class="container-fluid">
-        
+
         <div class="row">
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
@@ -136,11 +137,11 @@
                   <small>%</small>
                 </span>
               </div>
-              
+
             </div>
-            
+
           </div>
-          
+
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
@@ -149,13 +150,13 @@
                 <span class="info-box-text">Likes</span>
                 <span class="info-box-number">41,410</span>
               </div>
-              
-            </div>
-            
-          </div>
-          
 
-          
+            </div>
+
+          </div>
+
+
+
           <div class="clearfix hidden-md-up"></div>
 
           <div class="col-12 col-sm-6 col-md-3">
@@ -166,11 +167,11 @@
                 <span class="info-box-text">Sales</span>
                 <span class="info-box-number">760</span>
               </div>
-              
+
             </div>
-            
+
           </div>
-          
+
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
@@ -179,13 +180,13 @@
                 <span class="info-box-text">New Members</span>
                 <span class="info-box-number">2,000</span>
               </div>
-              
+
             </div>
-            
+
           </div>
-          
+
         </div>
-        
+
 
         <div class="row">
           <div class="col-md-12">
@@ -214,7 +215,7 @@
                   </button>
                 </div>
               </div>
-              
+
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-8">
@@ -223,12 +224,12 @@
                     </p>
 
                     <div class="chart">
-                      
+
                       <canvas id="salesChart" height="180" style="height: 180px;"></canvas>
                     </div>
-                    
+
                   </div>
-                  
+
                   <div class="col-md-4">
                     <p class="text-center">
                       <strong>Goal Completion</strong>
@@ -241,7 +242,7 @@
                         <div class="progress-bar bg-primary" style="width: 80%"></div>
                       </div>
                     </div>
-                    
+
 
                     <div class="progress-group">
                       Complete Purchase
@@ -251,7 +252,7 @@
                       </div>
                     </div>
 
-                    
+
                     <div class="progress-group">
                       <span class="progress-text">Visit Premium Page</span>
                       <span class="float-right"><b>480</b>/800</span>
@@ -260,7 +261,7 @@
                       </div>
                     </div>
 
-                    
+
                     <div class="progress-group">
                       Send Inquiries
                       <span class="float-right"><b>250</b>/500</span>
@@ -268,13 +269,13 @@
                         <div class="progress-bar bg-warning" style="width: 50%"></div>
                       </div>
                     </div>
-                    
+
                   </div>
-                  
+
                 </div>
-                
+
               </div>
-              
+
               <div class="card-footer">
                 <div class="row">
                   <div class="col-sm-3 col-6">
@@ -283,51 +284,51 @@
                       <h5 class="description-header">$35,210.43</h5>
                       <span class="description-text">TOTAL REVENUE</span>
                     </div>
-                    
+
                   </div>
-                  
+
                   <div class="col-sm-3 col-6">
                     <div class="description-block border-right">
                       <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
                       <h5 class="description-header">$10,390.90</h5>
                       <span class="description-text">TOTAL COST</span>
                     </div>
-                    
+
                   </div>
-                  
+
                   <div class="col-sm-3 col-6">
                     <div class="description-block border-right">
                       <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
                       <h5 class="description-header">$24,813.53</h5>
                       <span class="description-text">TOTAL PROFIT</span>
                     </div>
-                    
+
                   </div>
-                  
+
                   <div class="col-sm-3 col-6">
                     <div class="description-block">
                       <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
                       <h5 class="description-header">1200</h5>
                       <span class="description-text">GOAL COMPLETIONS</span>
                     </div>
-                    
+
                   </div>
                 </div>
-                
-              </div>
-              
-            </div>
-            
-          </div>
-          
-        </div>
-        
 
-        
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
         <div class="row">
-          
+
           <div class="col-md-8">
-            
+
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">US-Visitors Report</h3>
@@ -341,11 +342,11 @@
                   </button>
                 </div>
               </div>
-              
+
               <div class="card-body p-0">
                 <div class="d-md-flex">
                   <div class="p-1 flex-fill" style="overflow: hidden">
-                    
+
                     <div id="world-map-markers" style="height: 325px; overflow: hidden">
                       <div class="map"></div>
                     </div>
@@ -356,30 +357,30 @@
                       <h5 class="description-header">8390</h5>
                       <span class="description-text">Visits</span>
                     </div>
-                    
+
                     <div class="description-block mb-4">
                       <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
                       <h5 class="description-header">30%</h5>
                       <span class="description-text">Referrals</span>
                     </div>
-                    
+
                     <div class="description-block">
                       <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
                       <h5 class="description-header">70%</h5>
                       <span class="description-text">Organic</span>
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
-              
+
             </div>
-            
+
             <div class="row">
-             
+
 
               <div class="col-md-12">
-                
+
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title">Latest Members</h3>
@@ -394,7 +395,7 @@
                       </button>
                     </div>
                   </div>
-                  
+
                   <div class="card-body p-0">
                     <ul class="users-list clearfix">
                       <li>
@@ -438,21 +439,21 @@
                         <span class="users-list-date">15 Jan</span>
                       </li>
                     </ul>
-                    
+
                   </div>
-                  
+
                   <div class="card-footer text-center">
                     <a href="/admin/users">View All Users</a>
                   </div>
-                  
-                </div>
-                
-              </div>
-              
-            </div>
-            
 
-            
+                </div>
+
+              </div>
+
+            </div>
+
+
+
             <div class="card">
               <div class="card-header border-transparent">
                 <h3 class="card-title">Latest Orders</h3>
@@ -466,7 +467,7 @@
                   </button>
                 </div>
               </div>
-              
+
               <div class="card-body p-0">
                 <div class="table-responsive">
                   <table class="table m-0">
@@ -482,10 +483,10 @@
                     </thead>
                     <tbody>
                     @foreach($getOrderDetails as $key => $order)
-                      <?php 
+                      <?php
                         // echo "<pre>";
                         // print_r($order->user_details->email);
-                        // die; 
+                        // die;
                       ?>
                     <tr>
                       <td><a href="pages/examples/invoice.html">{{isset($order->token)?$order->token:''}}</a></td>
@@ -501,21 +502,21 @@
                     </tbody>
                   </table>
                 </div>
-                
+
               </div>
-              
+
               <div class="card-footer clearfix">
-                
+
                 <a href="{{route('admin.order.details.page')}}" class="btn btn-sm btn-secondary float-right">View All Orders</a>
               </div>
-              
+
             </div>
-            
+
           </div>
-          
+
 
           <div class="col-md-4">
-            
+
             <div class="info-box mb-3 bg-warning">
               <span class="info-box-icon"><i class="fas fa-tag"></i></span>
 
@@ -523,9 +524,9 @@
                 <span class="info-box-text">Inventory</span>
                 <span class="info-box-number">5,200</span>
               </div>
-              
+
             </div>
-            
+
             <div class="info-box mb-3 bg-success">
               <span class="info-box-icon"><i class="far fa-heart"></i></span>
 
@@ -533,9 +534,9 @@
                 <span class="info-box-text">Mentions</span>
                 <span class="info-box-number">92,050</span>
               </div>
-              
+
             </div>
-            
+
             <div class="info-box mb-3 bg-danger">
               <span class="info-box-icon"><i class="fas fa-cloud-download-alt"></i></span>
 
@@ -543,9 +544,9 @@
                 <span class="info-box-text">Downloads</span>
                 <span class="info-box-number">114,381</span>
               </div>
-              
+
             </div>
-            
+
             <div class="info-box mb-3 bg-info">
               <span class="info-box-icon"><i class="far fa-comment"></i></span>
 
@@ -553,9 +554,9 @@
                 <span class="info-box-text">Direct Messages</span>
                 <span class="info-box-number">163,921</span>
               </div>
-              
+
             </div>
-            
+
 
             <div class="card">
               <div class="card-header">
@@ -570,16 +571,16 @@
                   </button>
                 </div>
               </div>
-              
+
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-8">
                     <div class="chart-responsive">
                       <canvas id="pieChart" height="150"></canvas>
                     </div>
-                    
+
                   </div>
-                  
+
                   <div class="col-md-4">
                     <ul class="chart-legend clearfix">
                       <li><i class="far fa-circle text-danger"></i> Chrome</li>
@@ -590,11 +591,11 @@
                       <li><i class="far fa-circle text-secondary"></i> Navigator</li>
                     </ul>
                   </div>
-                  
+
                 </div>
-                
+
               </div>
-              
+
               <div class="card-footer p-0">
                 <ul class="nav nav-pills flex-column">
                   <li class="nav-item">
@@ -623,11 +624,11 @@
                   </li>
                 </ul>
               </div>
-              
-            </div>
-            
 
-            
+            </div>
+
+
+
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Recently Added Products</h3>
@@ -641,7 +642,7 @@
                   </button>
                 </div>
               </div>
-              
+
               <div class="card-body p-0">
                 <ul class="products-list product-list-in-card pl-2 pr-2">
                   <li class="item">
@@ -656,7 +657,7 @@
                       </span>
                     </div>
                   </li>
-                  
+
                   <li class="item">
                     <div class="product-img">
                       <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
@@ -669,7 +670,7 @@
                       </span>
                     </div>
                   </li>
-                  
+
                   <li class="item">
                     <div class="product-img">
                       <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
@@ -685,7 +686,7 @@
                       </span>
                     </div>
                   </li>
-                  
+
                   <li class="item">
                     <div class="product-img">
                       <img src="dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
@@ -698,22 +699,22 @@
                       </span>
                     </div>
                   </li>
-                  
+
                 </ul>
               </div>
-              
+
               <div class="card-footer text-center">
                 <a href="/admin/products/products" class="uppercase">View All Products</a>
               </div>
-              
+
             </div>
-            
+
           </div>
-          
+
         </div>
-        
+
       </div>
     </section> -->
-    
+
 
 @endsection
