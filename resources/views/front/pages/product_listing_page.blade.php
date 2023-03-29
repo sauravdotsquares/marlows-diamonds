@@ -110,88 +110,11 @@
 
 
                         <div class="reset-filer-container">
-                            <button class="reset-filer-btn">Reset search</button>
+                            <a href="{{url()->current()}}"><button class="reset-filer-btn">Reset search</button></a>
                         </div>
 
                     </div>
 
-                    <div class="sidebar-main-cart">
-                        <div class="sidebar-title">
-                            Shopping Cart
-                        </div>
-                        @if (session('cart'))
-                            <div class="side-cart-row">
-                                @php $total = 0 @endphp
-                                @foreach (session('cart') as $id => $details)
-                                    @php $total += $details['price'] * $details['quantity'] @endphp
-                                    <div class="side-cart-item">
-                                        <div class="cart-image-item">
-                                            @if (isset($details['selected_parameter']['imagelink']) && !empty($details['selected_parameter']['imagelink']))
-                                                <img src="{{ $details['selected_parameter']['imagelink'] }}" width="100"
-                                                    height="100" class="img-responsive" />
-                                            @elseif(isset($details['image']) && !empty($details['image']))
-                                                <img src="{{ asset('storage/' . $details['image']) }}" width="100"
-                                                    height="100" class="img-responsive" />
-                                            @else
-                                                <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/MarlowsDiamonds-Logo-225x107.png"
-                                                    width="100" height="100" class="img-responsive" />
-                                            @endif
-                                        </div>
-                                        <div class="side-cart-delete">
-                                            <a href="javascript:void(0);" data-id="{{ $id }}"
-                                                class="remove-from-cart">x</a>
-                                        </div>
-
-                                        <div class="side-cart-pr-name">
-                                            {!! $details['name'] !!}
-                                        </div>
-                                        <div class="side-cart-quantity">
-                                            {{ $details['quantity'] }} ×
-                                            <span
-                                                class="side-cart-amount">{{ MY_CURRENCY_SYMBOL }}{{ number_format($details['price'], 2) }}</span>
-                                        </div>
-                                        <div class="side-cart-total">
-                                            <strong>Subtotal: </strong>
-                                            {{ MY_CURRENCY_SYMBOL }}{{ number_format($details['price'] * $details['quantity'], 2) }}
-                                            (incl. VAT)
-                                        </div>
-
-                                    </div>
-                                @endforeach
-                                <div class="side-cart-actions">
-                                    <a class="view-basket btn-bg-small" href="{{ route('product.cart') }}">View Basket</a>
-                                    <a class="btn-bg-small" href="{{ route('product.checkout') }}">Checkout</a>
-                                </div>
-                            </div>
-                        @else
-                            <div class="shopping_cart_content">
-                                <p class="mini-cart__empty-message">No products in the basket.</p>
-                            </div>
-                        @endif
-                    </div>
-                    @if (session('recentproducts'))
-                        <div class="side-recentlyview">
-                            <div class="sidebar-title">
-                                Recently Viewed
-                            </div>
-                            <div class="side-recently-item">
-                                @php $i = 0; @endphp
-                                @foreach (array_reverse(session('recentproducts')) as $ProductDetails)
-                                    @if ($i <= 8)
-                                        <div class="side-recently-col">
-                                            <a class="side-recently-pr-name"
-                                                href="{{ asset('product/' . $ProductDetails['slug']) }}">{{ $ProductDetails['name'] }}</a>
-                                            <a class="side-recently-pr-img"
-                                                href="{{ asset('product/' . $ProductDetails['slug']) }}"><img
-                                                    src="{{ asset('storage/' . $ProductDetails['image']) }}"
-                                                    alt="image"></a>
-                                        </div>
-                                    @endif
-                                    @php $i++; @endphp
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
                 </div>
 
             </div>
