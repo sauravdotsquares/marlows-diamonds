@@ -590,7 +590,7 @@ if (!function_exists('validate_breadcrumb')) {
 
             $dataNew['request']['body'] = array(
                 "shapes" => array($data['shape']),
-                "labs" => $data['certificate'],
+                "labs" => isset($data['certificate']) && count($data['certificate'])?$data['certificate']:['GIA','IGI'],
                 "fluorescence_intensities" => $fluroscenceNewArray,
                 "color_from" => $data['colorFrom'],
                 "color_to" => $data['colorTo'],
@@ -1216,74 +1216,89 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
-    function getProductListing($slug = null, $slug2 = null, $slug3 = null, $requestData = [])
-    {
-        /** Slug belongs to product category */
+    function getProductListing($queryString=null, $requestData=[]){
+
+        /** generate custom query for categories */
         $category_custom_query = "";
+        $is404 = false;
+        $categoryData = null;
 
-        if (!empty($slug)) {
-            $slugCategory = Category::where('slug', $slug)->first();
-            if (!empty($slugCategory)) {
-                $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-            } else {
-                return ['status' => 404];
-            };
+        // echo end($queryString);die;
+        if($queryString[0] == 'diamond-engagement-rings'){
+            $queryString[0] = 'engagement-rings';
         }
 
-        if (!empty($slug2)) {
-            $slug2Category = Category::where('slug', $slug2)->first();
-            if (!empty($slug2Category)) {
-                $category_custom_query .= " OR find_in_set('" . $slug2Category->id . "',categories) ";
-            } else {
-                return ['status' => 404];
-            };
-        }
 
-        if (!empty($slug3)) {
-            $slug3Category = Category::where('slug', $slug3)->first();
-            if (!empty($slug3Category)) {
-                $category_custom_query .= " OR find_in_set('" . $slug3Category->id . "',categories) ";
-            } else {
-                return ['status' => 404];
+        if(!empty($queryString)){
+            foreach ($queryString as $queryString_key => $queryString_value) {
+                $slugCategory = Category::where('slug',$queryString_value)->first();
+                if(!empty($slugCategory)){
+                    if(!$queryString_key){  $category_custom_query .= '( '; }
+                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
+                    if($queryString_key+1 != count($queryString)){ $category_custom_query .= " AND "; }
+                    else{ $category_custom_query .= ' ) '; }
+                }else{
+                    $is404 = true;
+                }
+                if(end($queryString) == $queryString_value){  $categoryData=$slugCategory; }
             }
         }
 
+        if($is404){ return null; }
+
+        if($queryString[0] == 'diamonds-rings'){
+            $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
+        }
+
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
-        $query = Products::where('status', 1)->whereRaw(DB::raw($category_custom_query));
+        $query = Products::where('status',1)->whereRaw(DB::raw($category_custom_query));
 
         /** Search filter */
-        if (!empty($requestData['keyword'])) {
+        if(!empty($requestData['keyword'])){
             $keyword = $requestData['keyword'];
-            $query = $query->where('title', 'LIKE', "%$keyword%");
+            $query = $query->where('title','LIKE',"%$keyword%");
         }
 
-        if (!empty($requestData['category']) && $requestData['category'] != 'undefined') {
+        if(!empty($requestData['category']) && $requestData['category']!='undefined'){
             $getPostCategory = $requestData['category'];
-            $query = $query->whereRaw("find_in_set('" . $getPostCategory . "',categories)");
+            $query = $query->whereRaw("find_in_set('".implode(",", $getPostCategory)."',categories)");
         }
 
-        if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
+        if(!empty($requestData['metal_type']) && $requestData['metal_type']!='undefined'){
             $metal_type = $requestData['metal_type'];
-            $query->whereHas('getProductVariation.variDetails', function ($query) use ($metal_type) {
-                $query->where('value', $metal_type);
+            $query->whereHas('getProductVariation.variDetails', function($query) use ($metal_type){
+                $query->where('value',$metal_type);
             });
         }
+        if(!empty($requestData['carat']) && $requestData['carat']!='undefined'){
+            $carat = $requestData['carat'];
+            $query->whereHas('getProductVariation.variDetails', function($query) use ($carat){
+                $query->where('value',$carat);
+            });
+        }
+        /** Search filter */
+        if(!empty($requestData['filter-by-shape'])){
+            $shape = $requestData['filter-by-shape'];
+            $query = $query->whereIn('diamond_shape', $shape);
+        }
 
-        $getProductListFinal = $query->paginate(50, ['*'], 'page', $pageNo);
+        // echo "checked ".$query->toSql();die;
+        $getProductListFinal = $query->paginate(100,['*'],'page',$pageNo);
 
 
-        $productItems = "";
-        if ($getProductListFinal->count()) {
+        $productItems = "No record Found";
+        if($getProductListFinal->count()){
             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
         }
         $isNextPage = $getProductListFinal->hasMorePages();
         $nextPage = $getProductListFinal->currentPage() + 1;
 
         return [
-            'status' => 200,
+            'status'=>200,
             'productItems' => $productItems,
             'isNextPage' => $isNextPage,
             'nextPage' => $nextPage,
+            'categoryData' => $categoryData
         ];
     }
 }

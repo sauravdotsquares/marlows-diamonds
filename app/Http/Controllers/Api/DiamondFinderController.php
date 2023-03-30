@@ -77,7 +77,7 @@ class DiamondFinderController
         $rapnetRecords = [];
         if(!empty($rapnetData)){
 	        foreach ($rapnetData as $key => $result) {
-	        	$rapnetRecords[$key]['Shape'] = $result->shape;;
+	        	$rapnetRecords[$key]['Shape'] = $result->shape;
 	        	$rapnetRecords[$key]['Carat'] = $result->size;
 	        	$rapnetRecords[$key]['Color'] = $result->color;
 	        	$rapnetRecords[$key]['Clarity'] = $result->clarity;
@@ -97,7 +97,7 @@ class DiamondFinderController
     					$rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$rapnetRecords[$key]['CERT_NO'];
     				}
     				else if($result->lab=='HRD'){
-    					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$rapnetRecords[$key]['CERT_NO'].'&weight='.$result->Weight;
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$rapnetRecords[$key]['CERT_NO'].'&weight='.$result->size;
     				}
     				else {
     					$rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID;
