@@ -19,9 +19,9 @@ class DiamondFinderController
     {
     	$colorFrom = 'D'; $colorTo = 'K'; $colour=array();
     	if($request->colour!=''){
-            $colour = explode(',',$request->colour);
-                $colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
-        }
+         $colour = explode(',',$request->colour);
+			   $colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
+      }
 
        	$clarityFrom = 'IF'; $clarityTo = 'SI2'; $clarity=array();
     	if($request->clarity!=''){
@@ -57,9 +57,10 @@ class DiamondFinderController
        	}
 
         $data = array('shape'=>$request->shape,'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'paging'=>5,'PageSize'=>5);
-        //echo '<pre>'; print_r($data); die;
 
         $hkData = getHKApiRecords($data);
+        $hkData['data'] = array_map(array($this, "amountChange"), $hkData['data']);
+
         if(empty($hkData['data'])){
         	$hkData['to']=5;
         	$hkData['last_page']=10;
@@ -70,37 +71,33 @@ class DiamondFinderController
         	$hkData['total']=100;
         }
 
-        $rapnetData = getRepnetAPIPattern($data,$hkData['current_page']);
-
-
-
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
 
 
         $rapnetRecords = [];
         if(!empty($rapnetData)){
 	        foreach ($rapnetData as $key => $result) {
-	        	$rapnetRecords[$key]['Shape'] = $result->ShapeTitle;;
-	        	$rapnetRecords[$key]['Carat'] = $result->Weight;
-	        	$rapnetRecords[$key]['Color'] = $result->ColorTitle;
-	        	$rapnetRecords[$key]['Clarity'] = $result->ClarityTitle;
-	        	if(isset($result->CutLongTitle))
-	        		$rapnetRecords[$key]['Cut'] = $result->CutLongTitle;
+	        	$rapnetRecords[$key]['Shape'] = $result->shape;;
+	        	$rapnetRecords[$key]['Carat'] = $result->size;
+	        	$rapnetRecords[$key]['Color'] = $result->color;
+	        	$rapnetRecords[$key]['Clarity'] = $result->clarity;
+	        	if(isset($result->cut))
+	        		$rapnetRecords[$key]['Cut'] = $result->cut;
 
-	        	$rapnetRecords[$key]['Lab'] = $result->LabTitle;
-	        	$rapnetRecords[$key]['Amount'] = $result->FinalPrice;
-	        	$rapnetRecords[$key]['Stock_NO'] = $result->DiamondID;
-                $rapnetRecords[$key]['CERT_NO'] = $result->CertificateNumber;
+	        	$rapnetRecords[$key]['Lab'] = $result->lab;
+	        	$rapnetRecords[$key]['Amount'] = ($result->total_sales_price*getVAT())/1.2;
+	        	$rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
+                $rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
 
 
-	        	if($result->LabTitle=='GIA'){
-    					$rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$result->CertificateNumber.'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
+	        	if($result->lab=='GIA'){
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$rapnetRecords[$key]['CERT_NO'].'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
     				}
-    				else if($result->LabTitle=='IGI'){
-    					$rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$result->CertificateNumber;
+    				else if($result->lab=='IGI'){
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$rapnetRecords[$key]['CERT_NO'];
     				}
-    				else if($result->LabTitle=='HRD'){
-    					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$result->CertificateNumber.'&weight='.$result->Weight;
+    				else if($result->lab=='HRD'){
+    					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$rapnetRecords[$key]['CERT_NO'].'&weight='.$result->Weight;
     				}
     				else {
     					$rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID;
@@ -108,13 +105,19 @@ class DiamondFinderController
 
 	        }
     	  }
-        //echo '<pre>'; print_r($rapnetRecords); die;
+
         $hkData['data'] = Arr::collapse([$hkData['data'], $rapnetRecords]);
 
         $hkData['VAT'] = getVAT();
-        $hkData['firstDiamondAmount'] = $hkData['data'][0]['Amount'];
-       // $hkData =
+        $hkData['firstDiamondAmount'] = isset($hkData['data'][0])?$hkData['data'][0]['Amount']:'';
+
 		return response($hkData);
     }
 
+    public function amountChange($num){
+        if(isset($num['Amount']))
+            $num['Amount'] *= getVAT();
+
+        return $num;
+    }
 }
