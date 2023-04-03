@@ -1223,13 +1223,34 @@ if (!function_exists('validate_breadcrumb')) {
         $is404 = false;
         $categoryData = null;
 
-        // echo end($queryString);die;
-        if($queryString[0] == 'diamond-engagement-rings'){
-            $queryString[0] = 'engagement-rings';
+        if(isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings',$requestData['category'])){
+            $requestData['category'] = [
+                'engagement-rings',
+                'eternity-rings',
+                'wedding-rings'
+            ];
         }
 
-
-        if(!empty($queryString)){
+        if(isset($requestData['category']) && !empty($requestData['category'])){
+            foreach ($requestData['category'] as $queryString_key => $queryString_value_new) {
+                $slugCategory = Category::where('slug',$queryString_value_new)->first();
+                if(!empty($slugCategory)){
+                    if(!$queryString_key){
+                        $category_custom_query .= '( ';
+                    }
+                    // $category_custom_query .= '( ';
+                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
+                    if($queryString_key+1 != count($requestData['category'])){
+                        $category_custom_query .= " OR ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                }
+            }
+        }elseif(!empty($queryString)){
+            if($queryString[0] == 'diamond-engagement-rings'){
+                $queryString[0] = 'engagement-rings';
+            }
             foreach ($queryString as $queryString_key => $queryString_value) {
                 $slugCategory = Category::where('slug',$queryString_value)->first();
                 if(!empty($slugCategory)){
@@ -1242,13 +1263,14 @@ if (!function_exists('validate_breadcrumb')) {
                 }
                 if(end($queryString) == $queryString_value){  $categoryData=$slugCategory; }
             }
+        }else{
+            $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
         }
+
 
         if($is404){ return null; }
 
-        if($queryString[0] == 'diamonds-rings'){
-            $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
-        }
+
 
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
         $query = Products::where('status',1)->whereRaw(DB::raw($category_custom_query));
@@ -1257,11 +1279,6 @@ if (!function_exists('validate_breadcrumb')) {
         if(!empty($requestData['keyword'])){
             $keyword = $requestData['keyword'];
             $query = $query->where('title','LIKE',"%$keyword%");
-        }
-
-        if(!empty($requestData['category']) && $requestData['category']!='undefined'){
-            $getPostCategory = $requestData['category'];
-            $query = $query->whereRaw("find_in_set('".implode(",", $getPostCategory)."',categories)");
         }
 
         if(!empty($requestData['metal_type']) && $requestData['metal_type']!='undefined'){
