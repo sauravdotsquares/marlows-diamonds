@@ -47,6 +47,9 @@
                         <p>Loading More Products</p>
                         <button style="display: none;" class="ajax-load-btn">Load more data</button>
                     </div>
+                    <div class="ajax-loader">
+                        <img src="{{ asset('images/spinner.gif') }}" id="loading-data-image" class="img-responsive" style="display:block;" />
+                    </div>
                     {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
                 </div>
 
@@ -113,6 +116,8 @@
             </div>
         </div>
     </div>
+
+
 
 @endsection
 
@@ -225,7 +230,8 @@ $("#slider").slider({
         $(document).on('change', ".filter-item-data", function() {
             // console.log('{{ route('getfilteredproducts') }}');
             // var index = parseInt($(this).attr("id").replace("filter-item-data-Array", ''));
-
+            $('.search-result').html("");
+            $('#loading-data-image').css('display','block');
             $.ajax({
                 type: 'GET',
                 url: "{{ route('getfilteredproducts') }}",
@@ -235,19 +241,11 @@ $("#slider").slider({
                     'path':'{{$path}}'
                 },
                 success: function(res) {
+                    $('#loading-data-image').css('display','block');
                     $('.search-result').html(res);
-                    console.log("res");
-                    console.log(res);
-                    return false;
-                    if (res.status == 200) {
-                        $('.search-result').html(res);
-                    }
-                    // getAttribute();
                     return false;
                 }
             });
-            // var dataString = 'ids='+ ids;
-            // console.log(dataString);
         });
 
         // function sendDataValues() {
