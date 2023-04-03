@@ -69,14 +69,24 @@
                                 <ul>
                                     @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
                                         <li>
-                                            @if (isset($product_item_item->item_type) && $product_item_item->item_type == 'categories')
-                                                <a class="filter-item-data" data-id="{{ $product_item_item->item_id }}"
-                                                    href="{{ asset('/' . $product_item_item->item_slug) }}">{{ $product_item_item->item_name }}</a>
-                                            @else
-                                                <input type="{{$filter_item->input_type}}" name="{{ $filter_item->slug }}" {{(in_array(Str::lower($product_item_item->item_value),$slugs)) ? ' checked ' : ''}} {{(in_array(Str::lower(Str::replace(' ','-',$product_item_item->item_name)),$slugs)) ? ' checked ' : ''}}
-                                                    value="{{ $product_item_item->item_value }}"
-                                                    class="filter-item-data"> {{ $product_item_item->item_name }}
+                                            @php
+                                                $checkVariable = 'true';
+                                                $checkVariableNew = '';
+                                            @endphp
+
+                                            @if(in_array(Str::lower($product_item_item->item_value),$slugs))
+                                                <?php
+                                                    $checkVariable = 'false';
+                                                    $checkVariableNew = 'checked';
+                                                ?>
+                                            @elseif(in_array(Str::lower(Str::replace(' ','-',$product_item_item->item_name)),$slugs))
+                                                <?php
+                                                    $checkVariable = 'false';
+                                                    $checkVariableNew = 'checked';
+                                                ?>
                                             @endif
+
+                                            <input type="{{$filter_item->input_type}}" name="{{ $filter_item->slug }}"  {{$checkVariableNew}} onclick="return {{$checkVariable}};" value="{{ $product_item_item->item_value }}" class="filter-item-data"> {{ $product_item_item->item_name }}
                                         </li>
                                     @endforeach
                                 </ul>
@@ -218,7 +228,7 @@ $("#slider").slider({
 
             $.ajax({
                 type: 'GET',
-                url: '{{ route('getfilteredproducts') }}',
+                url: "{{ route('getfilteredproducts') }}",
                 data: {
                     '_token': "{{ csrf_token() }}",
                     'ids': $('.filter-item-data:checked').serializeArray(),
@@ -230,10 +240,7 @@ $("#slider").slider({
                     console.log(res);
                     return false;
                     if (res.status == 200) {
-                        // removed msg
                         $('.search-result').html(res);
-                        $('#imgeremovenew' + index).remove();
-                        $('#imgeremovenewClose' + index).remove();
                     }
                     // getAttribute();
                     return false;
