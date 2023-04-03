@@ -1268,6 +1268,25 @@ if (!function_exists('validate_breadcrumb')) {
         }
 
 
+        // if(isset($requestData['categories']) && !empty($requestData['categories'])){
+        //     foreach ($requestData['categories'] as $queryString_key => $value) {
+        //         $slugCategory = Category::where('slug',$value)->first();
+        //         if(!empty($slugCategory)){
+        //             if(!$queryString_key){
+        //                 $category_custom_query .= '( ';
+        //             }
+        //             // $category_custom_query .= '( ';
+        //             $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
+        //             if($queryString_key+1 != count($requestData['category'])){
+        //                 $category_custom_query .= " AND ";
+        //             } else {
+        //                 $category_custom_query .= ' ) ';
+        //             }
+        //         }
+        //     }
+        // }
+
+
         if($is404){ return null; }
 
 
