@@ -1331,12 +1331,13 @@ class ProductController extends Controller
     public function getProductListData(Request $request)
     {
         $dataArray = [];
-        foreach($request->ids as $key => $value){
-            $dataArray[$value['name']][] = $value['value'];
+
+        if(isset($request->ids) && !empty($request->ids)){
+            foreach($request->ids as $key => $value){
+                $dataArray[$value['name']][] = $value['value'];
+            }
         }
 
-        if(isset($dataArray['filter-by-style']))
-        $dataArray['category'] = $dataArray['filter-by-style'];
         $slugs = explode('/', $request->path);
         $productListingData = getProductListing($slugs, $dataArray);
 
