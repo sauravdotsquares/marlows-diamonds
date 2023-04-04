@@ -1306,12 +1306,20 @@ if (!function_exists('validate_breadcrumb')) {
                 $query->where('value',$metal_type);
             });
         }
-        if(!empty($requestData['carat']) && $requestData['carat']!='undefined'){
-            $carat = $requestData['carat'];
-            $query->whereHas('getProductVariation.variDetails', function($query) use ($carat){
-                $query->where('value',$carat);
+
+
+
+        if(!empty($requestData['price-min']) && !empty($requestData['price-max'])){
+            $query->whereHas('getProductVariation', function($query) use ($requestData){
+                $query->whereBetween('regular_price',array($requestData['price-min'][0],$requestData['price-max'][0]));
             });
         }
+        // if(!empty($requestData['carat']) && $requestData['carat']!='undefined'){
+        //     $carat = $requestData['carat'];
+        //     $query->whereHas('getProductVariation.variDetails', function($query) use ($carat){
+        //         $query->where('value',$carat);
+        //     });
+        // }
         /** Search filter */
         if(!empty($requestData['filter-by-shape'])){
             $shape = $requestData['filter-by-shape'];
