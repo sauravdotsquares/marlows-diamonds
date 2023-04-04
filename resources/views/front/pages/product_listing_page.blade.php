@@ -36,6 +36,17 @@
         .error {
             color: #e74c3c !important;
         }
+
+        .srchniput-fil span {
+            font-size: 13px;
+            background: #ffff;
+            position: absolute;
+            left: 8px;
+            top: -22px;
+            padding: 0px 4px;
+            display: inline-block;
+        }
+
     </style>
 @endsection
 
