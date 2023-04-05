@@ -1248,10 +1248,14 @@ if (!function_exists('validate_breadcrumb')) {
                 }
             }
         }elseif(!empty($queryString)){
-            if($queryString[0] == 'diamond-engagement-rings'){
-                $queryString[0] = 'engagement-rings';
-            }
             $conditions = 'AND';
+            if($queryString[0] == 'diamond-engagement-rings'){
+                $queryString = [
+                    'diamond-engagement-rings',
+                    'engagement-rings',
+                ];
+                $conditions = 'OR';
+            }
             if($queryString[0] == 'diamonds-rings'){
                 $queryString = [
                     'engagement-rings',
@@ -1260,8 +1264,10 @@ if (!function_exists('validate_breadcrumb')) {
                 ];
                 $conditions = 'OR';
             }
+
             foreach ($queryString as $queryString_key => $queryString_value) {
                 $slugCategory = Category::where('slug',$queryString_value)->first();
+
                 if(!empty($slugCategory)){
                     if(!$queryString_key){  $category_custom_query .= '( '; }
                     $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
@@ -1270,7 +1276,7 @@ if (!function_exists('validate_breadcrumb')) {
                 }else{
                     $is404 = true;
                 }
-                if(end($queryString) == $queryString_value){  $categoryData=$slugCategory; }
+                if(current($queryString) == $queryString_value){  $categoryData=$slugCategory; }
             }
         }else{
             $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
@@ -1294,29 +1300,7 @@ if (!function_exists('validate_breadcrumb')) {
             }
         }
 
-
-        // if(isset($requestData['categories']) && !empty($requestData['categories'])){
-        //     foreach ($requestData['categories'] as $queryString_key => $value) {
-        //         $slugCategory = Category::where('slug',$value)->first();
-        //         if(!empty($slugCategory)){
-        //             if(!$queryString_key){
-        //                 $category_custom_query .= '( ';
-        //             }
-        //             // $category_custom_query .= '( ';
-        //             $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
-        //             if($queryString_key+1 != count($requestData['category'])){
-        //                 $category_custom_query .= " AND ";
-        //             } else {
-        //                 $category_custom_query .= ' ) ';
-        //             }
-        //         }
-        //     }
-        // }
-
-
         if($is404){ return null; }
-
-
 
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
         $query = Products::where('status',1)->whereRaw(DB::raw($category_custom_query));
@@ -1341,12 +1325,7 @@ if (!function_exists('validate_breadcrumb')) {
                 $query->whereBetween('regular_price',array($requestData['price-min'][0],$requestData['price-max'][0]));
             });
         }
-        // if(!empty($requestData['carat']) && $requestData['carat']!='undefined'){
-        //     $carat = $requestData['carat'];
-        //     $query->whereHas('getProductVariation.variDetails', function($query) use ($carat){
-        //         $query->where('value',$carat);
-        //     });
-        // }
+
         /** Search filter */
         if(!empty($requestData['filter-by-shape'])){
             $shape = $requestData['filter-by-shape'];
