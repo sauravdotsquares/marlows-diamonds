@@ -285,7 +285,7 @@
 
 <script>
 
-        var countDownDate = new Date("04/30/2023 23:59:59").getTime();
+        var countDownDate = new Date("05/06/2023 23:59:59").getTime();
         var myfunc = setInterval(function() {
 
         var now = new Date().getTime();
