@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: shehbaz
@@ -583,14 +584,14 @@ if (!function_exists('validate_breadcrumb')) {
             ];
 
             $fluroscenceNewArray = [];
-            foreach($data['fluorescence'] as $newKey => $valuePass){
+            foreach ($data['fluorescence'] as $newKey => $valuePass) {
                 $getFluValue = $fluroscenceArray[$valuePass];
                 $fluroscenceNewArray[] = $getFluValue;
             }
 
             $dataNew['request']['body'] = array(
                 "shapes" => array($data['shape']),
-                "labs" => isset($data['certificate']) && count($data['certificate'])?$data['certificate']:['GIA','IGI'],
+                "labs" => isset($data['certificate']) && count($data['certificate']) ? $data['certificate'] : ['GIA', 'IGI'],
                 "fluorescence_intensities" => $fluroscenceNewArray,
                 "color_from" => $data['colorFrom'],
                 "color_to" => $data['colorTo'],
@@ -635,9 +636,9 @@ if (!function_exists('validate_breadcrumb')) {
             $response = curl_exec($curl);
             $response = json_decode($response);
 
-            if(isset($response->response->header) && !empty($response->response->body->diamonds)){
+            if (isset($response->response->header) && !empty($response->response->body->diamonds)) {
                 $response = $response->response->body->diamonds;
-            }else{
+            } else {
                 $response = '';
             }
             return $response;
@@ -1216,14 +1217,15 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
-    function getProductListing($queryString=null, $requestData=[]){
+    function getProductListing($queryString = null, $requestData = [])
+    {
 
         /** generate custom query for categories */
         $category_custom_query = "";
         $is404 = false;
         $categoryData = null;
 
-        if(isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings',$requestData['category'])){
+        if (isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings', $requestData['category'])) {
             $requestData['category'] = [
                 'engagement-rings',
                 'eternity-rings',
@@ -1231,32 +1233,32 @@ if (!function_exists('validate_breadcrumb')) {
             ];
         }
 
-        if(isset($requestData['category']) && !empty($requestData['category'])){
+        if (isset($requestData['category']) && !empty($requestData['category'])) {
             foreach ($requestData['category'] as $queryString_key => $queryString_value_new) {
-                $slugCategory = Category::where('slug',$queryString_value_new)->first();
-                if(!empty($slugCategory)){
-                    if(!$queryString_key){
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
                         $category_custom_query .= '( ';
                     }
                     // $category_custom_query .= '( ';
-                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
-                    if($queryString_key+1 != count($requestData['category'])){
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($requestData['category'])) {
                         $category_custom_query .= " OR ";
                     } else {
                         $category_custom_query .= ' ) ';
                     }
                 }
             }
-        }elseif(!empty($queryString)){
+        } elseif (!empty($queryString)) {
             $conditions = 'AND';
-            if($queryString[0] == 'diamond-engagement-rings'){
+            if ($queryString[0] == 'diamond-engagement-rings') {
                 $queryString = [
                     'diamond-engagement-rings',
                     'engagement-rings',
                 ];
                 $conditions = 'OR';
             }
-            if($queryString[0] == 'diamonds-rings'){
+            if ($queryString[0] == 'diamonds-rings') {
                 $queryString = [
                     'engagement-rings',
                     'eternity-rings',
@@ -1266,32 +1268,39 @@ if (!function_exists('validate_breadcrumb')) {
             }
 
             foreach ($queryString as $queryString_key => $queryString_value) {
-                $slugCategory = Category::where('slug',$queryString_value)->first();
+                $slugCategory = Category::where('slug', $queryString_value)->first();
 
-                if(!empty($slugCategory)){
-                    if(!$queryString_key){  $category_custom_query .= '( '; }
-                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
-                    if($queryString_key+1 != count($queryString)){ $category_custom_query .= " $conditions "; }
-                    else{ $category_custom_query .= ' ) '; }
-                }else{
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
+                        $category_custom_query .= '( ';
+                    }
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($queryString)) {
+                        $category_custom_query .= " $conditions ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                } else {
                     $is404 = true;
                 }
-                if(current($queryString) == $queryString_value){  $categoryData=$slugCategory; }
+                if (current($queryString) == $queryString_value) {
+                    $categoryData = $slugCategory;
+                }
             }
-        }else{
+        } else {
             $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
         }
 
-        if(isset($requestData['style-categories']) && !empty($requestData['style-categories'])){
+        if (isset($requestData['style-categories']) && !empty($requestData['style-categories'])) {
             foreach ($requestData['style-categories'] as $queryString_key => $queryString_value_new) {
-                $slugCategory = Category::where('slug',$queryString_value_new)->first();
-                if(!empty($slugCategory)){
-                    if(!$queryString_key){
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
                         $category_custom_query .= 'AND ( ';
                     }
                     // $category_custom_query .= '( ';
-                    $category_custom_query .= " find_in_set('".$slugCategory->id."',categories) ";
-                    if($queryString_key+1 != count($requestData['style-categories'])){
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($requestData['style-categories'])) {
                         $category_custom_query .= "  ";
                     } else {
                         $category_custom_query .= ' ) ';
@@ -1300,51 +1309,53 @@ if (!function_exists('validate_breadcrumb')) {
             }
         }
 
-        if($is404){ return null; }
+        if ($is404) {
+            return null;
+        }
 
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
-        $query = Products::where('status',1)->whereRaw(DB::raw($category_custom_query));
+        $query = Products::where('status', 1)->whereRaw(DB::raw($category_custom_query));
 
         /** Search filter */
-        if(!empty($requestData['keyword'])){
+        if (!empty($requestData['keyword'])) {
             $keyword = $requestData['keyword'];
-            $query = $query->where('title','LIKE',"%$keyword%");
+            $query = $query->where('title', 'LIKE', "%$keyword%");
         }
 
-        if(!empty($requestData['metal_type']) && $requestData['metal_type']!='undefined'){
+        if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
             $metal_type = $requestData['metal_type'];
-            $query->whereHas('getProductVariation.variDetails', function($query) use ($metal_type){
-                $query->where('value',$metal_type);
+            $query->whereHas('getProductVariation.variDetails', function ($query) use ($metal_type) {
+                $query->where('value', $metal_type);
             });
         }
 
 
 
-        if(!empty($requestData['price-min']) && !empty($requestData['price-max'])){
-            $query->whereHas('getProductVariation', function($query) use ($requestData){
-                $query->whereBetween('regular_price',array($requestData['price-min'][0],$requestData['price-max'][0]));
+        if (!empty($requestData['price-min']) && !empty($requestData['price-max'])) {
+            $query->whereHas('getProductVariation', function ($query) use ($requestData) {
+                $query->whereBetween('regular_price', array($requestData['price-min'][0], $requestData['price-max'][0]));
             });
         }
 
         /** Search filter */
-        if(!empty($requestData['filter-by-shape'])){
+        if (!empty($requestData['filter-by-shape'])) {
             $shape = $requestData['filter-by-shape'];
             $query = $query->whereIn('diamond_shape', $shape);
         }
 
         // echo "checked ".$query->toSql();die;
-        $getProductListFinal = $query->paginate(100,['*'],'page',$pageNo);
+        $getProductListFinal = $query->paginate(12, ['*'], 'page', $pageNo);
 
 
-        $productItems = "No record Found";
-        if($getProductListFinal->count()){
+        $productItems = "";
+        if ($getProductListFinal->count()) {
             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
         }
         $isNextPage = $getProductListFinal->hasMorePages();
         $nextPage = $getProductListFinal->currentPage() + 1;
 
         return [
-            'status'=>200,
+            'status' => 200,
             'productItems' => $productItems,
             'isNextPage' => $isNextPage,
             'nextPage' => $nextPage,

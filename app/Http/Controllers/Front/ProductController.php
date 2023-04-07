@@ -36,7 +36,8 @@ use billythekid\dekopay\Core\DekoPayApiClient;
 class ProductController extends Controller
 {
 
-    public function productCategory($cat1 = null, $cat2 = null, $cat3 = null){
+    public function productCategory($cat1 = null, $cat2 = null, $cat3 = null)
+    {
         if ($cat3 != null) {
             // echo "cat3";
             $getCatId = Category::where('slug', $cat3)->first();
@@ -46,7 +47,7 @@ class ProductController extends Controller
         } elseif ($cat1 != null) {
 
             $to404 = ['all-products'];
-            if(in_array($cat1, $to404)){
+            if (in_array($cat1, $to404)) {
                 return view('layouts.errors.404');
             }
             $getCatId = Category::where('slug', $cat1)->first();
@@ -59,7 +60,8 @@ class ProductController extends Controller
         return view('front.pages.product-listing', ['data' => $getCatId, 'cat1' => $cat1, 'cat2' => $cat2, 'cat3' => $cat3]);
     }
 
-    public function productDetails(Request $request, $productSlug = null){
+    public function productDetails(Request $request, $productSlug = null)
+    {
 
 
 
@@ -79,10 +81,10 @@ class ProductController extends Controller
             // $productSlug = str_replace("_","-",$productSlug);
             $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $productSlug)->first();
 
-            if(empty($getProduct)){
+            if (empty($getProduct)) {
                 /** If data not found with existing slug then check in redirections table and redirect */
-                $redirectTo = UrlRedirects::where('old_url', $productSlug)->where(['type'=>'product','is_active'=>1, 'is_deleted'=>0])->first();
-                if(!empty($redirectTo) && !empty($redirectTo->new_url)){
+                $redirectTo = UrlRedirects::where('old_url', $productSlug)->where(['type' => 'product', 'is_active' => 1, 'is_deleted' => 0])->first();
+                if (!empty($redirectTo) && !empty($redirectTo->new_url)) {
                     $redirectTo = route('product.details', $redirectTo->new_url);
                     return redirect($redirectTo, 301);
                 }
@@ -156,23 +158,23 @@ class ProductController extends Controller
                     );
                 } else {
 
-                    $all_categories_slug = Category::select(['id','slug'])->whereIn('id', $prod_categories)->pluck('slug');
-                    if($all_categories_slug->count()){
+                    $all_categories_slug = Category::select(['id', 'slug'])->whereIn('id', $prod_categories)->pluck('slug');
+                    if ($all_categories_slug->count()) {
                         $all_categories_slug = $all_categories_slug->toArray();
-                    }else{
+                    } else {
                         $all_categories_slug = [];
                     }
 
                     /** This code is for removing duplicate iamges */
                     $prdIdsToRmvDplictImgs = duplicateProductRemoveIds();
-                    if(in_array($getProduct->id,$prdIdsToRmvDplictImgs)){
+                    if (in_array($getProduct->id, $prdIdsToRmvDplictImgs)) {
                         $variationDetails = null;
                         $customSlider = 1;
-                    }else{
+                    } else {
                         $variationDetails = ProductVariations::where('product_id', $getProduct->id)
-                        ->select('vari_image')
-                        ->groupBy('vari_image')
-                        ->get();
+                            ->select('vari_image')
+                            ->groupBy('vari_image')
+                            ->get();
                         $customSlider = 0;
                     }
 
@@ -200,7 +202,8 @@ class ProductController extends Controller
         }
     }
 
-    public function getIds(){
+    public function getIds()
+    {
         $ids =  [$this->id];
         foreach ($this->children as $child) {
             $ids = array_merge($ids, $child->getIds());
@@ -208,9 +211,10 @@ class ProductController extends Controller
         return $ids;
     }
 
-    public function getProductList(Request $request){
+    public function getProductList(Request $request)
+    {
 
-        $getParentData = Category::with('grandchildren')->where('status', 1)->where('id', $request->cate_id)->select('id', 'parent_id','slug')->first()->toArray();
+        $getParentData = Category::with('grandchildren')->where('status', 1)->where('id', $request->cate_id)->select('id', 'parent_id', 'slug')->first()->toArray();
 
         $getParentHierarchy = array($getParentData['id']);
         foreach ($getParentData['grandchildren'] as $keyName => $childId) {
@@ -234,28 +238,28 @@ class ProductController extends Controller
 
         /** Order by  */
         switch ($getParentData['slug']) {
-            case 'exclusive-to-marlows':{
-                $orderKey = "created_at";
-                $orderValue = "desc";
-                break;
-            }
-            default:{
-                $orderKey = "title";
-                $orderValue = "asc";
-                break;
-            }
+            case 'exclusive-to-marlows': {
+                    $orderKey = "created_at";
+                    $orderValue = "desc";
+                    break;
+                }
+            default: {
+                    $orderKey = "title";
+                    $orderValue = "asc";
+                    break;
+                }
         }
 
         $getProductListFinal = Products::with('getProductImages')->orderBy($orderKey, $orderValue)->where('status', 1)->whereIn('id', $output)->simplePaginate(12);
 
 
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
-            $notInList=0;
+            $notInList = 0;
             foreach ($getProductListFinal as $product_list_key => $product_list_value) {
 
 
                 $minMaxPrice = Products::getMinMaxPrice($product_list_value->id);
-                if($minMaxPrice){
+                if ($minMaxPrice) {
                     $getProductListFinal[$product_list_key]->minimumValue = $minMaxPrice['minimumValue'];
                     $getProductListFinal[$product_list_key]->maximumValue = $minMaxPrice['maximumValue'];
                 }
@@ -317,7 +321,8 @@ class ProductController extends Controller
         // die;
     }
 
-    public function getSingleArray($blankArray, $cateArray, $level = 0){
+    public function getSingleArray($blankArray, $cateArray, $level = 0)
+    {
         $level++;
         if (count($cateArray)) {
             foreach ($cateArray as $key => $val) {
@@ -334,7 +339,8 @@ class ProductController extends Controller
         return json_encode($blankArray);
     }
 
-    public function getNewRepNetFunction(Type $var = null){
+    public function getNewRepNetFunction(Type $var = null)
+    {
         $getArray = [
             'caret' => 'DI',
             'Color' => 'D',
@@ -381,7 +387,8 @@ class ProductController extends Controller
         return true;
     }
 
-    public function getCustomFilter(Request $request){
+    public function getCustomFilter(Request $request)
+    {
 
         $product_id = Products::where('slug', $request->slug)->value('id');
         if ($product_id != '') {
@@ -424,26 +431,25 @@ class ProductController extends Controller
                             }
                         }
 
-                        if ($is_empty){
+                        if ($is_empty) {
                             $final_attr['attri_' . $attribute['slug']] = $explode_attr;
 
-                            if($request->typeName && $attribute['slug'] == 'finger-size'){
+                            if ($request->typeName && $attribute['slug'] == 'finger-size') {
                                 $alphaRange = range('I', 'M');
                                 $result = preg_replace("/[^A-Z]+/", "", $final_attr['attri_' . $attribute['slug']]);
                                 $finalAlphaData = [];
-                                foreach($result as $keyName => $valueData){
-                                    if(in_array($valueData,$alphaRange)){
-                                        if($keyName%2 == 0){
-                                            array_push($finalAlphaData,$valueData);
-                                        }elseif($keyName%2 == 1){
-                                            array_push($finalAlphaData,$valueData.'-1/2');
+                                foreach ($result as $keyName => $valueData) {
+                                    if (in_array($valueData, $alphaRange)) {
+                                        if ($keyName % 2 == 0) {
+                                            array_push($finalAlphaData, $valueData);
+                                        } elseif ($keyName % 2 == 1) {
+                                            array_push($finalAlphaData, $valueData . '-1/2');
                                         }
                                     }
                                 }
                                 $final_attr['attri_' . $attribute['slug']] = $finalAlphaData;
                             }
-
-                        }else{
+                        } else {
                             $final_attr['attri_' . $attribute['slug']] = $found;
                         }
 
@@ -456,7 +462,8 @@ class ProductController extends Controller
         return response()->json(['status' => 'Not attribute selected']);
     }
 
-    public function getProductVideo(Request $request){
+    public function getProductVideo(Request $request)
+    {
         $getProduct = Products::where('slug', $request->slug)->select('id')->first();
 
         if (isset($getProduct) && !empty($getProduct->id)) {
@@ -467,7 +474,7 @@ class ProductController extends Controller
             }
 
             if (isset($getVariDetails) && !empty($getVariDetails)) {
-                $getSelectedVariationVideoImages = ProductVariations::where('id', $getVariDetails->variation_id)->select('vari_image','multi_vari_video','multi_vari_img', 'vari_video', 'regular_price', 'sale_price')->first();
+                $getSelectedVariationVideoImages = ProductVariations::where('id', $getVariDetails->variation_id)->select('vari_image', 'multi_vari_video', 'multi_vari_img', 'vari_video', 'regular_price', 'sale_price')->first();
 
                 return response()->json($getSelectedVariationVideoImages);
             }
@@ -475,7 +482,8 @@ class ProductController extends Controller
         return response()->json($getProductVariationId);
     }
 
-    public function getCustomApiFilterData(Request $request){
+    public function getCustomApiFilterData(Request $request)
+    {
 
         // echo '<pre>'; print_r($request->all()); die;
 
@@ -607,7 +615,8 @@ class ProductController extends Controller
         // return response()->json(['html'=> '']);
     }
 
-    public function autocomplete(Request $request){
+    public function autocomplete(Request $request)
+    {
         $getSearchedData = Products::with(['getProductImages'])->select("title", 'id', 'slug')
             ->where("title", "LIKE", "%{$request['query']}%")
             ->get();
@@ -734,19 +743,28 @@ class ProductController extends Controller
     // }
 
 
-    public function getSelectedVariationsData(Request $request){
+    public function getSelectedVariationsData(Request $request)
+    {
 
         $productData = Products::where('slug', $request->slug)->first();
         $runOldCode = true;
 
-        if(!empty($productData)){
+        if (!empty($productData)) {
             $prodCategoriesDJ = explode(',', $productData->categories);
-            if(in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)){
+            if (in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)) {
 
-                $allCarats = Masters::where(['type'=>'carat','is_deleted'=>0, 'is_active'=>1])->pluck('name');
-                if($allCarats->count()){ $allCarats = $allCarats->toArray(); }else{ $allCarats = []; }
-                $metalTypes = Masters::where(['type'=>'metal_types','is_deleted'=>0, 'is_active'=>1])->pluck('name');
-                if($metalTypes->count()){ $metalTypes = $metalTypes->toArray(); }else{ $metalTypes = []; }
+                $allCarats = Masters::where(['type' => 'carat', 'is_deleted' => 0, 'is_active' => 1])->pluck('name');
+                if ($allCarats->count()) {
+                    $allCarats = $allCarats->toArray();
+                } else {
+                    $allCarats = [];
+                }
+                $metalTypes = Masters::where(['type' => 'metal_types', 'is_deleted' => 0, 'is_active' => 1])->pluck('name');
+                if ($metalTypes->count()) {
+                    $metalTypes = $metalTypes->toArray();
+                } else {
+                    $metalTypes = [];
+                }
 
                 /** mined and lab_grown id exists in masters table */
                 /** get carat metal type and product type */
@@ -756,54 +774,56 @@ class ProductController extends Controller
                 $carat = "";
 
                 foreach ($request['variations'] as $variations_key => $variations_value) {
-                    if(in_array($variations_value, $metalTypes)){
+                    if (in_array($variations_value, $metalTypes)) {
                         $selectedMetalType = $variations_value;
-                        $metalData = Masters::where(['type'=>'metal_types', 'name'=> $selectedMetalType])->first();
+                        $metalData = Masters::where(['type' => 'metal_types', 'name' => $selectedMetalType])->first();
                         $selectedMetalTypeId = $metalData->id;
-                    }else if(in_array($variations_value, $allCarats)){
+                    } else if (in_array($variations_value, $allCarats)) {
                         $carat = $variations_value;
                     }
                 }
 
 
                 $combinations = ProductVariationsMaster::with(['masterData'])
-                                ->whereHas('masterData', function($q) use ($carat) { $q->where('name',$carat); })
-                                ->where(['product_id'=> $productData->id, 'is_deleted'=> 0, 'is_active'=>1 ])
-                                ->first();
-                                // ->toArray();
+                    ->whereHas('masterData', function ($q) use ($carat) {
+                        $q->where('name', $carat);
+                    })
+                    ->where(['product_id' => $productData->id, 'is_deleted' => 0, 'is_active' => 1])
+                    ->first();
+                // ->toArray();
 
-                if(!empty($combinations)){
+                if (!empty($combinations)) {
                     $combinations = $combinations->toArray();
 
-                    $combinationsPriceFormula = GlobalCombinationsVariations::where(['is_deleted'=>0 ,'is_active'=> 1, 'global_combinations_id'=> 1 ])
-                    ->where('variations_id->metal_types',$selectedMetalTypeId)
-                    ->where('variations_id->product_type',$productType)
-                    ->first();
+                    $combinationsPriceFormula = GlobalCombinationsVariations::where(['is_deleted' => 0, 'is_active' => 1, 'global_combinations_id' => 1])
+                        ->where('variations_id->metal_types', $selectedMetalTypeId)
+                        ->where('variations_id->product_type', $productType)
+                        ->first();
                     // ->toArray();
 
-                    if(!empty($combinationsPriceFormula)){
+                    if (!empty($combinationsPriceFormula)) {
 
                         $combinationsPriceFormula = $combinationsPriceFormula->toArray();
 
-                        $totalPrice =   !empty($combinations['total_price']) ? ( ((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['total_price']) : 0;
-                        $price = ( ((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['price']);
+                        $totalPrice =   !empty($combinations['total_price']) ? (((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['total_price']) : 0;
+                        $price = (((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['price']);
                         $runOldCode = false;
 
 
                         $image = getProductVariationImage($productData->id, $request);
 
                         /** Apply discount */
-                        $getDiscountRange = DiscountRange::whereHas('discount_data', function($q)  {
-                                                    $q->whereDate('end_date', '>', now());
-                                                })
-                                                ->with(['discount_data'])
-                                                ->whereIn('category_id', $prodCategoriesDJ)
-                                                ->whereRaw('"' . $price . '" between `from_price` and `to_price`')
-                                                ->first();
+                        $getDiscountRange = DiscountRange::whereHas('discount_data', function ($q) {
+                            $q->whereDate('end_date', '>', now());
+                        })
+                            ->with(['discount_data'])
+                            ->whereIn('category_id', $prodCategoriesDJ)
+                            ->whereRaw('"' . $price . '" between `from_price` and `to_price`')
+                            ->first();
 
-                        if(!empty($getDiscountRange)){
+                        if (!empty($getDiscountRange)) {
                             $price_after_discount = ($getDiscountRange->discount / 100) * $price;
-                        }else{
+                        } else {
                             $price_after_discount = 0;
                         }
 
@@ -848,27 +868,27 @@ class ProductController extends Controller
 
             // prd($checkPlanCatArray);
 
-            $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date','is_login_users')
-                            ->where('category_id', $checkPlanCatArray['id'])
-                            ->where('status', 1)
-                            ->first();
+            $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date', 'is_login_users')
+                ->where('category_id', $checkPlanCatArray['id'])
+                ->where('status', 1)
+                ->first();
 
             // echo 'asdf';
             // prd($disPercentage);
 
             $getProductVariationId = ProductVariations::where('product_id', $product_id)
-                                    ->pluck('id')
-                                    ->toArray();
+                ->pluck('id')
+                ->toArray();
 
 
 
             if (!empty($getProductVariationId)) {
 
                 $getVariDetails = ProductVariationDetails::groupBy('value')
-                                ->whereIn('variation_id', $getProductVariationId)
-                                ->whereIn('value', $request->variations)
-                                ->get()
-                                ->toArray();
+                    ->whereIn('variation_id', $getProductVariationId)
+                    ->whereIn('value', $request->variations)
+                    ->get()
+                    ->toArray();
 
 
                 $attributeCount = count($request->variations);
@@ -879,9 +899,9 @@ class ProductController extends Controller
 
                     foreach ($request->variations as $key2 => $variations) {
                         $getVariDetails =   ProductVariationDetails::where('variation_id', $productVariationId)
-                                            ->where('value', $variations)
-                                            ->get()
-                                            ->toArray();
+                            ->where('value', $variations)
+                            ->get()
+                            ->toArray();
 
                         if (!empty($getVariDetails))
                             $variationDetails[] = $getVariDetails;
@@ -900,8 +920,8 @@ class ProductController extends Controller
 
                 // Get product variation price
                 $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
-                                                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video','multi_vari_img','multi_vari_video', 'regular_price', 'sale_price')
-                                                    ->first();
+                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video', 'regular_price', 'sale_price')
+                    ->first();
 
                 /** Price change for lab grown */
                 if ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat <= 3000) {
@@ -921,13 +941,13 @@ class ProductController extends Controller
                 if (isset($disPercentage) && !empty($disPercentage)) {
                     $disPercentage = $disPercentage->toArray();
 
-                    if($disPercentage['is_login_users']){
+                    if ($disPercentage['is_login_users']) {
                         $isDiscountApplicable = auth()->guard('customer')->check();
-                    }else{
+                    } else {
                         $isDiscountApplicable = true;
                     }
 
-                    if ( $isDiscountApplicable ) {
+                    if ($isDiscountApplicable) {
 
                         if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
                             $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
@@ -943,9 +963,9 @@ class ProductController extends Controller
                         if ($disPercentage['end_date'] >= date('Y-m-d')) {
 
                             $getDiscountRange = DiscountRange::select('category_id', 'from_price', 'to_price', 'discount')
-                                                ->where('category_id', $checkPlanCatArray['id'])
-                                                ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
-                                                ->first();
+                                ->where('category_id', $checkPlanCatArray['id'])
+                                ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
+                                ->first();
 
 
                             $discountPercentage = 1 + ($disPercentage['discount'] / 100);
@@ -959,12 +979,9 @@ class ProductController extends Controller
                             } else {
                                 $discountPercentage = 1;
                             }
-
                         } else {
                             $discountPercentage = 1;
                         }
-
-
                     } else {
                         if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
                             $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
@@ -976,13 +993,13 @@ class ProductController extends Controller
                 }
 
 
-                $categorySlugs = Category::whereIn('id',$prod_categories )->pluck('slug');
-                if($categorySlugs->count()){
+                $categorySlugs = Category::whereIn('id', $prod_categories)->pluck('slug');
+                if ($categorySlugs->count()) {
                     $categorySlugs = $categorySlugs->toArray();
                 }
 
                 /** Discount not applicable to exclusive to marlows */
-                if(in_array('exclusive-to-marlows', $categorySlugs)){
+                if (in_array('exclusive-to-marlows', $categorySlugs)) {
                     $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
                     $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
                     $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
@@ -1012,7 +1029,8 @@ class ProductController extends Controller
     }
 
 
-    public function getRelatedProductList(Request $request){
+    public function getRelatedProductList(Request $request)
+    {
         $getCatIdArray = explode(',', $request->catid);
 
         $getCateProductId = array();
@@ -1035,11 +1053,13 @@ class ProductController extends Controller
         return response()->json(['html' => $view]);
     }
 
-    public function exclusiveMarlows(Request $request){
+    public function exclusiveMarlows(Request $request)
+    {
         return View::make('front.pages.exclusive_products');
     }
 
-    public function productSlugs(Request $request){
+    public function productSlugs(Request $request)
+    {
         /** TODO:
          * 1. get all previous slugs of products
          * 2. update new slug after checking duplication
@@ -1074,8 +1094,8 @@ class ProductController extends Controller
 
         foreach ($blog_categories_slugs as $blog_slug_key => $blog_slug_value) {
             $categorySlugItem = PostCategory::where('slug', $blog_slug_value)->first();
-            if(!empty($categorySlugItem)){
-                $categorySlugItem->meta_description = str_replace('ITEM_TO_CHANGE',$categorySlugItem->name, $blog_category_meta_description);
+            if (!empty($categorySlugItem)) {
+                $categorySlugItem->meta_description = str_replace('ITEM_TO_CHANGE', $categorySlugItem->name, $blog_category_meta_description);
                 $categorySlugItem->save();
                 $blog_affected_records++;
             }
@@ -1101,8 +1121,8 @@ class ProductController extends Controller
         $product_categories_description = "Browse our stunning range of Round cut ITEM_TO_CHANGE_TWO Stunning certified diamond rings available online and in store.";
         foreach ($product_categories_slugs as $product_cateogry_slug_key => $product_cateogry_slug_value) {
             $categorySlugItem = Category::where('slug', $product_cateogry_slug_value)->first();
-            if(!empty($categorySlugItem)){
-                $categorySlugItem->meta_description = str_replace('ITEM_TO_CHANGE_TWO',$categorySlugItem->name, $product_categories_description);
+            if (!empty($categorySlugItem)) {
+                $categorySlugItem->meta_description = str_replace('ITEM_TO_CHANGE_TWO', $categorySlugItem->name, $product_categories_description);
                 $categorySlugItem->save();
                 $product_categories_total_updated++;
             }
@@ -1114,46 +1134,48 @@ class ProductController extends Controller
     }
 
 
-    public function productListingData(Request $request){
+    public function productListingData(Request $request)
+    {
 
 
 
-        $productListingData = getProductListing($request['slug'], $request['slug2'], $request['slug3'],$request->all());
-        if($productListingData['status'] == 404){
+        $productListingData = getProductListing($request['slug'], $request['slug2'], $request['slug3'], $request->all());
+        if ($productListingData['status'] == 404) {
             // return view('layouts.errors.404');
             return response()->json([
-                'status'=> false,
+                'status' => false,
                 'message' => "Something went wrong"
             ]);
-        }else if($productListingData['status'] == 200){
+        } else if ($productListingData['status'] == 200) {
             return response()->json([
-                'status'=> true,
-                'productItems'=> $productListingData['productItems'],
+                'status' => true,
+                'productItems' => $productListingData['productItems'],
                 'isNextPage' => $productListingData['isNextPage'],
                 'nextPage' => $productListingData['nextPage'],
-                "slug"=>$request['slug'],
+                "slug" => $request['slug'],
                 "slug2" => $request['slug2'],
                 "slug3" => $request['slug3']
             ]);
-        }else{
+        } else {
             return response()->json([
-                'status'=> false,
+                'status' => false,
                 'message' => "Something went wrong"
             ]);
         }
 
-        return view('front.pages.multi-category-product-listing', compact(['productItems','nextPage']));
+        return view('front.pages.multi-category-product-listing', compact(['productItems', 'nextPage']));
     }
 
 
-    public function generateSitemap(Request $request){
+    public function generateSitemap(Request $request)
+    {
 
         // ->where('status',1)
         // ->where('status',1)
-        $products = Products::select('slug','updated_at')->groupBy('slug')->get();
-        $posts = Posts::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
-        $posts_categories = PostCategory::select('slug','updated_at')->groupBy('slug')->where('status',1)->get();
-        $pages = Pages::select('slug','updated_at')->groupBy('slug')->where(['status'=>1, 'is_deleted'=>0])->get();
+        $products = Products::select('slug', 'updated_at')->groupBy('slug')->get();
+        $posts = Posts::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
+        $posts_categories = PostCategory::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
+        $pages = Pages::select('slug', 'updated_at')->groupBy('slug')->where(['status' => 1, 'is_deleted' => 0])->get();
 
         $otherPages = [
             'product/wishlist',
@@ -1168,8 +1190,8 @@ class ProductController extends Controller
         $dataOfCategories = explode(',', $categorySitemap);
         $categoryUrlsList = [];
         foreach ($dataOfCategories as $category_key => $category_value) {
-            if(!empty($category_value)){
-                $categoryItem = explode('@',$category_value);
+            if (!empty($category_value)) {
+                $categoryItem = explode('@', $category_value);
                 $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
                 $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') . '/product-category/' . $categoryUrl;
                 $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
@@ -1184,17 +1206,17 @@ class ProductController extends Controller
             'otherPages' => $otherPages,
             'categoryUrlsList' => $categoryUrlsList
         ])->header('Content-Type', 'text/xml');
-
     }
 
 
-    public function categoriesSitemap($level=0, $prefix="" ){
+    public function categoriesSitemap($level = 0, $prefix = "")
+    {
 
-        $rows = Category::select(['name','title','id','parent_id','slug','updated_at'])
-        ->where('slug','!=','all-products')
-        ->where('parent_id',$level)->get();
+        $rows = Category::select(['name', 'title', 'id', 'parent_id', 'slug', 'updated_at'])
+            ->where('slug', '!=', 'all-products')
+            ->where('parent_id', $level)->get();
         $html = '';
-        if($rows->count()){
+        if ($rows->count()) {
             $rows = $rows->toArray();
             foreach ($rows as $row) {
                 $html .= $row['slug'] . '@' . $row['updated_at'] . ',';
@@ -1204,13 +1226,14 @@ class ProductController extends Controller
         return $html;
     }
 
-    public function categoriesHtmlSitemap($level=0, $prefix="" ){
+    public function categoriesHtmlSitemap($level = 0, $prefix = "")
+    {
 
-        $rows = Category::select(['name','title','id','parent_id','slug','updated_at'])
-        ->where('slug','!=','all-products')
-        ->where('parent_id',$level)->get();
+        $rows = Category::select(['name', 'title', 'id', 'parent_id', 'slug', 'updated_at'])
+            ->where('slug', '!=', 'all-products')
+            ->where('parent_id', $level)->get();
         $html = '';
-        if($rows->count()){
+        if ($rows->count()) {
             $rows = $rows->toArray();
             foreach ($rows as $row) {
                 $html .= $row['slug'] . '@' . $row['title'] . ',';
@@ -1221,51 +1244,53 @@ class ProductController extends Controller
     }
 
 
-    public function attachParentSlugToCategory($categorySlugs="", $dataToReturn=""){
+    public function attachParentSlugToCategory($categorySlugs = "", $dataToReturn = "")
+    {
 
         $dataToReturn = $categorySlugs . '/' . $dataToReturn;
-        $categoryInfo = Category::where('slug', $categorySlugs )->first();
+        $categoryInfo = Category::where('slug', $categorySlugs)->first();
 
-        if(!empty($categoryInfo)){
-            $data = Category::where('id', $categoryInfo->parent_id )->first();
-            if(!empty($data)){
-                return $this->attachParentSlugToCategory($data->slug,  $dataToReturn );
+        if (!empty($categoryInfo)) {
+            $data = Category::where('id', $categoryInfo->parent_id)->first();
+            if (!empty($data)) {
+                return $this->attachParentSlugToCategory($data->slug,  $dataToReturn);
             }
         }
         return $dataToReturn;
     }
 
 
-    public function htmlSiteMap(Request $request){
+    public function htmlSiteMap(Request $request)
+    {
 
         // ->where('status',1)
         // ->where('status',1)
-        $products = Products::select('slug','updated_at','title')->groupBy('slug')->get();
-        $posts = Posts::select('slug','updated_at','title')->groupBy('slug')->where('status',1)->get();
-        $posts_categories = PostCategory::select('slug','updated_at','name')->groupBy('slug')->where('status',1)->get();
-        $pages = Pages::select('slug','updated_at','title')->groupBy('slug')->where(['status'=>1, 'is_deleted'=>0])->get();
+        $products = Products::select('slug', 'updated_at', 'title')->groupBy('slug')->get();
+        $posts = Posts::select('slug', 'updated_at', 'title')->groupBy('slug')->where('status', 1)->get();
+        $posts_categories = PostCategory::select('slug', 'updated_at', 'name')->groupBy('slug')->where('status', 1)->get();
+        $pages = Pages::select('slug', 'updated_at', 'title')->groupBy('slug')->where(['status' => 1, 'is_deleted' => 0])->get();
 
         $otherPages = [
-            'Wishlist'=> 'product/wishlist',
-            'Homepage'=>'/',
-            'My Account'=> 'my-account',
-            'Cart'=>'products/cart',
-            'Forgot password'=> '/users/forget-password',
+            'Wishlist' => 'product/wishlist',
+            'Homepage' => '/',
+            'My Account' => 'my-account',
+            'Cart' => 'products/cart',
+            'Forgot password' => '/users/forget-password',
         ];
 
         $categorySitemap = $this->categoriesHtmlSitemap();
         $dataOfCategories = explode(',', $categorySitemap);
         $categoryUrlsList = [];
         foreach ($dataOfCategories as $category_key => $category_value) {
-            if(!empty($category_value)){
-                $categoryItem = explode('@',$category_value);
+            if (!empty($category_value)) {
+                $categoryItem = explode('@', $category_value);
                 $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
-                $categoryUrlsList[$category_key]['url'] = url( 'product-category/' . $categoryUrl);
+                $categoryUrlsList[$category_key]['url'] = url('product-category/' . $categoryUrl);
                 $categoryUrlsList[$category_key]['name'] = $categoryItem[1];
             }
         }
 
-        $data =  (object)['image'=>''];
+        $data =  (object)['image' => ''];
 
         return view('front.html_sitemap', compact([
             'products',
@@ -1279,12 +1304,13 @@ class ProductController extends Controller
     }
 
 
-    public function productListPage($all){
+    public function productListPage($all)
+    {
         $request = request();
         $path =  $request->path();
         $slugs = explode('/', $path);
         $productListingData = getProductListing($slugs, request()->all());
-        if(!empty($productListingData)){
+        if (!empty($productListingData)) {
 
             $productItems = $productListingData['productItems'];
             $isNextPage = $productListingData['isNextPage'];
@@ -1294,15 +1320,15 @@ class ProductController extends Controller
             $path = request()->path();
 
             /** Items for filter */
-            $filter_items = ProductFilter::whereHas('product_items', function($query){
-                $query->where(['is_deleted'=>0, 'is_active'=>1]);
+            $filter_items = ProductFilter::whereHas('product_items', function ($query) {
+                $query->where(['is_deleted' => 0, 'is_active' => 1]);
             })
-            ->with('product_items')
-            ->where(['is_deleted'=>0, 'is_active'=>1])
-            ->get();
+                ->with('product_items')
+                ->where(['is_deleted' => 0, 'is_active' => 1])
+                ->get();
 
 
-            if($request->isMethod('POST')){
+            if ($request->isMethod('POST')) {
                 return response()->json([
                     "status" => true,
                     "productItems" => $productItems,
@@ -1311,7 +1337,7 @@ class ProductController extends Controller
                 ]);
             }
 
-            return view('front.pages.product_listing_page',compact([
+            return view('front.pages.product_listing_page', compact([
                 'productItems',
                 'isNextPage',
                 'nextPage',
@@ -1320,29 +1346,23 @@ class ProductController extends Controller
                 'path',
                 'slugs'
             ]));
-
-        }else{
+        } else {
             return view('layouts.errors.404');
         }
-
-
     }
 
     public function getProductListData(Request $request)
     {
         $dataArray = [];
 
-        if(isset($request->ids) && !empty($request->ids)){
-            foreach($request->ids as $key => $value){
+        if (isset($request->ids) && !empty($request->ids)) {
+            foreach ($request->ids as $key => $value) {
                 $dataArray[$value['name']][] = $value['value'];
             }
         }
-
+        $dataArray['page'] = $request->page;
         $slugs = explode('/', $request->path);
-        $productListingData = getProductListing($slugs, $dataArray);
-
+        return $productListingData = getProductListing($slugs, $dataArray);
         return view('front.includes.productCard', $productListingData);
-
     }
-
 }
