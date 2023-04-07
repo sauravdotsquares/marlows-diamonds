@@ -306,7 +306,7 @@
         const timerToShow = daysToShow+' '+ hoursToShow+' '+ minutesToShow+' '+ secondsToShow;
         $(".discount_timer").css('display','inline-block');
         $(".discount_timer").text(timerToShow);
-        $("#offer-text").text('Mid Season Sale - Up to 30% off');
+        $("#offer-text").text('Wedding Rings Sale - Up to 30% off');
         // console.log('first', hoursToShow);
         // console.log('first', minutesToShow);
         // console.log('first', secondsToShow);
