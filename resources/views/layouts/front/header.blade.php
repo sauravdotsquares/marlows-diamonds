@@ -263,13 +263,13 @@
                     {{-- <a href="{{ route('products.exclusive') }}" >
                         <span> Exclusive to Marlows </span>
                     </a> --}}
-                    <p>Mid Season Sale - Up to 30% off </p> 
-                    <p> 
+                    <p id="offer-text"> </p>
+                    <p>
                     {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}
-                         <span class="header-heighlight-text discount_timer"></span> 
-                        <br> 
-                     
-                    </p> 
+                         <span class="header-heighlight-text discount_timer"></span>
+                        <br>
+
+                    </p>
                 </div>
                 <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
@@ -285,35 +285,37 @@
 
 <script>
 
-        var countDownDate = new Date("03/20/2023 23:59:59").getTime();
+        var countDownDate = new Date("04/30/2023 23:59:59").getTime();
         var myfunc = setInterval(function() {
 
         var now = new Date().getTime();
         var timeleft = countDownDate - now;
-            
+
         // Calculating the days, hours, minutes and seconds left
         var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
         var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
-            
+
         // Result is output to the specific element
         const daysToShow = days + "d "
-        const hoursToShow = hours + "h " 
-        const minutesToShow = minutes + "m " 
-        const secondsToShow = seconds + "s " 
+        const hoursToShow = hours + "h "
+        const minutesToShow = minutes + "m "
+        const secondsToShow = seconds + "s "
 
         const timerToShow = daysToShow+' '+ hoursToShow+' '+ minutesToShow+' '+ secondsToShow;
         $(".discount_timer").css('display','inline-block');
         $(".discount_timer").text(timerToShow);
+        $("#offer-text").text('Mid Season Sale - Up to 30% off');
         // console.log('first', hoursToShow);
         // console.log('first', minutesToShow);
-        // console.log('first', secondsToShow);  
+        // console.log('first', secondsToShow);
         // Display the message when countdown is over
         if (timeleft < 0) {
             clearInterval(myfunc);
             $(".discount_timer").text('');
             $(".discount_timer").css('display','none');
+            $(".offer-text").text('');
         }
         }, 1000);
 </script>
