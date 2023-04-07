@@ -264,6 +264,7 @@
                         <span> Exclusive to Marlows </span>
                     </a> --}}
                     {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
+                    <p id="offer-text"> </p>
                     <p>
                     {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}
                          <span class="header-heighlight-text discount_timer"></span>
@@ -285,7 +286,7 @@
 
 <script>
 
-        var countDownDate = new Date("03/20/2023 23:59:59").getTime();
+        var countDownDate = new Date("05/06/2023 23:59:59").getTime();
         var myfunc = setInterval(function() {
 
         var now = new Date().getTime();
@@ -306,6 +307,7 @@
         const timerToShow = daysToShow+' '+ hoursToShow+' '+ minutesToShow+' '+ secondsToShow;
         $(".discount_timer").css('display','inline-block');
         $(".discount_timer").text(timerToShow);
+        $("#offer-text").text('Wedding Rings Sale - Up to 30% off');
         // console.log('first', hoursToShow);
         // console.log('first', minutesToShow);
         // console.log('first', secondsToShow);
@@ -314,6 +316,7 @@
             clearInterval(myfunc);
             $(".discount_timer").text('');
             $(".discount_timer").css('display','none');
+            $(".offer-text").text('');
         }
         }, 1000);
 </script>
