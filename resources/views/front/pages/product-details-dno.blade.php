@@ -33,7 +33,12 @@
 
 @section('content')
 
-
+@php
+	$categorySlug = '';
+	if(in_array('wedding-rings',$all_categories_slug)){
+		$categorySlug = 'wedding-rings';
+	}
+@endphp
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
@@ -814,6 +819,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
+					'categorySlug': '{{$categorySlug}}',
                     'type' : '{{$plainbandMulti}}',
                     'typeName' : '{{$plainband}}',
                     'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
