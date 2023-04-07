@@ -46,7 +46,6 @@
             padding: 0px 4px;
             display: inline-block;
         }
-
     </style>
 @endsection
 
@@ -63,6 +62,10 @@
     <div class="container">
         <div class="category-listing-row">
             <div class="category-list-wrap">
+                <input type="hidden" id="pagescroll" value="1">
+                <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
+                <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
+
                 <div class="search-result"> @include('front.includes.productCard')</div>
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
@@ -116,7 +119,7 @@
                                             ?>
                                         @endif
 
-                                        @if(isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
+                                        @if (isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
                                             <div class="diamond-field-contens col-lg-9">
                                                 <div class="diamond-field-inner-bar">
                                                     <div class="range_carat_wap">
@@ -124,26 +127,41 @@
                                                         <div class="srchniput-fil">
                                                             <div class="minrange">
                                                                 <span>Min</span>
-                                                                <input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
+                                                                <input id="sliderRangeSetMin" disabled=""
+                                                                    data-index="0" class="sliderValue" value="100">
                                                             </div>
                                                             <div class="maxrange">
-                                                            <span>Max</span>
-                                                                <input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="15000">
+                                                                <span>Max</span>
+                                                                <input id="sliderRangeSetMax" disabled=""
+                                                                    data-index="1" class="sliderValue" value="15000">
                                                             </div>
                                                         </div>
 
-                                                        <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 19.1489%; width: 40.4255%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 19.1489%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5745%;"></span></div>
-                                                            <div class="srchniput-fil">
-                                                                <input type="hidden" class="sliderValue filter-item-data" data-index="0" value="250" id="input-carat-min" name="price-min" autocomplete="off">
-                                                                <input type="hidden" class="sliderValue filter-item-data" data-index="1" value="1000" id="input-carat-max" name="price-max" autocomplete="off">
-                                                            </div>
+                                                        <div id="slider"
+                                                            class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                                                            <div class="ui-slider-range ui-widget-header ui-corner-all"
+                                                                style="left: 19.1489%; width: 40.4255%;"></div><span
+                                                                class="ui-slider-handle ui-state-default ui-corner-all"
+                                                                tabindex="0" style="left: 19.1489%;"></span><span
+                                                                class="ui-slider-handle ui-state-default ui-corner-all"
+                                                                tabindex="0" style="left: 59.5745%;"></span>
+                                                        </div>
+                                                        <div class="srchniput-fil">
+                                                            <input type="hidden" class="sliderValue filter-item-data"
+                                                                data-index="0" value="250" id="input-carat-min"
+                                                                name="price-min" autocomplete="off">
+                                                            <input type="hidden" class="sliderValue filter-item-data"
+                                                                data-index="1" value="1000" id="input-carat-max"
+                                                                name="price-max" autocomplete="off">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         @else
                                             <input type="{{ $filter_item->input_type }}" name="{{ $filter_item->slug }}"
-                                            {{ $checkVariableNew }} onclick="return {{ $checkVariable }};"
-                                            value="{{ $product_item_item->item_value }}" class="filter-item-data">
+                                                {{ $checkVariableNew }} onclick="return {{ $checkVariable }};"
+                                                value="{{ $product_item_item->item_value }}"
+                                                class="filter-item-data">
                                             {{ $product_item_item->item_name }}
                                         @endif
 
@@ -151,14 +169,13 @@
 
 
                                     </li>
-
                                 @endforeach
 
                             </ul>
                         </div>
                     @endforeach
                     {{-- <li> --}}
-                        {{-- <div class="choose-diaond-fields row diamond-carat">
+                    {{-- <div class="choose-diaond-fields row diamond-carat">
 							<div class="diamond-field-labels col-lg-3">
 								Carat
 							</div>
@@ -241,7 +258,7 @@
                 }
 
             },
-            change: function(){
+            change: function() {
 
                 var value1 = $("#slider").slider("values", 0);
                 var value2 = $("#slider").slider("values", 1);
@@ -250,30 +267,35 @@
             },
         });
 
-        $("#sliderRangeSetMin").change(function (event) {
+        $("#sliderRangeSetMin").change(function(event) {
             var value1 = parseFloat($("#sliderRangeSetMin").val());
             var highVal = value1 * 2;
-            $("#slider").slider("option", {"max": highVal, "value": value1});
+            $("#slider").slider("option", {
+                "max": highVal,
+                "value": value1
+            });
         });
 
-        $("#sliderRangeSetMax").change(function (event) {
+        $("#sliderRangeSetMax").change(function(event) {
             var value1 = parseFloat($("#sliderRangeSetMax").val());
             var highVal = value1 * 2;
-            $("#slider").slider("option", {"max": highVal, "value": value1});
+            $("#slider").slider("option", {
+                "max": highVal,
+                "value": value1
+            });
         });
 
-		var stepsSlider = document.getElementById('range-slider');
-		var input0 = document.getElementById('input-carat-min');
-		var input1 = document.getElementById('input-carat-max');
-		var inputs = [input0, input1];
+        var stepsSlider = document.getElementById('range-slider');
+        var input0 = document.getElementById('input-carat-min');
+        var input1 = document.getElementById('input-carat-max');
+        var inputs = [input0, input1];
 
         $('.show-more-content').hide();
         $('.show-more').click(function() {
             $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
         });
     });
-</script>
-<script>
+
     $(document).on('mouseenter', '.product-hover-affect', function(event) {
         if ($(this).find('video').length) {
             $(this).find('video')[0].play()
@@ -308,252 +330,46 @@
             $(this).find('video')[0].play()
         }
     });
-
-
     $(document).on('change', ".filter-item-data", function() {
+        $("#showProductList").html('');
         sendDataValues();
     });
 
+    sendDataValues();
 
+    $(window).scroll(function() {
+        var scroll = $('#scrollFlag').val();
+        if (scroll == 0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
+            var page = $('#pagescroll').val();
+            sendDataValues(page);
+            $('#scrollFlag').val(1);
+        }
+    });
 
-    function sendDataValues() {
-        $('.search-result').html("");
-        $('#loading-data-image').css('display', 'block');
+    function sendDataValues(page) {
+        $('.ajax-load').show();
         $.ajax({
             type: 'GET',
             url: "{{ route('getfilteredproducts') }}",
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
-                'path': '{{ $path }}'
+                'path': '{{ $path }}',
+                'page': page
             },
             success: function(res) {
-                $('#loading-data-image').css('display', 'none');
-                $('.search-result').html(res);
-                return false;
+                $('#pagescroll').val(res.nextPage);
+
+                if (res.productItems == "") {
+                    $('.ajax-load').html("No more products found");
+                    return false;
+                }
+                $('.ajax-load').hide();
+                $("#showProductList").append(res.productItems);
+                $('#sectionHeight').val($('#showProductList').height());
+                $('#scrollFlag').val(0);
             }
         });
     }
-
-    // $(document).on('click', '.filter-item-data', function() {
-
-    //     $(this).toggleClass('active');
-    //     getFilterValues();
-    // });
-
-    // function getFilterValues() {
-    //     let dataToSend = {};
-    //     const filterItem = $('.filter-item-data.active');
-    //     // console.log("check detailsadasd dadsd");
-    //     // console.log(filterItem);
-    //     for (var item in filterItem) {
-    //         if (typeof filterItem[item] == 'object') {
-    //             const itemRef = $(filterItem[item]);
-    //             // console.log("itemRef"+itemRef);
-    //             const itemValue = itemRef.attr('data-id');
-    //             console.log("itemValue " + itemValue);
-    //             const itemName = itemRef.parents('.filter-item').find('.filter_item_slug').val();
-    //             // console.log("itemName"+itemName);
-    //             if (itemName && itemValue) {
-    //                 if (dataToSend[itemName]) {
-    //                     const existingItems = dataToSend[itemName].split();
-    //                     console.log("existingItems" + existingItems);
-    //                     console.log(existingItems);
-    //                     existingItems.push(itemValue);
-    //                     dataToSend[itemName] = existingItems.join(',');
-    //                     console.log("checki ");
-    //                     console.log(dataToSend[itemName]);
-    //                     console.log("check if");
-    //                 } else {
-    //                     console.log("check else");
-    //                     dataToSend[itemName] = itemValue;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     var size = Object.keys(dataToSend).length;
-    //     if (size) {
-    //         const keyword = $(".search-item").val();
-    //         let path = window.location.href.split('?')[0];
-    //         // console.log('path', path);
-    //         window.history.pushState({
-    //             ...dataToSend,
-    //             keyword: keyword
-    //         }, '', path);
-    //         const newData = new URLSearchParams({
-    //             ...dataToSend,
-    //             keyword: keyword
-    //         }).toString();
-    //         console.log("testing" + newData);
-    //         return newData;
-    //     } else {
-    //         return null;
-    //     }
-    // }
-
-
-    // var typingTimer;                //timer identifier
-    // var doneTypingInterval = 1000;  //time in ms, 5 seconds for example
-    // var $input = ".search-item";
-
-    // $(document).on('keyup',$input, function(){
-    //     clearTimeout(typingTimer);
-    //     typingTimer = setTimeout(doneTyping, doneTypingInterval);
-    // });
-
-    // $(document).on('click','.category-filter-item', function(){
-    //     // $('.category-filter-item').removeClass('active');
-    //     $(this).addClass('active');
-    //     setTimeout(()=>{
-    //         doneTyping();
-    //     },100)
-    // });
-
-    // $(document).on('click','.metal-type-filter-item', function(){
-    //     // $('.metal-type-filter-item').removeClass('active');
-    //     $(this).toggleClass('active');
-
-
-
-    //     setTimeout(()=>{
-    //         doneTyping();
-    //     },100)
-    // });
-
-    // function doneTyping () {
-    // 	$("#showProductList").empty();
-    //     $("#nextPageNumber").val(1);
-    //     clearTimeout(typingTimer);
-    //     loadMoreData();
-    // }
-
-    //     /** On scroll get more data */
-    //     var triggerScrollEvent = true;
-    //     $(document).ready(function() {
-    //         $(document).on('scroll',function(){
-    //             if(triggerScrollEvent){
-    //                 if($(".loading-data-element").isInViewport()){
-    //                     triggerScrollEvent = false;
-    //                     $(".ajax-load-btn").trigger('click');
-    //                 }
-    //             }
-    //         });
-    //     });
-
-    //     $(document).on('click',".ajax-load-btn", function(){
-    //         triggerScrollEvent = false;
-    //         $('.ajax-load').show();
-    //         loadMoreData();
-    //     });
-
-
-    //     $(".reset-filer-btn").on('click', function(){
-    //         $("#nextPageNumber").val('1');
-    //         $(".search-item").val('');
-    //         $(".category-filter-item").removeClass('active');
-    //         $(".metal-type-filter-item").removeClass('active');
-    //         setTimeout(()=>{
-    //             $("#showProductList").empty();
-    //             $("#nextPageNumber").val(1);
-    //             loadMoreData(true);
-    //         },100)
-    //     });
-
-
-    //     function loadMorePassData () {
-    //         const page = $("#nextPageNumber").val();
-    //         const searchKeyword = $(".search-item").val();
-    //         const categorySearch = $(".category-filter-item.active").attr('data-id');
-    //         const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
-
-    //         var url = new URL(location.href);
-    //         url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
-    //         url.searchParams.set('category', (categorySearch ? categorySearch : ''));
-    //         url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
-    //         if (history.pushState) {
-    //             window.history.pushState({path:url.href},'',url.href);
-    //         }
-    //         return {
-    //             '_token': "{{ csrf_token() }}",
-    //             keyword: searchKeyword,
-    //             category: categorySearch,
-    //             metal_type : metalTypeSearch,
-    //             page: page
-    //         };
-    //     }
-
-    //     function getFilterData () {
-
-    //     }
-
-    //     function loadMoreData(resetSearch=false){
-
-    //         // const dataToPass = loadMorePassData(resetSearch);
-    //         const page = $("#nextPageNumber").val();
-    //         const searchKeyword = $(".search-item").val();
-    //         const categorySearch = $(".category-filter-item.active").attr('data-id');
-    //         const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
-
-    //         var url = new URL(location.href);
-    //         url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
-    //         url.searchParams.set('category', (categorySearch ? categorySearch : ''));
-    //         url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
-    //         if (history.pushState) {
-    //             window.history.pushState({path:url.href},'',url.href);
-    //         }
-
-    //         if(resetSearch){
-    //             var url = {
-    //                 href: window.location.href.split('?')[0]
-    //             };
-    //             if (history.pushState) {
-    //                 window.history.pushState({path:url.href},'',url.href);
-    //             }
-    //         }
-
-
-
-    //         $.ajax({
-    //             url: encodeURI(window.location.href),
-    //             type: "post",
-    //             data: {
-    //                 '_token': "{{ csrf_token() }}",
-    //                 'page':page
-    //             },
-    //         }).done(function(data){
-    //             triggerScrollEvent = true;
-    //             if(data.status){
-    //                 $('.ajax-load').hide();
-    //             }
-    //             $("#showProductList").append(data.productItems);
-    //             $("#nextPageNumber").val(data.nextPage);
-
-    //             if(!data.isNextPage){
-    //                 triggerScrollEvent = false;
-    //             }
-
-    //         }).fail(function(jqXHR, ajaxOptions, thrownError){
-    //             triggerScrollEvent = true;
-    //             alert('server not responding...');
-    //         });
-    //     }
-
-    //     $(".remove-from-cart").click(function (e) {
-    //         e.preventDefault();
-    //         var ele = $(this);
-    //         if(confirm("Are you sure want to remove?")) {
-    //             $.ajax({
-    //                 url: '{{ route('remove.from.cart') }}',
-    //                 method: "DELETE",
-    //                 data: {
-    //                     _token: '{{ csrf_token() }}',
-    //                     id: $(this).attr("data-id")
-    //                 },
-    //                 success: function (response) {
-    //                     window.location.reload();
-    //                 }
-    //             });
-    //         }
-    //     });
 </script>
 @endsection
