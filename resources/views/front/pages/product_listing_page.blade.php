@@ -139,8 +139,7 @@
 
                                                         <div id="slider"
                                                             class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
-                                                            <div class="ui-slider-range ui-widget-header ui-corner-all"
-                                                                style="left: 19.1489%; width: 40.4255%;"></div><span
+                                                                <span
                                                                 class="ui-slider-handle ui-state-default ui-corner-all"
                                                                 tabindex="0" style="left: 19.1489%;"></span><span
                                                                 class="ui-slider-handle ui-state-default ui-corner-all"
