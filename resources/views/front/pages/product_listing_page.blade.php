@@ -133,7 +133,7 @@
                                                             <div class="maxrange">
                                                                 <span>Max</span>
                                                                 <input id="sliderRangeSetMax" disabled=""
-                                                                    data-index="1" class="sliderValue" value="15000">
+                                                                    data-index="1" class="sliderValue" value="150000">
                                                             </div>
                                                         </div>
 
@@ -207,7 +207,7 @@
 
 
                     <div class="reset-filer-container">
-                        <a href="{{ url()->current() }}"><button class="reset-filer-btn">Reset search</button></a>
+                        <a href="javascript:void(0)" id="resetFilterButton"><button class="reset-filer-btn">Reset search</button></a>
                     </div>
 
                 </div>
@@ -243,7 +243,7 @@
         $("#slider").slider({
             range: true,
             min: 100,
-            max: 15000,
+            max: 150000,
             step: 2,
             values: [250, 7000],
             slide: function(event, ui) {
@@ -263,6 +263,7 @@
                 var value1 = $("#slider").slider("values", 0);
                 var value2 = $("#slider").slider("values", 1);
 
+                $("#showProductList").html('');
                 sendDataValues();
             },
         });
@@ -294,7 +295,40 @@
         $('.show-more').click(function() {
             $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
         });
+
+
+        $('#resetFilterButton').on('click',function(){
+            $('.filter-item-data').prop("checked",false);
+            var value= '{{$slugs[0]}}';
+            $("input[name=category][value=" + value + "]").prop('checked', true);
+            $("#showProductList").html('');
+            sendDataValues();
+        });
+
+
+        // $('.filter-item-data').on('click',function(){
+            
+        // });
+
     });
+
+    var value= '{{ url()->current() }}';
+    if(value = 'eternity-rings'){
+        console.log('eternity');
+        $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+        $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+    }
+    
+    if(value = 'wedding-rings'){
+        console.log('wedding');
+        $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+        $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+    }
+    if(value = 'diamond-engagement-rings'){
+        console.log('engagement');
+        $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+        $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+    }
 
     $(document).on('mouseenter', '.product-hover-affect', function(event) {
         if ($(this).find('video').length) {
