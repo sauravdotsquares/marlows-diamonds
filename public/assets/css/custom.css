@@ -340,7 +340,7 @@ input.input-control{height:38px}
 .product-items-item-info .product-price {margin: 10px 0 8px 0px;}
 
 .product-items-item-details {text-align: center;padding: 13px 14px;}
-.product-items-item-name a {text-decoration: none;color: #8e2e65;font-size: 15px;font-weight: 400;line-height: 25px; display: block;}
+.product-items-item-name a {text-decoration: none;color: #8e2e65;font-size: 14px;font-weight: 400;line-height: 20px; display: block; min-height: 75px;}
 .product-items-item-image img {width: 100%;transition: all ease 0.3s;}
 .product-items-item-image:hover img {transform: scale(1.1);}
 .product-items-item-image a {overflow: hidden;display: block;max-height: 225px}
@@ -570,7 +570,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .shape-list ul li button img {max-width: 26px;display: block;margin: auto;height: 29px;}
 
 .shape-list ul li.active-diamond button, .shape-list ul li button:hover {background: #8e2e65;color: #fff;}
-.diamond-field-labels {font-weight: bold;}
+.diamond-field-labels {font-weight: bold; margin: 0 0 5px;}
 .choose-diaond-fields {margin-top: 14px;margin-bottom: 14px;}
 .diamond-field-inner-bar {display: flex;flex-wrap: wrap; align-items: center;}
 .diamond-field-inner-bar .diamond-fil-cols {width: 100%;flex: 0 0 86%;max-width: 86%;-ms-flex: 0 0 86%;}
@@ -753,6 +753,7 @@ z-index: 11;}
 .account-sidebar {margin: 0 0 30px 0;}
 .checkout-form-group .form-control {margin: 0 0 10px 0; color: #000;}
 .diamond_image{width: 80px;}
+.diamond-field-contens {max-width: 100%;width: 90%;}
 .range_carat_wap{width: 100%;flex: 0 0 86%;max-width: 86%;-ms-flex: 0 0 86%;}
 .blogdetail-desc ol {padding: 0px 0 0 13px;margin: 20px 0 10px 0;}
 .blogdetail-desc ol li {font-size: 18px;color: #303030;}
@@ -969,26 +970,30 @@ a[disabled="disabled"] {pointer-events: none;}
 
 
 .srchniput-fil input {
-	height: 44px;
-	text-align: left;
-	width: 100%;
-	padding: 0 10px;
-	background: none;
-	border: 1px solid #B0B0B0;
+height: 44px;
+text-align: left;
+width: 100%;
+padding: 0 10px;
+background: none;
+border: 1px solid #B0B0B0;
 }
+body .srchniput-fil span {line-height: 5px;font-size: 13px;background: #f2f2f7;position: absolute;left: 0;top: -2px;padding: 0px 10px;display: inline-block;margin: 0 0 0 11px;
+border-radius: 5px;color: #000;}
+.choose-diamnond-filter .srchniput-fil .minrange span {background: #fff;}
+.choose-diamnond-filter .srchniput-fil .maxrange span {background: #fff;}
 
 .range_carat_wap #slider * {transition: none;}
 .srchniput-fil {display: flex;column-gap: 10px;margin:3px 0 19px 0;}
 .srchniput-fil div {position: relative;}
 
 .srchniput-fil span {
-	font-size: 13px;
-	background: #ffff;
-	position: absolute;
-	left: 8px;
-	top: -8px;
-	padding: 0 6px;
-	display: inline-block;
+font-size: 13px;
+    background: none;
+    position: absolute;
+    left: 53px;
+    top: 6px;
+    padding: 0px 4px;
+    display: inline-block
 }
 .range_carat_wap #slider .ui-slider-handle {width: 18px !important;height: 22px;top: -0.5em;}
 .product-action-btn {margin-top: 20px;}
@@ -1159,6 +1164,10 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 	.post-bar .post-bar-center p {
 		font-size: 12px;
 	}
+
+.srchniput-fil input{font-size: 11px;}
+
+
 }
 
 @media(max-width:1199px){
@@ -1167,6 +1176,13 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 	}
 
 .post-data-col .col-lg-4.col-sm-6 {width: 47%;}
+
+
+
+.category-listing-row {display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap;}
+.category-list-wrap{ order:1 }
+.category-sidebar-wrap{ width:100%; }
+
 
 .footer-social a {margin: 0 7px 0 0;}
 
@@ -1217,13 +1233,20 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 
 
 .location-header strong {display: block;}
-    }
+.diamond-field-contens{ width:100%; }
+}
 
 
 .blog-detail-search-field .blog-details-search-input{
-	padding: 0 10px 0 10px !important;
+padding: 0 10px 0 10px !important;
 }
 .blog-detail-search-field .seach-btn{
-	left: revert;
-	right: 10px !important;
+left: revert;
+right: 10px !important;
+}
+
+
+@media(max-width:500px){
+.product-items-item-name a{ min-height:inherit; }
+
 }
