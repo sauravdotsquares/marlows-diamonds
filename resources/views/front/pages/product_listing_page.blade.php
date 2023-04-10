@@ -305,30 +305,24 @@
             sendDataValues();
         });
 
-
-        // $('.filter-item-data').on('click',function(){
-            
-        // });
+        var value= '{{$path}}';
+        if(value == 'eternity-rings'){
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+        }
+        
+        if(value == 'wedding-rings'){
+            $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+        }
+        if(value == 'diamond-engagement-rings'){
+            $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+        }
 
     });
 
-    var value= '{{ url()->current() }}';
-    if(value == 'eternity-rings'){
-        console.log('eternity');
-        $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
-        $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
-    }
-    
-    if(value == 'wedding-rings'){
-        console.log('wedding');
-        $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
-        $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
-    }
-    if(value == 'diamond-engagement-rings'){
-        console.log('engagement');
-        $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
-        $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
-    }
+   
 
     $(document).on('mouseenter', '.product-hover-affect', function(event) {
         if ($(this).find('video').length) {
