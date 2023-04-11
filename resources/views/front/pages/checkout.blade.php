@@ -249,7 +249,7 @@
                                     @php $total = 0; $totalVat = 0; @endphp
                                     @if(session('cart'))
                                         @foreach(session('cart') as $id => $details)
-                                            @php $total += $details['price'] * $details['quantity'] @endphp
+                                            @php $total += $details['deposited_price'] * $details['quantity'] @endphp
                                             @php $totalVat += str_replace( ',', '', $details['vat'] ) * $details['quantity'] @endphp
                                         <tr class="checkcart-item">
                                             <td class="checkpr-name">
@@ -330,7 +330,7 @@
                                             </td>
                                             <td class="check-product-total">
                                                 <span>
-                                                    {{MY_CURRENCY_SYMBOL}}{{ $details['price'] * $details['quantity'] }}</span>
+                                                    {{MY_CURRENCY_SYMBOL}}{{ $details['deposited_price'] * $details['quantity'] }}</span>
                                             </td>
                                         </tr>
                                         @endforeach

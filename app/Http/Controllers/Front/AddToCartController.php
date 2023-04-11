@@ -142,6 +142,7 @@ class AddToCartController extends Controller
                         'customArray'=> $customArray,
                         "quantity" => 1,
                         "price" => $input['price'],
+                        "deposited_price" => $input['price'],
                         "vat" => getVATPriceFunction($input['setting_price']),
                         "image" => $productData->getProductImages->image_url
                     ];
@@ -160,15 +161,13 @@ class AddToCartController extends Controller
     public function addToCartDiamond(Request $request)
     {
 
-        // echo "<pre>";
-        // print_r($request->all(''));
-        // die;
-
         if(isset($request->CERT_NO) && !empty($request->CERT_NO) && $request->CERT_NO > 0){
 
             $input = $request->all('');
             unset($request['slug']);
             unset($request['price']);
+            unset($request['partial_amount']);
+            unset($request['total_amount']);
             unset($request['_token']);
 
             // $titleHtml = '';
@@ -207,7 +206,8 @@ class AddToCartController extends Controller
                     "customArray"=> $selectedAttributes,
                     "quantity" => 1,
                     "price" => $input['price'],
-                    "vat" => getVATPriceFunction($input['setting_price']),
+                    "deposited_price" => $input['partial_amount'],
+                    "vat" => getVATPriceFunction($input['partial_amount']),
                     "image" => ''
                 ];
             }
