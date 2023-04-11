@@ -1056,6 +1056,7 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 
 
 .product-grid-items-item.product-hover-affect .product-items-item-image {overflow: hidden;}
+.related-products-list .product-grid-items-item .product-items-item-image {height:345px;}
 
 
 .product-grid-items-item.product-hover-affect .product-items-item-info .product-hover-video {display: none;}
