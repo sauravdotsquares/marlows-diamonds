@@ -105,8 +105,8 @@ class PlaceOrderController extends Controller
                             $getOrderDetails->user_id = $getEmailExists->id;
                             $getOrderDetails->order_product_details = json_encode($getProduct['customArray']);
                             $getOrderDetails->quantity = $getProduct['quantity'];
-                            $getOrderDetails->product_price = $getProduct['price'];
-                            $getOrderDetails->total_price = $getProduct['quantity']*$getProduct['price'];
+                            $getOrderDetails->product_price = $getProduct['deposited_price'];
+                            $getOrderDetails->total_price = $getProduct['quantity']*$getProduct['deposited_price'];
                             $getOrderDetails->save();
                         }
 
