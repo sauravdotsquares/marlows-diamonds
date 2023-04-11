@@ -1034,6 +1034,7 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 .labo-textblock table.table.table-bordered tr td p a {color: #903c6c;font-weight: 600;}
 .labo-textblock table.table.table-bordered tr td p b {font-size: 15px !important;}
 .product-item-details .product-titles-small {min-height: 72px;}
+a.btn-bg-small.expdia {font-size: 15px;margin: 40px 0 0;}
 
 @media(max-width:1300px){
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu {
