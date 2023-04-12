@@ -147,10 +147,10 @@
                                                         </div>
                                                         <div class="srchniput-fil">
                                                             <input type="hidden" class="sliderValue filter-item-data"
-                                                                data-index="0" value="250" id="input-carat-min"
+                                                                data-index="0" value="100" id="input-carat-min"
                                                                 name="price-min" autocomplete="off">
                                                             <input type="hidden" class="sliderValue filter-item-data"
-                                                                data-index="1" value="1000" id="input-carat-max"
+                                                                data-index="1" value="150000" id="input-carat-max"
                                                                 name="price-max" autocomplete="off">
                                                         </div>
                                                     </div>
@@ -189,7 +189,7 @@
 											</div>
                                             <div class="maxrange">
 											<span>Max</span>
-												<input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="15000">
+												<input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
 											</div>
                                         </div>
 
@@ -244,7 +244,7 @@
             min: 100,
             max: 150000,
             step: 2,
-            values: [250, 7000],
+            values: [100, 150000],
             slide: function(event, ui) {
                 var value1 = $("#slider").slider("values", 0);
                 var value2 = $("#slider").slider("values", 1);
@@ -370,7 +370,7 @@
         sendDataValues();
     });
 
-    sendDataValues();
+    // sendDataValues();
 
     $(window).scroll(function() {
         var scroll = $('#scrollFlag').val();
@@ -382,6 +382,7 @@
     });
 
     function sendDataValues(page) {
+        $("input[name=filter-by-shape]").attr('onclick', 'return false;');
         $('.ajax-load').show();
         $.ajax({
             type: 'GET',
@@ -393,6 +394,7 @@
                 'page': page
             },
             success: function(res) {
+                $("input[name=filter-by-shape]").attr('onclick', 'return true;');
                 $('#pagescroll').val(res.nextPage);
 
                 if (res.productItems == "") {
