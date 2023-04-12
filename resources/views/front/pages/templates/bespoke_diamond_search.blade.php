@@ -574,7 +574,7 @@
                     <input type="hidden" id="addStockNumber" value="0">
                     <input type="hidden" id="total_amount" value="0">
                     <input type="hidden" id="partial_amount" value="0">
-					<div class="table-bottom-content">
+					<div class="table-bottom-content tabel-payment">
 						<input type="radio" class="form-control" id="full_payment" name="payment_mode" checked value="100"> <span>Full Payment</span>
 						<input type="radio" class="form-control" id="partial_deposit_payment" name="payment_mode" value="{{$checkDepositPercentage}}"> <span>{{$checkDepositPercentage}}% Payment </span>
 						<div class="diamond-total-subtotal">
