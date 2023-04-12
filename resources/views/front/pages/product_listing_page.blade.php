@@ -305,20 +305,28 @@
         });
 
         var value= '{{$path}}';
-        if(value == 'eternity-rings'){
+        var arrVars = value.split("/");
+        
+        if(arrVars[0] == 'eternity-rings'){
             $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
             $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
         }
         
-        if(value == 'wedding-rings'){
+        if(arrVars[0] == 'wedding-rings'){
             $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
             $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
         }
-        if(value == 'diamond-engagement-rings'){
+        if(arrVars[0] == 'diamond-engagement-rings'){
             $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
             $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
         }
-
+        if(arrVars[0] == 'engagement-rings'){
+            $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+        }
+        if(arrVars[1] == 'halo' || arrVars[1] == 'shoulder-set' || arrVars[1] == 'solitaire' || arrVars[1] == 'multi-stone'){
+            $("input[name=style-categories]").attr('onclick', 'return false;');
+        }
     });
 
    
