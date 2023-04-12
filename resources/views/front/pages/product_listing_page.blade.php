@@ -298,8 +298,14 @@
 
         $('#resetFilterButton').on('click',function(){
             $('.filter-item-data').prop("checked",false);
-            var value= '{{$slugs[0]}}';
-            $("input[name=category][value=" + value + "]").prop('checked', true);
+            var value= '{{$path}}';
+            var arrVars = value.split("/");
+            
+            var value1= arrVars[0];
+            var value2= arrVars[1];
+            $("input[name=category][value=" + value1 + "]").prop('checked', true);
+            $("input[name=style-categories][value=" + value2 + "]").prop('checked', true);
+            $("input[name=filter-by-shape][value=" + value2 + "]").prop('checked', true);
             $("#showProductList").html('');
             sendDataValues();
         });
@@ -369,7 +375,7 @@
         $("#showProductList").html('');
         sendDataValues();
     });
-    
+
     $("#showProductList").html('');
     sendDataValues();
 
