@@ -369,8 +369,9 @@
         $("#showProductList").html('');
         sendDataValues();
     });
-
-    // sendDataValues();
+    
+    $("#showProductList").html('');
+    sendDataValues();
 
     $(window).scroll(function() {
         var scroll = $('#scrollFlag').val();
