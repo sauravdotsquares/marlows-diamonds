@@ -19,6 +19,8 @@ class OrderDetail extends Model
         'order_product_details',
         'product_price',
         'total_price',
+        'deposited_product_price',
+        'final_product_price',
         'status',
     ];
 

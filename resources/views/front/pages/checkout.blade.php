@@ -246,10 +246,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php $total = 0; $totalVat = 0; @endphp
+                                    @php $total = 0; $totalVat = 0; $totalPrice = 0; $depositedPrice = 0; @endphp
                                     @if(session('cart'))
                                         @foreach(session('cart') as $id => $details)
-                                            @php $total += $details['deposited_price'] * $details['quantity'] @endphp
+                                            @php 
+                                                $total += $details['deposited_price'] * $details['quantity'];
+                                                $totalPrice += $details['price'] * $details['quantity']; 
+                                                $depositedPrice += $details['deposited_price'] * $details['quantity'];
+                                            @endphp
                                             @php $totalVat += str_replace( ',', '', $details['vat'] ) * $details['quantity'] @endphp
                                         <tr class="checkcart-item">
                                             <td class="checkpr-name">
@@ -354,7 +358,9 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <input type="hidden" id="final_price" name="final_price" value="{{ $total }}">
+                        <input type="hidden" id="final_price" name="final_price" value="{{ base64_encode($total) }}">
+                        <input type="hidden" id="total_price" name="total_price" value="{{ base64_encode($totalPrice) }}">
+                        <input type="hidden" id="deposited_price" name="deposited_price" value="{{ base64_encode($depositedPrice) }}">
                         <input type="hidden" id="selected_payment_type" name="selected_payment_type" value="paypal">
                         <div class="checkout-payment-options">
                             <ul class="cc_payment_methods_options">

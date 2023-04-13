@@ -17,10 +17,14 @@ class PlaceOrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
-        //echo '<pre>'; print_r($request->all()); die;
-        //echo $encryt = base64_encode('6-7');
-        //echo $encryt = base64_decode($encryt);
-        //die;
+        // echo 'afdfds<pre>'; 
+        // print_r(base64_decode($request->deposited_price)); 
+        // echo "<br>";
+        // print_r(base64_decode($request->total_price)); 
+        // die;
+        // echo $encryt = base64_encode('6-7');
+        // echo $encryt = base64_decode($encryt);
+        // die;
         if(!Auth::check()){
 
             // If user is not logged in
@@ -90,6 +94,8 @@ class PlaceOrderController extends Controller
                 $getOrders = new Order;
                 $getOrders->user_id = $getEmailExists->id;
                 $getOrders->final_price = $request->final_price;
+                $getOrders->total_price = base64_decode($request->total_price);
+                $getOrders->deposited_price = base64_decode($request->deposited_price);
                 $getOrders->payment_type = $request->payment_type;
                 $getOrders->paymentccdetails = $request->paymentccdetails;
                 $getOrders->depositpercentage = $request->depositepercentage;
@@ -105,8 +111,10 @@ class PlaceOrderController extends Controller
                             $getOrderDetails->user_id = $getEmailExists->id;
                             $getOrderDetails->order_product_details = json_encode($getProduct['customArray']);
                             $getOrderDetails->quantity = $getProduct['quantity'];
-                            $getOrderDetails->product_price = $getProduct['deposited_price'];
-                            $getOrderDetails->total_price = $getProduct['quantity']*$getProduct['deposited_price'];
+                            $getOrderDetails->product_price = $getProduct['price'];
+                            $getOrderDetails->total_price = $getProduct['quantity']*$getProduct['price'];
+                            $getOrderDetails->deposited_product_price = $getProduct['quantity']*$getProduct['deposited_price'];
+                            $getOrderDetails->final_product_price = $getProduct['quantity']*$getProduct['price'];
                             $getOrderDetails->save();
                         }
 

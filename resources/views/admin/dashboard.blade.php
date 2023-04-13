@@ -59,6 +59,7 @@
                                 <th>Order ID</th>
                                 <th>User Email</th>
                                 <th>Total Payment</th>
+                                <th>Deposited Payment</th>
                                 <th>Payment Method</th>
                                 <th>Status</th>
                                 <th>Order Date</th>
@@ -69,7 +70,8 @@
                             <tr>
                                 <td><a href="pages/examples/invoice.html">{{isset($order->token)?$order->token:''}}</a></td>
                                 <td>{{isset($order->user_details->email)?$order->user_details->email:''}}</td>
-                                <td>{{isset($order->final_price)?$order->final_price:''}}</td>
+                                <td>{{isset($order->total_price)?$order->total_price:$order->final_price}}</td>
+                                <td>{{isset($order->deposited_price)?$order->deposited_price:$order->final_price}}</td>
                                 <td>{{isset($order->payment_type)?$order->payment_type:''}}</td>
                                 <td>{!!isset($order->status_details_designs)?$order->status_details_designs:'' !!}</td>
                                 <td>
