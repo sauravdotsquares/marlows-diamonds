@@ -576,7 +576,9 @@
                     <input type="hidden" id="partial_amount" value="0">
 					<div class="table-bottom-content tabel-payment">
 						<input type="radio" class="form-control" id="full_payment" name="payment_mode" checked value="100"> <span>Full Payment</span>
-						<input type="radio" class="form-control" id="partial_deposit_payment" name="payment_mode" value="{{$checkDepositPercentage}}"> <span>{{$checkDepositPercentage}}% Payment </span>
+						<input type="radio" class="form-control" id="partial_deposit_payment" name="payment_mode" value="{{$checkDepositPercentage}}"> 
+						<span>{{$checkDepositPercentage}}% Payment </span>
+						<div class="pay-amtrest" style="display: none !important;"><span id="deposited_message">Pay 10 % of the amount and the rest pay at the store</span></div>
 						<div class="diamond-total-subtotal">
 							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <span id="diamond_price_selected"><%firstDiamondAmount | number : 2 %></span></p>
 							<div class="total-diamond-price1 " ng-if="firstDiamondAmount"> <strong class="total-diamond-price">Deposit Diamond Price:</strong>£ <span id="diamond_deposit_price_selected"><%firstDiamondAmount | number : 0 %> </span> </div>
@@ -884,6 +886,12 @@
 
 
 		$("input[name=payment_mode]").on('change',function(){
+			var mode_value = $(this).val();
+			var mode_check_value = '{{$checkDepositPercentage}}';
+			$('.pay-amtrest').attr("style", "display: none !important");
+			if($(this).val() == '{{$checkDepositPercentage}}'){
+				$(".pay-amtrest").removeAttr("style");
+			}
 			getPaymentModeFunction($(this).val(),$("#addtobasketselectedrowid").val());
 		});
 		getPaymentModeFunction($("input[name=payment_mode]").val(),$("#addtobasketselectedrowid").val());
@@ -891,10 +899,7 @@
 			var percentage = depositPercentage/100;
 			var amount = $('#tdAmount'+index).text();
 			var finalAmount = amount*percentage;
-			console.log(amount);
-			console.log(finalAmount);
-			console.log(percentage);
-			console.log(index);
+			
 			$('#total_amount').val(parseFloat(amount).toFixed(2));
 			$('#partial_amount').val(parseFloat(finalAmount).toFixed(2));
 			$('#diamond_price_selected').text(parseFloat(amount).toFixed(2));
