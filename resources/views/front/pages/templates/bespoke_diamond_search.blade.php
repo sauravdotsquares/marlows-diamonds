@@ -535,7 +535,7 @@
 										<td id="tdClarity<%$index%>"><%records.Clarity%></td>
 										<td id="tdCut<%$index%>" ng-if="shape=='ROUND'"><%records.Cut%></td>
 										<td id="tdLab<%$index%>"><%records.Lab%></td>
-										<td id="tdAmount<%$index%>"><%records.Amount*1.25*VAT | number : 2 %></td>
+										<td id="tdAmount<%$index%>"><%records.Amount | number : 2 %></td>
 
 										<td id="tdCertiLink<%$index%>"> <a target="_block" class="table-view-btn" href="<%records.CertificateLink%>">View</a> </td>
 
@@ -571,8 +571,8 @@
                     <input type="hidden" id="addStockNumber" value="0">
 					<div class="table-bottom-content">
 						<div class="diamond-total-subtotal">
-							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount*1.25*VAT | number : 2 %></p>
-							<div class="total-diamond-price" ng-if="firstDiamondAmount">£ <%firstDiamondAmount*1.25*VAT | number : 0 %> </div>
+							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount | number : 2 %></p>
+							<div class="total-diamond-price" ng-if="firstDiamondAmount">£ <%firstDiamondAmount | number : 2 %> </div>
 						</div>
 						<div class="addbasket-req-btns">
 							{{-- <a class="white-bg-btn" href="#">Add To Basket</a> --}}
