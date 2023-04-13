@@ -538,7 +538,7 @@
 										<td id="tdClarity<%$index%>"><%records.Clarity%></td>
 										<td id="tdCut<%$index%>" ng-if="shape=='ROUND'"><%records.Cut%></td>
 										<td id="tdLab<%$index%>"><%records.Lab%></td>
-										<td id="tdAmount<%$index%>"><%records.Amount*1.25*VAT | number : 2 %></td>
+										<td id="tdAmount<%$index%>"><%records.Amount | number : 2 %></td>
 
 										<td id="tdCertiLink<%$index%>"> <a target="_block" class="table-view-btn" href="<%records.CertificateLink%>">View</a> </td>
 
@@ -578,8 +578,8 @@
 						<input type="radio" class="form-control" id="full_payment" name="payment_mode" checked value="100"> <span>Full Payment</span>
 						<input type="radio" class="form-control" id="partial_deposit_payment" name="payment_mode" value="{{$checkDepositPercentage}}"> <span>{{$checkDepositPercentage}}% Payment </span>
 						<div class="diamond-total-subtotal">
-							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <span id="diamond_price_selected"><%firstDiamondAmount*1.25*VAT | number : 2 %></span></p>
-							<div class="total-diamond-price1 " ng-if="firstDiamondAmount"> <strong class="total-diamond-price">Deposit Diamond Price:</strong>£ <span id="diamond_deposit_price_selected"><%firstDiamondAmount*1.25*VAT | number : 0 %> </span> </div>
+							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <span id="diamond_price_selected"><%firstDiamondAmount | number : 2 %></span></p>
+							<div class="total-diamond-price1 " ng-if="firstDiamondAmount"> <strong class="total-diamond-price">Deposit Diamond Price:</strong>£ <span id="diamond_deposit_price_selected"><%firstDiamondAmount | number : 0 %> </span> </div>
 						</div>
 						<div class="addbasket-req-btns">
                             <a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">
