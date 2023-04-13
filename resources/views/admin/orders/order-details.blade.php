@@ -30,17 +30,29 @@
                                 <thead>
                                     <tr>
                                         <th style="width:65%;" class="woocommerce-table__product-name product-name">Product</th>
-                                        <th class="woocommerce-table__product-table product-total">Total</th>
+                                        <th class="woocommerce-table__product-table product-total">Total Amount</th>
+                                        <th class="woocommerce-table__product-table product-total">Deposited Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($getOrderDetails->getOrderDetailsFunction as $key => $orderDetails)
                                         <?php
+
+                                            // echo "checking <pre>";
+                                            // print_r($getOrderDetails);
+                                            // die;
+
                                             if(isset($orderDetails->order_product_details) && !empty($orderDetails->order_product_details)){
                                                 $orderProductDetails = json_decode($orderDetails->order_product_details);
                                             }else{
                                                 $orderProductDetails = [];
                                             }
+                                            $productSlug = '';
+                                            if(isset($orderDetails->product_details) && !empty($orderDetails->product_details)){
+                                                $productSlug = $orderDetails->product_details->slug;
+                                            }
+
+                                            // isset($orderDetails->product_details)?$orderDetails->product_details->slug:'';
                                         ?>
                                         <tr class="woocommerce-table__line-item order_item">
                                             <td class="woocommerce-table__product-name product-name">
@@ -49,7 +61,7 @@
                                                         <img src="images/Marlows-03.jpg" alt="ffimg">
                                                     </div>
                                                     <div class="pr-desc-text-content">
-                                                        <a href="{{asset('product/'.$orderDetails->product_details->slug)}}" target="_blank">
+                                                        <a href="{{asset('product/'.$productSlug)}}" target="_blank">
                                                             {{isset($orderDetails->product_details->title)?$orderDetails->product_details->title:''}}</a> <strong
                                                             class="product-quantity">×&nbsp;{{$orderDetails->quantity}}</strong>
                                                         <ul class="wc-item-meta">
@@ -71,7 +83,11 @@
                                             </td>
                                             <td class="woocommerce-table__product-total product-total">
                                                 <span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$orderDetails->product_price * $orderDetails->quantity}}</bdi></span>
+                                                            class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$orderDetails->total_price * $orderDetails->quantity}}</bdi></span>
+                                            </td>
+                                            <td class="woocommerce-table__product-total product-total">
+                                                <span class="woocommerce-Price-amount amount"><bdi><span
+                                                            class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($orderDetails->deposited_product_price)?$orderDetails->deposited_product_price:$orderDetails->product_price * $orderDetails->quantity}}</bdi></span>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -80,7 +96,7 @@
                                     <tr>
                                         <th scope="row">Subtotal:</th>
                                         <td><span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$getOrderDetails->final_price}}</span></td>
+                                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Payment method:</th>
@@ -89,11 +105,24 @@
                                     <tr>
                                         <th scope="row">Total:</th>
                                         <td><span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$getOrderDetails->final_price}}</span>
-                                            <small class="includes_tax">(includes <span
+                                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span>
+                                            <!-- <small class="includes_tax">(includes <span
                                                     class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>64.80</span>
-                                                VAT)</small></td>
+                                                        class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}
+                                                   </span>64.80</span>
+                                                VAT)</small> -->
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Deposited:</th>
+                                        <td><span class="woocommerce-Price-amount amount"><span
+                                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span>
+                                            <!-- <small class="includes_tax">(includes <span
+                                                    class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}
+                                                   </span>64.80</span>
+                                                VAT)</small> -->
+                                            </td>
                                     </tr>
                                 </tfoot>
                             </table>

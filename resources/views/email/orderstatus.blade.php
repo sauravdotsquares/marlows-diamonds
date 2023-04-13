@@ -314,6 +314,24 @@
                                                     {{-- (includes £329.06 VAT) --}}
 											</td>
 										</tr>
+										<tr>
+											<td width="270px" align="left" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px;">
+												<p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+												<strong style=" font-size: 14px;">Deposited Total:</strong></p>
+
+											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
+
+											</td>
+											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
+													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
+
+                                                    {{-- (includes £329.06 VAT) --}}
+											</td>
+										</tr>
 									</tbody>
 								</table>
 							</td>

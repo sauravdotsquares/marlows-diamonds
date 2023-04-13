@@ -25,6 +25,7 @@
                       <th>Order IDs</th>
                       <th>User Email</th>
                       <th>Total Payment</th>
+                      <th>Deposited Payment</th>
                       <th>Payment Method</th>
                       <th>Status</th>
                       <th>Order Date</th>
@@ -36,7 +37,8 @@
                     <tr>
                       <td><a href="{{route('admin.order.product.details',[$order->id])}}">{{isset($order->token)?$order->token:''}}</a></td>
                       <td>{{isset($order->user_details->email)?$order->user_details->email:''}}</td>
-                      <td>{{isset($order->final_price)?$order->final_price:''}}</td>
+                      <td>{{isset($order->total_price)?$order->total_price:$order->final_price}}</td>
+                      <td>{{isset($order->deposited_price)?$order->deposited_price:$order->final_price}}</td>
                       <td>{{isset($order->payment_type)?$order->payment_type:''}}</td>
                       <td>
                         <a href="javascript:void(0);" type="button" class="orderSelectedStatus" data-bs-toggle="modal" data-token="{{$order->token}}" data-status="{{isset($order->status)?$order->status:''}}" data-bs-target="#exampleModal">{!!isset($order->status_details_designs)?$order->status_details_designs:''!!}</a>
