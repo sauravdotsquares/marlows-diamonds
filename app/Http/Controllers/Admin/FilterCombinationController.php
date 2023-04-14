@@ -308,8 +308,8 @@ class FilterCombinationController extends Controller
             $masterData['MaxPrice'] = ProductVariations::max('regular_price');
         } elseif($slugData == 'filter-by-shape'){
             $masterData = DiamondShapes::select('name','value')->get()->toArray();
-        } elseif($slugData == 'filter-by-style'){
-            $masterData = Category::select('name','id as value')->where(['is_deleted'=>0,'parent_id' => 8])->get()->toArray();
+        } elseif($slugData == 'style-categories'){
+            $masterData = Category::select('name','id as value')->where(['is_deleted'=>0])->get()->toArray();
         } elseif($slugData == 'colour'){
             $masterData = Masters::select('name','slug','value')->where(['is_deleted'=>0,'type'=>'colour'])->get()->toArray();
         } elseif($slugData == 'diamond-clarity'){
@@ -319,7 +319,7 @@ class FilterCombinationController extends Controller
         } elseif($slugData == 'metal_type'){
             $masterData = Masters::select('name','slug','value')->where(['is_deleted'=>0,'type'=>'metal_types'])->get()->toArray();
         } elseif ($slugData == 'category'){
-            $masterData = Masters::select('name','slug','value')->where(['is_deleted'=>0,'type'=>'categories'])->get()->toArray();
+            $masterData = Category::select('name','id as value')->where(['is_deleted'=>0,'parent_id'=>0])->get()->toArray();
         }
 
         // prd($masterData);
@@ -363,7 +363,7 @@ class FilterCombinationController extends Controller
             $new_record->item_name = isset($itemValue[1])?$itemValue[1]:$data['item_name'];
             $new_record->item_slug = $item_slug;
             $new_record->item_id = isset($data['item_id'])?$data['item_id']:0;
-            $new_record->item_value = isset($itemValue[0])?$itemValue[0]:0;
+            $new_record->item_value = $item_slug;
             $new_record->item_type = isset($data['item_type'])?$data['item_type']:0;
             $new_record->min_price = isset($data['min_price'])?$data['min_price']:0;
             $new_record->max_price = isset($data['max_price'])?$data['max_price']:0;

@@ -62,7 +62,7 @@
                                             @error('item_value') <span class="custom-error">{{ $message }}</span>  @enderror
                                         </div>
                                     </div>
-                                @elseif($slugData == 'filter-by-style')
+                                @elseif($slugData == 'style-categories')
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="min_price">Style </label>
