@@ -276,7 +276,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['final_price']}}
+													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
 											</td>
 										</tr>
 
@@ -309,7 +309,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['final_price']}}
+													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
 
                                                     {{-- (includes £329.06 VAT) --}}
 											</td>
