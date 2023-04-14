@@ -334,6 +334,7 @@
             $("input[name=style-categories]").attr('onclick', 'return false;');
         }
         filterShapechanged();
+        filterStylechanged();
     });
     function filterShapechanged(){
         $('input[name="filter-by-shape"]:checked').each(function() {
@@ -342,7 +343,13 @@
             }
         });
     }
-   
+    function filterStylechanged(){
+        $('input[name="style-categories"]:checked').each(function() {
+            if(this.value != ''){
+                $("input[name=style-categories]").attr('onclick', 'return false;');
+            }
+        });
+    }
 
     $(document).on('mouseenter', '.product-hover-affect', function(event) {
         if ($(this).find('video').length) {
