@@ -1251,6 +1251,13 @@ if (!function_exists('validate_breadcrumb')) {
             }
         } elseif (!empty($queryString)) {
             $conditions = 'AND';
+            if(isset($queryString[1]) && !empty($queryString[1])){
+                $slugCategory = Category::where('slug','LIKE','%'.$queryString[1].'%')->pluck('slug')->toArray();
+                unset($queryString[1]);
+                $queryString = array_merge($queryString,$slugCategory);
+                $conditions = 'OR';
+            }
+
             if ($queryString[0] == 'diamond-engagement-rings') {
                 $queryString = [
                     'diamond-engagement-rings',

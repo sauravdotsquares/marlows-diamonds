@@ -109,16 +109,16 @@
 
                                         @if (in_array(Str::lower($product_item_item->item_value), $slugs))
                                             <?php
-                                            $checkVariable = 'false';
-                                            $checkVariableNew = 'checked';
+                                                $checkVariable = 'false';
+                                                $checkVariableNew = 'checked';
                                             ?>
                                         @elseif(in_array(Str::lower(Str::replace(' ', '-', $product_item_item->item_name)), $slugs))
                                             <?php
-                                            $checkVariable = 'false';
-                                            $checkVariableNew = 'checked';
+                                                $checkVariable = 'false';
+                                                $checkVariableNew = 'checked';
                                             ?>
                                         @endif
-
+                                       
                                         @if (isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
                                             <div class="diamond-field-contens col-lg-9">
                                                 <div class="diamond-field-inner-bar">
@@ -333,8 +333,15 @@
         if(arrVars[1] == 'halo' || arrVars[1] == 'shoulder-set' || arrVars[1] == 'solitaire' || arrVars[1] == 'multi-stone'){
             $("input[name=style-categories]").attr('onclick', 'return false;');
         }
+        filterShapechanged();
     });
-
+    function filterShapechanged(){
+        $('input[name="filter-by-shape"]:checked').each(function() {
+            if(this.value != ''){
+                $("input[name=filter-by-shape]").attr('onclick', 'return false;');
+            }
+        });
+    }
    
 
     $(document).on('mouseenter', '.product-hover-affect', function(event) {
@@ -389,7 +396,8 @@
     });
 
     function sendDataValues(page) {
-        $("input[name=filter-by-shape]").attr('onclick', 'return false;');
+        // $("input[name=filter-by-shape]").attr('onclick', 'return false;');
+        // filterShapechanged();
         $('.ajax-load').show();
         $.ajax({
             type: 'GET',
@@ -401,7 +409,7 @@
                 'page': page
             },
             success: function(res) {
-                $("input[name=filter-by-shape]").attr('onclick', 'return true;');
+                // filterShapechanged();
                 $('#pagescroll').val(res.nextPage);
 
                 if (res.productItems == "") {
