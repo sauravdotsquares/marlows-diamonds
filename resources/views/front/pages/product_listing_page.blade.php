@@ -305,7 +305,7 @@
             var value2= arrVars[1];
             $("input[name=category][value=" + value1 + "]").prop('checked', true);
             $("input[name=style-categories][value=" + value2 + "]").prop('checked', true);
-            $("input[name=filter-by-shape][value=" + value2 + "]").prop('checked', true);
+            $("input[name=filter-by-shape][value=" + value2.toUpperCase() + "]").prop('checked', true);
             $("#showProductList").html('');
             sendDataValues();
         });
