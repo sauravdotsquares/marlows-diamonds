@@ -62,13 +62,13 @@
                                             @error('item_value') <span class="custom-error">{{ $message }}</span>  @enderror
                                         </div>
                                     </div>
-                                @elseif($slugData == 'style-categories')
+                                @elseif($slugData == 'style-categories' || $slugData == 'ring-categories' || $slugData == 'jewellery-categories')
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="min_price">Style </label>
                                             <select name="item_value" id="style" class="form-control">
                                                 @foreach($masterData as $key =>$style)
-                                                    <option value="{{$style['value'].'-'.$style['name']}}">{{$style['name']}}</option>
+                                                    <option value="{{str_replace('-','/',$style['slug']).'-'.$style['name']}}">{{$style['name']}}</option>
                                                 @endforeach
                                             </select>
                                             @error('item_value') <span class="custom-error">{{ $message }}</span>  @enderror

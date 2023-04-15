@@ -310,6 +310,10 @@ class FilterCombinationController extends Controller
             $masterData = DiamondShapes::select('name','value')->get()->toArray();
         } elseif($slugData == 'style-categories'){
             $masterData = Category::select('name','id as value')->where(['is_deleted'=>0])->get()->toArray();
+        } elseif($slugData == 'ring-categories'){
+            $masterData = Category::select('name','id as value','slug')->where(['is_deleted'=>0,'parent_id'=>48])->get()->toArray();
+        } elseif($slugData == 'jewellery-categories'){
+            $masterData = Category::select('name','id as value','slug')->where(['is_deleted'=>0,'parent_id'=>2])->get()->toArray();
         } elseif($slugData == 'colour'){
             $masterData = Masters::select('name','slug','value')->where(['is_deleted'=>0,'type'=>'colour'])->get()->toArray();
         } elseif($slugData == 'diamond-clarity'){
@@ -363,7 +367,7 @@ class FilterCombinationController extends Controller
             $new_record->item_name = isset($itemValue[1])?$itemValue[1]:$data['item_name'];
             $new_record->item_slug = $item_slug;
             $new_record->item_id = isset($data['item_id'])?$data['item_id']:0;
-            $new_record->item_value = $item_slug;
+            $new_record->item_value = str_replace('/','-',$itemValue[0]);
             $new_record->item_type = isset($data['item_type'])?$data['item_type']:0;
             $new_record->min_price = isset($data['min_price'])?$data['min_price']:0;
             $new_record->max_price = isset($data['max_price'])?$data['max_price']:0;
