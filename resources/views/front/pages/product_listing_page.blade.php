@@ -313,28 +313,88 @@
         var value= '{{$path}}';
         var arrVars = value.split("/");
         
+        if(arrVars[0] == 'diamonds-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
+        }
+
+        if(arrVars[0] == 'diamond-engagement-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=style-categories][value='mens']").parent('li').css('display','none');
+            $("input[name=style-categories][value='womens']").parent('li').css('display','none');
+
+            $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
+        }
+
         if(arrVars[0] == 'eternity-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=style-categories][value='halo']").parent('li').css('display','none');
+            $("input[name=style-categories][value='multi-stone']").parent('li').css('display','none');
+            $("input[name=style-categories][value='shoulder-set']").parent('li').css('display','none');
+            $("input[name=style-categories][value='solitaire']").parent('li').css('display','none');
+
             $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
             $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display','none');
+
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
         }
         
+        
         if(arrVars[0] == 'wedding-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=style-categories][value='halo']").parent('li').css('display','none');
+            $("input[name=style-categories][value='multi-stone']").parent('li').css('display','none');
+            $("input[name=style-categories][value='shoulder-set']").parent('li').css('display','none');
+            $("input[name=style-categories][value='solitaire']").parent('li').css('display','none');
+
             $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
             $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display','none');
+
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
         }
-        if(arrVars[0] == 'diamond-engagement-rings'){
-            $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
-            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
-        }
+        
         if(arrVars[0] == 'engagement-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=style-categories][value='mens']").parent('li').css('display','none');
+            $("input[name=style-categories][value='womens']").parent('li').css('display','none');
+
             $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
             $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
         }
+
+        if(arrVars[0] == 'diamond-jewellery'){
+            $("input[name=category][value='diamonds-rings']").parent('li').css('display','none');
+            $("input[name=category][value='engagement-rings']").parent('li').css('display','none');
+            $("input[name=category][value='eternity-rings']").parent('li').css('display','none');
+            $("input[name=category][value='wedding-rings']").parent('li').css('display','none');
+
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='style-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+        }
+
         if(arrVars[1] == 'halo' || arrVars[1] == 'shoulder-set' || arrVars[1] == 'solitaire' || arrVars[1] == 'multi-stone'){
             $("input[name=style-categories]").attr('onclick', 'return false;');
         }
         filterShapechanged();
         filterStylechanged();
+        filterRingTypechanged();
+        filterJewelleryTypechanged();
     });
     function filterShapechanged(){
         $('input[name="filter-by-shape"]:checked').each(function() {
@@ -347,6 +407,20 @@
         $('input[name="style-categories"]:checked').each(function() {
             if(this.value != ''){
                 $("input[name=style-categories]").attr('onclick', 'return false;');
+            }
+        });
+    }
+    function filterRingTypechanged(){
+        $('input[name="ring-categories"]:checked').each(function() {
+            if(this.value != ''){
+                $("input[name=ring-categories]").attr('onclick', 'return false;');
+            }
+        });
+    }
+    function filterJewelleryTypechanged(){
+        $('input[name="jewellery-categories"]:checked').each(function() {
+            if(this.value != ''){
+                $("input[name=jewellery-categories]").attr('onclick', 'return false;');
             }
         });
     }
