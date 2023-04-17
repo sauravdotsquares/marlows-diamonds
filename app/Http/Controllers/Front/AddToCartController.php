@@ -68,6 +68,7 @@ class AddToCartController extends Controller
                     'customArray'=> $customArray,
                     "quantity" => 1,
                     "price" => $request['lab_grown_price'],
+                    "deposited_price" => $request['lab_grown_price'],
                     "vat" => getVATPriceFunction($request['setting_price']),
                     "image" => $productData->getProductImages->image_url
                 ];
