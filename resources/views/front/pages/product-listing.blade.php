@@ -87,6 +87,13 @@
                         @php $total = 0 @endphp
                         @foreach(session('cart') as $id => $details)
                             @php $total += $details['price'] * $details['quantity'] @endphp
+                            <?php 
+                                if(isset($details['deposited_price']) && !empty($details['deposited_price'])){
+                                    $price = $details['deposited_price'];
+                                }else{
+                                    $price = $details['price']
+                                }
+                            ?>
                             <div class="side-cart-item">
                                 <div class="cart-image-item">
                                     @if(isset($details['customArray']['ImageLink']) && !empty($details['customArray']['ImageLink']))
@@ -111,7 +118,7 @@
                                     <span class="side-cart-amount">{{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'],2) }}</span>
                                 </div>
                                 <div class="side-cart-total">
-                                    <strong>Deposited: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($details['deposited_price'] * $details['quantity'],2) }} (incl. VAT)
+                                    <strong>Deposited: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($price * $details['quantity'],2) }} (incl. VAT)
                                 </div>
 
                             </div>
