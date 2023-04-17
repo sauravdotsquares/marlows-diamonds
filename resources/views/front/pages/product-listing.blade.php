@@ -91,7 +91,7 @@
                                 if(isset($details['deposited_price']) && !empty($details['deposited_price'])){
                                     $price = $details['deposited_price'];
                                 }else{
-                                    $price = $details['price']
+                                    $price = $details['price'];
                                 }
                             ?>
                             <div class="side-cart-item">
