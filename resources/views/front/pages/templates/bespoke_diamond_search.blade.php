@@ -36,6 +36,9 @@
 				<h2>{!!$data->short_description!!}</h2>
 			@endif
 		</div>
+		<?php 
+			$checkDepositPercentage = $data->deposit;
+		?>
 		<div class="row">
 			<div class="col-lg-4">
 				<div class="chooseyour-diamond-side">
@@ -569,17 +572,24 @@
                     <input type="hidden" id="addtobasketselectedrowid" value="0">
                     <input type="hidden" id="addCertificateNo" value="0">
                     <input type="hidden" id="addStockNumber" value="0">
-					<div class="table-bottom-content">
+                    <input type="hidden" id="total_amount" value="0">
+                    <input type="hidden" id="partial_amount" value="0">
+					<div class="table-bottom-content tabel-payment">
+						<input type="radio" class="form-control" id="full_payment" name="payment_mode" checked value="100"> <span>Full Payment</span>
+						<input type="radio" class="form-control" id="partial_deposit_payment" name="payment_mode" value="{{$checkDepositPercentage}}"> 
+						<span>{{$checkDepositPercentage}}% Payment </span>
+						<div class="pay-amtrest" style="display: none !important;"><span id="deposited_message">Pay 10 % of the amount and the rest pay at the store</span></div>
 						<div class="diamond-total-subtotal">
-							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount | number : 2 %></p>
-							<div class="total-diamond-price" ng-if="firstDiamondAmount">£ <%firstDiamondAmount | number : 0 %> </div>
+							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <span id="diamond_price_selected"><%firstDiamondAmount | number : 2 %></span></p>
+							<div class="total-diamond-price1 " ng-if="firstDiamondAmount"> <strong class="total-diamond-price">Deposit Diamond Price:</strong>£ <span id="diamond_deposit_price_selected"><%firstDiamondAmount | number : 2 %> </span> </div>
 						</div>
 						<div class="addbasket-req-btns">
-							{{-- <a class="white-bg-btn" href="#">Add To Basket</a> --}}
-                            <a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
+                            <a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">
+								Add to basket
+							</a>
 							<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#requestAppointment">
-						Request an Appointment
-						</a>
+								Request an Appointment
+							</a>
 						</div>
 					</div>
 				</div>
@@ -739,7 +749,7 @@
                 }
             },
             submitHandler: function (form) {
-                // if (grecaptcha.getResponse()) {
+                if (grecaptcha.getResponse()) {
                     var form_data = new FormData(form);
                     $(form).find("button[type='submit']").prop('disabled',true);
                     $("button[type='submit']").text("Please Wait...");
@@ -753,20 +763,16 @@
                         success: function (response) {
                             blankForm();
                             $("button[type='submit']").text("Send Message");
-                            // $(this).find("button[type='submit']").prop('disabled',true);
-                            // console.log(response);
-                            // return false;
                             if(response.status == 200){
                                 toastr.success(response.success);
-                                // window.location.reload();
                             }else{
                                 toastr.info(response.error);
                             }
                         }
                     });
-                // } else {
-                //     alert('Please confirm captcha to proceed')
-                // }
+                } else {
+                    alert('Please confirm captcha to proceed')
+                }
             }
         });
 
@@ -787,10 +793,6 @@
             document.addEventListener("touchcancel", touchHandler, true);
         }
 
-        // $('#slider .ui-corner-all:first-child').text('0.3');
-        // $(".ma-info-icon").click(function(){
-		// 	$(this).next(".m-quote-pop").toggle();
-		// });
 
 		var popElement = document.getElementsByClassName("helping-text-container");
 		document.addEventListener('click', function(event) {
@@ -805,7 +807,6 @@
 				} else {
 					if($(popEl).find('.m-quote-pop').is(':visible')){
 						$(popEl).find('.m-quote-pop').css('display','none');
-						// console.log('Visiable and removed');
 					}else{
 						$(popEl).find(".m-quote-pop").css('display','block');
 					}
@@ -814,15 +815,6 @@
 				}
 			}
 		});
-
-		// $('body').on('click', function() {
-		// 	// if visiable then hide
-		// 	if($(".m-quote-pop").is(":visible")){
-		// 		console.log('visiable')
-		// 		$(".m-quote-pop").css('display','none');
-		// 	}
-		// })
-		// remove all .active classes when clicked anywhere
 
 
         $("#slider").slider({
@@ -839,7 +831,6 @@
 
 
                 for (var i = 0; i < ui.values.length; ++i) {
-                    // console.log('Checking');
                     $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
                 }
 
@@ -848,8 +839,6 @@
 
                 var value1 = $("#slider").slider("values", 0);
                 var value2 = $("#slider").slider("values", 1);
-                // $("#slider").find(".ui-slider-handle:first").text(value1);
-                // $("#slider").find(".ui-slider-handle:last").text(value2);
 
                 angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
             },
@@ -872,32 +861,6 @@
 		var input1 = document.getElementById('input-carat-max');
 		var inputs = [input0, input1];
 
-		// noUiSlider.create(stepsSlider, {
-		//     start: [0.3, 2.5],
-		//     connect: true,
-        //     behavior:'fixed',
-		//     tooltips: [true, wNumb({decimals: 0})],
-		//     range: {
-		//         'min': [0.3],
-		//         'max': [5]
-		//     },
-		// });
-        //input-carat-min
-        //input-carat-max
-        // $('#input-carat-min').on('change',function(){
-        //     console.log($(this).val().trigger('change'));
-        // });
-        // $('#input-carat-max').on('change',function(){
-        //     console.log($(this).val().trigger('change'));
-        // });
-
-		// stepsSlider.noUiSlider.on('update', function (values, handle) {
-		//     inputs[handle].value = values[handle];
-		// 	//jQuery(".search-button button").trigger('click');
-		// });
-		// stepsSlider.noUiSlider.on('change', function (values, handle) {
-		//     angular.element(document.getElementById('diamondMainController')).scope().getDiamondResults();
-		// });
 
         $(document).on('click','input[type="checkbox"]',function(){
 			if($(this).is(":checked")==true){
@@ -914,12 +877,42 @@
         $(document).on('change', "[id^=selectedDiamondCheckBox]", function () {
             var index = parseInt($(this).attr("id").replace("selectedDiamondCheckBox",''));
             $('#addtobasketselectedrowid').val(index);
+			getPaymentModeFunction($("input[type='radio'][name='payment_mode']:checked").val(),index);
         });
 
         $('#addtobasket').on('click',function(){
-            // alert($('#addtobasketselectedrowid').val());
             addtobasketFunction($('#addtobasketselectedrowid').val());
         });
+
+
+		$("input[name=payment_mode]").on('change',function(){
+			var mode_value = $(this).val();
+			var mode_check_value = '{{$checkDepositPercentage}}';
+			$('.pay-amtrest').attr("style", "display: none !important");
+			if($(this).val() == '{{$checkDepositPercentage}}'){
+				$(".pay-amtrest").removeAttr("style");
+			}
+			getPaymentModeFunction($(this).val(),$("#addtobasketselectedrowid").val());
+		});
+		getPaymentModeFunction($("input[name=payment_mode]").val(),$("#addtobasketselectedrowid").val());
+		function getPaymentModeFunction(depositPercentage,index){
+			var percentage = depositPercentage/100;
+			var amount = $('#tdAmount'+index).text();
+			var finalAmount = amount*percentage;
+			
+			$('#total_amount').val(parseFloat(amount).toFixed(2));
+			$('#partial_amount').val(parseFloat(finalAmount).toFixed(2));
+			$('#diamond_price_selected').text(parseFloat(amount).toFixed(2));
+			$('#diamond_deposit_price_selected').text(parseFloat(finalAmount).toFixed(2));
+		}
+
+
+		$(document).on('click','.ng-binding',function(){
+			setTimeout(function(){
+				getPaymentModeFunction($("input[type='radio'][name='payment_mode']:checked").val(),0);
+			},4000);
+		});
+
     });
 
     function getNumberFromCurrency(currency) {
@@ -942,26 +935,17 @@
 
     function addtobasketFunction(index){
         var cert_number = $('#tdCertiLink'+index).find('a').attr('href');
-        // console.log(cert_number);
-        // var filename = cert_number.replace( /^.*?([^\/]+)\..+?$/, '$1' );
-        // var fileName_new = cert_number.replace(/[\#\?].*$/,'');
-        // var src= $('#tdCertiLink'+index).find('a').attr('href');
-
-        // var name = src.match(/static\/images\/banner\/(.*)\.jpg/);
 
         var reportno = getParameterByName('reportno',cert_number);
         var certNumber;
         if(reportno !== null && reportno !== undefined){
-            // console.log("Not Null");
             certNumber = reportno;
 
         }else{
             var reportno = getParameterByName('r',cert_number);
             if(reportno !== null && reportno !== undefined){
-                // console.log("Not Null");
                 certNumber = reportno;
             }else{
-                // console.log("Null");
                 var tarr = cert_number.replace(/^.*\/\/[^\/]+/, '').split('/');
                 certNumber = tarr[2].replace(/\.[^/.]+$/, "");
             }
@@ -971,38 +955,19 @@
         var certificatenumber = $('#selectedDiamondCheckBox'+index).data('certno');
         var stockno = $('#selectedDiamondCheckBox'+index).data('stockno');
 
-        // console.log(certificatenumber);
-        // console.log(stockno);
 
         if(certificatenumber != '' && certificatenumber !== null && certificatenumber !== undefined){
-            // console.log("certificatenumber");
+            
             certNumber = certificatenumber;
         }else{
             certNumber = '';
         }
 
         if(stockno != '' && stockno !== null && stockno !== undefined){
-            // console.log("stockno");
             stockno = stockno;
         }else{
-            // console.log("else");
             stockno = stockno;
         }
-
-
-
-        // console.log(certNumber);
-        // return false;
-
-        // console.log(cert_number.replace(/^.*\/\/[^\/]+/, ''));
-
-
-
-        // console.log(fileName_new);
-        // console.log(name);
-        // console.log(cert_number);
-        // console.log(filename);
-        // return false;
 
         $.ajax({
             type: 'POST',
@@ -1016,14 +981,16 @@
                 'Lab' : $('#tdLab'+index).text(),
                 'CERT_NO' : certNumber,
                 'Stock_NO' : stockno,
-                'price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, //parseFloat($('#price').val()) || 0;
-                'setting_price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, //parseFloat($('#price').val()) || 0;
+				'deposit' : $("input[name=payment_mode]").val(),
+				'total_amount' : $("#total_amount").val(),
+				'partial_amount' : $("#partial_amount").val(),
+                'price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, 
+                'setting_price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0, 
                 'CertificateLink': $('#tdCertiLink'+index).find('a').attr('href') || '',
                 'Shape': $('#tdShape'+index).text() || '',
                 'ImageLink': $('#tdImgLink'+index).find('a').attr('href') || '',
             },
             success: function (res) {
-                // console.log(res);
                 if(res.success != '' && typeof res.success !== "undefined"){
                     if(res.cartcount){
                         $(".cartcount").text(res.cartcount);
