@@ -57,6 +57,12 @@
                         </div>
                         <div class="form-group">
                            <div class="form-label-group">
+                              <label for="deposit">Deposit(%)</label>
+                              <input type="text" id="deposit" name="deposit" value="{{ $pages->deposit }}" class="form-control" placeholder="Deposit">
+                           </div>
+                        </div>
+                        <div class="form-group">
+                           <div class="form-label-group">
                               <label for="product_name">Slug</label>
                               <input type="text" id="slug" name="slug" value="{{ $pages->slug }}" class="form-control" placeholder="Slug" >
                            </div>

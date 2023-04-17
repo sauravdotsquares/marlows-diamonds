@@ -31,13 +31,9 @@
                             @php $total = 0 @endphp
 
                             @foreach(session('cart') as $id => $details)
-                            <?php
-                                // echo "<pre>";
-                                // print_r($details['customArray']['final_price']);
-                                // die;
-                            ?>
+                           
                             @php
-                                $total += $details['price'] * $details['quantity'];
+                                $total += $details['deposited_price'] * $details['quantity'];
                             @endphp
                             <tr data-id="{{ $id }}">
                                 <td class="product-info-col" data-th="Product">
@@ -132,7 +128,7 @@
                                         class="form-control quantity update-cart" />
                                 </td>
                                 <td class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}}{{
-                                    number_format($details['price'] * $details['quantity'],2) }}</td>
+                                    number_format($details['deposited_price'] * $details['quantity'],2) }}</td>
                                 <td class="product-action-col" class="actions" data-th="">
                                     <button class="btn btn-danger btn-sm remove-from-cart"><i
                                             class="fa fa-trash-o"></i></button>
@@ -207,7 +203,8 @@
                             @php $total = 0 @endphp
                             @if(session('cart'))
                             @foreach(session('cart') as $id => $details)
-                                    @php $total += $details['price'] * $details['quantity'] @endphp
+                            
+                                    @php $total += $details['deposited_price'] * $details['quantity'] @endphp
                                     <tr data-id="{{ $id }}">
                                         <td class="product-info-col" data-th="Product">
                                             <div class="cart-item-name">
@@ -259,7 +256,7 @@
                                         <td  class="product-quantity-col" data-th="Quantity">
                                             <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity update-cart" />
                                         </td>
-                                        <td  class="product-subtotal-col" data-th="Subtotal">${{ $details['price'] * $details['quantity'] }}</td>
+                                        <td  class="product-subtotal-col" data-th="Subtotal">${{ $details['deposited_price'] * $details['quantity'] }}</td>
                                         <td  class="product-action-col" class="actions" data-th="">
                                             <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-trash-o"></i></button>
                                         </td>

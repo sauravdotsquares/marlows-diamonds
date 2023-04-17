@@ -90,6 +90,8 @@ class PlaceOrderController extends Controller
                 $getOrders = new Order;
                 $getOrders->user_id = $getEmailExists->id;
                 $getOrders->final_price = $request->final_price;
+                $getOrders->total_price = base64_decode($request->total_price);
+                $getOrders->deposited_price = base64_decode($request->deposited_price);
                 $getOrders->payment_type = $request->payment_type;
                 $getOrders->paymentccdetails = $request->paymentccdetails;
                 $getOrders->depositpercentage = $request->depositepercentage;
@@ -107,6 +109,8 @@ class PlaceOrderController extends Controller
                             $getOrderDetails->quantity = $getProduct['quantity'];
                             $getOrderDetails->product_price = $getProduct['price'];
                             $getOrderDetails->total_price = $getProduct['quantity']*$getProduct['price'];
+                            $getOrderDetails->deposited_product_price = $getProduct['quantity']*$getProduct['deposited_price'];
+                            $getOrderDetails->final_product_price = $getProduct['quantity']*$getProduct['price'];
                             $getOrderDetails->save();
                         }
 
