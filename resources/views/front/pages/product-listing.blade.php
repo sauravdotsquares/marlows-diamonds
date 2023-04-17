@@ -89,14 +89,14 @@
                             @php $total += $details['price'] * $details['quantity'] @endphp
                             <div class="side-cart-item">
                                 <div class="cart-image-item">
-                                    @if(isset($details['selected_parameter']['imagelink']) && !empty($details['selected_parameter']['imagelink']))
-                                        <img src="{{$details['selected_parameter']['imagelink']}}" width="100" height="100"
+                                    @if(isset($details['customArray']['ImageLink']) && !empty($details['customArray']['ImageLink']))
+                                        <img src="{{$details['customArray']['ImageLink']}}" width="100" height="100"
                                         class="img-responsive" />
                                     @elseif(isset($details['image']) && !empty($details['image']))
                                         <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
                                         class="img-responsive" />
                                     @else
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/MarlowsDiamonds-Logo-225x107.png" width="100" height="100" class="img-responsive" />
+                                        <img src="{{asset('images/waiting_img.png')}}" width="100" height="100" class="img-responsive" />
                                     @endif
                                 </div>
                                 <div class="side-cart-delete">
@@ -111,7 +111,7 @@
                                     <span class="side-cart-amount">{{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'],2) }}</span>
                                 </div>
                                 <div class="side-cart-total">
-                                    <strong>Subtotal: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'] * $details['quantity'],2) }} (incl. VAT)
+                                    <strong>Deposited: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($details['deposited_price'] * $details['quantity'],2) }} (incl. VAT)
                                 </div>
 
                             </div>
