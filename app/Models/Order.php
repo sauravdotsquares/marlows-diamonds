@@ -20,6 +20,8 @@ class Order extends Model
         'build',
         'token',
         'final_price',
+        'total_price',
+        'deposited_price',
         'payment_type',
         'paymentccdetails',
         'depositpercentage',
