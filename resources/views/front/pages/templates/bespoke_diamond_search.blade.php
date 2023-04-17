@@ -897,7 +897,7 @@
 		getPaymentModeFunction($("input[name=payment_mode]").val(),$("#addtobasketselectedrowid").val());
 		function getPaymentModeFunction(depositPercentage,index){
 			var percentage = depositPercentage/100;
-			var amount = $('#tdAmount'+index).text();
+			var amount = getNumberFromCurrency($('#tdAmount'+index).text());
 			var finalAmount = amount*percentage;
 			
 			$('#total_amount').val(parseFloat(amount).toFixed(2));
@@ -916,7 +916,7 @@
     });
 
     function getNumberFromCurrency(currency) {
-        return Number(currency.replace(/[$,]/g,''))
+        return Number(currency.replace(/,/g , ''))
     }
 
     function getParameterByName(name, url) {
