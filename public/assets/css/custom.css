@@ -1256,3 +1256,7 @@ right: 10px !important;
 .product-items-item-name a{ min-height:inherit; }
 
 }
+
+@media(max-width:420px){
+    span#deposited_message {font-size: 11px;} 
+}
