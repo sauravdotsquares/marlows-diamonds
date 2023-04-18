@@ -1254,11 +1254,13 @@ if (!function_exists('validate_breadcrumb')) {
             if(isset($queryString[1]) && !empty($queryString[1])){
                 if(isset($queryString[2]) && $queryString[1] == 'womens'){
                     $queryString[2] = $queryString[2].'-'.$queryString[1];
+                    $queryString = Category::whereIn('slug',$queryString)->pluck('slug')->toArray();
+                    
+                    if(isset($queryString) && count($queryString) != 3 ){
+                        $is404 = true;
+                    }
+                    $conditions = 'AND';
                 }
-
-                $queryString = Category::whereIn('slug',$queryString)->pluck('slug')->toArray();
-                
-                $conditions = 'AND';
             }
 
             if ($queryString[0] == 'diamond-engagement-rings') {
