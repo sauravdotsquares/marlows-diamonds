@@ -656,7 +656,7 @@ if (!function_exists('validate_breadcrumb')) {
     if (!function_exists("getVATPriceFunction")) {
         function getVATPriceFunction($getTotal)
         {
-            // return $getTotal - ($getTotal/1.2);
+            $getTotal = floatval(preg_replace('/[^\d.]/', '', $getTotal));
             return number_format($getTotal - ($getTotal/1.2),2);
         }
     }

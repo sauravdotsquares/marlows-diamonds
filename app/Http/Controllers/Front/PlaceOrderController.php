@@ -89,7 +89,7 @@ class PlaceOrderController extends Controller
             if($getCustomerAddress){
                 $getOrders = new Order;
                 $getOrders->user_id = $getEmailExists->id;
-                $getOrders->final_price = $request->final_price;
+                $getOrders->final_price = base64_decode($request->final_price);
                 $getOrders->total_price = base64_decode($request->total_price);
                 $getOrders->deposited_price = base64_decode($request->deposited_price);
                 $getOrders->payment_type = $request->payment_type;

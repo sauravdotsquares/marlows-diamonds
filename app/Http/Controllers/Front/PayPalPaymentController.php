@@ -61,7 +61,7 @@ class PayPalPaymentController extends Controller
             $item->setName(isset($orderDetails->product_details->title)?$orderDetails->product_details->title:'No Name') /** item name **/
                         ->setCurrency(Config::get('paypal.currency','GBP'))
                         ->setQuantity(isset($orderDetails->quantity)?$orderDetails->quantity:1)
-                        ->setPrice(isset($orderDetails->product_price)?$orderDetails->product_price:'1.00'); /** unit price **/
+                        ->setPrice(isset($orderDetails->deposited_product_price)?$orderDetails->deposited_product_price:'1.00'); /** unit price **/
             $getProdustItems[] = $item;
         }
 
@@ -84,7 +84,7 @@ class PayPalPaymentController extends Controller
 
         $amount = new Amount();
         $amount->setCurrency(Config::get('paypal.currency','GBP'))
-            ->setTotal($getOrderDetails->final_price);
+            ->setTotal($getOrderDetails->deposited_price);
 
         $transaction = new Transaction();
         $transaction->setAmount($amount)

@@ -13,14 +13,15 @@
             foreach($pay['get_order_details_function'] as $value2){
                 $getCustomOrderData['items'][] = array(
                     'id' => $value2['id'],
-                    'name' => $value2['product_details']['title'],
+                    'name' => isset($value2['product_details']['title'])?$value2['product_details']['title']:'custom_diamond',
                     'list_name' => 'Search Results',
                     'brand' => 'Marlows',
-                    'category' => $value2['product_details']['cat_details'],
+                    'category' => isset($value2['product_details']['cat_details'])?$value2['product_details']['cat_details']:'custom_diamond',
                     'variant'=> 'Black',
                     'list_position' => 1,
                     'quantity'=> $value2['quantity'],
                     'price' => $value2['total_price'],
+                    'deposited_price' => isset($value2['deposited_product_price'])?$value2['deposited_product_price']:$value2['total_price'],
                 );
             }
         }
