@@ -1,4 +1,4 @@
-<li class="cc_payment_methods via_deko_payment" ng-controller="DekopayController" ng-init="financeOptionsCheckout()">
+<li class="cc_payment_methods via_deko_payment" ng-controller="DekopayController" ng-init="financeOptionsCheckout()">  
     <input type="radio" name="payment_type" required="required" value="dekopay">
     <label class="deko_label">
         Dekopay
@@ -6,14 +6,14 @@
     </label>
     <div class="payment-box-main-drop deko-pay-box " style="display:none;">
         <div class="finance-available-options">
-            <input type="hidden" value="10" id="totalOrder">
-            <input type="hidden" value="ONIB12-16.9" id="default_code">
+            <input type="hidden" value="{{ $totalAmount }}" id="totalOrder">
+            <input type="hidden" value="ONIB12-14.9" id="default_code">
             <input type="hidden" value="10" id="default_perc">
             <input type="hidden" value="{{env('DEKOPAY_API_KEY')}}" id="myapi">
             <input type="hidden" value="{{env('DEKOPAY_MODE')}}" id="url_check">
             <input type="hidden" name="preSetValue" id="preSetValue" value="{{env('DEKOPAY_MIN_AMT_EMI')}}">
 
-            <input type="hidden" name="payPro" id="payPro" value="ONIB12-16.9">
+            <input type="hidden" name="payPro" id="payPro" value="ONIB12-14.9">
             <input type="hidden" name="payPer" id="payPer" value="10">
             <p>Pay securely by Credit or Debit card or internet banking through Dekopay
                 Secure Servers.</p>
@@ -28,7 +28,7 @@
                         Price :
                     </div>
                     <div class="payment-cc-details-values">
-                        {{MY_CURRENCY_SYMBOL}} <span id="totalP">10</span>
+                        {{MY_CURRENCY_SYMBOL}} <span id="totalP">{{ $totalAmount }}</span>
                     </div>
                 </div>
                 <div class="payment-cc-details-inner">
@@ -37,11 +37,11 @@
                     </div>
                     <div class="payment-cc-details-values">
                     <select id="terms" name="term" ng-model="term" ng-change="dekoInit()">
-                        <option value="ONIB12-16.9" ng-selected="ONIB12-16.9"> 12  Months Credit 16.9%</option>
-                        <option value="ONIB18-16.9"> 18  Months Credit 16.9%</option>
-                        <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
-                        <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
-                        <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
+                        <option value="ONIB12-14.9" ng-selected="ONIB12-14.9"> 12 Months Promotional Credit (14.9%)</option>
+                        <option value="ONIB24-14.9"> 24 Months Promotional Credit (14.9%)</option>
+                        <option value="ONIB36-14.9"> 36 Months Promotional Credit (14.9%)</option>
+                        <option value="ONIB48-14.9"> 48 Months Promotional Credit (14.9%)</option>
+                        <option value="ONIB60-14.9"> 60 Months Promotional Credit (14.9%)</option>
                     </select>
 
                     </div>

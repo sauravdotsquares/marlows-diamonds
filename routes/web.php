@@ -322,8 +322,8 @@ Route::group(['middleware' => ['customer']], function () {
 		Route::get('/my-accounts', 'LoginController@dashboardPage')->name('my_accounts');
 		Route::get('/logout-customer', 'LoginController@logout')->name('logout-customer');
 		// Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
-		Route::get('products/checkout/dekopay/{orderId?}', 'DekoPayController@receipt_page')->name('make.dekopay');
-
+		
+		Route::get('wc-api/dekopay', 'DekoPayController@check_response');
 	});
 });
 
@@ -473,6 +473,8 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::group(['as' => 'wishlist.', 'prefix' => 'w' ], function () {
 		Route::any('/add', 'AppWishListController@addToWishList')->name('wishlist_add');
 	});
+
+	Route::get('products/checkout/dekopay/{orderId?}', 'DekoPayController@receipt_page')->name('make.dekopay');
 
 });
 

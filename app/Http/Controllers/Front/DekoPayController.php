@@ -49,7 +49,7 @@ class DekoPayController extends Controller
 			$items = array();
 			foreach ($orderDetails as $key => $orderDetail) {
 				$orders = json_decode($orderDetail->order_product_details);
-				$items[] = $orders->title;
+				$items[] = isset($orders->title)?$orders->title:'Custom Diamond';
 				
 			}
 			$pname =implode(',',$items);
@@ -124,7 +124,9 @@ class DekoPayController extends Controller
 	function get_dekopay_args( $order)
 	{			
 			$order_id = $order->order_id;
-			$email = CustomerAddress::where('user_id',Auth::user()->id)->where('order_id',$order_id)->value('email');
+			$user_id = $order->user_id;
+			
+			$email = CustomerAddress::where('user_id',$user_id)->where('order_id',$order_id)->value('email');
 			$data = array();
 			$data['customerReference'] = $order_id.'-'.$order->order_key;
 			$data['description'] = "Payment for order id ".$order_id;
@@ -133,7 +135,6 @@ class DekoPayController extends Controller
 			$data['amount'] = number_format($order->totalAmts, 2, '.', '');	
 			
 			$url = $this->pay_url;
-				
             if($url == 'live'){
 			  $form_url = 'https://secure.dekopay.com/credit-application/form/';
 			}else{
