@@ -17,16 +17,12 @@ class PlaceOrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
-        // echo 'afdfds<pre>'; 
-        // print_r(base64_decode($request->deposited_price)); 
-        // echo "<br>";
-        // print_r(base64_decode($request->total_price)); 
-        // die;
-        // echo $encryt = base64_encode('6-7');
-        // echo $encryt = base64_decode($encryt);
-        // die;
+        //echo '<pre>'; print_r($request->all()); die;
+        //echo $encryt = base64_encode('6-7');
+        //echo $encryt = base64_decode($encryt);
+        //die;
         if(!Auth::check()){
-
+            
             // If user is not logged in
             $getEmailExists = User::where('email',$request->cust_email)->first();
 
@@ -56,7 +52,7 @@ class PlaceOrderController extends Controller
 
         if(isset($getEmailExists) && !empty($getEmailExists)){
             $getCustomerAddress = CustomerAddress::where('user_id',$getEmailExists->id)->first();
-            if($getCustomerAddress){
+            if($getCustomerAddress){          
                 $getCustomerAddress->user_id = $getEmailExists->id;
                 $getCustomerAddress->order_id = 1;
                 $getCustomerAddress->first_name = $request->first_name;
@@ -94,8 +90,8 @@ class PlaceOrderController extends Controller
                 $getOrders = new Order;
                 $getOrders->user_id = $getEmailExists->id;
                 $getOrders->final_price = $request->final_price;
-                $getOrders->total_price = base64_decode($request->total_price);
-                $getOrders->deposited_price = base64_decode($request->deposited_price);
+                $getOrders->total_price = $request->total_price;
+                $getOrders->deposited_price = $request->deposited_price;
                 $getOrders->payment_type = $request->payment_type;
                 $getOrders->paymentccdetails = $request->paymentccdetails;
                 $getOrders->depositpercentage = $request->depositepercentage;
@@ -123,6 +119,7 @@ class PlaceOrderController extends Controller
                         if($request->selected_payment_type == 'dekopay'){
                             $orderDekopayFinance = new OrderDekopayFinance;
                             $orderDekopayFinance->order_id = $getOrders->id;
+                            $orderDekopayFinance->user_id = $getEmailExists->id;
                             $orderDekopayFinance->order_key = base64_encode($getEmailExists->id.'-'.$getOrders->id);
                             $orderDekopayFinance->finCodes = $request->payPro;
                             $orderDekopayFinance->depositAmt = $request->payPer;

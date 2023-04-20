@@ -358,15 +358,15 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <input type="hidden" id="final_price" name="final_price" value="{{ base64_encode($total) }}">
-                        <input type="hidden" id="total_price" name="total_price" value="{{ base64_encode($totalPrice) }}">
-                        <input type="hidden" id="deposited_price" name="deposited_price" value="{{ base64_encode($depositedPrice) }}">
+                        <input type="hidden" id="final_price" name="final_price" value="{{ $total }}">
+                        <input type="hidden" id="total_price" name="total_price" value="{{ $totalPrice }}">
+                        <input type="hidden" id="deposited_price" name="deposited_price" value="{{ $depositedPrice }}">
                         <input type="hidden" id="selected_payment_type" name="selected_payment_type" value="paypal">
                         <div class="checkout-payment-options">
                             <ul class="cc_payment_methods_options">
 
                                 @include('front.pages.payments.paypal',['totalAmount'=>$total])
-                                {{-- @include('front.pages.payments.dekopay',['totalAmount'=>$total]) --}}
+                                @include('front.pages.payments.dekopay',['totalAmount'=>$total])
                             </ul>
                         </div>
                         <div class="checkout-place-order">
@@ -615,10 +615,10 @@
                 contentType:false,
                 processData: false,
                 data: form_data,
-                success: function (response) {
+                success: function (response) {    
                     $('.cc_place_order_btn button').text('Place Order');
                     $('.cc_place_order_btn button').prop('disabled', false);
-                    if(response.status == 500){
+                    if(response.status == 500){ 
                         $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
                         toastr.info(response.msg);
                     }
@@ -665,7 +665,7 @@
 
 
     function alterFilters(){
-            if(null != dekoFilters){
+        if(null != dekoFilters){
             var term = $('select[name="term"]').val();
             if(dekoFilters.hasOwnProperty(term)){
                 termProp = parseInt(dekoFilters[term]);
@@ -680,11 +680,11 @@
             }else{
                 $('select[name="percentage"] option').removeAttr('disabled');
             }
-    }
+        }
     }
 
     var url="https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=b884fefd2e03ec4c921c184fcc4273f0";
-
+    
     function get_deko_data(){
         $.getScript( url, function() {
             alterFilters();
