@@ -222,7 +222,7 @@
 					</div>
 				</div>
 
-				{{-- <div class="finance-available" ng-controller="DekopayController">
+				<div class="finance-available" ng-controller="DekopayController">
 					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
@@ -232,7 +232,7 @@
 					<div class="doko-img">
 						<img src="{{asset('')}}assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
 					</div>
-				</div> --}}
+				</div>
 
 			</div>
 		</div>
@@ -461,7 +461,7 @@
 </div>
 
 <!-- Modal -->
-{{-- @include('front.includes.dekopay-finance-options') --}}
+@include('front.includes.dekopay-finance-options')
 <?php
     if($plainbandMulti){
         $plainbandMulti = 1;
