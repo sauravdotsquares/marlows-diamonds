@@ -7,6 +7,7 @@
     <div class="container">
         <div class="head-para-three">
             <h2 class="heading-h-three">Best Selling Marlow's Diamond Jewellery</h2>
+            <p>Explore our collection of engagement rings for women in a variety of shapes and styles.</p>
         </div>
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
@@ -27,10 +28,10 @@
                                     <div class="product-titles-small">
                                         <a href="{{asset('product/'.$product->slug)}}"> {{$product->title}}</a>
                                     </div>
-                                    {{-- <div class="product-price">
+                                    <div class="product-price">
                                         {{MY_CURRENCY_SYMBOL}}
                                         {{isset($product->ProductVariationMinMaxPrice->MaxPrice)?$product->ProductVariationMinMaxPrice->MaxPrice:0.00}}
-                                    </div> --}}
+                                    </div>
                                     <div class="product-action-btn">
                                         <a class="btn-bg-small" href="{{asset('product/'.$product->slug)}}">Select Options</a>
                                     </div>
@@ -40,6 +41,9 @@
                     @endif
                 @endforeach
             </div>
+        </div>
+        <div class="text-center">
+            <a class="btn-bg-small expdia" href="{{asset('/product-category/engagement-rings')}}">Explore all Diamond Engagement Rings Now</a>
         </div>
     </div>
 </div>

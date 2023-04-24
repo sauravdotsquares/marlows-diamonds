@@ -40,6 +40,11 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
         $scope.range = [];
 
         $scope.shape = $("input[name='shape']:checked").val(); // Shape
+        $scope.payment_mode = $("input[name='payment_mode']:checked").val(); // Shape
+
+        $scope.temp_value_type = $("input[name=payment_mode]").prop('checked');
+        $scope.temp_value_partial_deposit_payment = parseInt($("#partial_deposit_payment").val());
+       
 
         setTimeout(function() { // Carat
             $scope.carat_min = $("#input-carat-min").val();
@@ -77,14 +82,35 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
         $("input[name='certificate[]']:checked").each(function () { // Certificate
             $scope.certificate.push($(this).val());
         });
+
+        $scope.partial_deposit_payment = [];
+        $("input[name='payment_mode']:checked", function () { // Flu
+            var temp_value = 0;
+            if($("input[name=payment_mode]").prop('checked')){
+                temp_value = $("#full_payment").val();
+            }else{
+                temp_value = $("#partial_deposit_payment").val();
+            }
+            $scope.partial_deposit_payment.push(temp_value);
+        });
+
+        
         
         function getData(){
             
-            $scope.fromService = diamondSearchService.diamondSearch($scope.limit,$scope.currentPage,$scope.next_page_url,$scope.shape,$scope.carat_min,$scope.carat_max,$scope.colour,$scope.clarity,$scope.grade,$scope.polish,$scope.symmetry,$scope.fluorescence,$scope.certificate).then(function(result) {
+            $scope.fromService = diamondSearchService.diamondSearch($scope.limit,$scope.currentPage,$scope.next_page_url,$scope.shape,$scope.carat_min,$scope.carat_max,$scope.colour,$scope.clarity,$scope.grade,$scope.polish,$scope.symmetry,$scope.fluorescence,$scope.certificate,$scope.partial_deposit_payment).then(function(result) {
+
+                
+               
                
                 $scope.data = result.data.data;
                 
                 $scope.paging = result.data;
+                if($scope.temp_value_type){
+                    $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount;
+                }else{
+                    $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount * ($scope.temp_value_partial_deposit_payment / 100);
+                }
                 $scope.currentPage = $scope.paging.current_page;
                 $scope.numPerPage = $scope.paging.per_page;
                 $scope.maxSize = 10;
@@ -94,7 +120,10 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
                 $scope.totalPages = $scope.paging.last_page;
                 $scope.VAT = $scope.paging.VAT;
                 $scope.firstDiamondAmount = $scope.paging.firstDiamondAmount;
+                
+                // $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount/10;
                 $scope.loader=false;
+                // console.log('Sumit', $scope);
             });
 
 
@@ -107,6 +136,12 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
 
     $scope.updateDiamondPrice = function(price){
         $scope.firstDiamondAmount = price;
+        if($scope.temp_value_type){
+            $scope.partial_deposit_payment = $scope.firstDiamondAmount;
+        }else{
+            $scope.partial_deposit_payment = $scope.firstDiamondAmount * ($scope.temp_value_partial_deposit_payment / 100);
+        }
+        // console.log("Sumit", $scope);
     }
 
 });
@@ -149,7 +184,7 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
     $scope.financeOptions = function(){
         $scope.term='ONIB12-14.9';
         $scope.percentage='10';
-        $scope.productPrice = $("#finaldiamondprice").text().replace("£", "");
+        $scope.productPrice = $("#finaldiamondprice .price").text().replace("£", "");
         $('#totalOrder').val($scope.productPrice);
         $('#totalOrderText').text($scope.productPrice);
         $('#totalOrderText').attr('data-val',$scope.productPrice);

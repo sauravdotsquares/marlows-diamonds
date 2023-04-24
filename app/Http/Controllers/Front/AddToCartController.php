@@ -68,6 +68,7 @@ class AddToCartController extends Controller
                     'customArray'=> $customArray,
                     "quantity" => 1,
                     "price" => $request['lab_grown_price'],
+                    "deposited_price" => $request['lab_grown_price'],
                     "vat" => getVATPriceFunction($request['setting_price']),
                     "image" => $productData->getProductImages->image_url
                 ];
@@ -205,8 +206,8 @@ class AddToCartController extends Controller
                     "name" => 'Custom Diamond',
                     "customArray"=> $selectedAttributes,
                     "quantity" => 1,
-                    "price" => $input['price'],
-                    "deposited_price" => $input['partial_amount'],
+                    "price" => isset($input['total_amount'])?floatval(preg_replace('/[^\d.]/', '', $input['total_amount'])):$input['price'],
+                    "deposited_price" => floatval(preg_replace('/[^\d.]/', '', $input['partial_amount'])),
                     "vat" => getVATPriceFunction($input['partial_amount']),
                     "image" => ''
                 ];

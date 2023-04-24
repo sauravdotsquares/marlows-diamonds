@@ -30,7 +30,6 @@ Route::get('/phpinfo', function() {
     return phpinfo();
 });
 Route::namespace('Admin')->group(function () {
-    Route::get('/admin', 'LoginController@showLoginForm')->name('admin.direct.login');
     Route::get('admin/login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('admin/login', 'LoginController@login')->name('admin.login');
     Route::get('admin/logout', 'LoginController@logout')->name('admin.logout');
@@ -103,9 +102,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::any('/products/update-price/{slug}','ProductController@productPricing')->name('product-pricing');
 		Route::any('/products/get-product-price','ProductController@getProductPricing')->name('get-product-price');
 		Route::any('/products/images/{slug}','ProductController@uploadFiles')->name('update_product_images');
+		
 
-
-
+		
 
 		Route::post('/products/change-product-status','ProductController@status')->name('change-product-status');
 		Route::post('/products/delete-product-records','ProductController@delete')->name('delete-product-records');
@@ -121,8 +120,8 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::get('/products/export-base-price','ProductController@basePriceexportCsv')->name('export-base-price');
 		Route::any('/products/update-base-price','ProductController@basePriceUpdate')->name('update-base-price');
 		Route::get('/products/search','ProductController@productSearch')->name('product-search');
-
-
+		
+		
 
 		// Faqs Route list
 		Route::get('/faqs', 'FaqController@index')->name('faqs');
@@ -229,7 +228,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/view/{slug}', 'GlobalCombinationsController@view')->name('view');
 		});
 
-        Route::group(['as' => 'filter_master.', 'prefix' => 'filter_master' ], function () {
+		Route::group(['as' => 'filter_master.', 'prefix' => 'filter_master' ], function () {
 			Route::any('', 'FilterCombinationController@index')->name('index');
 			Route::any('/add', 'FilterCombinationController@add')->name('add');
 			Route::any('/edit/{slug}', 'FilterCombinationController@edit')->name('edit');
@@ -249,21 +248,21 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		});
 
 		Route::group(['as' => 'app_products.', 'prefix' => 'app-products', 'namespace' =>'Products' ], function () {
-
+			
 			Route::any('/', 'AppProductsController@list')->name('list');
 			Route::any('/basic-information', 'AppProductsController@basicInformation')->name('basic_information');
 			Route::any('/basic-information/{slug}', 'AppProductsController@editBasicInformation')->name('edit_basic_information');
-
+			
 			Route::any('/variations/{slug}', 'AppProductsController@variationsSelection')->name('variations');
 			Route::any('/variations-edit/{slug}', 'AppProductsController@variationsSelectionEdit')->name('variations_edit');
-
+			
 			Route::any('/upload-images', 'AppProductsController@uploadImages')->name('upload_images');
 			Route::any('/remove-images', 'AppProductsController@removeImage')->name('remove_images');
 
 			Route::any('/change-status/{slug}', 'AppProductsController@changeStatus')->name('change_status');
 			Route::any('/delete/{slug}', 'AppProductsController@deleteRecord')->name('delete');
-
-
+			
+			
 			// Route::any('/images/{slug}', 'AppProductsController@addImages')->name('add_images');
 			// Route::any('/edit/{slug}', 'AppProductsController@edit')->name('edit');
 			// Route::any('/attributes/{slug}', 'AppProductsController@addAttributes')->name('add_attributes');
@@ -281,7 +280,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/delete/{id}', 'ImageGalleryController@deleteFile')->name('deleteFile');
 			Route::any('/files-list', 'ImageGalleryController@getFilesList')->name('getFilesList');
 			Route::any('/use-media', 'ImageGalleryController@useImage')->name('useImage');
-
+			
 		});
 
 
@@ -358,7 +357,7 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	/** Change slugs of all products from previous to new one */
 
 	Route::get('redirects','ProductController@productSlugs');
-
+	
 	// Route::get('product-slugs','ProductController@productSlugs');
 
 	/** Change slugs of all products from previous to new one */
@@ -379,13 +378,13 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	// Route::any('{slug}','ProductController@productListPage');
 
 	Route::get('product-category/{cat1?}/{cat2?}/{cat3?}','ProductController@productCategory');
-
+	
 
 	//Route::post('product/{slug?}','ContactUsFormController@ContactUsForm')->name('contact');
 	Route::post('product/get-product-list','ProductController@getProductList');
 
 	Route::post('product/get-related-product-list','ProductController@getRelatedProductList')->name('get.related.product.list');
-
+	
 
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 	Route::any('product/get-variations-data','ProductController@getSelectedVariationsData')->name('get-variations-data');
@@ -393,7 +392,7 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/get-products-video','ProductController@getProductVideo')->name('get-product-video');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
 	Route::any('product-api/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data-api');
-    Route::get('get-filtered-data','ProductController@getProductListData')->name('getfilteredproducts');
+	Route::get('get-filtered-data','ProductController@getProductListData')->name('getfilteredproducts');
 
 	Route::post('post/get-data','PageController@myPost');
     // Route::get('/blog-resources/{slug}', 'PageController@show');
@@ -401,13 +400,13 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('/', 'MailListFormController@MailListForm')->name('maillist');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 
-
+ 
 	Route::get('products/cart', 'AddToCartController@index')->name('product.cart');
 	Route::post('product/add-to-cart', 'AddToCartController@addToCart')->name('add.to.cart');
 	Route::post('product/add-to-cart-diamond', 'AddToCartController@addToCartDiamond')->name('add.to.cart.diamond');
 	Route::patch('product/update-cart', 'AddToCartController@updateCart')->name('update.cart');
 
-    Route::patch('product/get-filtered-data', 'AddToCartController@updateCart')->name('update.cart');
+	Route::patch('product/get-filtered-data', 'AddToCartController@updateCart')->name('update.cart');
 
 
 	Route::delete('product/remove-from-cart', 'AddToCartController@removeCart')->name('remove.from.cart');
@@ -447,9 +446,9 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::get('deko-api/dekopay', 'DekoPayController@check_response');
 
 
-
-
-
+	
+	
+	
 
 	// {slug2?}/{slug3?}
 	Route::get('{page}', 'PageController@page')->name('page');
@@ -475,7 +474,6 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	});
 
 	Route::get('products/checkout/dekopay/{orderId?}', 'DekoPayController@receipt_page')->name('make.dekopay');
-
 });
 
 /*

@@ -73,7 +73,7 @@ class DiamondFinderController
 
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
 
-
+		
         $rapnetRecords = [];
         if(!empty($rapnetData)){
 	        foreach ($rapnetData as $key => $result) {

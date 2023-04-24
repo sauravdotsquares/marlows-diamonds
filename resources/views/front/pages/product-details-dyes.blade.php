@@ -253,7 +253,7 @@
 					{!!$data->description ? $data->description : $data->description!!}
 				</div>
 				<div class="product-decriptions product-description-common product-description-common_lab_item">
-					{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
+					{!! $data->lab_description ? $data->lab_description.'<br>'.$data->description :  $data->description  !!}
 				</div>
 				<div class="product-finder-price" id="finaldiamondprice">
 
@@ -514,15 +514,15 @@
 							</div>
 							@endif
 						</div>
-						<div class="google-capatcha form-controls">
-						<div class="g-recaptcha" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
-						</div>
-						@if ($errors->has('g-recaptcha-response'))
-							<div class="error">
-								{{ $errors->first('g-recaptcha-response') }}
-							</div>
+						{{-- <div class="google-capatcha form-controls">
+                            <div class="g-recaptcha" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
+                            </div>
+						    @if ($errors->has('g-recaptcha-response'))
+                                <div class="error">
+                                    {{ $errors->first('g-recaptcha-response') }}
+                                </div>
 							@endif
-						</div>
+						</div> --}}
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
@@ -635,7 +635,7 @@
                     }
                 },
                 submitHandler: function (form) {
-                    if (grecaptcha.getResponse()) {
+                    // if (grecaptcha.getResponse()) {
                         var form_data = new FormData(form);
                         $(form).find("button[type='submit']").prop('disabled',true);
                         $("button[type='submit']").text("Please Wait...");
@@ -660,9 +660,9 @@
                                 }
                             }
                         });
-                    } else {
-                        alert('Please confirm captcha to proceed')
-                    }
+                    // } else {
+                    //     alert('Please confirm captcha to proceed')
+                    // }
                 }
             });
 

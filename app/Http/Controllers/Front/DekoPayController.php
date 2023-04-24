@@ -135,6 +135,7 @@ class DekoPayController extends Controller
 			$data['amount'] = number_format($order->totalAmts, 2, '.', '');	
 			
 			$url = $this->pay_url;
+			
             if($url == 'live'){
 			  $form_url = 'https://secure.dekopay.com/credit-application/form/';
 			}else{
