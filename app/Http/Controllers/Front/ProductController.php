@@ -23,6 +23,7 @@ use App\Models\SitemapUrls;
 use App\Models\Posts;
 use App\Models\PostCategory;
 use App\Models\Pages;
+use App\Models\ProductFilter;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
