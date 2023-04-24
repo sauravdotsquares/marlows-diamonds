@@ -184,7 +184,7 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
     $scope.financeOptions = function(){
         $scope.term='ONIB12-14.9';
         $scope.percentage='10';
-        $scope.productPrice = $("#finaldiamondprice").text().replace("£", "");
+        $scope.productPrice = $("#finaldiamondprice .price").text().replace("£", "");
         $('#totalOrder').val($scope.productPrice);
         $('#totalOrderText').text($scope.productPrice);
         $('#totalOrderText').attr('data-val',$scope.productPrice);
