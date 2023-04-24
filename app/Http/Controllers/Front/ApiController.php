@@ -140,6 +140,7 @@ class ApiController extends Controller
     public function getHariKrishnaFunction(){
 
         ini_set('max_execution_time', 1200);
+        set_time_limit(0);
 
         $start_date_time = date('Y-m-d H:i:s');
         Log::info("Harekrishna API work start at:- ". $start_date_time);
@@ -169,9 +170,15 @@ class ApiController extends Controller
             $putFile = file_put_contents($json_file_path, $resp);
             
             /** Make data to save accordingly */
-            $arData = json_decode($resp, true);  
-            $dataToInsert = [];
+            $arData = json_decode($resp, true);
+            
+            // Delete old data with truncate
+             HKDiamondStock::truncate();
+            
+            // $dataToInsert = [];
+            $recordsAdded= 0;
             foreach($arData as $key => $stock){
+                $dataToInsert = [];
                 $stock['Sr_No'] = $stock['Sr_No_'];
                 $stock['Flourescent'] = $stock['Fluorescent'];
                 $stock['Measurements'] = $stock['Measurement'];
@@ -179,19 +186,21 @@ class ApiController extends Controller
                 unset($stock['Sr_No_']);
                 unset($stock['Fluorescent']);
                 unset($stock['Measurement']);
-                $dataToInsert[$key] = $stock;
+                $dataToInsert[0] = $stock;
+                HKDiamondStock::insert($dataToInsert);
+                $recordsAdded = $recordsAdded + 1;
             }
             
             // Delete old data with truncate
-            HKDiamondStock::truncate();
+            //HKDiamondStock::truncate();
 
             // Save all data using chunks
-            $recordsAdded = 0;
-            $collection = collect($dataToInsert);
-            foreach ($collection->chunk(100) as  $chunk) {
-                HKDiamondStock::insert($chunk->toArray());
-                $recordsAdded = $recordsAdded + $chunk->count();
-            }
+            // $recordsAdded = 0;
+            // $collection = collect($dataToInsert);
+            // foreach ($collection->chunk(100) as  $chunk) {
+            //     HKDiamondStock::insert($chunk->toArray());
+            //     $recordsAdded = $recordsAdded + $chunk->count();
+            // }
 
             
 

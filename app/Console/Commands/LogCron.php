@@ -43,16 +43,16 @@ class LogCron extends Command
         
         $this->line('==================');
         $this->line('Running my job at ' . date('Y-m-d h:i:s'));
-        HariKrishna::truncate();
+        // HariKrishna::truncate();
         
-        DiamondStock::chunk(1000, function ($records) {
-            foreach ($records as $record) {
-                unset($record['id']);
-                $record['created_at'] = date('Y-m-d h:i:s');
-                $record['updated_at'] = date('Y-m-d h:i:s');
-                HariKrishna::create($record->toArray());
-            }
-        });
+        // DiamondStock::chunk(1000, function ($records) {
+        //     foreach ($records as $record) {
+        //         unset($record['id']);
+        //         $record['created_at'] = date('Y-m-d h:i:s');
+        //         $record['updated_at'] = date('Y-m-d h:i:s');
+        //         HariKrishna::create($record->toArray());
+        //     }
+        // });
         $this->line('Ending my job at ' . date('Y-m-d h:i:s'));
     }
 }

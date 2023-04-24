@@ -251,9 +251,9 @@
     </div>
     <!-- Navbars and logo end here -->
 
-   <!-- Post bar start -->
+    <!-- Post bar start -->
 
-   <div class="post-bar">
+  <div class="post-bar">
         <div class="container">
             <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
                 <div class="post-bar-left header-post-bar-left">
@@ -263,6 +263,7 @@
                     {{-- <a href="{{ route('products.exclusive') }}" >
                         <span> Exclusive to Marlows </span>
                     </a> --}}
+                    {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
                     <p id="offer-text"> </p>
                     <p>
                     {{-- <span class="header-heighlight-text">Up to 30% off</span> --}}

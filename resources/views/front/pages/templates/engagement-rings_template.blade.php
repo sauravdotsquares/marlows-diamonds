@@ -112,12 +112,12 @@
 				</div>
 				<div class="leftright-imt-col leftright-text">
 					<h2 class="leftright-heading heading-h-three">
-						Find Your Perfect Match
+						Find Your Perfect Ring for Your Partner
 					</h2>
-					<p>You found your perfect match so the engagement ring you propose with should also be a perfect match for your partner. Marlow’s Diamonds brings to you a curated assortment of diamond engagement rings in the most beautiful designs, stone settings, diamonds shapes, and ring sizes.</p>
-					<p>Why us? Because our diamonds are as special as your relationship. Our engagement rings are made only with ethically sourced diamonds. With us, you can be assured of quality because our diamonds are graded by the GIA. Adorning our sparkling stones will bring you joy and warmth for the rest of your lives.</p>
+					<p>Once you've found your perfect match, you should choose the perfect engagement ring that suits her personality and look. We bring to you a curated assortment of diamond engagement rings in the most beautiful designs, stone settings, diamond shapes, and ring sizes.</p>
+					<p>Our diamond engagement rings are fully natural and unique, designed in our lab. We only use ethically sourced diamonds in our engagement rings. Additionally, we offer diamonds that are graded by the GIA, so you can be confident that they are of high quality. Adorning our sparkling stones will bring you joy and warmth for the rest of your lives.</p>
 					<div class="viewguide-btn">
-							<a class="btn-bg-small" href="/product-category/engagement-rings/shoulder-set/">Shop Now</a>
+							<a class="btn-bg-small" href="/product-category/engagement-rings">Shop Now</a>
 					</div>
 				</div>
 			</div>
