@@ -264,7 +264,7 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
        if(price>preSetVal){
             $('.finance-available-options').css('display','block');
             $('.finance_options_not_available').css('display','none');
-       }else{
+        }else{
             $('.finance-available-options').css('display','none');
             $('.finance_options_not_available').css('display','block');
        }

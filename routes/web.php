@@ -323,7 +323,6 @@ Route::group(['middleware' => ['customer']], function () {
 		// Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
 		
 		Route::get('wc-api/dekopay', 'DekoPayController@check_response');
-
 	});
 });
 
