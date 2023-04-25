@@ -236,6 +236,10 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/delete/{slug}', 'FilterCombinationController@delete')->name('delete');
 			Route::any('/view/{slug}', 'FilterCombinationController@view')->name('view');
 			Route::any('/view/{slug}/additem', 'FilterCombinationController@filterItemAdd')->name('view');
+			Route::any('/itemlistview/{slug}', 'FilterCombinationController@itemListView')->name('itemlistview');
+			Route::any('/itemstatus/{slug}', 'FilterCombinationController@itemStatusFunction')->name('itemstatus');
+			Route::any('/itemedit/{slug}', 'FilterCombinationController@itemEditFunction')->name('itemedit');
+			Route::any('/itemdelete/{slug}', 'FilterCombinationController@itemDeleteFunction')->name('itemdelete');
 			// Route::any('/view/{slug}/edititem', 'FilterCombinationController@filterItemEdit')->name('view');
 			// Route::any('/view/{slug}/statusitem', 'FilterCombinationController@filterItemStatus')->name('view');
 			// Route::any('/view/{slug}/deleteitem', 'FilterCombinationController@filterItemDelete')->name('view');

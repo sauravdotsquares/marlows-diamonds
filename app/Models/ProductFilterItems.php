@@ -19,7 +19,17 @@ class ProductFilterItems extends Model
         'item_value',
         'min_price',
         'max_price',
+        'top_text',
+        'bottom_text',
         'is_active',
         'is_deleted'
     ];
+    protected $appends = [
+        'parent_filter_name'
+    ];
+
+    public function getParentFilterNameAttribute()
+    {
+        return ProductFilter::where('id',$this->product_filter_id)->pluck('name')->first();
+    }
 }

@@ -65,7 +65,8 @@
                 <input type="hidden" id="pagescroll" value="1">
                 <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
                 <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
-
+               
+                <div class="text-center"><h5>{{isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''}}</h5></div>
                 <div class="search-result"> @include('front.includes.productCard')</div>
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
@@ -78,6 +79,7 @@
                     <img src="{{ asset('images/spinner.gif') }}" id="loading-data-image" class="img-responsive"
                         style="display:none;" />
                 </div>
+                <div class="text-center"><h5>{{isset($filterItemTextData->bottom_text)?$filterItemTextData->bottom_text:''}}</h5></div>
                 {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
             </div>
 

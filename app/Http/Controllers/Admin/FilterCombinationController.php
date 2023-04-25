@@ -64,7 +64,6 @@ class FilterCombinationController extends Controller
         }
         // prd($dataToPass);
         if($request->post()){
-            // prd($request->all());
             $data = $request->validate([
                 'name' => 'required',
                 'form_data.*.product_type' => 'required|numeric',
@@ -339,6 +338,8 @@ class FilterCombinationController extends Controller
                 'item_value' => 'required_if:max_price,null',
                 'product_filter_id' => 'required|numeric',
                 'item_type' => 'required',
+                'top_text' => '',
+                'bottom_text' => '',
             ],
             [
                 // 'item_name.required' => 'Please enter item name',
@@ -371,12 +372,14 @@ class FilterCombinationController extends Controller
             $new_record->item_type = isset($data['item_type'])?$data['item_type']:0;
             $new_record->min_price = isset($data['min_price'])?$data['min_price']:0;
             $new_record->max_price = isset($data['max_price'])?$data['max_price']:0;
+            $new_record->top_text = isset($data['top_text'])?$data['top_text']:'';
+            $new_record->bottom_text = isset($data['bottom_text'])?$data['bottom_text']:'';
             if( $new_record->save()){
-                // echo "saved";
-                // prd($request->all());
+                return redirect()->back()->with('success','Record has been added successfully');
+            }else{
+                return redirect()->back()->with('danger','Record has not added successfully');
             }
 
-            return redirect()->back()->with('success','Record has been added successfully');
             // return redirect()->route($this->route_path. '.view')->with('success','Record has been added successfully');
         }
 
@@ -398,4 +401,89 @@ class FilterCombinationController extends Controller
         echo "Check delete function";
     }
 
+    public function itemListView($slug,Request $request)
+    {
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard")],
+            ["name" => $this->module_name , "url" => route($this->route_path . ".index", [ 'type'=> $this->master_type]  )],
+            ["name" => "View Item List ", "url" => route($this->route_path . ".itemlistview", ['slug' => $slug ]  )],
+        ];
+        populate_breadcrumb($breadcrumb);
+
+
+        $getSlugItemData = ProductFilterItems::where('item_type',$slug)->get();
+        $route_path = $this->route_path;
+        return view($this->view_path. '.viewitemlist', compact(['slug','route_path','getSlugItemData']));
+    }
+
+    public function itemStatusFunction($slug,Request $request)
+    {
+        
+        $response = [];
+
+        $record = ProductFilterItems::where('id', $slug)->first();
+        // prd($record);
+        if(!empty($record)){
+            $record->is_active =  $record->is_active ? 0 : 1;
+            $record->save();
+            $response['status'] = 'success';
+            $response['message'] = 'Record updated successfully';
+        }else{
+            $response['status'] = 'error';
+            $response['message'] = 'Record not identified';
+        }
+
+        if($request->ajax()){
+            return response()->json($response);
+        }else{
+            return redirect()->back()->with($response['status'],$response['message']);
+        }
+    }
+    public function itemEditFunction($slug,Request $request)
+    {
+
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard")],
+            ["name" => $this->module_name , "url" => route($this->route_path . ".index", [ 'type'=> $this->master_type]  )],
+            ["name" => "View Item List ", "url" => route($this->route_path . ".itemlistview", ['slug' => $slug ]  )],
+        ];
+        populate_breadcrumb($breadcrumb);
+
+        $page_title = "Edit Item Product";
+        $dataToPass = ProductFilterItems::where('id',$slug)->first();
+
+
+        if($request->post()){
+            $dataToPass->item_name =  $request->item_name;
+            $dataToPass->top_text =  $request->top_text;
+            $dataToPass->bottom_text =  $request->bottom_text;
+            $dataToPass->save();
+
+            return view($this->view_path. '.itemeditpage',compact(['page_title','dataToPass']));
+        }
+
+        return view($this->view_path. '.itemeditpage',compact(['page_title','dataToPass']));
+    }
+    public function itemDeleteFunction($slug,Request $request)
+    {
+       
+        $response = [];
+
+        $record = ProductFilterItems::where('id', $slug)->first();
+        if(!empty($record)){
+            $record->is_deleted =  $record->is_deleted ? 0 : 1;
+            $record->save();
+            $response['status'] = 'success';
+            $response['message'] = 'Record Deleted successfully';
+        }else{
+            $response['status'] = 'error';
+            $response['message'] = 'Record not identified';
+        }
+
+        if($request->ajax()){
+            return response()->json($response);
+        }else{
+            return redirect()->back()->with($response['status'],$response['message']);
+        }
+    }
 }
