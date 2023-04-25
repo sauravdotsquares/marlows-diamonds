@@ -26,13 +26,27 @@
                         <div class="card-body">
 
                             <div class="row">
-                                {{-- <div class="col-md-12">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="item_name">Name </label>
                                         <input type="text" class="form-control" id="item_name" name="item_name" placeholder="Enter item name" value="{{ request()->old('item_name') }}">
                                         @error('item_name') <span class="custom-error">{{ $message }}</span>  @enderror
                                     </div>
-                                </div> --}}
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="top_text">Top Text </label>
+                                        <input type="text" class="form-control" id="top_text" name="top_text" placeholder="Enter item name" value="{{ request()->old('top_text') }}">
+                                        @error('top_text') <span class="custom-error">{{ $message }}</span>  @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="bottom_text">Bottom Text </label>
+                                        <input type="text" class="form-control" id="bottom_text" name="bottom_text" placeholder="Enter item name" value="{{ request()->old('bottom_text') }}">
+                                        @error('bottom_text') <span class="custom-error">{{ $message }}</span>  @enderror
+                                    </div>
+                                </div>
                                 <input type="hidden" name="product_filter_id" value="{{$getFilterData['id']}}">
                                 <input type="hidden" name="item_type" value="{{$getFilterData['slug']}}">
                                 @if($slugData == 'filter-by-price')

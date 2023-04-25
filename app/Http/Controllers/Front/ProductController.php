@@ -24,6 +24,7 @@ use App\Models\Posts;
 use App\Models\PostCategory;
 use App\Models\Pages;
 use App\Models\ProductFilter;
+use App\Models\ProductFilterItems;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -1691,6 +1692,15 @@ class ProductController extends Controller
                 ->where(['is_deleted' => 0, 'is_active' => 1])
                 ->get();
 
+            $slugText = '';
+            if(isset($slugs[1]) && !empty($slugs[1])){
+                $slugText = $slugs[1];
+            }elseif(isset($slugs[0]) && !empty($slugs[0])){
+                $slugText = $slugs[0];
+            }
+
+            $filterItemTextData = ProductFilterItems::where('item_slug',$slugText)->select('top_text','bottom_text')->first();
+
 
             if ($request->isMethod('POST')) {
                 return response()->json([
@@ -1702,6 +1712,7 @@ class ProductController extends Controller
             }
 
             return view('front.pages.product_listing_page', compact([
+                'filterItemTextData',
                 'productItems',
                 'isNextPage',
                 'nextPage',

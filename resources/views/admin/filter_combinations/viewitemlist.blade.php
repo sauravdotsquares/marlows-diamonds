@@ -6,17 +6,19 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <a href="{{  route($route_path. '.add') }}" class="btn btn-primary add-button float-right">
-                            Add Record
-                        </a>
                     </div>
                     <div class="card-body">
                         <table id="" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>S.N.</th>
-                                    <th>Name</th>
-                                    <th>Slug</th>
+                                    <th>Filter name</th>
+                                    <th>Filter Item Name</th>
+                                    <th>Filter Item slug</th>
+                                    <th>Value</th>
+                                    <th>Type</th>
+                                    <th>Top Text</th>
+                                    <th>Bottom Text</th>
                                     <th>Created</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -24,19 +26,20 @@
                             </thead>
                             <tbody>
 
-                                <?php
-                                    // echo "<pre>";
-                                    // print_r($dataToPass);
-                                    // die;
+                                
 
-                                ?>
-
-                                <?php if($dataToPass->count()){ ?>
-                                    @foreach($dataToPass as $key => $data)
+                                <?php if($getSlugItemData->count()){ ?>
+                                    @foreach($getSlugItemData as $key => $data)
+                                   
                                         <tr>
-                                            <td>{{$dataToPass->firstItem() + $key}}</td>
-                                            <td>{{$data->name}}</td>
-                                            <td>{{$data->slug}}</td>
+                                            <td>{{++$key}}</td>
+                                            <td>{{$data->parent_filter_name}}</td>
+                                            <td>{{$data->item_name}}</td>
+                                            <td>{{$data->item_slug}}</td>
+                                            <td>{{$data->item_value}}</td>
+                                            <td>{{$data->item_type}}</td>
+                                            <td>{{$data->top_text}}</td>
+                                            <td>{{$data->bottom_text}}</td>
                                             <td><span class="date-format" date="{{$data->created_at}}"></span></td>
                                             <td>
                                                 <?php if($data->is_active){ ?>
@@ -46,15 +49,13 @@
                                                 <?php } ?>
                                             </td>
                                             <td>
-                                                <a title="View record" class="btn btn-outline-info btn-sm" href="{{ route($route_path. '.itemlistview', ['slug'=> $data->slug ] ) }}">View Item</a>
-                                                <a title="View record" class="btn btn-outline-info btn-sm" href="{{ route($route_path. '.view', ['slug'=> $data->slug ] ) }}">Add Item</a>
                                                 @if($data->is_active)
-                                                    <a title="Change status" class="btn btn-outline-danger btn-sm confirm_first" href="{{ route($route_path. '.status', ['slug'=> $data->slug ] ) }}">Inactive</a>
+                                                    <a title="Change status" class="btn btn-outline-danger btn-sm confirm_first" href="{{ route($route_path. '.itemstatus', ['slug'=> $data->id ] ) }}">Inactive</a>
                                                 @else
-                                                    <a title="Change status" class="btn btn-outline-success btn-sm confirm_first" href="{{ route($route_path. '.status', ['slug'=> $data->slug ] ) }}">Activate</a>
+                                                    <a title="Change status" class="btn btn-outline-success btn-sm confirm_first" href="{{ route($route_path. '.itemstatus', ['slug'=> $data->id ] ) }}">Activate</a>
                                                 @endif
-                                                <a title="Edit record" class="btn btn-outline-info btn-sm" href="{{ route($route_path. '.edit', ['slug'=> $data->slug ] ) }}">Edit</a>
-                                                <a title="Change status" class="btn btn-outline-success btn-sm confirm_first" href="{{ route($route_path. '.delete', ['slug'=> $data->slug ] ) }}">Delete</a>
+                                                <a title="Edit record" class="btn btn-outline-info btn-sm" href="{{ route($route_path. '.itemedit', ['slug'=> $data->id ] ) }}">Edit</a>
+                                                <a title="Change status" class="btn btn-outline-success btn-sm confirm_first" href="{{ route($route_path. '.itemdelete', ['slug'=> $data->id ] ) }}">Delete</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -66,7 +67,7 @@
                             </tbody>
                         </table>
                         <div class="pagination-container float-right">
-                            {{ $dataToPass->appends($_GET)->links('layouts.pagination') }}
+                          
                         </div>
                     </div>
                 </div>
