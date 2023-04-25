@@ -35,15 +35,11 @@
 					@else
 						<a href="#">{{isset($product->title)?$product->title:''}}</a>
 					@endif
-					
-					<?php if(!empty($product->minimumValue) && !empty($product->maximumValue)){ ?>
-						<p> <strong>Price</strong> <span>  {{MY_CURRENCY_SYMBOL}}{{$product->minimumValue}} - {{MY_CURRENCY_SYMBOL}}{{$product->maximumValue}} </span> </p>
-					<?php } ?>
 
+					<?php if(!empty($product->ProductVariationMinMaxPrice->MinPrice) && !empty($product->ProductVariationMinMaxPrice->MinPrice)){ ?>
+                        <p> <strong>Price</strong> <span>  {{MY_CURRENCY_SYMBOL}} {{round(($product->ProductVariationMinMaxPrice->MaxPrice*getVAT()),2)}} </span> </p>
+					<?php } ?>
 				</div>
-                {{-- <div class="product-price">
-                    {{MY_CURRENCY_SYMBOL}} {{$product->ProductVariationMinMaxPrice->MaxPrice}}
-                </div> --}}
 			</div>
 		</div>
 	</div>
