@@ -1260,8 +1260,12 @@ if (!function_exists('validate_breadcrumb')) {
                          $is404 = true;
                      }
                      $conditions = 'AND';
+                 }else{
+                    $queryString = Category::whereIn('slug',$queryString)->orWhere('slug','like','%'.$queryString[1].'%')->pluck('slug')->toArray();
+                        
+                     $conditions = 'OR';
                  }
-             }
+            }
  
              if ($queryString[0] == 'diamond-engagement-rings') {
                  $queryString = [
