@@ -1729,13 +1729,13 @@ class ProductController extends Controller
     public function getProductListData(Request $request)
     {
         $dataArray = [];
-
         if (isset($request->ids) && !empty($request->ids)) {
             foreach ($request->ids as $key => $value) {
                 $dataArray[$value['name']][] = $value['value'];
             }
         }
         $dataArray['page'] = $request->page;
+        $dataArray['keyword'] = $request->keyword;
         $slugs = explode('/', $request->path);
         return $productListingData = getProductListing($slugs, $dataArray);
         return view('front.includes.productCard', $productListingData);
