@@ -32,14 +32,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="top_text">Top Text </label>
-                                        <input type="text" class="form-control" id="top_text" name="top_text" placeholder="Enter item name" value="{{ isset($dataToPass->top_text)?$dataToPass->top_text:'' }}">
+                                        <textarea id="top_text" name="top_text" class="form-control ckeditor description" placeholder="Top Text Description" >{!! isset($dataToPass->top_text)?$dataToPass->top_text:'' !!}</textarea>
                                         @error('top_text') <span class="custom-error">{{ $message }}</span>  @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="bottom_text">Bottom Text </label>
-                                        <input type="text" class="form-control" id="bottom_text" name="bottom_text" placeholder="Enter item name" value="{{ isset($dataToPass->bottom_text)?$dataToPass->bottom_text:'' }}">
+                                        <textarea id="bottom_text" name="bottom_text" class="form-control ckeditor description" placeholder="Bottom Text Description" >{{ isset($dataToPass->bottom_text)?$dataToPass->bottom_text:'' }}</textarea>
                                         @error('bottom_text') <span class="custom-error">{{ $message }}</span>  @enderror
                                     </div>
                                 </div>
@@ -67,7 +67,11 @@
 
 @section('js')
     <script>
-
-      
+        $(function () {
+            // Summernote
+            $('.description').summernote({
+                height:250
+            })
+        })
     </script>
 @endsection
