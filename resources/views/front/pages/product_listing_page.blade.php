@@ -478,6 +478,17 @@
         }
     });
 
+    $('#search').on('keyup',function(){
+        let searchTextData = $(this).val();
+        if(searchTextData.length > 2){
+            $("#showProductList").html('');
+            sendDataValues(1);
+        }else if(searchTextData.length == 0){
+            var page = $('#pagescroll').val();
+            sendDataValues(page);
+        }
+    });
+
     function sendDataValues(page) {
         // $("input[name=filter-by-shape]").attr('onclick', 'return false;');
         // filterShapechanged();
@@ -488,6 +499,7 @@
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
+                'keyword': $('#search').val(),
                 'path': '{{ $path }}',
                 'page': page
             },
