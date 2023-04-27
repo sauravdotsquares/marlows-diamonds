@@ -100,7 +100,7 @@ class LoginController extends Controller
             ];
         }
         if(isset($getDetails) && !empty($getDetails)){
-            if(Auth::attempt($userDetails, true)){
+            if(Auth::guard('customer')->attempt($userDetails, true)){
                 Auth::login(Auth::user(), true);
                 $getUserId = User::where('email',$userDetails['email'])->first();
                 return $getUserId;
