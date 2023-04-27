@@ -73,17 +73,14 @@
 										<tr>
 											<th align="left" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; ">Product</th>
 											<th align="center" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; ">Quantity</th>
-											<th align="right" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; ">Price</th>
+											<th align="right" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; "> Total Price</th>
+											<th align="right" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; "> Deposited Price</th>
 										</tr>
 									</thead>
 									<tbody>
 										@foreach($data1['data']['get_order_details_function'] as $key => $orderDetails)
                                             <?php
                                             $detailsDecode = (array)json_decode($orderDetails['order_product_details']);
-                                            // unset($detailsDecode['title']);
-                                            // echo "adasd<pre>";
-                                            // print_r($detailsDecode);
-                                            // die;
                                             ?>
                                             <tr>
                                                 <td width="270px" align="left" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
@@ -258,6 +255,10 @@
                                                 color: #505050;line-height: 20px; font-size: 14px;">
                                                         {{MY_CURRENCY_SYMBOL}}{{$orderDetails['total_price']}}
                                                 </td>
+                                                <td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+                                                color: #505050;line-height: 20px; font-size: 14px;">
+                                                        {{MY_CURRENCY_SYMBOL}}{{$orderDetails['deposited_product_price']}}
+                                                </td>
                                             </tr>
                                             <?php // die; ?>
 										@endforeach
@@ -268,6 +269,10 @@
 											color: #505050;line-height: 20px;">
 												<p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
 												<strong style=" font-size: 14px;">Subtotal:</strong></p>
+
+											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
 
 											</td>
 											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
@@ -291,6 +296,10 @@
 											color: #505050;line-height: 20px; font-size: 14px;">
 
 											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
+
+											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
 													{{$data1['data']['payment_type']}}
@@ -301,6 +310,10 @@
 											color: #505050;line-height: 20px;">
 												<p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
 												<strong style=" font-size: 14px;">Total:</strong></p>
+
+											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
 
 											</td>
 											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
@@ -319,6 +332,10 @@
 											color: #505050;line-height: 20px;">
 												<p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
 												<strong style=" font-size: 14px;">Deposited Total:</strong></p>
+
+											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
 
 											</td>
 											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
