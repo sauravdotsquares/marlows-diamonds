@@ -239,8 +239,73 @@ h3,.heading-h-three{font-size:28px}
 }
 }
 
+
+
+@media(min-width: 1200px) and (max-width: 1420px){
+
+
+.site-logo-main {
+    max-width: 93px;
+}
+
+.head-mini-search .formgroup {
+    max-width: 160px;
+}
+
+
+.head-mini-search .formgroup input {
+    font-size: 12px;
+    padding:0 10px 0 34px;
+}
+
+	.chepaest-lab-left {max-width: 640px;padding: 18px 38px;}
+	.chepaest-lab-left p {font-size: 14px;line-height: 23px;margin: 0 0 15px 0;}
+	.chepaest-lab-left h3 {font-size: 23px;margin: 0 0 19px 0;}
+	.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 7px;font-size: 10px;}
+	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {right: -4px;}
+}
+
+
+
 @media(max-width:1199px){
 .product-info-media .owl-carousel {position: relative;margin: 0;float: right;width: 75%;}
+
+
+.main-navigaiton .nav-navbars .level-zero > span > a {
+    padding: 15px 5px;
+    font-size: 9px;
+}
+
+.main-navigaiton .nav-navbars .level-zero .fa-angle-down {
+    top: 7px;
+    font-size: 9px;
+}
+
+
+
+
+.head-mini-search .formgroup input {
+    font-size: 12px;
+    padding:0 6px 0 27px;
+}
+
+.seach-btn {
+    width: 16px;
+    left: 7px;
+    top: 7px;
+}
+
+
+
+.site-logo-main {
+    max-width: 74px;
+}
+
+
+.head-mini-search .formgroup {
+    max-width: 115px;
+    position: relative;
+}
 }
 
 /** media only for header responsive **/
@@ -323,13 +388,7 @@ h3,.heading-h-three{font-size:28px}
 	.diamond-shapes {align-items: start !important;}
 }
 
-@media(min-width: 1200px) and (max-width: 1420px){
-	.chepaest-lab-left {max-width: 640px;padding: 18px 38px;}
-	.chepaest-lab-left p {font-size: 14px;line-height: 23px;margin: 0 0 15px 0;}
-	.chepaest-lab-left h3 {font-size: 23px;margin: 0 0 19px 0;}
-	.main-navigaiton .nav-navbars .level-zero > span > a {padding: 15px 8px;}
-	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {right: -2px;}
-}
+
 
 @media(max-width:991px){
 .diamond-field-labels {margin-bottom: 8px;}
