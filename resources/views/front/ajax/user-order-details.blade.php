@@ -11,6 +11,7 @@
                     <tr>
                         <th>Product</th>
                         <th>Total</th>
+                        <th>Deposited</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -123,6 +124,7 @@
                                 </ul>
                             </td>
                             <td> {{MY_CURRENCY_SYMBOL}} {{ $value->product_price * $value->quantity}}</td>
+                            <td> {{MY_CURRENCY_SYMBOL}} {{ $value->deposited_product_price}}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -130,16 +132,16 @@
                     <tr>
                         <th scope="row">Subtotal:</th>
                         <td><span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$getOrderDetails->final_price}}</span></td>
+                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Payment method:</th>
                         <td>{{$getOrderDetails->payment_type}}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Total:</th>
+                        <th scope="row">Deposited Total:</th>
                         <td><span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$getOrderDetails->final_price}}</span> <small
+                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span> <small
                                 class="includes_tax">(includes <span class="woocommerce-Price-amount amount"><span
                                         class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>64.80</span> VAT)</small></td>
                     </tr>
