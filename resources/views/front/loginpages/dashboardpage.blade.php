@@ -77,6 +77,7 @@
                                                         <th>Date</th>
                                                         <th>Status</th>
                                                         <th>Total</th>
+                                                        <th>Deposited</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
