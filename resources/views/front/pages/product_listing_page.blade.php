@@ -79,6 +79,8 @@
                     <img src="{{ asset('images/spinner.gif') }}" id="loading-data-image" class="img-responsive"
                         style="display:none;" />
                 </div>
+                <br>
+                <br>
                 <div class="text-center">{!!isset($filterItemTextData->bottom_text)?$filterItemTextData->bottom_text:''!!}</div>
                 {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
             </div>
