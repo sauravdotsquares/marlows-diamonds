@@ -485,14 +485,14 @@
         let searchTextData = $(this).val();
         if(searchTextData.length > 2){
             $("#showProductList").html('');
-            sendDataValues(1);
+            sendDataValues(1,'html');
         }else if(searchTextData.length == 0){
             var page = $('#pagescroll').val();
-            sendDataValues(page);
+            sendDataValues(page,'append');
         }
     });
 
-    function sendDataValues(page) {
+    function sendDataValues(page,type='append') {
         // $("input[name=filter-by-shape]").attr('onclick', 'return false;');
         // filterShapechanged();
         $('.ajax-load').show();
@@ -515,7 +515,11 @@
                     return false;
                 }
                 $('.ajax-load').hide();
-                $("#showProductList").append(res.productItems);
+                if(type == 'append'){
+                    $("#showProductList").append(res.productItems);
+                }else{
+                    $("#showProductList").html(res.productItems);
+                }
                 $('#sectionHeight').val($('#showProductList').height());
                 $('#scrollFlag').val(0);
             }
