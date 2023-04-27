@@ -67,6 +67,7 @@
                 <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
                
                 <div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>
+                <br>
                 <div class="search-result"> @include('front.includes.productCard')</div>
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
