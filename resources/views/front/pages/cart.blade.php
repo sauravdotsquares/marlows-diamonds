@@ -124,7 +124,7 @@
                                     &nbsp; {{MY_CURRENCY_SYMBOL}}{{
                                     number_format($details['price'],2) }}</td>
                                 <td class="product-quantity-col" data-th="Quantity">
-                                    <input type="number" disabled="disabled" value="{{ $details['quantity'] }}"
+                                    <input type="text" disabled="disabled" value="{{ $details['quantity'] }}"
                                         class="form-control quantity update-cart" />
                                 </td>
                                 <td class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}}{{
