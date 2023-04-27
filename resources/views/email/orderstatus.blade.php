@@ -366,12 +366,12 @@
 									<tbody>
 										<tr>
 											<td align="center" style="border: 1px dashed #808080;font-family:Arial; font-size: 15px; color: #808080; padding: 30px 20px; line-height: 24px;">
-												{{isset($data1['data']['order_address']['first_name'])?$data1['data']['order_address']['first_name']:''}} {{isset($data1['data']['order_address']['last_name'])?$data1['data']['order_address']['last_name']:''}}<br>
-												{{isset($data1['data']['order_address']['company_name'])?$data1['data']['order_address']['company_name']:''}}<br>
-												{{isset($data1['data']['order_address']['street_address_l1'])?$data1['data']['order_address']['street_address_l1']:''}} {{isset($data1['data']['order_address']['street_address_l2'])?$data1['data']['order_address']['street_address_l2']:''}}<br>
-												{{isset($data1['data']['order_address']['town_city'])?$data1['data']['order_address']['town_city']:''}}<br>
-												{{isset($data1['data']['order_address']['state'])?$data1['data']['order_address']['state']:''}} {{isset($data1['data']['order_address']['pin_code'])?$data1['data']['order_address']['pin_code']:''}}<br>
-												{{isset($data1['data']['order_address']['country_name'])?$data1['data']['order_address']['country_name']:''}}<br>
+												{{isset($data1['data']['order_address']['first_name'])?$data1['data']['order_address']['first_name']:''}} {{isset($data1['data']['order_address']['last_name'])?$data1['data']['order_address']['last_name'].'<br>':''}}
+												{{isset($data1['data']['order_address']['company_name'])?$data1['data']['order_address']['company_name'].'<br>':''}}
+												{{isset($data1['data']['order_address']['street_address_l1'])?$data1['data']['order_address']['street_address_l1']:''}} {{isset($data1['data']['order_address']['street_address_l2'])?$data1['data']['order_address']['street_address_l2'].'<br>':''}}
+												{{isset($data1['data']['order_address']['town_city'])?$data1['data']['order_address']['town_city'].'<br>':''}}
+												{{isset($data1['data']['order_address']['state'])?$data1['data']['order_address']['state']:''}} {{isset($data1['data']['order_address']['pin_code'])?$data1['data']['order_address']['pin_code'].'<br>':''}}
+												{{isset($data1['data']['order_address']['country_name'])?$data1['data']['order_address']['country_name'].'<br>':''}}
 												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="tel:{{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}"> {{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}</a><br>
 												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="mailto:{{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}"> {{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}</a>
 											</td>
