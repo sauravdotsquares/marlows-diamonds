@@ -154,8 +154,9 @@
         <h4>Billing address</h4>
         <div class="woocommerce-customer-details">
             <address>
-                {{isset($getOrderDetails->order_address->first_name)?$getOrderDetails->order_address->first_name." ":''}}{{isset($getOrderDetails->order_address->last_name)?$getOrderDetails->order_address->last_name:''}} <br> {{isset($getOrderDetails->order_address->company_name)?$getOrderDetails->order_address->company_name:''}}  <br>
-                {{isset($getOrderDetails->order_address->street_address_l1)?$getOrderDetails->order_address->street_address_l1:''}}<br>{{isset($getOrderDetails->order_address->street_address_l2)?$getOrderDetails->order_address->street_address_l2:''}}<br>{{isset($getOrderDetails->order_address->town_city)?$getOrderDetails->order_address->town_city:''}} {{isset($getOrderDetails->order_address->state)?$getOrderDetails->order_address->state:''}}<br><br>{{isset($getOrderDetails->order_address->pin_code)?$getOrderDetails->order_address->pin_code:''}}
+                {!!isset($getOrderDetails->order_address->first_name)?$getOrderDetails->order_address->first_name."<br>":''!!}
+                {!!isset($getOrderDetails->order_address->company_name)?$getOrderDetails->order_address->company_name.'<br>':'' !!}  
+                {!!isset($getOrderDetails->order_address->street_address_l1)?$getOrderDetails->order_address->street_address_l1.'<br>':''!!}{!!isset($getOrderDetails->order_address->street_address_l2)?$getOrderDetails->order_address->street_address_l2.'<br>':''!!}{!!isset($getOrderDetails->order_address->town_city)?$getOrderDetails->order_address->town_city:''!!} {!!isset($getOrderDetails->order_address->state)?$getOrderDetails->order_address->state.'<br>':''!!}{!!isset($getOrderDetails->order_address->pin_code)?$getOrderDetails->order_address->pin_code:''!!}
                 <p class="woocommerce-customer-details--phone"> {{isset($getOrderDetails->order_address->mobile)?$getOrderDetails->order_address->mobile:''}} </p>
 
                 <p class="woocommerce-customer-details--email">{{isset($getOrderDetails->order_address->email)?$getOrderDetails->order_address->email:''}}</p>
