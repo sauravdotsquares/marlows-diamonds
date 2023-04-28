@@ -37,7 +37,7 @@ class PageController
                 /** Slug belongs to blog Category */
                 $redirectTo = route('blog_list', $pageCategory->slug);
                 return redirect($redirectTo, 301);
-            }elseif($productCategories && env('APP_DEBUG') ){
+            }elseif($productCategories){
                 $productController = new ProductController();
                 return $productController->productListPage(request()->path());
             }else{
