@@ -1234,21 +1234,21 @@ if (!function_exists('validate_breadcrumb')) {
          }
  
          if (isset($requestData['category']) && !empty($requestData['category'])) {
-             foreach ($requestData['category'] as $queryString_key => $queryString_value_new) {
-                 $slugCategory = Category::where('slug', $queryString_value_new)->first();
-                 if (!empty($slugCategory)) {
-                     if (!$queryString_key) {
-                         $category_custom_query .= '( ';
-                     }
-                     // $category_custom_query .= '( ';
-                     $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-                     if ($queryString_key + 1 != count($requestData['category'])) {
-                         $category_custom_query .= " OR ";
-                     } else {
-                         $category_custom_query .= ' ) ';
-                     }
-                 }
-             }
+            foreach ($requestData['category'] as $queryString_key => $queryString_value_new) {
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
+                        $category_custom_query .= '( ';
+                    }
+                    // $category_custom_query .= '( ';
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($requestData['category'])) {
+                        $category_custom_query .= " OR ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                }
+            }
          } elseif (!empty($queryString)) {
              $conditions = 'AND';
              if(isset($queryString[1]) && !empty($queryString[1])){
@@ -1261,7 +1261,8 @@ if (!function_exists('validate_breadcrumb')) {
                      }
                      $conditions = 'AND';
                  }else{
-                    $queryString = Category::whereIn('slug',$queryString)->orWhere('slug','like','%'.$queryString[1].'%')->pluck('slug')->toArray();
+
+                    $queryString = Category::whereIn('slug',$queryString)->pluck('slug')->toArray();
                         
                      $conditions = 'OR';
                  }
