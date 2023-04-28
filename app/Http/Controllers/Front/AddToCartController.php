@@ -267,7 +267,7 @@ class AddToCartController extends Controller
         if(isset($cart) && !empty($cart)){
             $getCountries = Country::get();
             $getUsersDetails = [];
-            if(auth()->guard('customer')->check()){
+            if(Auth::guard('customer')->check() && isset(Auth::user()->id)){
                 $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::user()->id)->first();
             }
             return view('front.pages.checkout',compact('getCountries','getUsersDetails','url'));

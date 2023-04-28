@@ -754,7 +754,7 @@
 				}
 			},
 			submitHandler: function (form) {
-				if (grecaptcha.getResponse()) {
+				// if (grecaptcha.getResponse()) {
 					var form_data = new FormData(form);
 					$(form).find("button[type='submit']").prop('disabled',true);
 					$("button[type='submit']").text("Please Wait...");
@@ -775,9 +775,9 @@
 							}
 						}
 					});
-				} else {
-					alert('Please confirm captcha to proceed')
-				}
+				// } else {
+				// 	alert('Please confirm captcha to proceed')
+				// }
 			}
 		});
 
