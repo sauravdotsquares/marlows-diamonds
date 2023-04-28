@@ -36,7 +36,7 @@
                         <tbody>
 
                                 @foreach(session('wishlist') as $id => $details)
-
+                                   
                                     <tr data-id="{{ $id }}">
                                         <!-- <td class="wish-product-cb-col"><input type="checkbox" class="product-cb"></td> -->
                                         <!-- <td class="wish-product-remove-col">
@@ -47,8 +47,10 @@
                                             <a href="#"><img src="../assets/images/RC2019B_00003-225x225.jpg" alt="image"></a>
                                         </td>
                                         <td class="wish-product-name-col">
-                                            {!!isset($details['name'])?$details['name']:''!!}
-                                            <!-- <a href="#">BRIE | Marquise shape Halo and shoulder channel set Engagement Ring</a>
+                                            <a href="{{ asset('product/'.$details['titleSlug']) }}">{{ $details['titleName'] }}</a>
+                                            <!-- 
+                                                {!!isset($details['name'])?$details['name']:''!!} -->
+                                            <!-- 
 
                                             <dl class="variation">
                                                 <dt class="variation-MetalColour">Metal Colour :

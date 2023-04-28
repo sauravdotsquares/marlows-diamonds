@@ -58,7 +58,6 @@ class DiamondFinderController
 
         $data = array('shape'=>$request->shape,'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$request->carat_min,'caratTo'=>$request->carat_max,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'paging'=>5,'PageSize'=>5);
 
-
         $hkData = getHKApiRecords($data);
         $hkData['data'] = array_map(array($this, "amountChange"), $hkData['data']);
 
@@ -74,6 +73,7 @@ class DiamondFinderController
 
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
 
+		
         $rapnetRecords = [];
         if(!empty($rapnetData)){
 	        foreach ($rapnetData as $key => $result) {

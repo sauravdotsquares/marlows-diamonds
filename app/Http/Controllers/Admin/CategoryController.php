@@ -21,7 +21,11 @@ class CategoryController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-        $getData = Category::latest()->get();
+        $query = Category::latest();
+
+        $query  = getFilter(Category::class, $query, request()->all());
+
+        $getData = $query->paginate(10);
 
         $result = [
             'getData' => $getData,

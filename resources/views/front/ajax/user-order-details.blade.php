@@ -11,6 +11,7 @@
                     <tr>
                         <th>Product</th>
                         <th>Total</th>
+                        <th>Deposited</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -123,6 +124,7 @@
                                 </ul>
                             </td>
                             <td> {{MY_CURRENCY_SYMBOL}} {{ $value->product_price * $value->quantity}}</td>
+                            <td> {{MY_CURRENCY_SYMBOL}} {{ $value->deposited_product_price}}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -130,16 +132,16 @@
                     <tr>
                         <th scope="row">Subtotal:</th>
                         <td><span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$getOrderDetails->final_price}}</span></td>
+                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Payment method:</th>
                         <td>{{$getOrderDetails->payment_type}}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Total:</th>
+                        <th scope="row">Deposited Total:</th>
                         <td><span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$getOrderDetails->final_price}}</span> <small
+                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span> <small
                                 class="includes_tax">(includes <span class="woocommerce-Price-amount amount"><span
                                         class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>64.80</span> VAT)</small></td>
                     </tr>
@@ -152,8 +154,9 @@
         <h4>Billing address</h4>
         <div class="woocommerce-customer-details">
             <address>
-                {{isset($getOrderDetails->order_address->first_name)?$getOrderDetails->order_address->first_name." ":''}}{{isset($getOrderDetails->order_address->last_name)?$getOrderDetails->order_address->last_name:''}} <br> {{isset($getOrderDetails->order_address->company_name)?$getOrderDetails->order_address->company_name:''}}  <br>
-                {{isset($getOrderDetails->order_address->street_address_l1)?$getOrderDetails->order_address->street_address_l1:''}}<br>{{isset($getOrderDetails->order_address->street_address_l2)?$getOrderDetails->order_address->street_address_l2:''}}<br>{{isset($getOrderDetails->order_address->town_city)?$getOrderDetails->order_address->town_city:''}} {{isset($getOrderDetails->order_address->state)?$getOrderDetails->order_address->state:''}}<br><br>{{isset($getOrderDetails->order_address->pin_code)?$getOrderDetails->order_address->pin_code:''}}
+                {!!isset($getOrderDetails->order_address->first_name)?$getOrderDetails->order_address->first_name."<br>":''!!}
+                {!!isset($getOrderDetails->order_address->company_name)?$getOrderDetails->order_address->company_name.'<br>':'' !!}  
+                {!!isset($getOrderDetails->order_address->street_address_l1)?$getOrderDetails->order_address->street_address_l1.'<br>':''!!}{!!isset($getOrderDetails->order_address->street_address_l2)?$getOrderDetails->order_address->street_address_l2.'<br>':''!!}{!!isset($getOrderDetails->order_address->town_city)?$getOrderDetails->order_address->town_city:''!!} {!!isset($getOrderDetails->order_address->state)?$getOrderDetails->order_address->state.'<br>':''!!}{!!isset($getOrderDetails->order_address->pin_code)?$getOrderDetails->order_address->pin_code:''!!}
                 <p class="woocommerce-customer-details--phone"> {{isset($getOrderDetails->order_address->mobile)?$getOrderDetails->order_address->mobile:''}} </p>
 
                 <p class="woocommerce-customer-details--email">{{isset($getOrderDetails->order_address->email)?$getOrderDetails->order_address->email:''}}</p>

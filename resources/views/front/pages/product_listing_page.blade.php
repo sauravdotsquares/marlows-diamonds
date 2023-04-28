@@ -1,179 +1,455 @@
 @extends('layouts.front.app')
 @section('content')
+@section('css')
+    <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+    <style>
+        .ui-slider-handle {
+            width: 35px !important;
+            font-size: small !important;
+            color: #FF0000 !important;
+            text-align: center !important;
+        }
 
-<div class="category-banner" style="background-image:url({{asset('')}}assets/images/engagement-rings-banner.png)">
+        .ui-slider .ui-slider-handle {
+            height: 1.5em;
+            color: #8e2e65 !important;
+        }
+
+        .ui-widget-header {
+            background: #8e2e65 !important;
+        }
+
+        .ui-state-hover,
+        .ui-widget-content .ui-state-hover,
+        .ui-widget-header .ui-state-hover,
+        .ui-state-focus,
+        .ui-widget-content .ui-state-focus,
+        .ui-widget-header .ui-state-focus {
+            border-color: #8e2e65 !important;
+            outline: none;
+            box-shadow: none;
+            background: #fff !important;
+        }
+
+        .error {
+            color: #e74c3c !important;
+        }
+
+        .srchniput-fil span {
+            font-size: 13px;
+            background: #ffff;
+            position: absolute;
+            left: 8px;
+            top: -22px;
+            padding: 0px 4px;
+            display: inline-block;
+        }
+    </style>
+@endsection
+
+<div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
     <div class="container">
         <div class="category-banner-text">
-            <h1>{!! isset($data->title)?$data->title:'' !!}</h1>
-            <p>{!! isset($data->short_description)?$data->short_description:'' !!}</p>
+            <h1>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h1>
+            <p>{!! !empty($categoryData->short_description) ? $categoryData->short_description : '' !!}</p>
         </div>
     </div>
 </div>
 
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
-    <div class="container" >
+    <div class="container">
         <div class="category-listing-row">
             <div class="category-list-wrap">
-                
-                <div class="product-grid-wrap">
-                    <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
-                        {!! $productItems !!}
-                    </div>
-                </div>
-
+                <input type="hidden" id="pagescroll" value="1">
+                <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
+                <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
+               
+                <div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>
+                <br>
+                <div class="search-result"> @include('front.includes.productCard')</div>
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
-                    <img alt="Product loader" src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More Products</p>
+                    <img alt="Product loader" src="{{ asset('assets/images/spinner-ring.gif') }}">
+                    <p>Loading More Products</p>
                     <button style="display: none;" class="ajax-load-btn">Load more data</button>
                 </div>
-
-                {!! isset($data->description)?$data->description:'' !!}
+                <div class="ajax-loader">
+                    <img src="{{ asset('images/spinner.gif') }}" id="loading-data-image" class="img-responsive"
+                        style="display:none;" />
+                </div>
+                <br>
+                <br>
+                <div class="text-center">{!!isset($filterItemTextData->bottom_text)?$filterItemTextData->bottom_text:''!!}</div>
+                {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
             </div>
-            
+
             <div class="category-sidebar-wrap">
 
-                
+
 
                 <div class="filter-container">
 
-                    <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
-                    <div class="category-filter-title">
-                        <h3>Filter by category</h3>
-                    </div>
-                    <ul>
-                        @foreach ($categories as $category_item)
-                            <li><a class="category-filter-item" data-id="{{$category_item->id}}" href="javascript:;">{{ $category_item->name }}</a></li>
-                        @endforeach
-                    </ul>
+                    <input type="text" name="title" class="search-item" id="search" value=""
+                        placeholder="Search here">
 
-                    <div class="metal-type-filter-title">
-                        <h3>Filter by metal type</h3>
-                    </div>
-                    <ul>
-                        @foreach ($metalTypesForFilter as $metal_type)
-                            <li><a class="metal-type-filter-item" data-id="{{ trim($metal_type)}}" href="javascript:;">{{ $metal_type }}</a></li>
-                        @endforeach
-                    </ul>
+
+
+                    @foreach ($filter_items as $filter_key => $filter_item)
+                        <div class="filter-item">
+                            <input type="hidden" name="filter_item_slug" class="filter_item_slug"
+                                value="{{ $filter_item->slug }}" />
+                            <div class="category-filter-title">
+                                <h3>{{ $filter_item->name }}</h3>
+                            </div>
+                            <ul>
+                                @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
+                                    <li>
+                                        @php
+                                            $checkVariable = 'true';
+                                            $checkVariableNew = '';
+                                        @endphp
+
+                                        @if (in_array(Str::lower($product_item_item->item_value), $slugs))
+                                            <?php
+                                                $checkVariable = 'false';
+                                                $checkVariableNew = 'checked';
+                                            ?>
+                                        @elseif(in_array(Str::lower(Str::replace(' ', '-', $product_item_item->item_name)), $slugs))
+                                            <?php
+                                                $checkVariable = 'false';
+                                                $checkVariableNew = 'checked';
+                                            ?>
+                                        @endif
+                                       
+                                        @if (isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
+                                            <div class="diamond-field-contens col-lg-9">
+                                                <div class="diamond-field-inner-bar">
+                                                    <div class="range_carat_wap">
+
+                                                        <div class="srchniput-fil">
+                                                            <div class="minrange">
+                                                                <span>Min</span>
+                                                                <input id="sliderRangeSetMin" disabled=""
+                                                                    data-index="0" class="sliderValue" value="100">
+                                                            </div>
+                                                            <div class="maxrange">
+                                                                <span>Max</span>
+                                                                <input id="sliderRangeSetMax" disabled=""
+                                                                    data-index="1" class="sliderValue" value="150000">
+                                                            </div>
+                                                        </div>
+
+                                                        <div id="slider"
+                                                            class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                                                                <span
+                                                                class="ui-slider-handle ui-state-default ui-corner-all"
+                                                                tabindex="0" style="left: 19.1489%;"></span><span
+                                                                class="ui-slider-handle ui-state-default ui-corner-all"
+                                                                tabindex="0" style="left: 59.5745%;"></span>
+                                                        </div>
+                                                        <div class="srchniput-fil">
+                                                            <input type="hidden" class="sliderValue filter-item-data"
+                                                                data-index="0" value="100" id="input-carat-min"
+                                                                name="price-min" autocomplete="off">
+                                                            <input type="hidden" class="sliderValue filter-item-data"
+                                                                data-index="1" value="150000" id="input-carat-max"
+                                                                name="price-max" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <input type="{{ $filter_item->input_type }}" name="{{ $filter_item->slug }}"
+                                                {{ $checkVariableNew }} onclick="return {{ $checkVariable }};"
+                                                value="{{ $product_item_item->item_value }}"
+                                                class="filter-item-data">
+                                            {{ $product_item_item->item_name }}
+                                        @endif
+
+
+
+
+                                    </li>
+                                @endforeach
+
+                            </ul>
+                        </div>
+                    @endforeach
+                    {{-- <li> --}}
+                    {{-- <div class="choose-diaond-fields row diamond-carat">
+							<div class="diamond-field-labels col-lg-3">
+								Carat
+							</div>
+							<div class="diamond-field-contens col-lg-9">
+								<div class="diamond-field-inner-bar">
+									<div class="range_carat_wap">
+
+                                        <div class="srchniput-fil">
+                                            <div class="minrange">
+												<span>Min</span>
+												<input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
+											</div>
+                                            <div class="maxrange">
+											<span>Max</span>
+												<input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
+											</div>
+                                        </div>
+
+                                        <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 19.1489%; width: 40.4255%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 19.1489%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5745%;"></span></div>
+                                            <div class="srchniput-fil">
+                                                <input type="hidden" class="sliderValue filter-item-data" data-index="0" value="250" id="input-carat-min" name="price-min" autocomplete="off">
+                                                <input type="hidden" class="sliderValue filter-item-data" data-index="1" value="1000" id="input-carat-max" name="price-max" autocomplete="off">
+										    </div>
+									 </div>
+								</div>
+							</div>
+						</div> --}}
+                    {{-- </li> --}}
+
 
                     <div class="reset-filer-container">
-                        <button class="reset-filer-btn">Reset search</button>
+                        <a href="javascript:void(0)" id="resetFilterButton"><button class="reset-filer-btn">Reset search</button></a>
                     </div>
 
                 </div>
 
-                <div class="sidebar-main-cart">
-                    <div class="sidebar-title">
-                        Shopping Cart
-                    </div>
-                    @if(session('cart'))
-                    <div class="side-cart-row">
-                        @php $total = 0 @endphp
-                        @foreach(session('cart') as $id => $details)
-                            @php $total += $details['price'] * $details['quantity'] @endphp
-                            <div class="side-cart-item">
-                                <div class="cart-image-item">
-                                    @if(isset($details['selected_parameter']['imagelink']) && !empty($details['selected_parameter']['imagelink']))
-                                        <img src="{{$details['selected_parameter']['imagelink']}}" width="100" height="100"
-                                        class="img-responsive" />
-                                    @elseif(isset($details['image']) && !empty($details['image']))
-                                        <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
-                                        class="img-responsive" />
-                                    @else
-                                        <img src="https://www.marlows-diamonds.co.uk/wp-content/uploads/2019/07/MarlowsDiamonds-Logo-225x107.png" width="100" height="100" class="img-responsive" />
-                                    @endif
-                                </div>
-                                <div class="side-cart-delete">
-                                    <a href="javascript:void(0);" data-id="{{ $id }}" class="remove-from-cart">x</a>
-                                </div>
-
-                                <div class="side-cart-pr-name">
-                                    {!! $details['name'] !!}
-                                </div>
-                                <div class="side-cart-quantity">
-                                    {{ $details['quantity'] }} ×
-                                    <span class="side-cart-amount">{{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'],2) }}</span>
-                                </div>
-                                <div class="side-cart-total">
-                                    <strong>Subtotal: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'] * $details['quantity'],2) }} (incl. VAT)
-                                </div>
-
-                            </div>
-                        @endforeach
-                        <div class="side-cart-actions">
-                            <a class="view-basket btn-bg-small" href="{{route('product.cart')}}">View Basket</a>
-                            <a class="btn-bg-small" href="{{route('product.checkout')}}">Checkout</a>
-                        </div>
-                    </div>
-                    @else
-                        <div class="shopping_cart_content">
-                            <p class="mini-cart__empty-message">No products in the basket.</p>
-                        </div>
-                    @endif
-                </div>
-                @if(session('recentproducts'))
-                <div class="side-recentlyview">
-                    <div class="sidebar-title">
-                        Recently Viewed
-                    </div>
-                    <div class="side-recently-item">
-                        @php $i = 0; @endphp
-                        @foreach(array_reverse(session('recentproducts')) as $ProductDetails)
-                            @if($i <= 8)
-                                <div class="side-recently-col">
-                                    <a class="side-recently-pr-name" href="{{asset('product/'.$ProductDetails['slug'])}}">{{$ProductDetails['name']}}</a>
-                                    <a class="side-recently-pr-img" href="{{asset('product/'.$ProductDetails['slug'])}}"><img src="{{asset('storage/'.$ProductDetails['image'])}}"
-                                            alt="image"></a>
-                                </div>
-                            @endif
-                            @php $i++; @endphp
-                        @endforeach
-                    </div>
-                </div>
-                @endif
             </div>
-            
+
+        </div>
+    </div>
+</div>
+<!-- Section Reviews -->
+<div class="container">
+    <div class="rating-review-block">
+        <div class="owl-carousel owl-theme slider-review">
+            @include('front.pages.reviews')
         </div>
     </div>
 </div>
 
 
+
+@endsection
+
+
+
+
+
 @section('js')
-
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
-$(document).ready(function(){
-    $('.show-more-content').hide();
-    $('.show-more').click(function(){
-        $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
+    $(document).ready(function() {
+
+
+        $("#slider").slider({
+            range: true,
+            min: 100,
+            max: 150000,
+            step: 2,
+            values: [100, 150000],
+            slide: function(event, ui) {
+                var value1 = $("#slider").slider("values", 0);
+                var value2 = $("#slider").slider("values", 1);
+                $("#sliderRangeSetMin").val(value1);
+                $("#sliderRangeSetMax").val(value2);
+
+
+                for (var i = 0; i < ui.values.length; ++i) {
+                    $("input.sliderValue[data-index=" + i + "]").val(ui.values[i]);
+                }
+
+            },
+            change: function() {
+
+                var value1 = $("#slider").slider("values", 0);
+                var value2 = $("#slider").slider("values", 1);
+
+                $("#showProductList").html('');
+                sendDataValues();
+            },
+        });
+
+        $("#sliderRangeSetMin").change(function(event) {
+            var value1 = parseFloat($("#sliderRangeSetMin").val());
+            var highVal = value1 * 2;
+            $("#slider").slider("option", {
+                "max": highVal,
+                "value": value1
+            });
+        });
+
+        $("#sliderRangeSetMax").change(function(event) {
+            var value1 = parseFloat($("#sliderRangeSetMax").val());
+            var highVal = value1 * 2;
+            $("#slider").slider("option", {
+                "max": highVal,
+                "value": value1
+            });
+        });
+
+        var stepsSlider = document.getElementById('range-slider');
+        var input0 = document.getElementById('input-carat-min');
+        var input1 = document.getElementById('input-carat-max');
+        var inputs = [input0, input1];
+
+        $('.show-more-content').hide();
+        $('.show-more').click(function() {
+            $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
+        });
+
+
+        $('#resetFilterButton').on('click',function(){
+            $('.filter-item-data').prop("checked",false);
+            var value= '{{$path}}';
+            var arrVars = value.split("/");
+            
+            var value1= arrVars[0];
+            var value2= arrVars[1];
+            $("input[name=category][value=" + value1 + "]").prop('checked', true);
+            $("input[name=style-categories][value=" + value2 + "]").prop('checked', true);
+            $("input[name=filter-by-shape][value=" + value2.toUpperCase() + "]").prop('checked', true);
+            $("#showProductList").html('');
+            sendDataValues();
+        });
+
+        var value= '{{$path}}';
+        var arrVars = value.split("/");
+        
+        if(arrVars[0] == 'diamonds-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
+        }
+
+        if(arrVars[0] == 'diamond-engagement-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=style-categories][value='mens']").parent('li').css('display','none');
+            $("input[name=style-categories][value='womens']").parent('li').css('display','none');
+
+            $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
+        }
+
+        if(arrVars[0] == 'eternity-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=style-categories][value='halo']").parent('li').css('display','none');
+            $("input[name=style-categories][value='multi-stone']").parent('li').css('display','none');
+            $("input[name=style-categories][value='shoulder-set']").parent('li').css('display','none');
+            $("input[name=style-categories][value='solitaire']").parent('li').css('display','none');
+
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display','none');
+
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
+        }
+        
+        
+        if(arrVars[0] == 'wedding-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=style-categories][value='halo']").parent('li').css('display','none');
+            $("input[name=style-categories][value='multi-stone']").parent('li').css('display','none');
+            $("input[name=style-categories][value='shoulder-set']").parent('li').css('display','none');
+            $("input[name=style-categories][value='solitaire']").parent('li').css('display','none');
+
+            $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display','none');
+
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
+        }
+        
+        if(arrVars[0] == 'engagement-rings'){
+            $("input[name=category][value='diamond-jewellery']").parent('li').css('display','none');
+            $("input[name=style-categories][value='mens']").parent('li').css('display','none');
+            $("input[name=style-categories][value='womens']").parent('li').css('display','none');
+
+            $("input[name=category][value='eternity-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display','none');
+        }
+
+        if(arrVars[0] == 'diamond-jewellery'){
+            $("input[name=category][value='diamonds-rings']").parent('li').css('display','none');
+            $("input[name=category][value='engagement-rings']").parent('li').css('display','none');
+            $("input[name=category][value='eternity-rings']").parent('li').css('display','none');
+            $("input[name=category][value='wedding-rings']").parent('li').css('display','none');
+
+            $("input[name=category][value='wedding-rings']").attr('disabled', 'disabled');
+            $("input[name=category][value='engagement-rings']").attr('disabled', 'disabled');
+            $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='style-categories']").parent('.filter-item').css('display','none');
+            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display','none');
+        }
+
+        if(arrVars[1] == 'halo' || arrVars[1] == 'shoulder-set' || arrVars[1] == 'solitaire' || arrVars[1] == 'multi-stone'){
+            $("input[name=style-categories]").attr('onclick', 'return false;');
+        }
+        filterShapechanged();
+        filterStylechanged();
+        filterRingTypechanged();
+        filterJewelleryTypechanged();
     });
-});
+    function filterShapechanged(){
+        $('input[name="filter-by-shape"]:checked').each(function() {
+            if(this.value != ''){
+                $("input[name=filter-by-shape]").attr('onclick', 'return false;');
+            }
+        });
+    }
+    function filterStylechanged(){
+        $('input[name="style-categories"]:checked').each(function() {
+            if(this.value != ''){
+                $("input[name=style-categories]").attr('onclick', 'return false;');
+            }
+        });
+    }
+    function filterRingTypechanged(){
+        $('input[name="ring-categories"]:checked').each(function() {
+            if(this.value != ''){
+                $("input[name=ring-categories]").attr('onclick', 'return false;');
+            }
+        });
+    }
+    function filterJewelleryTypechanged(){
+        $('input[name="jewellery-categories"]:checked').each(function() {
+            if(this.value != ''){
+                $("input[name=jewellery-categories]").attr('onclick', 'return false;');
+            }
+        });
+    }
 
-</script>
-    <script>
-
-
-
-
-    $(document).on('mouseenter','.product-hover-affect', function (event) {
-        if($(this).find('video').length){
+    $(document).on('mouseenter', '.product-hover-affect', function(event) {
+        if ($(this).find('video').length) {
             $(this).find('video')[0].play()
         }
-    }).on('mouseleave','.top-level',  function(){
+    }).on('mouseleave', '.top-level', function() {
         console.log('mouse leave')
-        if($(this).find('video').length){
+        if ($(this).find('video').length) {
             $(this).find('video')[0].pause()
         }
     })
-    
-    $(document).on('touchstart','.product-hover-affect',function() {
+
+    $(document).on('touchstart', '.product-hover-affect', function() {
         $(this).find('a.product-hov').css({
-            '-webkit-transition' : 'all 200ms ease-in',
-            '-webkit-transform' : 'scale(1.2)',
-            '-ms-transition' : 'all 200ms ease-in',
-            '-ms-transform' : 'scale(1.2)',
-            '-moz-transition' : 'all 200ms ease-in',
-            '-moz-transform' : 'scale(1.2)',
-            'transition' : 'all 200ms ease-in',
+            '-webkit-transition': 'all 200ms ease-in',
+            '-webkit-transform': 'scale(1.2)',
+            '-ms-transition': 'all 200ms ease-in',
+            '-ms-transform': 'scale(1.2)',
+            '-moz-transition': 'all 200ms ease-in',
+            '-moz-transform': 'scale(1.2)',
+            'transition': 'all 200ms ease-in',
             'transform': 'scale(1.2)'
         });
         $(this).find('.product-hover-video').css({
@@ -181,199 +457,73 @@ $(document).ready(function(){
             'position': "absolute",
             'top': "0",
             "width": "100%",
-            "height" : "100%",
-            "background" : "#fff"
+            "height": "100%",
+            "background": "#fff"
         });
-        if($(this).find('video').length){
+        if ($(this).find('video').length) {
             $(this).find('video')[0].play()
         }
     });
-
-
-    var typingTimer;                //timer identifier
-	var doneTypingInterval = 1000;  //time in ms, 5 seconds for example
-	var $input = ".search-item";
-
-
-    $(document).on('keyup',$input, function(){
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    $(document).on('change', ".filter-item-data", function() {
+        $("#showProductList").html('');
+        sendDataValues();
     });
 
-    $(document).on('click','.category-filter-item', function(){
-        $('.category-filter-item').removeClass('active');
-        $(this).addClass('active');
-        setTimeout(()=>{
-            doneTyping();
-        },100)
-    });
+    $("#showProductList").html('');
+    sendDataValues();
 
-    $(document).on('click','.metal-type-filter-item', function(){
-        $('.metal-type-filter-item').removeClass('active');
-        $(this).addClass('active');
-        setTimeout(()=>{
-            doneTyping();
-        },100)
-    });
-
-
-    
-
-
-    function doneTyping () {
-		$("#showProductList").empty();
-        $("#nextPageNumber").val(1);
-        clearTimeout(typingTimer);
-        loadMoreData();
-	}
-
-        /** On scroll get more data */
-        var triggerScrollEvent = true;
-        $(document).ready(function() {
-            $(document).on('scroll',function(){
-                if(triggerScrollEvent){
-                    if($(".loading-data-element").isInViewport()){
-                        triggerScrollEvent = false;
-                        $(".ajax-load-btn").trigger('click');
-                    }
-                }
-            });
-        });
-
-        $(document).on('click',".ajax-load-btn", function(){
-            triggerScrollEvent = false;
-            $('.ajax-load').show();
-            loadMoreData();
-        });
-
-        
-        $(".reset-filer-btn").on('click', function(){
-            $("#nextPageNumber").val('1');
-            $(".search-item").val('');
-            $(".category-filter-item").removeClass('active');
-            $(".metal-type-filter-item").removeClass('active');
-            setTimeout(()=>{
-                $("#showProductList").empty();
-                $("#nextPageNumber").val(1);
-                loadMoreData(true);
-            },100)
-        });
-
-
-        function loadMorePassData () {
-            const page = $("#nextPageNumber").val();
-            const searchKeyword = $(".search-item").val();
-            const categorySearch = $(".category-filter-item.active").attr('data-id');
-            const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
-
-            var url = new URL(location.href);
-            url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
-            url.searchParams.set('category', (categorySearch ? categorySearch : ''));
-            url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
-            if (history.pushState) {
-                window.history.pushState({path:url.href},'',url.href);
-            }
-            return {
-                '_token': "{{csrf_token()}}",
-                keyword: searchKeyword,
-                category: categorySearch,
-                metal_type : metalTypeSearch,
-                slug : "{{ $slug }}",
-                slug2 : "{{ $slug2 }}",
-                slug3 : "{{ $slug3 }}",
-                page: page
-            };
-
-
+    $(window).scroll(function() {
+        var scroll = $('#scrollFlag').val();
+        if (scroll == 0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
+            var page = $('#pagescroll').val();
+            sendDataValues(page);
+            $('#scrollFlag').val(1);
         }
+    });
 
-        function loadMoreData(resetSearch=false){
-
-            // const dataToPass = loadMorePassData(resetSearch);
-            const page = $("#nextPageNumber").val();
-            const searchKeyword = $(".search-item").val();
-            const categorySearch = $(".category-filter-item.active").attr('data-id');
-            const metalTypeSearch = $(".metal-type-filter-item.active").attr('data-id');
-
-            var url = new URL(location.href);
-            url.searchParams.set('keyword', (searchKeyword ? searchKeyword : ''));
-            url.searchParams.set('category', (categorySearch ? categorySearch : ''));
-            url.searchParams.set('metal_type', (metalTypeSearch ? metalTypeSearch : ''));
-            if (history.pushState) {
-                window.history.pushState({path:url.href},'',url.href);
-            }
-
-            if(resetSearch){
-                var url = {
-                    href: window.location.href.split('?')[0]
-                }
-                if (history.pushState) {
-                    window.history.pushState({path:url.href},'',url.href);
-                }
-            }
-
-
-
-            $.ajax({
-                url: '{{url("product-listing-data")}}?page='+page,
-                type: "post",
-                data: {
-                    '_token': "{{csrf_token()}}",
-                    'page':page,
-                    "slug" : "{{ $slug }}",
-                    "slug2" : "{{ $slug2 }}",
-                    "slug3" : "{{ $slug3 }}",
-                    "keyword": searchKeyword,
-                    "category": categorySearch,
-                    "metal_type" : metalTypeSearch
-                },
-            }).done(function(data){
-                triggerScrollEvent = true;
-                if(data.status){
-                    $('.ajax-load').hide();
-                }
-                $("#showProductList").append(data.productItems);
-                $("#nextPageNumber").val(data.nextPage);
-
-                if(!data.isNextPage){
-                    triggerScrollEvent = false;
-                }
-
-            }).fail(function(jqXHR, ajaxOptions, thrownError){
-                triggerScrollEvent = true;
-                alert('server not responding...');
-            });
+    $('#search').on('keyup',function(){
+        let searchTextData = $(this).val();
+        if(searchTextData.length > 2){
+            $("#showProductList").html('');
+            sendDataValues(1,'html');
+        }else if(searchTextData.length == 0){
+            var page = $('#pagescroll').val();
+            sendDataValues(page,'append');
         }
+    });
 
-        $(".remove-from-cart").click(function (e) {
-            e.preventDefault();
-            var ele = $(this);
-            if(confirm("Are you sure want to remove?")) {
-                $.ajax({
-                    url: '{{ route("remove.from.cart") }}',
-                    method: "DELETE",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: $(this).attr("data-id")
-                    },
-                    success: function (response) {
-                        window.location.reload();
-                    }
-                });
+    function sendDataValues(page,type='append') {
+        // $("input[name=filter-by-shape]").attr('onclick', 'return false;');
+        // filterShapechanged();
+        $('.ajax-load').show();
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('getfilteredproducts') }}",
+            data: {
+                '_token': "{{ csrf_token() }}",
+                'ids': $('.filter-item-data').serializeArray(),
+                'keyword': $('#search').val(),
+                'path': '{{ $path }}',
+                'page': page
+            },
+            success: function(res) {
+                // filterShapechanged();
+                $('#pagescroll').val(res.nextPage);
+
+                if (res.productItems == "") {
+                    $('.ajax-load').html("No more products found");
+                    return false;
+                }
+                $('.ajax-load').hide();
+                if(type == 'append'){
+                    $("#showProductList").append(res.productItems);
+                }else{
+                    $("#showProductList").html(res.productItems);
+                }
+                $('#sectionHeight').val($('#showProductList').height());
+                $('#scrollFlag').val(0);
             }
         });
-    </script>
+    }
+</script>
 @endsection
-<!-- Category Listing Wrap end -->
-<!-- Section Reviews -->
-<div class="container">
-	<div class="rating-review-block">
-		<div class="owl-carousel owl-theme slider-review">
-		@include('front.pages.reviews')
-		</div>
-	</div>
-</div>
-
-@endsection
-
-
