@@ -138,10 +138,14 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .logo-menu-bar-wrap{align-items:center;position:relative}
 .main-navigaiton .nav-navbars .level-zero{display:inline-block;vertical-align:top;position:relative ; margin: 4px 0px;}
 .main-navigaiton .nav-navbars .level-zero a{text-decoration:none;color:#444;font-weight:bold;text-transform:uppercase;font-size:12px}
-.main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: 0px;top: 5px;}
+.main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: -4px;top: 5px;}
 .main-navigaiton .nav-navbars .level-zero span {position: relative;display: block;}
 .site-logo-main{ max-width: 130px;}
-.main-navigaiton .nav-navbars .level-zero > span > a{padding:15px 11px}
+
+
+.main-navigaiton .nav-navbars .level-zero > span > a{padding:15px 8px;}
+
+
 .nav-navbars .level-zero.submenu .inner-submenu{display:none}
 .nav-navbars .static-megamenu{text-align:center}
 .nav-navbars .static-megamenu *{text-align:left}
@@ -1040,6 +1044,7 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 .table-bottom-content.tabel-payment .diamond-total-subtotal {margin: 40px 0 0;}
 span#deposited_message {color: #8e2e65;display: inline-block !important;font-weight: bold;font-size: 18px;margin: 0px 0 0;background: none;padding: 0px 0px 0px;}
 .table-bottom-content.tabel-payment .pay-amtrest { position: absolute; right: 11px; }
+a.btn-bg-small.expdia { font-size: 15px; margin: 40px 0 0; }
 
 @media(max-width:1300px){
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu {

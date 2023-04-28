@@ -35,11 +35,11 @@
             </div>
           </div>
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3" id="show_hide_password">
           <input type="password" class="form-control" placeholder="Password" name="password">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+            <a href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
+        <a href="/users/forget-password">I forgot my password</a>
       </p>
      
     </div>
@@ -73,10 +73,28 @@
 <!-- /.login-box -->
 
 <!-- jQuery -->
+
 <script src="{{ asset('admin/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/dist/js/adminlte.min.js')}}"></script>
+<script>
+$(document).ready(function() {
+    $("#show_hide_password a").on('click', function(event) {
+     
+        event.preventDefault();
+        if($('#show_hide_password input').attr("type") == "text"){
+            $('#show_hide_password input').attr('type', 'password');
+            $('#show_hide_password i').addClass( "fa-eye-slash" );
+            $('#show_hide_password i').removeClass( "fa-eye" );
+        }else if($('#show_hide_password input').attr("type") == "password"){
+            $('#show_hide_password input').attr('type', 'text');
+            $('#show_hide_password i').removeClass( "fa-eye-slash" );
+            $('#show_hide_password i').addClass( "fa-eye" );
+        }
+    });
+});
+</script>
 </body>
 </html>

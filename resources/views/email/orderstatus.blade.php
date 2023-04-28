@@ -73,17 +73,14 @@
 										<tr>
 											<th align="left" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; ">Product</th>
 											<th align="center" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; ">Quantity</th>
-											<th align="right" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; ">Price</th>
+											<th align="right" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; "> Total Price</th>
+											<th align="right" style="font-size: 16px; color: #606060;font-family:Arial; border: 1px dashed #808080; border-width:1px 0 1px 0; padding: 15px 0; "> Deposited Price</th>
 										</tr>
 									</thead>
 									<tbody>
 										@foreach($data1['data']['get_order_details_function'] as $key => $orderDetails)
                                             <?php
                                             $detailsDecode = (array)json_decode($orderDetails['order_product_details']);
-                                            // unset($detailsDecode['title']);
-                                            // echo "adasd<pre>";
-                                            // print_r($detailsDecode);
-                                            // die;
                                             ?>
                                             <tr>
                                                 <td width="270px" align="left" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
@@ -258,6 +255,10 @@
                                                 color: #505050;line-height: 20px; font-size: 14px;">
                                                         {{MY_CURRENCY_SYMBOL}}{{$orderDetails['total_price']}}
                                                 </td>
+                                                <td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+                                                color: #505050;line-height: 20px; font-size: 14px;">
+                                                        {{MY_CURRENCY_SYMBOL}}{{$orderDetails['deposited_product_price']}}
+                                                </td>
                                             </tr>
                                             <?php // die; ?>
 										@endforeach
@@ -274,9 +275,13 @@
 											color: #505050;line-height: 20px; font-size: 14px;">
 
 											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
+
+											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['final_price']}}
+													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
 											</td>
 										</tr>
 
@@ -285,6 +290,10 @@
 											color: #505050;line-height: 20px;">
 												<p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
 												<strong style=" font-size: 14px;">Payment method:</strong></p>
+
+											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
 
 											</td>
 											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
@@ -307,9 +316,35 @@
 											color: #505050;line-height: 20px; font-size: 14px;">
 
 											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
+
+											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['final_price']}}
+													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
+
+                                                    {{-- (includes £329.06 VAT) --}}
+											</td>
+										</tr>
+										<tr>
+											<td width="270px" align="left" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px;">
+												<p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+												<strong style=" font-size: 14px;">Deposited Total:</strong></p>
+
+											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
+
+											</td>
+											<td align="center" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
+
+											</td>
+											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
+											color: #505050;line-height: 20px; font-size: 14px;">
+													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
 
                                                     {{-- (includes £329.06 VAT) --}}
 											</td>
@@ -331,12 +366,12 @@
 									<tbody>
 										<tr>
 											<td align="center" style="border: 1px dashed #808080;font-family:Arial; font-size: 15px; color: #808080; padding: 30px 20px; line-height: 24px;">
-												{{isset($data1['data']['order_address']['first_name'])?$data1['data']['order_address']['first_name']:''}} {{isset($data1['data']['order_address']['last_name'])?$data1['data']['order_address']['last_name']:''}}<br>
-												{{isset($data1['data']['order_address']['company_name'])?$data1['data']['order_address']['company_name']:''}}<br>
-												{{isset($data1['data']['order_address']['street_address_l1'])?$data1['data']['order_address']['street_address_l1']:''}} {{isset($data1['data']['order_address']['street_address_l2'])?$data1['data']['order_address']['street_address_l2']:''}}<br>
-												{{isset($data1['data']['order_address']['town_city'])?$data1['data']['order_address']['town_city']:''}}<br>
-												{{isset($data1['data']['order_address']['state'])?$data1['data']['order_address']['state']:''}} {{isset($data1['data']['order_address']['pin_code'])?$data1['data']['order_address']['pin_code']:''}}<br>
-												{{isset($data1['data']['order_address']['country_name'])?$data1['data']['order_address']['country_name']:''}}<br>
+												{{isset($data1['data']['order_address']['first_name'])?$data1['data']['order_address']['first_name']:''}} {!!isset($data1['data']['order_address']['last_name'])?$data1['data']['order_address']['last_name'].'<br>':''!!}
+												{!!isset($data1['data']['order_address']['company_name'])?$data1['data']['order_address']['company_name'].'<br>':''!!}
+												{!!isset($data1['data']['order_address']['street_address_l1'])?$data1['data']['order_address']['street_address_l1']:''!!} {!!isset($data1['data']['order_address']['street_address_l2'])?$data1['data']['order_address']['street_address_l2'].'<br>':''!!}
+												{!!isset($data1['data']['order_address']['town_city'])?$data1['data']['order_address']['town_city'].'<br>':''!!}
+												{!!isset($data1['data']['order_address']['state'])?$data1['data']['order_address']['state']:''!!} {!!isset($data1['data']['order_address']['pin_code'])?$data1['data']['order_address']['pin_code'].'<br>':''!!}
+												{!!isset($data1['data']['order_address']['country_name'])?$data1['data']['order_address']['country_name'].'<br>':''!!}
 												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="tel:{{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}"> {{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}</a><br>
 												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="mailto:{{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}"> {{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}</a>
 											</td>

@@ -23,6 +23,8 @@ use App\Models\SitemapUrls;
 use App\Models\Posts;
 use App\Models\PostCategory;
 use App\Models\Pages;
+use App\Models\ProductFilter;
+use App\Models\ProductFilterItems;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -456,6 +458,7 @@ class ProductController extends Controller
 
                         if ($is_empty) {
                             $final_attr['attri_' . $attribute['slug']] = $explode_attr;
+                            
                             if ($request->typeName && $attribute['slug'] == 'finger-size') {
                                 $alphaRange = range('I', 'M');
                                 $result = preg_replace("/[^A-Z]+/", "", $final_attr['attri_' . $attribute['slug']]);
@@ -1666,9 +1669,75 @@ class ProductController extends Controller
     }
 
 
-    public function productListPage(Request $request)
+    public function productListPage($all)
     {
-        prd('This is product list page');
+        $request = request();
+        $path =  $request->path();
+        $slugs = explode('/', $path);
+        $productListingData = getProductListing($slugs, request()->all());
+        if (!empty($productListingData)) {
+
+            $productItems = $productListingData['productItems'];
+            $isNextPage = $productListingData['isNextPage'];
+            $nextPage = $productListingData['nextPage'];
+            $categoryData = $productListingData['categoryData'];
+
+            $path = request()->path();
+
+            /** Items for filter */
+            $filter_items = ProductFilter::whereHas('product_items', function ($query) {
+                $query->where(['is_deleted' => 0, 'is_active' => 1]);
+            })
+                ->with('product_items')
+                ->where(['is_deleted' => 0, 'is_active' => 1])
+                ->get();
+
+            $slugText = '';
+            if(isset($slugs[1]) && !empty($slugs[1])){
+                $slugText = $slugs[1];
+            }elseif(isset($slugs[0]) && !empty($slugs[0])){
+                $slugText = $slugs[0];
+            }
+
+            $filterItemTextData = ProductFilterItems::where('item_slug',$slugText)->select('top_text','bottom_text')->first();
+
+
+            if ($request->isMethod('POST')) {
+                return response()->json([
+                    "status" => true,
+                    "productItems" => $productItems,
+                    "isNextPage" => $isNextPage,
+                    "nextPage" => $nextPage
+                ]);
+            }
+
+            return view('front.pages.product_listing_page', compact([
+                'filterItemTextData',
+                'productItems',
+                'isNextPage',
+                'nextPage',
+                'filter_items',
+                'categoryData',
+                'path',
+                'slugs'
+            ]));
+        } else {
+            return view('layouts.errors.404');
+        }
     }
 
+    public function getProductListData(Request $request)
+    {
+        $dataArray = [];
+        if (isset($request->ids) && !empty($request->ids)) {
+            foreach ($request->ids as $key => $value) {
+                $dataArray[$value['name']][] = $value['value'];
+            }
+        }
+        $dataArray['page'] = $request->page;
+        $dataArray['keyword'] = $request->keyword;
+        $slugs = explode('/', $request->path);
+        return $productListingData = getProductListing($slugs, $dataArray);
+        return view('front.includes.productCard', $productListingData);
+    }
 }

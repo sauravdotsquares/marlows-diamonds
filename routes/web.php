@@ -17,10 +17,9 @@ use App\Models\UrlRedirects;
 use Illuminate\Http\Request;
 
 Route::get('/clear-cache', function() {
-	Artisan::call('cache:clear');
-	// Artisan::call('config:cache');
-	// Artisan::call('route:cache');
-	// Artisan::call('view:clear');
+	Artisan::call('optimize:clear');
+	Artisan::call('view:cache');
+	Artisan::call('view:clear');
 	echo 'Application cache cleared';
 });
 
@@ -229,6 +228,23 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 			Route::any('/view/{slug}', 'GlobalCombinationsController@view')->name('view');
 		});
 
+		Route::group(['as' => 'filter_master.', 'prefix' => 'filter_master' ], function () {
+			Route::any('', 'FilterCombinationController@index')->name('index');
+			Route::any('/add', 'FilterCombinationController@add')->name('add');
+			Route::any('/edit/{slug}', 'FilterCombinationController@edit')->name('edit');
+			Route::any('/status/{slug}', 'FilterCombinationController@status')->name('status');
+			Route::any('/delete/{slug}', 'FilterCombinationController@delete')->name('delete');
+			Route::any('/view/{slug}', 'FilterCombinationController@view')->name('view');
+			Route::any('/view/{slug}/additem', 'FilterCombinationController@filterItemAdd')->name('view');
+			Route::any('/itemlistview/{slug}', 'FilterCombinationController@itemListView')->name('itemlistview');
+			Route::any('/itemstatus/{slug}', 'FilterCombinationController@itemStatusFunction')->name('itemstatus');
+			Route::any('/itemedit/{slug}', 'FilterCombinationController@itemEditFunction')->name('itemedit');
+			Route::any('/itemdelete/{slug}', 'FilterCombinationController@itemDeleteFunction')->name('itemdelete');
+			// Route::any('/view/{slug}/edititem', 'FilterCombinationController@filterItemEdit')->name('view');
+			// Route::any('/view/{slug}/statusitem', 'FilterCombinationController@filterItemStatus')->name('view');
+			// Route::any('/view/{slug}/deleteitem', 'FilterCombinationController@filterItemDelete')->name('view');
+		});
+
 		Route::group(['as' => 'combinations.', 'prefix' => 'combinations', 'namespace' =>'Products' ], function () {
 			Route::any('', 'CombinationsController@index')->name('index');
 			Route::any('/add-attributes', 'CombinationsController@addAttributes')->name('add_attributes');
@@ -311,7 +327,6 @@ Route::group(['middleware' => ['customer']], function () {
 		// Route::post('/place-order', 'PlaceOrderController@placeOrder')->name('place.order');
 		
 		Route::get('wc-api/dekopay', 'DekoPayController@check_response');
-
 	});
 });
 
@@ -342,7 +357,7 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 		return redirect('/'. $url, 301);
 	})->where('any', '.*');
 
-	Route::any('product-listing-data','ProductController@productListingData');
+	//Route::any('product-listing-data','ProductController@productListingData');
 	/** Change slugs of all products from previous to new one */
 
 	Route::get('redirects','ProductController@productSlugs');
@@ -381,6 +396,8 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/get-products-video','ProductController@getProductVideo')->name('get-product-video');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');
 	Route::any('product-api/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data-api');
+	Route::get('get-filtered-data','ProductController@getProductListData')->name('getfilteredproducts');
+
 	Route::post('post/get-data','PageController@myPost');
     // Route::get('/blog-resources/{slug}', 'PageController@show');
 	Route::post('/visit-us', 'ContactUsFormController@ContactUsForm')->name('contact');
@@ -392,6 +409,10 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/add-to-cart', 'AddToCartController@addToCart')->name('add.to.cart');
 	Route::post('product/add-to-cart-diamond', 'AddToCartController@addToCartDiamond')->name('add.to.cart.diamond');
 	Route::patch('product/update-cart', 'AddToCartController@updateCart')->name('update.cart');
+
+	Route::patch('product/get-filtered-data', 'AddToCartController@updateCart')->name('update.cart');
+
+
 	Route::delete('product/remove-from-cart', 'AddToCartController@removeCart')->name('remove.from.cart');
 
 	Route::get('products/checkout', 'AddToCartController@checkoutOrder')->name('product.checkout');
@@ -469,4 +490,6 @@ Route::group(['prefix' => 'api/v1'], function() {
 		Route::post('searchProducts','ProductController@searchProducts');
 	});
 });
+
+Route::any('{all}/{subpage}','Front\ProductController@productListPage')->where('all', '.*');
 
