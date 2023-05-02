@@ -25,6 +25,7 @@ use App\Models\PostCategory;
 use App\Models\Pages;
 use App\Models\ProductFilter;
 use App\Models\ProductFilterItems;
+use Illuminate\Support\Facades\Redirect;
 use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
@@ -39,6 +40,49 @@ class ProductController extends Controller
 
     public function productCategory($cat1 = null, $cat2 = null, $cat3 = null)
     {
+        $request = request();
+        $path =  $request->path();
+        $slugs = explode('/', $path);
+
+        if (count($slugs) < 3 && $slugs[1] == 'engagement-rings') {
+            echo "if ";
+            $slugs[1] = 'diamond-engagement-rings';
+        }
+
+        $makeNewURL = '';
+        if(isset($slugs[1]) && !empty($slugs[1])){
+            $makeNewURL .= $slugs[1]; 
+        }
+
+        if(isset($slugs[2]) && !empty($slugs[2])){
+            $makeNewURL .= '/'.$slugs[2]; 
+        }
+        
+        if(isset($slugs[3]) && !empty($slugs[3])){
+
+            $getShapeAttribute = ProductFilterItems::where('item_type','filter-by-shape')->pluck('item_value')->toArray();
+            if(isset($getShapeAttribute) && !empty($getShapeAttribute)){
+                $input = explode('-',$slugs[3]); // for get same string found in array with upper case.
+                $input = array_flip($input);
+                $input = array_change_key_case($input, CASE_UPPER);
+                $input = array_flip($input);
+                $slugs[4]=array_values(array_intersect($getShapeAttribute,$input));
+            
+                if(isset($slugs[4]) && !empty($slugs[4])){
+                    $makeNewURL = $slugs[1].'/'.strtolower($slugs[4][0]); 
+                }else{
+                    if(isset($slugs[2]) && $slugs[2] == 'womens'){
+                        $makeNewURL .= '/'.str_replace('-'.$slugs[2],"",$slugs[3]);
+                    }else{
+                        $makeNewURL .= '/'.$slugs[3]; 
+                    }
+                }
+            }else{
+                $makeNewURL .= '/'.strtolower($slugs[3][0]); 
+            }
+        }
+        return Redirect::to($makeNewURL, 301); 
+        
         if ($cat3 != null) {
             // echo "cat3";
             $getCatId = Category::where('slug', $cat3)->first();
