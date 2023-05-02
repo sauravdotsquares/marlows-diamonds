@@ -28,7 +28,7 @@ class LoginController extends Controller
         $getUserExists = User::where('email',$request->email)->first();
         $details = $request->only('email', 'password');
         $details['is_active'] = 1;
-
+        
         if(isset($getUserExists) && !empty($getUserExists)){
             $getLoginResponse = $this->login($details);
             if(isset($getLoginResponse) && $getLoginResponse){
@@ -101,7 +101,7 @@ class LoginController extends Controller
         }
         if(isset($getDetails) && !empty($getDetails)){
             if(Auth::guard('customer')->attempt($userDetails, true)){
-                Auth::login(Auth::user(), true);
+                // Auth::guard('customer')->login(Auth::user(), true);
                 $getUserId = User::where('email',$userDetails['email'])->first();
                 return $getUserId;
             }
@@ -110,9 +110,9 @@ class LoginController extends Controller
     }
 
     public function loginPageFunction($userDetails){
-        if (auth()->guard('customer')->attempt($userDetails)) {
+        if (Auth::guard('customer')->attempt($userDetails)) {
             if(Auth::attempt($userDetails, true)){
-                Auth::login(Auth::user(), true);
+                Auth::guard('customer')->login(Auth::user(), true);
                 return true;
             }
         }else{
@@ -186,14 +186,14 @@ class LoginController extends Controller
 
         Session::flush();
 
-        Auth::logout();
+        Auth::guard('customer')->logout();
 
         return redirect(route('my-account'));
     }
 
     public function dashboardPage(Request $request)
     {
-        $getUserDetails = $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::user()->id)->first();
+        $getUserDetails = $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::guard('customer')->user()->id)->first();
         $getCountries = Country::get();
 
         return view('front.loginpages.dashboardpage',compact('getUserDetails','getCountries'));
@@ -209,9 +209,9 @@ class LoginController extends Controller
     public function changeCustomerUserAddress(Request $request)
     {
         if(auth()->guard('customer')->check()){
-            $getCustomerAddress = CustomerAddress::where('user_id',Auth::user()->id)->first();
+            $getCustomerAddress = CustomerAddress::where('user_id',Auth::guard('customer')->user()->id)->first();
             if($getCustomerAddress){
-                $getCustomerAddress->user_id = Auth::user()->id;
+                $getCustomerAddress->user_id = Auth::guard('customer')->user()->id;
                 $getCustomerAddress->order_id = 1;
                 $getCustomerAddress->first_name = $request->first_name;
                 $getCustomerAddress->last_name = $request->last_name;
@@ -228,7 +228,7 @@ class LoginController extends Controller
                 $getCustomerAddress->save();
             }else{
                 $getCustomerAddress = new CustomerAddress;
-                $getCustomerAddress->user_id = Auth::user()->id;
+                $getCustomerAddress->user_id = Auth::guard('customer')->user()->id;
                 $getCustomerAddress->order_id = 1;
                 $getCustomerAddress->first_name = $request->first_name;
                 $getCustomerAddress->last_name = $request->last_name;
@@ -263,12 +263,12 @@ class LoginController extends Controller
 
             $data = $request->all();
 
-            if(!\Hash::check($data['old_password'], auth()->user()->password)){
+            if(!\Hash::check($data['old_password'], Auth::guard('customer')->user()->password)){
 
                 return back()->with('error','You have entered wrong password');
 
             }else{
-                User::where('email', auth()->user()->email)->update([
+                User::where('email', Auth::guard('customer')->user()->email)->update([
                     'name'=> $request->name,
                     'nicename'=> $request->nicename,
                     'password' => Hash::make($request->new_password),
@@ -277,7 +277,7 @@ class LoginController extends Controller
                 return back()->with('success','You have successfully updated account details');
             }
         }else{
-            User::where('email', auth()->user()->email)->update([
+            User::where('email', Auth::guard('customer')->user()->email)->update([
                 'name'=> $request->name,
                 'nicename'=> $request->nicename,
             ]);
@@ -288,7 +288,7 @@ class LoginController extends Controller
 
     public function getOrderDetails(Request $request)
     {
-        $getOrderDetails = Order::with('getOrderDetailsFunction')->whereNotNull('custom_order_id')->latest()->where('user_id',Auth::user()->id)->get();
+        $getOrderDetails = Order::with('getOrderDetailsFunction')->whereNotNull('custom_order_id')->latest()->where('user_id',Auth::guard('customer')->user()->id)->get();
 
         if(count($getOrderDetails)){
             $view = view('front.ajax.user-order-list',compact('getOrderDetails'))->render();

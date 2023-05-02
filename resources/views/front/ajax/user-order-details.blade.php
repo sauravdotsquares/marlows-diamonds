@@ -17,12 +17,6 @@
                 <tbody>
                     @foreach($getOrderDetails->getOrderDetailsFunction as $key => $value)
                         <?php
-                            // echo "<pre>";
-                            // print_r($value->product_details->title);
-                            // // print_r($value->order_product_details);
-                            // die;
-                        ?>
-                        <?php
                             $detailsDecode = (array)json_decode($value->order_product_details);
                             // $new_value = $getDataProduct['title'];
                             // unset($getDataProduct['title']);
@@ -124,7 +118,7 @@
                                 </ul>
                             </td>
                             <td> {{MY_CURRENCY_SYMBOL}} {{ $value->product_price * $value->quantity}}</td>
-                            <td> {{MY_CURRENCY_SYMBOL}} {{ $value->deposited_product_price}}</td>
+                            <td> {{MY_CURRENCY_SYMBOL}} {{ isset($value->deposited_product_price)?$value->deposited_product_price:$value->total_price}}</td>
                         </tr>
                     @endforeach
                 </tbody>
