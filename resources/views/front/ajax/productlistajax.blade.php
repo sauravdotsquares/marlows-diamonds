@@ -36,9 +36,9 @@
 						<a href="#">{{isset($product->title)?$product->title:''}}</a>
 					@endif
 
-					<?php if(!empty($product->ProductVariationMinMaxPrice->MinPrice) && !empty($product->ProductVariationMinMaxPrice->MinPrice)){ ?>
-                        <p> <strong>Price</strong> <span>  {{MY_CURRENCY_SYMBOL}} {{round(($product->ProductVariationMinMaxPrice->MaxPrice*getVAT()),2)}} </span> </p>
-					<?php } ?>
+					<!-- <?php //if(!empty($product->ProductVariationMinMaxPrice->MinPrice) && !empty($product->ProductVariationMinMaxPrice->MinPrice) && $product->ProductVariationMinMaxPrice->MinPrice != 0){ ?>
+                        <p> <strong>Price</strong> <span>  {{MY_CURRENCY_SYMBOL}} {{round(($product->ProductVariationMinMaxPrice->MinPrice),2)}} </span> </p>
+					<?php //} ?> -->
 				</div>
 			</div>
 		</div>
