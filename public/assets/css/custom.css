@@ -11,6 +11,14 @@
     font-style: normal;
     font-display: swap;
 }
+@font-face {
+    font-family: 'Castellar';
+    src: url('../fonts/Castellar.woff2') format('woff2'),
+        url('../fonts/Castellar.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 /** GLobal Css **/
 body{font-size:14px;font-family:'Lato';color:#626262;line-height:1.5;padding:0;margin:0}
