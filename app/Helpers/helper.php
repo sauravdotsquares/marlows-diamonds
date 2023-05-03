@@ -1268,14 +1268,14 @@ if (!function_exists('validate_breadcrumb')) {
                  }
             }
  
-             if ($queryString[0] == 'diamond-engagement-rings') {
+             if (isset($queryString[0]) && $queryString[0] == 'diamond-engagement-rings') {
                  $queryString = [
                      'diamond-engagement-rings',
                      'engagement-rings',
                  ];
                  $conditions = 'OR';
              }
-             if ($queryString[0] == 'diamonds-rings') {
+             if (isset($queryString[0]) && $queryString[0] == 'diamonds-rings') {
                  $queryString = [
                      'engagement-rings',
                      'eternity-rings',
@@ -1371,6 +1371,9 @@ if (!function_exists('validate_breadcrumb')) {
          if ($is404) {
              return null;
          }
+        if (empty($category_custom_query)) {
+            return null;
+        }
  
          $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
          $query = Products::where('status', 1)->whereRaw(DB::raw($category_custom_query));
