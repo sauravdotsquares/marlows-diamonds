@@ -1,8 +1,9 @@
 @extends('layouts.admin.app')
 
 @section('css')
-<link rel="stylesheet" href="{{asset('')}}/admin/plugins/select2/css/select2.min.css">
-<link rel="stylesheet" href="{{asset('')}}/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+<link rel="stylesheet" href="{{asset('admin/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
 
 <style>
@@ -547,7 +548,7 @@
 
 @section('js')
 <!-- Select2 -->
-<script src="{{asset('')}}/admin/plugins/select2/js/select2.full.min.js"></script>
+<script src="{{asset('admin/plugins/select2/js/select2.full.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.min.js"></script>
 
