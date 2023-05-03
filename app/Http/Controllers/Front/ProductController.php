@@ -174,13 +174,16 @@ class ProductController extends Controller
 
                     if (isset($productVariationId) && !empty($productVariationId)) {
                         $variDetails =  ProductVariationDetails::whereIn('variation_id', $productVariationId)
-                            ->where('value', 'Platinum')
+                            ->where('value', '9ct White Gold')
+                            ->orWhere('value', 'Platinum')
                             ->select('id', 'variation_id', 'value')
-                            ->first();
+                            ->orderBy('variation_id','desc')
+                            ->first();    
 
                         if (empty($variDetails)) {
                             $variDetails =  ProductVariationDetails::whereIn('variation_id', $productVariationId)
                                 ->select('id', 'variation_id', 'value')
+                                ->where('value', '!=','')
                                 ->first();
                         }
                     }
