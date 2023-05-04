@@ -558,7 +558,8 @@
 
 			if(classToPerform == 'mined_item'){
 				$(".mined-certificate").removeAttr('style');
-				$(".store-locator-border-right").css('border-right','1px solid #B0B0B0')
+				$(".store-locator-border-right").css('border-right','1px solid #B0B0B0');
+				$("#selected_diamond_price").val($('.refinedata').first().data('price'));
 			}else{
 				$(".mined-certificate").css('display','none');
 				$(".store-locator-border-right").css('border-right','none')
@@ -857,7 +858,7 @@
 
                         if(triggerLab){
                             triggerLab = false;
-                            getFinalPrice();
+							getFinalPrice();
                         }else{
                             // $('#finaldiamondprice').html(res.finalPrice);
                             if(res.finalPrice == res.discountedPrice){
@@ -910,6 +911,7 @@
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);
 						//getCustomPrice();
+						$("#selected_diamond_price").val($('.refinedata').first().data('price'));
 					}else{
 						$('#refineSearchData').html("No Data Found");
 					}

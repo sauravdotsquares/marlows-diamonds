@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Discount;
 use App\Models\DiscountRange;
+use App\Models\PercentageRange;
 
 class DiscountController extends Controller
 {
@@ -59,8 +60,10 @@ class DiscountController extends Controller
                         'diamond_type' => !empty($request->diamond_type) ? $request->diamond_type : null
                     ]);
                     $this->addDiscountRanges($request->all(),$insDiscountData->id);
+                    $this->addPercentageRanges($request->all(),$insDiscountData->id);
                 }else{
                     $this->addDiscountRanges($request->all(),$getDuplicateDiscount->id);
+                    $this->addPercentageRanges($request->all(),$getDuplicateDiscount->id);
                 }
 
                 return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Duplicate Category not allowed');
@@ -77,6 +80,7 @@ class DiscountController extends Controller
                 ]);
 
                 $this->addDiscountRanges($request->all(),$insDiscountData->id);
+                $this->addPercentageRanges($request->all(),$insDiscountData->id);
 
                 return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Discount Added Successfully');
             }
@@ -142,7 +146,35 @@ class DiscountController extends Controller
                 'status'=> 1,
             ]);
         }
+        return true;
+    }
 
+    public function addPercentageRanges($getDiscountRangeArray,$discountId){
+        $arrayPercentageValue = [];
+    
+        for($i=1;$i<=7;$i++){
+            $arrayPercentageValue[$i]['category_id'] = isset($getDiscountRangeArray['category_id'])?$getDiscountRangeArray['category_id']:0;
+            $arrayPercentageValue[$i]['from'] = isset($getDiscountRangeArray['range'.$i.'_inc_from'])?$getDiscountRangeArray['range'.$i.'_inc_from']:0;
+            $arrayPercentageValue[$i]['to'] = isset($getDiscountRangeArray['range'.$i.'_inc_to'])?$getDiscountRangeArray['range'.$i.'_inc_to']:0;
+            $arrayPercentageValue[$i]['discount'] = isset($getDiscountRangeArray['discount_inc_range'.$i])?$getDiscountRangeArray['discount_inc_range'.$i]:0;
+            $arrayPercentageValue[$i]['discount_id'] = isset($discountId)?$discountId:0;
+            $arrayPercentageValue[$i]['diamond_type'] = !empty($getDiscountRangeArray['diamond_type']) ? $getDiscountRangeArray['diamond_type'] : null;
+        }
+
+        PercentageRange::where('category_id',$getDiscountRangeArray['category_id'])->delete();
+        foreach($arrayPercentageValue as $key => $value){
+            if($value['to'] != 0){
+                PercentageRange::create([
+                    'category_id'=> $value['category_id'],
+                    'discount_id'=> $value['discount_id'],
+                    'from_price'=> $value['from'],
+                    'to_price'=> $value['to'],
+                    'percentage'=> $value['discount'],
+                    'diamond_type'=> $value['diamond_type'],
+                    'status'=> 1,
+                ]);
+            }
+        }
         return true;
     }
 }
