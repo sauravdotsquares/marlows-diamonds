@@ -8,6 +8,7 @@ use App\Models\Products;
 use App\Models\Category;
 use App\Models\Discount;
 use App\Models\DiscountRange;
+use App\Models\PercentageRange;
 use App\Models\LabPricesList;
 
 
@@ -73,12 +74,13 @@ class ProductPriceController extends Controller
 
                 $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$labPrice, $request['diamond_type']);
 
+                $getFinalCalculatedPrices = $this->getPercentageFinalPrice($finalDiscountedPrice['settingPriceWithVatDiscount'],$productCategories,$request->diamond_type);
                 return response()->json([
                     'labPriceFormula' => true,
                     'labPrice' => $newPrice->price,
                     'variationPrice' => $variationPrice,
-                    'finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),
-                    'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount'])
+                    'finalPrice'=>round($getFinalCalculatedPrices),
+                    'discountedPrice'=>round($getFinalCalculatedPrices)
                 ]);
             }
         }
@@ -287,5 +289,13 @@ class ProductPriceController extends Controller
         }
     }
 
+    public function getPercentageFinalPrice($price,$category,$diamondType)
+    {
+        $getPercentagePriceRanges = PercentageRange::where(['diamond_type'=>$diamondType])->whereIn('category_id',$category)->whereRaw('"'.$price.'" between `from_price` and `to_price`')->select('category_id','diamond_type','percentage','from_price','to_price','discount_id')->first();
 
+        if(isset($getPercentagePriceRanges) && !empty($getPercentagePriceRanges)){
+            return $price*$getPercentagePriceRanges->percentage;
+        }
+        return $price;
+    }
 }
