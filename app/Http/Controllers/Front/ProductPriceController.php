@@ -20,7 +20,7 @@ class ProductPriceController extends Controller
     public function getProductFinalPrice(Request $request){
 
         // $variationPrice = $CurrentVariationPrice * 1.3;
-        $settingPrice = $request->setting_price;
+        $settingPrice = $request->variation_price;
         //1053+440 = 1493   
 
         $diamondPrice = $request->diamond_price;
@@ -74,13 +74,13 @@ class ProductPriceController extends Controller
 
                 $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$labPrice, $request['diamond_type']);
 
-                $getFinalCalculatedPrices = $this->getPercentageFinalPrice($finalDiscountedPrice['settingPriceWithVatDiscount'],$productCategories,$request->diamond_type);
+                // $getFinalCalculatedPrices = $this->getPercentageFinalPrice($finalDiscountedPrice['settingPriceWithVatDiscount'],$productCategories,$request->diamond_type);
                 return response()->json([
                     'labPriceFormula' => true,
                     'labPrice' => $newPrice->price,
                     'variationPrice' => $variationPrice,
-                    'finalPrice'=>round($getFinalCalculatedPrices),
-                    'discountedPrice'=>round($getFinalCalculatedPrices)
+                    'finalPrice'=>round($finalDiscountedPrice['settingPriceWithVat']),
+                    'discountedPrice'=>round($finalDiscountedPrice['settingPriceWithVatDiscount'])
                 ]);
             }
         }
