@@ -90,7 +90,7 @@ h2,.heading-h-two{font-size:22px}
 .takeonlab {padding: 20px 0 40px 0;}
 .takeon-right {padding: 40px 0 0 0;}
 .chepaest-lab-left {padding: 30px 20px;}
-.chepaest-lab-left h3 {font-size: 20px;margin: 0 0 15px 0;}
+.chepaest-lab-left h2 {font-size: 20px;margin: 0 0 15px 0;}
 .laboratory-grown {padding: 40px 0;}
 .vieworderd-table {overflow-x: scroll;}
 .account-main-content #orderDataTable_filter, .account-main-content #orderDataTable_paginate {float: none;margin: 20px 0 0 0;}
@@ -260,7 +260,7 @@ h3,.heading-h-three{font-size:28px}
 
 	.chepaest-lab-left {max-width: 640px;padding: 18px 38px;}
 	.chepaest-lab-left p {font-size: 14px;line-height: 23px;margin: 0 0 15px 0;}
-	.chepaest-lab-left h3 {font-size: 23px;margin: 0 0 19px 0;}
+	.chepaest-lab-left h2 {font-size: 23px;margin: 0 0 19px 0;}
 	.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 7px;font-size: 10px;}
 	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {right: -4px;}
 }
