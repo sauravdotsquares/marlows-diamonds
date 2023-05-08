@@ -26,7 +26,7 @@ class Products extends Model
         'title','slug','old_slug','tags','is_variable','diamond_shape','short_description','description','lab_description','old_description','categories','sale_price','regular_price','meta_title','meta_keyword','meta_description','status','dfinder_status','is_featured','is_taxable','stock_status'
     ];
 
-    protected $appends = ['cat_details','ProductVariationMinMaxPrice'];
+    protected $appends = ['cat_details','ProductVariationMinMaxPrice','AdditionalPriceMetalType'];
 
     public function getProductImages(){
         return $this->hasOne(ProductImages::class,'product_id','id')->where('is_featured',1);
@@ -43,6 +43,23 @@ class Products extends Model
     public function getProductVariationMinMaxPriceAttribute(){
         return ProductVariations::select(\DB::raw('MIN(regular_price) AS MinPrice, MAX(regular_price) AS MaxPrice'))->where('product_id',$this->id)->first();
         // return $this->hasOne(ProductVariations::class,'product_id','id')->select(\DB::raw('MIN(regular_price) AS minPrice, MAX(regular_price) AS MaxPrice'));
+    }
+
+    public function getAdditionalPriceMetalTypeAttribute(){
+        $finalAdditionalPrices = 0;
+        $getVariationId = ProductVariations::where('product_id',$this->id)->pluck('id');
+        $get18CaratRecord = ProductVariationDetails::whereIn('variation_id',$getVariationId)->where('value','Platinum')->first();
+        if(isset($get18CaratRecord) && !empty($get18CaratRecord)){
+            $getVariationIdArray = ProductVariations::where('id',$get18CaratRecord->variation_id)->first();
+
+            $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->first();
+
+            $finalAdditionalPrices = [
+                'regular_price' => $getVariationIdArray->regular_price,
+                'lab_price' => $newPrice->price
+            ];
+        }
+        return $finalAdditionalPrices;
     }
 
     public function getCatDetailsAttribute()

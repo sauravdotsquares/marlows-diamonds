@@ -181,6 +181,73 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card card-primary">
+                            <div>
+                                <div class="card-header">
+                                    <h3 class="card-title">Add Increase/Decrese Price Ranges</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        {{-- <label for="from">From</label>
+                                        <label for="from">To</label>
+                                        <label for="from">Discount</label> --}}
+                                        {{-- <input type="text" id="range1_from" name="range1_from"  value="0">
+                                        <input type="text" id="range1_to" name="range1_to"  value="1000">
+
+                                        <input type="text" id="discount_range1" name="discount_inc_range1" placeholder="Discount" value="{{isset($getDiscountData->percentage_range_details[0]['percentage'])?$getDiscountData->percentage_range_details[0]['percentage']:''}}"> --}}
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="range1_inc_from" name="range1_inc_from"  value="0">
+                                        <input type="text" id="range1_inc_to" name="range1_inc_to"  value="1500">
+
+                                        <input type="text" id="discount_inc_range1" name="discount_inc_range1" placeholder="Discount" value="{{isset($getDiscountData->percentage_range_details[0]['percentage'])?$getDiscountData->percentage_range_details[0]['percentage']:''}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="range2_inc_from" name="range2_inc_from"  value="1501">
+                                        <input type="text" id="range2_inc_to" name="range2_inc_to"  value="3000">
+
+                                        <input type="text" id="discount_inc_range2" name="discount_inc_range2" placeholder="Discount" value="{{isset($getDiscountData->percentage_range_details[1]['percentage'])?$getDiscountData->percentage_range_details[1]['percentage']:''}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="range3_inc_from" name="range3_inc_from"  value="3001">
+                                        <input type="text" id="range3_inc_to" name="range3_inc_to"  value="6000">
+
+                                        <input type="text" id="discount_inc_range3" name="discount_inc_range3" placeholder="Discount" value="{{isset($getDiscountData->percentage_range_details[2]['percentage'])?$getDiscountData->percentage_range_details[2]['percentage']:''}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="range4_inc_from" name="range4_inc_from"  value="6001">
+                                        <input type="text" id="range4_inc_to" name="range4_inc_to"  value="100000">
+
+                                        <input type="text" id="discount_inc_range4" name="discount_inc_range4" placeholder="Discount" value="{{isset($getDiscountData->percentage_range_details[3]['percentage'])?$getDiscountData->percentage_range_details[3]['percentage']:''}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="range5_inc_from" name="range5_inc_from"  value="">
+                                        <input type="text" id="range5_inc_to" name="range5_inc_to"  value="">
+
+                                        <input type="text" id="discount_inc_range5" name="discount_inc_range5" placeholder="Discount" value="{{isset($getDiscountData->percentage_range_details[4]['percentage'])?$getDiscountData->percentage_range_details[4]['percentage']:''}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="range6_inc_from" name="range6_inc_from"  value="">
+                                        <input type="text" id="range6_inc_to" name="range6_inc_to"  value="">
+
+                                        <input type="text" id="discount_inc_range6" name="discount_inc_range6" placeholder="Discount" value="{{isset($getDiscountData->percentage_range_details[5]['percentage'])?$getDiscountData->percentage_range_details[5]['percentage']:''}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="range7_inc_from" name="range7_inc_from"  value="">
+                                        <input type="text" id="range7_inc_to" name="range7_inc_to"  value="">
+
+                                        <input type="text" id="discount_inc_range7" name="discount_inc_range7" placeholder="Discount" value="{{isset($getDiscountData->percentage_range_details[6]['percentage'])?$getDiscountData->percentage_range_details[6]['percentage']:''}}">
+                                    </div>
+                                    {{-- <div class="form-group">
+                                        <div class="form-label-group">
+                                            <label for="discount">Discount(%)</label>
+
+                                        </div>
+                                    </div> --}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card card-header">

@@ -175,7 +175,6 @@ class ProductController extends Controller
                     if (isset($productVariationId) && !empty($productVariationId)) {
                         $variDetails =  ProductVariationDetails::whereIn('variation_id', $productVariationId)
                             ->where('value', '9ct White Gold')
-                            ->orWhere('value', 'Platinum')
                             ->select('id', 'variation_id', 'value')
                             ->orderBy('variation_id','desc')
                             ->first();    
@@ -486,9 +485,15 @@ class ProductController extends Controller
 
                         $explode_attr = explode('|', $attribute['values']);
 
+                        if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
+                            $arr_2 = "9ct";
+                            $explode_attr = array_filter($explode_attr, function($value) use ($arr_2) {
+                                return stripos($value, $arr_2) === false;
+                            });
+                        }
                         $getAttrVals = ProductVariationDetails::whereIn('variation_id', $variation_ids)->where('key', 'attri_' . $attribute['slug'])->pluck('value')->toArray();
 
-
+                        
                         $found = [];
                         foreach ($explode_attr as $num) {
                             if (in_array(trim($num), $getAttrVals)) {
