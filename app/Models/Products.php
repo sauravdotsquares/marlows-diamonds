@@ -46,18 +46,19 @@ class Products extends Model
     }
 
     public function getAdditionalPriceMetalTypeAttribute(){
-        
+        $finalAdditionalPrices = 0;
         $getVariationId = ProductVariations::where('product_id',$this->id)->pluck('id');
         $get18CaratRecord = ProductVariationDetails::whereIn('variation_id',$getVariationId)->where('value','Platinum')->first();
-        $getVariationIdArray = ProductVariations::where('id',$get18CaratRecord->variation_id)->first();
+        if(isset($get18CaratRecord) && !empty($get18CaratRecord)){
+            $getVariationIdArray = ProductVariations::where('id',$get18CaratRecord->variation_id)->first();
 
-        $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->first();
+            $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->first();
 
-        $finalAdditionalPrices = [
-            'regular_price' => $getVariationIdArray->regular_price,
-            'lab_price' => $newPrice->price
-        ];
-
+            $finalAdditionalPrices = [
+                'regular_price' => $getVariationIdArray->regular_price,
+                'lab_price' => $newPrice->price
+            ];
+        }
         return $finalAdditionalPrices;
     }
 

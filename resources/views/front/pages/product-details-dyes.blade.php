@@ -593,17 +593,18 @@
 		//$(".lab_item").css('display','none');
 
 		$(".lab_price_update_items").on('change', function() {
-            // console.log('two')
 			changeDiamondType($('.diamond_type:checked').attr("id"));
 		});
 
 
 		$(document).on('change', '.diamond_type' , function(event) {
-            console.log('first');
-			changeDiamondType($(event.target).attr("id"));
+			getCustomFilter();
+			setTimeout(function(){
+				changeDiamondType($(event.target).attr("id"));
+			}, 500);
 		});
 
-
+		
         function blankForm(){
             $('input[name="title"]').val('');
             $('input[name="email"]').val('');
@@ -737,6 +738,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
+					'diamond_type': $('.diamond_type:checked').val(),
                     'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
                 },
                 success: function (res) {
