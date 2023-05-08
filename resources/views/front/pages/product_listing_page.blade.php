@@ -61,31 +61,6 @@
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
     <div class="container">
         <div class="category-listing-row">
-            <div class="category-list-wrap">
-                <input type="hidden" id="pagescroll" value="1">
-                <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
-                <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
-               
-                <div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>
-                <br>
-                <div class="search-result"> @include('front.includes.productCard')</div>
-                <div class="loading-data-element"></div>
-                <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
-                <div class="ajax-load text-center" style="display:none;">
-                    <img alt="Product loader" src="{{ asset('assets/images/spinner-ring.gif') }}">
-                    <p>Loading More Products</p>
-                    <button style="display: none;" class="ajax-load-btn">Load more data</button>
-                </div>
-                <div class="ajax-loader">
-                    <img src="{{ asset('images/spinner.gif') }}" id="loading-data-image" class="img-responsive"
-                        style="display:none;" />
-                </div>
-                <br>
-                <br>
-                <div class="text-center">{!!isset($filterItemTextData->bottom_text)?$filterItemTextData->bottom_text:''!!}</div>
-                {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
-            </div>
-
             <div class="category-sidebar-wrap">
 
 
@@ -180,33 +155,33 @@
                     @endforeach
                     {{-- <li> --}}
                     {{-- <div class="choose-diaond-fields row diamond-carat">
-							<div class="diamond-field-labels col-lg-3">
-								Carat
-							</div>
-							<div class="diamond-field-contens col-lg-9">
-								<div class="diamond-field-inner-bar">
-									<div class="range_carat_wap">
+                            <div class="diamond-field-labels col-lg-3">
+                                Carat
+                            </div>
+                            <div class="diamond-field-contens col-lg-9">
+                                <div class="diamond-field-inner-bar">
+                                    <div class="range_carat_wap">
 
                                         <div class="srchniput-fil">
                                             <div class="minrange">
-												<span>Min</span>
-												<input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
-											</div>
+                                                <span>Min</span>
+                                                <input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
+                                            </div>
                                             <div class="maxrange">
-											<span>Max</span>
-												<input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
-											</div>
+                                            <span>Max</span>
+                                                <input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
+                                            </div>
                                         </div>
 
                                         <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 19.1489%; width: 40.4255%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 19.1489%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5745%;"></span></div>
                                             <div class="srchniput-fil">
                                                 <input type="hidden" class="sliderValue filter-item-data" data-index="0" value="250" id="input-carat-min" name="price-min" autocomplete="off">
                                                 <input type="hidden" class="sliderValue filter-item-data" data-index="1" value="1000" id="input-carat-max" name="price-max" autocomplete="off">
-										    </div>
-									 </div>
-								</div>
-							</div>
-						</div> --}}
+                                            </div>
+                                     </div>
+                                </div>
+                            </div>
+                        </div> --}}
                     {{-- </li> --}}
 
 
@@ -217,7 +192,30 @@
                 </div>
 
             </div>
-
+            <div class="category-list-wrap">
+                <input type="hidden" id="pagescroll" value="1">
+                <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
+                <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
+               
+                <div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>
+                <br>
+                <div class="search-result"> @include('front.includes.productCard')</div>
+                <div class="loading-data-element"></div>
+                <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
+                <div class="ajax-load text-center" style="display:none;">
+                    <img alt="Product loader" src="{{ asset('assets/images/spinner-ring.gif') }}">
+                    <p>Loading More Products</p>
+                    <button style="display: none;" class="ajax-load-btn">Load more data</button>
+                </div>
+                <div class="ajax-loader">
+                    <img src="{{ asset('images/spinner.gif') }}" id="loading-data-image" class="img-responsive"
+                        style="display:none;" />
+                </div>
+                <br>
+                <br>
+                <div class="text-center">{!!isset($filterItemTextData->bottom_text)?$filterItemTextData->bottom_text:''!!}</div>
+                {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
+            </div>
         </div>
     </div>
 </div>
