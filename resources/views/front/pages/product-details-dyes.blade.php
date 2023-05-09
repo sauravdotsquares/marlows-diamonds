@@ -933,58 +933,58 @@
 		// getFinalPrice()
 
 
-		function getFinalSelectedPrice(){
+		// function getFinalSelectedPrice(){
 			
-			let parentCategory = '{{$getParentCategory}}';
+		// 	let parentCategory = '{{$getParentCategory}}';
 			
-			let diamondType = $('.diamond_type:checked').val();
-			console.log(diamondType);
-			if(diamondType == 'lab_grown'){
-				let metalType = $('#metal-type').val();
-				let metalTypeArray = metalType.split(" ");
-				let selectedFinalPrice = $("#finaldiamondprice .price").text().replace("£", "");
+		// 	let diamondType = $('.diamond_type:checked').val();
+		// 	console.log(diamondType);
+		// 	if(diamondType == 'lab_grown'){
+		// 		let metalType = $('#metal-type').val();
+		// 		let metalTypeArray = metalType.split(" ");
+		// 		let selectedFinalPrice = $("#finaldiamondprice .price").text().replace("£", "");
 
 
-				let regularPrice = '{{$regular_price}}';
-				let labPrice = $('#lab_price').val();
-				let finalMetalType18ct = parseFloat(regularPrice) + parseFloat(labPrice);
-				let gstPercentage = '{{getVAT()}}';
-				let Final18CTAmountWithGST = parseFloat(finalMetalType18ct) * parseFloat(gstPercentage);
+		// 		let regularPrice = '{{$regular_price}}';
+		// 		let labPrice = $('#lab_price').val();
+		// 		let finalMetalType18ct = parseFloat(regularPrice) + parseFloat(labPrice);
+		// 		let gstPercentage = '{{getVAT()}}';
+		// 		let Final18CTAmountWithGST = parseFloat(finalMetalType18ct) * parseFloat(gstPercentage);
 				
-				let percentage = 0;
+		// 		let percentage = 0;
 
-				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 0 && selectedFinalPrice < 1500){
-					percentage= 10;
+		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 0 && selectedFinalPrice < 1500){
+		// 			percentage= 10;
 					
-				}
+		// 		}
 				
-				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 1500 && selectedFinalPrice < 3000){
-					percentage= 20;
+		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 1500 && selectedFinalPrice < 3000){
+		// 			percentage= 20;
 					
-				}
-				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 3000 && selectedFinalPrice < 6000){
-					percentage= 25;
+		// 		}
+		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 3000 && selectedFinalPrice < 6000){
+		// 			percentage= 25;
 					
-				}
-				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 6000){
-					percentage= 35;
+		// 		}
+		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 6000){
+		// 			percentage= 35;
 					
-				}
-				if(metalTypeArray[1] === '18ct' || metalTypeArray[0] === 'Platinum'){
-					var percentageAmount = selectedFinalPrice * (percentage/100) ; 
-					var getVal =  selectedFinalPrice - percentageAmount ; 
+		// 		}
+		// 		if(metalTypeArray[1] === '18ct' || metalTypeArray[0] === 'Platinum'){
+		// 			var percentageAmount = selectedFinalPrice * (percentage/100) ; 
+		// 			var getVal =  selectedFinalPrice - percentageAmount ; 
 
-				}else{
-					var percentageAmount = Final18CTAmountWithGST * (percentage/100); 
-					var  getValNew =  Final18CTAmountWithGST - percentageAmount ; 
-					var  Final9CTAmountWithGST =  getValNew *(20/100) ;
-					var getVal =  getValNew - Final9CTAmountWithGST ;  
-				}
+		// 		}else{
+		// 			var percentageAmount = Final18CTAmountWithGST * (percentage/100); 
+		// 			var  getValNew =  Final18CTAmountWithGST - percentageAmount ; 
+		// 			var  Final9CTAmountWithGST =  getValNew *(20/100) ;
+		// 			var getVal =  getValNew - Final9CTAmountWithGST ;  
+		// 		}
 
-				$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+parseInt(getVal)+' </span>');
-				$('#selected_final_price').val(parseInt(getVal));
-			}
-		}
+		// 		$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+parseInt(getVal)+' </span>');
+		// 		$('#selected_final_price').val(parseInt(getVal));
+		// 	}
+		// }
 		function getFinalPrice(){
 
 			$('#addtobasket').addClass('disabledAnchor');
@@ -1020,7 +1020,7 @@
 
 						$('#addtobasket').removeClass('disabledAnchor');
 
-						getFinalSelectedPrice();
+						// getFinalSelectedPrice();
 					}else{
 						$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
 					}
