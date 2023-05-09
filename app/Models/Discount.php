@@ -21,7 +21,7 @@ class Discount extends Model
         'status'
     ];
 
-    protected $appends = ['cat_details','discount_range_details'];
+    protected $appends = ['cat_details','discount_range_details','discount_range_details'];
 
     public function getCatDetailsAttribute()
     {
@@ -31,5 +31,9 @@ class Discount extends Model
     public function getDiscountRangeDetailsAttribute()
     {
         return DiscountRange::where('discount_id',$this->id)->get()->toArray();
+    }
+    public function getPercentageRangeDetailsAttribute()
+    {
+        return PercentageRange::where('discount_id',$this->id)->get()->toArray();
     }
 }

@@ -69,6 +69,17 @@
 
 
 			</div>
+			<?php 
+				$getParentCategoryArray = explode(',',$data->cat_details);
+				$getParentCategory = '';
+				if(in_array('Engagement Rings',$getParentCategoryArray)){
+					$getParentCategory = $getParentCategoryArray[0];
+					$regular_price = $data->AdditionalPriceMetalType['regular_price'];
+					$lab_price = $data->AdditionalPriceMetalType['lab_price'];
+				}
+			?>
+			<input type="hidden" name="lab_price" id="lab_price" value="{{isset($lab_price)?$lab_price:742}}">
+				
 			<div class="product-info-main">
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
@@ -558,7 +569,8 @@
 
 			if(classToPerform == 'mined_item'){
 				$(".mined-certificate").removeAttr('style');
-				$(".store-locator-border-right").css('border-right','1px solid #B0B0B0')
+				$(".store-locator-border-right").css('border-right','1px solid #B0B0B0');
+				$("#selected_diamond_price").val($('.refinedata').first().data('price'));
 			}else{
 				$(".mined-certificate").css('display','none');
 				$(".store-locator-border-right").css('border-right','none')
@@ -581,17 +593,18 @@
 		//$(".lab_item").css('display','none');
 
 		$(".lab_price_update_items").on('change', function() {
-            // console.log('two')
 			changeDiamondType($('.diamond_type:checked').attr("id"));
 		});
 
 
 		$(document).on('change', '.diamond_type' , function(event) {
-            console.log('first')
-			changeDiamondType($(event.target).attr("id"));
+			getCustomFilter();
+			setTimeout(function(){
+				changeDiamondType($(event.target).attr("id"));
+			}, 500);
 		});
 
-
+		
         function blankForm(){
             $('input[name="title"]').val('');
             $('input[name="email"]').val('');
@@ -725,6 +738,7 @@
                 data: {
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
+					'diamond_type': $('.diamond_type:checked').val(),
                     'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
                 },
                 success: function (res) {
@@ -857,7 +871,7 @@
 
                         if(triggerLab){
                             triggerLab = false;
-                            getFinalPrice();
+							getFinalPrice();
                         }else{
                             // $('#finaldiamondprice').html(res.finalPrice);
                             if(res.finalPrice == res.discountedPrice){
@@ -866,8 +880,6 @@
                                 $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
                             }
                         }
-
-
 
 						$('#selected_final_price').val(res.finalPrice);
 						$('#selected_diamond_price').val(res.diamondPrice);
@@ -910,6 +922,7 @@
 					if(res.html != ''){
 						$('#refineSearchData').html(res.html);
 						//getCustomPrice();
+						$("#selected_diamond_price").val($('.refinedata').first().data('price'));
 					}else{
 						$('#refineSearchData').html("No Data Found");
 					}
@@ -920,6 +933,58 @@
 		// getFinalPrice()
 
 
+		function getFinalSelectedPrice(){
+			
+			let parentCategory = '{{$getParentCategory}}';
+			
+			let diamondType = $('.diamond_type:checked').val();
+			console.log(diamondType);
+			if(diamondType == 'lab_grown'){
+				let metalType = $('#metal-type').val();
+				let metalTypeArray = metalType.split(" ");
+				let selectedFinalPrice = $("#finaldiamondprice .price").text().replace("£", "");
+
+
+				let regularPrice = '{{$regular_price}}';
+				let labPrice = $('#lab_price').val();
+				let finalMetalType18ct = parseFloat(regularPrice) + parseFloat(labPrice);
+				let gstPercentage = '{{getVAT()}}';
+				let Final18CTAmountWithGST = parseFloat(finalMetalType18ct) * parseFloat(gstPercentage);
+				
+				let percentage = 0;
+
+				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 0 && selectedFinalPrice < 1500){
+					percentage= 10;
+					
+				}
+				
+				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 1500 && selectedFinalPrice < 3000){
+					percentage= 20;
+					
+				}
+				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 3000 && selectedFinalPrice < 6000){
+					percentage= 25;
+					
+				}
+				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 6000){
+					percentage= 35;
+					
+				}
+				if(metalTypeArray[1] === '18ct' || metalTypeArray[0] === 'Platinum'){
+					var percentageAmount = selectedFinalPrice * (percentage/100) ; 
+					var getVal =  selectedFinalPrice - percentageAmount ; 
+
+				}else{
+					var percentageAmount = Final18CTAmountWithGST * (percentage/100); 
+					var  getValNew =  Final18CTAmountWithGST - percentageAmount ; 
+					var  Final9CTAmountWithGST =  getValNew *(20/100) ;
+					var getVal =  getValNew - Final9CTAmountWithGST ;  
+				}
+
+				$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+parseInt(getVal)+' </span>');
+				$('#selected_final_price').val(parseInt(getVal));
+			}
+		}
 		function getFinalPrice(){
 
 			$('#addtobasket').addClass('disabledAnchor');
@@ -948,11 +1013,14 @@
                         if(res.finalPrice == res.discountedPrice){
                             $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
                             $('#selected_final_price').val(res.finalPrice);
+							$('#lab_price').val(res.labPrice);
                         }else{
                             $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
                         }
 
 						$('#addtobasket').removeClass('disabledAnchor');
+
+						getFinalSelectedPrice();
 					}else{
 						$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
 					}
