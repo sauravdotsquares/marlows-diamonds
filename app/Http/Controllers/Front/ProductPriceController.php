@@ -23,7 +23,7 @@ class ProductPriceController extends Controller
         $settingPrice = $request->variation_price;
         //1053+440 = 1493   
 
-        $diamondPrice = $request->diamond_price;
+        $diamondPrice = (isset($request->diamond_price) && $request->diamond_price != 'NaN')?$request->diamond_price:0.00;
 
         $finalPrice = $settingPrice + $diamondPrice;
 
