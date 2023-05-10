@@ -602,6 +602,12 @@
 			setTimeout(function(){
 				changeDiamondType($(event.target).attr("id"));
 			}, 500);
+			let getDiamondType = $(this).val();
+			if(getDiamondType == 'lab_grown'){
+				getProdVideo('onChange',' 9ct White Gold ');
+			}else if(getDiamondType == 'mined_diamond'){
+				getProdVideo('onChange','Platinum');
+			}
 		});
 
 		
@@ -747,8 +753,12 @@
             });
 		}
 
-		function getProdVideo(action=null){
-			var metal_type = $('#metal-type :selected').val();
+		function getProdVideo(action=null,metalType=null){
+			if(metalType == null){
+				var metal_type = $('#metal-type :selected').val();
+			}else{
+				var metal_type = metalType;
+			}
 
 			$.ajax({
 				type: 'POST',
