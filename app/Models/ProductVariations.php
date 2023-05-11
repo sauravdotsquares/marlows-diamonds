@@ -15,6 +15,8 @@ class ProductVariations extends Model
         'product_id',
         'sale_price',
         'regular_price',
+        'mined',
+        'lab',
         'stock_status',
         'vari_image',
         'vari_video',
