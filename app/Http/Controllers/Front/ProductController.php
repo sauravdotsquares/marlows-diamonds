@@ -825,14 +825,14 @@ class ProductController extends Controller
 
     public function getSelectedVariationsData(Request $request)
     {
-
+        
         $productData = Products::where('slug', $request->slug)->first();
         $runOldCode = true;
 
         if (!empty($productData)) {
             $prodCategoriesDJ = explode(',', $productData->categories);
             if (in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)) {
-
+                
                 $allCarats = Masters::where(['type' => 'carat', 'is_deleted' => 0, 'is_active' => 1])->pluck('name');
                 if ($allCarats->count()) {
                     $allCarats = $allCarats->toArray();
@@ -880,7 +880,7 @@ class ProductController extends Controller
                         ->where('variations_id->product_type', $productType)
                         ->first();
                     // ->toArray();
-
+                   
                     if (!empty($combinationsPriceFormula)) {
 
                         $combinationsPriceFormula = $combinationsPriceFormula->toArray();
@@ -963,14 +963,14 @@ class ProductController extends Controller
 
 
             if (!empty($getProductVariationId)) {
-
+               
                 $getVariDetails = ProductVariationDetails::groupBy('value')
                     ->whereIn('variation_id', $getProductVariationId)
                     ->whereIn('value', $request->variations)
                     ->get()
                     ->toArray();
 
-
+                   
                 $attributeCount = count($request->variations);
                 // prd($getProductVariationId);
 
@@ -1015,7 +1015,7 @@ class ProductController extends Controller
                 $increaseDiscount = 1;
                 $discountPercentage = 1;
 
-                $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
+                $regular_p_final = (($regular_p_final) * $increaseDiscount);
 
                 // prd($disPercentage);
                 if (isset($disPercentage) && !empty($disPercentage)) {
@@ -1047,7 +1047,7 @@ class ProductController extends Controller
                                 ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
                                 ->first();
 
-
+                            
                             $discountPercentage = 1 + ($disPercentage['discount'] / 100);
 
                             if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
