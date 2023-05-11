@@ -165,8 +165,11 @@
                             @php
                                 $data->description = $data->lab_description ? $data->lab_description.'<br>'.$data->description :  $data->description ;
                             @endphp
+							{!!$data->description ? $data->description : $data->description!!}
+						@else
+								
+							{!!$data->lab_description ? $data->lab_description : $data->description!!}
                         @endif
-                        {!! $data->description ? $data->description :  $data->description  !!}
 					</div>
 				@else
 					<div class="product-decriptions product-description-common product-description-common_mined">
