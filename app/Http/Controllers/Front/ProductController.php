@@ -50,39 +50,39 @@ class ProductController extends Controller
         }
 
         $makeNewURL = '';
-        if(isset($slugs[1]) && !empty($slugs[1])){
-            $makeNewURL .= $slugs[1]; 
+        if (isset($slugs[1]) && !empty($slugs[1])) {
+            $makeNewURL .= $slugs[1];
         }
 
-        if(isset($slugs[2]) && !empty($slugs[2])){
-            $makeNewURL .= '/'.$slugs[2]; 
+        if (isset($slugs[2]) && !empty($slugs[2])) {
+            $makeNewURL .= '/' . $slugs[2];
         }
-        
-        if(isset($slugs[3]) && !empty($slugs[3])){
 
-            $getShapeAttribute = ProductFilterItems::where('item_type','filter-by-shape')->pluck('item_value')->toArray();
-            if(isset($getShapeAttribute) && !empty($getShapeAttribute)){
-                $input = explode('-',$slugs[3]); // for get same string found in array with upper case.
+        if (isset($slugs[3]) && !empty($slugs[3])) {
+
+            $getShapeAttribute = ProductFilterItems::where('item_type', 'filter-by-shape')->pluck('item_value')->toArray();
+            if (isset($getShapeAttribute) && !empty($getShapeAttribute)) {
+                $input = explode('-', $slugs[3]); // for get same string found in array with upper case.
                 $input = array_flip($input);
                 $input = array_change_key_case($input, CASE_UPPER);
                 $input = array_flip($input);
-                $slugs[4]=array_values(array_intersect($getShapeAttribute,$input));
-            
-                if(isset($slugs[4]) && !empty($slugs[4])){
-                    $makeNewURL = $slugs[1].'/'.strtolower($slugs[4][0]); 
-                }else{
-                    if(isset($slugs[2]) && $slugs[2] == 'womens'){
-                        $makeNewURL .= '/'.str_replace('-'.$slugs[2],"",$slugs[3]);
-                    }else{
-                        $makeNewURL .= '/'.$slugs[3]; 
+                $slugs[4] = array_values(array_intersect($getShapeAttribute, $input));
+
+                if (isset($slugs[4]) && !empty($slugs[4])) {
+                    $makeNewURL = $slugs[1] . '/' . strtolower($slugs[4][0]);
+                } else {
+                    if (isset($slugs[2]) && $slugs[2] == 'womens') {
+                        $makeNewURL .= '/' . str_replace('-' . $slugs[2], "", $slugs[3]);
+                    } else {
+                        $makeNewURL .= '/' . $slugs[3];
                     }
                 }
-            }else{
-                $makeNewURL .= '/'.strtolower($slugs[3][0]); 
+            } else {
+                $makeNewURL .= '/' . strtolower($slugs[3][0]);
             }
         }
-        return Redirect::to($makeNewURL, 301); 
-        
+        return Redirect::to($makeNewURL, 301);
+
         if ($cat3 != null) {
             // echo "cat3";
             $getCatId = Category::where('slug', $cat3)->first();
@@ -176,13 +176,13 @@ class ProductController extends Controller
                         $variDetails =  ProductVariationDetails::whereIn('variation_id', $productVariationId)
                             ->where('value', '9ct White Gold')
                             ->select('id', 'variation_id', 'value')
-                            ->orderBy('variation_id','desc')
-                            ->first();    
+                            ->orderBy('variation_id', 'desc')
+                            ->first();
 
                         if (empty($variDetails)) {
                             $variDetails =  ProductVariationDetails::whereIn('variation_id', $productVariationId)
                                 ->select('id', 'variation_id', 'value')
-                                ->where('value', '!=','')
+                                ->where('value', '!=', '')
                                 ->first();
                         }
                     }
@@ -456,14 +456,14 @@ class ProductController extends Controller
 
                     // remove after update product start gk.
 
-                    if(isset($request->categorySlug) && !empty($request->categorySlug)){
+                    if (isset($request->categorySlug) && !empty($request->categorySlug)) {
                         $insert[] =  [
                             "id" => 2,
                             "name" => "Finger Size",
                             "slug" => "finger-size",
                             "values" => "G | G-1/2 | H | H-1/2 | I | I-1/2 | J | J-1/2 | K | K-1/2 | L | L-1/2 | M | M-1/2 | N | N-1/2 | O | O-1/2 | P | P-1/2 | Q | Q-1/2 | R | R-1/2 | S | S-1/2 | T | T-1/2 | U | U-1/2 | V | V-1/2 | W | W-1/2 | X | X-1/2 | Y | Y-1/2 | Z | Z-1/2 "
                         ];
-                        
+
                         $temp_array = array_column($attributes, 'slug');
                         if (!in_array('finger-size', $temp_array)) {
                             $attributes = array_merge(
@@ -485,15 +485,15 @@ class ProductController extends Controller
 
                         $explode_attr = explode('|', $attribute['values']);
 
-                        if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
+                        if (isset($request->diamond_type) && $request->diamond_type == 'mined_diamond') {
                             $arr_2 = "9ct";
-                            $explode_attr = array_filter($explode_attr, function($value) use ($arr_2) {
+                            $explode_attr = array_filter($explode_attr, function ($value) use ($arr_2) {
                                 return stripos($value, $arr_2) === false;
                             });
                         }
                         $getAttrVals = ProductVariationDetails::whereIn('variation_id', $variation_ids)->where('key', 'attri_' . $attribute['slug'])->pluck('value')->toArray();
 
-                        
+
                         $found = [];
                         foreach ($explode_attr as $num) {
                             if (in_array(trim($num), $getAttrVals)) {
@@ -510,7 +510,7 @@ class ProductController extends Controller
 
                         if ($is_empty) {
                             $final_attr['attri_' . $attribute['slug']] = $explode_attr;
-                            
+
                             if ($request->typeName && $attribute['slug'] == 'finger-size') {
                                 $alphaRange = range('I', 'M');
                                 $result = preg_replace("/[^A-Z]+/", "", $final_attr['attri_' . $attribute['slug']]);
@@ -641,30 +641,27 @@ class ProductController extends Controller
         if (!empty($rapnetData)) {
             foreach ($rapnetData as $key => $result) {
                 $rapnetRecords[$key]['Shape'] = $result->shape;
-	        	$rapnetRecords[$key]['Carat'] = $result->size;
-	        	$rapnetRecords[$key]['Color'] = $result->color;
-	        	$rapnetRecords[$key]['Clarity'] = $result->clarity;
-                if(isset($result->cut))
-	        		$rapnetRecords[$key]['Cut'] = $result->cut;
+                $rapnetRecords[$key]['Carat'] = $result->size;
+                $rapnetRecords[$key]['Color'] = $result->color;
+                $rapnetRecords[$key]['Clarity'] = $result->clarity;
+                if (isset($result->cut))
+                    $rapnetRecords[$key]['Cut'] = $result->cut;
 
                 $rapnetRecords[$key]['Lab'] = $result->lab;
-                $rapnetRecords[$key]['Amount'] = ($result->total_sales_price*getVAT())/1.2;
+                $rapnetRecords[$key]['Amount'] = ($result->total_sales_price * getVAT()) / 1.2;
                 $rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
                 $rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
-    
 
-                if($result->lab=='GIA'){
-					$rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$rapnetRecords[$key]['CERT_NO'].'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
-				}
-				else if($result->lab=='IGI'){
-					$rapnetRecords[$key]['CertificateLink']= 'https://www.igi.org/reports/verify-your-report?r='.$rapnetRecords[$key]['CERT_NO'];
-				}
-				else if($result->lab=='HRD'){
-					$rapnetRecords[$key]['CertificateLink']= 'https://www.hrdantwerplink.be/?record_number='.$rapnetRecords[$key]['CERT_NO'].'&weight='.$result->size;
-				}
-				else {
-					$rapnetRecords[$key]['CertificateLink']= 'https://www.diamondselections.com/GetCertificate.aspx?diamondid='.$result->DiamondID;
-				}
+
+                if ($result->lab == 'GIA') {
+                    $rapnetRecords[$key]['CertificateLink'] = 'https://www.gia.edu/cs/Satellite?reportno=' . $rapnetRecords[$key]['CERT_NO'] . '&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
+                } else if ($result->lab == 'IGI') {
+                    $rapnetRecords[$key]['CertificateLink'] = 'https://www.igi.org/reports/verify-your-report?r=' . $rapnetRecords[$key]['CERT_NO'];
+                } else if ($result->lab == 'HRD') {
+                    $rapnetRecords[$key]['CertificateLink'] = 'https://www.hrdantwerplink.be/?record_number=' . $rapnetRecords[$key]['CERT_NO'] . '&weight=' . $result->size;
+                } else {
+                    $rapnetRecords[$key]['CertificateLink'] = 'https://www.diamondselections.com/GetCertificate.aspx?diamondid=' . $result->DiamondID;
+                }
             }
             // echo '<pre>'; print_r($rapnetRecords); die;
         }
@@ -825,14 +822,14 @@ class ProductController extends Controller
 
     public function getSelectedVariationsData(Request $request)
     {
-        
+
         $productData = Products::where('slug', $request->slug)->first();
         $runOldCode = true;
 
         if (!empty($productData)) {
             $prodCategoriesDJ = explode(',', $productData->categories);
-            if (in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)) {
-                
+            if (!in_array('3', $prodCategoriesDJ)  &&  in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)) {
+
                 $allCarats = Masters::where(['type' => 'carat', 'is_deleted' => 0, 'is_active' => 1])->pluck('name');
                 if ($allCarats->count()) {
                     $allCarats = $allCarats->toArray();
@@ -872,6 +869,10 @@ class ProductController extends Controller
                     ->first();
                 // ->toArray();
 
+                dd($combinations);
+                die;
+
+
                 if (!empty($combinations)) {
                     $combinations = $combinations->toArray();
 
@@ -880,7 +881,7 @@ class ProductController extends Controller
                         ->where('variations_id->product_type', $productType)
                         ->first();
                     // ->toArray();
-                   
+
                     if (!empty($combinationsPriceFormula)) {
 
                         $combinationsPriceFormula = $combinationsPriceFormula->toArray();
@@ -963,14 +964,14 @@ class ProductController extends Controller
 
 
             if (!empty($getProductVariationId)) {
-               
+
                 $getVariDetails = ProductVariationDetails::groupBy('value')
                     ->whereIn('variation_id', $getProductVariationId)
                     ->whereIn('value', $request->variations)
                     ->get()
                     ->toArray();
 
-                   
+
                 $attributeCount = count($request->variations);
                 // prd($getProductVariationId);
 
@@ -978,7 +979,7 @@ class ProductController extends Controller
                     $variationDetails = array();
 
                     foreach ($request->variations as $key2 => $variations) {
-                        $getVariDetails =   ProductVariationDetails::where('variation_id', $productVariationId)
+                        $getVariDetails = ProductVariationDetails::where('variation_id', $productVariationId)
                             ->where('value', $variations)
                             ->get()
                             ->toArray();
@@ -1000,7 +1001,7 @@ class ProductController extends Controller
 
                 // Get product variation price
                 $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
-                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video', 'regular_price', 'sale_price')
+                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video', 'regular_price', 'sale_price', 'mined', 'lab')
                     ->first();
 
                 /** Price change for lab grown */
@@ -1047,7 +1048,7 @@ class ProductController extends Controller
                                 ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
                                 ->first();
 
-                            
+
                             $discountPercentage = 1 + ($disPercentage['discount'] / 100);
 
                             if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
@@ -1078,6 +1079,10 @@ class ProductController extends Controller
                     $categorySlugs = $categorySlugs->toArray();
                 }
 
+                // echo "asdfds<pre>";
+
+                // die;
+
                 /** Discount not applicable to exclusive to marlows */
                 if (in_array('exclusive-to-marlows', $categorySlugs)) {
                     $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
@@ -1087,6 +1092,31 @@ class ProductController extends Controller
                     $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                     $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
                     $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
+                    return response()->json($newArray);
+                } elseif (in_array('bracelets', $categorySlugs)) {
+                    $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+                    $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
+                    $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
+                    $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                    // 
+                    // dump($getSelectedVariationVideoImages->mined);
+                    // dump($getSelectedVariationVideoImages->lab);
+                    // dd($request->all());
+                    if ($request->diamond_type == 'lab_grown') {
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->lab;
+                        $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->lab;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->lab;
+                    } elseif ($request->diamond_type == 'mined') {
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->mined;
+                        $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->mined;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->mined;
+                    } else {
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                        $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
+                    }
+
+                   
                     return response()->json($newArray);
                 }
 
@@ -1745,13 +1775,13 @@ class ProductController extends Controller
                 ->get();
 
             $slugText = '';
-            if(isset($slugs[1]) && !empty($slugs[1])){
+            if (isset($slugs[1]) && !empty($slugs[1])) {
                 $slugText = $slugs[1];
-            }elseif(isset($slugs[0]) && !empty($slugs[0])){
+            } elseif (isset($slugs[0]) && !empty($slugs[0])) {
                 $slugText = $slugs[0];
             }
 
-            $filterItemTextData = ProductFilterItems::where('item_slug',$slugText)->select('top_text','bottom_text')->first();
+            $filterItemTextData = ProductFilterItems::where('item_slug', $slugText)->select('top_text', 'bottom_text')->first();
 
 
             if ($request->isMethod('POST')) {

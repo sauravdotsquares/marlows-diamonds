@@ -245,6 +245,8 @@ class ProductController extends Controller
                 ->update([
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                     'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
+                    'mined'=>isset($value['vari_mined'])?$value['vari_mined']:0.0,
+                    'lab'=>isset($value['vari_lab'])?$value['vari_lab']:0.0,
                     'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
                     // 'vari_image'=>isset($imageVariImage)?$imageVariImage:null,
                     'vari_image'=> !empty($uploadedImages) ? $uploadedImages[0] : $variationItem->vari_image,
@@ -259,6 +261,8 @@ class ProductController extends Controller
                     'product_id'=>$productId,
                     'sale_price'=>isset($value['vari_sale_price'])?$value['vari_sale_price']:0,
                     'regular_price'=>isset($value['vari_regular_price'])?$value['vari_regular_price']:0.0,
+                    'mined'=>isset($value['vari_mined'])?$value['vari_mined']:0.0,
+                    'lab'=>isset($value['vari_lab'])?$value['vari_lab']:0.0,
                     'stock_status'=>isset($value['vari_stock_status'])?$value['vari_stock_status']:0,
                     'vari_image'=>!empty($uploadedImages) ? $uploadedImages[0] : null,
                     'multi_vari_img' => !empty($uploadedImages) ? implode(',',$uploadedImages) : null,
