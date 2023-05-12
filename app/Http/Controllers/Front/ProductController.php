@@ -1099,11 +1099,11 @@ class ProductController extends Controller
                  
                     if ($request->diamond_type == 'lab_grown') {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->lab;
-                        $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->lab;
+                        // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->lab;
                         $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->lab;
                     } elseif ($request->diamond_type == 'mined') {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->mined;
-                        $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->mined;
+                        // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->mined;
                         $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->mined;
                     } else {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
