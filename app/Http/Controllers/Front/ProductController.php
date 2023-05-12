@@ -869,8 +869,6 @@ class ProductController extends Controller
                     ->first();
                 // ->toArray();
 
-                dd($combinations);
-                die;
 
 
                 if (!empty($combinations)) {
@@ -1098,10 +1096,7 @@ class ProductController extends Controller
                     $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
                     $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                     $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
-                    // 
-                    // dump($getSelectedVariationVideoImages->mined);
-                    // dump($getSelectedVariationVideoImages->lab);
-                    // dd($request->all());
+                 
                     if ($request->diamond_type == 'lab_grown') {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->lab;
                         $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->lab;
@@ -1153,7 +1148,6 @@ class ProductController extends Controller
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
         $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->take(4)->get();
-        //dd($getProductListFinal);
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $view = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
         } else {
