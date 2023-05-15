@@ -10,6 +10,8 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderDekopayFinance;
 use App\Models\User;
+use App\Models\Settings;
+use Mail;
 use Auth;
 
 class DekoPayController extends Controller
@@ -153,18 +155,20 @@ class DekoPayController extends Controller
 		$_PostVal=$request->all();
 		$posted=$_PostVal;
 		
-		
 		file_put_contents(__DIR__.'/'.time().'.txt', print_r($posted,true));
 
-		if(empty($posted['Identification']['RetailerUniqueRef'])){
+		if(empty($posted['retaileruniqueref'])){
 			return view('front.pages.payments.dekopay_failed',['message'=>'Request Failure']);
 		}
 		//extract($posted);
-			$msg = $posted['Identification']['RetailerUniqueRef'];
-			 if (isset($posted['Identification']['RetailerUniqueRef']) && isset($posted['Status'])) :		
-				if (!empty($posted['Identification']['RetailerUniqueRef']) && !empty($posted['Status'])) :
+			$msg = $posted['retaileruniqueref'];
+			 if (isset($posted['retaileruniqueref']) ) :
+				if (!empty($posted['retaileruniqueref']) ) :
 					header('HTTP/1.1 200 OK');
-					$this->successful_request($posted);
+					
+            	    $result = $this->payment_complete($posted['retaileruniqueref']);
+				    // 	$this->successful_request($posted);
+					return view('front.pages.success-page',$result);
 				else :
 					return view('front.pages.payments.dekopay_failed',['message'=>'Request Failure']);
 			   endif;
@@ -173,27 +177,57 @@ class DekoPayController extends Controller
 				if(isset($_GET['retaileruniqueref']) && !empty($res_orderdata)) {
 					$resorder = explode("-",$res_orderdata);
 					$return_url = route('make.dekopay').'/'.$resorder[0]."?key=".$resorder[1];
-					
 					return redirect($return_url);
-					
 				} else {
 					$return_url = route('product.cart');
-					
 					return redirect($return_url);
 				}
 			endif;
 
 	}
 	function payment_complete($order_id){
-		Order::where('id',$order_id)->update(['pay_timestamp'=>date('Y-m-d h:i:s'),'status'=>2]);
+		$resorder = explode("-",$order_id); 
+		$order_id = $resorder[0];
+		$dekoPayFinanceOrderId = $resorder[1];
+		Order::where('id',$order_id)->update(['custom_order_id'=>$dekoPayFinanceOrderId,'deko_order_key'=> $dekoPayFinanceOrderId, 'pay_timestamp'=>date('Y-m-d h:i:s'),'status'=>2]);
+		$getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id',$order_id)->first()->toArray();
+		
+		$admin_email = Settings::where("option_name",'admin_email')->value('option_value');
+        $transaction_emails = Settings::where("option_name",'transaction_emails')->value('option_value');
+        $data = [
+            'data' => $getOrderDetailsMail
+        ];
+        
+        $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
+        Mail::send('email.orderstatus', array(
+            'data1' => $data,
+        ), function($message) use ($request,$admin_email, $transaction_emails ){
+            $message->from('hello@marlows-diamonds.co.uk');
+            $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
 
+            if(!empty($transaction_emails)){
+                $emails_to_cc = explode(',', $transaction_emails);
+                foreach ($emails_to_cc as $email_to_cc) {
+                    $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                }
+            }
+
+            $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
+        });
+		
 		session()->forget('cart');
+		
+		$result = [
+            'pay' => $getOrderDetailsMail,
+            'response' => 'Your Order number('.$getOrderDetailsMail['custom_order_id'].') has been successfully paid',
+        ]; 
+        return $result;
 	}
 	function successful_request( $posted ) {
-			$order_id_key=$posted['Identification']['RetailerUniqueRef'];
+	    
+			$order_id_key=$posted['retaileruniqueref'];
 			$resorder = explode("-",$order_id_key); 
 			$order_id = $resorder[0];
-
 
 			$price = 0;
 			foreach ($posted['Goods'] as $prod) {
@@ -225,7 +259,7 @@ class DekoPayController extends Controller
 			if ($status=="decline" || $status=="cancelled" || $status=="predecline")// TXN has declined
 			{	   
 				return view('front.pages.payments.dekopay_failed',['response'=>'Payment '.$status]);
-
+				
 			} 
 			else // TXN has declined
 			{	   
