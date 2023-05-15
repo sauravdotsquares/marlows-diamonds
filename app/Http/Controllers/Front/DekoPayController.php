@@ -166,7 +166,7 @@ class DekoPayController extends Controller
 				if (!empty($posted['retaileruniqueref']) ) :
 					header('HTTP/1.1 200 OK');
 					
-            	    $result = $this->payment_complete($posted['retaileruniqueref']);
+            	    $result = $this->payment_complete(isset($posted['token'])?$posted['token']:0,$posted['retaileruniqueref']);
 				    // 	$this->successful_request($posted);
 					return view('front.pages.success-page',$result);
 				else :
@@ -185,11 +185,11 @@ class DekoPayController extends Controller
 			endif;
 
 	}
-	function payment_complete($order_id){
+	function payment_complete($token,$order_id){
 		$resorder = explode("-",$order_id); 
 		$order_id = $resorder[0];
 		$dekoPayFinanceOrderId = $resorder[1];
-		Order::where('id',$order_id)->update(['custom_order_id'=>$dekoPayFinanceOrderId,'deko_order_key'=> $dekoPayFinanceOrderId, 'pay_timestamp'=>date('Y-m-d h:i:s'),'status'=>2]);
+		Order::where('id',$order_id)->update(['token'=>$token,'custom_order_id'=>$dekoPayFinanceOrderId,'deko_order_key'=> $dekoPayFinanceOrderId, 'pay_timestamp'=>date('Y-m-d h:i:s'),'status'=>2]);
 		$getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id',$order_id)->first()->toArray();
 		
 		$admin_email = Settings::where("option_name",'admin_email')->value('option_value');
