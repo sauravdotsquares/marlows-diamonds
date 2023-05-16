@@ -5,15 +5,10 @@
 @if(count($product_data))
 <div class="best-selling-marlows">
     <div class="container">
-        <?php 
-            $getRoutePath = Request::path();
-        ?>
-        @if(isset($getRoutePath) && $getRoutePath != 'lab-grown-diamond-engagement-rings')
         <div class="head-para-three">
             <h2 class="heading-h-three">Best Selling Marlow's Diamond Jewellery</h2>
             <p>Explore our collection of engagement rings for women in a variety of shapes and styles.</p>
         </div>
-        @endif
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
                 @foreach($product_data as $key => $product)
@@ -47,11 +42,9 @@
                 @endforeach
             </div>
         </div>
-        @if(isset($getRoutePath) && $getRoutePath != 'lab-grown-diamond-engagement-rings')
         <div class="text-center">
             <a class="btn-bg-small expdia" href="{{asset('/product-category/engagement-rings')}}">Explore all Diamond Engagement Rings Now</a>
         </div>
-        @endif
     </div>
 </div>
 @endif
