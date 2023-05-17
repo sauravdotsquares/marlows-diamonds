@@ -148,16 +148,16 @@ class PayPalPaymentController extends Controller
 
         $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
             Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request,$admin_email, $transaction_emails ){
-            $message->from('hello@marlows-diamonds.co.uk');
+            $message->from('sharma.gajendra@dotsquares.com');
 
             $admin_email_london = "london@marlows-diamonds.co.uk";
-            $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+            $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
             
             /** add cc for more users */
             if(!empty($transaction_emails)){
                 $emails_to_cc = explode(',', $transaction_emails);
                 foreach ($emails_to_cc as $email_to_cc) {
-                    $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                    $message->cc('sharma.gajendra@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
                 }
             }
             
@@ -199,13 +199,13 @@ class PayPalPaymentController extends Controller
                     Mail::send('email.orderstatus', array(
                     'data1' => $data,
                 ), function($message) use ($request,$admin_email, $transaction_emails ){
-                    $message->from('hello@marlows-diamonds.co.uk');
-                    $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
+                    $message->from('sharma.gajendra@dotsquares.com');
+                    $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('Your Marlows Diamonds order has been received!');
 
                     if(!empty($transaction_emails)){
                         $emails_to_cc = explode(',', $transaction_emails);
                         foreach ($emails_to_cc as $email_to_cc) {
-                            $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                            $message->cc('sharma.gajendra@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
                         }
                     }
 
