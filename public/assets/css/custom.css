@@ -1180,6 +1180,37 @@ a.btn-bg-small.expdia { font-size: 15px; margin: 40px 0 0; }
 .exclusive-text{
 	font-weight:900;
 }
+/*grown diamond css*/
+.diamond-rings-panel {display: -webkit-box;display: -ms-flexbox;display: flex;-ms-flex-wrap: wrap;flex-wrap: wrap; -webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;}
+.diamond-rings-panel .product-diamond-item {flex: 0 0 22%;max-width: 22%;-ms-flex: 0 0 22%;width: 100%;padding: 15px;text-align: center;border-radius: 4px;height: 100%;
+border: 1px solid #D0D0D0;overflow: hidden; position: relative; margin: 0 10px 30px;}
+.diamond-rings-panel .product-diamond-item:hover {box-shadow: 0px 1px 7px rgba(53, 53, 53, 0.2);transition: all ease-in-out .34s;}
+.diamond-rings-panel .product-diamond-item .product-diamond-item-image{overflow: hidden;height: 250px;display: flex;display: -ms-flexbox;align-items: center; justify-content: center;}
+.diamond-rings-panel .product-diamond-item a.product-hov .product-hover-video {display: none;}
+.diamond-rings-panel .product-diamond-item:hover img {transform: scale(1.1);width: 100%;transition: all ease 0.3s;}
+.diamond-rings-panel .product-diamond-item .product-diamond-item-image:hover video.product-hover-video {display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff; left: 0;}
+.product-diamond-item .product-diamond-item-details a {text-decoration: none;color: #8e2e65;font-size: 14px;font-weight: 400;line-height: 20px;display: block;min-height: 75px;}
+
+.diamond-rings-panel .product-diamond-item:hover a.product-hov {-webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
+-ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);overflow: hidden;}
+.diamond-rings-panel .product-diamond-item:hover a.product-hov {-webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
+-ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);overflow: hidden;}
+.product-diamond-item .product-diamond-item-details h4 {font-family: "Lato";color: #000;font-size: 15px;}
+
+.search-result nav {width: 100%;}
+.search-result nav ul.pagination {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;width: 100%; 
+-ms-flex-wrap: wrap;flex-wrap: wrap;}
+.search-result nav ul.pagination li.page-item a.page-link {color: #000; height: 35px;}
+.search-result nav ul.pagination li.page-item a.page-link:focus {box-shadow: none !important;}
+.search-result nav ul.pagination li.page-item.active .page-link {background: #8e2e65;border-color: #8e2e65;}
+.search-result nav ul.pagination li.page-item:first-child, .search-result nav ul.pagination li.page-item:last-child{font-size: 0; position: relative; cursor: pointer;}
+.search-result nav ul.pagination li.page-item:first-child span, .search-result nav ul.pagination li.page-item:last-child span {height: 35px;}
+.search-result nav ul.pagination li.page-item:first-child:before{ content: "\f104";font-family: 'FontAwesome';font-size: 15px;position: absolute;z-index: 99;top: 50%; line-height: 0;
+padding: 0;right: 10px;}
+.search-result nav ul.pagination li.page-item:last-child:before{content: "\f105"; font-family: 'FontAwesome';font-size: 15px;position: absolute;z-index: 99;top: 50%; line-height: 0;
+padding: 0;right: 10px;}
+/*grown diamond css end*/
+
 @media(max-width:1400px){
 	.post-bar .post-bar-center p {
 		font-size: 12px;
@@ -1233,6 +1264,10 @@ a.btn-bg-small.expdia { font-size: 15px; margin: 40px 0 0; }
 .blog-list-sidebar-first.mobile-sidebar .accordion-body ul li:last-child a {border: none;}
 .blog-list-sidebar-first.mobile-sidebar .accordion .accordion-collapse {padding: 0;}
 
+
+/*grown diamond css*/
+.diamond-rings-panel .product-diamond-item {flex: 0 0 30%;max-width: 30%;}
+/*grown diamond css end*/
     }
 
 
@@ -1254,6 +1289,11 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 
 .location-header strong {display: block;}
 .diamond-field-contens{ width:100%; }
+
+/*grown diamond css*/
+.diamond-rings-panel .product-diamond-item {flex: 0 0 100%;max-width: 100%;}
+.search-result nav ul.pagination li.page-item {margin: 0 0 10px;}
+/*grown diamond css end*/
 }
 
 
