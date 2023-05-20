@@ -876,11 +876,8 @@
 
 		function addtobasketFunction(getUrl){
 
-			let lab_grown_price = $("#finaldiamondprice").find('.price').text();
-			if(lab_grown_price){
-				lab_grown_price = lab_grown_price.replace(/[^0-9]/g, "");
-			}
-
+			let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
+			
 			$.ajax({
                 type: 'POST',
                 url: getUrl,
@@ -894,8 +891,8 @@
 					'metalcolor' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
 					'slug' : '{{$data->slug}}',
-					'setting_price': getNumberFromCurrency($('#selected_variation_price').val()) || 0, //parseFloat($('#price').val()) || 0;
-					'price': getNumberFromCurrency($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;
+					'setting_price': lab_grown_price, //parseFloat($('#price').val()) || 0;
+					'price': lab_grown_price, //parseFloat($('#price').val()) || 0;
 					'certificatelink': $('#certificate_url').val() || '',
 					'shape': $('#selected_diamond_shape').val() || '',
 					'certificate': $('#selected_diamond_certno').val() || '',
@@ -906,7 +903,7 @@
 					'lab_grown_colour' : $("#lab_grown_colour").val(),
 					'lab_grown_carat' : $("#lab_grown_carat").val(),
 					'diamond_type' : $(".diamond_type:checked").val(),
-					'lab_grown_price' : getNumberFromCurrency(lab_grown_price),
+					'lab_grown_price' : lab_grown_price,
 
                     'jsondata' : $('input[name="selectrefinedata"]:checked').data('jsonvalue'),
 
