@@ -500,14 +500,14 @@
         sendDataValues();
     });
 
-    $("#showProductList").html('');
-    sendDataValues();
+    // $("#showProductList").html('');
+    // sendDataValues();
 
     $(window).scroll(function() {
         var scroll = $('#scrollFlag').val();
         if (scroll == 0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
             var page = $('#pagescroll').val();
-            sendDataValues(page);
+            // sendDataValues(page);
             $('#scrollFlag').val(1);
         }
     });
