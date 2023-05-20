@@ -44,4 +44,4 @@
 		</div>
 	</div>
 @endforeach
-{{ $getProductListFinal->links() }}
+{{-- $getProductListFinal->links() --}}
