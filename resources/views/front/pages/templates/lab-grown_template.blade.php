@@ -13,7 +13,7 @@
 	</div>
 </div>
 
-<div class="diamond-rings-sec">
+<!-- <div class="diamond-rings-sec">
 	<div class="container">
 		<div class="diamond-rings-panel">
 			<div class="product-diamond-item">
@@ -76,7 +76,7 @@
 			</div>	
 		</div>
 	</div>
-</div> 
+</div>  -->
 {!!$data->description!!}
 
 <!-- FAQ Section start here -->
