@@ -13,6 +13,70 @@
 	</div>
 </div>
 
+<div class="diamond-rings-sec">
+	<div class="container">
+		<div class="diamond-rings-panel">
+			<div class="product-diamond-item">
+			<div class="product-diamond-item-image">
+				<a href="https://marlows-diamonds.co.uk/product/nova-low-set-four-claw-tapering-engagement-ring" class="product-hov">
+					<img src="https://marlows-diamonds.co.uk/storage/Products/M1008-A1_00003_1652184237.jpg" alt="">	
+					<video class="product-hover-video" muted="muted" playsinline="">
+						<source src="https://marlows-diamonds.co.uk/storage/ProductsVariVideos/NOVA Low Set Four Claw Tapering Engagement Ring_1665567215.mp4" type="video/mp4">
+					</video>		
+				</a>
+			</div>
+			<div class="product-diamond-item-details">
+					<a href="#">NOVA | Low Set Four Claw Tapering Engagement Ring</a>	
+					<h4>Price <span>£ 964</span></h4>
+			</div>
+			</div>
+					<div class="product-diamond-item">
+			<div class="product-diamond-item-image">
+				<a href="https://marlows-diamonds.co.uk/product/nova-low-set-four-claw-tapering-engagement-ring" class="product-hov">
+					<img src="https://marlows-diamonds.co.uk/storage/Products/M1008-A1_00003_1652184237.jpg" alt="">	
+					<video class="product-hover-video" muted="muted" playsinline="">
+						<source src="https://marlows-diamonds.co.uk/storage/ProductsVariVideos/NOVA Low Set Four Claw Tapering Engagement Ring_1665567215.mp4" type="video/mp4">
+					</video>		
+				</a>
+			</div>
+			<div class="product-diamond-item-details">
+					<a href="#">NOVA | Low Set Four Claw Tapering Engagement Ring</a>	
+					<h4>Price <span>£ 964</span></h4>
+			</div>
+			</div>
+						<div class="product-diamond-item">
+
+			<div class="product-diamond-item-image">
+				<a href="https://marlows-diamonds.co.uk/product/nova-low-set-four-claw-tapering-engagement-ring" class="product-hov">
+					<img src="https://marlows-diamonds.co.uk/storage/Products/M1008-A1_00003_1652184237.jpg" alt="">	
+					<video class="product-hover-video" muted="muted" playsinline="">
+						<source src="https://marlows-diamonds.co.uk/storage/ProductsVariVideos/NOVA Low Set Four Claw Tapering Engagement Ring_1665567215.mp4" type="video/mp4">
+					</video>		
+				</a>
+			</div>
+			<div class="product-diamond-item-details">
+					<a href="#">NOVA | Low Set Four Claw Tapering Engagement Ring</a>	
+					<h4>Price <span>£ 964</span></h4>
+			</div>
+			</div>
+						<div class="product-diamond-item">
+
+			<div class="product-diamond-item-image">
+				<a href="https://marlows-diamonds.co.uk/product/nova-low-set-four-claw-tapering-engagement-ring" class="product-hov">
+					<img src="https://marlows-diamonds.co.uk/storage/Products/M1008-A1_00003_1652184237.jpg" alt="">	
+					<video class="product-hover-video" muted="muted" playsinline="">
+						<source src="https://marlows-diamonds.co.uk/storage/ProductsVariVideos/NOVA Low Set Four Claw Tapering Engagement Ring_1665567215.mp4" type="video/mp4">
+					</video>		
+				</a>
+			</div>
+			<div class="product-diamond-item-details">
+					<a href="#">NOVA | Low Set Four Claw Tapering Engagement Ring</a>	
+					<h4>Price <span>£ 964</span></h4>
+			</div>
+			</div>	
+		</div>
+	</div>
+</div> 
 {!!$data->description!!}
 
 <!-- FAQ Section start here -->

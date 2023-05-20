@@ -417,6 +417,49 @@
                                                    <div class="col-md-6">
                                                       <div class="form-group">
                                                          <div class="form-label-group">
+                                                            <label for="mined_diamond_rrp">Mined Diamond RRP</label>
+                                                            <input data-field="mined_rrp" type="text" id="mined_diamond_rrp" name="data[0][mined_diamond_rrp]"
+                                                               class="form-control" placeholder="Mined Diamond RRP">
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-md-6">
+                                                      <div class="form-group">
+                                                         <div class="form-label-group">
+                                                            <label for="vari_regular_price">
+                                                               Mined Diamond</label>
+                                                            <input data-field="mined_diamond" type="text" id="mined_diamond"
+                                                               name="data[0][mined_diamond]" class="form-control"
+                                                               placeholder="Mined Diamond">
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="col-md-6">
+                                                      <div class="form-group">
+                                                         <div class="form-label-group">
+                                                            <label for="lab_grown_rrp">Lab Grown Diamond RRP</label>
+                                                            <input data-field="lab_grown_rrp" type="text" id="lab_grown_rrp" name="data[0][lab_grown_rrp]"
+                                                               class="form-control" placeholder="Lab Grown Diamond RRP">
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-md-6">
+                                                      <div class="form-group">
+                                                         <div class="form-label-group">
+                                                            <label for="lab_grown">Lab Grown Diamond</label>
+                                                            <input data-field="lab_grown" type="text" id="lab_grown"
+                                                               name="data[0][lab_grown]" class="form-control"
+                                                               placeholder="Lab Grown Diamond">
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="col-md-6">
+                                                      <div class="form-group">
+                                                         <div class="form-label-group">
                                                             <label for="vari_image">Image</label>
                                                             <input data-field="vari_image" type="file" id="vari_image" name="data[0][vari_image][]"
                                                                class="form-control" multiple>
