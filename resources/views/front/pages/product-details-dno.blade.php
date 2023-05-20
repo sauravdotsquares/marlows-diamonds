@@ -712,7 +712,6 @@
                     'total-diamond-weight': '{{ isset($requestData["total-diamond-weight"]) ? $requestData["total-diamond-weight"] : "" }}',
                 },
                 success: function (res) {
-
 					$('#filterDataDesign .type-variations-row').html(res);
 					getCustomPriceFinalFunction();
                     return false;
@@ -891,7 +890,7 @@
 				$('.carousel-thumbnail-item').closest('li').removeClass('active');
 				$('#carousel-selector-'+index).closest('li').addClass('active');
 			});
-			getCustomPriceFinalFunction();
+			
             $(document).on('click','.product-gallery__trigger',function(e){
 				e.preventDefault();
 				$('#carousel-zoom .item:first-child a').click();
