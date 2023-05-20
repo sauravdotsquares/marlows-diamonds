@@ -128,20 +128,20 @@
 						<label>Choose Your Diamond</label>
 						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
 							<div class="d-type-input">
-								<input type="radio" name="attribute_choose-your-diamond"  checked value="mined">
+								<input type="radio" name="attribute_choose-your-diamond" class="diamond_type"  checked value="mined_diamond">
 								<span>Mined Diamond</span>
 							</div>
 							<div class="d-type-input">
-								<input type="radio" name="attribute_choose-your-diamond" value="lab_grown">
+								<input type="radio" name="attribute_choose-your-diamond" class="diamond_type" value="lab_grown">
 								<span>Lab Grown Diamond</span>
 							</div>
 						@else
 							<div class="d-type-input">
-								<input type="radio" name="attribute_choose-your-diamond" value="mined">
+								<input type="radio" name="attribute_choose-your-diamond" class="diamond_type" value="mined_diamond">
 								<span>Mined Diamond</span>
 							</div>
 							<div class="d-type-input">
-								<input type="radio" name="attribute_choose-your-diamond" checked value="lab_grown">
+								<input type="radio" name="attribute_choose-your-diamond" checked class="diamond_type" value="lab_grown">
 								<span>Lab Grown Diamond</span>
 							</div>
 						@endif
@@ -196,13 +196,13 @@
 					</div>
 				@endif --}}
 
-
-
-                <div class="product-finder-price"  id="discountedTotalPrice">
-                </div>
-                <div class="product-finder-price" id="finaldiamondprice">
-
+				<div style="display: flex;">
+					<h4><del style="color:#000" id="shopPrice"> </del> </h4>
+					<div class="product-finder-price" id="finaldiamondprice" style="padding-left: 10px">
+					</div>
 				</div>
+				<p><span style="color:green">You Save : <span id="savePrice"></span></span> | RRP <del id="rrpPrice"> </del> </p>
+
 				{{-- <div class="product-finder-price">
 					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
 				</div> --}}
@@ -566,12 +566,8 @@
                                 blankForm();
                                 $("button[type='submit']").text("Send Message");
 
-                                // $(this).find("button[type='submit']").prop('disabled',true);
-                                // console.log(response);
-                                // return false;
                                 if(response.status == 200){
                                     toastr.success(response.success);
-                                    // window.location.reload();
                                 }else{
                                     toastr.info(response.error);
                                 }
@@ -601,49 +597,15 @@
 			});
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
 				changeDescription($(this));
-				getSelectedVariationsData();
+				getCustomPriceFinalFunction();
 			});
 
             $(document).on('change','#metal-type',function(){
-				getProdVideo('onChange');
-
+				getSelectedVariationsData();
 			});
 		})
 
-        function getProdVideo(action=null){
-			var metal_type = $('#metal-type :selected').val();
-
-			$.ajax({
-				type: 'POST',
-				url: '{{route("get-product-video")}}',
-				data: {
-					'_token': "{{csrf_token()}}",
-					'slug' : '{{$data->slug}}',
-					'metal_color' : metal_type,
-				},
-				success: function (res) {
-					if(res.vari_video){
-						if($('#variationVideo').length){
-							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
-							$('#variationVideo').attr('src', videoUrl);
-							$("#variationVideo")[0].play();
-						}
-					}
-					if(res.regular_price!='' || res.regular_price!='0.00')
-						$('#selected_variation_price').val(res.regular_price);
-					else
-						$('#selected_variation_price').val(res.sale_price);
-					if(action!=null && action=='onChange'){
-                        // getSelectedVariationsData();
-                    }
-						// getFinalPrice();
-				}
-			});
-		}
-
 		function getSelectedVariationsData(){
-			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
-
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 
 			var variations = [];
@@ -666,88 +628,6 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-
-					if(typeof res.formula!='undefined' && res.formula){
-
-						var regular_p = res.regular_price;
-						$('#selected_variation_price').val(res.regular_price);
-						$('#selected_final_price').val(regular_p);
-
-						if(res.statusCode == 500){
-							$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
-						}else if(!regular_p){
-							$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ res.regular_price_with_vat_discount  + ' </span>');
-						}else{
-							if(regular_p == res.regular_price_with_vat_discount){
-								$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ res.regular_price_with_vat_discount + ' </span>');
-							}else{
-								$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+ regular_p +'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ res.regular_price_with_vat_discount + ' </span>');
-								$('#selected_discounted_price').val(res.regular_price_with_vat_discount);
-							}
-						}
-
-					}else{
-						if(res.regular_price!='' || res.regular_price!='0.00'){
-
-							var regular_p = Math.round(res.regular_price_with_vat);
-
-							// console.log('regular_p',regular_p)
-							// if(diamond_type=='lab_grown' && regular_p<=3000){
-							// 	regular_p_final = regular_p-(regular_p*0.35);
-							// }else if(diamond_type=='lab_grown' && regular_p>3000){
-							// 	regular_p_final = regular_p-(regular_p*0.5);
-							// }else{
-							// 	regular_p_final = regular_p;
-							// }
-							// if(multistone == 1){
-							//     regular_p_final = regular_p_final* 1.5;
-							// }
-							// if(jewellery == 1){
-							//     regular_p_final = regular_p_final* 1.1;
-							// }
-
-							$('#selected_variation_price').val(res.regular_price);
-							$('#selected_final_price').val(Math.round(regular_p));
-							if(res.statusCode == 500){
-								$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
-							}else if(!regular_p){
-								$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
-							}else{
-								if(regular_p == res.regular_price_with_vat_discount){
-									$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
-								}else{
-
-									$('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p)+'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
-
-									$('#selected_discounted_price').val(res.regular_price_with_vat_discount);
-								}
-							}
-							// $('#finaldiamondprice').text();
-						}else{
-							console.log('From here')
-							var sale_p = Math.round(res.sale_price_with_vat);
-
-							if(diamond_type=='lab_grown' && sale_p<=3000){
-								sale_p_final = sale_p-(regular_p*0.35);
-
-							}else if(diamond_type=='lab_grown' && sale_p>3000){
-								sale_p_final = sale_p-(sale_p*0.5);
-
-							}else{
-								sale_p_final = sale_p;
-							}
-							if(multistone == 1){
-								sale_p_final = sale_p_final* 1.5;
-							}
-							if(jewellery == 1){
-								sale_p_final = sale_p_final* 1.1;
-							}
-							$('#selected_variation_price').val(res.sale_price);
-							$('#selected_final_price').val(Math.round(sale_p_final));
-							// $('#finaldiamondprice').text(Math.round(sale_p_final));
-							$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(sale_p_final)+' </span>');
-						}
-					}
 
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
 						const multipleImages = res.multi_vari_img.split(',');
@@ -814,8 +694,9 @@
 				}
 			});
 		}
+
 		function getCustomFilter(){
-			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+			// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -833,7 +714,7 @@
                 success: function (res) {
 
 					$('#filterDataDesign .type-variations-row').html(res);
-					getSelectedVariationsData();
+					getCustomPriceFinalFunction();
                     return false;
                 }
             });
@@ -857,13 +738,12 @@
 					'certificate' : $('#diamond-certificate').val(),
                     'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
 					'slug' : '{{$data->slug}}',
-					'price':parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
-					'discounted_price':parseInt($('#selected_discounted_price').val()) || 0, //parseFloat($('#price').val()) || 0;
-					'final_price':parseInt($('#selected_final_price').val()) || 0, //parseFloat($('#price').val()) || 0;
-                    'setting_price': parseInt(trdata) || 0, //parseFloat($('#price').val()) || 0;
+					'price':parseInt(trdata) || 0,
+					'discounted_price':parseInt($('#selected_discounted_price').val()) || 0, 
+					'final_price':parseInt($('#selected_final_price').val()) || 0, 
+                    'setting_price': parseInt(trdata) || 0, 
                 },
                 success: function (res) {
-					console.log(res);
 					if(res.success != '' && typeof res.success !== "undefined"){
 						if(res.cartcount){
 							$(".cartcount").text(res.cartcount);
@@ -875,29 +755,6 @@
 						toastr.success(res.success);
 					}else{
 						toastr.info(res.error);
-					}
-                }
-            });
-		}
-
-		function getFinalPrice(){
-			$('#addtobasket').addClass('disabledAnchor');
-			$.ajax({
-                type: 'POST',
-                url: '{{route("products-final-price")}}',
-                data: {
-                    '_token': "{{csrf_token()}}",
-					'variation_price' : parseFloat($('#selected_variation_price').val()),
-					'slug': '{{$data->slug}}'
-                },
-                success: function (res) {
-					$('#finaldiamondprice').html("");
-					if(res != ''){
-						$('#finaldiamondprice').text(res);
-						$('#selected_final_price').val(res);
-						$('#addtobasket').removeClass('disabledAnchor');
-					}else{
-						$('#finaldiamondprice').text("");
 					}
                 }
             });
@@ -922,6 +779,78 @@
                 }
             });
         }
+
+		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
+			
+			let diamondCaratWeight;
+			let diamondColour;
+			var diamondShape;
+			let diamondGrade;
+			let diamondClarity;
+			let diamondCertificate;
+
+			var variations = [];
+			$('.type-variations-row select').each(function(i, sel){
+
+				if($(sel).attr('name')!='finger-size')
+					variations.push($(sel).val());
+			});
+
+			if($('.diamond_type:checked').val() == 'mined_diamond'){
+				diamondCaratWeight = $('#carat').val();
+				diamondColour = $('#diamond-colour').val();
+				diamondShape = $('#selected_diamond_shape').val();
+				diamondGrade = $('#diamond-grade').val();
+				diamondClarity = $('#diamond-clarity').val();
+				diamondCertificate = $('#diamond-certificate').val();
+			}else if($('.diamond_type:checked').val() == 'lab_grown'){
+				diamondCaratWeight = $('#lab_grown_carat').val();
+				diamondColour = $('#lab_grown_colour').val();
+				diamondGrade = '';
+				diamondClarity = $('#lab_grown_clarity').val();
+				diamondCertificate = '';
+			}
+
+			$.ajax({
+                type: 'POST',
+                url: '{{route("get-product-variation-prices")}}',
+                dataType: 'json',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'productMetalType' : $('#metal-type').val(),
+					'variations' : variations,
+					'productCarat' : $('#Carat').val(),
+					'productWidthMM' : $('#width-mm').val(),
+					'productTotalDiamondWeight' : $('#total-diamond-weight').val(),
+					'diamondCaratWeight' : diamondCaratWeight,
+					'diamondColour' : diamondColour,
+					'diamondGrade' : diamondGrade,
+					'diamondClarity' : diamondClarity,
+					'diamondCertificate' : diamondCertificate,
+					'diamondShape' : diamondShape,
+					'selectedDiamondPrice' : selectedDiamondPrice,
+					'type': 0,
+					'slug': '{{$data->slug}}',
+					'diamond_type' : $('.diamond_type:checked').val()
+                },
+                success: function (res) {
+					if(res.status == 200){
+						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price).toFixed(2)));
+						$('#getLabDiamondPrices').val(res.getLabDiamondPrices);
+					}else if(res.status == 500){
+						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#getLabDiamondPrices').val('');
+					}
+                }
+            });
+
+		}
 
         $(document).ready(function() {
 	      	var $owl = $('#carousel');
@@ -962,7 +891,7 @@
 				$('.carousel-thumbnail-item').closest('li').removeClass('active');
 				$('#carousel-selector-'+index).closest('li').addClass('active');
 			});
-
+			getCustomPriceFinalFunction();
             $(document).on('click','.product-gallery__trigger',function(e){
 				e.preventDefault();
 				$('#carousel-zoom .item:first-child a').click();

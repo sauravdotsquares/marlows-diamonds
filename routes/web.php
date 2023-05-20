@@ -392,6 +392,7 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');
 	Route::any('product/get-variations-data','ProductController@getSelectedVariationsData')->name('get-variations-data');
+	Route::any('product/get-product-variation-prices','ProductController@getProductVariationPrices')->name('get-product-variation-prices');
 
 	Route::post('product/get-products-video','ProductController@getProductVideo')->name('get-product-video');
 	Route::post('product/custom-api-filter','ProductController@getCustomApiFilterData')->name('custom-api-filter-data');

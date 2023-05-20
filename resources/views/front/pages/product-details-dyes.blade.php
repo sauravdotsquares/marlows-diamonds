@@ -107,7 +107,7 @@
 
 				{{-- Show items for lab grown only --}}
 				<div id="apiCustomDesign">
-					<div class="type-variations-row lab_item mined_lab_items {{ $default == "lab_grown" ? 'show-items' : 'hide-items' }}">
+					<div class="type-variations-row1 lab_item mined_lab_items {{ $default == "lab_grown" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
 							<label class="label"> Central Diamond Weight </label>
 							<select class="form-control lab_price_update_items " name="carat" id="lab_grown_carat">
@@ -132,7 +132,7 @@
 				</div>
 
 				{{-- Show items for lab grown only --}}
-				<div class="type-variations-row lab_item mined_lab_items {{ $default == "lab_grown" ? 'show-items' : 'hide-items' }}">
+				<div class="type-variations-row1 lab_item mined_lab_items {{ $default == "lab_grown" ? 'show-items' : 'hide-items' }}">
 					<div class="type-variations-col">
 						<label class="label"> Clarity </label>
 						<select class="form-control lab_price_update_items " name="diamond-clarity" id="lab_grown_clarity">
@@ -146,7 +146,7 @@
 
 				{{-- Show items for mined only --}}
 				<div id="apiCustomDesign">
-					<div class="type-variations-row mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
+					<div class="type-variations-row1 mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
 							<label class="label"> Central Diamond Weight </label>
 							<select class="form-control" name="carat" id="carat">
@@ -183,7 +183,7 @@
 						</div>
 					</div>
 
-					<div class="type-variations-row mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
+					<div class="type-variations-row1 mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
 							<label class="label"> Clarity </label>
 							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
@@ -217,7 +217,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="type-variations-row mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
+					<div class="type-variations-row1 mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						{{-- <div class="type-variations-col{{($data->diamond_shape == 'ROUND')?'-one':''}}">
 							<label class="label"> Certificate </label>
 							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
@@ -266,9 +266,15 @@
 				<div class="product-decriptions product-description-common product-description-common_lab_item">
 					{!! $data->lab_description ? $data->lab_description.'<br>'.$data->description :  $data->description  !!}
 				</div>
-				<div class="product-finder-price" id="finaldiamondprice">
-
+				<div style="display: flex;">
+					<h4><del style="color:#000" id="shopPrice"> </del> </h4>
+					<div class="product-finder-price" id="finaldiamondprice" style="padding-left: 10px">
+					</div>
 				</div>
+				<p><span style="color:green">You Save : <span id="savePrice"></span></span> | RRP <del id="rrpPrice"> </del> </p>
+				<input type="hidden" id="getLabDiamondPrices" name="getLabDiamondPrices" value="">
+
+
 				<input type="hidden" id="certificate_url" name="certificate_url" value="">
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($variationDetails->regular_price)?$variationDetails->regular_price:$variationDetails->sale_price}}">
 				<input type="hidden" name="selected_setting_price" id="selected_setting_price" value="0.00">
@@ -583,9 +589,9 @@
 			$(".product-description-common").css('display','none');
 			$(".product-description-common_"+classToPerform).css('display','block');
 
-			getFinalPrice();
+			// getFinalPrice();
 		}
-        //console.log('first', $('.diamond_type:checked').attr("id"))
+       
         // $(document).ready(function(){
         //     changeDiamondType($('.diamond_type:checked').attr("id"));
         // })
@@ -601,7 +607,9 @@
 			getCustomFilter();
 			setTimeout(function(){
 				changeDiamondType($(event.target).attr("id"));
+				
 			}, 500);
+			getCustomPriceFinalFunction();
 			let getDiamondType = $(this).val();
 			if(getDiamondType == 'lab_grown'){
 				getProdVideo('onChange',' 9ct White Gold ');
@@ -668,12 +676,8 @@
                             success: function (response) {
                                 blankForm();
                                 $("button[type='submit']").text("Send Message");
-                                // $(this).find("button[type='submit']").prop('disabled',true);
-                                // console.log(response);
-                                // return false;
                                 if(response.status == 200){
                                     toastr.success(response.success);
-                                    // window.location.reload();
                                 }else{
                                     toastr.info(response.error);
                                 }
@@ -687,6 +691,7 @@
 
             getRelatedProduct();
 			getCustomFilter(); //getProdVideo();
+			
 
 			$(".viewdiamond-btn").click(function(){
 				$(".diamond-table").toggle();
@@ -713,9 +718,15 @@
 			// 	getSelectedAttributePrice();
 			// });
 
-            $(document).on('change', "#carat,#diamond-colour,#diamond-clarity,#diamond-grade,#diamond-certificate", function(){
-                getSelectedAttributePrice();
-            });
+            // $(document).on('change', "#carat,#diamond-colour,#diamond-clarity,#diamond-grade,#diamond-certificate", function(){
+            //     getSelectedAttributePrice();
+            // });
+
+			$(document).on('change', "#metal-type,#finger-size,#lab_grown_carat,#lab_grown_colour,#lab_grown_clarity,#carat,#diamond-colour,#diamond-clarity,#diamond-certificate", function(){
+				getSelectedAttributePrice();
+				getProdVideo();
+				getCustomPriceFinalFunction();
+			});
 
 			$('#addtobasket').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}');
@@ -728,11 +739,15 @@
 				getProdVideo('onChange');
 			});
 
+			
+
 			$(document).on('click','.refinedata',function(){
-				$("#selected_diamond_price").val($(this).data('price'));
-				$("#certificate_url").val($(this).data('certurl'));
-				$("#productCertificateLink").attr('href',$(this).data('certurl'));
-				getFinalPrice();
+				// console.log($(this).data('price'));
+				getCustomPriceFinalFunction(getNumberFromCurrency($(this).data('price')));
+				// $("#selected_diamond_price").val($(this).data('price'));
+				// $("#certificate_url").val($(this).data('certurl'));
+				// $("#productCertificateLink").attr('href',$(this).data('certurl'));
+				// getFinalPrice();
 			});
 		});
 
@@ -749,6 +764,7 @@
                 },
                 success: function (res) {
 					$('#filterDataDesign .type-variations-row').html(res);
+					getCustomPriceFinalFunction();
                 }
             });
 		}
@@ -759,7 +775,6 @@
 			}else{
 				var metal_type = metalType;
 			}
-
 			$.ajax({
 				type: 'POST',
 				url: '{{route("get-product-video")}}',
@@ -774,17 +789,84 @@
 						$('#variationVideo').attr('src', videoUrl);
 						$("#variationVideo")[0].play();
 					}
-					if(res.regular_price!='' || res.regular_price!='0.00')
-						$('#selected_variation_price').val(res.regular_price);
-					else
-						$('#selected_variation_price').val(res.sale_price);
-					if(action!=null && action=='onChange')
-						getFinalPrice();
 				}
 			});
 		}
 		function getNumberFromCurrency(currency) {
 			return Number(currency.replace(/[$,]/g,''))
+		}
+
+		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
+			$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+			$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending...</span>');
+			$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+			$('#getLabDiamondPrices').val('');
+			
+			var variations = [];
+			$('.type-variations-row select').each(function(i, sel){
+
+				if($(sel).attr('name')!='finger-size')
+					variations.push($(sel).val());
+			});
+
+			let diamondCaratWeight;
+			let diamondColour;
+			var diamondShape;
+			let diamondGrade;
+			let diamondClarity;
+			let diamondCertificate;
+			if($('.diamond_type:checked').val() == 'mined_diamond'){
+				diamondCaratWeight = $('#carat').val();
+				diamondColour = $('#diamond-colour').val();
+				diamondShape = $('#selected_diamond_shape').val();
+				diamondGrade = $('#diamond-grade').val();
+				diamondClarity = $('#diamond-clarity').val();
+				diamondCertificate = $('#diamond-certificate').val();
+			}else if($('.diamond_type:checked').val() == 'lab_grown'){
+				diamondCaratWeight = $('#lab_grown_carat').val();
+				diamondColour = $('#lab_grown_colour').val();
+				diamondGrade = '';
+				diamondClarity = $('#lab_grown_clarity').val();
+				diamondCertificate = '';
+			}
+
+			$.ajax({
+                type: 'POST',
+                url: '{{route("get-product-variation-prices")}}',
+                dataType: 'json',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'metal_type' : $('#metal-type').val(),
+					'variations' : variations,
+					'diamondCaratWeight' : diamondCaratWeight,
+					'diamondColour' : diamondColour,
+					'diamondGrade' : diamondGrade,
+					'diamondClarity' : diamondClarity,
+					'diamondCertificate' : diamondCertificate,
+					'diamondShape' : diamondShape,
+					'selectedDiamondPrice' : selectedDiamondPrice,
+					'slug': '{{$data->slug}}',
+					'type': 1,
+					'diamond_type' : $('.diamond_type:checked').val()
+                },
+                success: function (res) {
+					if(res.status == 200){
+						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+						$('#getLabDiamondPrices').val(res.getLabDiamondPrices.toFixed(2));
+					}else if(res.status == 500){
+						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#getLabDiamondPrices').val('');
+					}
+                }
+            });
+
 		}
 
 		function addtobasketFunction(getUrl){
@@ -846,7 +928,7 @@
 		var triggerLab = true;
 		function getSelectedAttributePrice(){
 
-			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+			// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$('#addtobasket').addClass('disabledAnchor');
 
 			var caratVal = $('#carat').val();
@@ -856,62 +938,62 @@
 			var diamondCertificate = $('#diamond-certificate').val();
 			var diamondShape = $('#selected_diamond_shape').val();
 			var variation_price = $('#selected_variation_price').val();
-			$.ajax({
-                type: 'POST',
-                url: '{{route("products-final-price-with-diamond")}}',
-                dataType: 'json',
-                data: {
-                    '_token': "{{csrf_token()}}",
-                    'variation_price' : variation_price,
-					'carat' : caratVal,
-					'color' : diamondColor,
-					'clarity' : diamondClarity,
-					'grade' : diamondGrade,
-					'certificate' : diamondCertificate,
-					'shape' : diamondShape,
-					'slug': '{{$data->slug}}',
-					'diamond_type' : $('.diamond_type:checked').val()
-                },
-                success: function (res) {
-					// console.log('triggerLab', triggerLab);
+			// $.ajax({
+            //     type: 'POST',
+            //     url: '{{route("products-final-price-with-diamond")}}',
+            //     dataType: 'json',
+            //     data: {
+            //         '_token': "{{csrf_token()}}",
+            //         'variation_price' : variation_price,
+			// 		'carat' : caratVal,
+			// 		'color' : diamondColor,
+			// 		'clarity' : diamondClarity,
+			// 		'grade' : diamondGrade,
+			// 		'certificate' : diamondCertificate,
+			// 		'shape' : diamondShape,
+			// 		'slug': '{{$data->slug}}',
+			// 		'diamond_type' : $('.diamond_type:checked').val()
+            //     },
+            //     success: function (res) {
+			// 		// console.log('triggerLab', triggerLab);
 
 
-					$('#finaldiamondprice').html("");
-                    if(res.statuscode == 200){
+			// 		// $('#finaldiamondprice').html("");
+            //         if(res.statuscode == 200){
 
-                        if(triggerLab){
-                            triggerLab = false;
-							getFinalPrice();
-                        }else{
-                            // $('#finaldiamondprice').html(res.finalPrice);
-                            if(res.finalPrice == res.discountedPrice){
-                                $('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
-                            }else{
-                                $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
-                            }
-                        }
+            //             if(triggerLab){
+            //                 triggerLab = false;
+			// 				getFinalPrice();
+            //             }else{
+            //                 // $('#finaldiamondprice').html(res.finalPrice);
+            //                 if(res.finalPrice == res.discountedPrice){
+            //                     // $('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+            //                 }else{
+            //                     // $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+            //                 }
+            //             }
 
-						$('#selected_final_price').val(res.finalPrice);
-						$('#selected_diamond_price').val(res.diamondPrice);
-						$('#selected_discounted_price').val(res.discountedPrice);
-						$('#selected_setting_price').val(res.settingPrice);
-						$('#selected_diamond_certno').val(res.Stock_NO);
-						$('#certificate_url').val(res.CertificateLink);
-						$('#productCertificateLink').attr('href',res.CertificateLink);
-						$('#addtobasket').removeClass('disabledAnchor');
-                    }else{
-                        $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
-                        $('#refineSearchData').html("No Data Found");
-                        // $('#finaldiamondprice').text('Sorry we have no diamonds matching your selection.');
-                        $('#selected_final_price').val('');
-						$('#selected_diamond_price').val('');
-						$('#selected_diamond_certno').val('');
-						$('#certificate_url').val('');
-						$('#productCertificateLink').attr('href','');
-                    }
-                }
+			// 			$('#selected_final_price').val(res.finalPrice);
+			// 			$('#selected_diamond_price').val(res.diamondPrice);
+			// 			$('#selected_discounted_price').val(res.discountedPrice);
+			// 			$('#selected_setting_price').val(res.settingPrice);
+			// 			$('#selected_diamond_certno').val(res.Stock_NO);
+			// 			$('#certificate_url').val(res.CertificateLink);
+			// 			$('#productCertificateLink').attr('href',res.CertificateLink);
+			// 			$('#addtobasket').removeClass('disabledAnchor');
+            //         }else{
+            //             // $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
+            //             $('#refineSearchData').html("No Data Found");
+            //             // $('#finaldiamondprice').text('Sorry we have no diamonds matching your selection.');
+            //             $('#selected_final_price').val('');
+			// 			$('#selected_diamond_price').val('');
+			// 			$('#selected_diamond_certno').val('');
+			// 			$('#certificate_url').val('');
+			// 			$('#productCertificateLink').attr('href','');
+            //         }
+            //     }
 
-            });
+            // });
 
 			$.ajax({
                 type: 'POST',
@@ -943,100 +1025,99 @@
 		// getFinalPrice()
 
 
-		function getFinalSelectedPrice(){
+		// function getFinalSelectedPrice(){
 			
-			let parentCategory = '{{$getParentCategory}}';
+		// 	let parentCategory = '{{$getParentCategory}}';
 			
-			let diamondType = $('.diamond_type:checked').val();
-			console.log(diamondType);
-			if(diamondType == 'lab_grown'){
-				let metalType = $('#metal-type').val();
-				let metalTypeArray = metalType.split(" ");
-				let selectedFinalPrice = $("#finaldiamondprice .price").text().replace("£", "");
+		// 	let diamondType = $('.diamond_type:checked').val();
+		// 	// console.log(diamondType);
+		// 	if(diamondType == 'lab_grown'){
+		// 		let metalType = $('#metal-type').val();
+		// 		let metalTypeArray = metalType.split(" ");
+		// 		let selectedFinalPrice = $("#finaldiamondprice .price").text().replace("£", "");
 
 
-				let regularPrice = '{{$regular_price}}';
-				let labPrice = $('#lab_price').val();
-				let finalMetalType18ct = parseFloat(regularPrice) + parseFloat(labPrice);
-				let gstPercentage = '{{getVAT()}}';
-				let Final18CTAmountWithGST = parseFloat(finalMetalType18ct) * parseFloat(gstPercentage);
+		// 		let regularPrice = '{{$regular_price}}';
+		// 		let labPrice = $('#lab_price').val();
+		// 		let finalMetalType18ct = parseFloat(regularPrice) + parseFloat(labPrice);
+		// 		let gstPercentage = '{{getVAT()}}';
+		// 		let Final18CTAmountWithGST = parseFloat(finalMetalType18ct) * parseFloat(gstPercentage);
 				
-				let percentage = 0;
+		// 		let percentage = 0;
 
-				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 0 && selectedFinalPrice < 1500){
-					percentage= 10;
+		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 0 && selectedFinalPrice < 1500){
+		// 			percentage= 10;
 					
-				}
+		// 		}
 				
-				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 1500 && selectedFinalPrice < 3000){
-					percentage= 20;
+		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 1500 && selectedFinalPrice < 3000){
+		// 			percentage= 20;
 					
-				}
-				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 3000 && selectedFinalPrice < 6000){
-					percentage= 25;
+		// 		}
+		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 3000 && selectedFinalPrice < 6000){
+		// 			percentage= 25;
 					
-				}
-				if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 6000){
-					percentage= 35;
+		// 		}
+		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 6000){
+		// 			percentage= 35;
 					
-				}
-				if(metalTypeArray[1] === '18ct' || metalTypeArray[0] === 'Platinum'){
-					var percentageAmount = selectedFinalPrice * (percentage/100) ; 
-					var getVal =  selectedFinalPrice - percentageAmount ; 
+		// 		}
+		// 		if(metalTypeArray[1] === '18ct' || metalTypeArray[0] === 'Platinum'){
+		// 			var percentageAmount = selectedFinalPrice * (percentage/100) ; 
+		// 			var getVal =  selectedFinalPrice - percentageAmount ; 
 
-				}else{
-					var percentageAmount = Final18CTAmountWithGST * (percentage/100); 
-					var  getValNew =  Final18CTAmountWithGST - percentageAmount ; 
-					var  Final9CTAmountWithGST =  getValNew *(20/100) ;
-					var getVal =  getValNew - Final9CTAmountWithGST ;  
-				}
+		// 		}else{
+		// 			var percentageAmount = Final18CTAmountWithGST * (percentage/100); 
+		// 			var  getValNew =  Final18CTAmountWithGST - percentageAmount ; 
+		// 			var  Final9CTAmountWithGST =  getValNew *(20/100) ;
+		// 			var getVal =  getValNew - Final9CTAmountWithGST ;  
+		// 		}
 
-				$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+parseInt(getVal)+' </span>');
-				$('#selected_final_price').val(parseInt(getVal));
-			}
-		}
-		function getFinalPrice(){
+		// 		// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+parseInt(getVal)+' </span>');
+		// 		// $('#selected_final_price').val(parseInt(getVal));
+		// 	}
+		// }
+		// function getFinalPrice(){
+		// 	$('#addtobasket').addClass('disabledAnchor');
+        //     // $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+		// 	$.ajax({
+        //         type: 'POST',
+        //         url: '{{route("products-final-price")}}',
+        //         data: {
+        //             '_token': "{{csrf_token()}}",
+		// 			'variation_price' : parseFloat($('#selected_variation_price').val()),
+		// 			'setting_price' : parseFloat($('#selected_setting_price').val().split(",").join("")),
+		// 			'discounted_price' : parseFloat($('#selected_discounted_price').val().split(",").join("")),
+		// 			'diamond_price' : parseFloat($('#selected_diamond_price').val().split(",").join("")),
+		// 			'slug': '{{$data->slug}}',
 
-			$('#addtobasket').addClass('disabledAnchor');
-            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
-			$.ajax({
-                type: 'POST',
-                url: '{{route("products-final-price")}}',
-                data: {
-                    '_token': "{{csrf_token()}}",
-					'variation_price' : parseFloat($('#selected_variation_price').val()),
-					'setting_price' : parseFloat($('#selected_setting_price').val().split(",").join("")),
-					'discounted_price' : parseFloat($('#selected_discounted_price').val().split(",").join("")),
-					'diamond_price' : parseFloat($('#selected_diamond_price').val().split(",").join("")),
-					'slug': '{{$data->slug}}',
+		// 			/** new pricing */
+		// 			'diamond_type' : $('.diamond_type:checked').val(),
+		// 			'lab_grown_carat': $("#lab_grown_carat").val(),
+		// 			'lab_grown_colour': $("#lab_grown_colour").val(),
+		// 			'lab_grown_clarity': $("#lab_grown_clarity").val(),
 
-					/** new pricing */
-					'diamond_type' : $('.diamond_type:checked').val(),
-					'lab_grown_carat': $("#lab_grown_carat").val(),
-					'lab_grown_colour': $("#lab_grown_colour").val(),
-					'lab_grown_clarity': $("#lab_grown_clarity").val(),
+        //         },
+        //         success: function (res) {
+		// 			// $('#finaldiamondprice').html("");
+		// 			if(res.finalPrice != ''){
+        //                 if(res.finalPrice == res.discountedPrice){
+        //                     // $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
+        //                     $('#selected_final_price').val(res.finalPrice);
+		// 					$('#lab_price').val(res.labPrice);
+        //                 }else{
+        //                     // $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
+        //                 }
 
-                },
-                success: function (res) {
-					$('#finaldiamondprice').html("");
-					if(res.finalPrice != ''){
-                        if(res.finalPrice == res.discountedPrice){
-                            $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
-                            $('#selected_final_price').val(res.finalPrice);
-							$('#lab_price').val(res.labPrice);
-                        }else{
-                            $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
-                        }
+		// 				$('#addtobasket').removeClass('disabledAnchor');
 
-						$('#addtobasket').removeClass('disabledAnchor');
-
-						getFinalSelectedPrice();
-					}else{
-						$('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
-					}
-                }
-            });
-		}
+		// 				getFinalSelectedPrice();
+		// 			}else{
+		// 				// $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
+		// 			}
+        //         }
+        //     });
+		// }
 
         function getRelatedProduct(){
             $.ajax({
@@ -1058,9 +1139,9 @@
             });
         }
         $(document).on('click','.product-gallery__trigger',function(e){
-	      		e.preventDefault();
-	      		$('#carousel .item.active a').click();
-	      });
+			e.preventDefault();
+			$('#carousel .item.active a').click();
+		});
 
     </script>
 	<script src='https://www.google.com/recaptcha/api.js'></script>
