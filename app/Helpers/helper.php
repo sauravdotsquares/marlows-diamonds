@@ -1553,7 +1553,7 @@ function getBrowser()
         $diamondClarity = $requestData['diamondClarity'];
         $diamondCertificate = $requestData['diamondCertificate'];
         // $diamondShape = $requestData['diamondShape'];
-        $diamondGrade = $requestData['diamondGrade'];
+        $diamondGrade = isset($requestData['diamondGrade'])?$requestData['diamondGrade']:'';
         $diamondType = $requestData['diamond_type'];
     
         if(isset($diamondType) && $diamondType == 'lab_grown'){
@@ -1588,7 +1588,7 @@ function getBrowser()
     }
 
     $gradeFrom = $gradeTo = 'EX'; $grade=array();
-    if($requestData['diamondGrade']!=''){
+    if(isset($requestData['diamondGrade']) && $requestData['diamondGrade']!=''){
         $grade = explode(',',$requestData['diamondGrade']);
         $gradeFrom = $gradeTo = $requestData['diamondGrade'];
     }

@@ -853,8 +853,13 @@
                 success: function (res) {
 					if(res.status == 200){
 						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
-						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
-						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						if(res.allPrices.shop_price == res.allPrices.discounted_price){
+						    $('#shopPrice').html('');
+						    $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						}else{
+						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+						    $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						}
 						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
 						$('#getLabDiamondPrices').val(res.getLabDiamondPrices.toFixed(2));
 					}else if(res.status == 500){
