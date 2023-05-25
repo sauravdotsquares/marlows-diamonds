@@ -1681,12 +1681,13 @@ class ProductController extends Controller
         return view('front.includes.productCard', $productListingData);
     }
 
-    public function getProductVariationPrices(Request $request)
+    public static function getProductVariationPrices(Request $request)
     {
         $getRegularPrices = getRagularFilterPrices($request->all(),$request['diamond_type'], $request->slug, $request->metal_type);
         $getLabDiamondPrices = 0;
-        if (isset($request->selectedDiamondPrice) == null) {
-            if(isset($request['type']) && $request['type']){
+
+        if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
+            if(isset($request->type) && $request->type){
                 $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
             }
         }else{

@@ -197,11 +197,11 @@
 				@endif --}}
 
 				<div style="display: flex;">
-					<h4><del style="color:#000" id="shopPrice"> </del> </h4>
+					<h4><del style="color:#000" class="shopPriceval"id="shopPrice"> </del> </h4>
 					<div class="product-finder-price" id="finaldiamondprice" style="padding-left: 10px">
 					</div>
 				</div>
-				<p><span style="color:green">You Save : <span id="savePrice"></span></span> | RRP <del id="rrpPrice"> </del> </p>
+				<p><span style="color:green">You Save : <span id="savePrice" class="save"></span></span> | RRP <del id="rrpPrice" class="rrpPriceval"> </del> </p>
 
 				{{-- <div class="product-finder-price">
 					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
@@ -696,7 +696,7 @@
 		}
 
 		function getCustomFilter(){
-			// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -720,7 +720,11 @@
 		}
 
 		function addtobasketFunction(getUrl){
-            var trdata = $('#finaldiamondprice .price').text().replace(/[^0-9]/gi, '');
+            var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
+			var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
+			var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');
+			var shopPricedata= $('#shopPrice.shopPriceval').text().replace(/[^\0-9.-]+/g, '');
+
 			$.ajax({
                 type: 'POST',
                 url: getUrl,
@@ -738,6 +742,9 @@
                     'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
 					'slug' : '{{$data->slug}}',
 					'price':parseInt(trdata) || 0,
+					'rrpPrice':parseInt(rrpPrice) || 0,
+					'savePrice':parseInt(savePriceval) || 0,
+					'shopPrice':parseInt(shopPricedata) || 0,
 					'discounted_price':parseInt($('#selected_discounted_price').val()) || 0, 
 					'final_price':parseInt($('#selected_final_price').val()) || 0, 
                     'setting_price': parseInt(trdata) || 0, 
