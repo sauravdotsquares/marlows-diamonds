@@ -115,8 +115,12 @@
                                         </div>
                                     </div>
                                 </td>
+                          
                                 <td class="product-price-col" data-th="Price">
-                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
+                               <p> {{MY_CURRENCY_SYMBOL}}{{ $details['rrpPrice'] }}</p>
+                               <p> {{MY_CURRENCY_SYMBOL}} {{ $details['savePrice'] }}</p>
+                              <p> <del> {{MY_CURRENCY_SYMBOL}}{{ $details['shopPrice'] }}</del></p>
+                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['shopPricedata'])
                                         <del>{{MY_CURRENCY_SYMBOL}}{{
                                             number_format($details['customArray']['final_price'],2) }}
                                         </del>
