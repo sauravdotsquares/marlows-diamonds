@@ -1672,7 +1672,7 @@ function getBrowser()
                     ->first();
 
         if(isset($disPercentage) && !empty($disPercentage)){
-            $discountedPrice = $price*$disPercentage->discount;        
+            $discountedPrice = $price * (1 - $disPercentage->discount / 100);        
             return $discountedPrice;
         }
         return $price;
