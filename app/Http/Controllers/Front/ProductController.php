@@ -1787,6 +1787,7 @@ class ProductController extends Controller
                 ]);
             }
 
+            $data = $categoryData;
             return view('front.pages.product_listing_page', compact([
                 'filterItemTextData',
                 'productItems',
@@ -1794,6 +1795,7 @@ class ProductController extends Controller
                 'nextPage',
                 'filter_items',
                 'categoryData',
+                'data',
                 'path',
                 'slugs'
             ]));
