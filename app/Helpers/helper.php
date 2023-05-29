@@ -1254,20 +1254,20 @@ if (!function_exists('validate_breadcrumb')) {
              if(isset($queryString[1]) && !empty($queryString[1])){
                  if(isset($queryString[2]) && $queryString[1] == 'womens'){
                      $queryString[2] = $queryString[2].'-'.$queryString[1];
-                     $queryString = Category::whereIn('slug',$queryString)->pluck('slug')->toArray();
+                     $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
                      
                      if(isset($queryString) && count($queryString) != 3 ){
                          $is404 = true;
                      }
                      $conditions = 'AND';
                  }else{
-
-                    $queryString = Category::whereIn('slug',$queryString)->pluck('slug')->toArray();
-                        
+                    
+                    $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
+                   
                      $conditions = 'OR';
                  }
             }
- 
+
              if (isset($queryString[0]) && $queryString[0] == 'diamond-engagement-rings') {
                  $queryString = [
                      'diamond-engagement-rings',
@@ -1309,7 +1309,7 @@ if (!function_exists('validate_breadcrumb')) {
          } else {
              $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
          }
- 
+
          if (isset($requestData['style-categories']) && !empty($requestData['style-categories'])) {
              foreach ($requestData['style-categories'] as $queryString_key => $queryString_value_new) {
                  $slugCategory = Category::where('slug', $queryString_value_new)->first();
