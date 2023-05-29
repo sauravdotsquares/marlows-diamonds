@@ -1283,7 +1283,7 @@ if (!function_exists('validate_breadcrumb')) {
                  ];
                  $conditions = 'OR';
              }
- 
+             
              foreach ($queryString as $queryString_key => $queryString_value) {
                  $slugCategory = Category::where('slug', $queryString_value)->first();
  
@@ -1300,9 +1300,11 @@ if (!function_exists('validate_breadcrumb')) {
                  } else {
                      $is404 = true;
                  }
-                 if (current($queryString) == $queryString_value) {
-                     $categoryData = $slugCategory;
-                 }
+                if (current($queryString) == $queryString_value) {
+                    $categoryData = $slugCategory;
+                }elseif (last($queryString) == $queryString_value){
+                    $categoryData = $slugCategory;
+                }
              }
          } else {
              $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
@@ -1354,16 +1356,16 @@ if (!function_exists('validate_breadcrumb')) {
              foreach ($requestData['jewellery-categories'] as $queryString_key => $queryString_value_new) {
                  $slugCategory = Category::where('slug', $queryString_value_new)->first();
                  if (!empty($slugCategory)) {
-                     if (!$queryString_key) {
-                         $category_custom_query .= 'AND ( ';
-                     }
-                     // $category_custom_query .= '( ';
-                     $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-                     if ($queryString_key + 1 != count($requestData['jewellery-categories'])) {
-                         $category_custom_query .= "  ";
-                     } else {
-                         $category_custom_query .= ' ) ';
-                     }
+                    if (!$queryString_key) {
+                        $category_custom_query .= 'AND ( ';
+                    }
+                    // $category_custom_query .= '( ';
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($requestData['jewellery-categories'])) {
+                        $category_custom_query .= "  ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
                  }
              }
          }
