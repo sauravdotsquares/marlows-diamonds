@@ -22,7 +22,7 @@ use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Category;
 use App\Models\Popups;
-use App\Models\ProductImages;
+use App\Models\MarginApiRange;
 use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
 use App\Models\ProductThumbVideos;
@@ -1546,3 +1546,13 @@ function getBrowser()
       'pattern'    => $pattern
     );
   }
+
+    function amountHariKrishnaChange($numPrice){
+        $marginAPIPercentage = MarginApiRange::where('api_type','harikrishna')->whereRaw('"'.$numPrice.'" between `from_price` and `to_price`')
+        ->where('status', 1)
+        ->first();
+        if(isset($marginAPIPercentage) && !empty($marginAPIPercentage)){
+            return ($numPrice / 1.2) * $marginAPIPercentage->percentage;
+        }
+        return $numPrice;
+    }

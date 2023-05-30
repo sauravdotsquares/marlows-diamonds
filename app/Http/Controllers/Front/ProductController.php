@@ -9,7 +9,7 @@ use App\Models\Products;
 use App\Models\RepnetData;
 use App\Models\ProductVariationAttributes;
 use App\Models\Attributes;
-use App\Models\DiamondStock;
+use App\Models\MarginApiRange;
 use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
 use App\Models\ProductImages;
@@ -634,6 +634,7 @@ class ProductController extends Controller
         //echo '<pre>'; print_r($data); die;
 
         $hkData = getHKApiRecords($data);
+        $hkData = array_map(array($this, "amountChange"), $hkData);
         $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
         // prefunc($rapnetData);
 
@@ -692,6 +693,16 @@ class ProductController extends Controller
         // return response()->json(['html'=> '']);
     }
 
+    public function amountChange($num){
+		$marginAPIPercentage = MarginApiRange::where('api_type','harikrishna')->whereRaw('"'.$num['Amount'].'" between `from_price` and `to_price`')
+		->where('status', 1)
+		->first();
+		$num['oldAmount'] = $num['Amount'];
+        if(isset($num['Amount']))
+            $num['Amount'] = ($num['Amount'] / 1.2) * $marginAPIPercentage->percentage;
+        return $num;
+    }
+    
     public function autocomplete(Request $request)
     {
         $getSearchedData = Products::with(['getProductImages'])->select("title", 'id', 'slug')
