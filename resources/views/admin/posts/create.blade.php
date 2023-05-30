@@ -119,6 +119,12 @@
                      </div>
                      <div class="form-group">
                         <div class="form-label-group">
+                           <label for="meta_keyword">Meta Keywords</label>
+                           <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Keywords" value="">
+                        </div>
+                     </div>
+                     <div class="form-group">
+                        <div class="form-label-group">
                            <textarea id="meta_description" name="meta_description" class="form-control ckeditor" placeholder="Meta Description" ></textarea>                    
                         </div>
                      </div>
