@@ -136,11 +136,13 @@ class ProductPriceController extends Controller
         
         $settingPrice = sprintf('%0.2f', $request->variation_price);
         $hkData = getHKApiRecords($data);
-
+        
         // prd($settingPrice);
-
+        
         if(!empty($hkData)){
-        	$diamondPrice = sprintf('%0.2f', ($hkData[0]['Amount']*1.25));
+            $finalHKPriceMargin = amountHariKrishnaChange($hkData[0]['Amount']);
+            
+        	$diamondPrice = sprintf('%0.2f', ($finalHKPriceMargin));
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
 
             $finalDiscountedPrice = $this->getActualSettingPrice($request->slug,$finalPrice, $request['diamond_type']);

@@ -515,7 +515,8 @@ class XMLController extends Controller
         $hkData = getHKApiRecords($data);
 
         if(!empty($hkData)){
-        	$diamondPrice = sprintf('%0.2f', ($hkData[0]['Amount']*1.25));
+            $finalHKPriceMargin = amountHariKrishnaChange($hkData[0]['Amount']);
+        	$diamondPrice = sprintf('%0.2f', ($finalHKPriceMargin));
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
 
             $finalDiscountedPrice = $this->getActualSettingPrice($requestDataArray['slug'],$finalPrice);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\HKDiamondStock;
+use App\Models\MarginApiRange;
 use Illuminate\Support\Arr;
 //use SoapClient;
 
@@ -73,7 +74,6 @@ class DiamondFinderController
 
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
 
-		
         $rapnetRecords = [];
         if(!empty($rapnetData)){
 	        foreach ($rapnetData as $key => $result) {
@@ -89,7 +89,7 @@ class DiamondFinderController
 	        	$rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
                 $rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
 
-
+				
 	        	if($result->lab=='GIA'){
     					$rapnetRecords[$key]['CertificateLink']= 'https://www.gia.edu/cs/Satellite?reportno='.$rapnetRecords[$key]['CERT_NO'].'&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
     				}
@@ -115,9 +115,12 @@ class DiamondFinderController
     }
 
     public function amountChange($num){
+		$marginAPIPercentage = MarginApiRange::where('api_type','harikrishna')->whereRaw('"'.$num['Amount'].'" between `from_price` and `to_price`')
+		->where('status', 1)
+		->first();
+		$num['oldAmount'] = $num['Amount'];
         if(isset($num['Amount']))
-            $num['Amount'] *= getVAT();
-
+            $num['Amount'] = ($num['Amount'] / 1.2) * $marginAPIPercentage->percentage;
         return $num;
     }
 }

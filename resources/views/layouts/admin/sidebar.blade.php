@@ -369,6 +369,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/admin/api-margin-module" class="nav-link @if(request()->segment(2) == 'api-margin-module') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>API Margin Module</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/admin/discount/creatediscount" class="nav-link @if(request()->segment(2) == 'discount' && request()->segment(3) == 'creatediscount') active @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Discount</p>

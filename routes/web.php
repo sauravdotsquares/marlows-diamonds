@@ -191,6 +191,9 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 
 		Route::get('get-product-excel-report','ProductController@getProductExcelReport')->name('get-product-report');
 
+		Route::get('api-margin-module/{apitype?}','DiscountController@apiMarginModule')->name('api-margin-module');
+		Route::post('createmargin','DiscountController@addMarginModule')->name('create-createmargin');
+		
 		Route::get('discount','DiscountController@index')->name('discount');
 		Route::get('discount/creatediscount','DiscountController@addDiscount')->name('create-discount');
 		Route::post('creatediscount','DiscountController@addDiscountData')->name('create-discount-form');
