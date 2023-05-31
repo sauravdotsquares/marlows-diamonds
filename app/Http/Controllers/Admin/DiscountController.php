@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Discount;
 use App\Models\DiscountRange;
 use App\Models\PercentageRange;
+use App\Models\MarginApiRange;
 
 class DiscountController extends Controller
 {
@@ -176,5 +177,46 @@ class DiscountController extends Controller
             }
         }
         return true;
+    }
+    
+    public function apiMarginModule($apiType = null)
+    {
+        $breadcrumb = [
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Margin Create", "url" => route("admin.api-margin-module"), "icon" => "fa fa-percent"],
+
+        ];
+        populate_breadcrumb($breadcrumb);
+        if(is_null($apiType)){
+            $apiType = 'harikrishna';
+        }
+        $getApiMarginData = MarginApiRange::where('api_type',$apiType)->get();
+        return view('admin.margin.create',compact('getApiMarginData','apiType'));
+    }
+
+    public function addMarginModule(Request $request)
+    {
+        $getApiMarginRangeArray = $request->all();
+        
+        $arrayNew = [];
+        for($i=1;$i<=7;$i++){
+            $arrayNew[$i]['api_type'] = isset($getApiMarginRangeArray['api_type'])?$getApiMarginRangeArray['api_type']:0;
+            $arrayNew[$i]['from'] = isset($getApiMarginRangeArray['from_price'.$i])?$getApiMarginRangeArray['from_price'.$i]:0;
+            $arrayNew[$i]['to'] = isset($getApiMarginRangeArray['to_price'.$i])?$getApiMarginRangeArray['to_price'.$i]:0;
+            $arrayNew[$i]['percentage'] = isset($getApiMarginRangeArray['percentage'.$i])?$getApiMarginRangeArray['percentage'.$i]:0;
+        }
+        MarginApiRange::where('api_type',$getApiMarginRangeArray['api_type'])->delete();
+        foreach($arrayNew as $key => $value){
+            if($value['from'] != 0){
+                MarginApiRange::updateOrCreate(['id'=>$request->table_id],[
+                    'api_type'=> $value['api_type'],
+                    'from_price'=> $value['from'],
+                    'to_price'=> $value['to'],
+                    'percentage'=> $value['percentage'],
+                    'status'=> 1,
+                ]);
+            }
+        }
+        return redirect()->action('Admin\DiscountController@apiMarginModule')->with('alert-success', 'Margin Added Successfully');
     }
 }
