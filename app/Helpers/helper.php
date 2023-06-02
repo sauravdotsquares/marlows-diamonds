@@ -1551,19 +1551,18 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
 
     function getLabDiamondPrices($requestData){
         if(isset($requestData['type']) && $requestData['type']){
-            $diamondCaratWeight = explode("-", trim($requestData['diamondCaratWeight']));
-            $diamondColour = $requestData['diamondColour'];
-            $diamondClarity = $requestData['diamondClarity'];
-            $diamondCertificate = $requestData['diamondCertificate'];
+            $diamondCaratWeight = explode("-", trim($requestData['carat']));
+            $diamondColour = $requestData['color'];
+            $diamondClarity = $requestData['clarity'];
+            $diamondCertificate = $requestData['certificate'];
             // $diamondShape = $requestData['diamondShape'];
-            $diamondGrade = isset($requestData['diamondGrade'])?$requestData['diamondGrade']:'';
+            $diamondGrade = isset($requestData['grade'])?$requestData['grade']:'';
             $diamondType = $requestData['diamond_type'];
         
             if(isset($diamondType) && $diamondType == 'lab_grown'){
                 return LabPricesList::whereBetween('carat', [$diamondCaratWeight[0], $diamondCaratWeight[1]])->where(['color'=> $diamondColour, 'clarity'=>$diamondClarity,'is_active'=>1, 'is_deleted'=>0])->select('clarity','color','carat','price')->first();
-            }elseif(isset($diamondType) && $diamondType == 'mined_diamond'){
-        
-                return getVariationDiamondPrices($requestData);
+            }else{
+                return 0.00;
             }
         }else{
             return 0.00;
