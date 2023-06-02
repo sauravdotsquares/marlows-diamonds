@@ -733,7 +733,7 @@
 			});
 
 			$("#productWishList").on('click',function(){
-				addtobasketFunction('{{route("set-product-wishlist")}}')
+				addtobasketFunction('{{route("set-product-wishlist")}}');
 			});
 			$(document).on('change','#metal-type',function(){
 				getProdVideo('onChange');
@@ -826,6 +826,7 @@
 			}else if($('.diamond_type:checked').val() == 'lab_grown'){
 				diamondCaratWeight = $('#lab_grown_carat').val();
 				diamondColour = $('#lab_grown_colour').val();
+				diamondShape = $('#selected_diamond_shape').val();
 				diamondGrade = '';
 				diamondClarity = $('#lab_grown_clarity').val();
 				diamondCertificate = '';
@@ -839,15 +840,15 @@
                     '_token': "{{csrf_token()}}",
 					'metal_type' : $('#metal-type').val(),
 					'variations' : variations,
-					'diamondCaratWeight' : diamondCaratWeight,
-					'diamondColour' : diamondColour,
-					'diamondGrade' : diamondGrade,
-					'diamondClarity' : diamondClarity,
-					'diamondCertificate' : diamondCertificate,
-					'diamondShape' : diamondShape,
+					'carat' : diamondCaratWeight,
+					'color' : diamondColour,
+					'grade' : diamondGrade,
+					'clarity' : diamondClarity,
+					'certificate' : diamondCertificate,
+					'shape' : diamondShape,
 					'selectedDiamondPrice' : selectedDiamondPrice,
 					'slug': '{{$data->slug}}',
-					'type': 1,
+					'type': 1, 
 					'diamond_type' : $('.diamond_type:checked').val()
                 },
                 success: function (res) {
@@ -878,34 +879,64 @@
 
 			let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
 			
+			let diamondCaratWeight;
+			let diamondColour;
+			var diamondShape;
+			let diamondGrade;
+			let diamondClarity;
+			let diamondCertificate;
+			if($('.diamond_type:checked').val() == 'mined_diamond'){
+				diamondCaratWeight = $('#carat').val();
+				diamondColour = $('#diamond-colour').val();
+				diamondShape = $('#selected_diamond_shape').val();
+				diamondGrade = $('#diamond-grade').val();
+				diamondClarity = $('#diamond-clarity').val();
+				diamondCertificate = $('#diamond-certificate').val();
+			}else if($('.diamond_type:checked').val() == 'lab_grown'){
+				diamondCaratWeight = $('#lab_grown_carat').val();
+				diamondColour = $('#lab_grown_colour').val();
+				diamondShape = $('#selected_diamond_shape').val();
+				diamondGrade = '';
+				diamondClarity = $('#lab_grown_clarity').val();
+				diamondCertificate = '';
+			}
+
+			var variations = [];
+			$('.type-variations-row select').each(function(i, sel){
+
+				if($(sel).attr('name')!='finger-size')
+					variations.push($(sel).val());
+			});
 			$.ajax({
                 type: 'POST',
                 url: getUrl,
                 data: {
                     '_token': "{{csrf_token()}}",
-					'carat' : $('#carat').val(),
-					'color' : $('#diamond-colour').val(),
-					'clarity' : $('#diamond-clarity').val(),
-					'grade' : $('#diamond-grade').val(),
+					'carat' : diamondCaratWeight,
+					'variations' : variations,
+					'color' : diamondColour,
+					'clarity' : diamondClarity,
+					'grade' : diamondGrade,
 					'fingersize' : $('#finger-size').val(),
-					'metalcolor' : $('#metal-type').val(),
-					'certificate' : $('#diamond-certificate').val(),
+					'metal_type' : $('#metal-type').val(),
+					'certificate' : diamondCertificate,
 					'slug' : '{{$data->slug}}',
 					'setting_price': lab_grown_price, //parseFloat($('#price').val()) || 0;
 					'price': lab_grown_price, //parseFloat($('#price').val()) || 0;
+					'selectedDiamondPrice' : $('#getLabDiamondPrices').val(),
 					'certificatelink': $('#certificate_url').val() || '',
-					'shape': $('#selected_diamond_shape').val() || '',
+					'shape': diamondShape,
+					'type': 1,
 					'certificate': $('#selected_diamond_certno').val() || '',
-
-
-					/**  Add lab information in cart */
-					'lab_grown_clarity' : $("#lab_grown_clarity").val(),
-					'lab_grown_colour' : $("#lab_grown_colour").val(),
-					'lab_grown_carat' : $("#lab_grown_carat").val(),
 					'diamond_type' : $(".diamond_type:checked").val(),
-					'lab_grown_price' : lab_grown_price,
-
                     'jsondata' : $('input[name="selectrefinedata"]:checked').data('jsonvalue'),
+
+
+					// /**  Add lab information in cart */
+					// 'lab_grown_clarity' : $("#lab_grown_clarity").val(),
+					// 'lab_grown_colour' : $("#lab_grown_colour").val(),
+					// 'lab_grown_carat' : $("#lab_grown_carat").val(),
+					// 'lab_grown_price' : lab_grown_price,
 
                 },
                 success: function (res) {

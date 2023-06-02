@@ -725,19 +725,52 @@
 			var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');
 			var shopPricedata= $('#shopPrice.shopPriceval').text().replace(/[^\0-9.-]+/g, '');
 
+			let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
+			
+			let diamondCaratWeight;
+			let diamondColour;
+			var diamondShape;
+			let diamondGrade;
+			let diamondClarity;
+			let diamondCertificate;
+			if($('.diamond_type:checked').val() == 'mined_diamond'){
+				diamondCaratWeight = $('#carat').val();
+				diamondColour = $('#diamond-colour').val();
+				diamondShape = $('#selected_diamond_shape').val();
+				diamondGrade = $('#diamond-grade').val();
+				diamondClarity = $('#diamond-clarity').val();
+				diamondCertificate = $('#diamond-certificate').val();
+			}else if($('.diamond_type:checked').val() == 'lab_grown'){
+				diamondCaratWeight = $('#lab_grown_carat').val();
+				diamondColour = $('#lab_grown_colour').val();
+				diamondShape = $('#selected_diamond_shape').val();
+				diamondGrade = '';
+				diamondClarity = $('#lab_grown_clarity').val();
+				diamondCertificate = '';
+			}
+
+			var variations = [];
+			$('.type-variations-row select').each(function(i, sel){
+
+				if($(sel).attr('name')!='finger-size')
+					variations.push($(sel).val());
+			});
+
+
 			$.ajax({
                 type: 'POST',
                 url: getUrl,
                 data: {
                     '_token': "{{csrf_token()}}",
 					'carat' : $('#carat').val(),
+					'variations' : variations,
 					'total-diamond-weight' : $('#total-diamond-weight').val(),
 					'color' : $('#diamond-colour').val(),
 					'clarity' : $('#diamond-clarity').val(),
 					'width-mm' : $('#width-mm').val(),
 					'grade' : $('#diamond-grade').val(),
 					'fingersize' : $('#finger-size').val(),
-					'metalcolor' : $('#metal-type').val(),
+					'metal_type' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
                     'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
 					'slug' : '{{$data->slug}}',
@@ -745,6 +778,7 @@
 					'rrpPrice':parseInt(rrpPrice) || 0,
 					'savePrice':parseInt(savePriceval) || 0,
 					'shopPrice':parseInt(shopPricedata) || 0,
+					'diamond_type' : $(".diamond_type:checked").val(),
 					'discounted_price':parseInt($('#selected_discounted_price').val()) || 0, 
 					'final_price':parseInt($('#selected_final_price').val()) || 0, 
                     'setting_price': parseInt(trdata) || 0, 

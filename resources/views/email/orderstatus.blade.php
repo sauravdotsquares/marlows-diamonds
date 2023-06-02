@@ -97,12 +97,12 @@
                                                             {{ ($detailsDecode['choose_diamond'] == 'lab_grown')?'Lab Grown':'Mined'}}
                                                         </p>
                                                     @endif
-                                                    @if(isset($detailsDecode['metalcolor']) && !empty($detailsDecode['metalcolor']))
+                                                    @if(isset($detailsDecode['metal_type']) && !empty($detailsDecode['metal_type']))
                                                         <p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
                                                             <strong style=" font-size: 14px;">
                                                                 Metal:
                                                             </strong>
-                                                            {{$detailsDecode['metalcolor']}}
+                                                            {{$detailsDecode['metal_type']}}
                                                         </p>
                                                     @endif
                                                     @if(isset($detailsDecode['fingersize']) && !empty($detailsDecode['fingersize']))
