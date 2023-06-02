@@ -633,7 +633,7 @@ class ProductController extends Controller
         $hkData = getHKApiRecords($data);
         $hkData = array_map(array($this, "amountChange"), $hkData);
         $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
-
+        
         $rapnetRecords = [];
         if (!empty($rapnetData)) {
             foreach ($rapnetData as $key => $result) {
@@ -664,11 +664,18 @@ class ProductController extends Controller
         $apiData['data'] = Arr::collapse([$hkData, $rapnetRecords]);
 
         $apiData['VAT'] = getVAT();
-
+        
         if (!empty($apiData['data'])) {
-            $dataArray = [];
-            foreach ($apiData['data'] as $key => $data) {
-                $dataArray[] = View::make('front.includes.product_detail_diamonds', ['key' => $key, 'apiRecords' => $data, 'VAT' => $apiData['VAT']])->render();
+            if($request->type && $request->diamond_type == "mined_diamond"){
+                if(isset($request->selectedDiamondPrice) && !empty($request->selectedDiamondPrice)){
+                    return $request->selectedDiamondPrice;
+                }
+                return $apiData['data'][0]['Amount'];
+            }else{
+                $dataArray = [];
+                foreach ($apiData['data'] as $key => $data) {
+                    $dataArray[] = View::make('front.includes.product_detail_diamonds', ['key' => $key, 'apiRecords' => $data, 'VAT' => $apiData['VAT']])->render();
+                }
             }
         }
         return response()->json(['html' => $dataArray]);
@@ -873,7 +880,7 @@ class ProductController extends Controller
 
                 // Get product variation price
                 $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
-                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video', 'regular_price', 'sale_price', 'mined', 'lab')
+                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video', 'regular_price', 'sale_price', 'mined_diamond', 'lab_grown')
                     ->first();
 
                 /** Price change for lab grown */
@@ -972,13 +979,13 @@ class ProductController extends Controller
                     $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
 
                     if ($request->diamond_type == 'lab_grown') {
-                        $newArray['regular_price'] = $getSelectedVariationVideoImages->lab;
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->lab_grown;
                         // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->lab;
-                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->lab;
-                    } elseif ($request->diamond_type == 'mined') {
-                        $newArray['regular_price'] = $getSelectedVariationVideoImages->mined;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->lab_grown;
+                    } elseif ($request->diamond_type == 'mined_diamond') {
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->mined_diamond;
                         // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->mined;
-                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->mined;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->mined_diamond;
                     } else {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                         $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
@@ -1693,14 +1700,18 @@ class ProductController extends Controller
         return view('front.includes.productCard', $productListingData);
     }
 
-    public static function getProductVariationPrices(Request $request)
+    public function getProductVariationPrices(Request $request)
     {
         $getRegularPrices = getRagularFilterPrices($request->all(),$request['diamond_type'], $request->slug, $request->metal_type);
         $getLabDiamondPrices = 0;
 
         if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
             if(isset($request->type) && $request->type){
-                $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
+                if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
+                    $getLabDiamondPrices = $this->getCustomApiFilterData($request);
+                }else{
+                    $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
+                }
             }
         }else{
             $getLabDiamondPrices = $request->selectedDiamondPrice;

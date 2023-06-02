@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Front\ProductController;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Country;
@@ -30,7 +31,9 @@ class AddToCartController extends Controller
      */
     public function addToCart(Request $request)
     {
-     
+        $getActualPrice = new ProductController;
+        $getPriceFunction = $getActualPrice->getProductVariationPrices($request);
+
 
         if (!empty($request['diamond_type']) && $request['diamond_type'] == 'lab_grown' && !empty($request->slug)) {
             /** Add item in cart for lab grown */
@@ -52,9 +55,9 @@ class AddToCartController extends Controller
                         }
                     }
                 }
-                $customArray['Clarity'] = !empty($request['lab_grown_clarity']) ? $request['lab_grown_clarity'] : '';
-                $customArray['Color'] = !empty($request['lab_grown_colour']) ? $request['lab_grown_colour'] : '';
-                $customArray['Carat'] = !empty($request['lab_grown_carat']) ? $request['lab_grown_carat'] : '';
+                $customArray['Clarity'] = !empty($request['clarity']) ? $request['clarity'] : '';
+                $customArray['Color'] = !empty($request['color']) ? $request['color'] : '';
+                $customArray['Carat'] = !empty($request['carat']) ? $request['carat'] : '';
                 $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : '';
 
                 unset($customArray['jsondata']);
@@ -68,20 +71,21 @@ class AddToCartController extends Controller
                     "name" => $productData->title,
                     'customArray' => $customArray,
                     "quantity" => 1,
-                    "price" => $request['lab_grown_price'],
-                    "deposited_price" => $request['lab_grown_price'],
+                    // "price" => $request['lab_grown_price'],
+                    "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
                     "vat" => getVATPriceFunction($request['setting_price']),
                     "image" => $productData->getProductImages->image_url,
-                    "shopPrice"=> $_REQUEST['shopPrice'],
-                    "shopPrice"=> $_REQUEST['rrpPrice'],
-                    "savePrice"=> $_REQUEST['savePrice']
+                    "price_front" => $request['lab_grown_price'],
+                    "rrp_price"=> $getPriceFunction['allPrices']['rrp_price'],
+                    "shop_price"=> $getPriceFunction['allPrices']['shop_price'],
+                    'price' => $getPriceFunction['allPrices']['discounted_price'],
+                    "savePrice"=> $getPriceFunction['allPrices']['rrp_price'] - $getPriceFunction['allPrices']['discounted_price'],
+                    "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
+                    'getLabDiamondPrices' => $getPriceFunction['getLabDiamondPrices'],
                 ];
 
-               
-
-
                 session()->put('cart', $cart);
-                return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully123!']);
+                return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully!']);
             }
         }
 
@@ -112,7 +116,7 @@ class AddToCartController extends Controller
             unset($request['jsondata']);
      
 
-
+            
             // prd($customArray);
 
             $titleHtml = '';
@@ -151,12 +155,16 @@ class AddToCartController extends Controller
                         // "selected_parameter"=> $selectedAttributes,
                         'customArray' => $customArray,
                         "quantity" => 1,
-                        "price" => $input['price'],
-                        "shopPrice"=> $_REQUEST['shopPrice'],
-                        "savePrice"=> $_REQUEST['savePrice'],
-                        "rrpPrice"=> $_REQUEST['rrpPrice'],
-                        "deposited_price" => $input['price'],
+                        // "price" => $input['price'],
+                        "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
                         "vat" => getVATPriceFunction($input['setting_price']),
+                        "price_front" => $getPriceFunction['allPrices']['discounted_price'],
+                        "rrp_price"=> $getPriceFunction['allPrices']['rrp_price'],
+                        "shop_price"=> $getPriceFunction['allPrices']['shop_price'],
+                        'price' => $getPriceFunction['allPrices']['discounted_price'],
+                        "savePrice"=> $getPriceFunction['allPrices']['rrp_price'] - $getPriceFunction['allPrices']['discounted_price'],
+                        "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
+                        'getLabDiamondPrices' => $getPriceFunction['getLabDiamondPrices'],
                         "image" => $productData->getProductImages->image_url
                     ];
                 }
