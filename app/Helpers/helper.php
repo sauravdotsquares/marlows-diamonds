@@ -1259,14 +1259,18 @@ if (!function_exists('validate_breadcrumb')) {
                      $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
                      
                      if(isset($queryString) && count($queryString) != 3 ){
-                         $is404 = true;
+                        $is404 = true;
                      }
                      $conditions = 'AND';
                  }else{
-                    
+                   
+                    $getQueryStringCount = count($queryString);
                     $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
                    
-                     $conditions = 'OR';
+                    $conditions = 'OR';
+                    if($getQueryStringCount != count($queryString)){
+                        $is404 = true;
+                    }
                  }
             }
 
