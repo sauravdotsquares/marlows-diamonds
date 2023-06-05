@@ -120,7 +120,7 @@ class DiamondFinderController
 		->first();
 		$num['oldAmount'] = $num['Amount'];
         if(isset($num['Amount']))
-            $num['Amount'] = ($num['Amount'] / 1.2) * $marginAPIPercentage->percentage;
+            $num['Amount'] = $num['Amount'] * $marginAPIPercentage->percentage;
         return $num;
     }
 }
