@@ -515,7 +515,7 @@ class XMLController extends Controller
         $hkData = getHKApiRecords($data);
 
         if(!empty($hkData)){
-            $finalHKPriceMargin = amountHariKrishnaChange($hkData[0]['Amount']);
+            $finalHKPriceMargin = amountHariKrishnaRapnetChange($hkData[0]['Amount']);
         	$diamondPrice = sprintf('%0.2f', ($finalHKPriceMargin));
         	$finalPrice = round((float)$settingPrice+(float)$diamondPrice);
 
