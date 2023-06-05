@@ -1684,12 +1684,12 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         return $price;
     }
     
-    function amountHariKrishnaChange($numPrice){
+    function amountHariKrishnaRapnetChange($numPrice){
         $marginAPIPercentage = MarginApiRange::where('api_type','harikrishna')->whereRaw('"'.$numPrice.'" between `from_price` and `to_price`')
         ->where('status', 1)
         ->first();
         if(isset($marginAPIPercentage) && !empty($marginAPIPercentage)){
-            return ($numPrice / 1.2) * $marginAPIPercentage->percentage;
+            return $numPrice * $marginAPIPercentage->percentage;
         }
         return $numPrice;
     }
