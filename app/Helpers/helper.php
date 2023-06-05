@@ -1622,6 +1622,11 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     }
 
     function getRagularFilterPrices($getRequestData,$diamondType,$slug,$filterArray){
+        if(isset($diamondType) && !empty($diamondType)){
+            $diamondType = $diamondType;
+        }else{
+            $diamondType = 'mined_diamond';
+        }
         $rrpPrice = $diamondType.'_rrp';
         $getProductDetails = Products::where('slug',$slug)->first();
         
@@ -1645,9 +1650,14 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
             }
         }
 
+        $categoryId = $getProductDetails->product_parent_category;
+        if(in_array('54',explode(',',$getProductDetails->categories))){
+            $categoryId = 54;
+        }
+
         $getRegularPrices = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select('regular_price',"$diamondType as shopPrice","$rrpPrice as rrpPrice",'product_id','id')->first();
 
-        $getDiscountedPrice = getIncreaseDiscountedPrice($getProductDetails->product_parent_category,$getRegularPrices->shopPrice);
+        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice);
 
         $result = [
             'rrp_price'=> $getRegularPrices->rrpPrice,

@@ -43,6 +43,10 @@
                                         <li><strong class="wc-item-meta-label">Metal:</strong>
                                             <p> {{ $detailsDecode['metal_type'] }}</p>
                                         </li>
+                                    @elseif(isset($detailsDecode['metalcolor']) && !empty($detailsDecode['metalcolor']))
+                                        <li><strong class="wc-item-meta-label">Metal:</strong>
+                                            <p> {{ $detailsDecode['metalcolor'] }}</p>
+                                        </li>
                                     @endif
                                     @if(isset($detailsDecode['fingersize']) && !empty($detailsDecode['fingersize']))
                                         <li><strong class="wc-item-meta-label">Finger Size:</strong>
