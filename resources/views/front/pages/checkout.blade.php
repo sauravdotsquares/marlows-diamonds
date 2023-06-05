@@ -268,9 +268,9 @@
                                                         <dt class="variation-Colour">Choose Your Diamond: </dt>
                                                         <dd class="variation-Colour"><p> {{ ($details['customArray']['choose_diamond'] == 'lab_grown')?'Lab Grown':'Mined'}}</p></dd>
                                                     @endif
-                                                    @if(isset($details['customArray']['metalcolor']) && !empty($details['customArray']['metalcolor']))
+                                                    @if(isset($details['customArray']['metal_type']) && !empty($details['customArray']['metal_type']))
                                                         <dt class="variation-Colour">Metal: </dt>
-                                                        <dd class="variation-Colour"><p> {{$details['customArray']['metalcolor']}}</p></dd>
+                                                        <dd class="variation-Colour"><p> {{$details['customArray']['metal_type']}}</p></dd>
                                                     @endif
                                                     @if(isset($details['customArray']['fingersize']) && !empty($details['customArray']['fingersize']))
                                                         <dt class="variation-FingerSize">Finger Size: </dt>
@@ -323,6 +323,19 @@
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
                                             </td>
                                             <td>
+                                            @if(isset($details['rrp_price']) && !empty($details['rrp_price']))
+                                                <p> 
+                                                    <span> RRP Price: </span> 
+                                                    <del>{{MY_CURRENCY_SYMBOL}} {{$details['rrp_price']}}</del>
+                                                </p>
+                                            @endif
+                                            <!-- <p> <span> Save Price: </span> {{MY_CURRENCY_SYMBOL}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
+                                            @if(isset($details['shop_price']) && !empty($details['shop_price']))
+                                                <p> 
+                                                    <span> Shop Price: </span> 
+                                                    <del> {{MY_CURRENCY_SYMBOL}}{{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
+                                                </p>
+                                            @endif
                                                 <span>
                                                     @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
                                                         <del>{{MY_CURRENCY_SYMBOL}}{{

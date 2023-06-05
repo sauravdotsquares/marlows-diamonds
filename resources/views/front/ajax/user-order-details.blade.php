@@ -39,7 +39,11 @@
                                             <p> {{ ($detailsDecode['choose_diamond'] == 'lab_grown')?'Lab Grown':'Mined'}}</p>
                                         </li>
                                     @endif
-                                    @if(isset($detailsDecode['metalcolor']) && !empty($detailsDecode['metalcolor']))
+                                    @if(isset($detailsDecode['metal_type']) && !empty($detailsDecode['metal_type']))
+                                        <li><strong class="wc-item-meta-label">Metal:</strong>
+                                            <p> {{ $detailsDecode['metal_type'] }}</p>
+                                        </li>
+                                    @elseif(isset($detailsDecode['metalcolor']) && !empty($detailsDecode['metalcolor']))
                                         <li><strong class="wc-item-meta-label">Metal:</strong>
                                             <p> {{ $detailsDecode['metalcolor'] }}</p>
                                         </li>

@@ -26,7 +26,14 @@ class Products extends Model
         'title','slug','old_slug','tags','is_variable','diamond_shape','short_description','description','lab_description','old_description','categories','sale_price','regular_price','meta_title','meta_keyword','meta_description','status','dfinder_status','is_featured','is_taxable','stock_status'
     ];
 
-    protected $appends = ['cat_details','ProductVariationMinMaxPrice','AdditionalPriceMetalType'];
+    protected $appends = ['cat_details','ProductVariationMinMaxPrice','AdditionalPriceMetalType','product_parent_category'];
+
+    public function getProductParentCategoryAttribute()
+    {
+        $ids = explode(',',$this->categories);
+        $getCat = Category::whereIn('id',$ids)->where('parent_id',0)->pluck('id','name')->first();
+        return $getCat;
+    }
 
     public function getProductImages(){
         return $this->hasOne(ProductImages::class,'product_id','id')->where('is_featured',1);

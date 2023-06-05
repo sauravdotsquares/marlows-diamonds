@@ -19,6 +19,7 @@ use App\Models\Masters;
 use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\UrlRedirects;
+use App\Models\LabPricesList;
 use App\Models\SitemapUrls;
 use App\Models\Posts;
 use App\Models\PostCategory;
@@ -561,9 +562,6 @@ class ProductController extends Controller
 
     public function getCustomApiFilterData(Request $request)
     {
-
-        // echo '<pre>'; print_r($request->all()); die;
-
         $caratFrom = '0.30';
         $caratTo = '0.39';
         if ($request->carat != '') {
@@ -631,13 +629,11 @@ class ProductController extends Controller
             'PageSize' => 2
         ];
 
-        //echo '<pre>'; print_r($data); die;
-
+        
         $hkData = getHKApiRecords($data);
         $hkData = array_map(array($this, "amountChange"), $hkData);
         $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
-        // prefunc($rapnetData);
-
+        
         $rapnetRecords = [];
         if (!empty($rapnetData)) {
             foreach ($rapnetData as $key => $result) {
@@ -649,7 +645,7 @@ class ProductController extends Controller
                     $rapnetRecords[$key]['Cut'] = $result->cut;
 
                 $rapnetRecords[$key]['Lab'] = $result->lab;
-                $rapnetRecords[$key]['Amount'] = ($result->total_sales_price * getVAT()) / 1.2;
+                $rapnetRecords[$key]['Amount'] = ($result->total_sales_price);
                 $rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
                 $rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
 
@@ -664,33 +660,25 @@ class ProductController extends Controller
                     $rapnetRecords[$key]['CertificateLink'] = 'https://www.diamondselections.com/GetCertificate.aspx?diamondid=' . $result->DiamondID;
                 }
             }
-            // echo '<pre>'; print_r($rapnetRecords); die;
         }
-        //echo '<pre>'; print_r($rapnetRecords); die;
         $apiData['data'] = Arr::collapse([$hkData, $rapnetRecords]);
 
         $apiData['VAT'] = getVAT();
-        //echo '<pre>'; print_r($apiData); die;
-
-        //   prefunc($apiData);
-
+        
         if (!empty($apiData['data'])) {
-            $dataArray = [];
-            foreach ($apiData['data'] as $key => $data) {
-                $dataArray[] = View::make('front.includes.product_detail_diamonds', ['key' => $key, 'apiRecords' => $data, 'VAT' => $apiData['VAT']])->render();
+            if($request->type && $request->diamond_type == "mined_diamond"){
+                if(isset($request->selectedDiamondPrice) && !empty($request->selectedDiamondPrice)){
+                    return $request->selectedDiamondPrice;
+                }
+                return $apiData['data'][0]['Amount'];
+            }else{
+                $dataArray = [];
+                foreach ($apiData['data'] as $key => $data) {
+                    $dataArray[] = View::make('front.includes.product_detail_diamonds', ['key' => $key, 'apiRecords' => $data, 'VAT' => $apiData['VAT']])->render();
+                }
             }
         }
         return response()->json(['html' => $dataArray]);
-
-        // $getApiController = new ApiController;
-        // $getActualData = $getApiController->getRepnetApiFunction($request->all());
-
-        // if(count($getActualData)){
-        //     $view = view('front.ajax.product_refinesearch',compact('getActualData'))->render();
-        //     return response()->json(['html'=> $view]);
-        // }
-
-        // return response()->json(['html'=> '']);
     }
 
     public function amountChange($num){
@@ -712,124 +700,6 @@ class ProductController extends Controller
         $view = view('front.ajax.search_suggesion', compact('getSearchedData'))->render();
         return response()->json(['html' => $view]);
     }
-
-
-    // public function getSelectedVariationsData(Request $request){
-    //     $product_id = Products::where('slug', $request->slug)->value('id');
-    //     if ($product_id != '') {
-    //         $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $request->slug)->first();
-    //         $prod_categories = explode(',', $getProduct->categories);
-    //         if (in_array("18", $prod_categories)) {
-    //             $prod_categories = ['18'];
-    //             $checkPlanCatArray = Category::whereIn('id', $prod_categories)->first()->toArray();
-    //         } else {
-    //             $checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
-    //         }
-    //         $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date','is_login_users')
-    //                         ->where('category_id', $checkPlanCatArray['id'])
-    //                         ->where('status', 1)
-    //                         ->first();
-    //         $getProductVariationId = ProductVariations::where('product_id', $product_id)
-    //                                 ->pluck('id')
-    //                                 ->toArray();
-    //         if (!empty($getProductVariationId)) {
-    //             $getVariDetails = ProductVariationDetails::groupBy('value')
-    //                             ->whereIn('variation_id', $getProductVariationId)
-    //                             ->whereIn('value', $request->variations)
-    //                             ->get()
-    //                             ->toArray();
-    //             $attributeCount = count($request->variations);
-    //             foreach ($getProductVariationId as $key1 => $productVariationId) {
-    //                 $variationDetails = array();
-    //                 foreach ($request->variations as $key2 => $variations) {
-    //                     $getVariDetails =   ProductVariationDetails::where('variation_id', $productVariationId)
-    //                                         ->where('value', $variations)
-    //                                         ->get()
-    //                                         ->toArray();
-    //                     if (!empty($getVariDetails))
-    //                         $variationDetails[] = $getVariDetails;
-    //                 }
-    //                 if ($attributeCount == count($variationDetails))
-    //                     break;
-    //             }
-    //         }
-    //         $vat = getVAT();
-    //         $newArray = [];
-    //         if (isset($getVariDetails) && !empty($getVariDetails)) {
-    //             $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
-    //                                                 ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'regular_price', 'sale_price')
-    //                                                 ->first();
-    //             if ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat <= 3000) {
-    //                 $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.35));
-    //                 // sprintf('%0.2f', ;
-    //                 // $regular_p_discount_final = $regular_p_final/$discountPercentage;
-    //             } elseif ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat > 3000) {
-    //                 $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.5));
-    //                 // sprintf('%0.2f', ;
-    //                 // $regular_p_discount_final = $regular_p_final/$discountPercentage;
-    //             } else {
-    //                 $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat);
-    //                 // $regular_p_discount_final = $regular_p_final/$discountPercentage;
-    //             }
-    //             $increaseDiscount = 1;
-    //             $discountPercentage = 1;
-    //             $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
-    //             if (isset($disPercentage) && !empty($disPercentage)) {
-    //                 $disPercentage = $disPercentage->toArray();
-    //                 if($disPercentage['is_login_users']){
-    //                     $isDiscountApplicable = auth()->guard('customer')->check();
-    //                 }else{
-    //                     $isDiscountApplicable = true;
-    //                 }
-    //                 /**  If customer login */
-    //                 //if ( 1 || $disPercentage->is_login_users || auth()->guard('customer')->check()) {
-    //                 if ( $isDiscountApplicable ) {
-    //                     if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
-    //                         $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
-    //                     } else {
-    //                         $increaseDiscount = 1;
-    //                     }
-    //                     $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
-    //                     if ($disPercentage['end_date'] >= date('Y-m-d')) {
-    //                         $getDiscountRange = DiscountRange::select('category_id', 'from_price', 'to_price', 'discount')
-    //                                             ->where('category_id', $checkPlanCatArray['id'])
-    //                                             ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
-    //                                             ->first();
-    //                         $discountPercentage = 1 + ($disPercentage['discount'] / 100);
-    //                         if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
-    //                             if ($getDiscountRange->discount > 1) {
-    //                                 $discountPercentage = 1 + ($getDiscountRange->discount / 100);
-    //                             } else {
-    //                                 $discountPercentage = 1;
-    //                             }
-    //                         } else {
-    //                             $discountPercentage = 1;
-    //                         }
-    //                     } else {
-    //                         $discountPercentage = 1;
-    //                     }
-    //                 } else {
-    //                     if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
-    //                         $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
-    //                     } else {
-    //                         $increaseDiscount = 1;
-    //                     }
-    //                     $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
-    //                 }
-    //             }
-    //             $regular_p_discount_final = $regular_p_final / $discountPercentage;
-    //             $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
-    //             $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
-    //             $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
-    //             $newArray['regular_price_with_vat'] = round($regular_p_final);
-    //             $newArray['regular_price_with_vat_discount'] = round($regular_p_discount_final);
-    //             return response()->json($newArray);
-    //         } else {
-    //             return response()->json(['statusCode' => '500', 'msg' => 'No Variation Found']);
-    //         }
-    //     }
-    // }
-
 
     public function getSelectedVariationsData(Request $request)
     {
@@ -1010,7 +880,7 @@ class ProductController extends Controller
 
                 // Get product variation price
                 $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
-                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video', 'regular_price', 'sale_price', 'mined', 'lab')
+                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video', 'regular_price', 'sale_price', 'mined_diamond', 'lab_grown')
                     ->first();
 
                 /** Price change for lab grown */
@@ -1107,22 +977,22 @@ class ProductController extends Controller
                     $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
                     $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                     $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
-                 
+
                     if ($request->diamond_type == 'lab_grown') {
-                        $newArray['regular_price'] = $getSelectedVariationVideoImages->lab;
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->lab_grown;
                         // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->lab;
-                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->lab;
-                    } elseif ($request->diamond_type == 'mined') {
-                        $newArray['regular_price'] = $getSelectedVariationVideoImages->mined;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->lab_grown;
+                    } elseif ($request->diamond_type == 'mined_diamond') {
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->mined_diamond;
                         // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->mined;
-                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->mined;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->mined_diamond;
                     } else {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                         $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
                         $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
                     }
 
-                   
+
                     return response()->json($newArray);
                 }
 
@@ -1828,5 +1698,41 @@ class ProductController extends Controller
         $slugs = explode('/', $request->path);
         return $productListingData = getProductListing($slugs, $dataArray);
         return view('front.includes.productCard', $productListingData);
+    }
+
+    public function getProductVariationPrices(Request $request)
+    {
+        $getRegularPrices = getRagularFilterPrices($request->all(),$request['diamond_type'], $request->slug, $request->metal_type);
+        $getLabDiamondPrices = 0;
+
+        if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
+            if(isset($request->type) && $request->type){
+                if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
+                    $getLabDiamondPrices = $this->getCustomApiFilterData($request);
+                }else{
+                    $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
+                }
+            }
+        }else{
+            $getLabDiamondPrices = $request->selectedDiamondPrice;
+        }
+
+        $resultedArray = array_map(function($num) use ($getLabDiamondPrices) {
+            return $num + $getLabDiamondPrices;
+        }, $getRegularPrices);
+
+        if(isset($resultedArray) && !empty($resultedArray)){
+            return [
+                'status'=> 200,
+                'allPrices'=>$resultedArray,
+                'getLabDiamondPrices'=>round($getLabDiamondPrices,2),
+            ];
+        }
+
+        return [
+            'status'=> 500,
+            'allPrices'=>0.00,
+            'getLabDiamondPrices'=>0.00,
+        ];
     }
 }

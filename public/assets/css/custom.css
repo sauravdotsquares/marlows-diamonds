@@ -405,6 +405,7 @@ input.input-control{height:38px}
 .product-detail-wraper {padding: 46px 0 20px 0;}
 .product-title-name h1 {font-family: "Lato";font-size: 26px;letter-spacing: 0;font-weight: bold;}
 .type-variations-row {display: flex;flex-wrap: wrap;margin: 0 -9px 17px;}
+.type-variations-row1 {display: flex;flex-wrap: wrap;margin: 0 -9px 17px;}
 .type-variations-col {width: 100%;flex: 0 0 50%;-ms-flex: 0 0 50%;max-width: 50%;padding:0 9px 13px;}
 label.label {display: block;margin: 0 0 5px 0;}
 .product-title-name {margin: 0 0 30px 0;}
@@ -1264,6 +1265,7 @@ padding: 0;right: 10px;}
 .blog-list-sidebar-first.mobile-sidebar .accordion-body ul li:last-child a {border: none;}
 .blog-list-sidebar-first.mobile-sidebar .accordion .accordion-collapse {padding: 0;}
 
+
 /*grown diamond css*/
 .diamond-rings-panel .product-diamond-item {flex: 0 0 30%;max-width: 30%;}
 /*grown diamond css end*/
@@ -1288,6 +1290,7 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 
 .location-header strong {display: block;}
 .diamond-field-contens{ width:100%; }
+
 /*grown diamond css*/
 .diamond-rings-panel .product-diamond-item {flex: 0 0 100%;max-width: 100%;}
 .search-result nav ul.pagination li.page-item {margin: 0 0 10px;}

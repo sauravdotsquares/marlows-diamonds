@@ -23,6 +23,9 @@ class Discount extends Model
 
     protected $appends = ['cat_details','discount_range_details','discount_range_details'];
 
+    public function getDiscountRanges(){
+        return $this->hasMany(DiscountRange::class,'discount_id','id');
+    }
     public function getCatDetailsAttribute()
     {
         return Category::where('id',$this->category_id)->value('name');
