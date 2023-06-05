@@ -44,7 +44,7 @@ class PayPalPaymentController extends Controller
 
 
         if(isset($maxOrderId) && !empty($maxOrderId)){
-            $generateCustomOrderId = $maxOrderId +1;
+            $generateCustomOrderId = base64_encode($getOrderDetails->user_id.'-'.$getOrderDetails->id);
         }else{
             $generateCustomOrderId = '31002';
         }
