@@ -843,12 +843,18 @@
 				diamondGrade = $('#diamond-grade').val();
 				diamondClarity = $('#diamond-clarity').val();
 				diamondCertificate = $('#diamond-certificate').val();
+				$('.product-description-common_lab_grown').css('display','none');
+				$('.product-description-common_mined').css('display','block');
+				console.log("mined_diamond");
 			}else if($('.diamond_type:checked').val() == 'lab_grown'){
 				diamondCaratWeight = $('#lab_grown_carat').val();
 				diamondColour = $('#lab_grown_colour').val();
 				diamondGrade = '';
 				diamondClarity = $('#lab_grown_clarity').val();
 				diamondCertificate = '';
+				$('.product-description-common_lab_grown').css('display','block');
+				$('.product-description-common_mined').css('display','none');
+				console.log("Lab grown ");
 			}
 
 			$.ajax({
