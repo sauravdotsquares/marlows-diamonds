@@ -198,7 +198,7 @@
 
 				<div style="display: flex;">
 					<h4><del style="color:#000" class="shopPriceval"id="shopPrice"> </del> </h4>
-					<div class="product-finder-price" id="finaldiamondprice" style="padding-left: 10px">
+					<div class="product-finder-price" id="finaldiamondprice" style="">
 					</div>
 				</div>
 				<p><span style="color:green"> <span id="savePrice" class="save"></span></span> <del id="rrpPrice" class="rrpPriceval"> </del> </p>
@@ -875,17 +875,19 @@
                 },
                 success: function (res) {
 					if(res.status == 200){
-						$('#rrpPrice').html('RRP {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+
+						if(res.allPrices.rrp_price != res.allPrices.discounted_price){
+							$('#rrpPrice').html('RRP:  {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price).toFixed(2)) + ' | ');
+						}
 
 						if(res.allPrices.shop_price == res.allPrices.discounted_price){
 						    $('#shopPrice').html('');
-						    $('#finaldiamondprice').html(' <span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 						}else{
-
 						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
-						    $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price).toFixed(2)) + ' | ');
 						}
+						$('#finaldiamondprice').html(' <span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 						
 						// $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
 						// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
