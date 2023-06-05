@@ -31,7 +31,7 @@
                             @php $total = 0 @endphp
 
                             @foreach(session('cart') as $id => $details)
-                          
+
                             @php
                                 $total += $details['deposited_price'] * $details['quantity'];
                             @endphp
@@ -120,16 +120,18 @@
                                 
                                 @if(isset($details['rrp_price']) && !empty($details['rrp_price']))
                                     <p> 
-                                        <span> RRP Price: </span> 
+                                        <span> RRP: </span> 
                                         <del>{{MY_CURRENCY_SYMBOL}} {{$details['rrp_price']}}</del>
                                     </p>
                                 @endif
                                <!-- <p> <span> Save Price: </span> {{MY_CURRENCY_SYMBOL}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
                                 @if(isset($details['shop_price']) && !empty($details['shop_price']))
+                                    @if($details['price']!= $details['shop_price'])
                                     <p> 
-                                        <span> Shop Price: </span> 
+                                        <span> Our Price: </span> 
                                         <del> {{MY_CURRENCY_SYMBOL}}{{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
                                     </p>
+                                    @endif
                                 @endif
                                     @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['shopPricedata'])
                                         <del>{{MY_CURRENCY_SYMBOL}}{{
