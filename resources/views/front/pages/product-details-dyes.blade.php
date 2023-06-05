@@ -266,12 +266,16 @@
 				<div class="product-decriptions product-description-common product-description-common_lab_item">
 					{!! $data->lab_description ? $data->lab_description.'<br>'.$data->description :  $data->description  !!}
 				</div>
-				<div style="display: flex;">
-					<h4><del style="color:#000" id="shopPrice"> </del> </h4>
-					<div class="product-finder-price" id="finaldiamondprice" style="padding-left: 10px">
+				<div class="price-section">
+					<div style="display: flex;">
+						<h4><del style="color:#000" id="shopPrice"> </del> </h4>
+						<div class="product-finder-price" id="finaldiamondprice" style="">
+						</div>
 					</div>
+					<p><span style="color:green">You Save : <span id="savePrice"></span></span> |  <del id="rrpPrice"> </del> </p>
 				</div>
-				<p><span style="color:green">You Save : <span id="savePrice"></span></span> | RRP <del id="rrpPrice"> </del> </p>
+				
+				
 				<input type="hidden" id="getLabDiamondPrices" name="getLabDiamondPrices" value="">
 
 
@@ -797,10 +801,11 @@
 		}
 
 		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
-			$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
-			$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
-			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending...</span>');
-			$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+			$('#price-section').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+			// $('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+			// $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+			// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending...</span>');
+			// $('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
 			$('#getLabDiamondPrices').val('');
 			
 			var variations = [];
@@ -853,21 +858,21 @@
                 },
                 success: function (res) {
 					if(res.status == 200){
-						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+						$('#rrpPrice').html('RRP: {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
 						if(res.allPrices.shop_price == res.allPrices.discounted_price){
 						    $('#shopPrice').html('');
-						    $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 						}else{
 						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
-						    $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 						}
+						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
 						$('#getLabDiamondPrices').val(res.getLabDiamondPrices.toFixed(2));
 					}else if(res.status == 500){
-						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
-						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
-						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
-						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#price-section').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+						// $('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						// $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						// $('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
 						$('#getLabDiamondPrices').val('');
 					}
                 }
