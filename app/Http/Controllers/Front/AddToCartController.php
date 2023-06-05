@@ -215,11 +215,7 @@ class AddToCartController extends Controller
             }
             // $titleHtml .= ' </dl>';
 
-            $cart = session()->get('cart', []);
-            // echo "<pre>";
-            // print_r($selectedAttributes);
-            // // print_r($request->all(''));
-            // die;
+            $cart = session()->get('cart', []);  
             if (isset($cart[$request->CERT_NO])) {
                 // $cart[$request->CERT_NO]['quantity']++;
             } else {
@@ -228,7 +224,7 @@ class AddToCartController extends Controller
                     "customArray" => $selectedAttributes,
                     "quantity" => 1,
                     "price" => isset($input['total_amount']) ? floatval(preg_replace('/[^\d.]/', '', $input['total_amount'])) : $input['price'],
-                    "deposited_price" => floatval(preg_replace('', '', $input['partial_amount'])),
+                    "deposited_price" => floatval(preg_replace('/[^\d.]/', '', $input['partial_amount'])),
                     "vat" => getVATPriceFunction($input['partial_amount']),
                     "image" => ''
                 ];
