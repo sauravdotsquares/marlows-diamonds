@@ -47,32 +47,32 @@ class OrderController extends Controller
 
     public function changeOrderStatus(Request $request)
     {
-        $getOrderDetails = Order::where('token',$request->order_token)->update(['status'=>$request->order_status]);
-		$getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$request->order_token)->first()->toArray();
+		$getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id',$request->order_id)->first()->toArray();
+
+        if(isset($getOrderDetailsMail) && !empty($getOrderDetailsMail)){
+            $getOrderDetails = Order::where('id',$request->order_id)->update(['status'=>$request->order_status]);
+
+            $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
 		
-		$admin_email = Settings::where("option_name",'admin_email')->value('option_value');
-		
-		$data = [
-		   'data' => $getOrderDetailsMail
-		];
-		
-		$request['customer_email'] = $getOrderDetailsMail['user_details']['email']; 
-		// echo "<pre>";
-		// print_r($getOrderDetailsMail['user_details']['email']);
-		// die;
-		//Mail::send('email.orderstatus',["data1"=>$data], function($message) use ($request,$admin_email ){
-		Mail::send('email.orderstatus', array(
-            'data1' => $data,
-			
+            $data = [
+               'data' => $getOrderDetailsMail
+            ];
             
-        ), function($message) use ($request,$admin_email ){	
-			$message->from('hello@marlows-diamonds.co.uk');
-			$message->to($admin_email, 'Admin')->subject('Order Status');
-			$message->cc($request['customer_email'], 'Customer')->subject('Order Status');
-			
-        });
-		
-        return response()->json(['status'=>200,'msg'=>'Successfully Updated...']);
+            $request['customer_email'] = $getOrderDetailsMail['user_details']['email']; 
+
+            Mail::send('email.orderstatus', array(
+                'data1' => $data,
+            ), function($message) use ($request,$admin_email ){	
+                $message->from('hello@marlows-diamonds.co.uk');
+                $message->to($admin_email, 'Admin')->subject('Order Status');
+                $message->cc($request['customer_email'], 'Customer')->subject('Order Status');
+                
+            });
+            
+            return response()->json(['status'=>200,'msg'=>'Successfully Updated...']);
+        }else{
+            return response()->json(['status'=>200,'msg'=>'Something went wrong...']);
+        }
     }
 
 }
