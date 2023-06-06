@@ -36,67 +36,70 @@
                                 </thead>
                                 <tbody>
                                     @foreach($getOrderDetails->getOrderDetailsFunction as $key => $orderDetails)
-                                        <?php
+                                    <?php
 
-                                            // echo "checking <pre>";
-                                            // print_r($getOrderDetails);
-                                            // die;
+                                    // echo "checking <pre>";
+                                    // print_r($getOrderDetails);
+                                    // die;
 
-                                            if(isset($orderDetails->order_product_details) && !empty($orderDetails->order_product_details)){
-                                                $orderProductDetails = json_decode($orderDetails->order_product_details);
-                                            }else{
-                                                $orderProductDetails = [];
-                                            }
-                                            $productSlug = '';
-                                            if(isset($orderDetails->product_details) && !empty($orderDetails->product_details)){
-                                                $productSlug = $orderDetails->product_details->slug;
-                                            }
+                                    if (isset($orderDetails->order_product_details) && !empty($orderDetails->order_product_details)) {
+                                        $orderProductDetails = json_decode($orderDetails->order_product_details);
+                                    } else {
+                                        $orderProductDetails = [];
+                                    }
+                                    $productSlug = '';
+                                    if (isset($orderDetails->product_details) && !empty($orderDetails->product_details)) {
+                                        $productSlug = $orderDetails->product_details->slug;
+                                    }
 
-                                            // isset($orderDetails->product_details)?$orderDetails->product_details->slug:'';
-                                        ?>
-                                        <tr class="woocommerce-table__line-item order_item">
-                                            <td class="woocommerce-table__product-name product-name">
-                                                <div class="pr-desc-text">
-                                                    <div class="pr-desc-text-img">
-                                                        <img src="images/Marlows-03.jpg" alt="ffimg">
-                                                    </div>
-                                                    <div class="pr-desc-text-content">
-                                                        <a href="{{asset('product/'.$productSlug)}}" target="_blank">
-                                                            {{isset($orderDetails->product_details->title)?$orderDetails->product_details->title:''}}</a> <strong
-                                                            class="product-quantity">×&nbsp;{{$orderDetails->quantity}}</strong>
-                                                        <ul class="wc-item-meta">
-                                                            @foreach($orderProductDetails as $key1 => $orderProductDetails)
-                                                                @if($key1 == 'certificatelink')
-                                                                    <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
-                                                                        <a href="{{$orderProductDetails}}" target="_blank">
-                                                                        view </a>
-                                                                    </li>
-                                                                @else
-                                                                    <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
-                                                                        <p>{{$orderProductDetails}}</p>
-                                                                    </li>
-                                                                @endif
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
+                                    // isset($orderDetails->product_details)?$orderDetails->product_details->slug:'';
+                                    ?>
+                                    <tr class="woocommerce-table__line-item order_item">
+                                        <td class="woocommerce-table__product-name product-name">
+                                            <div class="pr-desc-text">
+                                                <!-- <div class="pr-desc-text-img">
+                                                    <img src="images/Marlows-03.jpg" alt="ffimg">
+                                                </div> -->
+                                                <div class="pr-desc-text-content">
+                                                    <a href="{{asset('product/'.$productSlug)}}" target="_blank">
+                                                        {{isset($orderDetails->product_details->title)?$orderDetails->product_details->title:''}}</a> <strong class="product-quantity">×&nbsp;{{$orderDetails->quantity}}</strong>
+                                                    <ul class="wc-item-meta">
+                                                        @foreach($orderProductDetails as $key1 => $orderProductdtail)
+                                                        <?php 
+                                                            // dump($orderProductdtail);
+                                                        ?>
+                                                        @if($key1 == 'certificatelink')
+                                                        <!-- @php $orderProductDetails = $orderProductDetails ? $orderProductDetails : ''; @endphp -->
+                                                        <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
+                                                            @if($orderProductdtail != null)
+                                                            <a href="{{$orderProductdtail}}" target="_blank"> view </a>
+                                                            @endif
+                                                        </li>
+                                                        @else
+                                                            @if($key1 != 'variations')
+                                                                <li><strong class="wc-item-meta-label">{{ucwords($key1)}}:</strong>
+                                                                    <p>{{$orderProductdtail}}</p>
+                                                                </li>
+                                                            @endif
+                                                        @endif
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
-                                            </td>
-                                            <td class="woocommerce-table__product-total product-total">
-                                                <span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$orderDetails->total_price * $orderDetails->quantity}}</bdi></span>
-                                            </td>
-                                            <td class="woocommerce-table__product-total product-total">
-                                                <span class="woocommerce-Price-amount amount"><bdi><span
-                                                            class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($orderDetails->deposited_product_price)?$orderDetails->deposited_product_price:$orderDetails->product_price * $orderDetails->quantity}}</bdi></span>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                        <td class="woocommerce-table__product-total product-total">
+                                            <span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{$orderDetails->total_price * $orderDetails->quantity}}</bdi></span>
+                                        </td>
+                                        <td class="woocommerce-table__product-total product-total">
+                                            <span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($orderDetails->deposited_product_price)?$orderDetails->deposited_product_price:$orderDetails->product_price * $orderDetails->quantity}}</bdi></span>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th scope="row">Subtotal:</th>
-                                        <td><span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span></td>
+                                        <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Payment method:</th>
@@ -104,25 +107,23 @@
                                     </tr>
                                     <tr>
                                         <th scope="row">Total:</th>
-                                        <td><span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span>
+                                        <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span>
                                             <!-- <small class="includes_tax">(includes <span
                                                     class="woocommerce-Price-amount amount"><span
                                                         class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}
                                                    </span>64.80</span>
                                                 VAT)</small> -->
-                                            </td>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Deposited:</th>
-                                        <td><span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span>
+                                        <td><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span>
                                             <!-- <small class="includes_tax">(includes <span
                                                     class="woocommerce-Price-amount amount"><span
                                                         class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}
                                                    </span>64.80</span>
                                                 VAT)</small> -->
-                                            </td>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -161,68 +162,68 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
-      </div>
-      <div class="modal-body">
-        <select name="status_change" class="form-control" id="status_change">
-            <option value="">Choose Any</option>
-            <option value="0">Payment Pending</option>
-            <option value="1">Payment Processing</option>
-            <option value="2">Payment Success</option>
-            <option value="3">Payment Cancelled</option>
-            <option value="4">Order Shipped</option>
-            <option value="5">Order Delivered</option>
-            <option value="6">Order Return</option>
-        </select>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+            </div>
+            <div class="modal-body">
+                <select name="status_change" class="form-control" id="status_change">
+                    <option value="">Choose Any</option>
+                    <option value="0">Payment Pending</option>
+                    <option value="1">Payment Processing</option>
+                    <option value="2">Payment Success</option>
+                    <option value="3">Payment Cancelled</option>
+                    <option value="4">Order Shipped</option>
+                    <option value="5">Order Delivered</option>
+                    <option value="6">Order Return</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script>
-        $(document).ready(function(){
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    $(document).ready(function(){
 
-            $('#orderSelectedStatus').on('click',function(){
-                // console.log($(this).data('status'));
-                $('#status_change').val($(this).data('status'));
-            });
-
-
-            $('#status_change').on('change',function(){
-                if(confirm("Are you sure want to Change Status?")) {
-                    $.ajax({
-                        url: "{{ route('admin.order.change.order.status') }}",
-                        method: "POST",
-                        data: {
-                            _token: '{{ csrf_token() }}',
-                            order_token: '{{$getOrderDetails->token}}',
-                            order_status: $(this).val()
-                        },
-                        success: function (response) {
-                            //
-                            if(response.status == 200){
-                                toastr.success(response.msg);
-                            }else{
-                                toastr.info("Not Updated...");
-                            }
-                            window.location.reload();
-                        }
-                    });
-                }
-                // console.log($(this).val());
-            });
-
+        $('#orderSelectedStatus').on('click',function(){
+            // console.log($(this).data('status'));
+            $('#status_change').val($(this).data('status'));
         });
-    </script>
+
+
+        $('#status_change').on('change',function(){
+            if(confirm("Are you sure want to Change Status?")) {
+                $.ajax({
+                    url: "{{ route('admin.order.change.order.status') }}",
+                    method: "POST",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        order_token: '{{$getOrderDetails->token}}',
+                        order_status: $(this).val()
+                    },
+                    success: function (response) {
+                        //
+                        if(response.status == 200){
+                            toastr.success(response.msg);
+                        }else{
+                            toastr.info("Not Updated...");
+                        }
+                        window.location.reload();
+                    }
+                });
+            }
+            // console.log($(this).val());
+        });
+
+    });
+</script>
 @endsection
 
 @endsection
