@@ -41,7 +41,7 @@
                       <td>{{isset($order->deposited_price)?$order->deposited_price:$order->final_price}}</td>
                       <td>{{isset($order->payment_type)?$order->payment_type:''}}</td>
                       <td>
-                        <a href="javascript:void(0);" type="button" class="orderSelectedStatus" data-bs-toggle="modal" data-token="{{$order->token}}" data-status="{{isset($order->status)?$order->status:''}}" data-bs-target="#exampleModal">{!!isset($order->status_details_designs)?$order->status_details_designs:''!!}</a>
+                        <a href="javascript:void(0);" type="button" class="orderSelectedStatus" data-bs-toggle="modal" data-token="{{$order->token}}" data-id="{{$order->id}}" data-status="{{isset($order->status)?$order->status:''}}" data-bs-target="#exampleModal">{!!isset($order->status_details_designs)?$order->status_details_designs:''!!}</a>
 
                          <!-- <a href="javascript:void(0);" id="orderDetailsPage{{$order->id}}">{!!isset($order->status_details_designs)?$order->status_details_designs:'' !!}</a></td> -->
                       <td>
@@ -124,6 +124,7 @@
          // console.log($(this).data('status'));
          $('#status_change').val($(this).data('status'));
          $('#status_change').attr('data-token',$(this).data('token'));
+         $('#status_change').attr('data-id',$(this).data('id'));
       });
 
 
@@ -134,11 +135,12 @@
                method: "POST",
                data: {
                      _token: '{{ csrf_token() }}',
+                     order_id: $(this).data('id'),
                      order_token: $(this).data('token'),
                      order_status: $(this).val()
                },
                success: function (response) {
-                     //
+                  //
                      if(response.status == 200){
                         toastr.success(response.msg);
                      }else{
