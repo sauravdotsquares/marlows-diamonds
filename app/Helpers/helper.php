@@ -1226,6 +1226,8 @@ if (!function_exists('validate_breadcrumb')) {
          $category_custom_query = "";
          $is404 = false;
          $categoryData = null;
+         $getAjaxResponses = true;
+         $page = 12;
  
          if (isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings', $requestData['category'])) {
              $requestData['category'] = [
@@ -1251,6 +1253,8 @@ if (!function_exists('validate_breadcrumb')) {
                     }
                 }
             }
+            $getAjaxResponses = false;
+            $page = '';
          } elseif (!empty($queryString)) {
              $conditions = 'AND';
              if(isset($queryString[1]) && !empty($queryString[1])){
@@ -1267,7 +1271,7 @@ if (!function_exists('validate_breadcrumb')) {
                     $getQueryStringCount = count($queryString);
                     $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
                    
-                    $conditions = 'OR';
+                    $conditions = 'AND';
                     if($getQueryStringCount != count($queryString)){
                         $is404 = true;
                     }
@@ -1414,12 +1418,12 @@ if (!function_exists('validate_breadcrumb')) {
          }
  
          // echo "checked ".$query->toSql();die;
-         $getProductListFinal = $query->paginate(12, ['*'], 'page', $pageNo);
+         $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
  
         
          $productItems = "";
          if ($getProductListFinal->count()) {
-             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
          }
          $isNextPage = $getProductListFinal->hasMorePages();
          $nextPage = $getProductListFinal->currentPage() + 1;
