@@ -95,6 +95,7 @@ class PlaceOrderController extends Controller
                 $getOrders->payment_type = $request->payment_type;
                 $getOrders->paymentccdetails = $request->paymentccdetails;
                 $getOrders->depositpercentage = $request->depositepercentage;
+                $getOrders->status = 0;
                 $getOrders->save();
 
                 if($getOrders){
@@ -126,10 +127,12 @@ class PlaceOrderController extends Controller
                             $orderDekopayFinance->totalAmts = $request->final_price;
 
                             $orderDekopayFinance->save();
+                            Order::where('id',$getOrders->id)->update(['custom_order_id'=>$getOrders->id.'-'.base64_encode($getEmailExists->id.'-'.$getOrders->id),'status'=>1,'deko_status'=>'pending']);
+                            session()->put('custom_order_id', $getOrders->id.'-'.base64_encode($getEmailExists->id.'-'.$getOrders->id));
                         }
 
                         CustomerAddress::where('user_id',$getEmailExists->id)->update(['order_id'=>$getOrders->id]);
-
+                        
 
                         return response()->json(['status'=>200,'msg'=>'Order added','order_dt'=>$getOrders->id]);
                         // return redirect(route('make.payment'));

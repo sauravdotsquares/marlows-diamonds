@@ -149,6 +149,42 @@ class DekoPayController extends Controller
 			return $data;
 			
 	}
+	
+	public function dekopayVerified(Request $request){
+	    $tokenData = (isset($request['token']) && !empty($request['token']))?$request['token']:0;
+	    $retailerUniqueRef = (isset($request['retaileruniqueref']) && !empty($request['retaileruniqueref']))?$request['retaileruniqueref']:0;
+	    
+	    if($retailerUniqueRef != 0){
+	         $result = $this->payment_complete($tokenData,$retailerUniqueRef,'verified');
+	         return view('front.pages.success-page',$result);
+	    }
+	    return view('front.pages.cancel-page',[]);
+	}
+	
+	public function dekopayDeclined(Request $request){
+		$checkCustomOrderId = session()->get('custom_order_id');
+		$result = $this->payment_cancelled($checkCustomOrderId,$checkCustomOrderId,'declined');
+	    return view('front.pages.cancel-page',$result);
+	}
+	public function dekopayCancelled(Request $request){
+		$checkCustomOrderId = session()->get('custom_order_id');
+		$result = $this->payment_cancelled($checkCustomOrderId,$checkCustomOrderId,'cancelled');
+		
+		return view('front.pages.cancel-page',$result);
+	}
+	
+	public function dekopayReferred(Request $request){
+		$checkCustomOrderId = session()->get('custom_order_id');
+		$result = $this->payment_cancelled($checkCustomOrderId,$checkCustomOrderId,'referred');
+		
+	    return view('front.pages.cancel-page',$result);
+	}
+	
+	public function dekopayCsnUrl(Request $request){
+		$checkCustomOrderId = session()->get('custom_order_id');
+		$result = $this->payment_cancelled($checkCustomOrderId,$checkCustomOrderId,'csn_url');
+	    return view('front.pages.cancel-page',$result);
+	}
 
 	public function check_response(Request $request)
 	{ 
@@ -185,11 +221,11 @@ class DekoPayController extends Controller
 			endif;
 
 	}
-	function payment_complete($token,$order_id){
+	function payment_complete($token,$order_id,$dekoStatus){
 		$resorder = explode("-",$order_id); 
 		$order_id = $resorder[0];
 		$dekoPayFinanceOrderId = $resorder[1];
-		Order::where('id',$order_id)->update(['token'=>$token,'custom_order_id'=>$dekoPayFinanceOrderId,'deko_order_key'=> $dekoPayFinanceOrderId, 'pay_timestamp'=>date('Y-m-d h:i:s'),'status'=>2]);
+		Order::where('id',$order_id)->update(['token'=>$token,'custom_order_id'=>$dekoPayFinanceOrderId,'deko_order_key'=> $dekoPayFinanceOrderId, 'pay_timestamp'=>date('Y-m-d h:i:s'),'status'=>2,'deko_status'=>$dekoStatus]);
 		$getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id',$order_id)->first()->toArray();
 		
 		$admin_email = Settings::where("option_name",'admin_email')->value('option_value');
@@ -223,8 +259,48 @@ class DekoPayController extends Controller
         ]; 
         return $result;
 	}
+	function payment_cancelled($token,$order_id,$dekoStatus){
+
+		$resorder = explode("-",$order_id); 
+		$order_id = $resorder[0];
+		$dekoPayFinanceOrderId = $resorder[1];
+		Order::where('id',$order_id)->update(['token'=>$token,'custom_order_id'=>$token,'deko_order_key'=> $dekoPayFinanceOrderId, 'pay_timestamp'=>date('Y-m-d h:i:s'),'status'=>3,'deko_status'=>$dekoStatus]);
+		$getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id',$order_id)->first()->toArray();
+
+        $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
+        $transaction_emails = Settings::where("option_name",'transaction_emails')->value('option_value');
+
+        $data = [
+            'data' => $getOrderDetailsMail
+        ];
+
+        $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
+		Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request,$admin_email, $transaction_emails ){
+			// $message->from('hello@marlows-diamonds.co.uk');
+			$message->from('sharma.gajendra@dotsquares.com');
+
+			$admin_email_london = "sharma.gajendra@dotsquares.com";
+			$message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+            
+            /** add cc for more users */
+            if(!empty($transaction_emails)){
+                $emails_to_cc = explode(',', $transaction_emails);
+                foreach ($emails_to_cc as $email_to_cc) {
+                    $message->cc('sharma.gajendra@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                }
+            }
+            
+            $message->cc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Marlows Diamonds: Your transaction not completed.');
+        });
+
+        $result = [
+            'response' => 'Your Order number('.$getOrderDetailsMail['custom_order_id'].') has been cancelled',
+        ];
+
+        return $result;
+	}
 	function successful_request( $posted ) {
-	    
+
 			$order_id_key=$posted['retaileruniqueref'];
 			$resorder = explode("-",$order_id_key); 
 			$order_id = $resorder[0];
