@@ -245,7 +245,7 @@ if (!function_exists('validate_breadcrumb')) {
 	if (!function_exists("getReviews")) {
     function getReviews()
 		{
-			$reviews = Reviews::where('status',1)->all();
+			$reviews = Reviews::where('status',1)->get();
 			return ($reviews);
 		}
 	}
