@@ -18,8 +18,9 @@ class PostController
 
         // ];
         // populate_breadcrumb($breadcrumb);
-		$posts = Posts::all();
-		return view('front.pages.templates.blog_template', compact('posts'));
+		$posts = Posts::orderBy('id','DESC')->where('status',1)->get();
+		return view('front.pages.templates.blog_template', compact('posts')); 
 		
     }
 }
+  
