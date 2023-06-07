@@ -14,7 +14,7 @@ class FaqCategory extends Model
     protected $fillable = ['title'];
 	
 	public function getFAQData(){
-		return $this->hasMany(Faqs::class,'categories','id');
+		return $this->hasMany(Faqs::class,'categories','id')->where('status',1);
 	}
 	
 }

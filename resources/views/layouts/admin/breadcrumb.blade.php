@@ -11,8 +11,8 @@
                 @if($loop->last)
                     <li class="breadcrumb-item active"><a href="{{ $breadcrumb["url"] }}">@if(isset($breadcrumb["icon"]))<i class="{{$breadcrumb["icon"]}}"></i> @endif {{$breadcrumb["name"]}}</a></li>
                 @else
-                    <li class="breadcrumb-item"><a href="{{ $breadcrumb["url"] }}">@if(isset($breadcrumb["icon"]))<i
-                                    class="{{$breadcrumb["icon"]}}"></i> @endif {{$breadcrumb["name"]}}</a></li>
+                    <li class="breadcrumb-item">@if(isset($breadcrumb["icon"]))<i
+                                    class="{{$breadcrumb["icon"]}}"></i> @endif {{$breadcrumb["name"]}}</li>
                 @endif
             @endforeach
             </ol>
