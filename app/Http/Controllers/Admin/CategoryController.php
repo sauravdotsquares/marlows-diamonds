@@ -203,7 +203,7 @@ class CategoryController extends Controller
     public function delete(Request $request)
     {
         $post = Category::find($request->id)->delete();
-        return response()->json($post);
+        return redirect()->action('Admin\CategoryController@index')->with('success', 'Currency Deleted Successfully');
     }
 
     function getCategoryTree($parent_id = 0, $spacing = '', $tree_array = array())

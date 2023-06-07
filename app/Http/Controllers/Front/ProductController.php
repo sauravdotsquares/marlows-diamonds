@@ -125,7 +125,7 @@ class ProductController extends Controller
 
         if ($productSlug != null) {
             // $productSlug = str_replace("_","-",$productSlug);
-            $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $productSlug)->first();
+            $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('status',1)->where('slug', $productSlug)->first();
 
             if (empty($getProduct)) {
                 /** If data not found with existing slug then check in redirections table and redirect */

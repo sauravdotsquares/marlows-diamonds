@@ -93,7 +93,7 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::post('/products/categories/add','CategoryController@add')->name('add');
 		Route::post('/get-categories','CategoryController@getCategory')->name('get-category');
 		Route::post('/change-categories','CategoryController@status');
-		Route::post('/delete-categories','CategoryController@delete');
+		Route::any('/delete-categories','CategoryController@delete');
 
 		// Product Add Pages Routes
 		Route::get('/products/products','ProductController@index')->name('products-list');

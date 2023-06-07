@@ -73,7 +73,7 @@ class DiamondFinderController
         }
 
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
-
+				
         $rapnetRecords = [];
         if(!empty($rapnetData)){
 	        foreach ($rapnetData as $key => $result) {
@@ -85,7 +85,8 @@ class DiamondFinderController
 	        		$rapnetRecords[$key]['Cut'] = $result->cut;
 
 	        	$rapnetRecords[$key]['Lab'] = $result->lab;
-	        	$rapnetRecords[$key]['Amount'] = ($result->total_sales_price*getVAT())/1.2;
+	        	$rapnetRecords[$key]['oldAmount'] =$result->total_sales_price;
+	        	$rapnetRecords[$key]['Amount'] = amountHariKrishnaRapnetChange($result->total_sales_price);
 	        	$rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
                 $rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
 
@@ -120,7 +121,7 @@ class DiamondFinderController
 		->first();
 		$num['oldAmount'] = $num['Amount'];
         if(isset($num['Amount']))
-            $num['Amount'] = ($num['Amount'] / 1.2) * $marginAPIPercentage->percentage;
+            $num['Amount'] = $num['Amount'] * $marginAPIPercentage->percentage;
         return $num;
     }
 }
