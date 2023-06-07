@@ -245,7 +245,7 @@ if (!function_exists('validate_breadcrumb')) {
 	if (!function_exists("getReviews")) {
     function getReviews()
 		{
-			$reviews = Reviews::all();
+			$reviews = Reviews::where('status',1)->all();
 			return ($reviews);
 		}
 	}
@@ -283,7 +283,7 @@ if (!function_exists('validate_breadcrumb')) {
 	if (!function_exists("getEngagementFaqs")) {
     function getEngagementFaqs()
 		{
-			$getengagementfaqs = Faqs::take(50)->orderBy('id', 'DESC')->where('categories', 0)->get();
+			$getengagementfaqs = Faqs::take(50)->orderBy('id', 'DESC')->where('status',1)->where('categories', 0)->get();
 			return ($getengagementfaqs);
 		}
 	}
