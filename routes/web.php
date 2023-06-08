@@ -449,9 +449,14 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 
 	Route::post('download-pdf','HomeController@downloadPDF')->name('download-pdf');
 	Route::get('deko-api/dekopay', 'DekoPayController@check_response');
+	Route::any('/deko-api/dekopay-verified', 'DekoPayController@dekopayVerified');
+	Route::any('/deko-api/dekopay-declined', 'DekoPayController@dekopayDeclined');
+	Route::any('/deko-api/dekopay-cancelled', 'DekoPayController@dekopayCancelled');
+	Route::any('/deko-api/dekopay-referred', 'DekoPayController@dekopayReferred');
+	Route::any('/deko-api/dekopay-csn-url', 'DekoPayController@dekopayCsnUrl');
 
 
-	Route::get('deko-api/dekopay', 'DekoPayController@check_response');
+
 
 
 	
