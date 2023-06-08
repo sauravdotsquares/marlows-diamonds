@@ -280,6 +280,13 @@ if (!function_exists('validate_breadcrumb')) {
 		}
 	}
 
+    if (!function_exists("getFaqsAllCategory")) {
+        function getFaqsAllCategory()
+        {
+            $faqs = FaqCategory::get();
+            return ($faqs);
+        }
+    }
 	if (!function_exists("getEngagementFaqs")) {
     function getEngagementFaqs()
 		{
@@ -299,7 +306,11 @@ if (!function_exists('validate_breadcrumb')) {
     function getFaqByCategory($category = "", $in_array = false)
     {
         $category = empty($category) ? 0 : $category;
-        $faqs = Faqs::where(['categories' => $category])->get();
+        if(is_array($category)){
+            $faqs = Faqs::whereIn(['categories' => $category])->get();
+        }else{
+            $faqs = Faqs::where(['categories' => $category])->get();
+        }
 
         if ($in_array && $faqs->count()) {
             return $faqs->toArray();
