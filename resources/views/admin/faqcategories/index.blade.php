@@ -7,7 +7,7 @@
          <div class="col-12">
             <div class="card">
                <div class="card-header">
-                  <a href="{{ url('admin/faqs/categories/create')}}"><button type="button" class="btn btn-primary add-button">Add New Faq category</button></a>
+                  <a href="{{ url('admin/faqcategories/create')}}"><button type="button" class="btn btn-primary add-button">Add New Faq category</button></a>
                </div>
                <!-- /.card-header -->
                <div class="card-body">

@@ -52,7 +52,16 @@
                </div>
                <div class="col-md-4">
                   <div class="card card-header">
-                     
+                     <div class="form-group">
+                        <div class="form-label-group">
+                        <label for="product_name">Categories</label>
+                           <select name="categories" id="categories" class="" >
+                              @foreach($faqcategories as $cat)
+                                 <option value = {{ $cat->id }} {{ isset($faqs->categories) && $faqs->categories == $cat->id ? 'selected' : ''}} >{{ $cat->title }}</option>
+                              @endforeach
+                           </select>
+                        </div>
+                  </div> 
                      <div class="form-group">
                         <div class="form-label-group">
                            <select id="status" name="status" class="form-control">
