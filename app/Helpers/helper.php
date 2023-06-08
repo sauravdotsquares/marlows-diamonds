@@ -307,7 +307,7 @@ if (!function_exists('validate_breadcrumb')) {
     {
         $category = empty($category) ? 0 : $category;
         if(is_array($category)){
-            $faqs = Faqs::whereIn(['categories' => $category])->get();
+            $faqs = Faqs::whereIn('categories',$category)->get();
         }else{
             $faqs = Faqs::where(['categories' => $category])->get();
         }
