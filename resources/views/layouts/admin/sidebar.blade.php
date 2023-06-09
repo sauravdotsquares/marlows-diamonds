@@ -307,7 +307,12 @@
                   <p>Add Faq</p>
                 </a>
               </li>
-
+              <li class="nav-item">
+                <a href="/admin/faqcategories" class="nav-link @if(request()->segment(2) == 'faqs' && request()->segment(3) != 'create') active @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Faq Category</p>
+                </a>
+              </li>
 
             </ul>
           </li>

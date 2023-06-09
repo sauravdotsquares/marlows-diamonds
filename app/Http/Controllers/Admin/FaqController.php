@@ -103,8 +103,9 @@ class FaqController extends Controller
             return 'URL NOT FOUND';
         }
         $faqs = Faqs::find($id);
+        $faqcategories = FaqCategory::get();
 		//dd($faqs );
-        return view('admin.faqs.edit',compact('faqs'));
+        return view('admin.faqs.edit',compact('faqs','faqcategories'));
 	}
 
     /**
