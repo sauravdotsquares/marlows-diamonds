@@ -110,7 +110,13 @@
 
 							  </select>
 						   </div>
-					  </div>  
+					  </div> 
+                 <div class="form-group">
+						   <div class="form-label-group">
+							  <label for="faq_title">FAQ Title</label>
+							  <input type="text" name="faq_title" id="faq_title" value="" class="form-control" placeholder="FAQ Title">
+						   </div>
+					  </div> 
                  <div class="form-group">
 						   <div class="form-label-group">
 							  <label for="faq_category">FAQs Categories</label>

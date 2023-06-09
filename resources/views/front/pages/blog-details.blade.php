@@ -106,9 +106,9 @@
 	<div class="faq-section engagement-ring-faq">
 		<div class="container">
 			<div class="head-para-three">
-				<div class="heading-h-three">
-					FAQ’s
-				</div>
+				<h2 class="heading-h-three">
+					{{ isset($data->faq_title)?$data->faq_title:'FAQ’s' }}
+				</h2>
 				<p>Some of the most common Q&A's</p>
 			</div>
 			<div class="faq-list">
