@@ -16,7 +16,7 @@ class Posts extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'title', 'subtitle', 'slug', 'categories', 'faq_category', 'short_description', 'description', 'status', 'image', 'meta_title', 'meta_description', 'meta_keyword', 'deleted_at', 'created_at','updated_at'
+        'title', 'subtitle', 'slug', 'categories', 'faq_title', 'faq_category', 'short_description', 'description', 'status', 'image', 'meta_title', 'meta_description', 'meta_keyword', 'deleted_at', 'created_at','updated_at'
     ];
 
 	protected $appends = ['cat_details','cat_name'];
