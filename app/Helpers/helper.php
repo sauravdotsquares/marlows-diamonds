@@ -21,6 +21,7 @@ use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Popups;
 use App\Models\MarginApiRange;
 use App\Models\DiscountRange;
@@ -1687,13 +1688,17 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     }
 
     function getIncreaseDiscountedPrice($category,$price){
-        $disPercentage = DiscountRange::with('discount_data')->where('category_id', $category)
+       
+        $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
+                        $q->whereDate('end_date', '>', now());
+                    })
+                    ->with(['discount_data'])->where('category_id', $category)
                     ->whereRaw('"'.$price.'" between `from_price` and `to_price`')
                     ->where('status', 1)
                     ->first();
-
+        
         if(isset($disPercentage) && !empty($disPercentage)){
-            $discountedPrice = $price * (1 - $disPercentage->discount / 100);        
+            $discountedPrice = $price * (1 - $disPercentage->discount / 100);  
             return $discountedPrice;
         }
         return $price;
