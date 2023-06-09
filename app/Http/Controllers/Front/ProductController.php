@@ -339,8 +339,8 @@ class ProductController extends Controller
                 //     }
                 // }
             }
-
-            $view = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+            $getAjaxResponses = false;
+            $view = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
             $view = '';
             $getProductListFinal = '';
@@ -1018,7 +1018,7 @@ class ProductController extends Controller
     public function getRelatedProductList(Request $request)
     {
         $getCatIdArray = explode(',', $request->catid);
-
+        $getAjaxResponses = false;
         $getCateProductId = array();
         foreach ($getCatIdArray as $prKey => $proVal) {
             $getProductList = Products::whereRaw("find_in_set('" . $proVal . "',categories)")
@@ -1030,7 +1030,7 @@ class ProductController extends Controller
 
         $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->take(4)->get();
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
-            $view = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+            $view = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
             $view = '';
         }
