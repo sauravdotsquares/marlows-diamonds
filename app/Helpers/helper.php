@@ -1677,7 +1677,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
 
         $getRegularPrices = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select('regular_price',"$diamondType as shopPrice","$rrpPrice as rrpPrice",'product_id','id')->first();
 
-        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice);
+        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
 
         $result = [
             'rrp_price'=> $getRegularPrices->rrpPrice,
@@ -1687,13 +1687,16 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         return $result;
     }
 
-    function getIncreaseDiscountedPrice($category,$price){
+    function getIncreaseDiscountedPrice($category,$price,$diamondType){
        
         $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
                         $q->whereDate('end_date', '>', now());
                     })
                     ->with(['discount_data'])->where('category_id', $category)
                     ->whereRaw('"'.$price.'" between `from_price` and `to_price`')
+                    ->when($diamondType, function ($q) use ($diamondType) {
+                        return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
+                    })
                     ->where('status', 1)
                     ->first();
         
