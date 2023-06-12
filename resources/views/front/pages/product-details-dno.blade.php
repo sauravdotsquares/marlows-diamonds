@@ -884,7 +884,7 @@
 
 						if(res.allPrices.rrp_price != res.allPrices.discounted_price){
 							$('#rrpPrice').html('RRP:  {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
-							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price).toFixed(2)) + ' | ');
+							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
 						}
 
 						if(res.allPrices.shop_price == res.allPrices.discounted_price){
