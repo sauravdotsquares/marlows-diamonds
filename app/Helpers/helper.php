@@ -21,6 +21,7 @@ use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Popups;
 use App\Models\MarginApiRange;
 use App\Models\DiscountRange;
@@ -1676,7 +1677,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
 
         $getRegularPrices = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select('regular_price',"$diamondType as shopPrice","$rrpPrice as rrpPrice",'product_id','id')->first();
 
-        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice);
+        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
 
         $result = [
             'rrp_price'=> $getRegularPrices->rrpPrice,
@@ -1686,14 +1687,21 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         return $result;
     }
 
-    function getIncreaseDiscountedPrice($category,$price){
-        $disPercentage = DiscountRange::with('discount_data')->where('category_id', $category)
+    function getIncreaseDiscountedPrice($category,$price,$diamondType){
+       
+        $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
+                        $q->whereDate('end_date', '>', now());
+                    })
+                    ->with(['discount_data'])->where('category_id', $category)
                     ->whereRaw('"'.$price.'" between `from_price` and `to_price`')
+                    ->when($diamondType, function ($q) use ($diamondType) {
+                        return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
+                    })
                     ->where('status', 1)
                     ->first();
-
+        
         if(isset($disPercentage) && !empty($disPercentage)){
-            $discountedPrice = $price * (1 - $disPercentage->discount / 100);        
+            $discountedPrice = $price * (1 - $disPercentage->discount / 100);  
             return $discountedPrice;
         }
         return $price;
