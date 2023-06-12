@@ -43,6 +43,17 @@ class DiscountController extends Controller
 
     public function addDiscountData(Request $request){
 
+        $diamondTypeArr = [];
+        if(isset($request->diamond_type) && !empty($request->diamond_type)){
+            array_push($diamondTypeArr,$request->diamond_type);
+            $diamondTypeArr = implode(',',$diamondTypeArr);
+        }else{
+            $diamondAllType = [
+                'mined_diamond',
+                'lab_grown'
+            ];
+            $diamondTypeArr = implode(',',$diamondAllType);
+        }
         $isDicountForLoginUsers = empty($request['is_login_users']) ? 0 : 1;
 
         if(!empty($request->category_id)){
@@ -51,6 +62,7 @@ class DiscountController extends Controller
             if(isset($getDuplicateDiscount) && !empty($getDuplicateDiscount)){
                 if(isset($request->table_id) && !empty($request->table_id)){
                     $insDiscountData = Discount::updateOrCreate(['id'=>$request->table_id],[
+                        'title'=> $request->title,
                         'category_id'=> $request->category_id,
                         'category_slug'=> $request->category_slug,
                         'discount'=> $request->discount,
@@ -58,18 +70,19 @@ class DiscountController extends Controller
                         'end_date'=> $request->end_date,
                         'is_login_users'=>$isDicountForLoginUsers,
                         'status'=> $request->status,
-                        'diamond_type' => !empty($request->diamond_type) ? $request->diamond_type : null
+                        'diamond_type' => $diamondTypeArr,
                     ]);
-                    $this->addDiscountRanges($request->all(),$insDiscountData->id);
+                    $this->addDiscountRanges($request->all(),$insDiscountData->id,$diamondTypeArr);
                     $this->addPercentageRanges($request->all(),$insDiscountData->id);
                 }else{
-                    $this->addDiscountRanges($request->all(),$getDuplicateDiscount->id);
+                    $this->addDiscountRanges($request->all(),$getDuplicateDiscount->id,$diamondTypeArr);
                     $this->addPercentageRanges($request->all(),$getDuplicateDiscount->id);
                 }
 
                 return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Duplicate Category not allowed');
             }else{
                 $insDiscountData = Discount::updateOrCreate(['category_id'=>$request->category_id],[
+                    'title'=> $request->title,
                     'category_id'=> $request->category_id,
                     'category_slug'=> $request->category_slug,
                     'discount'=> $request->discount,
@@ -77,10 +90,10 @@ class DiscountController extends Controller
                     'end_date'=> $request->end_date,
                     'status'=> $request->status,
                     'is_login_users'=>$isDicountForLoginUsers,
-                    'diamond_type' => !empty($request->diamond_type) ? $request->diamond_type : null
+                    'diamond_type' => $diamondTypeArr,
                 ]);
 
-                $this->addDiscountRanges($request->all(),$insDiscountData->id);
+                $this->addDiscountRanges($request->all(),$insDiscountData->id,$diamondTypeArr);
                 $this->addPercentageRanges($request->all(),$insDiscountData->id);
 
                 return redirect()->action('Admin\DiscountController@index')->with('alert-success', 'Discount Added Successfully');
@@ -124,7 +137,7 @@ class DiscountController extends Controller
         return response()->json($post);
     }
 
-    public function addDiscountRanges($getDiscountRangeArray,$discountId){
+    public function addDiscountRanges($getDiscountRangeArray,$discountId,$discountType){
         $arrayNew = [];
 
         for($i=1;$i<=7;$i++){
@@ -143,7 +156,7 @@ class DiscountController extends Controller
                 'from_price'=> $value['from'],
                 'to_price'=> $value['to'],
                 'discount'=> $value['discount'],
-                'diamond_type'=> $value['diamond_type'],
+                'diamond_type'=> $discountType,
                 'status'=> 1,
             ]);
         }
