@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $breadcrumb = [
-            ["name" => "Categories", "url" => route("admin.categories"), "icon" => "fa fa-home"],
+            ["name" => "Categories", "url" => route("admin.categories"), "icon" => "fa fa-list-alt"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
