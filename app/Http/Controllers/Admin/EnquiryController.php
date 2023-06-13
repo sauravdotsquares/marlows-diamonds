@@ -36,7 +36,7 @@ class EnquiryController extends Controller
      */
     public function update($enquiryid=null){
         $breadcrumb = [
-            ["name" => "Edit Review", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Edit Enquiry", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
@@ -87,7 +87,7 @@ class EnquiryController extends Controller
 		
         $enquiries->fill($input)->save();
 
-        return redirect()->action('Admin\EnquiryController@index')->with('alert-success', 'Review Updated Successfully');
+        return redirect()->action('Admin\EnquiryController@index')->with('alert-success', 'Enquiry Updated Successfully');
     }
 
     
@@ -101,7 +101,7 @@ class EnquiryController extends Controller
     public function delete($enquiryid) {
         $id = base64_decode($enquiryid);
         Enquiries::find($id)->delete(); 
-		return redirect()->action('Admin\EnquiryController@index')->with('alert-success', 'Review Deleted Successfully');
+		return redirect()->action('Admin\EnquiryController@index')->with('success', 'Enquiry Deleted Successfully');
     }
 	
 }

@@ -11,6 +11,7 @@ use App\Models\CustomerAddress;
 use App\Models\Order;
 use Session;
 use Hash;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -110,6 +111,7 @@ class LoginController extends Controller
     }
 
     public function loginPageFunction($userDetails){
+        
         if (Auth::guard('customer')->attempt($userDetails)) {
             if(Auth::attempt($userDetails, true)){
                 Auth::guard('customer')->login(Auth::user(), true);
@@ -161,19 +163,33 @@ class LoginController extends Controller
         unset($request['_token']);
 
         if(isset($request->email) && !empty($request->email) && isset($request->password) && !empty($request->password)){
-            $getLoginResponse = $this->loginPageFunction($request->all(''));
-            if(isset($getLoginResponse) && $getLoginResponse == 1){
-                return redirect(route('my_accounts'));
+           
+            $userActive = DB::table('users')
+            ->where('email', $request->email)
+            ->where( 'is_active', 1)
+            ->first();
+
+            if(isset($userActive) && !empty($userActive)){
+                $getLoginResponse = $this->loginPageFunction($request->all(''));
+                if(isset($getLoginResponse) && $getLoginResponse == 1){
+                    return redirect(route('my_accounts'));
+                }else{
+                    $msg = "Incorrect login credentials";
+                }
             }else{
                 $msg = "Incorrect login credentials";
             }
+
         }else{
             $msg = "Please fill required parameter";
         }
         $request->session()->flash('error', $msg);
+        // alert('test');
         return redirect(route('my-account'));
     }
 
+
+   
 
     /**
      * Log out account user.
@@ -193,10 +209,14 @@ class LoginController extends Controller
 
     public function dashboardPage(Request $request)
     {
-        $getUserDetails = $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::guard('customer')->user()->id)->first();
-        $getCountries = Country::get();
 
-        return view('front.loginpages.dashboardpage',compact('getUserDetails','getCountries'));
+        if(Auth::check()){
+            $getUserDetails = $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::guard('customer')->user()->id)->first();
+            $getCountries = Country::get();
+    
+            return view('front.loginpages.dashboardpage',compact('getUserDetails','getCountries'));
+        }
+
     }
 
     public function checkEmailId(Request $request)

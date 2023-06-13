@@ -20,8 +20,9 @@ class PostController extends Controller
     public function index()
     {
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
-            ["name" => "Posts", "url" => route("admin.posts"), "icon" => "fa fa-home"],
+            ["name" => "Blogs", "url" => route("admin.posts")],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+         
 
         ];
         populate_breadcrumb($breadcrumb);
@@ -37,7 +38,7 @@ class PostController extends Controller
      */
     public function create(){
         $breadcrumb = [
-            ["name" => "Add New", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Add New Blog", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];

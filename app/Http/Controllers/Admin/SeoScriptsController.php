@@ -24,8 +24,9 @@ class SeoScriptsController extends Controller{
 
         $page_title = "Seo Scripts";
         $breadcrumb = [
-            ["name" => "Home", "url" => url('/admin'), "icon" => ""],
             ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],
+            ["name" => "Home", "url" => url('/admin'), "icon" => "fa fa-home"],
+           
         ];
         populate_breadcrumb($breadcrumb);
 
@@ -44,9 +45,11 @@ class SeoScriptsController extends Controller{
     public function add(Request $request){
         $page_title = "Seo Scripts";
         $breadcrumb = [
-            ["name" => "Home", "url" => url('/admin'), "icon" => ""],
-            ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],
             ["name" => "Add", "url" => route("admin.seo_scripts.add"), "icon" => ""],
+            ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],
+            ["name" => "Home", "url" => url('/admin'), "icon" => "fa fa-home"],
+          
+           
         ];
         populate_breadcrumb($breadcrumb);
 
@@ -82,9 +85,10 @@ class SeoScriptsController extends Controller{
 
             $page_title = "Seo Scripts";
             $breadcrumb = [
-                ["name" => "Home", "url" => url('/admin'), "icon" => ""],
-                ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],
                 ["name" => "Edit", "url" => route("admin.seo_scripts.edit", $record->id), "icon" => ""],
+                ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],       
+                ["name" => "Home", "url" => url('/admin'), "icon" => "fa fa-home"],
+            
             ];
             populate_breadcrumb($breadcrumb);
 

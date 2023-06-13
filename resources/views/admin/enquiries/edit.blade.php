@@ -52,13 +52,9 @@
 							  <textarea id="description" name="description" class="form-control ckeditor" placeholder="Review Description" >{{ $enquiries->description }}</textarea>
                            </div>
                         </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="card card-header">
-                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="form-group">
+                           <button type="submit" class="btn btn-primary" style="float:right">Submit</button>
+                        </div>  
                      </div>
                   </div>
                </div>

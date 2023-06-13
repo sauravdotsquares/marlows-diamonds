@@ -42,7 +42,7 @@ class PageController extends Controller
      */
     public function create(){
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Add New Page", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
@@ -110,7 +110,7 @@ class PageController extends Controller
      */
     public function update($pageid=null){
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Edit Page", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
