@@ -21,6 +21,7 @@ use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Category;
+use App\Models\Discount;
 use App\Models\Popups;
 use App\Models\MarginApiRange;
 use App\Models\DiscountRange;
@@ -280,6 +281,13 @@ if (!function_exists('validate_breadcrumb')) {
 		}
 	}
 
+    if (!function_exists("getFaqsAllCategory")) {
+        function getFaqsAllCategory()
+        {
+            $faqs = FaqCategory::get();
+            return ($faqs);
+        }
+    }
 	if (!function_exists("getEngagementFaqs")) {
     function getEngagementFaqs()
 		{
@@ -299,7 +307,11 @@ if (!function_exists('validate_breadcrumb')) {
     function getFaqByCategory($category = "", $in_array = false)
     {
         $category = empty($category) ? 0 : $category;
-        $faqs = Faqs::where(['categories' => $category])->get();
+        if(is_array($category)){
+            $faqs = Faqs::whereIn('categories',$category)->get();
+        }else{
+            $faqs = Faqs::where(['categories' => $category])->get();
+        }
 
         if ($in_array && $faqs->count()) {
             return $faqs->toArray();
@@ -1226,6 +1238,8 @@ if (!function_exists('validate_breadcrumb')) {
          $category_custom_query = "";
          $is404 = false;
          $categoryData = null;
+         $getAjaxResponses = true;
+         $page = 12;
  
          if (isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings', $requestData['category'])) {
              $requestData['category'] = [
@@ -1251,6 +1265,8 @@ if (!function_exists('validate_breadcrumb')) {
                     }
                 }
             }
+            $getAjaxResponses = false;
+            $page = '';
          } elseif (!empty($queryString)) {
              $conditions = 'AND';
              if(isset($queryString[1]) && !empty($queryString[1])){
@@ -1267,7 +1283,7 @@ if (!function_exists('validate_breadcrumb')) {
                     $getQueryStringCount = count($queryString);
                     $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
                    
-                    $conditions = 'OR';
+                    $conditions = 'AND';
                     if($getQueryStringCount != count($queryString)){
                         $is404 = true;
                     }
@@ -1414,12 +1430,12 @@ if (!function_exists('validate_breadcrumb')) {
          }
  
          // echo "checked ".$query->toSql();die;
-         $getProductListFinal = $query->paginate(12, ['*'], 'page', $pageNo);
+         $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
  
         
          $productItems = "";
          if ($getProductListFinal->count()) {
-             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
          }
          $isNextPage = $getProductListFinal->hasMorePages();
          $nextPage = $getProductListFinal->currentPage() + 1;
@@ -1661,7 +1677,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
 
         $getRegularPrices = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select('regular_price',"$diamondType as shopPrice","$rrpPrice as rrpPrice",'product_id','id')->first();
 
-        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice);
+        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
 
         $result = [
             'rrp_price'=> $getRegularPrices->rrpPrice,
@@ -1671,14 +1687,21 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         return $result;
     }
 
-    function getIncreaseDiscountedPrice($category,$price){
-        $disPercentage = DiscountRange::with('discount_data')->where('category_id', $category)
+    function getIncreaseDiscountedPrice($category,$price,$diamondType){
+       
+        $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
+                        $q->whereDate('end_date', '>', now());
+                    })
+                    ->with(['discount_data'])->where('category_id', $category)
                     ->whereRaw('"'.$price.'" between `from_price` and `to_price`')
+                    ->when($diamondType, function ($q) use ($diamondType) {
+                        return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
+                    })
                     ->where('status', 1)
                     ->first();
-
+        
         if(isset($disPercentage) && !empty($disPercentage)){
-            $discountedPrice = $price * (1 - $disPercentage->discount / 100);        
+            $discountedPrice = $price * (1 - $disPercentage->discount / 100);  
             return $discountedPrice;
         }
         return $price;

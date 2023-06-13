@@ -35,7 +35,7 @@
                     <tbody>
                     @foreach($getOrderDetails as $key => $order)
                     <tr>
-                      <td><a href="{{route('admin.order.product.details',[$order->id])}}">{{isset($order->token)?$order->token:''}}</a></td>
+                      <td><a href="{{route('admin.order.product.details',[$order->id])}}">{{isset($order->token)?$order->token:(isset($order->custom_order_id)?$order->custom_order_id:'')}}</a></td>
                       <td>{{isset($order->user_details->email)?$order->user_details->email:''}}</td>
                       <td>{{isset($order->total_price)?$order->total_price:$order->final_price}}</td>
                       <td>{{isset($order->deposited_price)?$order->deposited_price:$order->final_price}}</td>

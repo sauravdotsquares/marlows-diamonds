@@ -40,6 +40,20 @@
                              <textarea id="top-bar-desktop" name="top-bar-desktop" class="form-control">{{$settings1->get_options('top-bar-desktop')}}</textarea> 
                            </div>
                         </div>
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="discount-text-header">Discount Text Header</label>
+                             <textarea id="discount-text-header" name="discount-text-header" class="form-control">{{$settings1->get_options('discount-text-header')}}</textarea> 
+                           </div>
+                        </div>
+
+                        <div class="form-group">
+                           <div class="form-label-group">
+                              <label for="discount-date">Discount Date</label>
+                             <textarea id="discount-date" name="discount-date" class="form-control">{{$settings1->get_options('discount-date')}}</textarea> 
+                           </div>
+                        </div>
+
 						<div class="card card-info">
 						<div class="card-header">
 						<h3 class="card-title">Top Bar Mobile</h3>
