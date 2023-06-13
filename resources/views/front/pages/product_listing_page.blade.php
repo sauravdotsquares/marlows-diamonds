@@ -81,8 +81,8 @@
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
     <div class="container">
         <div class="category-listing-row">
-            <div class="category-sidebar-wrap">
-                <div id="collapse1">
+            <div id="collapse1" class="category-sidebar-wrap">
+                <div>
                 <div class="filter-container">
                     <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
                     @foreach ($filter_items as $filter_key => $filter_item)
