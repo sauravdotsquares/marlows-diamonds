@@ -85,7 +85,7 @@
                                        @else
                                           <a title="Change Status"
                                           href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="1"><i
-                                             class="fa fa-edit" aria-hidden="true"></i></a>
+                                             class="fa fa-times" aria-hidden="true"></i></a>
                                        @endif
                                        
                                        <a title="Pricing" href="{{route('admin.product-pricing',[$value->slug])}}" class="btn btn-success btn-sm"><i class="fa fa-solid fa-dollar-sign" aria-hidden="true"></i></a>
