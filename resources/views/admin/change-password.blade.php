@@ -15,7 +15,7 @@
               <!-- form start -->
               
 				@if(old('msg'))
-				<p>msg:{{ old('msg') }}<p>
+				<center><h5 style="margin-top:20px;font-weight:bold">{{ old('msg') }}<h5></center>
 				@endif
             <form id="quickForm" method="POST" name="change_paswd" action="{{ url('admin/change-password') }}">
                 @csrf
@@ -56,7 +56,7 @@
 				<div class="card-footer">
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</div>
-				
+				  
 			</form>
 			</div>
         

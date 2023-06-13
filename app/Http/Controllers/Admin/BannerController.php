@@ -233,13 +233,14 @@ class BannerController extends Controller
     public function delete($bannerid) {
         $id = base64_decode($bannerid);
         Banners::find($id)->delete(); 
-		return redirect()->action('Admin\BannerController@index')->with('alert-success', 'Banner Deleted Successfully');
+		return redirect()->action('Admin\BannerController@index')->with('success', 'Banner Deleted Successfully');
     }
+	
 	 /**
      * Status
      */
 	public function status($ids,$status) { 
-        $ids = base64_decode($ids);       
+        $ids = base64_decode($ids);         
         $banners =  Banners::find($ids);
         if (empty($banners)) {
             return 'URL NOT FOUND';
@@ -258,7 +259,7 @@ class BannerController extends Controller
 		BannerDetails::find($id)->delete($id);	  
 		return response()->json([
 			'success' => 'Record deleted successfully!'
-		]);
+		]);  
 	}
 
 }

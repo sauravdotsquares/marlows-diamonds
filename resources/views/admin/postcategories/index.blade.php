@@ -45,14 +45,14 @@
                            <tr>
                               <td>{{++$key}}</td>
                               <td>{{$value->name}}</td>
-                              <td><img src="{{asset('images').'/'.$value->image_url}}" alt=""></td>
+                              <td><img src="{{asset('storage').'/categories/'.'/'.$value->image_url}}" alt=""></td>
                               <td>{{$value->slug}}</td>
                               <td>Parent</td>
                               <td>{!!$value->description!!}</td>
                               <td>{{$value->created_at}}</td>
                               <td>
                                  @if($value->status == 1)
-                                    <a title="Change Status"
+                                     <a title="Change Status"
                                     href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="0"><i
                                        class="fa fa-check" aria-hidden="true"></i></a>
                                  @else

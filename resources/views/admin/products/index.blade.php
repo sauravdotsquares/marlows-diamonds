@@ -130,8 +130,8 @@
             <button class="close" type="button" data-bs-dismiss="modal">&times;</button>
          </div>
          <div class="modal-body">
-            <div class="deleteContent">
-               Are you sure want to delete <span class="title"></span>?
+            <div class="deleteContent" style="padding-left: 10px; font-size:20px">
+               Are you sure want to delete ? <br><span class="title"></span>?
             </div>
          </div>
          <div class="modal-footer">
@@ -139,7 +139,7 @@
                <span id="footer_action_button"></span>
             </button>
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal">
-               <span class="glyphicon glyphicon"></span> Close
+               <span class="glyphicon glyphicon"></span> No
             </button>
             <input type="hidden" name="themeId" value="" />
          </div>
