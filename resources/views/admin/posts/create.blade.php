@@ -45,7 +45,7 @@
                <div class="col-md-8">
                   <div class="card card-primary">
                      <div class="card-header">
-                        <h3 class="card-title">Add Post</h3>
+                        <h3 class="card-title">Add Blog</h3>
                      </div>
                      <div class="card-body">
                         <div class="form-group">

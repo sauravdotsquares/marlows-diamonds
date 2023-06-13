@@ -153,7 +153,7 @@ class UserController extends Controller
     public function delete($userid) {
         $id = base64_decode($userid);
         User::find($id)->delete(); 
-		return redirect()->action('Admin\UserController@index')->with('alert-success', 'User Deleted Successfully');
+		return redirect()->action('Admin\UserController@index')->with('success', 'User Deleted Successfully');
     }
 	 /**
      * Status

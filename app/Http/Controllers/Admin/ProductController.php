@@ -36,8 +36,9 @@ class ProductController extends Controller
 
     public function index(Request $request){
         $breadcrumb = [
-            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Product Lists", "url" => route("admin.products-list"), "icon" => "fab fa-product-hunt"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            
 
         ];
         populate_breadcrumb($breadcrumb);

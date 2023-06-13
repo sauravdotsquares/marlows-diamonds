@@ -107,7 +107,7 @@
                                         <img src="{{ asset('storage/'.$imageURL) }}" alt="Product Image" class="img-size-50">
                                     </div>
                                     <div class="product-info">
-                                        <a href="javascript:void(0)" class="product-title">{{ $productsValue['get_product_images'] }}
+                                        <a href="{{route('admin.products-list')}}" class="product-title">{{ $productsValue['get_product_images'] }}
                                         <span class="badge badge-warning float-right">{{ $productsValue->slug }}</span></a>
                                         <span class="product-description">{{ strip_tags($productsValue->short_description) }}</span>
                                     </div>

@@ -99,8 +99,8 @@ class CategoryController extends Controller
     public function createForm($catId = null)
     {
         $breadcrumb = [
-            ["name" => "Create Category", "url" => route("admin.categories"), "icon" => "fa fa-home"],
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            ["name" => "Create Category", "url" => route("admin.categories"), "icon" => "fa fa-list-alt "],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
         ];
         populate_breadcrumb($breadcrumb);
 

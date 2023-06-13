@@ -13,8 +13,9 @@ class OrderController extends Controller
     public function index()
     {
         $breadcrumb = [
-            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Orders", "url" => route("admin.order.details.page"), "icon" => "fa fa-dashboard"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+         
 
         ];
         populate_breadcrumb($breadcrumb);

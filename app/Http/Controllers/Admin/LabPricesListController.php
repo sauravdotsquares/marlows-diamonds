@@ -18,8 +18,9 @@ class LabPricesListController extends Controller{
     public function labPriceList(Request $request){
         
         $breadcrumb = [
-            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Engagement lab price", "url" => route("admin.lab_price_variations.list"), "icon" => "fas fa-dollar-sign"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+          
 
         ];
         populate_breadcrumb($breadcrumb);
