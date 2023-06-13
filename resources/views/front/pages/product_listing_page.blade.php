@@ -51,7 +51,7 @@
         }
 
         /* Landscape phone to portrait tablet  show the button */
-        @media only screen and (max-width: 991px) and (min-width: 400px) {
+        @media only screen and (max-width: 991px) and (min-width: 320px) {
 
         .nav-toggle{
         display : block; // or inline-block or inline : which ever is appropriate for you.
@@ -537,7 +537,7 @@
 <script>
     $(document).ready(function() {
         var collapse1value= document.getElementById('collapse1');
-        if (screen.width <= 400 || screen.width <= 991) {
+        if (screen.width <= 320 || screen.width <= 991) {
             collapse1value.style.display="none";
         }
         else
