@@ -75,7 +75,7 @@
     </div>
 </div>
 <div>
-    <center><button href="#collapse1" class="nav-toggle btn btn-primary"><i class="fa fa-filter" style="font-size:24px"></i>All Filter Category</button></center>
+    <center><button href="#collapse1" class="nav-toggle btn" style="background-color: #8e2e65; color:#fff"><i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter</button></center>
 </div>
 
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
@@ -542,7 +542,7 @@
         }
         else
         {
-            collapse1value.style.display="block";
+            // collapse1value.style.display="block11";
         }
 		  $('.nav-toggle').click(function(){
 			//get collapse content selector
@@ -553,10 +553,10 @@
 			$(collapse_content_selector).toggle(function(){
 			  if($(this).css('display')=='none'){
                                 //change the button label to be 'Show'
-				toggle_switch.html('<i class="fa fa-filter" style="font-size:24px"></i>All Filter Category');
+				toggle_switch.html('<i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter');
 			  }else{
                                 //change the button label to be 'Hide'
-				toggle_switch.html('<i class="fa fa-filter" style="font-size:24px"></i>All Filter Category');
+				toggle_switch.html('<i class="fa fa-minus" style="font-size:15px;color:#fff;"></i> All Filter');
 			  }
 			});
 		  });
