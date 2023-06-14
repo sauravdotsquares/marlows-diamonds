@@ -74,7 +74,7 @@
                                 <tbody>
                                     @foreach ($getData as $key => $value)
                                         <tr>
-                                            <td>{{ ++$key }}</td>
+                                            <td>{{ $getData->firstItem()+ $key }}</td>
                                             <td>{{ $value->name }}</td>
 
                                             <td>{{ $value->slug }}</td>
