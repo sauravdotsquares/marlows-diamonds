@@ -29,7 +29,7 @@ class PasswordController extends Controller
             if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
                 // The passwords not matches
                 
-				return back()->withInput(array('msg' => 'Your current password does not matches with the password you provided'));
+				return back()->withInput(array('msg' => 'Please Enter Valid Password'));
                
             }
             //uncomment this if you need to validate that the new password is same as old one

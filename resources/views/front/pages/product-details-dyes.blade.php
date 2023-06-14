@@ -1075,7 +1075,7 @@
 		// 		let selectedFinalPrice = $("#finaldiamondprice .price").text().replace("£", "");
 
 
-		// 		let regularPrice = '{{$regular_price}}';
+		
 		// 		let labPrice = $('#lab_price').val();
 		// 		let finalMetalType18ct = parseFloat(regularPrice) + parseFloat(labPrice);
 		// 		let gstPercentage = '{{getVAT()}}';
