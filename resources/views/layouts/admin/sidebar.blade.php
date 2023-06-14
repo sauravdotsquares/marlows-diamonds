@@ -16,7 +16,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('admin/dist/img/image_2023_03_17T10_13_17_718Z.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a class="d-block">{{isset(auth()->user()->nicename)?auth()->user()->nicename:''}}</a>
