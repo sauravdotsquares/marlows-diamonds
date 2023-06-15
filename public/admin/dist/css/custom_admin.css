@@ -214,10 +214,13 @@ form#cmsForm .form-group button {margin: 0px 0 15px;}
 .sidebar-mini ul#myEditor li.list-group-item .btn-group a.btn.clickable {margin: 0 4px 0 0;border-radius: 4px;width: 25px;height: 25px;padding: 4px 3px !important;}
 .sidebar-mini .content.products_section .card-primary .card-body button.btn {width: auto;float: right;}
 
-.sidebar-mini .card-body table.table.table-bordered.table-hover td:last-child {padding: 0px;}
+.sidebar-mini .card-body table.table.table-bordered.table-hover td:last-child {padding: 5px;}
 .sidebar-mini .card-body table.table.table-bordered.table-hover td:last-child a {margin: 0 1px;}
+.sidebar-mini .card-body table.table.table-bordered.table-hover td:last-child a i.fa { font-size: 12px;}
 
 .sidebar-mini .alert.alert-danger a.close {color: #fff;opacity: 1;}
 
 table.table-bordered.dataTable th.sorting:before {top: 8px;}
 table.table-bordered.dataTable th.sorting:after {top: 8px; right: 5px;}
+
+.content.products_section .form-group input {height: auto;}

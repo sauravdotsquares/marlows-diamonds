@@ -20,7 +20,7 @@
             </div>
             <div class="login-reg-wraper">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-6 col-md-6"> 
                         <div class="login-block-wrap login-reg-block">
                             <div class="heading-div-lock">
                                 Login

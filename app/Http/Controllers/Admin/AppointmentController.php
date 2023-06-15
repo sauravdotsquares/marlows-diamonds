@@ -36,7 +36,7 @@ class AppointmentController extends Controller
      */
     public function update($appointmentid=null){
         $breadcrumb = [
-            ["name" => "Edit Review", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Edit Appointments", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];

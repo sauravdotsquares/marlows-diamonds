@@ -21,7 +21,7 @@
                         <p>
                             Order #<mark class="order-number">{{isset($getOrderDetails->token)?$getOrderDetails->token:''}}</mark> was placed on <mark class="order-date">{{isset($getOrderDetails->created_at)?$getOrderDetails->created_at->format('M d, Y'):''}}</mark> and is currently
                             <!-- <mark class="order-status">Cancelled</mark>  -->
-                            <a href="javascript:void(0);" type="button" class="" data-bs-toggle="modal" id="orderSelectedStatus" data-status="{{isset($getOrderDetails->status)?$getOrderDetails->status:''}}" data-bs-target="#exampleModal">{!!isset($getOrderDetails->status_details_designs)?$getOrderDetails->status_details_designs:''!!}</a>.
+                           {!!isset($getOrderDetails->status_details_designs)?$getOrderDetails->status_details_designs:''!!}.
                         </p>
 
                         <section class="woocommerce-order-details">
@@ -161,11 +161,11 @@
 </button> -->
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Manage Status</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
             </div>
             <div class="modal-body">
@@ -182,11 +182,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>

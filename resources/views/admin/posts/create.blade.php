@@ -45,7 +45,7 @@
                <div class="col-md-8">
                   <div class="card card-primary">
                      <div class="card-header">
-                        <h3 class="card-title">Add Post</h3>
+                        <h3 class="card-title">Add Blog</h3>
                      </div>
                      <div class="card-body">
                         <div class="form-group">
@@ -91,6 +91,7 @@
                               <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                            </div>
                         </div>
+                        <span><b>Note</b>: <span style="color: green; font-size:15px">Please upload image size 500 X 300</span></span>
                      </div>
                      <div class="form-group">
                         <div class="form-label-group">

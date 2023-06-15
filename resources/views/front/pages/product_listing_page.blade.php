@@ -46,6 +46,23 @@
         padding: 0px 4px;
         display: inline-block;
     }
+        .nav-toggle{
+        display : none; // display none for everyone
+        }
+
+        /* Landscape phone to portrait tablet  show the button */
+        @media only screen and (max-width: 991px) and (min-width: 320px) {
+
+        .nav-toggle{
+        display : block; // or inline-block or inline : which ever is appropriate for you.
+        }
+        .filter-item
+        {
+            display:inline-block;
+            vertical-align:top;
+            margin-right: 60px;
+        }
+    }
 </style>
 @endsection
 
@@ -57,20 +74,17 @@
         </div>
     </div>
 </div>
+<div>
+    <center><button href="#collapse1" class="nav-toggle btn" style="background-color: #8e2e65; color:#fff"><i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category</button></center>
+</div>
 
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
     <div class="container">
         <div class="category-listing-row">
-            <div class="category-sidebar-wrap">
-
-
-
+            <div id="collapse1" class="category-sidebar-wrap">
+                <div>
                 <div class="filter-container">
-
                     <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
-
-
-
                     @foreach ($filter_items as $filter_key => $filter_item)
                     <div class="filter-item">
                         <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{ $filter_item->slug }}" />
@@ -127,54 +141,17 @@
                                 <input type="{{ $filter_item->input_type }}" name="{{ $filter_item->slug }}" {{ $checkVariableNew }} onclick="return {{ $checkVariable }};" value="{{ $product_item_item->item_value }}" class="filter-item-data">
                                 {{ $product_item_item->item_name }}
                                 @endif
-
-
-
-
                             </li>
                             @endforeach
-
                         </ul>
                     </div>
                     @endforeach
-                    {{-- <li> --}}
-                    {{-- <div class="choose-diaond-fields row diamond-carat">
-                            <div class="diamond-field-labels col-lg-3">
-                                Carat
-                            </div>
-                            <div class="diamond-field-contens col-lg-9">
-                                <div class="diamond-field-inner-bar">
-                                    <div class="range_carat_wap">
-
-                                        <div class="srchniput-fil">
-                                            <div class="minrange">
-                                                <span>Min</span>
-                                                <input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
-                                            </div>
-                                            <div class="maxrange">
-                                            <span>Max</span>
-                                                <input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
-                                            </div>
-                                        </div>
-
-                                        <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 19.1489%; width: 40.4255%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 19.1489%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5745%;"></span></div>
-                                            <div class="srchniput-fil">
-                                                <input type="hidden" class="sliderValue filter-item-data" data-index="0" value="250" id="input-carat-min" name="price-min" autocomplete="off">
-                                                <input type="hidden" class="sliderValue filter-item-data" data-index="1" value="1000" id="input-carat-max" name="price-max" autocomplete="off">
-                                            </div>
-                                     </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                    {{-- </li> --}}
-
-
                     <div class="reset-filer-container">
                         <a href="javascript:void(0)" id="resetFilterButton"><button class="reset-filer-btn">Reset search</button></a>
                     </div>
 
                 </div>
-
+            </div>
             </div>
             <div class="category-list-wrap">
                 <input type="hidden" id="pagescroll" value="1">
@@ -557,4 +534,33 @@
         });
     }
 </script>
+<script>
+    $(document).ready(function() {
+        var collapse1value= document.getElementById('collapse1');
+        if (screen.width <= 320 || screen.width <= 991) {
+            collapse1value.style.display="none";
+        }
+        else
+        {
+            // collapse1value.style.display="block11";
+        }
+		  $('.nav-toggle').click(function(){
+			//get collapse content selector
+			var collapse_content_selector = $(this).attr('href');					
+ 
+			//make the collapse content to be shown or hide
+			var toggle_switch = $(this);
+			$(collapse_content_selector).toggle(function(){
+			  if($(this).css('display')=='none'){
+                                //change the button label to be 'Show'
+				toggle_switch.html('<i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category');
+			  }else{
+                                //change the button label to be 'Hide'
+				toggle_switch.html('<i class="fa fa-minus" style="font-size:15px;color:#fff;"></i> All Filter Category');
+			  }
+			});
+		  });
+ 
+		});	
+    </script>
 @endsection

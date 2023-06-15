@@ -20,8 +20,9 @@ class PostController extends Controller
     public function index()
     {
         $breadcrumb = [
-            ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
-            ["name" => "Posts", "url" => route("admin.posts"), "icon" => "fa fa-home"],
+            ["name" => "Blogs", "url" => route("admin.posts")],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+         
 
         ];
         populate_breadcrumb($breadcrumb);
@@ -37,7 +38,7 @@ class PostController extends Controller
      */
     public function create(){
         $breadcrumb = [
-            ["name" => "Add New", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Add New Blog", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
@@ -60,7 +61,7 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
-			
+          
         ]);
 		
 		if($request->hasFile('image')) {
@@ -72,7 +73,7 @@ class PostController extends Controller
 			// $news->image = $fileName;
   
             $image = single_storage_image_upload($request->file('image'),'Post','500','300');
-            $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
+            // $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
         }
 		
 		// echo "Check";
@@ -172,7 +173,7 @@ class PostController extends Controller
                 
                 $image = '';
                 $image = single_storage_image_upload($request->file('image'),'Post','500','300');
-				$image = single_storage_image_upload($request->file('image'),'Post','1200','600');
+				// $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
             //}
         }
 

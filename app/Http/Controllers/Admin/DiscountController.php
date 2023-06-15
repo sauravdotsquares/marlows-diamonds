@@ -15,8 +15,9 @@ class DiscountController extends Controller
 
     public function index(){
         $breadcrumb = [
-            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+           
             ["name" => "Discount", "url" => route("admin.discount"), "icon" => "fa fa-percent"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
         ];
 
         populate_breadcrumb($breadcrumb);
@@ -28,8 +29,9 @@ class DiscountController extends Controller
 
     public function addDiscount(){
         $breadcrumb = [
-            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Discount Create", "url" => route("admin.create-discount"), "icon" => "fa fa-percent"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+          
 
         ];
 
@@ -107,8 +109,9 @@ class DiscountController extends Controller
         $getDiscountData = Discount::where('id',$discountId)->first();
 
         $breadcrumb = [
+            ["name" => "Edit Discount", "url" => route("admin.create-discount"), "icon" => "fa fa-percent"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
-            ["name" => "Discount Create", "url" => route("admin.create-discount"), "icon" => "fa fa-percent"],
+           
 
         ];
 

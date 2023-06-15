@@ -47,6 +47,9 @@
 							  <textarea id="description" name="description" class="form-control ckeditor" placeholder="Popup Description" >{{ $popups->description }}</textarea>
                            </div>
                         </div>
+                        <div class="form-group">
+                           <button type="submit" class="btn btn-primary" style="float: right">Submit</button>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -64,9 +67,6 @@
                      </div>
 
 
-                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                     </div>
                   </div>
                </div>
             </div>

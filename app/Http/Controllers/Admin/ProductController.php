@@ -36,8 +36,9 @@ class ProductController extends Controller
 
     public function index(Request $request){
         $breadcrumb = [
-            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Product Lists", "url" => route("admin.products-list"), "icon" => "fab fa-product-hunt"],
+            ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+            
 
         ];
         populate_breadcrumb($breadcrumb);
@@ -53,7 +54,7 @@ class ProductController extends Controller
 
     public function create(){
         $breadcrumb = [
-            ["name" => "Add New Product", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
+            ["name" => "Add New Product", "url" => route("admin.products-createform"), "icon" => "fa fa-plus"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
         ];
         populate_breadcrumb($breadcrumb);
@@ -69,7 +70,7 @@ class ProductController extends Controller
 
     public function updatePage($productId = null){
         $breadcrumb = [
-            ["name" => "Edit Product", "url" => route("admin.products-createform"), "icon" => "fa fa-home"],
+            ["name" => "Edit Product", "url" => route("admin.products-createform"), "icon" => "fa fa-plus"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
         ];
         populate_breadcrumb($breadcrumb);

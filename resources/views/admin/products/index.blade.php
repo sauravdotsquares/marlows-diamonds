@@ -85,7 +85,7 @@
                                        @else
                                           <a title="Change Status"
                                           href="javascript:void(0);" class="statusSwitch" data-record="{{$value->id}}" data-value="1"><i
-                                             class="fa fa-edit" aria-hidden="true"></i></a>
+                                             class="fa fa-times" aria-hidden="true"></i></a>
                                        @endif
                                        
                                        <a title="Pricing" href="{{route('admin.product-pricing',[$value->slug])}}" class="btn btn-success btn-sm"><i class="fa fa-solid fa-dollar-sign" aria-hidden="true"></i></a>
@@ -130,8 +130,8 @@
             <button class="close" type="button" data-bs-dismiss="modal">&times;</button>
          </div>
          <div class="modal-body">
-            <div class="deleteContent">
-               Are you sure want to delete <span class="title"></span>?
+            <div class="deleteContent" style="padding-left: 10px; font-size:20px">
+               Are you sure want to delete ? <br><span class="title"></span>?
             </div>
          </div>
          <div class="modal-footer">
@@ -139,7 +139,7 @@
                <span id="footer_action_button"></span>
             </button>
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal">
-               <span class="glyphicon glyphicon"></span> Close
+               <span class="glyphicon glyphicon"></span> No
             </button>
             <input type="hidden" name="themeId" value="" />
          </div>

@@ -16,7 +16,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('admin/dist/img/image_2023_03_17T10_13_17_718Z.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a class="d-block">{{isset(auth()->user()->nicename)?auth()->user()->nicename:''}}</a>
@@ -89,12 +89,17 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/posts/categories" class="nav-link @if(request()->segment(2) == 'posts' && request()->segment(3) == 'categories') active @endif">
+                <a href="/admin/posts/categories" class="nav-link @if(request()->segment(2) == 'posts' && request()->segment(3) == 'categories')  @endif">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories</p>
                 </a>
               </li>
-
+              <li class="nav-item">
+                <a href="{{ url('admin/products/categories/create') }}" class="nav-link @if(request()->segment(2) == 'posts' && request()->segment(3) == 'categories')  @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Categories</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item @if(request()->segment(2) == 'pages') menu-is-opening menu-open @endif">
@@ -217,15 +222,21 @@
             <a href="#" class="nav-link @if(request()->segment(2) == 'users') active @endif">
               <i class="nav-icon fa fa-users"></i>
               <p>
-                Customers
+               Users
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{asset('admin/users')}}" class="nav-link @if(request()->segment(2) == 'users') active @endif">
+                <a href="{{asset('admin/users')}}" class="nav-link @if(request()->segment(2) == 'users')  @endif">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Customers</p>
+                  <p>Users</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('admin/users/create')}}" class="nav-link @if(request()->segment(2) == 'users')  @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add User</p>
                 </a>
               </li>
             </ul>
