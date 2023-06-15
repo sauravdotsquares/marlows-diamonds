@@ -182,7 +182,7 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
         dekoFilters = window.dekofilters;
     }
     $scope.financeOptions = function(){
-        $scope.term='ONIB12-14.9';
+        $scope.term='ONIB12-21.9';
         $scope.percentage='10';
         $scope.productPrice = $("#finaldiamondprice .price").text().replace("£", "");
         $('#totalOrder').val($scope.productPrice);
@@ -197,7 +197,7 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
         }
     }
     $scope.financeOptionsCheckout = function(){
-        $scope.term='ONIB12-14.9';
+        $scope.term='ONIB12-21.9';
         $scope.percentage='10';
        
         alterFilters(); 
@@ -251,13 +251,13 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
        var deposit  = parseFloat($('#payed').val()); 
 
        var code = $('#terms').val();
-
+      
        $('#payPro').val(code); 
        $('#payPer').val(payedVal); 
         
        var amount = (parseFloat(price)/100)* deposit;
        var my_fd = new FinanceDetails(code, parseFloat(price), deposit, amount);
-        
+       
        var preSetVal = parseFloat($('#preSetValue').val());
        //console.log(price);
        //console.log(preSetVal);
