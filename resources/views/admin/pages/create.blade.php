@@ -155,17 +155,16 @@
                                     <option value="three">1:4</option>  
                                  </select>
                               </div>
+                              <div class="form-group">
+                                 <button type="submit" class="btn btn-primary float-right">Submit</button>
+                              </div>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
 
-               <div class="col-md-12">
-                   <div class="form-group">
-                     <button type="submit" class="btn btn-primary float-right">Submit</button>
-                  </div>
-               </div>
+             
             </div>
          </form>
       </div>
