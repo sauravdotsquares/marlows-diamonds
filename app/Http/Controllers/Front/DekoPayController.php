@@ -81,7 +81,7 @@ class DekoPayController extends Controller
 			"Goods[Description]"=> $desc,
 			"Goods[Quantity]"=> 1,
 			"Finance[Code]" => $finCode,
-			//"Finance[Code]" => 'ONIB12-14.9',
+			//"Finance[Code]" => 'ONIB12-21.9',
 			"Finance[Deposit]" => ($depositAmt/100) * $bool*100,
 		);
 		
