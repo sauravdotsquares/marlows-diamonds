@@ -61,7 +61,7 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
-			
+          
         ]);
 		
 		if($request->hasFile('image')) {
@@ -73,7 +73,7 @@ class PostController extends Controller
 			// $news->image = $fileName;
   
             $image = single_storage_image_upload($request->file('image'),'Post','500','300');
-            $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
+            // $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
         }
 		
 		// echo "Check";
@@ -173,7 +173,7 @@ class PostController extends Controller
                 
                 $image = '';
                 $image = single_storage_image_upload($request->file('image'),'Post','500','300');
-				$image = single_storage_image_upload($request->file('image'),'Post','1200','600');
+				// $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
             //}
         }
 
