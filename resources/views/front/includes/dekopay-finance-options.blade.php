@@ -22,11 +22,11 @@
                       <p> Finance Type : </p>
                       <p>
                           <select id="terms" name="term">
-                            <option value="ONIB12-14.9" selected=""> 12 Months Promotional Credit (14.9%)</option>
-                            <option value="ONIB24-14.9"> 24 Months Promotional Credit (14.9%)</option>
-                            <option value="ONIB36-14.9"> 36 Months Promotional Credit (14.9%)</option>
-                            <option value="ONIB48-14.9"> 48 Months Promotional Credit (14.9%)</option>
-                            <option value="ONIB60-14.9"> 60 Months Promotional Credit (14.9%)</option>
+                            <option value="ONIB12-21.9" selected=""> 12 Months Promotional Credit (21.9%)</option>
+                            <option value="ONIB18-21.9"> 18 Months Promotional Credit (21.9%)</option>
+                            <option value="ONIB24-21.9"> 24 Months Promotional Credit (21.9%)</option>
+                            <option value="ONIB36-21.9"> 36 Months Promotional Credit (21.9%)</option>
+                            <option value="ONIB48-21.9"> 48 Months Promotional Credit (21.9%)</option>
                           </select>
                       </p>
                   </li>
