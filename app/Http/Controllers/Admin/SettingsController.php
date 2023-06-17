@@ -29,29 +29,15 @@ class SettingsController extends Controller
 		
 		if($key == 'logo'){
 			if($request->hasFile('logo')) {
-
-				//$image_array = [];
-
-				//foreach ($request->file('image') as $image) {
+				$image = '';
+				$uploadpath = public_path().'\images\logo';
+				if (!empty($request->file('logo'))) {
+					$image_prefix = 'logo_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
+					$ext = $request->file('logo')->getClientOriginalExtension();
 					
-					$image = '';
-					$uploadpath = public_path().'\images';
-					//$original_name = $input['image']->getClientOriginalName();
-					$original_name = $request->file('logo')->getClientOriginalName();
-
-					/*if (!$request->file('image')->isValid() || empty($uploadpath)) {
-						return $image;
-					}*/
-					//dd($input['image']);
-					if (!empty($request->file('logo'))) {
-						$image_prefix = 'logo_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
-						$ext = $request->file('logo')->getClientOriginalExtension();
-						
-						$image = $image_prefix . '.' . $ext;
-						//$image_array[] = $image;
-						$request->file('logo')->move($uploadpath, $image);
-					}
-				//}
+					$image = $image_prefix . '.' . $ext;
+					$request->file('logo')->move($uploadpath, $image);
+				}
 				$value = $image;
 			}else{
 				$value = $request->image_bk;
