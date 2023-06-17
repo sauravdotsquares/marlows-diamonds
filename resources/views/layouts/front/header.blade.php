@@ -141,7 +141,7 @@
                 <div class="site-logo-main">
                     <a href="{{url('/')}}" title="{{$header_settings->get_options('site_title')}}">
                         @if($header_settings->get_options('logo')!='')
-                            <img src="{{asset('images/'.$header_settings->get_options('logo'))}}" alt="{{$header_settings->get_options('site_title')}}">
+                            <img src="{{asset('images/logo/'.$header_settings->get_options('logo'))}}" alt="{{$header_settings->get_options('site_title')}}">
 
                         @elseif($header_settings->get_options('site_title')!='')
                             <div>{{$header_settings->get_options('site_title')}}</div>
