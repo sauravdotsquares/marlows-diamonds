@@ -30,7 +30,7 @@ class SettingsController extends Controller
 		if($key == 'logo'){
 			if($request->hasFile('logo')) {
 				$image = '';
-				$uploadpath = public_path().'\images\logo';
+				$uploadpath = public_path().'/images/logo';
 				if (!empty($request->file('logo'))) {
 					$image_prefix = 'logo_' . rand(0, 999999999) . '_' . date('d_m_Y_h_i_s');
 					$ext = $request->file('logo')->getClientOriginalExtension();
