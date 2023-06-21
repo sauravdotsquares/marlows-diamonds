@@ -57,6 +57,14 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::post('/pages/edit/{id}', 'PageController@edit');
 		Route::get('/delete-page/{id}', 'PageController@delete');
 		Route::get('/pages/status/{id}/{status}', 'PageController@status');
+		// Pages Route
+		Route::get('/attributes', 'AttributeController@index')->name('attributes');
+		Route::get('/attributes/create', 'AttributeController@create')->name('create');
+		Route::post('/attributes/add', 'AttributeController@add')->name('add');
+		Route::get('/attributes/update/{id}', 'AttributeController@update')->name('create');
+		Route::post('/attributes/edit/{id}', 'AttributeController@edit');
+		Route::get('/delete-attribute/{id}', 'AttributeController@delete');
+		Route::get('/attributes/status/{id}/{status}', 'AttributeController@status');
 		// Blog/Posts Routes
 		Route::get('/posts', 'PostController@index')->name('posts');
 		Route::get('/posts/create', 'PostController@create')->name('create');
@@ -374,10 +382,6 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
     Route::get('/my-account', 'LoginController@index')->name('my-account');
     Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
     Route::post('/login-customers', 'LoginController@loginCustomer')->name('login-customers');
-
-    Route::post('/login-customer-account', 'LoginController@getLoginRegisterAccount')->name('login.customer.account');
-
-    Route::post('/check-email-id', 'LoginController@checkEmailId')->name('check.email.id');
 
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
 	//Route::any('/exclusive', 'ProductController@exclusiveMarlows')->name('products.exclusive');

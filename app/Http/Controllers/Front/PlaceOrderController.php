@@ -17,16 +17,12 @@ class PlaceOrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
-        //echo '<pre>'; print_r($request->all()); die;
-        //echo $encryt = base64_encode('6-7');
-        //echo $encryt = base64_decode($encryt);
-        //die;
         if(!Auth::check()){
-            
+           
             // If user is not logged in
             $getEmailExists = User::where('email',$request->cust_email)->first();
 
-
+            
             if(!isset($getEmailExists) && empty($getEmailExists)){
                 $userDetails = [
                     'email'=> $request->cust_email,
@@ -35,63 +31,43 @@ class PlaceOrderController extends Controller
                 ];
 
                 $getLoginStatusResponse = new LoginController;
-                $getEmailExists = $getLoginStatusResponse->registerCheckoutCustomer($userDetails);
-
-                // $getEmailExists = $getEmailExists;
+                $getEmailExists = $getLoginStatusResponse->registerFrontEndUsers($userDetails);
+                
                 // If user is already Exists
                 // return response()->json(['status'=>500,'msg'=>'Email is already exist please login and continue place order']);
             }
 
-
         }else if(Auth::check()){
             $getEmailExists = User::where('email',$request->cust_email)->first();
         }
-        // echo "<pre>";
-        // print_r($getEmailExists);
-        // die;
 
         if(isset($getEmailExists) && !empty($getEmailExists)){
-            $getCustomerAddress = CustomerAddress::where('user_id',$getEmailExists->id)->first();
-            if($getCustomerAddress){          
-                $getCustomerAddress->user_id = $getEmailExists->id;
-                $getCustomerAddress->order_id = 1;
-                $getCustomerAddress->first_name = $request->first_name;
-                $getCustomerAddress->last_name = $request->last_name;
-                $getCustomerAddress->company_name = $request->company_name;
-                $getCustomerAddress->country_id = $request->country_id;
-                $getCustomerAddress->street_address_l1 = $request->street_address_l1;
-                $getCustomerAddress->street_address_l2 = $request->street_address_l2;
-                $getCustomerAddress->town_city = $request->town_city;
-                $getCustomerAddress->state = $request->state;
-                $getCustomerAddress->pin_code = $request->pin_code;
-                $getCustomerAddress->mobile = $request->mobile;
-                $getCustomerAddress->email = $request->cust_email;
-                $getCustomerAddress->order_notes = $request->order_notes;
-                $getCustomerAddress->save();
-            }else{
-                $getCustomerAddress = new CustomerAddress;
-                $getCustomerAddress->user_id = $getEmailExists->id;
-                $getCustomerAddress->order_id = 1;
-                $getCustomerAddress->first_name = $request->first_name;
-                $getCustomerAddress->last_name = $request->last_name;
-                $getCustomerAddress->company_name = $request->company_name;
-                $getCustomerAddress->country_id = $request->country_id;
-                $getCustomerAddress->street_address_l1 = $request->street_address_l1;
-                $getCustomerAddress->street_address_l2 = $request->street_address_l2;
-                $getCustomerAddress->town_city = $request->town_city;
-                $getCustomerAddress->state = $request->state;
-                $getCustomerAddress->pin_code = $request->pin_code;
-                $getCustomerAddress->mobile = $request->mobile;
-                $getCustomerAddress->email = $request->cust_email;
-                $getCustomerAddress->order_notes = $request->order_notes;
-                $getCustomerAddress->save();
-            }
+            $getCustomerAddress = CustomerAddress::updateOrCreate(['user_id' => $getEmailExists->id],
+                [
+                    'user_id' => $getEmailExists->id,
+                    'order_id' => 1,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'company_name' => $request->company_name,
+                    'country_id' => $request->country_id,
+                    'street_address_l1' => $request->street_address_l1,
+                    'street_address_l2' => $request->street_address_l2,
+                    'town_city' => $request->town_city,
+                    'state' => $request->state,
+                    'pin_code' => $request->pin_code,
+                    'mobile' => $request->mobile,
+                    'email' => $request->cust_email,
+                    'order_notes' => $request->order_notes,
+                ]
+            );
+
+
             if($getCustomerAddress){
                 $getOrders = new Order;
                 $getOrders->user_id = $getEmailExists->id;
-                $getOrders->final_price = $request->final_price;
-                $getOrders->total_price = $request->total_price;
-                $getOrders->deposited_price = $request->deposited_price;
+                // $getOrders->final_price = $request->final_price;
+                // $getOrders->total_price = $request->total_price;
+                // $getOrders->deposited_price = $request->deposited_price;
                 $getOrders->payment_type = $request->payment_type;
                 $getOrders->paymentccdetails = $request->paymentccdetails;
                 $getOrders->depositpercentage = $request->depositepercentage;
@@ -101,7 +77,22 @@ class PlaceOrderController extends Controller
                 if($getOrders){
                     $getSessionProductData = session('cart');
                     if(isset($getSessionProductData) && !empty($getSessionProductData)){
+                        $rrpTotal = 0;
+                        $shopPriceTotal = 0;
+                        $salePriceTotal = 0;
+                        $savePriceTotal = 0;
+                        $finalPriceTotal = 0;
+                        $vat = 0;
+                        $depositedPriceTotal = 0;
                         foreach($getSessionProductData as $key => $getProduct){
+                            $rrpTotal += isset($getProduct['rrp_price'])?$getProduct['rrp_price']:0;
+                            $shopPriceTotal += isset($getProduct['shop_price'])?$getProduct['shop_price']:0;
+                            $salePriceTotal += isset($getProduct['price'])?$getProduct['price']:0;
+                            $savePriceTotal += isset($getProduct['savePrice'])?$getProduct['savePrice']:0;
+                            $finalPriceTotal += isset($getProduct['price'])?$getProduct['price']:0;
+                            $vat += isset($getProduct['vat'])?$getProduct['vat']:0;
+                            $depositedPriceTotal += isset($getProduct['deposited_price'])?$getProduct['deposited_price']:0;
+
                             $getOrderDetails = new OrderDetail;
                             $getOrderDetails->order_id = $getOrders->id;
                             $getOrderDetails->product_id = $key;
@@ -131,8 +122,20 @@ class PlaceOrderController extends Controller
                             session()->put('custom_order_id', $getOrders->id.'-'.base64_encode($getEmailExists->id.'-'.$getOrders->id));
                         }
 
-                        CustomerAddress::where('user_id',$getEmailExists->id)->update(['order_id'=>$getOrders->id]);
+                        CustomerAddress::where('user_id',$getEmailExists->id)->update([
+                            'order_id'=>$getOrders->id,
+                        ]);
                         
+                        Order::where('id',$getOrders->id)->update([
+                            'rrp_price'=>$rrpTotal,
+                            'shop_price'=>$shopPriceTotal,
+                            'sale_price'=>$salePriceTotal,
+                            'save_price'=>$savePriceTotal,
+                            'vat_price'=>$vat,
+                            'final_price'=>$salePriceTotal,
+                            'total_price'=>$salePriceTotal,
+                            'deposited_price'=>$salePriceTotal,
+                        ]);
 
                         return response()->json(['status'=>200,'msg'=>'Order added','order_dt'=>$getOrders->id]);
                         // return redirect(route('make.payment'));

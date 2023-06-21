@@ -23,105 +23,6 @@ class LoginController extends Controller
         return view('front.loginpages.loginpage');
     }
 
-    public function getLoginRegisterAccount(Request $request)
-    {
-
-        $getUserExists = User::where('email',$request->email)->first();
-        $details = $request->only('email', 'password');
-        $details['is_active'] = 1;
-        
-        if(isset($getUserExists) && !empty($getUserExists)){
-            $getLoginResponse = $this->login($details);
-            if(isset($getLoginResponse) && $getLoginResponse){
-                return response()->json(['status'=>200,'success'=>'success']);
-            }else{
-                return response()->json(['status'=>500,'error'=>'email or password not matched']);
-            }
-        }
-
-        if(isset($request->email) && isset($request->password)){
-            $getRegisterResponse = $this->register($details);
-            if(isset($getRegisterResponse) && $getRegisterResponse){
-                $getLoginResponse = $this->login($details);
-                if(isset($getLoginResponse) && $getLoginResponse){
-                    return response()->json(['status'=>200,'success'=>'success']);
-                }else{
-                    return response()->json(['status'=>500,'error'=>'email or password not matched']);
-                }
-            }
-        }
-        return response()->json(['error'=>'Email and password is required']);
-    }
-
-    public function register($userDetails){
-
-        if(isset($userDetails['email'])){
-            // echo "if";
-            // die;
-            $getInsertedDetails = User::create([
-                'name' => 'customer',
-                'email' => $userDetails['email'],
-                'username' => isset($userDetails['username'])?$userDetails['username']:'customer',
-                'password' => bcrypt(isset($userDetails['password'])?$userDetails['password']:'123456789'),
-                'nicename' => 'Customers',
-                'user_role' => 3,
-                'is_active' => 1
-            ]);
-            return $getInsertedDetails;
-        }
-
-        return false;
-    }
-
-    public function registerLoginFrontPage($userDetails){
-
-        if(isset($userDetails['email'])){
-            // echo "if";
-            // die;
-            $getInsertedDetails = User::create([
-                'name' => 'customer',
-                'email' => $userDetails['email'],
-                'username' => isset($userDetails['username'])?$userDetails['username']:'customer',
-                'password' => bcrypt(isset($userDetails['password'])?$userDetails['password']:'123456789'),
-                'nicename' => 'Customers',
-                'user_role' => 3,
-                'is_active' => 1
-            ]);
-            return true;
-        }
-
-        return false;
-    }
-
-    public function login($userDetails){
-        if(isset($userDetails['email'])){
-            $getDetails = [
-                'email'=>$userDetails['email'],
-                'password'=>isset($userDetails['password'])?$userDetails['password']:'123456789',
-            ];
-        }
-        if(isset($getDetails) && !empty($getDetails)){
-            if(Auth::guard('customer')->attempt($userDetails, true)){
-                // Auth::guard('customer')->login(Auth::user(), true);
-                $getUserId = User::where('email',$userDetails['email'])->first();
-                return $getUserId;
-            }
-        }
-        return false;
-    }
-
-    public function loginPageFunction($userDetails){
-        
-        if (Auth::guard('customer')->attempt($userDetails)) {
-            if(Auth::attempt($userDetails, true)){
-                Auth::guard('customer')->login(Auth::user(), true);
-                return true;
-            }
-        }else{
-            return false;
-        }
-    }
-
     public function registerCustomer(Request $request)
     {
         $request->validate([
@@ -130,16 +31,15 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         unset($request['_token']);
-        $getRegisterResponse = $this->registerLoginFrontPage($request->all(''));
 
-        if(isset($getRegisterResponse) && $getRegisterResponse == 1){
-            $getLoginResponse = $this->loginPageFunction($request->all(''));
+        $getRegisterResponse = $this->registerFrontEndUsers($request->all(''));
 
-            if(isset($getLoginResponse) && $getLoginResponse == 1){
+        if(isset($getRegisterResponse) && !empty($getRegisterResponse)){
+            $getLoginResponse = $this->loginFrontPageFunction($request->all(''));
+            if(isset($getLoginResponse) && $getLoginResponse){
                 return redirect(route('my_accounts'));
-            }else{
-                $msg = "Incorrect login credentials";
             }
+            $msg = "Incorrect login credentials";
         }else{
             $msg = "Please fill required parameter";
         }
@@ -148,48 +48,31 @@ class LoginController extends Controller
         return redirect(route('my-account'));
     }
 
-    public function registerCheckoutCustomer($userDetails)
-    {
-        $getRegisterResponse = $this->register($userDetails);
-        // if(isset($getRegisterResponse) && $getRegisterResponse == 1){
-        //     $getLoginResponse = $this->login($userDetails);
-        //     return $getLoginResponse;
-        // }
-        return $getRegisterResponse;
-    }
 
     public function loginCustomer(Request $request)
     {
+        $request->validate([
+            'login_email' => 'required|max:255',
+            'login_password' => 'required',
+        ]);
         unset($request['_token']);
-
-        if(isset($request->email) && !empty($request->email) && isset($request->password) && !empty($request->password)){
-           
-            $userActive = DB::table('users')
-            ->where('email', $request->email)
-            ->where( 'is_active', 1)
-            ->first();
-
-            if(isset($userActive) && !empty($userActive)){
-                $getLoginResponse = $this->loginPageFunction($request->all(''));
-                if(isset($getLoginResponse) && $getLoginResponse == 1){
-                    return redirect(route('my_accounts'));
-                }else{
-                    $msg = "Incorrect login credentials";
+        $getActiveResponse = $this->checkEmailActiveFunction($request->login_email);
+        if(isset($getActiveResponse) && $getActiveResponse){
+            $userDetails = [
+                'email' => $request->login_email,
+                'password' => $request->login_password,
+            ];
+            $getLoginResponse = $this->loginFrontPageFunction($userDetails);
+            if(isset($getLoginResponse) && $getLoginResponse){
+                if($request->ajax()){
+                    return response()->json(['status'=>200,'success'=>'success']);
                 }
-            }else{
-                $msg = "Incorrect login credentials";
+                return redirect(route('my_accounts'));
             }
-
-        }else{
-            $msg = "Please fill required parameter";
         }
-        $request->session()->flash('error', $msg);
-        // alert('test');
+        $request->session()->flash('error', "Incorrect login credentials");
         return redirect(route('my-account'));
     }
-
-
-   
 
     /**
      * Log out account user.
@@ -217,13 +100,6 @@ class LoginController extends Controller
             return view('front.loginpages.dashboardpage',compact('getUserDetails','getCountries'));
         }
 
-    }
-
-    public function checkEmailId(Request $request)
-    {
-        $checkEmail = User::where('email',$request->email)->count();
-
-        return response()->json($checkEmail);
     }
 
     public function changeCustomerUserAddress(Request $request)
@@ -327,4 +203,44 @@ class LoginController extends Controller
         return response()->json(['html'=> '']);
     }
 
+    
+    function registerFrontEndUsers($userDetails) {
+        if(isset($userDetails['email'])){
+            $getInsertedDetails = User::updateOrCreate(['email' => $userDetails['email']], [
+                'name' => 'customer',
+                'email' => $userDetails['email'],
+                'username' => isset($userDetails['username'])?$userDetails['username']:'customer',
+                'password' => bcrypt(isset($userDetails['password'])?$userDetails['password']:'123456789'),
+                'nicename' => 'Customers',
+                'user_role' => 3,
+                'is_active' => 1
+            ]);
+            return $getInsertedDetails;
+        }
+        return false;
+    }
+
+    public function loginFrontPageFunction($userDetails){
+        if (Auth::guard('customer')->attempt($userDetails)) {
+            if(Auth::attempt($userDetails, true)){
+                Auth::guard('customer')->login(Auth::user(), true);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function checkEmailActiveFunction($email) {
+
+        $userActive = DB::table('users')
+                ->where('email',$email)
+                ->where('is_active',1)
+                ->first();
+
+        if(isset($userActive) &&  !empty($userActive)){
+            return true;
+        }
+        return false;
+    }
 }
