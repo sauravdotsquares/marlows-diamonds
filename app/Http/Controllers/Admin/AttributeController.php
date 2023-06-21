@@ -17,7 +17,7 @@ class AttributeController extends Controller
     public function index(Request $request){
         
         $breadcrumb = [
-            ["name" => "Pages", "url" => route("admin.pages"), "icon" => "fa fa-dashboard"],
+            ["name" => "Attribute", "url" => route("admin.attributes"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
         ];
 
@@ -37,7 +37,7 @@ class AttributeController extends Controller
      */
     public function create(){
         $breadcrumb = [
-            ["name" => "Add New Page", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Add New attribute", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
@@ -75,7 +75,7 @@ class AttributeController extends Controller
      */
     public function update($pageid=null){
         $breadcrumb = [
-            ["name" => "Edit Page", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            ["name" => "Edit attribute", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
