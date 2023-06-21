@@ -72,7 +72,7 @@
                 <div class="middle-topbar-right">
                     <ul>
                         <li class="my-account-blk">
-                            @if(auth()->check())   
+                            @if(auth()->guard('customer')->check())   
                                 <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
                             @else
                                 <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_LOGIN}}</a>
