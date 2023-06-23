@@ -19,7 +19,7 @@
                </div>
                <!-- /.card-header -->
                <div class="card-body">
-               <table class="table m-0">
+               <table id="example2" class="table m-0">
                     <thead>
                     <tr>
                       <th>Order IDs</th>
