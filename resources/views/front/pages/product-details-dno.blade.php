@@ -114,8 +114,8 @@
 						</video>
 					@endif
 				{{-- <?php } ?> --}}
-
-
+                    <div id="myDiv"></div>
+			
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -177,24 +177,7 @@
 					</div>
 				@endif
 
-				{{-- @if( (!$plainband) &&  (!in_array('exclusive-to-marlows', $all_categories_slug)))
-					@if(!in_array('exclusive-to-marlows', $all_categories_slug) )
-						<div style="display: none;" class="product-decriptions  product-decriptions_varitions product-decriptions-mined ">
-							{!! $data->description !!}
-						</div>
-						<div class="product-decriptions product-decriptions_varitions product-decriptions-lab_grown">
-							{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
-						</div>
-					@else
-						<div class="product-decriptions">
-							{!!$data->old_description ? $data->old_description :$data->description !!}
-						</div>
-					@endif
-				@else
-					<div class="product-decriptions">
-						{!!$data->old_description ? $data->old_description : $data->description!!}
-					</div>
-				@endif --}}
+			
 
 				<div style="display: flex;">
 					<h4><del style="color:#000" class="shopPriceval"id="shopPrice"> </del> </h4>
@@ -597,14 +580,35 @@
 			});
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
 				changeDescription($(this));
+				console.log($(this));
 				getCustomPriceFinalFunction();
+				getDescribeSelectedOptions();
 			});
 
             $(document).on('change','#metal-type',function(){
+				console.log($(this).val());
 				getSelectedVariationsData();
 			});
 		})
 
+		function getDescribeSelectedOptions(){
+			console.log($("#metal-type option:first").val());
+			console.log($("#metal-type option:last").val());
+			$('#myDiv').html(`<table class="table  table-bordered table-striped table-responsive">
+									<tr>
+										<th>Type</th>
+										<th>Min </th>
+										<th>Max</th>
+										<th>Selected</th>
+									</tr>
+								<tr>
+									<td id="metalvalue">Metal Type</td>
+									<td>`+$("#metal-type option:first").val()+`</td>
+									<td>`+$("#metal-type option:last").val()+`</td>
+									<td>`+$("#metal-type").val()+`</td>
+								</tr>
+							</table>`);	 
+		}
 		function getSelectedVariationsData(){
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 
@@ -613,7 +617,10 @@
 
 				if($(sel).attr('name')!='finger-size')
 					variations.push($(sel).val());
+				
 			});
+
+			
             var multistone = '{{$plainbandMulti}}';
             var jewellery = '{{$plainbandJewellery}}';
 			var data_slug = '{{url("/")}}';
@@ -714,6 +721,7 @@
                 success: function (res) {
 					$('#filterDataDesign .type-variations-row').html(res);
 					getCustomPriceFinalFunction();
+					getDescribeSelectedOptions();
                     return false;
                 }
             });

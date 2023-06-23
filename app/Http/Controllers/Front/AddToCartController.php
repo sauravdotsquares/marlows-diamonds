@@ -15,7 +15,7 @@ class AddToCartController extends Controller
 {
     /**
      * Write code on Method
-     *
+     *      
      * @return response()
      */
     public function index()
@@ -131,13 +131,7 @@ class AddToCartController extends Controller
                     if ($key == 'certificatelink') {
                         // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
                         // $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
-                    } elseif ($key == 'imagelink') {
-                        // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                        // $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Image</a></dd>';
-                    } else {
-                        // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                        // $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
-                    }
+                    } 
                 }
                 $titleHtml .= ' </dl>';
 
@@ -145,17 +139,14 @@ class AddToCartController extends Controller
 
                 if (isset($cart[$productData->id])) {
                     return response()->json(['error' => 'This product is already exists in cart']);
-                    // $cart[$productData->id]['quantity']++;
                 } else {
 
                     $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : $request['choose_diamond'];
 
                     $cart[$productData->id] = [
                         "name" => $productData->title,
-                        // "selected_parameter"=> $selectedAttributes,
                         'customArray' => $customArray,
                         "quantity" => 1,
-                        // "price" => $input['price'],
                         "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
                         "vat" => getVATPriceFunction($input['setting_price']),
                         "price_front" => $getPriceFunction['allPrices']['discounted_price'],
@@ -191,26 +182,12 @@ class AddToCartController extends Controller
             unset($request['partial_amount']);
             unset($request['total_amount']);
             unset($request['_token']);
-
-            // $titleHtml = '';
-
-            // $titleHtml .= '<div class="cartproduct-title">Custom Diamond</div> <dl class="variation">';
             $selectedAttributes = [];
             foreach ($request->all('') as $key => $finalVal) {
                 // $selectedAttributes['title'] = 'Custom Diamond';
                 if (isset($finalVal) && !empty($finalVal)) {
                     $selectedAttributes[$key] = $finalVal;
-                    // if($key == 'certificatelink'){
-                    //     $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                    //     $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
-                    // }elseif($key == 'imagelink'){
-                    //     // Image Link is shown blank
-                    // }else{
-                    //     $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                    //     $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
-                    // }
-
-
+                 
                 }
             }
             // $titleHtml .= ' </dl>';

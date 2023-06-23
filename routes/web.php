@@ -424,9 +424,9 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/set-product-wishlist/{slug?}', 'WishlistController@addToWishlist')->name('set-product-wishlist');
 	Route::delete('product/remove-from-wishlist', 'WishlistController@removeWishlist')->name('remove.from.wishlist');
 
-	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
+	// Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
 
-	Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
+	// Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
 
 	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
@@ -454,14 +454,6 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::any('/deko-api/dekopay-cancelled', 'DekoPayController@dekopayCancelled');
 	Route::any('/deko-api/dekopay-referred', 'DekoPayController@dekopayReferred');
 	Route::any('/deko-api/dekopay-csn-url', 'DekoPayController@dekopayCsnUrl');
-
-
-
-
-
-	
-	
-	
 
 	// {slug2?}/{slug3?}
 	Route::get('{page}', 'PageController@page')->name('page');
