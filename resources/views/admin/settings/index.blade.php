@@ -94,7 +94,7 @@
              <div class="form-group">
                 <label for="exampleInputFile">Logo</label>
                 @if($settings1->get_options('logo')!='') 
-                  <div class="input-group"><img src="{{url('/').'/images/'.$settings1->get_options('logo')}}" width="150px;"></div>
+                  <div class="input-group"><img src="{{url('/').'/images/logo/'.$settings1->get_options('logo')}}" width="150px;"></div>
                 @endif
                 <div class="input-group">
                    <div class="custom-file">
