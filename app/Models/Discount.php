@@ -16,6 +16,7 @@ class Discount extends Model
         'category_slug',
         'discount',
         'diamond_type',
+        'discount_type',
         'inc_percentage',
         'is_login_users', // 0 => for all users, 1=> for login users
         'end_date',
