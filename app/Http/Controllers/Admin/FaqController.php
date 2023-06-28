@@ -7,8 +7,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Faqs;
 use App\Models\FaqCategory;
-
 use URL;
+
 class FaqController extends Controller
 {
     /**
@@ -24,14 +24,13 @@ class FaqController extends Controller
 
         ];
         populate_breadcrumb($breadcrumb);
-		
-        $query = Faqs::orderBy('id','DESC');
-        $query = getFilter(Faqs::class,$query, $request->all());
+
+        $query = Faqs::orderBy('id', 'DESC');
+        $query = getFilter(Faqs::class, $query, $request->all());
 
         $faqs = $query->paginate(10);
 
-		return view('admin.faqs.index', compact('faqs'));
-		
+        return view('admin.faqs.index', compact('faqs'));
     }
 
     /**
@@ -39,42 +38,33 @@ class FaqController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
+    public function create()
+    {
         $breadcrumb = [
             ["name" => "Add Faq", "url" => route("admin.faqs"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
-
         ];
         populate_breadcrumb($breadcrumb);
-        // $faqs = Faqs::all();
-		$faqcategories = FaqCategory::get();
-        return view('admin.faqs.create',compact('faqcategories'));
-	}
-	
+        $faqcategories = FaqCategory::get();
+        return view('admin.faqs.create', compact('faqcategories'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function add(Request $request){
-
-
+    public function add(Request $request)
+    {
         $input = $request->all();
-		 $request->validate([
+        $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
-			
         ]);
-       
-		
-		//dd($input);
-		// echo "<pre>";
-		// print_r($input);
-		// die;
 
-        $faqs = Faqs::create($input);
+        Faqs::create($input);
 
         return redirect()->action('Admin\FaqController@index')->with('alert-success', 'Faq Added Successfully');
     }
@@ -85,28 +75,28 @@ class FaqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($faqid=null){
+    public function update($faqid = null)
+    {
         $breadcrumb = [
             ["name" => "Edit Faq", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
-		
-		$id = base64_decode($faqid);
-		if ($id == '') {
+
+        $id = base64_decode($faqid);
+        if ($id == '') {
             return 'URL NOT FOUND';
         }
-		
-		$faqs = Faqs::find($id);
-		if (empty($faqs)) {
+
+        $faqs = Faqs::find($id);
+        if (empty($faqs)) {
             return 'URL NOT FOUND';
         }
         $faqs = Faqs::find($id);
         $faqcategories = FaqCategory::get();
-		//dd($faqs );
-        return view('admin.faqs.edit',compact('faqs','faqcategories'));
-	}
+        return view('admin.faqs.edit', compact('faqs', 'faqcategories'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -114,9 +104,10 @@ class FaqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $faqid) {
-        
-		$id = base64_decode($faqid);
+    public function edit(Request $request, $faqid)
+    {
+
+        $id = base64_decode($faqid);
         if ($id == '') {
             return 'URL NOT FOUND';
         }
@@ -127,22 +118,20 @@ class FaqController extends Controller
             return 'URL NOT FOUND';
         }
 
-       
-
         $input = $request->all();
-		$request->validate([
+        $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
-			
+
         ]);
-		
+
         $faqs->fill($input)->save();
 
         return redirect()->action('Admin\FaqController@index')->with('alert-success', 'Faq Updated Successfully');
     }
 
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -150,23 +139,23 @@ class FaqController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($faqid) {
+    public function delete($faqid)
+    {
         $id = base64_decode($faqid);
-        Faqs::find($id)->delete(); 
-        
-        // $faq = Faqs::where('id', $id)->first();
-        // if(!empty($faq)){
-        //     $faq->is_deleted = $faq->is_deleted ? 0 : 1;
-        //     $faq->save();
-        // }
-
-		return redirect()->action('Admin\FaqController@index')->with('success', 'Faq Deleted Successfully');
+        Faqs::find($id)->delete();
+        return redirect()->action('Admin\FaqController@index')->with('success', 'Faq Deleted Successfully');
     }
-	 /**
-     * Status
+
+    /**
+     * Change Status
+     *
+     * @param [type] $ids
+     * @param [type] $status
+     * @return void
      */
-	public function status($ids,$status) { 
-        $ids = base64_decode($ids);       
+    public function status($ids, $status)
+    {
+        $ids = base64_decode($ids);
         $faqs =  Faqs::find($ids);
         if (empty($faqs)) {
             return 'URL NOT FOUND';
@@ -174,7 +163,7 @@ class FaqController extends Controller
 
         $input['status'] = $status;
         unset($input['_token']);
-        
+
         $faqs->fill($input)->save();
 
         return redirect()->action('Admin\FaqController@index')->with('alert-success', 'Faq Status Updated Successfully');

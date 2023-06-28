@@ -44,7 +44,6 @@ class LoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        // dd($request->all());
         $this->validateLogin($request);
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -60,11 +59,7 @@ class LoginController extends Controller
         $details['is_active'] = 1;
         $details['user_role'] = 1;
         if (auth()->guard('employee')->attempt($details)) {
-            if(Auth::attempt($details, true)){
-
-                // $updateInstaData = new InstagramController;
-                // $updateInstaData->updateInstaData();
-
+            if (Auth::attempt($details, true)) {
                 Auth::login(Auth::user(), true);
             }
             return $this->sendLoginResponse($request);
