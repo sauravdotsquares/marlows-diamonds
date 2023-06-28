@@ -20,7 +20,8 @@ class InstaLibraryController extends Controller
     public $hasUserAccessToken = false;
     public $userId = '';
 
-    function __construct( $params ) {
+    function __construct($params)
+    {
 
         $this->_appId = config('instagram.application_id');
         $this->_appSecret = config('instagram.app_secret');
@@ -35,15 +36,18 @@ class InstaLibraryController extends Controller
         $this->_setAuthorizationUrl();
     }
 
-    public function getUserAccessToken() {
+    public function getUserAccessToken()
+    {
         return $this->_userAccessToken;
     }
 
-    public function getUserAccessTokenExpires() {
+    public function getUserAccessTokenExpires()
+    {
         return $this->_userAccessTokenExpires;
     }
 
-    private function _setAuthorizationUrl() {
+    private function _setAuthorizationUrl()
+    {
         $getVars = array(
             'app_id' => $this->_appId,
             'redirect_uri' => $this->_redirectUrl,
@@ -52,16 +56,17 @@ class InstaLibraryController extends Controller
         );
 
         // create url
-        $this->authorizationUrl = $this->_apiBaseUrl . 'oauth/authorize?' . http_build_query( $getVars );
+        $this->authorizationUrl = $this->_apiBaseUrl . 'oauth/authorize?' . http_build_query($getVars);
     }
 
-    private function _setUserInstagramAccessToken( $params ) {
+    private function _setUserInstagramAccessToken($params)
+    {
 
-        if ( $params['access_token'] ) { // we have an access token
+        if ($params['access_token']) { // we have an access token
             $this->_userAccessToken = $params['access_token'];
             $this->hasUserAccessToken = true;
             $this->userId = $params['user_id'];
-        } elseif ( $params['get_code'] ) { // try and get an access token
+        } elseif ($params['get_code']) { // try and get an access token
             $userAccessTokenResponse = $this->_getUserAccessToken();
             $this->_userAccessToken = $userAccessTokenResponse['access_token'];
             $this->hasUserAccessToken = true;
@@ -74,7 +79,8 @@ class InstaLibraryController extends Controller
         }
     }
 
-    private function _getUserAccessToken() {
+    private function _getUserAccessToken()
+    {
         $params = array(
             'endpoint_url' => $this->_apiBaseUrl . 'oauth/access_token',
             'type' => 'POST',
@@ -87,11 +93,12 @@ class InstaLibraryController extends Controller
             )
         );
 
-        $response = $this->_makeApiCall( $params );
+        $response = $this->_makeApiCall($params);
         return $response;
     }
 
-    private function _getLongLivedUserAccessToken() {
+    private function _getLongLivedUserAccessToken()
+    {
         $params = array(
             'endpoint_url' => $this->_graphBaseUrl . 'access_token',
             'type' => 'GET',
@@ -101,11 +108,12 @@ class InstaLibraryController extends Controller
             )
         );
 
-        $response = $this->_makeApiCall( $params );
+        $response = $this->_makeApiCall($params);
         return $response;
     }
 
-    public function getUser() {
+    public function getUser()
+    {
         $params = array(
             'endpoint_url' => $this->_graphBaseUrl . 'me',
             'type' => 'GET',
@@ -115,11 +123,12 @@ class InstaLibraryController extends Controller
             )
         );
 
-        $response = $this->_makeApiCall( $params );
+        $response = $this->_makeApiCall($params);
         return $response;
     }
 
-    public function getUsersMedia($userId) {
+    public function getUsersMedia($userId)
+    {
         $params = array(
             'endpoint_url' => $this->_graphBaseUrl . $userId . '/media',
             'type' => 'GET',
@@ -133,7 +142,8 @@ class InstaLibraryController extends Controller
         return $response;
     }
 
-    public function getPaging( $pagingEndpoint ) {
+    public function getPaging($pagingEndpoint)
+    {
         $params = array(
             'endpoint_url' => $pagingEndpoint,
             'type' => 'GET',
@@ -142,11 +152,12 @@ class InstaLibraryController extends Controller
             )
         );
 
-        $response = $this->_makeApiCall( $params );
+        $response = $this->_makeApiCall($params);
         return $response;
     }
 
-    public function getMedia( $mediaId ) {
+    public function getMedia($mediaId)
+    {
         $params = array(
             'endpoint_url' => $this->_graphBaseUrl . $mediaId,
             'type' => 'GET',
@@ -155,11 +166,12 @@ class InstaLibraryController extends Controller
             )
         );
 
-        $response = $this->_makeApiCall( $params );
+        $response = $this->_makeApiCall($params);
         return $response;
     }
 
-    public function getMediaChildren( $mediaId ) {
+    public function getMediaChildren($mediaId)
+    {
         $params = array(
             'endpoint_url' => $this->_graphBaseUrl . $mediaId . '/children',
             'type' => 'GET',
@@ -168,40 +180,41 @@ class InstaLibraryController extends Controller
             )
         );
 
-        $response = $this->_makeApiCall( $params );
+        $response = $this->_makeApiCall($params);
         return $response;
     }
 
-    private function _makeApiCall( $params ) {
+    private function _makeApiCall($params)
+    {
         $ch = curl_init();
 
         $endpoint = $params['endpoint_url'];
 
-        if ( 'POST' == $params['type'] ) { // post request
-            curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $params['url_params'] ) );
-            curl_setopt( $ch, CURLOPT_POST, 1 );
-        } elseif ( 'GET' == $params['type'] && !$params['url_params']['paging'] ) { // get request
+        if ('POST' == $params['type']) { // post request
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params['url_params']));
+            curl_setopt($ch, CURLOPT_POST, 1);
+        } elseif ('GET' == $params['type'] && !$params['url_params']['paging']) { // get request
             $params['url_params']['access_token'] = $this->_userAccessToken;
 
             //add params to endpoint
-            $endpoint .= '?' . http_build_query( $params['url_params'] );
+            $endpoint .= '?' . http_build_query($params['url_params']);
         }
 
         // general curl options
-        curl_setopt( $ch, CURLOPT_URL, $endpoint );
+        curl_setopt($ch, CURLOPT_URL, $endpoint);
 
-        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $response = curl_exec( $ch );
+        $response = curl_exec($ch);
 
-        curl_close( $ch );
+        curl_close($ch);
 
-        $responseArray = json_decode( $response, true );
+        $responseArray = json_decode($response, true);
 
-        if ( isset( $responseArray['error_type'] ) ) {
-            var_dump( $responseArray );
+        if (isset($responseArray['error_type'])) {
+            var_dump($responseArray);
             die();
         } else {
             return $responseArray;
