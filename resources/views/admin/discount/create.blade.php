@@ -77,6 +77,16 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="form-label-group">
+                                        <label for="discount_type">Discount type</label>
+                                        <select class="form-control" name="discount_type" id="discount_type">
+                                            <option value="" selected>Select Discount type</option>
+                                            <option value="F" {{ !empty($getDiscountData) && $getDiscountData->discount_type=="flat" ? 'selected' : '' }}  >Flat</option>
+                                            <option value="P" {{ !empty($getDiscountData) && $getDiscountData->discount_type=="lab_grown" ? 'selected' : '' }}>Percentage</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 
 
                                 {{-- <div class="form-group">

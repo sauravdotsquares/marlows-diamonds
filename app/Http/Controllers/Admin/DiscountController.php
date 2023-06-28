@@ -73,6 +73,7 @@ class DiscountController extends Controller
                         'is_login_users'=>$isDicountForLoginUsers,
                         'status'=> $request->status,
                         'diamond_type' => $diamondTypeArr,
+                        'discount_type' => $request->discount_type,
                     ]);
                     $this->addDiscountRanges($request->all(),$insDiscountData->id,$diamondTypeArr);
                     $this->addPercentageRanges($request->all(),$insDiscountData->id);
@@ -93,6 +94,7 @@ class DiscountController extends Controller
                     'status'=> $request->status,
                     'is_login_users'=>$isDicountForLoginUsers,
                     'diamond_type' => $diamondTypeArr,
+                    'discount_type' => $request->discount_type,
                 ]);
 
                 $this->addDiscountRanges($request->all(),$insDiscountData->id,$diamondTypeArr);
@@ -150,8 +152,9 @@ class DiscountController extends Controller
             $arrayNew[$i]['discount'] = isset($getDiscountRangeArray['discount_range'.$i])?$getDiscountRangeArray['discount_range'.$i]:0;
             $arrayNew[$i]['discount_id'] = isset($discountId)?$discountId:0;
             $arrayNew[$i]['diamond_type'] = !empty($getDiscountRangeArray['diamond_type']) ? $getDiscountRangeArray['diamond_type'] : null;
+            $arrayNew[$i]['discount_type'] = !empty($getDiscountRangeArray['discount_type']) ? $getDiscountRangeArray['discount_type'] : null;
         }
-        DiscountRange::where('category_id',$getDiscountRangeArray['category_id'])->delete();
+        DiscountRange::where('category_id',$getDiscountRangeArray['category_id'])->where('diamond_type',$getDiscountRangeArray['diamond_type'])->where('discount_type',$getDiscountRangeArray['discount_type'])->delete();
         foreach($arrayNew as $key => $value){
             DiscountRange::create([
                 'category_id'=> $value['category_id'],
@@ -159,6 +162,7 @@ class DiscountController extends Controller
                 'from_price'=> $value['from'],
                 'to_price'=> $value['to'],
                 'discount'=> $value['discount'],
+                'discount_type'=> $value['discount_type'],
                 'diamond_type'=> $discountType,
                 'status'=> 1,
             ]);

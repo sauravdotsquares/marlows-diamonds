@@ -1683,6 +1683,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
             'rrp_price'=> $getRegularPrices->rrpPrice,
             'shop_price'=> $getRegularPrices->shopPrice,
             'discounted_price'=> $getDiscountedPrice,
+            'parent_category' => $categoryId,
         ];
         return $result;
     }
@@ -1705,6 +1706,25 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
             return $discountedPrice;
         }
         return $price;
+    }
+
+    function getFlatDiscountRanges($arrayPrices, $catId,$diamondType){
+        $disFlatPercentage = DiscountRange::whereHas('discount_data', function($q)  {
+                        $q->whereDate('end_date', '>', now());
+                    })
+                    ->with(['discount_data'])->where('category_id', $catId)
+                    ->whereRaw('"'.$arrayPrices['shop_price'].'" between `from_price` and `to_price`')
+                    ->where('diamond_type', $diamondType)
+                    ->where('discount', '!=', 1)
+                    ->where('discount_type', 'F')
+                    ->where('status', 1)
+                    ->first();
+
+        if(isset($disFlatPercentage) && !empty($disFlatPercentage)){
+            $arrayPrices['discounted_price'] = round($arrayPrices['shop_price'] * (1 - $disFlatPercentage->discount / 100));
+            return $arrayPrices;
+        }
+        return $arrayPrices;
     }
     
     function amountHariKrishnaRapnetChange($numPrice){

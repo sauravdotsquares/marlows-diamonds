@@ -17,6 +17,7 @@ class DiscountRange extends Model
         'discount_id',
         'from_price',
         'diamond_type',
+        'discount_type',
         'to_price',
         'discount',
         'status',
