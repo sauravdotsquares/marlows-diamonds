@@ -1718,13 +1718,13 @@ class ProductController extends Controller
         }
 
         $resultedArray = array_map(function($num) use ($getLabDiamondPrices) {
-            return $num + $getLabDiamondPrices;
+            return round($num + $getLabDiamondPrices,2);
         }, $getRegularPrices);
-
+        unset($resultedArray['parent_category']);
         if(isset($resultedArray) && !empty($resultedArray)){
             return [
                 'status'=> 200,
-                'allPrices'=>$resultedArray,
+                'allPrices'=>getFlatDiscountRanges($resultedArray,$getRegularPrices['parent_category'],$request['diamond_type']),
                 'getLabDiamondPrices'=>round($getLabDiamondPrices,2),
             ];
         }
