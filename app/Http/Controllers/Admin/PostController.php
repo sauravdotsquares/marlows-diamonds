@@ -17,15 +17,19 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $breadcrumb = [
             ["name" => "Blogs", "url" => route("admin.posts")],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
         ];
         populate_breadcrumb($breadcrumb);
-        $posts = Posts::all();
-        return view('admin.posts.index', compact('posts'));
+
+        $posts = Posts::orderBy('id','DESC');
+        $posts = getFilter(Posts::class, $posts, $request->all());
+        $posts =  $posts->paginate(1000);
+		return view('admin.posts.index', compact('posts'));
+		
     }
 
     /**

@@ -21,6 +21,9 @@
 		.dropdown-menu:before{content: " ";position:absolute;top:-20px;right:50px;border:10px solid transparent;border-bottom-color:#fff;}span.price-not-found {font-size: 14px;color: #8e2e65;font-weight: bold;}
 		.error {color: #e74c3c !important;}
 		div#finaldiamondprice span del {font-size: 20px;}
+		.metaltypeval{font-size: 15px;font-weight: bold;color:black}
+		.tableheading{font-size: 17px; font-weight: bold;color:#fff !important;background:#8e2e65 }
+		.tablehover:hover {background-color: #8e2e65; color: #fff}
 		/* .carousel-thumbnails li{ -webkit-filter: brightness(80%); filter:brightness(80%); border: 1px solid transparent;}
 		.carousel-thumbnails li.active {filter: brightness(100%); border: 1px solid #8e2e65; border-radius: 1px;} */
 	</style>
@@ -114,8 +117,8 @@
 						</video>
 					@endif
 				{{-- <?php } ?> --}}
-
-
+                  <div id="myDivChanges"></div>
+			
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -177,24 +180,7 @@
 					</div>
 				@endif
 
-				{{-- @if( (!$plainband) &&  (!in_array('exclusive-to-marlows', $all_categories_slug)))
-					@if(!in_array('exclusive-to-marlows', $all_categories_slug) )
-						<div style="display: none;" class="product-decriptions  product-decriptions_varitions product-decriptions-mined ">
-							{!! $data->description !!}
-						</div>
-						<div class="product-decriptions product-decriptions_varitions product-decriptions-lab_grown">
-							{!! $data->lab_description ? $data->lab_description :  $data->description  !!}
-						</div>
-					@else
-						<div class="product-decriptions">
-							{!!$data->old_description ? $data->old_description :$data->description !!}
-						</div>
-					@endif
-				@else
-					<div class="product-decriptions">
-						{!!$data->old_description ? $data->old_description : $data->description!!}
-					</div>
-				@endif --}}
+			
 
 				<div style="display: flex;">
 					<h4><del style="color:#000" class="shopPriceval"id="shopPrice"> </del> </h4>
@@ -597,14 +583,17 @@
 			});
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
 				changeDescription($(this));
+				console.log($(this));
 				getCustomPriceFinalFunction();
+				getSelectedDataVariation();
 			});
 
             $(document).on('change','#metal-type',function(){
+				console.log($(this).val());
 				getSelectedVariationsData();
 			});
 		})
-
+	
 		function getSelectedVariationsData(){
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 
@@ -613,7 +602,10 @@
 
 				if($(sel).attr('name')!='finger-size')
 					variations.push($(sel).val());
+				
 			});
+
+			
             var multistone = '{{$plainbandMulti}}';
             var jewellery = '{{$plainbandJewellery}}';
 			var data_slug = '{{url("/")}}';
@@ -683,7 +675,7 @@
 							$("#variationVideo")[0].play();
 						}
 					}
-
+					
 					/** TODO: remove in carousel */
 					/** TODO: Add image in carousel */
 					// if(res.vari_image!='' && res.vari_image!=null){
@@ -714,6 +706,7 @@
                 success: function (res) {
 					$('#filterDataDesign .type-variations-row').html(res);
 					getCustomPriceFinalFunction();
+					getSelectedDataVariation();
                     return false;
                 }
             });
@@ -820,6 +813,33 @@
             });
         }
 
+		function getSelectedDataVariation(){
+
+			let designTable = `<table class="table  table-bordered  table-responsive">
+						<tr class="tableheading text-white tablehover">
+						<th>Type</th>
+						<th>Min</th>
+						<th>Max</th>
+						<th>Selected</th>
+						</tr>`;
+			$('.type-variations-col').each(function() { 
+				let forId = $(this).find('label').attr('for');
+				let forText = $(this).find('label').text();
+				designTable += `
+				<tr>
+					<td>`+forText+`</td>
+					<td>`+$('#'+forId+' option:first').val()+`</td>
+					<td>`+$('#'+forId+' option:last').val()+`</td>
+					<td>`+$('#'+forId).val()+`</td>
+				</tr>
+				`;
+				
+			});
+
+			designTable += `</table>`;
+			$('#myDivChanges').html(designTable);
+		}
+		
 		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
 			
 			let diamondCaratWeight;

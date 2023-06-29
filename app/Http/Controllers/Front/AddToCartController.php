@@ -15,7 +15,7 @@ class AddToCartController extends Controller
 {
     /**
      * Write code on Method
-     *
+     *      
      * @return response()
      */
     public function index()
@@ -81,7 +81,6 @@ class AddToCartController extends Controller
                 "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
                 'getLabDiamondPrices' => $getPriceFunction['getLabDiamondPrices'],
             ];
-
             session()->put('cart', $cart);
             return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully!']);
         } 
@@ -102,7 +101,6 @@ class AddToCartController extends Controller
             unset($request['partial_amount']);
             unset($request['total_amount']);
             unset($request['_token']);
-
             $selectedAttributes = [];
             foreach ($request->all('') as $key => $finalVal) {
                 if (isset($finalVal) && !empty($finalVal)) {
