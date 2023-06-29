@@ -16,14 +16,18 @@ class ProductPriceController extends Controller
 {
     /**
      * all engagements rings price for lab grown and mined lab.
+     *
+     * @param Request $request
+     * @return void
      */
-    // // public function getProductFinalPrice(Request $request){
+    public function getProductFinalPrice(Request $request)
+    {
 
     //     // $variationPrice = $CurrentVariationPrice * 1.3;
     //     $settingPrice = $request->variation_price;
     //     //1053+440 = 1493   
 
-    //     $diamondPrice = (isset($request->diamond_price) && $request->diamond_price != 'NaN')?$request->diamond_price:0.00;
+        $diamondPrice = (isset($request->diamond_price) && $request->diamond_price != 'NaN') ? $request->diamond_price : 0.00;
 
     //     $finalPrice = $settingPrice + $diamondPrice;
 
