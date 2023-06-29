@@ -611,7 +611,6 @@
                'value': $('#attribute_value').val(),
             },
             success: function (res) {
-               //console.log(res);
                getAttribute();
                return false;
             }
@@ -629,7 +628,6 @@
             'id': '{{$getProductData->id}}',
          },
          success: function (res) {
-           // console.log(res);
             if (res) {
                $('#show_attributes').empty();
                $("#show_attributes").append(res.getAttributeDesign);
@@ -654,8 +652,7 @@
       if ($(this).prop('checked') == true) {
          $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + $(this).data('name') + "</option></select> ");
          $.each($(this).data('value').split('|'), function (key, value) {
-            //console.log(value);
-            $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
+           $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
          });
       }
       else {
@@ -666,8 +663,6 @@
    function getDropdownDesign(res){
       $('.dropdownVariation').html("");
       $.each(res, function (key, value) {
-         //console.log('key 1 ');
-         //console.log(key);
          let changeText = $(document).find('#attributevari'+value.id).val();
          let changeTextArray = $(document).find('#attributevari'+value.id).data('value').split('|');
          let changeTextName = $(document).find('#attributevari'+value.id).data('name');
@@ -676,9 +671,6 @@
          if ($(document).find('#attributevari'+value.id).prop('checked') == true) {
             $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
             $.each(changeTextArray, function (key, value) {
-               //console.log('key 1 ');
-               //console.log(key);
-               // console.log(value);
                $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
             });
          }else {
@@ -690,8 +682,6 @@
    function getDropdownDesign(res){
       $('.dropdownVariation').html("");
       $.each(res, function (key, value) {
-        // console.log('key 1 ');
-        // console.log(key);
          let changeText = $(document).find('#attributevari'+value.id).val();
          let changeTextArray = $(document).find('#attributevari'+value.id).data('value').split('|');
          let changeTextName = $(document).find('#attributevari'+value.id).data('name');
@@ -700,10 +690,7 @@
          if ($(document).find('#attributevari'+value.id).prop('checked') == true) {
             $(".dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class'form-control'><option value=''>Select Any " + changeTextName + "</option></select> ");
             $.each(changeTextArray, function (key, value) {
-              // console.log('key 1 ');
-              // console.log(key);
-               // console.log(value);
-               $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
+             $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
             });
          }else {
             $("#" + changeText).remove();

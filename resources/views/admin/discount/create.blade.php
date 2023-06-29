@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="title">Discount Title</label>
-                                        <input type="text" name="title" id="title" value="{{isset($getDiscountData->title)?$getDiscountData->title:''}}">
+                                        <input type="text" class="form-control" name="title" id="title" value="{{isset($getDiscountData->title)?$getDiscountData->title:''}}">
                                     </div>
                                 </div>
                                 
@@ -77,8 +77,18 @@
                                     </div>
                                 </div>
 
-                                
+                                <div class="form-group">
+                                    <div class="form-label-group">
+                                        <label for="discount_type">Discount type</label>
+                                        <select class="form-control" name="discount_type" id="discount_type">
+                                            <option value="" selected>Select Discount type</option>
+                                            <option value="F" {{ !empty($getDiscountData) && $getDiscountData->discount_type=="F" ? 'selected' : '' }}  >Flat</option>
+                                            <option value="P" {{ !empty($getDiscountData) && $getDiscountData->discount_type=="P" ? 'selected' : '' }}>Percentage</option>
+                                        </select>
+                                    </div>
+                                </div>
 
+                                
                                 {{-- <div class="form-group">
                                     <div class="form-label-group">
                                         <label for="diamond_type">Diamond type</label>

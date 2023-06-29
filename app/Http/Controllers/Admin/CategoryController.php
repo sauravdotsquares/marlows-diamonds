@@ -13,6 +13,11 @@ use Str;
 
 class CategoryController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return void
+     */
     public function index()
     {
         $breadcrumb = [
@@ -34,6 +39,12 @@ class CategoryController extends Controller
         return view('admin.categories.index', $result);
     }
 
+    /**
+     * Display a listing of the Category.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function getCategory(Request $request)
     {
         $getCatId_arr = [];
@@ -67,10 +78,16 @@ class CategoryController extends Controller
             }
         }
         die;
-        //echo '<pre>'; print_r($dataArray);die;
-        //return response()->json($dataArray);
     }
 
+    /**
+     * Get child data functions
+     *
+     * @param [type] $parent_id
+     * @param [type] $level
+     * @param [type] $getCatId_arr
+     * @return void
+     */
     public function getChildData($parent_id, $level, $getCatId_arr)
     {
         $getChildData = Category::where('status', 1)->where('parent_id', $parent_id)->get()->toArray();
@@ -78,7 +95,6 @@ class CategoryController extends Controller
         $dataArray = $child1 = array();
         if (count($getChildData) > 0) {
             foreach ($getChildData as $key => $child) {
-                //echo str_repeat("-", ($level * 2)) . $child['name'] . '<br>';
                 if (in_array($child['id'], $getCatId_arr)) {
                     echo '<option selected value="' . $child['id'] . '">' . str_repeat("-", ($level * 2)) . $child['name'] . '</option>';
                 } else {
@@ -96,6 +112,12 @@ class CategoryController extends Controller
         return $dataArray;
     }
 
+    /**
+     * Create add form on category
+     *
+     * @param [type] $catId
+     * @return void
+     */
     public function createForm($catId = null)
     {
         $breadcrumb = [
@@ -118,23 +140,25 @@ class CategoryController extends Controller
         return view('admin.categories.create', $result);
     }
 
+    /**
+     * Add functionality of category data
+     *
+     * @param Request $request
+     * @return void
+     */
     public function add(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
         if ($request->hasFile('image')) {
-
             $image = single_storage_image_upload($request->file('image'), 'Category');
         } else {
             $image = $request->image_url_bk;
         }
 
-        //  setup parent_id 
-        //  $getParentId = 0;
         if (isset($request->table_id) && !empty($request->table_id)) {
             if ($request->table_id == $request->parent_id) {
-
                 $request->parent_id = 0;
             } elseif (!isset($request->parent_id) && empty($request->parent_id)) {
                 $request->parent_id = 0;
@@ -153,7 +177,7 @@ class CategoryController extends Controller
 
         if ($validator->fails()) {
             if (isset($request->table_id) && !empty($request->table_id)) {
-                $insertedData = Category::updateOrCreate(['id' => $request->table_id], [
+                Category::updateOrCreate(['id' => $request->table_id], [
                     'name' => $request->name,
                     'title' => isset($request->title) ? $request->title : '',
                     'slug' => strtolower($newCustomSlug),
@@ -170,7 +194,7 @@ class CategoryController extends Controller
             }
             return Redirect::back()->withErrors($validator->errors())->withInput();
         } else {
-            $insertedData = Category::updateOrCreate(['id' => $request->table_id], [
+            Category::updateOrCreate(['id' => $request->table_id], [
                 'name' => $request->name,
                 'title' => isset($request->title) ? $request->title : '',
                 'slug' => strtolower($newCustomSlug),
@@ -187,11 +211,16 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * Change Status
+     *
+     * @param Request $request
+     * @return void
+     */
     public function status(Request $request)
     {
         $statusChange = Category::findOrFail($request->id);
         if ($statusChange) {
-
             $statusChange->update([
                 'status' => $request->status,
             ]);
@@ -200,12 +229,26 @@ class CategoryController extends Controller
         return response()->json(['error' => 'geterror'], 422);
     }
 
+    /**
+     * Remove records
+     *
+     * @param Request $request
+     * @return void
+     */
     public function delete(Request $request)
     {
-        $post = Category::find($request->id)->delete();
+        Category::find($request->id)->delete();
         return redirect()->action('Admin\CategoryController@index')->with('success', 'Currency Deleted Successfully');
     }
 
+    /**
+     * Get Catrgory Tree Function
+     *
+     * @param integer $parent_id
+     * @param string $spacing
+     * @param array $tree_array
+     * @return void
+     */
     function getCategoryTree($parent_id = 0, $spacing = '', $tree_array = array())
     {
         $categories = Category::select('id', 'name', 'parent_id')->where('parent_id', '=', $parent_id)->orderBy('parent_id')->get();
@@ -213,7 +256,6 @@ class CategoryController extends Controller
             $tree_array[] = ['categoryId' => $item->id, 'categoryName' => $spacing . $item->name];
             $tree_array = $this->getCategoryTree($item->id, $spacing . '--', $tree_array);
         }
-
         return $tree_array;
     }
 }
