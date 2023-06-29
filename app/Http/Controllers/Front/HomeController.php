@@ -19,30 +19,34 @@ class HomeController
         return view('front.index');
     }
 
+    /**
+     * Download PDF function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function downloadPDF(Request $request)
     {
 
-        $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
+        $admin_email = Settings::where("option_name", 'admin_email')->value('option_value');
 
         $input = $request->all();
-		$request->validate([
+        $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:download_details|max:255',
         ]);
 
-
-
         $getDetailsSubmit = DownloadDetail::create([
-            'name'=> $request->name,
-            'email'=>$request->email
+            'name' => $request->name,
+            'email' => $request->email
         ]);
 
-        if(isset($getDetailsSubmit) && !empty($getDetailsSubmit)){
+        if (isset($getDetailsSubmit) && !empty($getDetailsSubmit)) {
 
             Mail::send('email.mail', array(
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
-            ), function($message) use ($request,$admin_email ){
+            ), function ($message) use ($request, $admin_email) {
                 $message->from('hello@marlows-diamonds.co.uk');
                 $message->to($admin_email, 'Admin')->subject('NEED ASSISTANCE?');
             });

@@ -74,19 +74,25 @@ class AddToCartController extends Controller
                 "vat" => getVATPriceFunction($request['setting_price']),
                 "image" => $productData->getProductImages->image_url,
                 "price_front" => $request['lab_grown_price'],
-                "rrp_price"=> $getPriceFunction['allPrices']['rrp_price'],
-                "shop_price"=> $getPriceFunction['allPrices']['shop_price'],
+                "rrp_price" => $getPriceFunction['allPrices']['rrp_price'],
+                "shop_price" => $getPriceFunction['allPrices']['shop_price'],
                 'price' => $getPriceFunction['allPrices']['discounted_price'],
-                "savePrice"=> $getPriceFunction['allPrices']['rrp_price'] - $getPriceFunction['allPrices']['discounted_price'],
+                "savePrice" => $getPriceFunction['allPrices']['rrp_price'] - $getPriceFunction['allPrices']['discounted_price'],
                 "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
                 'getLabDiamondPrices' => $getPriceFunction['getLabDiamondPrices'],
             ];
             session()->put('cart', $cart);
             return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully!']);
-        } 
+        }
         return response()->json(['error' => 'Please Wait...']);
     }
 
+    /**
+     * Add to cart with diamond functionality
+     *
+     * @param Request $request
+     * @return void
+     */
     public function addToCartDiamond(Request $request)
     {
         if (isset($request->CERT_NO) && !empty($request->CERT_NO) && $request->CERT_NO > 0) {
@@ -107,7 +113,7 @@ class AddToCartController extends Controller
                     $selectedAttributes[$key] = $finalVal;
                 }
             }
-            $cart = session()->get('cart', []);  
+            $cart = session()->get('cart', []);
             $cart[$request->CERT_NO] = [
                 "name" => 'Custom Diamond',
                 "customArray" => $selectedAttributes,
@@ -156,7 +162,12 @@ class AddToCartController extends Controller
         }
     }
 
-
+    /**
+     * Checkout order with deko pay payament gateway functionality
+     *
+     * @param Request $request
+     * @return void
+     */
     public function checkoutOrder(Request $request)
     {
         $dekoEnabled = true;

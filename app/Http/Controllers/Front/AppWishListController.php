@@ -3,39 +3,44 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\AppProducts;
 use App\Models\Products\AppWishList;
 use View;
 
-class AppWishListController extends Controller{
-    
+class AppWishListController extends Controller
+{
 
-    public function __construct(){
+    /**
+     * Constructor function
+     */
+    public function __construct()
+    {
         $this->view_path = "admin.app_products.products.";
         $this->default_pagination_limit = 12;
         $this->module_name = "Products";
         $this->route_path = "admin.app_products.";
-    }   
+    }
 
     /**
      * addToWishList
      * @param productSlug
      */
-    public function addToWishList(Request $request){
-        
-        if(auth()->guard('customer')->check()){
+    public function addToWishList(Request $request)
+    {
+
+        if (auth()->guard('customer')->check()) {
             $userId = auth()->guard('customer')->user()->id;
             $isSession = 0;
-        }else{
+        } else {
             $userId = session()->getId();
             $isSession = 1;
         }
 
         /** Check if product is valid or not */
-        $product = AppProducts::select(['id','slug'])->where(['slug'=> $request['productSlug']])->first();
-        if(empty($product)){
+        $product = AppProducts::select(['id', 'slug'])->where(['slug' => $request['productSlug']])->first();
+        if (empty($product)) {
             return response()->json([
                 'status' => false,
                 'message' => "Product not identified"
@@ -43,9 +48,9 @@ class AppWishListController extends Controller{
         }
 
         /** if product is already in wishlist then remove other add product in wishlist */
-        $exist = AppWishList::where(['is_deleted'=>0, 'user_id'=> $userId, 'product_id' => $product->id])->first();
-        if(empty($exist)){
-            if(!empty($product)){
+        $exist = AppWishList::where(['is_deleted' => 0, 'user_id' => $userId, 'product_id' => $product->id])->first();
+        if (empty($exist)) {
+            if (!empty($product)) {
                 $new_item = new AppWishList();
                 $new_item->user_id = $userId;
                 $new_item->is_session = $isSession;
@@ -56,7 +61,7 @@ class AppWishListController extends Controller{
                 'status' => true,
                 'wishlist_status' => true
             ]);
-        }else{
+        } else {
             $exist->is_deleted = 1;
             $exist->save();
             return response()->json([
@@ -64,6 +69,6 @@ class AppWishListController extends Controller{
                 'wishlist_status' => false
             ]);
         }
-    }//endof addToWishList
+    } //endof addToWishList
 
 }
