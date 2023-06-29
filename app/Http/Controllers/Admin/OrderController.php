@@ -65,14 +65,23 @@ class OrderController extends Controller
             ];
 
             $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
-
-            Mail::send('email.orderstatus', array(
-                'data1' => $data,
-            ), function ($message) use ($request, $admin_email) {
-                $message->from('hello@marlows-diamonds.co.uk');
-                $message->to($admin_email, 'Admin')->subject('Order Status');
-                $message->cc($request['customer_email'], 'Customer')->subject('Order Status');
-            });
+            if(env('APP_ENV') == 'production'){ 
+                Mail::send('email.orderstatus', array(
+                    'data1' => $data,
+                ), function ($message) use ($request, $admin_email) {
+                    $message->from('hello@marlows-diamonds.co.uk');
+                    $message->to($admin_email, 'Admin')->subject('Order Status');
+                    $message->cc($request['customer_email'], 'Customer')->subject('Order Status');
+                });
+            } else if(env('APP_ENV') == 'local'){
+                Mail::send('email.orderstatus', array(
+                    'data1' => $data,
+                ), function ($message) use ($request, $admin_email) {
+                    $message->from('hello@marlows-diamonds.co.uk');
+                    $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('Order Status');
+                    $message->cc($request['customer_email'], 'Customer')->subject('Order Status');
+                });
+            }
 
             return response()->json(['status' => 200, 'msg' => 'Successfully Updated...']);
         } else {

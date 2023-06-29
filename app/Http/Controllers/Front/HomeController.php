@@ -42,14 +42,23 @@ class HomeController
         ]);
 
         if (isset($getDetailsSubmit) && !empty($getDetailsSubmit)) {
-
-            Mail::send('email.mail', array(
-                'name' => $request->get('name'),
-                'email' => $request->get('email'),
-            ), function ($message) use ($request, $admin_email) {
-                $message->from('hello@marlows-diamonds.co.uk');
-                $message->to($admin_email, 'Admin')->subject('NEED ASSISTANCE?');
-            });
+            if(env('APP_ENV') == 'production'){
+                Mail::send('email.mail', array(
+                    'name' => $request->get('name'),
+                    'email' => $request->get('email'),
+                ), function ($message) use ($request, $admin_email) {
+                    $message->from('hello@marlows-diamonds.co.uk');
+                    $message->to($admin_email, 'Admin')->subject('NEED ASSISTANCE?');
+                });
+            }else if(env('APP_ENV') == 'local'){
+                Mail::send('email.mail', array(
+                    'name' => $request->get('name'),
+                    'email' => $request->get('email'),
+                ), function ($message) use ($request, $admin_email) {
+                    $message->from('hello@marlows-diamonds.co.uk');
+                    $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('NEED ASSISTANCE?');
+                });
+            }
 
             $file_path = public_path('assets/images/Marlows-DiamONDS-TERMINOLOGY-GUIDE-INFOGRAPHIC.pdf');
             return response()->download($file_path, 'example.pdf', [], 'inline');
