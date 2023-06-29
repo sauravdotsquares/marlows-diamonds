@@ -25,7 +25,11 @@
 
         .hide-items{ display: none; }
         .show-items{  display: flex; }
-	</style>
+		.metaltypeval{font-size: 15px;font-weight: bold;color:black}
+		.tableheading{font-size: 17px; font-weight: bold;color:#fff !important;background:#8e2e65 }
+		.tablehover:hover {background-color: #8e2e65; color: #fff}
+
+</style>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.css" rel="stylesheet" />
@@ -66,8 +70,7 @@
 						<source src="" type="video/mp4" type="video/mp4" />
 					@endif
 				</video>
-
-
+				<div id="myDivChanges"></div>
 			</div>
 			<?php 
 				$getParentCategoryArray = explode(',',$data->cat_details);
@@ -109,7 +112,7 @@
 				<div id="apiCustomDesign">
 					<div class="type-variations-row1 lab_item mined_lab_items {{ $default == "lab_grown" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
-							<label class="label"> Central Diamond Weight </label>
+							<label for="lab_grown_carat" class="label"> Central Diamond Weight </label>
 							<select class="form-control lab_price_update_items " name="carat" id="lab_grown_carat">
 								<option value="0.30-0.39" selected="selected">0.30-0.39</option>
 								<option value="0.50-0.59">0.50-0.59</option>
@@ -121,7 +124,7 @@
 							</select>
 						</div>
 						<div class="type-variations-col">
-							<label class="label"> Colour </label>
+							<label for="lab_grown_colour" class="label"> Colour </label>
 							<select class="form-control lab_price_update_items " name="diamond-colour" id="lab_grown_colour">
 								<option value="D" selected="selected">D - Exceptional White +</option>
 								<option value="E">E - Exceptional White</option>
@@ -134,7 +137,7 @@
 				{{-- Show items for lab grown only --}}
 				<div class="type-variations-row1 lab_item mined_lab_items {{ $default == "lab_grown" ? 'show-items' : 'hide-items' }}">
 					<div class="type-variations-col">
-						<label class="label"> Clarity </label>
+						<label for="lab_grown_clarity" class="label"> Clarity </label>
 						<select class="form-control lab_price_update_items " name="diamond-clarity" id="lab_grown_clarity">
 							<option value="VS1">VS1 - Very Small Inclusions</option>
 							<option value="VS2" selected>VS2 - Very Small Inclusions</option>
@@ -148,9 +151,8 @@
 				<div id="apiCustomDesign">
 					<div class="type-variations-row1 mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
-							<label class="label"> Central Diamond Weight </label>
+							<label for="carat" class="label"> Central Diamond Weight </label>
 							<select class="form-control" name="carat" id="carat">
-								<option value="">Choose an option</option>
 								<option value="0.30-0.39" selected="selected">0.30-0.39</option>
 								<option value="0.40-0.49">0.40-0.49</option>
 								<option value="0.50-0.59">0.50-0.59</option>
@@ -168,9 +170,8 @@
 							</select>
 						</div>
 						<div class="type-variations-col">
-							<label class="label"> Colour </label>
+							<label for="diamond-colour" class="label"> Colour </label>
 							<select class="form-control" name="diamond-colour" id="diamond-colour">
-                    			<option value="">Choose an option</option>
 								<option value="D" selected="selected">D - Exceptional White +</option>
 								<option value="E">E - Exceptional White</option>
 								<option value="F">F - Rare White +</option>
@@ -185,9 +186,8 @@
 
 					<div class="type-variations-row1 mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						<div class="type-variations-col">
-							<label class="label"> Clarity </label>
+							<label for="diamond-clarity" class="label"> Clarity </label>
 							<select class="form-control" name="diamond-clarity" id="diamond-clarity">
-                    			<option value="">Choose an option</option>
 								<option value="IF">IF - Internally Flawless</option>
 								<option value="VVS1">VVS1 - Minute Inclusions</option>
 								<option value="VVS2">VVS2 - Minute Inclusions</option>
@@ -199,7 +199,7 @@
 						</div>
                         @if(isset($data->diamond_shape) && $data->diamond_shape == 'ROUND')
                             <div class="type-variations-col">
-                                <label class="label"> Cut Grade </label>
+                                <label for="diamond-grade" class="label"> Cut Grade </label>
                                 <select class="form-control" name="diamond-grade" id="diamond-grade">
                                     <option value="">Choose an option</option>
                                     <option value="EX" selected="selected">Excellent</option>
@@ -209,23 +209,15 @@
                             </div>
                         @endif
                         <div class="type-variations-col{{($data->diamond_shape == 'ROUND')?'-one':''}}">
-							<label class="label"> Certificate </label>
+							<label for="diamond-certificate" class="label"> Certificate </label>
 							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
-                    			<option value="">Choose an option</option>
+                    	
 								<option value="GIA" selected="selected">GIA</option>
 								<option value="IGI">IGI</option>
 							</select>
 						</div>
 					</div>
 					<div class="type-variations-row1 mined_item mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
-						{{-- <div class="type-variations-col{{($data->diamond_shape == 'ROUND')?'-one':''}}">
-							<label class="label"> Certificate </label>
-							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
-                    			<option value="">Choose an option</option>
-								<option value="GIA" selected="selected">GIA</option>
-								<option value="IGI">IGI</option>
-							</select>
-						</div> --}}
 					</div>
 					<div class="view-diamond-sec mined_item_block mined_lab_items {{ $default == "mined" ? 'show-items' : 'hide-items' }}">
 						<div class="viewall-diamond-btn"><a class="btn-bg-large viewdiamond-btn"
@@ -333,8 +325,11 @@
 
 			</div>
 		</div>
+		       
+
 	</div>
 </div>
+
 
 <!-- Related Product start heRe -->
 <div class="related-products-section">
@@ -535,15 +530,6 @@
 							</div>
 							@endif
 						</div>
-						{{-- <div class="google-capatcha form-controls">
-                            <div class="g-recaptcha" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
-                            </div>
-						    @if ($errors->has('g-recaptcha-response'))
-                                <div class="error">
-                                    {{ $errors->first('g-recaptcha-response') }}
-                                </div>
-							@endif
-						</div> --}}
 						<div class="action-submit">
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
@@ -596,11 +582,6 @@
 			// getFinalPrice();
 		}
        
-        // $(document).ready(function(){
-        //     changeDiamondType($('.diamond_type:checked').attr("id"));
-        // })
-
-		//$(".lab_item").css('display','none');
 
 		$(".lab_price_update_items").on('change', function() {
 			changeDiamondType($('.diamond_type:checked').attr("id"));
@@ -615,11 +596,13 @@
 			}, 500);
 			getCustomPriceFinalFunction();
 			let getDiamondType = $(this).val();
+			getSelectedDataVariation();
 			if(getDiamondType == 'lab_grown'){
 				getProdVideo('onChange',' 9ct White Gold ');
 			}else if(getDiamondType == 'mined_diamond'){
 				getProdVideo('onChange','Platinum');
 			}
+	
 		});
 
 		
@@ -703,33 +686,18 @@
 
 			// TODO: getSelectedAttributePrice();
 
-			// setTimeout(() => {
-			// 	changeDiamondType('lab_item');
-			// }, 1000);
-			// $('#carat').on('change',function(){
-			// 	getSelectedAttributePrice();
-			// });
-			// $('#diamond-colour').on('change',function(){
-			// 	getSelectedAttributePrice();
-			// });
-			// $('#diamond-clarity').on('change',function(){
-			// 	getSelectedAttributePrice();
-			// });
-			// $('#diamond-grade').on('change',function(){
-			// 	getSelectedAttributePrice();
-			// });
-			// $('#diamond-certificate').on('change',function(){
-			// 	getSelectedAttributePrice();
-			// });
-
-            // $(document).on('change', "#carat,#diamond-colour,#diamond-clarity,#diamond-grade,#diamond-certificate", function(){
-            //     getSelectedAttributePrice();
-            // });
-
 			$(document).on('change', "#metal-type,#finger-size,#lab_grown_carat,#lab_grown_colour,#lab_grown_clarity,#carat,#diamond-colour,#diamond-clarity,#diamond-certificate", function(){
 				getSelectedAttributePrice();
 				getProdVideo();
 				getCustomPriceFinalFunction();
+				getSelectedDataVariation();
+				// if($('.diamond_type:checked').val() == 'lab_grown'){
+				// 	getDescribeSelectedOptions();
+				// }else if($('.diamond_type:checked').val() == 'mined_diamond'){
+				// 	getDescribeSelectedOptionsMined();
+				// }
+				
+				
 			});
 
 			$('#addtobasket').on('click',function(){
@@ -741,6 +709,7 @@
 			});
 			$(document).on('change','#metal-type',function(){
 				getProdVideo('onChange');
+		
 			});
 
 			
@@ -769,6 +738,12 @@
                 success: function (res) {
 					$('#filterDataDesign .type-variations-row').html(res);
 					getCustomPriceFinalFunction();
+					getSelectedDataVariation();
+				// 	if($('.diamond_type:checked').val() == 'lab_grown'){
+				// 	getDescribeSelectedOptions();
+				// }else if($('.diamond_type:checked').val() == 'mined_diamond'){
+				// 	getDescribeSelectedOptionsMined();
+				// }
                 }
             });
 		}
@@ -966,7 +941,6 @@
 		var triggerLab = true;
 		function getSelectedAttributePrice(){
 
-			// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
 			$('#addtobasket').addClass('disabledAnchor');
 
 			var caratVal = $('#carat').val();
@@ -976,63 +950,7 @@
 			var diamondCertificate = $('#diamond-certificate').val();
 			var diamondShape = $('#selected_diamond_shape').val();
 			var variation_price = $('#selected_variation_price').val();
-			// $.ajax({
-            //     type: 'POST',
-            //     url: '{{route("products-final-price-with-diamond")}}',
-            //     dataType: 'json',
-            //     data: {
-            //         '_token': "{{csrf_token()}}",
-            //         'variation_price' : variation_price,
-			// 		'carat' : caratVal,
-			// 		'color' : diamondColor,
-			// 		'clarity' : diamondClarity,
-			// 		'grade' : diamondGrade,
-			// 		'certificate' : diamondCertificate,
-			// 		'shape' : diamondShape,
-			// 		'slug': '{{$data->slug}}',
-			// 		'diamond_type' : $('.diamond_type:checked').val()
-            //     },
-            //     success: function (res) {
-			// 		// console.log('triggerLab', triggerLab);
-
-
-			// 		// $('#finaldiamondprice').html("");
-            //         if(res.statuscode == 200){
-
-            //             if(triggerLab){
-            //                 triggerLab = false;
-			// 				getFinalPrice();
-            //             }else{
-            //                 // $('#finaldiamondprice').html(res.finalPrice);
-            //                 if(res.finalPrice == res.discountedPrice){
-            //                     // $('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
-            //                 }else{
-            //                     // $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
-            //                 }
-            //             }
-
-			// 			$('#selected_final_price').val(res.finalPrice);
-			// 			$('#selected_diamond_price').val(res.diamondPrice);
-			// 			$('#selected_discounted_price').val(res.discountedPrice);
-			// 			$('#selected_setting_price').val(res.settingPrice);
-			// 			$('#selected_diamond_certno').val(res.Stock_NO);
-			// 			$('#certificate_url').val(res.CertificateLink);
-			// 			$('#productCertificateLink').attr('href',res.CertificateLink);
-			// 			$('#addtobasket').removeClass('disabledAnchor');
-            //         }else{
-            //             // $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
-            //             $('#refineSearchData').html("No Data Found");
-            //             // $('#finaldiamondprice').text('Sorry we have no diamonds matching your selection.');
-            //             $('#selected_final_price').val('');
-			// 			$('#selected_diamond_price').val('');
-			// 			$('#selected_diamond_certno').val('');
-			// 			$('#certificate_url').val('');
-			// 			$('#productCertificateLink').attr('href','');
-            //         }
-            //     }
-
-            // });
-
+			
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-api-filter-data")}}',
@@ -1060,102 +978,39 @@
             });
 		}
 
-		// getFinalPrice()
+		function getSelectedDataVariation(){
+          
+			let designTable = `<table class="table  table-bordered  table-responsive">
+						<tr class="tableheading text-white tablehover">
+						<th>Type</th>
+						<th>Min</th>
+						<th>Max</th>
+						<th>Selected</th>
+						</tr>`;
 
 
-		// function getFinalSelectedPrice(){
-			
-		// 	let parentCategory = '{{$getParentCategory}}';
-			
-		// 	let diamondType = $('.diamond_type:checked').val();
-		// 	// console.log(diamondType);
-		// 	if(diamondType == 'lab_grown'){
-		// 		let metalType = $('#metal-type').val();
-		// 		let metalTypeArray = metalType.split(" ");
-		// 		let selectedFinalPrice = $("#finaldiamondprice .price").text().replace("£", "");
-
-
-		
-		// 		let labPrice = $('#lab_price').val();
-		// 		let finalMetalType18ct = parseFloat(regularPrice) + parseFloat(labPrice);
-		// 		let gstPercentage = '{{getVAT()}}';
-		// 		let Final18CTAmountWithGST = parseFloat(finalMetalType18ct) * parseFloat(gstPercentage);
-				
-		// 		let percentage = 0;
-
-		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 0 && selectedFinalPrice < 1500){
-		// 			percentage= 10;
-					
-		// 		}
-				
-		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 1500 && selectedFinalPrice < 3000){
-		// 			percentage= 20;
-					
-		// 		}
-		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 3000 && selectedFinalPrice < 6000){
-		// 			percentage= 25;
-					
-		// 		}
-		// 		if(parentCategory == 'Engagement Rings' && diamondType == 'lab_grown' && selectedFinalPrice > 6000){
-		// 			percentage= 35;
-					
-		// 		}
-		// 		if(metalTypeArray[1] === '18ct' || metalTypeArray[0] === 'Platinum'){
-		// 			var percentageAmount = selectedFinalPrice * (percentage/100) ; 
-		// 			var getVal =  selectedFinalPrice - percentageAmount ; 
-
-		// 		}else{
-		// 			var percentageAmount = Final18CTAmountWithGST * (percentage/100); 
-		// 			var  getValNew =  Final18CTAmountWithGST - percentageAmount ; 
-		// 			var  Final9CTAmountWithGST =  getValNew *(20/100) ;
-		// 			var getVal =  getValNew - Final9CTAmountWithGST ;  
-		// 		}
-
-		// 		// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+parseInt(getVal)+' </span>');
-		// 		// $('#selected_final_price').val(parseInt(getVal));
-		// 	}
-		// }
-		// function getFinalPrice(){
-		// 	$('#addtobasket').addClass('disabledAnchor');
-        //     // $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
-		// 	$.ajax({
-        //         type: 'POST',
-        //         url: '{{route("products-final-price")}}',
-        //         data: {
-        //             '_token': "{{csrf_token()}}",
-		// 			'variation_price' : parseFloat($('#selected_variation_price').val()),
-		// 			'setting_price' : parseFloat($('#selected_setting_price').val().split(",").join("")),
-		// 			'discounted_price' : parseFloat($('#selected_discounted_price').val().split(",").join("")),
-		// 			'diamond_price' : parseFloat($('#selected_diamond_price').val().split(",").join("")),
-		// 			'slug': '{{$data->slug}}',
-
-		// 			/** new pricing */
-		// 			'diamond_type' : $('.diamond_type:checked').val(),
-		// 			'lab_grown_carat': $("#lab_grown_carat").val(),
-		// 			'lab_grown_colour': $("#lab_grown_colour").val(),
-		// 			'lab_grown_clarity': $("#lab_grown_clarity").val(),
-
-        //         },
-        //         success: function (res) {
-		// 			// $('#finaldiamondprice').html("");
-		// 			if(res.finalPrice != ''){
-        //                 if(res.finalPrice == res.discountedPrice){
-        //                     // $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.finalPrice+' </span>');
-        //                     $('#selected_final_price').val(res.finalPrice);
-		// 					$('#lab_price').val(res.labPrice);
-        //                 }else{
-        //                     // $('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+Math.round(res.finalPrice)+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+res.discountedPrice+' </span>');
-        //                 }
-
-		// 				$('#addtobasket').removeClass('disabledAnchor');
-
-		// 				getFinalSelectedPrice();
-		// 			}else{
-		// 				// $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
-		// 			}
-        //         }
-        //     });
-		// }
+			$('.type-variations-col').each(function() { 
+				// var caret=document.getElementById('lab_grown_carat').val();
+				let forId = $(this).find('label').attr('for');
+				console.log(forId);
+				let forText = $(this).find('label').text();
+				const diamondType = $('.diamond_type:checked').val();
+				if ((diamondType === 'lab_grown') && (forId === 'diamond-certificate' || forId === 'diamond-colour' || forId === 'diamond-clarity' || forId === 'carat')) {
+				} else if ((diamondType === 'mined_diamond') && (forId === 'lab_grown_carat' || forId === 'lab_grown_colour' || forId === 'lab_grown_clarity')) {
+				} else {
+			  designTable += `
+				<tr>
+				<td>${forText}</td>
+				<td>${$('#'+forId+' option:first').val()}</td>
+				<td>${$('#'+forId+' option:last').val()}</td>
+				<td>${$('#'+forId).val()}</td>
+				</tr>
+			`;
+			}			
+			});
+			designTable += `</table>`;
+			$('#myDivChanges').html(designTable);
+			}
 
         function getRelatedProduct(){
             $.ajax({
