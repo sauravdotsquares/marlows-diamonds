@@ -1698,6 +1698,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
                     ->when($diamondType, function ($q) use ($diamondType) {
                         return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
                     })
+                    ->where('discount', '!=', 1)
                     ->where('status', 1)
                     ->first();
         
