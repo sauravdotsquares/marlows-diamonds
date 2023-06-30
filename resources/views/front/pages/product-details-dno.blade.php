@@ -818,8 +818,7 @@
 			let designTable = `<table class="table  table-bordered  table-responsive">
 						<tr class="tableheading text-white tablehover">
 						<th>Type</th>
-						<th>Min</th>
-						<th>Max</th>
+					
 						<th>Selected</th>
 						</tr>`;
 			$('.type-variations-col').each(function() { 
@@ -828,8 +827,7 @@
 				designTable += `
 				<tr>
 					<td>`+forText+`</td>
-					<td>`+$('#'+forId+' option:first').val()+`</td>
-					<td>`+$('#'+forId+' option:last').val()+`</td>
+			
 					<td>`+$('#'+forId).val()+`</td>
 				</tr>
 				`;
