@@ -1252,6 +1252,7 @@ padding: 0;right: 10px;}
 
 @media(max-width:991px){
 .bloglist-wraper .col-md-9 {width: 100%; order: 2;}
+.blogdetails-wrap .col-lg-9 {width: 100%; order: 2;}
 .post-data-col {
     display: flex;
     flex-wrap: wrap;
