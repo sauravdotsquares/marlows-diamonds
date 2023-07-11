@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, target-densityDpi=device-dpi" />
+    <meta http-equiv="Cache-Control" content="max-age=604800">
     {{-- <meta name = "viewport" content = "width=device-width, minimum-scale=1.0, maximum-scale = 1.0, user-scalable = no"> --}}
     <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
