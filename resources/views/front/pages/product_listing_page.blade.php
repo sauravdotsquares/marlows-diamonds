@@ -69,20 +69,23 @@
     }
     .policyheading
     {
-        color: #8e2e65;font-weight:bold;
+        color: #8e2e65;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 13px;
     }
     .policy0icon
 		{
-		    border: 1px solid #8e2e65;
-            padding: 10px 15px 0px;
+            border: 1px solid #8e2e65;
+            padding: 7px 1px 0px;
             width: 24%;
             text-align: center;
-			border-radius: 10px;
+            border-radius: 10px;
 		}
 		.policyimg
 		{
-			width:80px;
-			margin: 0 0 20px;
+            width: 50px;
+            margin: 0 0 11px;
 		}
 		@media only screen and (max-width: 600px) {
 			.policy0icon
