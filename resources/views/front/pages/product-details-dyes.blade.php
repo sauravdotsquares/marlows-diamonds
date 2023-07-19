@@ -28,7 +28,38 @@
 		.metaltypeval{font-size: 15px;font-weight: bold;color:black}
 		.tableheading{font-size: 17px; font-weight: bold;color:#fff !important;background:#8e2e65 }
 		.tablehover:hover {background-color: #8e2e65; color: #fff}
-
+		.policy0icon
+		{
+		    border: 1px solid #8e2e65;
+            padding: 10px 15px 0px;
+            width: 24%;
+            text-align: center;
+			border-radius: 10px;
+		}
+		.policyimg
+		{
+			width:80px;
+			margin: 0 0 20px;
+		}
+		.policysection
+    {
+        margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;
+    }
+    .policyheading
+    {
+        color: #8e2e65;font-weight:bold;
+    }
+		@media only screen and (max-width: 600px) {
+			.policy0icon
+		{
+		    border: 1px solid #8e2e65;
+            padding: 10px 15px 0px;
+            width: 48%;
+            text-align: center;
+			border-radius: 10px;
+			margin-top: 10px;
+		}
+		}
 </style>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -211,7 +242,6 @@
                         <div class="type-variations-col{{($data->diamond_shape == 'ROUND')?'-one':''}}">
 							<label for="diamond-certificate" class="label"> Certificate </label>
 							<select class="form-control" name="diamond-certificate" id="diamond-certificate">
-                    	
 								<option value="GIA" selected="selected">GIA</option>
 								<option value="IGI">IGI</option>
 							</select>
@@ -323,6 +353,12 @@
 					</div>
 				</div>
 
+				<div class="policysection">
+					<div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading">Lifetime manufacturing<br> guarantee </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading">Free Delivery <br> Collection </h6></div>
+					<div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> Certificate <br> Diamond </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading">30 Days<br> Return </h6></div>
+					</div>
 			</div>
 		</div>
 		       
@@ -696,8 +732,6 @@
 				// }else if($('.diamond_type:checked').val() == 'mined_diamond'){
 				// 	getDescribeSelectedOptionsMined();
 				// }
-				
-				
 			});
 
 			$('#addtobasket').on('click',function(){
@@ -983,7 +1017,6 @@
 			let designTable = `<table class="table  table-bordered  table-responsive">
 						<tr class="tableheading text-white tablehover">
 						<th>Type</th>
-					
 						<th>Selected</th>
 						</tr>`;
 
@@ -1000,7 +1033,6 @@
 			  designTable += `
 				<tr>
 				<td>${forText}</td>
-			
 				<td>${$('#'+forId).val()}</td>
 				</tr>
 			`;

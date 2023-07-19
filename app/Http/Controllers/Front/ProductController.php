@@ -634,7 +634,6 @@ class ProductController extends Controller
             'PageSize' => 2
         ];
 
-
         $hkData = getHKApiRecords($data);
         $hkData = array_map(array($this, "amountChange"), $hkData);
         $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
@@ -650,7 +649,7 @@ class ProductController extends Controller
                     $rapnetRecords[$key]['Cut'] = $result->cut;
 
                 $rapnetRecords[$key]['Lab'] = $result->lab;
-                $rapnetRecords[$key]['Amount'] = ($result->total_sales_price);
+                $rapnetRecords[$key]['Amount'] = amountHariKrishnaRapnetChange($result->total_sales_price);
                 $rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
                 $rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
 
@@ -686,20 +685,13 @@ class ProductController extends Controller
         return response()->json(['html' => $dataArray]);
     }
 
-    /**
-     * Amount Changes function
-     *
-     * @param [type] $num
-     * @return void
-     */
-    public function amountChange($num)
-    {
-        $marginAPIPercentage = MarginApiRange::where('api_type', 'harikrishna')->whereRaw('"' . $num['Amount'] . '" between `from_price` and `to_price`')
-            ->where('status', 1)
-            ->first();
-        $num['oldAmount'] = $num['Amount'];
-        if (isset($num['Amount']))
-            $num['Amount'] = ($num['Amount'] / 1.2) * $marginAPIPercentage->percentage;
+    public function amountChange($num){
+		$marginAPIPercentage = MarginApiRange::where('api_type','harikrishna')->whereRaw('"'.$num['Amount'].'" between `from_price` and `to_price`')
+		->where('status', 1)
+		->first();
+		$num['oldAmount'] = $num['Amount'];
+        if(isset($num['Amount']))
+            $num['Amount'] = $num['Amount'] * $marginAPIPercentage->percentage;
         return $num;
     }
 

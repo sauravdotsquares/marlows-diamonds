@@ -24,7 +24,6 @@ class PostController extends Controller
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
         ];
         populate_breadcrumb($breadcrumb);
-
         $posts = Posts::orderBy('id','DESC');
         $posts = getFilter(Posts::class, $posts, $request->all());
         $posts =  $posts->paginate(1000);
