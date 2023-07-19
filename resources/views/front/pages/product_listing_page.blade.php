@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
     .dropdown-content {
-        display: none;
+       
         position: absolute;
         background-color: #f9f9f9;
         min-width: 160px;
@@ -342,12 +342,14 @@
                         <div style="display: flex">
                             <input type="text" name="title" class="search-item empty" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
                             <div class="dropdown">
-                                <button class="sortbtn dropbtn">Sort <i class="fa fa-filter"></i></button>
-                                <div class="dropdown-content">
-                                    <a href="#">A to Z</a>
-                                    <a href="#">Z to A</a>
-                                    <a href="#">Link 3</a>
-                                </div>
+                            <select class="dropdown-content" name="exampleSelect" id="exampleSelect">
+                                <option selected>Sort <i class="fa fa-filter"></i></option>
+                                <option value="asc">A to Z</option>
+                                <option value="desc">Z to A</option>
+                                <option value="price-min">Low to High</option>
+                                <option value="price-max">High to Low</option>
+                              </select>
+
                             </div>
                         </div>
                     </div>
@@ -672,8 +674,12 @@
         sendDataValues();
     });
 
-    // $("#showProductList").html('');
-    // sendDataValues();
+    $(document).on('change', "#exampleSelect", function() {
+       $("#showProductList").html('');
+        sendDataValues();
+   });
+
+    
 
     $(window).scroll(function() {
         var scroll = $('#scrollFlag').val();
@@ -705,6 +711,8 @@
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
+                
+                'sorting': $("#exampleSelect").val(),
                 'keyword': $('#search').val(),
                 'path': '{{ $path }}',
                 'page': page
@@ -728,10 +736,13 @@
             }
         });
     }
+
+  
 </script>
 <script>
     $(document).ready(function() {
-        var collapse1value = document.getElementById('collapse1');
+
+       var collapse1value = document.getElementById('collapse1');
         if (screen.width <= 320 || screen.width <= 991) {
             collapse1value.style.display = "none";
         } else {

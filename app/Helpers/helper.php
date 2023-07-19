@@ -1232,7 +1232,7 @@ if (!function_exists('validate_breadcrumb')) {
 
 
      function getProductListing($queryString = null, $requestData = [])
-     {
+     {  
  
          /** generate custom query for categories */
          $category_custom_query = "";
@@ -1419,7 +1419,7 @@ if (!function_exists('validate_breadcrumb')) {
          }
  
  
- 
+         //dd($requestData['price-min']);
          if (!empty($requestData['price-min']) && !empty($requestData['price-max'])) {
              $query->whereHas('getProductVariation', function ($query) use ($requestData) {
                  $query->whereBetween('regular_price', array($requestData['price-min'][0], $requestData['price-max'][0]));
@@ -1431,7 +1431,10 @@ if (!function_exists('validate_breadcrumb')) {
              $shape = $requestData['filter-by-shape'];
              $query = $query->whereIn('diamond_shape', $shape);
          }
- 
+         if (!empty($requestData['sorting'])) {
+            $sort = $requestData['sorting'];
+            $query = $query->orderBy('title', $sort);
+         }
          // echo "checked ".$query->toSql();die;
          $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
          
