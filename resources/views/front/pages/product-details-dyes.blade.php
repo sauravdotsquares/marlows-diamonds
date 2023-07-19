@@ -28,6 +28,30 @@
 		.metaltypeval{font-size: 15px;font-weight: bold;color:black}
 		.tableheading{font-size: 17px; font-weight: bold;color:#fff !important;background:#8e2e65 }
 		.tablehover:hover {background-color: #8e2e65; color: #fff}
+		.policy0icon
+		{
+		    border: 1px solid #8e2e65;
+            padding: 10px 15px 0px;
+            width: 24%;
+            text-align: center;
+			border-radius: 10px;
+		}
+		.policyimg
+		{
+			width:80px;
+			margin: 0 0 20px;
+		}
+		@media only screen and (max-width: 600px) {
+			.policy0icon
+		{
+		    border: 1px solid #8e2e65;
+            padding: 10px 15px 0px;
+            width: 48%;
+            text-align: center;
+			border-radius: 10px;
+			margin-top: 10px;
+		}
+		}
 </style>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -321,6 +345,12 @@
 					</div>
 				</div>
 
+				<div  style="margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;">
+					<div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 style="color: #8e2e65;font-weight:bold">Lifetime manufacturing<br> guarantee </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 style="color: #8e2e65;font-weight:bold">Free Delivery <br> Collection </h6></div>
+					<div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 style="color: #8e2e65;font-weight:bold">Certificate <br> Diamond </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 style="color: #8e2e65;font-weight:bold">30 Days<br> Return </h6></div>
+					</div>
 			</div>
 		</div>
 	</div>
