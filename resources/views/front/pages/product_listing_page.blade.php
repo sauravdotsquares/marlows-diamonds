@@ -4,7 +4,54 @@
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .search-item {
+        width: 320px;
+        height: 29px;
+        border: none;
+        background: #efefef;
+        padding: 6px;
+    }
+
+    input.empty {
+        font-family: FontAwesome;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: inherit;
+    }
+
+    .sortbtn {
+        width: 138px !important;
+        background: #fff;
+        border-radius: 6px;
+        border: 2px solid #efefef;
+        height: 30px;
+        margin-left: 2px;
+    }
+
     .ui-slider-handle {
         width: 35px !important;
         font-size: small !important;
@@ -37,6 +84,10 @@
         color: #e74c3c !important;
     }
 
+    .accordion-body {
+        padding: 0 15px;
+    }
+
     .srchniput-fil span {
         font-size: 13px;
         background: #ffff;
@@ -46,36 +97,151 @@
         padding: 0px 4px;
         display: inline-block;
     }
-        .nav-toggle{
-        display : none; // display none for everyone
+
+    .nav-toggle {
+        display: none; // display none for everyone
+    }
+
+    /* Landscape phone to portrait tablet  show the button */
+    @media only screen and (max-width: 576px) and (min-width: 320px) {
+        .nav-toggle {
+            display: block; // or inline-block or inline : which ever is appropriate for you.
         }
 
-        /* Landscape phone to portrait tablet  show the button */
-        @media only screen and (max-width: 991px) and (min-width: 320px) {
-
-        .nav-toggle{
-        display : block; // or inline-block or inline : which ever is appropriate for you.
-        }
-        .filter-item
-        {
-            display:inline-block;
-            vertical-align:top;
+        .filter-item {
+            display: inline-block;
+            vertical-align: top;
             margin-right: 60px;
+            width: 300px;
+        }
+
+        .search-item {
+            width: 134px !important;
+        }
+
+        .sortbtn {
+            width: 71px !important;
+        }
+    }
+
+    @media only screen and (max-width: 720px) and (min-width: 576px) {
+        .nav-toggle {
+            display: block; // or inline-block or inline : which ever is appropriate for you.
+        }
+
+        .filter-item {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 60px;
+            width: 300px;
+        }
+
+        .search-item {
+            width: 135px !important;
+        }
+
+        .sortbtn {
+            width: 122px !important;
+        }
+    }
+
+    @media only screen and (max-width: 991px) and (min-width: 720px) {
+        .nav-toggle {
+            display: block; // or inline-block or inline : which ever is appropriate for you.
+        }
+
+        .filter-item {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 60px;
+            width: 300px;
+        }
+
+        .search-item {
+            width: 178px !important;
+        }
+    }
+
+    @media only screen and (max-width: 1300px) and (min-width: 991px) {
+        .search-item {
+            width: 280px !important;
         }
     }
 </style>
 @endsection
 
-<div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
-    <div class="container">
-        <div class="category-banner-text">
-            <h1>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h1>
-            <p>{!! !empty($categoryData->short_description) ? $categoryData->short_description : '' !!}</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <p style="padding-top: 10px;text-decoration:none!important"><a href="{{ url('/') }}">Home</a> <span><?php
+                                                                                                                $url = $_SERVER['REQUEST_URI'];
+                                                                                                                echo $url;
+                                                                                                                ?></span></p>
+            <center>
+                <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3>
+            </center>
+            <div class="owl-carousel owl-theme" style="text-align: center; ">
+                @foreach ($filter_items as $filter_key => $filter_item)
+                    
+
+                    @if($filter_item->slug == 'style-categories')
+                        @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
+                            <div class="item">
+                               
+                                @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
+                                    <img src="{{ asset('storage/'.$product_item_item->category_images)}}" style="width:100px">
+                                @endif
+                                <p> <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a></p>
+                            </div>
+                        @endforeach
+                    @endif
+
+                @endforeach
+                <!-- <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div>
+                <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div>
+                <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div>
+                <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div>
+                <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div>
+                <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div>
+                <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div>
+                <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div>
+                <div class="item">
+                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
+                    <p> Eternity Ring</p>
+                </div> -->
+
+            </div>
+            <div>
+            </div>
         </div>
     </div>
-</div>
-<div>
-    <center><button href="#collapse1" class="nav-toggle btn" style="background-color: #8e2e65; color:#fff"><i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category</button></center>
+
+    <center><button href="#collapse1" class="nav-toggle btn" style="background-color: #8e2e65; color:#fff"><i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category</button></center><br>
 </div>
 
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
@@ -83,84 +249,116 @@
         <div class="category-listing-row">
             <div id="collapse1" class="category-sidebar-wrap">
                 <div>
-                <div class="filter-container">
-                    <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
-                    @foreach ($filter_items as $filter_key => $filter_item)
-                    <div class="filter-item">
-                        <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{ $filter_item->slug }}" />
-                        <div class="category-filter-title">
-                            <h3>{{ $filter_item->name }}</h3>
-                        </div>
-                        <ul>
-                            @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
-                            <li>
-                                @php
-                                $checkVariable = 'true';
-                                $checkVariableNew = '';
-                                @endphp
-
-                                @if (in_array(Str::lower($product_item_item->item_value), $slugs))
-                                <?php
-                                $checkVariable = 'false';
-                                $checkVariableNew = 'checked';
-                                ?>
-                                @elseif(in_array(Str::lower(Str::replace(' ', '-', $product_item_item->item_name)), $slugs))
-                                <?php
-                                $checkVariable = 'false';
-                                $checkVariableNew = 'checked';
-                                ?>
-                                @endif
-
-                                @if (isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
-                                <div class="diamond-field-contens col-lg-9">
-                                    <div class="diamond-field-inner-bar">
-                                        <div class="range_carat_wap">
-
-                                            <div class="srchniput-fil">
-                                                <div class="minrange">
-                                                    <span>Min</span>
-                                                    <input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
-                                                </div>
-                                                <div class="maxrange">
-                                                    <span>Max</span>
-                                                    <input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
-                                                </div>
-                                            </div>
-
-                                            <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
-                                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 19.1489%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5745%;"></span>
-                                            </div>
-                                            <div class="srchniput-fil">
-                                                <input type="hidden" class="sliderValue filter-item-data" data-index="0" value="100" id="input-carat-min" name="price-min" autocomplete="off">
-                                                <input type="hidden" class="sliderValue filter-item-data" data-index="1" value="150000" id="input-carat-max" name="price-max" autocomplete="off">
-                                            </div>
+                    <div style="display: flex">
+                        <h3>Filter </h3>
+                        <a href="javascript:void(0)" id="resetFilterButton" style="padding-left: 120px;color:black;"> Clear All Filter</a>
+                    </div>
+                    <div class="filter-container">
+                        @foreach ($filter_items as $filter_key => $filter_item)
+                        <div class="filter-item">
+                            <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{ $filter_item->slug }}" />
+                            <div class="accordion-item">
+                                <div class="category-filter-title">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-9">
+                                            <h6 style="padding:10px;"><b>{{ $filter_item->name }}</b></h6>
+                                        </div>
+                                        <div class="col-sm-6 col-3">
+                                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $filter_item->slug }}" aria-expanded="true" aria-controls="collapse{{ $filter_item->slug }}" style="background: #fff;border:none;"></button>
                                         </div>
                                     </div>
                                 </div>
-                                @else
-                                <input type="{{ $filter_item->input_type }}" name="{{ $filter_item->slug }}" {{ $checkVariableNew }} onclick="return {{ $checkVariable }};" value="{{ $product_item_item->item_value }}" class="filter-item-data">
-                                {{ $product_item_item->item_name }}
-                                @endif
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endforeach
-                    <div class="reset-filer-container">
-                        <a href="javascript:void(0)" id="resetFilterButton"><button class="reset-filer-btn">Reset search</button></a>
-                    </div>
+                                <ul>
+                                    <div id="collapse{{ $filter_item->slug }}" class="accordion-collapse collapse show" aria-labelledby="{{ $filter_item->slug }}" data-bs-parent="#accordionExample">
+                                        @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
+                                        <div class="accordion-body">
+                                            <li>
+                                                @php
+                                                $checkVariable = 'true';
+                                                $checkVariableNew = '';
+                                                @endphp
 
+                                                @if (in_array(Str::lower($product_item_item->item_value), $slugs))
+                                                <?php
+                                                $checkVariable = 'false';
+                                                $checkVariableNew = 'checked';
+                                                ?>
+                                                @elseif(in_array(Str::lower(Str::replace(' ', '-', $product_item_item->item_name)), $slugs))
+                                                <?php
+                                                $checkVariable = 'false';
+                                                $checkVariableNew = 'checked';
+                                                ?>
+                                                @endif
+
+                                                @if (isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
+                                                <div class="diamond-field-contens col-lg-9">
+                                                    <div class="diamond-field-inner-bar">
+                                                        <div class="range_carat_wap">
+                                                            <div class="srchniput-fil">
+                                                                <div class="minrange">
+                                                                    <span>Min</span>
+                                                                    <input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
+                                                                </div>
+                                                                <div class="maxrange">
+                                                                    <span>Max</span>
+                                                                    <input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                                                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 19.1489%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5745%;"></span>
+                                                            </div>
+                                                            <div class="srchniput-fil">
+                                                                <input type="hidden" class="sliderValue filter-item-data" data-index="0" value="100" id="input-carat-min" name="price-min" autocomplete="off">
+                                                                <input type="hidden" class="sliderValue filter-item-data" data-index="1" value="150000" id="input-carat-max" name="price-max" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @else
+                                                <input type="{{ $filter_item->input_type }}" name="{{ $filter_item->slug }}" {{ $checkVariableNew }} onclick="return {{ $checkVariable }};" value="{{ $product_item_item->item_value }}" class="filter-item-data">
+                                                {{ $product_item_item->item_name }}
+                                                @endif
+                                            </li>
+                                        </div>
+                                        @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        @endforeach
+                        <div class="reset-filer-container">
+                            <a href="javascript:void(0)" id="resetFilterButton"><button class="reset-filer-btn"> See All (234)</button></a>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-            </div>
             <div class="category-list-wrap">
+                <div class="row">
+                    <div class="col-sm-6 col-3">
+                        <p>Item 282</p>
+                    </div>
+                    <div class="col-sm-6 col-9">
+                        <div style="display: flex">
+                            <input type="text" name="title" class="search-item empty" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+                            <div class="dropdown">
+                                <button class="sortbtn dropbtn">Sort <i class="fa fa-filter"></i></button>
+                                <div class="dropdown-content">
+                                    <a href="#">A to Z</a>
+                                    <a href="#">Z to A</a>
+                                    <a href="#">Link 3</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <input type="hidden" id="pagescroll" value="1">
                 <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
                 <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
 
                 <div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>
                 <br>
-                <div class="search-result"> @include('front.includes.productCard')</div>
+                <div class="search-result" style="margin-top: -15px;"> @include('front.includes.productCard')</div>
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
@@ -180,20 +378,31 @@
     </div>
 </div>
 
-<!-- FAQ Section start here -->
+<!-- Section Reviews -->
+<div class="container">
+    <div class="rating-review-block">
+        <div class="owl-carousel owl-theme slider-review">
+            @include('front.pages.reviews')
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Section end here -->
 <div class="faq-section engagement-ring-faq">
     <div class="container">
         <div class="head-para-three">
-            <div class="heading-h-three">
+            <h2 class="heading-h-three">
                 Engagement Ring FAQ’s
-            </div>
-            <p>Some of the most common Engagement Ring Q&A's</p>
+            </h2>
+            <h3 style="font-size: 15px;">Some of the most common Engagement Ring Q&A's</h3>
         </div>
         <div class="faq-list">
             <div class="accordion" id="accordionExample">
+
                 @php
                 $getEngagementFaqs = getEngagementFaqs();
                 @endphp
+
                 @foreach($getEngagementFaqs as $key => $faq)
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="{{$faq->id}}">
@@ -216,34 +425,20 @@
                         </div>
                     </div>
                     @endforeach
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- FAQ Section end here -->
-
-<!-- Section Reviews -->
-<div class="container">
-    <div class="rating-review-block">
-        <div class="owl-carousel owl-theme slider-review">
-            @include('front.pages.reviews')
-        </div>
-    </div>
+<div>
+    <img src="{{url('/images/viewguide.PNG')}}">
 </div>
-
-
-
 @endsection
-
-
-
-
-
 @section('js')
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -536,31 +731,139 @@
 </script>
 <script>
     $(document).ready(function() {
-        var collapse1value= document.getElementById('collapse1');
+        var collapse1value = document.getElementById('collapse1');
         if (screen.width <= 320 || screen.width <= 991) {
-            collapse1value.style.display="none";
-        }
-        else
-        {
+            collapse1value.style.display = "none";
+        } else {
             // collapse1value.style.display="block11";
         }
-		  $('.nav-toggle').click(function(){
-			//get collapse content selector
-			var collapse_content_selector = $(this).attr('href');					
- 
-			//make the collapse content to be shown or hide
-			var toggle_switch = $(this);
-			$(collapse_content_selector).toggle(function(){
-			  if($(this).css('display')=='none'){
-                                //change the button label to be 'Show'
-				toggle_switch.html('<i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category');
-			  }else{
-                                //change the button label to be 'Hide'
-				toggle_switch.html('<i class="fa fa-minus" style="font-size:15px;color:#fff;"></i> All Filter Category');
-			  }
-			});
-		  });
- 
-		});	
-    </script>
+        $('.nav-toggle').click(function() {
+            //get collapse content selector
+            var collapse_content_selector = $(this).attr('href');
+
+            //make the collapse content to be shown or hide
+            var toggle_switch = $(this);
+            $(collapse_content_selector).toggle(function() {
+                if ($(this).css('display') == 'none') {
+                    //change the button label to be 'Show'
+                    toggle_switch.html('<i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category');
+                } else {
+                    //change the button label to be 'Hide'
+                    toggle_switch.html('<i class="fa fa-minus" style="font-size:15px;color:#fff;"></i> All Filter Category');
+                }
+            });
+        });
+
+        $(document).on('click',"#productWishList",function(){
+            addtobasketFunction()
+        });
+
+    });
+
+    function addtobasketFunction(getUrl){
+        var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
+        var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
+        var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');
+        var shopPricedata= $('#shopPrice.shopPriceval').text().replace(/[^\0-9.-]+/g, '');
+
+        let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
+        
+        let diamondCaratWeight;
+        let diamondColour;
+        var diamondShape;
+        let diamondGrade;
+        let diamondClarity;
+        let diamondCertificate;
+        if($('.diamond_type:checked').val() == 'mined_diamond'){
+            diamondCaratWeight = $('#carat').val();
+            diamondColour = $('#diamond-colour').val();
+            diamondShape = $('#selected_diamond_shape').val();
+            diamondGrade = $('#diamond-grade').val();
+            diamondClarity = $('#diamond-clarity').val();
+            diamondCertificate = $('#diamond-certificate').val();
+        }else if($('.diamond_type:checked').val() == 'lab_grown'){
+            diamondCaratWeight = $('#lab_grown_carat').val();
+            diamondColour = $('#lab_grown_colour').val();
+            diamondShape = $('#selected_diamond_shape').val();
+            diamondGrade = '';
+            diamondClarity = $('#lab_grown_clarity').val();
+            diamondCertificate = '';
+        }
+
+        var variations = [];
+        $('.type-variations-row select').each(function(i, sel){
+
+            if($(sel).attr('name')!='finger-size')
+                variations.push($(sel).val());
+        });
+
+
+        $.ajax({
+            type: 'POST',
+            url: getUrl,
+            data: {
+                '_token': "{{csrf_token()}}",
+                'carat' : $('#carat').val(),
+                'variations' : variations,
+                'total-diamond-weight' : $('#total-diamond-weight').val(),
+                'color' : $('#diamond-colour').val(),
+                'clarity' : $('#diamond-clarity').val(),
+                'width-mm' : $('#width-mm').val(),
+                'grade' : $('#diamond-grade').val(),
+                'fingersize' : $('#finger-size').val(),
+                'metal_type' : $('#metal-type').val(),
+                'certificate' : $('#diamond-certificate').val(),
+                'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
+                'slug' : '{{$data->slug}}',
+                'price':parseInt(trdata) || 0,
+                'rrpPrice':parseInt(rrpPrice) || 0,
+                'savePrice':parseInt(savePriceval) || 0,
+                'shopPrice':parseInt(shopPricedata) || 0,
+                'diamond_type' : $(".diamond_type:checked").val(),
+                'discounted_price':parseInt($('#selected_discounted_price').val()) || 0, 
+                'final_price':parseInt($('#selected_final_price').val()) || 0, 
+                'setting_price': parseInt(trdata) || 0, 
+            },
+            success: function (res) {
+                if(res.success != '' && typeof res.success !== "undefined"){
+                    if(res.cartcount){
+                        $(".cartcount").text(res.cartcount);
+                    }
+                    if(res.wishcount){
+                        $(".wishcount").removeClass('fa-heart-o');
+                        $(".wishcount").addClass('fa-heart');
+                    }
+                    toastr.success(res.success);
+                }else{
+                    toastr.info(res.error);
+                }
+            }
+        });
+    }
+
+    $(function() {
+        var owl = $(".owl-carousel");
+        owl.owlCarousel({
+            items: 7,
+            margin: 2,
+            loop: true,
+            nav: false,
+            responsive: {
+                320: {
+                    items: 2
+                },
+                480: {
+                    items: 3
+                },
+                769: {
+                    items: 4
+                },
+                991: {
+                    items: 6
+                }
+            }
+        });
+    });
+</script>
+</script>
 @endsection

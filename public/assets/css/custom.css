@@ -340,12 +340,12 @@ input.input-control{height:38px}
 .cols-ryt-tags:not(.wedding-rings, .diamond-jewellery) .filter-tags-col {max-width: 12%;flex: 0 0 12%;-ms-flex: 0 0 12%;}
 
 .product-filter-col:first-child {border-right: 2px solid #EFEFEF;max-width: 45%;flex: 0 0 45%;-ms-flex: 0 0 45%;}
-.category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top; background: #f2f2f7; padding:22px 18px 20px; margin-top: 9px;}
+.category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top;  margin-top: 9px;}
 .category-list-wrap {width: 76%;display: inline-block;vertical-align: top;padding-left: 30px;}
 .is-active .category-product-filter-icon img, .category-product-filter-icon:hover img { filter: brightness(0) saturate(100%) invert(19%) sepia(95%) saturate(1175%) hue-rotate(293deg) brightness(98%) contrast(87%) }
 .product-grid-items-item {flex: 0 0 25%;max-width: 25%;-ms-flex: 0 0 25%;width: 100%;padding: 10px 10px; text-align: center;}
 .product-grid-row{ margin: 0 -10px; }
-.product-items-item-info {padding: 0;border-radius: 4px;height: 100%;border: 1px solid #D0D0D0;overflow: hidden;}
+.product-items-item-info {padding: 0;border-radius: 4px;position: relative;height: 100%;border: 1px solid #D0D0D0;overflow: hidden;}
 .product-items-item-info:hover{
 	box-shadow: 0px 1px 7px rgba(53, 53, 53, 0.2);
 }

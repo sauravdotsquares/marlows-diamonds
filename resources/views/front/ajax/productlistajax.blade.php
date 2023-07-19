@@ -5,7 +5,7 @@
 	<div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
 		<div class="product-items-item-info">
 			<div class="product-items-item-image">
-				
+			
 				<a href="{{asset('product/'.$product->slug)}}"  class="{{ $thumbnailGif ? 'product-hov' : '' }}" >
 					@if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
 						<img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="{{$product->title}}">
@@ -14,8 +14,8 @@
 					<?php if($thumbnailGif){ ?>
 						{{-- <video class="product-hover-video" muted="muted">
 							<source src="{{ asset('storage/ProductsVariVideos/R1-143-White_Square-_1651731110.mp4')}}" type="video/mp4">
-						  </video> --}}
-
+						  </video> --}}		
+						  
 						  
 						  	<?php if($thumbnailGif->extension == "gif"){ ?>
 						  		<img src="{{ asset('storage/' . $thumbnailGif->image_url )}}" class="product-hover-video" >
@@ -25,11 +25,20 @@
 								</video>
 							<?php } ?>
 					<?php } ?>
-
+					
 				</a>
 			</div>
 			<div class="product-items-item-details">
 				<div class="product-items-item-name">
+						@php
+							$wishlist = session()->get('wishlist', []);
+							$wishListClass = "fa-heart-o";
+							if(array_key_exists($product->id,$wishlist)){
+								$wishListClass = "fa-heart";
+							}
+						@endphp
+						<a href="javascript:void(0);" id="productWishList{{$product->id}}" data-productslug="{{$product->slug}}"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true" style=" position: absolute;top: 10px;right: 10px;font-size: 21px;color: #932d63;"></i></a>
+					
 					@if(isset($product->slug) && !empty($product->slug))
 						<a href="{{asset('product/'.$product->slug)}}">{{isset($product->title)?$product->title:''}}</a>
 					@else

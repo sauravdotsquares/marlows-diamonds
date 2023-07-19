@@ -25,11 +25,19 @@ class ProductFilterItems extends Model
         'is_deleted'
     ];
     protected $appends = [
-        'parent_filter_name'
+        'parent_filter_name','category_images','parent_category_slug'
     ];
 
     public function getParentFilterNameAttribute()
     {
         return ProductFilter::where('id',$this->product_filter_id)->pluck('name')->first();
+    }
+    public function getCategoryImagesAttribute()
+    {
+        return Category::where('slug',$this->item_slug)->pluck('image_url')->first();
+    }
+    public function getParentCategorySlugAttribute()
+    {
+        return Category::where('slug',$this->item_slug)->first();
     }
 }
