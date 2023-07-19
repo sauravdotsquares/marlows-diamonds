@@ -1268,6 +1268,7 @@ if (!function_exists('validate_breadcrumb')) {
             $getAjaxResponses = false;
             $page = '';
          } elseif (!empty($queryString)) {
+           
              $conditions = 'AND';
              if(isset($queryString[1]) && !empty($queryString[1])){
                  if(isset($queryString[2]) && $queryString[1] == 'womens'){
@@ -1281,6 +1282,7 @@ if (!function_exists('validate_breadcrumb')) {
                  }else{
                    
                     $getQueryStringCount = count($queryString);
+                   
                     $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
                    
                     $conditions = 'AND';
@@ -1352,7 +1354,7 @@ if (!function_exists('validate_breadcrumb')) {
  
          if (isset($requestData['ring-categories']) && !empty($requestData['ring-categories'])) {
              
- 
+           
  
              foreach ($requestData['ring-categories'] as $queryString_key => $queryString_value_new) {
                  
@@ -1406,6 +1408,7 @@ if (!function_exists('validate_breadcrumb')) {
          if (!empty($requestData['keyword'])) {
              $keyword = $requestData['keyword'];
              $query = $query->where('title', 'LIKE', "%$keyword%");
+             
          }
  
          if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
@@ -1431,7 +1434,7 @@ if (!function_exists('validate_breadcrumb')) {
  
          // echo "checked ".$query->toSql();die;
          $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
- 
+         
         
          $productItems = "";
          if ($getProductListFinal->count()) {

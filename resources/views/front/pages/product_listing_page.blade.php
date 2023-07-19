@@ -754,13 +754,15 @@
             });
         });
 
-        $(document).on('click',"#productWishList",function(){
-            addtobasketFunction()
+        $(document).on('click', "[id^=productWishList]", function () {
+            var index = parseInt($(this).attr("id").replace("productWishList", ''));
+            var product_slug = $('#productWishList'+index).data('productslug');
+            addtobasketFunction('{{route("set-product-wishlist")}}',product_slug,index);
         });
 
     });
 
-    function addtobasketFunction(getUrl){
+    function addtobasketFunction(getUrl,product_slug,index){
         var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
         var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
         var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');
@@ -814,7 +816,7 @@
                 'metal_type' : $('#metal-type').val(),
                 'certificate' : $('#diamond-certificate').val(),
                 'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
-                'slug' : '{{$data->slug}}',
+                'slug' : product_slug,
                 'price':parseInt(trdata) || 0,
                 'rrpPrice':parseInt(rrpPrice) || 0,
                 'savePrice':parseInt(savePriceval) || 0,
@@ -830,8 +832,10 @@
                         $(".cartcount").text(res.cartcount);
                     }
                     if(res.wishcount){
-                        $(".wishcount").removeClass('fa-heart-o');
-                        $(".wishcount").addClass('fa-heart');
+                        $('#productWishList'+index).children('i').removeClass('fa-heart-o');
+                        $('#productWishList'+index).children('i').addClass('fa-heart');
+                        // $(".wishcount").removeClass('fa-heart-o');
+                        // $(".wishcount").addClass('fa-heart');
                     }
                     toastr.success(res.success);
                 }else{

@@ -1634,6 +1634,7 @@ class ProductController extends Controller
         if (!empty($productListingData)) {
 
             $productItems = $productListingData['productItems'];
+            
             $isNextPage = $productListingData['isNextPage'];
             $nextPage = $productListingData['nextPage'];
             $categoryData = $productListingData['categoryData'];

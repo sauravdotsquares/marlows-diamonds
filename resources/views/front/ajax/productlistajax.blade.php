@@ -32,6 +32,8 @@
 				<div class="product-items-item-name">
 						@php
 							$wishlist = session()->get('wishlist', []);
+							// dd($wishlist);
+							// dump($product->id);
 							$wishListClass = "fa-heart-o";
 							if(array_key_exists($product->id,$wishlist)){
 								$wishListClass = "fa-heart";
