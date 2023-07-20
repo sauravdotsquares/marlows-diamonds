@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
     .dropdown-content {
-        display: none;
+       
         position: absolute;
         background-color: #f9f9f9;
         min-width: 160px;
@@ -377,12 +377,14 @@
                         <div style="display: flex">
                             <input type="text" name="title" class="search-item empty" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
                             <div class="dropdown">
-                                <button class="sortbtn dropbtn">Sort <i class="fa fa-filter"></i></button>
-                                <div class="dropdown-content">
-                                    <a href="#">A to Z</a>
-                                    <a href="#">Z to A</a>
-                                    <a href="#">Link 3</a>
-                                </div>
+                            <select class="dropdown-content" name="exampleSelect" id="exampleSelect">
+                                <option selected>Sort <i class="fa fa-filter"></i></option>
+                                <option value="asc">A to Z</option>
+                                <option value="desc">Z to A</option>
+                                <option value="price-min">Low to High</option>
+                                <option value="price-max">High to Low</option>
+                              </select>
+
                             </div>
                         </div>
                     </div>
@@ -721,8 +723,12 @@
         sendDataValues();
     });
 
-    // $("#showProductList").html('');
-    // sendDataValues();
+    $(document).on('change', "#exampleSelect", function() {
+       $("#showProductList").html('');
+        sendDataValues();
+   });
+
+    
 
     $(window).scroll(function() {
         var scroll = $('#scrollFlag').val();
@@ -754,6 +760,8 @@
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
+                
+                'sorting': $("#exampleSelect").val(),
                 'keyword': $('#search').val(),
                 'path': '{{ $path }}',
                 'page': page
@@ -777,10 +785,13 @@
             }
         });
     }
+
+  
 </script>
 <script>
     $(document).ready(function() {
-        var collapse1value = document.getElementById('collapse1');
+
+       var collapse1value = document.getElementById('collapse1');
         if (screen.width <= 320 || screen.width <= 991) {
             collapse1value.style.display = "none";
         } else {
@@ -803,13 +814,15 @@
             });
         });
 
-        $(document).on('click',"#productWishList",function(){
-            addtobasketFunction()
+        $(document).on('click', "[id^=productWishList]", function () {
+            var index = parseInt($(this).attr("id").replace("productWishList", ''));
+            var product_slug = $('#productWishList'+index).data('productslug');
+            addtobasketFunction('{{route("set-product-wishlist")}}',product_slug,index);
         });
 
     });
 
-    function addtobasketFunction(getUrl){
+    function addtobasketFunction(getUrl,product_slug,index){
         var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
         var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
         var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');
@@ -863,7 +876,7 @@
                 'metal_type' : $('#metal-type').val(),
                 'certificate' : $('#diamond-certificate').val(),
                 'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
-                'slug' : '{{$data->slug}}',
+                'slug' : product_slug,
                 'price':parseInt(trdata) || 0,
                 'rrpPrice':parseInt(rrpPrice) || 0,
                 'savePrice':parseInt(savePriceval) || 0,
@@ -879,8 +892,10 @@
                         $(".cartcount").text(res.cartcount);
                     }
                     if(res.wishcount){
-                        $(".wishcount").removeClass('fa-heart-o');
-                        $(".wishcount").addClass('fa-heart');
+                        $('#productWishList'+index).children('i').removeClass('fa-heart-o');
+                        $('#productWishList'+index).children('i').addClass('fa-heart');
+                        // $(".wishcount").removeClass('fa-heart-o');
+                        // $(".wishcount").addClass('fa-heart');
                     }
                     toastr.success(res.success);
                 }else{

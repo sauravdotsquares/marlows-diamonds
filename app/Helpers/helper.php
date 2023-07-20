@@ -1301,6 +1301,11 @@ if (!function_exists('validate_breadcrumb')) {
             $query = $query->whereIn('diamond_shape', $shape);
         }
 
+        if (!empty($requestData['sorting'])) {
+            $sort = $requestData['sorting'];
+            $query = $query->orderBy('title', $sort);
+         }
+
         // echo "checked ".$query->toSql();die;
         $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
 

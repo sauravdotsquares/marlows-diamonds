@@ -1334,6 +1334,7 @@ class ProductController extends Controller
         if (!empty($productListingData)) {
 
             $productItems = $productListingData['productItems'];
+            
             $isNextPage = $productListingData['isNextPage'];
             $nextPage = $productListingData['nextPage'];
             $categoryData = $productListingData['categoryData'];
@@ -1393,15 +1394,23 @@ class ProductController extends Controller
     public function getProductListData(Request $request)
     {
         $dataArray = [];
+        
         if (isset($request->ids) && !empty($request->ids)) {
-            foreach ($request->ids as $key => $value) {
+           foreach ($request->ids as $key => $value) {
                 $dataArray[$value['name']][] = $value['value'];
             }
-        }
+          }
+          if (isset($request->sorting) && !empty($request->sorting)) {
+               $sorting = $request->sorting;
+           }
+      
+      
+      
+        $dataArray['sorting'] = $request->sorting;
         $dataArray['page'] = $request->page;
         $dataArray['keyword'] = $request->keyword;
         $slugs = explode('/', $request->path);
-        return $productListingData = getProductListing($slugs, $dataArray);
+        return $productListingData = getProductListing($slugs, $dataArray, $sorting);
         return view('front.includes.productCard', $productListingData);
     }
 
