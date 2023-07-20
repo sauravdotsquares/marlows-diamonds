@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
     .dropdown-content {
-       
+        height: 30px;
         position: absolute;
         background-color: #f9f9f9;
         min-width: 160px;
@@ -377,7 +377,7 @@
                         <div style="display: flex">
                             <input type="text" name="title" class="search-item empty" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
                             <div class="dropdown">
-                            <select class="dropdown-content" name="exampleSelect" id="exampleSelect">
+                            <select class="form-control dropdown-content" name="exampleSelect" id="exampleSelect">
                                 <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
                                 <option value="asc">A to Z</option>
                                 <option value="desc">Z to A</option>
