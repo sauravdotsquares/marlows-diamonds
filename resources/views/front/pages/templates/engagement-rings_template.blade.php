@@ -117,7 +117,7 @@
 					<p>Once you've found your perfect match, you should choose the perfect engagement ring that suits her personality and look. We bring to you a curated assortment of diamond engagement rings in the most beautiful designs, stone settings, diamond shapes, and ring sizes.</p>
 					<p>Our diamond engagement rings are fully natural and unique, designed in our lab. We only use ethically sourced diamonds in our engagement rings. Additionally, we offer diamonds that are graded by the GIA, so you can be confident that they are of high quality. Adorning our sparkling stones will bring you joy and warmth for the rest of your lives.</p>
 					<div class="viewguide-btn">
-							<a class="btn-bg-small" href="/product-category/engagement-rings">Shop Now</a>
+						<a class="btn-bg-small" href="/product-category/engagement-rings">Shop Now</a>
 					</div>
 				</div>
 			</div>
@@ -134,7 +134,7 @@
 <!-- Your Journery of a lifetime start here start-->
 <div class="journery-life-wraper">
 	<div class="container">
-	{!! isset($data->description)?$data->description:"" !!}
+		{!! isset($data->description)?$data->description:"" !!}
 
 
 	</div>
@@ -159,43 +159,43 @@
 				@endphp
 
 				@foreach($getEngagementFaqs as $key => $faq)
-					<div class="accordion-item">
-						<h2 class="accordion-header" id="{{$faq->id}}">
-							@if($key == 0)
-								<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
-							@else
-								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
-							@endif
-							{{isset($faq->title)?$faq->title:""}}
-						  </button>
-						</h2>
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="{{$faq->id}}">
 						@if($key == 0)
-							<div id="collapse{{$faq->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
+							@else
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
+								@endif
+								{{isset($faq->title)?$faq->title:""}}
+							</button>
+					</h2>
+					@if($key == 0)
+					<div id="collapse{{$faq->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
 						@else
-							<div id="collapse{{$faq->id}}" class="accordion-collapse collapse" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
-						@endif
-						  <div class="accordion-body">
-						   {!! isset($faq->description)?$faq->description:"" !!}
-						  </div>
+						<div id="collapse{{$faq->id}}" class="accordion-collapse collapse" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
+							@endif
+							<div class="accordion-body">
+								{!! isset($faq->description)?$faq->description:"" !!}
+							</div>
 						</div>
 					</div>
-				@endforeach
+					@endforeach
 
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 <!-- FAQ Section end here -->
 
 <!-- Section Reviews -->
 <div class="container">
-<div class="rating-review-block">
-				<div class="owl-carousel owl-theme slider-review">
-				@include('front.pages.reviews')
-				</div>
-			</div>
+	<div class="rating-review-block">
+		<div class="owl-carousel owl-theme slider-review">
+			@include('front.pages.reviews')
+		</div>
+	</div>
 </div>
 
 @include('front.includes.instagram-section')
