@@ -1694,9 +1694,10 @@ class ProductController extends Controller
                 $dataArray[$value['name']][] = $value['value'];
             }
           }
-          if (isset($request->sorting) && !empty($request->sorting)) {
+          $sorting = 'ASC';
+            if (isset($request->sorting) && !empty($request->sorting)) {
                $sorting = $request->sorting;
-           }
+            }
       
       
       

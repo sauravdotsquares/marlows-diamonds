@@ -343,7 +343,7 @@
                             <input type="text" name="title" class="search-item empty" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
                             <div class="dropdown">
                             <select class="dropdown-content" name="exampleSelect" id="exampleSelect">
-                                <option selected>Sort <i class="fa fa-filter"></i></option>
+                                <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
                                 <option value="asc">A to Z</option>
                                 <option value="desc">Z to A</option>
                                 <option value="price-min">Low to High</option>
