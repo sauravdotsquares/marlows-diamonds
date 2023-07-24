@@ -247,7 +247,7 @@
 <script>
     $(document).ready(function() {
 
-
+        
         $("#slider").slider({
             range: true,
             min: 100,
@@ -298,12 +298,6 @@
         var input0 = document.getElementById('input-carat-min');
         var input1 = document.getElementById('input-carat-max');
         var inputs = [input0, input1];
-
-        $('.show-more-content').hide();
-        $('.show-more').click(function() {
-            $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
-        });
-
 
         $('#resetFilterButton').on('click', function() {
             $('.filter-item-data').prop("checked", false);
