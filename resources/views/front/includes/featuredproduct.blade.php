@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="text-center">
-            <a class="btn-bg-small expdia" href="{{asset('/product-category/engagement-rings')}}">Explore all Diamond Engagement Rings Now</a>
+            <a class="btn-bg-small expdia" href="{{asset('/diamond-engagement-rings')}}">Explore all Diamond Engagement Rings Now</a>
         </div>
     </div>
 </div>
