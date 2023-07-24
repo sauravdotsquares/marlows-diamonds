@@ -210,7 +210,7 @@ class LoginController extends Controller
     public function dashboardPage(Request $request)
     {
 
-        if(Auth::check()){
+        if(Auth::guard('customer')->check()){
             $getUserDetails = $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::guard('customer')->user()->id)->first();
             $getCountries = Country::get();
     
