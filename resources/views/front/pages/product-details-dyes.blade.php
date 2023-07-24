@@ -448,7 +448,7 @@
 						guide, you can better understand the different types of diamonds and what shapes are the perfect
 						fit for you. Download your free guide today!</p>
 					<div class="viewguide-btn">
-						<a class="btn-bg-small" href="#">View Guide</a>
+						<a class="btn-bg-small" href="{{asset('/certified-diamond-terminology-guide')}}">View Guide</a>
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
