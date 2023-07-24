@@ -185,7 +185,7 @@
                 <div class="tinv-message ">
                     <p class="cart-empty woocommerce-info"> Your basket is currently empty. </p>
                     <div class="return-to-shop">
-                        <a class="btn-bg-small" href="{{ url('/') }}">Return to shop</a>
+                        <a class="btn-bg-small" href="{{ url('/diamond-engagement-rings') }}">Return to shop</a>
                     </div>
                 </div>
             </div>
