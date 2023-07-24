@@ -1,6 +1,10 @@
 @extends('layouts.front.app')
 @section('content')
 
+@section('css')
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.css" rel="stylesheet" />
+@endsection
 <!-- guide main -->
 <div class="buying-engagementguide-page">
 	<div class="main-guide-blok">
@@ -23,7 +27,7 @@
 						<p>Sign up to our newsletter to enter our yearly draw and win back the value of your first order!</p>
 					</div>
 					<div class="joinour-mailing-form">
-						<form method="post" action="{{ route('maillist') }}">
+						<form id="newsletterForm">
 							@csrf
 							<div class="form-rows flexed flex-flex-wrap">
 								<div class="form-col width-50">
@@ -54,8 +58,7 @@
 								</div>
 							</div>
 							<div class="action-btn">
-								<button class="white-bg-btn">Subscribe</button>
-
+								<button type='submit' class="white-bg-btn">Subscribe</button>
 							</div>
 						</form>
 
@@ -870,4 +873,80 @@
 @include('front.includes.instagram-section')
 <!-- insta photos section end -->
 
+@endsection
+
+@section('js')
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+	<script>		
+        function blankForm(){
+            $('input[name="title"]').val('');
+            $('input[name="email"]').val('');
+            $('input[name="phone"]').val('');
+            $('textarea[name="description"]').val('');
+            $("button[type='submit']").prop('disabled',false);
+            $('#requestAppointment').modal('hide');
+        }
+
+		$(document).ready(function(){
+            $('form#newsletterForm').validate({
+                rules: {
+                    title: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    description: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    title: {
+                        required: 'Name is required',
+                    },
+                    email: {
+                        required: 'Email is required',
+                        email: 'Valid email is required',
+                    },
+                    description: {
+                        required: 'Description is required',
+                    }
+                },
+                submitHandler: function (form) {
+                        var form_data = new FormData(form);
+                        $(form).find("button[type='submit']").prop('disabled',true);
+                        $("button[type='submit']").text("Please Wait...");
+                        $.ajax({
+                            url: "{{ route('maillist') }}",
+                            method: "POST",
+                            cache:false,
+                            contentType:false,
+                            processData: false,
+                            data: form_data,
+                            success: function (response) {
+								console.log("For Checking ====> ");
+								console.log(response);
+								console.log(response.status);
+								console.log(response.success);
+                                $("button[type='submit']").text("Subscribe");
+                                if(response.status == 200){
+
+                                    toastr.success(response.success);
+                                }else{
+                                    toastr.info(response.error);
+                                }
+                                blankForm();
+                            }
+                        });
+                }
+            });
+		});
+
+
+    </script>
 @endsection
