@@ -307,7 +307,7 @@
 					</a>
 					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
 					<a class="store-locator store-locator-border-right" href="{{asset('visit-us')}}">Store Locator</a>
-					<a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a>
+					<!-- <a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a> -->
 				</div>
 				<div class="finance-available" ng-controller="DekopayController">
 					<a href="javascript:void(0)" ng-click="financeOptions()">
