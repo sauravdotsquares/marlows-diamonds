@@ -9,6 +9,7 @@
         width: 38.33%;
         font-weight: 800;
     }
+    .search-suggestion.hide_254 {display: none;}
 </style>
 <!-- Header Start here -->
 <header class="header-main">
@@ -225,7 +226,7 @@
                             <input type="text" name="search" class="typeahead" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
                             <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
-                        <div class="search-suggestion" ng-if="searchResults.length>0" ng-cloak>
+                        <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
                             <div class="search-suggestion-list" ng-repeat="result in searchResults">
                                 <a href="/product/<%result.slug%>">
                                     <div class="search-suggestion-img">
