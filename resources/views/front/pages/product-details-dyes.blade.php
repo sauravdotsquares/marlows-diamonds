@@ -556,7 +556,6 @@
 	<script>
 
 		function changeDiamondType(classToPerform="") {
-            console.log('classToPerform', classToPerform);
 
 			if(classToPerform == 'mined_item'){
 				$(".mined-certificate").removeAttr('style');
@@ -607,7 +606,7 @@
             $('textarea[name="description"]').val('');
             $("button[type='submit']").prop('disabled',false);
             $('#requestAppointment').modal('hide');
-            grecaptcha.reset();
+            // grecaptcha.reset();
         }
 
 		$(document).ready(function(){
@@ -655,13 +654,13 @@
                             processData: false,
                             data: form_data,
                             success: function (response) {
-                                blankForm();
                                 $("button[type='submit']").text("Send Message");
                                 if(response.status == 200){
                                     toastr.success(response.success);
                                 }else{
                                     toastr.info(response.error);
                                 }
+                                blankForm();
                             }
                         });
                     // } else {
@@ -706,7 +705,6 @@
 			
 
 			$(document).on('click','.refinedata',function(){
-				// console.log($(this).data('price'));
 				getCustomPriceFinalFunction(getNumberFromCurrency($(this).data('price')));
 				// $("#selected_diamond_price").val($(this).data('price'));
 				// $("#certificate_url").val($(this).data('certurl'));
@@ -911,7 +909,6 @@
 
                 },
                 success: function (res) {
-					// console.log(res);
 					if(res.success != '' && typeof res.success !== "undefined"){
 						if(res.cartcount){
 							$(".cartcount").text(res.cartcount);
@@ -981,7 +978,6 @@
 			$('.type-variations-col').each(function() { 
 				// var caret=document.getElementById('lab_grown_carat').val();
 				let forId = $(this).find('label').attr('for');
-				console.log(forId);
 				let forText = $(this).find('label').text();
 				const diamondType = $('.diamond_type:checked').val();
 				if ((diamondType === 'lab_grown') && (forId === 'diamond-certificate' || forId === 'diamond-colour' || forId === 'diamond-clarity' || forId === 'carat')) {
@@ -1008,7 +1004,6 @@
                     catid: '{{$data->categories}}',
                 },
                 success: function (response) {
-                    // console.log(response.html);
                     $('#relatedProductData').html(" ");
                     if(response.html){
                         $('#relatedProductData').append(response.html);
