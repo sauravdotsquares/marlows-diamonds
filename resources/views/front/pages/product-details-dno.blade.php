@@ -487,7 +487,7 @@
             $('textarea[name="description"]').val('');
             $("button[type='submit']").prop('disabled',false);
             $('#requestAppointment').modal('hide');
-            grecaptcha.reset();
+            // grecaptcha.reset();
         }
 
 
@@ -549,14 +549,13 @@
                             processData: false,
                             data: form_data,
                             success: function (response) {
-                                blankForm();
-                                $("button[type='submit']").text("Send Message");
-
+								$("button[type='submit']").text("Send Message");
                                 if(response.status == 200){
-                                    toastr.success(response.success);
+									toastr.success(response.success);
                                 }else{
-                                    toastr.info(response.error);
+									toastr.info(response.error);
                                 }
+								blankForm();
                             }
                         });
                     // } else {
