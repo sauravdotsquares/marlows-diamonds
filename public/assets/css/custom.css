@@ -422,7 +422,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .product-add-cart {display: flex;align-items: center;margin: 18px 0 0 0;}
 .product-to-wishlist a {font-size: 24px;color: #8e2e65;}
 .product-to-basket {margin: 0 12px 0 14px;}
-.product-postactions a {text-decoration: none;color: #8e2e65;font-size: 14px;display: inline-block;vertical-align: middle;}
+.product-postactions a {text-decoration: none;color: #8e2e65;font-size: 14px;display: inline-block;vertical-align: middle;border-right: none;}
 .product-postactions {margin: 30px 0 30px 0;}
 .store-locator {border-left: 1px solid #B0B0B0;padding: 12px 13px;margin: 0 16px 0 16px;border-right: 1px solid #B0B0B0;}
 .finance-available {border: 1px solid #8e2e65;border-radius: 4px; position: relative; padding-right: 65px; margin-top: 30px;}
