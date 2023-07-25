@@ -143,8 +143,8 @@
                     <a href="{{url('/')}}" title="{{$header_settings->get_options('site_title')}}">
                         @if($header_settings->get_options('logo')!='')
                             <img src="{{asset('images/logo/'.$header_settings->get_options('logo'))}}" alt="{{$header_settings->get_options('site_title')}}">
-
-                        @elseif($header_settings->get_options('site_title')!='')
+                        
+                            @elseif($header_settings->get_options('site_title')!='')
                             <div>{{$header_settings->get_options('site_title')}}</div>
                             <span>{{$header_settings->get_options('site_tagline')}}</span>
                         @else
@@ -157,7 +157,17 @@
                             <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
                     </div>
                     <div class="mobile-wishlist">
-                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                        <?php
+                            $getArray = session('wishlist');
+                            if (isset($getArray) && count($getArray)) {
+                                $wishlistIcon = 'fa-heart';
+                            } else {
+                                $wishlistIcon = 'fa-heart-o';
+                            }
+                        ?>
+                        <a href="{{ route('products.wishlist') }}" title="Wishlist"><i
+                                class="fa {{ $wishlistIcon }} wishcount" aria-hidden="true"></i>
+                        </a>
                     </div>
                     <div class="mobile-cart">
                         <a href="{{ route('product.cart') }}">
