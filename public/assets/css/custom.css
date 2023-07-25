@@ -511,7 +511,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .visit-form form .form-controls input {width: 100%;height: 42px;border: none;padding: 0 11px; background: #fff; border-radius: 2px;}
 .visit-form form .form-controls {margin: 0 0 14px 0;}
 .visit-form form .form-controls textarea {width: 100%;height: 70px;border: none;padding: 10px 11px; background: #fff; border-radius: 2px;}
-.action-submit button {border: none;padding: 9px 20px; background-color: #fff;}
+.action-submit button {border: none;padding: 9px 20px; background-color: #fff; color:#000}
 .visitform-text {text-align: center;margin: 20px 0 0 0;}
 .visitform-text a {text-decoration: none;color: #fff;}
 .visit-form form {margin: 26px 0 0 0;}
