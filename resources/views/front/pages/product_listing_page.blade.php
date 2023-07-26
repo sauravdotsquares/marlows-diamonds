@@ -209,10 +209,18 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <p style="padding-top: 10px;text-decoration:none!important"><a href="{{ url('/') }}">Home</a> <span><?php
-                                                                                                                $url = $_SERVER['REQUEST_URI'];
-                                                                                                                echo $url;
-                                                                                                                ?></span></p>
+            <p style="padding-top: 10px;text-decoration:none!important">
+                <a href="{{ url('/') }}">Home </a> 
+                <span>
+                    <?php 
+                        $url = $_SERVER['REQUEST_URI'];
+                        if(isset($url) && !empty($url)){
+                            echo " / ";
+                        }
+                        echo getBreadcrumbCategoryName($url); 
+                    ?>
+                </span>
+            </p>
             <center>
                 <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3>
             </center>
