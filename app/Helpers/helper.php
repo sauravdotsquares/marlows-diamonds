@@ -1743,3 +1743,23 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         }
         return $numPrice;
     }
+    
+    if (!function_exists("getBreadcrumbCategoryName")) {
+        function getBreadcrumbCategoryName($breadCrumbURL)
+        {
+            $breadcrumbArray = array_filter(explode('/',$breadCrumbURL));
+            $newDesignBreadcrumb = [];
+            foreach($breadcrumbArray as $key => $value){
+                $getCategoryName = Category::where('slug',$value)->value('name');
+                if($key == 1 && count($breadcrumbArray) > 1){
+                    if($value == 'engagement-rings'){
+                        $value = 'diamond-engagement-rings';
+                    }
+                    $newDesignBreadcrumb[] = '<a href="/'.$value.'">'.$getCategoryName.'</a>'; 
+                }else{
+                    $newDesignBreadcrumb[] = $getCategoryName; 
+                }
+            }
+            return implode(' / ',$newDesignBreadcrumb);
+        }
+    }
