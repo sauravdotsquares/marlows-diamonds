@@ -1056,6 +1056,14 @@ span#deposited_message {color: #8e2e65;display: inline-block !important;font-wei
 a.btn-bg-small.expdia { font-size: 15px; margin: 40px 0 0; }
 del#shopPrice {margin-right: 5px;}
 
+/* For GIA Images updation */
+.leftright-imt-col.leftright-text a img {
+    margin: 0px 0 10px;
+    width: 145px;
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
 @media(max-width:1300px){
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu {
 		top: 85%;
