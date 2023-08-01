@@ -5,6 +5,7 @@
         .error {
             color: #e74c3c !important;
         }
+        .action-submit button {color:#000}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @endsection
