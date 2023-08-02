@@ -881,6 +881,7 @@
 
 		$(document).on('change', "[id^=selectedDiamondCheckBox]", function() {
 			var index = parseInt($(this).attr("id").replace("selectedDiamondCheckBox",''));
+			$('#addtobasketselectedrowid').val(index);
 			setPartialPaymentAmount(index);
 		});
 
