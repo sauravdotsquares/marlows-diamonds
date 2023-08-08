@@ -1,4 +1,5 @@
 @inject('header_settings', 'App\Models\Settings')
+@inject('header_settingss', 'App\Models\SettingsLang')
 <style>
     .discount_timer{
         font-weight: 800;
@@ -143,8 +144,8 @@
                     <a href="{{url('/')}}" title="{{$header_settings->get_options('site_title')}}">
                         @if($header_settings->get_options('logo')!='')
                             <img src="{{asset('images/logo/'.$header_settings->get_options('logo'))}}" alt="{{$header_settings->get_options('site_title')}}">
-                        
-                            @elseif($header_settings->get_options('site_title')!='')
+
+                        @elseif($header_settings->get_options('site_title')!='')
                             <div>{{$header_settings->get_options('site_title')}}</div>
                             <span>{{$header_settings->get_options('site_tagline')}}</span>
                         @else
@@ -158,16 +159,16 @@
                     </div>
                     <div class="mobile-wishlist">
                         <?php
-                            $getArray = session('wishlist');
-                            if (isset($getArray) && count($getArray)) {
-                                $wishlistIcon = 'fa-heart';
-                            } else {
-                                $wishlistIcon = 'fa-heart-o';
-                            }
-                        ?>
-                        <a href="{{ route('products.wishlist') }}" title="Wishlist"><i
-                                class="fa {{ $wishlistIcon }} wishcount" aria-hidden="true"></i>
-                        </a>
+                                $getArray = session('wishlist');
+                                if (isset($getArray) && count($getArray)) {
+                                    $wishlistIcon = 'fa-heart';
+                                } else {
+                                    $wishlistIcon = 'fa-heart-o';
+                                }
+                            ?>
+                            <a href="{{ route('products.wishlist') }}" title="Wishlist"><i
+                                    class="fa {{ $wishlistIcon }} wishcount" aria-hidden="true"></i>
+                            </a>
                     </div>
                     <div class="mobile-cart">
                         <a href="{{ route('product.cart') }}">

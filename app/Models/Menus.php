@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MenuLang;
 
 class Menus extends Model
 { 
@@ -20,4 +21,9 @@ class Menus extends Model
     protected $fillable = [
         'id','parent','title','slug','icon', 'target','tooltip','status'
     ];
+
+    public function langMenu()
+    {
+      return $this->hasMany(MenuLang::class);
+    }
 }
