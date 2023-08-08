@@ -1232,7 +1232,7 @@ if (!function_exists('validate_breadcrumb')) {
 
 
      function getProductListing($queryString = null, $requestData = [])
-     {
+     {  
  
          /** generate custom query for categories */
          $category_custom_query = "";
@@ -1352,7 +1352,7 @@ if (!function_exists('validate_breadcrumb')) {
  
          if (isset($requestData['ring-categories']) && !empty($requestData['ring-categories'])) {
              
- 
+           
  
              foreach ($requestData['ring-categories'] as $queryString_key => $queryString_value_new) {
                  
@@ -1416,7 +1416,7 @@ if (!function_exists('validate_breadcrumb')) {
          }
  
  
- 
+
          if (!empty($requestData['price-min']) && !empty($requestData['price-max'])) {
              $query->whereHas('getProductVariation', function ($query) use ($requestData) {
                  $query->whereBetween('regular_price', array($requestData['price-min'][0], $requestData['price-max'][0]));
@@ -1428,10 +1428,13 @@ if (!function_exists('validate_breadcrumb')) {
              $shape = $requestData['filter-by-shape'];
              $query = $query->whereIn('diamond_shape', $shape);
          }
- 
+         if (!empty($requestData['sorting'])) {
+            $sort = $requestData['sorting'];
+            $query = $query->orderBy('title', $sort);
+         }
          // echo "checked ".$query->toSql();die;
          $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
- 
+         
         
          $productItems = "";
          if ($getProductListFinal->count()) {
@@ -1737,3 +1740,75 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         }
         return $numPrice;
     }
+    
+    if (!function_exists('chnageColumnAccordingToLanguage')) {
+        function chnageColumnAccordingToLanguage($data, $relation, $colum_arr = [], $defult_language = null)
+        {
+            if ($defult_language == null)
+                $defult_language = "EN";
+            if ($defult_language != env('DEFULT_LANG_CODE')) {
+    
+                if (isset($data[0])) {
+                    foreach ($data as $key => $value) {
+                        if (isset($value->$relation[0])) {
+                            foreach ($value->$relation as $value1) {
+                                if ($value1->lang == $defult_language) {
+                                    foreach ($colum_arr as $colum_key => $colum_value) {
+                                        $data[$key]->$colum_value = $value1->$colum_value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (isset($data->$relation)) {
+                        foreach ($data->$relation as $value1) {
+                            if ($value1->lang == $defult_language) {
+                                foreach ($colum_arr as $colum_key => $colum_value) {
+                                    $data->$colum_value = $value1->$colum_value;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return $data;
+        }
+    }
+    
+    
+    if (!function_exists('chnageMenuLanguage')) {
+        function chnageMenuLanguage($data, $relation, $colum_arr = [], $defult_language = null)
+        {
+            if ($defult_language == null)
+                $defult_language = getDefultAdminLanguage();
+            // if ($defult_language != env('DEFULT_LANG_CODE')) {
+    
+                if (isset($data[0])) {
+                    foreach ($data as $key => $value) {
+                        if (isset($value->$relation[0])) {
+                            foreach ($value->$relation as $value1) {
+                                if ($value1->lang == $defult_language) {
+                                    foreach ($colum_arr as $colum_key => $colum_value) {
+                                        $data[$key]->$colum_value = $value1->$colum_value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (isset($data->$relation)) {
+                        foreach ($data->$relation as $value1) {
+                            if ($value1->lang == $defult_language) {
+                                foreach ($colum_arr as $colum_key => $colum_value) {
+                                    $data->$colum_value = $value1->$colum_value;
+                                }
+                            }
+                        }
+                    }
+                }
+            // }
+            return $data;
+        }
+    }
+    
