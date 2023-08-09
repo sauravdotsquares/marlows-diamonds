@@ -1063,6 +1063,33 @@ del#shopPrice {margin-right: 5px;}
     object-fit: cover;
     border: 2px solid #ccc;
 }
+/*listing page css*/
+
+/*aman css*/
+.product-panel-new .dropdown-content a {color: black;padding: 12px 16px;text-decoration: none;display: block;}
+.product-panel-new .dropdown:hover .dropdown-content {display: block;}
+.product-panel-new .search-item {width: 320px;height: 29px;border: none;background: #efefef;padding: 6px;}
+.product-panel-new input.empty {font-family: FontAwesome;font-style: normal;font-weight: normal;text-decoration: inherit;}
+.product-panel-new .sortbtn {width: 138px !important;background: #fff;border-radius: 6px;border: 2px solid #efefef;height: 30px;margin-left: 2px;}
+.product-panel-new .ui-slider-handle {width: 35px !important;font-size: small !important;color: #FF0000 !important;text-align: center !important;}
+.product-panel-new .ui-slider .ui-slider-handle {height: 1.5em;color: #8e2e65 !important;}
+.product-panel-new .ui-widget-header {background: #8e2e65 !important;}
+.product-panel-new .ui-state-hover,
+.product-panel-new .ui-widget-content .ui-state-hover,
+.product-panel-new .ui-widget-header .ui-state-hover,
+.product-panel-new .ui-state-focus,
+.product-panel-new .ui-widget-content .ui-state-focus,
+.product-panel-new .ui-widget-header .ui-state-focus {border-color: #8e2e65 !important;outline: none;box-shadow: none;background: #fff !important;}
+.product-panel-new .error {color: #e74c3c !important;}
+.product-panel-new .accordion-body {padding: 0 15px;}
+.product-panel-new .srchniput-fil span {font-size: 13px;background: #ffff;position: absolute;left: 8px;top: -22px;padding: 0px 4px;display: inline-block;}
+.product-panel-new .nav-toggle {display: none;}
+.product-panel-new .policysection{margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;}
+.product-panel-new .policyheading{color: #8e2e65;font-weight: bold;text-transform: capitalize;font-size: 13px;}
+.product-panel-new .policy0icon{border: 1px solid #8e2e65;padding: 7px 1px 0px;width: 24%;text-align: center;border-radius: 10px;}
+.product-panel-new .policyimg{width: 50px;margin: 0 0 11px;}
+h6.policyheading a { color: #8e2e65;}
+/*aman css*/
 
 @media(max-width:1300px){
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu {
@@ -1325,3 +1352,8 @@ right: 10px !important;
 @media(max-width:420px){
     span#deposited_message {font-size: 11px;} 
 }
+
+@media only screen and (max-width: 600px) {
+    .product-panel-new .policy0icon{border: 1px solid #8e2e65; padding: 10px 15px 0px; width: 48%; text-align: center; border-radius: 10px; margin-top: 10px; }
+}
+/*aman media css end*/
