@@ -24,6 +24,13 @@
 		.metaltypeval{font-size: 15px;font-weight: bold;color:black}
 		.tableheading{font-size: 17px; font-weight: bold;color:#fff !important;background:#8e2e65 }
 		.tablehover:hover {background-color: #8e2e65; color: #fff}
+		.policy0icon{border: 1px solid #8e2e65;padding: 10px 15px 0px;width: 24%;text-align: center;border-radius: 10px;}
+		.policysection{margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;}
+		.policyheading{color: #8e2e65;font-weight: bold;text-transform: capitalize;font-size: 13px;}
+    	.policy0icon{border: 1px solid #8e2e65;padding: 7px 1px 0px;width: 24%;text-align: center;border-radius: 10px;}
+		.policyimg{width: 40px;margin: 0 0 11px;}
+		.policysection a {color: #8e2e65;}
+		@media only screen and (max-width: 600px) {.policy0icon{border: 1px solid #8e2e65;padding: 10px 15px 0px;width: 48%;text-align: center;border-radius: 10px;margin-top: 10px;}}
 		/* .carousel-thumbnails li{ -webkit-filter: brightness(80%); filter:brightness(80%); border: 1px solid transparent;}
 		.carousel-thumbnails li.active {filter: brightness(100%); border: 1px solid #8e2e65; border-radius: 1px;} */
 	</style>
@@ -231,6 +238,12 @@
 					<div class="doko-img">
 						<img src="{{asset('')}}assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
 					</div>
+				</div>
+				<div class="policysection">
+					<div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading"><a href="/terms">Free Delivery & <br> Collection </a> </h6></div>
+					<div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> <a href="/terms">Diamond Quality <br> Certificate</a> </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading"><a href="/terms">30 Days<br> Return </a> </h6></div>
 				</div>
 
 			</div>

@@ -65,7 +65,7 @@
     }
 </style>
 @endsection
-
+<div class="container product-panel-new">
 <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
     <div class="container">
         <div class="category-banner-text">
@@ -179,7 +179,19 @@
         </div>
     </div>
 </div>
-
+<div class="container">
+    <div class="head-para-three">
+        <div class="heading-h-three">
+            Delivery & Return Policy
+        </div>
+    </div>
+    <div class="policysection">
+        <div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+        <div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading"><a href="/terms"> Free Delivery & <br> Collection  </a> </h6></div>
+        <div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> <a href="/terms"> Diamond Quality <br> Certificate </a> </h6></div>
+        <div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
+    </div>
+</div>
 <!-- FAQ Section start here -->
 <div class="faq-section engagement-ring-faq">
     <div class="container">
@@ -234,7 +246,7 @@
     </div>
 </div>
 
-
+</div>
 
 @endsection
 
