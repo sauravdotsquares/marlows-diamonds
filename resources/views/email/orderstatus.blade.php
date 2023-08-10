@@ -324,7 +324,7 @@
 											color: #505050;line-height: 20px; font-size: 14px;">
 													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
 
-                                                    {{-- (includes £329.06 VAT) --}}
+                                                  
 											</td>
 										</tr>
 										<tr>
@@ -346,7 +346,7 @@
 											color: #505050;line-height: 20px; font-size: 14px;">
 													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
 
-                                                    {{-- (includes £329.06 VAT) --}}
+                                                   
 											</td>
 										</tr>
 									</tbody>

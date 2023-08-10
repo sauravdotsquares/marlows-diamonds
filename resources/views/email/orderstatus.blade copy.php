@@ -161,7 +161,7 @@
 											color: #505050;line-height: 20px; font-size: 14px;">
 													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['final_price']}}
 
-                                                    {{-- (includes £329.06 VAT) --}}
+                                                    
 											</td>
 										</tr>
 									</tbody>

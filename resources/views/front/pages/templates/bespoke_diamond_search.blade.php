@@ -524,7 +524,7 @@
 										<th>Clarity</th>
 										<th ng-if="shape=='ROUND'">Cut</th>
 										<th>Cert</th>
-										<th>Diamond Price inc VAT</th>
+										<th>Diamond Price</th>
 										<th>Certificate</th>
 										<th>Image</th>
 										<th>Select</th>
