@@ -118,7 +118,7 @@
                                     <span class="side-cart-amount">{{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'],2) }}</span>
                                 </div>
                                 <div class="side-cart-total">
-                                    <strong>Deposited: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($price * $details['quantity'],2) }} (incl. VAT)
+                                    <strong>Deposited: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($price * $details['quantity'],2) }} 
                                 </div>
 
                             </div>

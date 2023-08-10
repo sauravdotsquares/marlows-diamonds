@@ -139,9 +139,7 @@
                     <tr>
                         <th scope="row">Deposited Total:</th>
                         <td><span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span> <small
-                                class="includes_tax">(includes <span class="woocommerce-Price-amount amount"><span
-                                        class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>64.80</span> VAT)</small></td>
+                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span> </td>
                     </tr>
                 </tfoot>
             </table>
