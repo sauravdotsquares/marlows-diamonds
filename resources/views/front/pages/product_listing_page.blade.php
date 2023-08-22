@@ -7,209 +7,17 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<style>
-    .dropdown-content {
-        height: 30px;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
 
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .search-item {
-        width: 320px;
-        height: 29px;
-        border: none;
-        background: #efefef;
-        padding: 6px;
-    }
-
-    input.empty {
-        font-family: FontAwesome;
-        font-style: normal;
-        font-weight: normal;
-        text-decoration: inherit;
-    }
-
-    .sortbtn {
-        width: 138px !important;
-        background: #fff;
-        border-radius: 6px;
-        border: 2px solid #efefef;
-        height: 30px;
-        margin-left: 2px;
-    }
-
-    .ui-slider-handle {
-        width: 35px !important;
-        font-size: small !important;
-        color: #FF0000 !important;
-        text-align: center !important;
-    }
-
-    .ui-slider .ui-slider-handle {
-        height: 1.5em;
-        color: #8e2e65 !important;
-    }
-
-    .ui-widget-header {
-        background: #8e2e65 !important;
-    }
-
-    .ui-state-hover,
-    .ui-widget-content .ui-state-hover,
-    .ui-widget-header .ui-state-hover,
-    .ui-state-focus,
-    .ui-widget-content .ui-state-focus,
-    .ui-widget-header .ui-state-focus {
-        border-color: #8e2e65 !important;
-        outline: none;
-        box-shadow: none;
-        background: #fff !important;
-    }
-
-    .error {
-        color: #e74c3c !important;
-    }
-
-    .accordion-body {
-        padding: 0 15px;
-    }
-
-    .srchniput-fil span {
-        font-size: 13px;
-        background: #ffff;
-        position: absolute;
-        left: 8px;
-        top: -22px;
-        padding: 0px 4px;
-        display: inline-block;
-    }
-
-    .nav-toggle {
-        display: none; // display none for everyone
-    }
-
-    /* Landscape phone to portrait tablet  show the button */
-    @media only screen and (max-width: 576px) and (min-width: 320px) {
-        .nav-toggle {
-            display: block; // or inline-block or inline : which ever is appropriate for you.
-        }
-
-        .filter-item {
-            display: inline-block;
-            vertical-align: top;
-            margin-right: 60px;
-            width: 300px;
-        }
-
-        .search-item {
-            width: 134px !important;
-        }
-
-        .sortbtn {
-            width: 71px !important;
-        }
-    }
-
-    @media only screen and (max-width: 720px) and (min-width: 576px) {
-        .nav-toggle {
-            display: block; // or inline-block or inline : which ever is appropriate for you.
-        }
-
-        .filter-item {
-            display: inline-block;
-            vertical-align: top;
-            margin-right: 60px;
-            width: 300px;
-        }
-
-        .search-item {
-            width: 135px !important;
-        }
-
-        .sortbtn {
-            width: 122px !important;
-        }
-    }
-
-    @media only screen and (max-width: 991px) and (min-width: 720px) {
-        .nav-toggle {
-            display: block; // or inline-block or inline : which ever is appropriate for you.
-        }
-
-        .filter-item {
-            display: inline-block;
-            vertical-align: top;
-            margin-right: 60px;
-            width: 300px;
-        }
-
-        .search-item {
-            width: 178px !important;
-        }
-    }
-
-    @media only screen and (max-width: 1300px) and (min-width: 991px) {
-        .search-item {
-            width: 280px !important;
-        }
-    }
-    .policysection
-    {
-        margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;
-    }
-    .policyheading
-    {
-        color: #8e2e65;
-    font-weight: bold;
-    text-transform: capitalize;
-    font-size: 13px;
-    }
-    .policy0icon
-		{
-            border: 1px solid #8e2e65;
-            padding: 7px 1px 0px;
-            width: 24%;
-            text-align: center;
-            border-radius: 10px;
-		}
-		.policyimg
-		{
-            width: 50px;
-            margin: 0 0 11px;
-		}
-		@media only screen and (max-width: 600px) {
-			.policy0icon
-		{
-		    border: 1px solid #8e2e65;
-            padding: 10px 15px 0px;
-            width: 48%;
-            text-align: center;
-			border-radius: 10px;
-			margin-top: 10px;
-		}
-		}
-</style>
 @endsection
 
 
-<div class="container">
+<div class="container product-panel-new">
+
+
+
     <div class="row">
         <div class="col-sm-12">
-            <p style="padding-top: 10px;text-decoration:none!important">
+            <p class="burgarmenu">
                 <a href="{{ url('/') }}">Home </a> 
                 <span>
                     <?php 
@@ -221,19 +29,25 @@
                     ?>
                 </span>
             </p>
+
+            <input type="text" name="title" class="search-item empty search-mobile" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+
             <center>
                 <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3>
             </center>
-            <div class="owl-carousel owl-theme" style="text-align: center; ">
+
+            <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
                 @foreach ($filter_items as $filter_key => $filter_item)
                     
 
                     @if($filter_item->slug == 'style-categories')
                         @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
                             <div class="item">
-                               
+                                
                                 @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
-                                    <img src="{{ asset('storage/'.$product_item_item->category_images)}}" style="width:100px">
+                                    <img src="{{ asset('storage/'.$product_item_item->category_images)}}" >
+                                @else
+                                    <img src="https://devstaging.marlows-diamonds.co.uk/storage/Products/CX9-SC48_00003_1650365432.jpg"> 
                                 @endif
                                 <p> <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a></p>
                             </div>
@@ -241,42 +55,6 @@
                     @endif
 
                 @endforeach
-                <!-- <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div>
-                <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div>
-                <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div>
-                <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div>
-                <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div>
-                <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div>
-                <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div>
-                <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div>
-                <div class="item">
-                    <img src="https://192.168.3.141/marlows-diamond/public/storage/Products/ET105-F-VS_T_W.jpg" style="width:100px">
-                    <p> Eternity Ring</p>
-                </div> -->
 
             </div>
             <div>
@@ -284,32 +62,37 @@
         </div>
     </div>
 
-    <center><button href="#collapse1" class="nav-toggle btn" style="background-color: #8e2e65; color:#fff"><i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category</button></center><br>
-</div>
 
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
     <div class="container">
         <div class="category-listing-row">
-            <div id="collapse1" class="category-sidebar-wrap">
+            <div class="category-sidebar-wrap category-sidebar-left">
                 <div>
-                    <div style="display: flex">
-                        <h3>Filter </h3>
-                        <a href="javascript:void(0)" id="resetFilterButton" style="padding-left: 120px;color:black;"> Clear All Filter</a>
+                    <div class="filter-clear">
+                        <button href="#collapse1" class="nav-toggle btn" style=""><i class="fa fa-angle-down" style="color:#993168"></i>  Filter </button>
+                        <a href="javascript:void(0)" class="clearallfilter-desktop" id="resetFilterButton">All Filter Category</a>
+                        <div class="dropdown sortmobile">
+                            <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>
+                            <select class="form-control dropdown-content" name="exampleSelect" id="exampleSelect">
+                                <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
+                                <option value="asc">A to Z</option>
+                                <option value="desc">Z to A</option>
+                                <option value="price-min">Low to High</option>
+                                <option value="price-max">High to Low</option>
+                              </select>
+
+                            </div>
                     </div>
-                    <div class="filter-container">
+                    <div class="filter-container" id="collapse1">
                         @foreach ($filter_items as $filter_key => $filter_item)
                         <div class="filter-item">
                             <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{ $filter_item->slug }}" />
                             <div class="accordion-item">
                                 <div class="category-filter-title">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-9">
-                                            <h6 style="padding:10px;"><b>{{ $filter_item->name }}</b></h6>
-                                        </div>
-                                        <div class="col-sm-6 col-3">
+
+                                            <h6><b>{{ $filter_item->name }}</b></h6>
+
                                             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $filter_item->slug }}" aria-expanded="true" aria-controls="collapse{{ $filter_item->slug }}" style="background: #fff;border:none;"></button>
-                                        </div>
-                                    </div>
                                 </div>
                                 <ul>
                                     <div id="collapse{{ $filter_item->slug }}" class="accordion-collapse collapse show" aria-labelledby="{{ $filter_item->slug }}" data-bs-parent="#accordionExample">
@@ -378,12 +161,13 @@
             </div>
             <div class="category-list-wrap">
                 <div class="row">
-                    <div class="col-sm-6 col-3">
+                    <div class="category-list-top">
+                    <div class="category-list-item">
                         <p>Item 282</p>
+                        <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
                     </div>
-                    <div class="col-sm-6 col-9">
-                        <div style="display: flex">
-                            <input type="text" name="title" class="search-item empty" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+                    <div class="category-list-item-searchsort dropdown-content-desktop">
+                          <input type="text" name="title" class="search-item empty" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
                             <div class="dropdown">
                             <select class="form-control dropdown-content" name="exampleSelect" id="exampleSelect">
                                 <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
@@ -394,8 +178,9 @@
                               </select>
 
                             </div>
-                        </div>
                     </div>
+</div>
+
                 </div>
                 <input type="hidden" id="pagescroll" value="1">
                 <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
@@ -491,8 +276,18 @@
     </div>
 </div>
 
-<div>
+<div class="engagement-ring-img">
     <img src="{{url('/images/viewguide.PNG')}}">
+
+
+    <div class="engagement-ring-img-content">
+        <div class="container">
+    <h2>Find the perfect engagement ring</h2>
+    <button class="reset-filer-btn"> View Guide </button>
+</div>
+</div>
+</div>
+
 </div>
 @endsection
 @section('js')
@@ -526,7 +321,7 @@
                 var value2 = $("#slider").slider("values", 1);
 
                 $("#showProductList").html('');
-                sendDataValues();
+                sendDataValues(); 
             },
         });
 
@@ -814,10 +609,10 @@
             $(collapse_content_selector).toggle(function() {
                 if ($(this).css('display') == 'none') {
                     //change the button label to be 'Show'
-                    toggle_switch.html('<i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category');
+                    toggle_switch.html('<i class="fa fa-angle-down" style="color:#993168"></i>  Filter');
                 } else {
                     //change the button label to be 'Hide'
-                    toggle_switch.html('<i class="fa fa-minus" style="font-size:15px;color:#fff;"></i> All Filter Category');
+                    toggle_switch.html('<i class="fa fa-angle-up" style="color:#993168"></i>  Filter');
                 }
             });
         });
