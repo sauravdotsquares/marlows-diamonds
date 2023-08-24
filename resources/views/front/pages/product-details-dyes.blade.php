@@ -337,8 +337,11 @@
 				</div>
 			</div>
 		</div>
+		       
+
 	</div>
 </div>
+
 
 <!-- Related Product start heRe -->
 <div class="related-products-section">
@@ -610,6 +613,7 @@
 			}else if(getDiamondType == 'mined_diamond'){
 				getProdVideo('onChange','Platinum');
 			}
+	
 		});
 
 		
@@ -714,6 +718,7 @@
 			});
 			$(document).on('change','#metal-type',function(){
 				getProdVideo('onChange');
+		
 			});
 
 			

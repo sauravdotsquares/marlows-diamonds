@@ -1,6 +1,6 @@
 user agent: *
-Disallow: 
+Disallow: /
 User-agent: Googlebot
-Disallow:
+Disallow: /
 User-agent: Googlebot-Image
-Disallow:
+Disallow: /

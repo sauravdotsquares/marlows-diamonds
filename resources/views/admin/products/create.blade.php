@@ -564,7 +564,6 @@
                'value': $('#attribute_value').val(),
             },
             success: function (res) {
-               console.log(res);
                getAttribute();
                return false;
             }
@@ -582,7 +581,6 @@
             '_token': "{{csrf_token()}}",
          },
          success: function (res) {
-            console.log(res);
             if (res) {
                $('#show_attributes').empty();
                $("#show_attributes").append(res.getAttributeDesign);
@@ -624,7 +622,6 @@
       if ($(this).prop('checked') == true) {
          $("#dropdownVariation").append("<select data-field='" + changeText + "' id='" + changeText + "' name='data[0][" + changeText + "]' class='form-control'><option value=''>Select Any " + $(this).data('name') + "</option></select> ");
          $.each($(this).data('value').split('|'), function (key, value) {
-            console.log(value);
             $("#" + changeText).append("<option value='" + value + "'>" + value + "</option>");
          });
       }

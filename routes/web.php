@@ -57,6 +57,14 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::post('/pages/edit/{id}', 'PageController@edit');
 		Route::get('/delete-page/{id}', 'PageController@delete');
 		Route::get('/pages/status/{id}/{status}', 'PageController@status');
+		// Pages Route
+		Route::get('/attributes', 'AttributeController@index')->name('attributes');
+		Route::get('/attributes/create', 'AttributeController@create')->name('create');
+		Route::post('/attributes/add', 'AttributeController@add')->name('add');
+		Route::get('/attributes/update/{id}', 'AttributeController@update')->name('create');
+		Route::post('/attributes/edit/{id}', 'AttributeController@edit');
+		Route::get('/delete-attribute/{id}', 'AttributeController@delete');
+		Route::get('/attributes/status/{id}/{status}', 'AttributeController@status');
 		// Blog/Posts Routes
 		Route::get('/posts', 'PostController@index')->name('posts');
 		Route::get('/posts/create', 'PostController@create')->name('create');
@@ -375,10 +383,6 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
     Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
     Route::post('/login-customers', 'LoginController@loginCustomer')->name('login-customers');
 
-    Route::post('/login-customer-account', 'LoginController@getLoginRegisterAccount')->name('login.customer.account');
-
-    Route::post('/check-email-id', 'LoginController@checkEmailId')->name('check.email.id');
-
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
 	//Route::any('/exclusive', 'ProductController@exclusiveMarlows')->name('products.exclusive');
 
@@ -424,9 +428,9 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/set-product-wishlist/{slug?}', 'WishlistController@addToWishlist')->name('set-product-wishlist');
 	Route::delete('product/remove-from-wishlist', 'WishlistController@removeWishlist')->name('remove.from.wishlist');
 
-	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
+	// Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
 
-	Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
+	// Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
 
 	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
@@ -454,14 +458,6 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::any('/deko-api/dekopay-cancelled', 'DekoPayController@dekopayCancelled');
 	Route::any('/deko-api/dekopay-referred', 'DekoPayController@dekopayReferred');
 	Route::any('/deko-api/dekopay-csn-url', 'DekoPayController@dekopayCsnUrl');
-
-
-
-
-
-	
-	
-	
 
 	// {slug2?}/{slug3?}
 	Route::get('{page}', 'PageController@page')->name('page');

@@ -81,7 +81,6 @@
             </div>
             <!-- Category SIdebar start -->
             <div class="category-sidebar-wrap">
-
                 <div class="sidebar-main-cart">
                     <div class="sidebar-title">
                         Shopping Cart
@@ -106,7 +105,6 @@
                                 <div class="side-cart-delete">
                                     <a href="javascript:void(0);" data-id="{{ $id }}" class="remove-from-cart">x</a>
                                 </div>
-
                                 <div class="side-cart-pr-name">
                                     {!! $details['name'] !!}
                                 </div>
@@ -117,7 +115,6 @@
                                 <div class="side-cart-total">
                                     <strong>Subtotal: </strong> {{MY_CURRENCY_SYMBOL}}{{ number_format($details['price'] * $details['quantity'],2) }} 
                                 </div>
-
                             </div>
                         @endforeach
                         <div class="side-cart-actions">
@@ -127,10 +124,7 @@
                     </div>
                     @else
                         <div class="shopping_cart_content">
-
                             <p class="mini-cart__empty-message">No products in the basket.</p>
-
-
                         </div>
                     @endif
                 </div>

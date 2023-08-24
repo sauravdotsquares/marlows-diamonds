@@ -9,7 +9,6 @@
 
 
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use App\Models\Reviews;
 use App\Models\PostCategory;
@@ -21,7 +20,6 @@ use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Category;
-use App\Models\Discount;
 use App\Models\Popups;
 use App\Models\MarginApiRange;
 use App\Models\DiscountRange;
@@ -35,12 +33,6 @@ use App\Models\LabPricesList;
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
 
-if (!function_exists("helper_test")) {
-    function helper_test()
-    {
-        echo "it is working";
-    }
-}
 if (!function_exists("getVAT")) {
     function getVAT()
     {
@@ -101,11 +93,11 @@ if (!function_exists("single_storage_image_upload")) {
         if (!file_exists(storage_path('app/public/' . $folderName))) {
             mkdir(storage_path('app/public/' . $folderName), 0777);
         }
-		// $height = 200;
-		// $width = 200;
-		$image = $imageUrl;
+        // $height = 200;
+        // $width = 200;
+        $image = $imageUrl;
         // echo '<pre>';print_r($image); die;
-		$imageName = $image->getClientOriginalName();
+        $imageName = $image->getClientOriginalName();
 
         if (!empty($height) && !empty($width)) {
             $fileName =  $folderName . '/' . time() . '-' . $height . 'x' . $width . $imageName;
@@ -116,7 +108,7 @@ if (!function_exists("single_storage_image_upload")) {
         }
 
 
-		return $fileName;
+        return $fileName;
     }
 }
 
@@ -157,13 +149,6 @@ if (!function_exists("product_video_upload")) {
         return  $fileNameToStore;
 
         // return $data;
-    }
-}
-
-if (!function_exists("multiple_image_upload")) {
-    function multiple_image_upload()
-    {
-        echo "it is working multiple";
     }
 }
 
@@ -243,43 +228,43 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
-	if (!function_exists("getReviews")) {
-    function getReviews()
-		{
-			$reviews = Reviews::where('status',1)->get();
-			return ($reviews);
-		}
-	}
+    if (!function_exists("getReviews")) {
+        function getReviews()
+        {
+            $reviews = Reviews::where('status', 1)->get();
+            return ($reviews);
+        }
+    }
 
-	if (!function_exists("getCategories")) {
-    function getCategories()
-		{
-			$postcategories = PostCategory::all();
-			return ($postcategories);
-		}
-	}
+    if (!function_exists("getCategories")) {
+        function getCategories()
+        {
+            $postcategories = PostCategory::all();
+            return ($postcategories);
+        }
+    }
 
-	if (!function_exists("getRecentPosts")) {
-    function getRecentPosts()
-		{
-			$recentposts = Posts::take(5)->orderBy('id', 'DESC')->where('status', 1)->get();
-			return ($recentposts);
-		}
-	}
-	if (!function_exists("getRelatedPosts")) {
-    function getRelatedPosts()
-		{
-			$relatedposts = Posts::take(5)->orderBy('id', 'DESC')->where('status', 1)->get();
-			return ($relatedposts);
-		}
-	}
-	if (!function_exists("getFaqs")) {
-    function getFaqs()
-		{
-			$faqs = FaqCategory::with('getFAQData')->take(5)->get();
-			return ($faqs);
-		}
-	}
+    if (!function_exists("getRecentPosts")) {
+        function getRecentPosts()
+        {
+            $recentposts = Posts::take(5)->orderBy('id', 'DESC')->where('status', 1)->get();
+            return ($recentposts);
+        }
+    }
+    if (!function_exists("getRelatedPosts")) {
+        function getRelatedPosts()
+        {
+            $relatedposts = Posts::take(5)->orderBy('id', 'DESC')->where('status', 1)->get();
+            return ($relatedposts);
+        }
+    }
+    if (!function_exists("getFaqs")) {
+        function getFaqs()
+        {
+            $faqs = FaqCategory::with('getFAQData')->take(5)->get();
+            return ($faqs);
+        }
+    }
 
     if (!function_exists("getFaqsAllCategory")) {
         function getFaqsAllCategory()
@@ -288,15 +273,15 @@ if (!function_exists('validate_breadcrumb')) {
             return ($faqs);
         }
     }
-	if (!function_exists("getEngagementFaqs")) {
-    function getEngagementFaqs()
-		{
-			$getengagementfaqs = Faqs::take(50)->orderBy('id', 'DESC')->where('status',1)->where('categories', 0)->get();
-			return ($getengagementfaqs);
-		}
-	}
+    if (!function_exists("getEngagementFaqs")) {
+        function getEngagementFaqs()
+        {
+            $getengagementfaqs = Faqs::take(50)->orderBy('id', 'DESC')->where('status', 1)->where('categories', 0)->get();
+            return ($getengagementfaqs);
+        }
+    }
 
-	if (!function_exists("getFeaturedProducts")) {
+    if (!function_exists("getFeaturedProducts")) {
         function getFeaturedProducts()
         {
             $featured = Products::with(['getProductImages'])->where('is_featured', 1)->limit(10)->get();
@@ -307,9 +292,9 @@ if (!function_exists('validate_breadcrumb')) {
     function getFaqByCategory($category = "", $in_array = false)
     {
         $category = empty($category) ? 0 : $category;
-        if(is_array($category)){
-            $faqs = Faqs::whereIn('categories',$category)->get();
-        }else{
+        if (is_array($category)) {
+            $faqs = Faqs::whereIn('categories', $category)->get();
+        } else {
             $faqs = Faqs::where(['categories' => $category])->get();
         }
 
@@ -366,7 +351,7 @@ if (!function_exists('validate_breadcrumb')) {
             else if (isset($data['num_of_row']))
                 $results = $results->take($data['num_of_row'])->get();
             else
-               $results = $results->get();
+                $results = $results->get();
 
             return $results->toArray();
         }
@@ -387,7 +372,7 @@ if (!function_exists('validate_breadcrumb')) {
 
             $ticket = $output_headers["AuthenticationTicketHeader"]->Ticket;
 
-           // $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
+            // $client1 = new SoapClient("https://technet.rapaport.com/WebServices/RetailFeed/Feed.asmx?WSDL", array( "trace" => 1, "exceptions" => 0, "cache_wsdl" => 0) );
 
             $rapnetData = $rapnetAllData = array();
 
@@ -397,56 +382,56 @@ if (!function_exists('validate_breadcrumb')) {
             $client->__setSoapHeaders($header);
 
             if (isset($data['gradeFrom'])) {
-                if ($data['gradeFrom'] == 'EX') { 
+                if ($data['gradeFrom'] == 'EX') {
                     $gradeFrom = 'EXCELLENT';
-                } elseif ($data['gradeFrom'] == 'VG') { 
+                } elseif ($data['gradeFrom'] == 'VG') {
                     $gradeFrom = 'VERY_GOOD';
-                } elseif ($data['gradeFrom'] == 'GD') { 
+                } elseif ($data['gradeFrom'] == 'GD') {
                     $gradeFrom = 'GOOD';
                 }
             }
             if (isset($data['gradeTo'])) {
                 if ($data['gradeTo'] == 'EX') {
                     $gradeTo = 'EXCELLENT';
-                } elseif ($data['gradeTo'] == 'VG') { 
+                } elseif ($data['gradeTo'] == 'VG') {
                     $gradeTo = 'VERY_GOOD';
-                } elseif ($data['gradeTo'] == 'GD') { 
+                } elseif ($data['gradeTo'] == 'GD') {
                     $gradeTo = 'GOOD';
                 }
             }
             if (isset($data['symmetryFrom'])) {
-                if ($data['symmetryFrom'] == 'EX') { 
+                if ($data['symmetryFrom'] == 'EX') {
                     $symmetryFrom = 'Excellent';
-                } elseif ($data['symmetryFrom'] == 'VG') { 
+                } elseif ($data['symmetryFrom'] == 'VG') {
                     $symmetryFrom = 'Very_Good';
-                } elseif ($data['symmetryFrom'] == 'GD') { 
+                } elseif ($data['symmetryFrom'] == 'GD') {
                     $symmetryFrom = 'Good';
                 }
             }
             if (isset($data['symmetryTo'])) {
                 if ($data['symmetryTo'] == 'EX') {
-                     $symmetryTo = 'Excellent';
-                } elseif ($data['symmetryTo'] == 'VG') { 
+                    $symmetryTo = 'Excellent';
+                } elseif ($data['symmetryTo'] == 'VG') {
                     $symmetryTo = 'Very_Good';
-                } elseif ($data['symmetryTo'] == 'GD') { 
+                } elseif ($data['symmetryTo'] == 'GD') {
                     $symmetryTo = 'Good';
                 }
             }
             if (isset($data['polishFrom'])) {
-                if ($data['polishFrom'] == 'EX') { 
+                if ($data['polishFrom'] == 'EX') {
                     $polishFrom = 'Excellent';
-                } elseif ($data['polishFrom'] == 'VG') { 
+                } elseif ($data['polishFrom'] == 'VG') {
                     $polishFrom = 'Very_Good';
-                } elseif ($data['polishFrom'] == 'GD') { 
+                } elseif ($data['polishFrom'] == 'GD') {
                     $polishFrom = 'Good';
                 }
             }
             if (isset($data['polishTo'])) {
-                if ($data['polishTo'] == 'EX') { 
+                if ($data['polishTo'] == 'EX') {
                     $polishTo = 'Excellent';
-                } elseif ($data['polishTo'] == 'VG') { 
+                } elseif ($data['polishTo'] == 'VG') {
                     $polishTo = 'Very_Good';
-                } elseif ($data['polishTo'] == 'GD') { 
+                } elseif ($data['polishTo'] == 'GD') {
                     $polishTo = 'Good';
                 }
             }
@@ -687,7 +672,7 @@ if (!function_exists('validate_breadcrumb')) {
         function getVATPriceFunction($getTotal)
         {
             $getTotal = floatval(preg_replace('/[^\d.]/', '', $getTotal));
-            return number_format($getTotal - ($getTotal/1.2),2);
+            return number_format($getTotal - ($getTotal / 1.2), 2);
         }
     }
     if (!function_exists("prefunc")) {
@@ -705,28 +690,6 @@ if (!function_exists('validate_breadcrumb')) {
             return Popups::where('status', 1)->first();
         }
     }
-
-    // if (!function_exists("final_image_upload_single_function")) {
-    //     function final_image_upload_single_function($imageUrl,$modelName,$modelId,$height=null,$width=null)
-    //     {
-    //         $modelId = base64_encode($modelId);
-    //         if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
-    //             mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
-    //         }
-
-    //         $imageName = $imageUrl->getClientOriginalName();
-    //         $fileName =  rand().$imageName;
-    //         $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
-
-    //         Image::make($imageUrl)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
-    //         Image::make($imageUrl)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
-
-    //         $data['f2']['R'] = $modelName.'/'.$modelId.'/'.$fileName;
-    //         $data['f2']['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
-
-    //         return $data;
-    //     }
-    // }
 
     if (!function_exists("final_image_upload_single_function")) {
         function final_image_upload_single_function($imageUrl, $modelName, $modelId, $height = null, $width = null)
@@ -750,32 +713,6 @@ if (!function_exists('validate_breadcrumb')) {
             return $data;
         }
     }
-
-    // if (!function_exists("final_image_upload_array_function")) {
-    //     function final_image_upload_array_function($imageUrlArray,$modelName,$modelId,$height=null,$width=null)
-    //     {
-    //         $modelId = base64_encode($modelId);
-    //         if (!file_exists(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'))) {
-    //             mkdir(storage_path('app/public/' . $modelName.'/'.$modelId.'/thumb'), 777, true);
-    //         }
-
-    //         if(is_array($imageUrlArray)){
-    //             $data= [];
-    //             foreach($imageUrlArray as $key => $file) {
-    //                 $imageName = $file->getClientOriginalName();
-    //                 $fileName =  rand().$imageName;
-    //                 $fileNameThumb =  'thumbnail_'. rand() . '- '.$height.'x'.$width.''. $imageName;
-
-    //                 Image::make($file)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.$fileName));
-    //                 Image::make($file)->resize($height,$width)->save(storage_path('app/public/' . $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb));
-
-    //                 $data[$key]['R'] = $modelName.'/'.$modelId.'/'.$fileName;
-    //                 $data[$key]['T'] = $modelName.'/'.$modelId.'/'.'thumb'.'/'.$fileNameThumb;
-    //             }
-    //         }
-    //         return $data;
-    //     }
-    // }
 
     if (!function_exists("final_image_upload_array_function")) {
 
@@ -818,13 +755,11 @@ if (!function_exists('validate_breadcrumb')) {
                     }
                 }
             }
-            // print_r($file_extensions);die;
             return $data;
         }
     }
 
-
-    function generateSlug($title = "", $table = "", $keyName = "slug", $number = 0) 
+    function generateSlug($title = "", $table = "", $keyName = "slug", $number = 0)
     {
         $slug = slugify($title);
         $slug = $number ? $slug . '-' . $number : $slug;
@@ -873,15 +808,13 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
-    function prd($data = '') 
+    function prd($data = '')
     {
         echo '<pre>';
         print_r($data);
         echo '</pre>';
         die();
     }
-
-
 
     function getMasterById($id = '')
     {
@@ -898,7 +831,6 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
-
     function getFilter($table, $query, $filter = [])
     {
         if (count($filter)) {
@@ -911,13 +843,12 @@ if (!function_exists('validate_breadcrumb')) {
         return $query;
     }
 
-
-    function unique_code($limit = 30) 
+    function unique_code($limit = 30)
     {
         return substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0, $limit);
     }
 
-    function in_array_multi($needle, $haystack, $strict = false) 
+    function in_array_multi($needle, $haystack, $strict = false)
     {
         foreach ($haystack as $item) {
             if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
@@ -927,7 +858,6 @@ if (!function_exists('validate_breadcrumb')) {
 
         return false;
     }
-
 
     function getThumbnailGif($productId = "")
     {
@@ -944,7 +874,6 @@ if (!function_exists('validate_breadcrumb')) {
         }
     }
 
-
     function getProductVariationImage($productId = "", $request = [])
     {
 
@@ -952,31 +881,21 @@ if (!function_exists('validate_breadcrumb')) {
         if (!empty($getProductVariationId) && $getProductVariationId->count()) {
             $getProductVariationId = $getProductVariationId->toArray();
 
-            // Statement 2
-            // $getVariDetails = ProductVariationDetails::groupBy('value')
-            //                     ->whereIn('variation_id', $getProductVariationId)
-            //                     ->whereIn('value', $request['variations'])
-            //                     ->get();
-            // if(!empty($getVariDetails) && $getVariDetails->count()){
-            //     $getVariDetails = $getVariDetails->toArray();
-            // }
-            // // endof statement 2
-
             $variationDetails = [];
             $attributeCount = count($request->variations);
             foreach ($getProductVariationId as $key1 => $productVariationId) {
                 $variationDetails = array();
                 foreach ($request->variations as $key2 => $variations) {
                     $getVariDetails =   ProductVariationDetails::where('variation_id', $productVariationId)
-                                        ->where('value', $variations)
-                                        ->get()
-                                        ->toArray();
+                        ->where('value', $variations)
+                        ->get()
+                        ->toArray();
 
                     if (!empty($getVariDetails))
                         $variationDetails[] = $getVariDetails;
                 }
-                if ($attributeCount == count($variationDetails)) { 
-                    break; 
+                if ($attributeCount == count($variationDetails)) {
+                    break;
                 }
             }
 
@@ -990,51 +909,6 @@ if (!function_exists('validate_breadcrumb')) {
             return null;
         }
     }
-
-    function getCategoriesTree($exsitingCategories = [], $parentId = 0)
-    {
-
-
-        //return Category::with(['childCategories'])->get()->toArray();
-
-        // if(!count($exsitingCategories)){
-        //     $parent_categories = Category::where('parent_id',0)->where(['status'=>1])->get();
-        //     if($parent_categories->count()){
-
-        //         /** Check if child category exists */
-        //         $isChildExists = false;
-        //         foreach ($parent_categories as $key => $value) {
-        //             $childCount = Category::where('parent_id',$value->id)->where(['status'=>1])->count();
-        //             if($childCount){
-        //                 $isChildExists = true;
-        //                 break;
-        //             }
-        //         }
-        //         if($isChildExists){
-        //             return getCategoriesTree($parent_categories->toArray());
-        //         }else{
-        //             return $parent_categories->toArray();
-        //         }
-        //     }
-        // }else{
-
-
-        //     foreach ($exsitingCategories as $key => $value) {
-        //         # code...
-        //     }
-
-
-        // }
-
-        // $parent_categories = Category::where('parent_id',$parentId)->where(['status'=>1])->get();
-        // foreach ($parent_categories as $key => $value) {
-        //     $childExist = Category::where('parent_id',$value->id)->where(['status'=>1])->count();
-        //     if($childExist){
-        //         $parent_categories->child = Category::where('parent_id',$value->id)->where(['status'=>1])->get();
-        //     }
-        // }
-    }
-
 
     function upload_file($file, $path = "")
     {
@@ -1129,39 +1003,39 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
-    function show_percentage($amount = 0, $pricing_data = [], $type = "show") 
+    function show_percentage($amount = 0, $pricing_data = [], $type = "show")
     {
 
         if (empty($pricing_data)) {
-           return $amount;
+            return $amount;
         }
         $percentageValue = getPercentageValue($amount, $pricing_data->percentage);
         switch ($type) {
-           case 'show': {
-              $toReturn = $amount;
-              if (!empty($pricing_data)) {
-                 if ($pricing_data->type == 'increase') {
-                    $toReturn .= " + $percentageValue ($pricing_data->percentage%)";
-                 } else {
-                    $toReturn .= " - $percentageValue ($pricing_data->percentage%)";
-                 }
-              }
-              return $toReturn;
-              break;
-           }
-           case 'action': {
-                 if ($pricing_data->type == 'increase') {
-                    return $amount + $percentageValue;
-                 } else {
-                    return $amount - $percentageValue;
-                 }
-              break;
-           }
+            case 'show': {
+                    $toReturn = $amount;
+                    if (!empty($pricing_data)) {
+                        if ($pricing_data->type == 'increase') {
+                            $toReturn .= " + $percentageValue ($pricing_data->percentage%)";
+                        } else {
+                            $toReturn .= " - $percentageValue ($pricing_data->percentage%)";
+                        }
+                    }
+                    return $toReturn;
+                    break;
+                }
+            case 'action': {
+                    if ($pricing_data->type == 'increase') {
+                        return $amount + $percentageValue;
+                    } else {
+                        return $amount - $percentageValue;
+                    }
+                    break;
+                }
 
-           default: {
-              return 'N/A';
-              break;
-           }
+            default: {
+                    return 'N/A';
+                    break;
+                }
         }
     }
 
@@ -1211,7 +1085,7 @@ if (!function_exists('validate_breadcrumb')) {
     } // endof file_get_url
 
 
-    function pageRedirects($path = "") 
+    function pageRedirects($path = "")
     {
         $path = $path[0] == '/' ? $path : '/' . $path;
         $path = urlencode($path);
@@ -1224,11 +1098,11 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
-    function isValidJson($string = "") 
+    function isValidJson($string = "")
     {
         json_decode($string);
         return json_last_error() === JSON_ERROR_NONE;
-     }
+    }
 
 
      function getProductListing($queryString = null, $requestData = [])
@@ -1267,117 +1141,115 @@ if (!function_exists('validate_breadcrumb')) {
             }
             $getAjaxResponses = false;
             $page = '';
-         } elseif (!empty($queryString)) {
-             $conditions = 'AND';
-             if(isset($queryString[1]) && !empty($queryString[1])){
-                 if(isset($queryString[2]) && $queryString[1] == 'womens'){
-                     $queryString[2] = $queryString[2].'-'.$queryString[1];
-                     $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
-                     
-                     if(isset($queryString) && count($queryString) != 3 ){
-                        $is404 = true;
-                     }
-                     $conditions = 'AND';
-                 }else{
-                   
-                    $getQueryStringCount = count($queryString);
-                    $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
-                   
-                    $conditions = 'AND';
-                    if($getQueryStringCount != count($queryString)){
+        } elseif (!empty($queryString)) {
+            $conditions = 'AND';
+            if (isset($queryString[1]) && !empty($queryString[1])) {
+                if (isset($queryString[2]) && $queryString[1] == 'womens') {
+                    $queryString[2] = $queryString[2] . '-' . $queryString[1];
+                    $queryString = Category::whereIn('slug', $queryString)->orderBy('id', 'asc')->pluck('slug')->toArray();
+
+                    if (isset($queryString) && count($queryString) != 3) {
                         $is404 = true;
                     }
-                 }
+                    $conditions = 'AND';
+                } else {
+
+                    $getQueryStringCount = count($queryString);
+                    $queryString = Category::whereIn('slug', $queryString)->orderBy('id', 'asc')->pluck('slug')->toArray();
+
+                    $conditions = 'AND';
+                    if ($getQueryStringCount != count($queryString)) {
+                        $is404 = true;
+                    }
+                }
             }
 
-             if (isset($queryString[0]) && $queryString[0] == 'diamond-engagement-rings') {
-                 $queryString = [
-                     'diamond-engagement-rings',
-                     'engagement-rings',
-                 ];
-                 $conditions = 'OR';
-             }
-             if (isset($queryString[0]) && $queryString[0] == 'diamonds-rings') {
-                 $queryString = [
-                     'engagement-rings',
-                     'eternity-rings',
-                     'wedding-rings'
-                 ];
-                 $conditions = 'OR';
-             }
-             
-             foreach ($queryString as $queryString_key => $queryString_value) {
-                 $slugCategory = Category::where('slug', $queryString_value)->first();
- 
-                 if (!empty($slugCategory)) {
-                     if (!$queryString_key) {
-                         $category_custom_query .= '( ';
-                     }
-                     $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-                     if ($queryString_key + 1 != count($queryString)) {
-                         $category_custom_query .= " $conditions ";
-                     } else {
-                         $category_custom_query .= ' ) ';
-                     }
-                 } else {
-                     $is404 = true;
-                 }
+            if (isset($queryString[0]) && $queryString[0] == 'diamond-engagement-rings') {
+                $queryString = [
+                    'diamond-engagement-rings',
+                    'engagement-rings',
+                ];
+                $conditions = 'OR';
+            }
+            if (isset($queryString[0]) && $queryString[0] == 'diamonds-rings') {
+                $queryString = [
+                    'engagement-rings',
+                    'eternity-rings',
+                    'wedding-rings'
+                ];
+                $conditions = 'OR';
+            }
+
+            foreach ($queryString as $queryString_key => $queryString_value) {
+                $slugCategory = Category::where('slug', $queryString_value)->first();
+
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
+                        $category_custom_query .= '( ';
+                    }
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($queryString)) {
+                        $category_custom_query .= " $conditions ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                } else {
+                    $is404 = true;
+                }
                 if (current($queryString) == $queryString_value) {
                     $categoryData = $slugCategory;
-                }elseif (last($queryString) == $queryString_value){
+                } elseif (last($queryString) == $queryString_value) {
                     $categoryData = $slugCategory;
                 }
-             }
-         } else {
-             $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
-         }
+            }
+        } else {
+            $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
+        }
 
-         if (isset($requestData['style-categories']) && !empty($requestData['style-categories'])) {
-             foreach ($requestData['style-categories'] as $queryString_key => $queryString_value_new) {
-                 $slugCategory = Category::where('slug', $queryString_value_new)->first();
-                 if (!empty($slugCategory)) {
-                     if (!$queryString_key) {
-                         $category_custom_query .= 'AND ( ';
-                     }
-                     // $category_custom_query .= '( ';
-                     $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-                     if ($queryString_key + 1 != count($requestData['style-categories'])) {
-                         $category_custom_query .= "  ";
-                     } else {
-                         $category_custom_query .= ' ) ';
-                     }
-                 }
-             }
-         }
- 
-         if (isset($requestData['ring-categories']) && !empty($requestData['ring-categories'])) {
-             
-           
- 
-             foreach ($requestData['ring-categories'] as $queryString_key => $queryString_value_new) {
-                 
-                 if($requestData['style-categories'][0] == 'womens'){
-                     $queryString_value_new = $queryString_value_new.'-'.$requestData['style-categories'][0];
-                 }
-                 $slugCategory = Category::where('slug', $queryString_value_new)->first();
-                 if (!empty($slugCategory)) {
-                     if (!$queryString_key) {
-                         $category_custom_query .= 'AND ( ';
-                     }
-                     // $category_custom_query .= '( ';
-                     $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-                     if ($queryString_key + 1 != count($requestData['ring-categories'])) {
-                         $category_custom_query .= "  ";
-                     } else {
-                         $category_custom_query .= ' ) ';
-                     }
-                 }
-             }
-         }
-         if (isset($requestData['jewellery-categories']) && !empty($requestData['jewellery-categories'])) {
-             foreach ($requestData['jewellery-categories'] as $queryString_key => $queryString_value_new) {
-                 $slugCategory = Category::where('slug', $queryString_value_new)->first();
-                 if (!empty($slugCategory)) {
+        if (isset($requestData['style-categories']) && !empty($requestData['style-categories'])) {
+            foreach ($requestData['style-categories'] as $queryString_key => $queryString_value_new) {
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
+                        $category_custom_query .= 'AND ( ';
+                    }
+                    // $category_custom_query .= '( ';
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($requestData['style-categories'])) {
+                        $category_custom_query .= "  ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                }
+            }
+        }
+
+        if (isset($requestData['ring-categories']) && !empty($requestData['ring-categories'])) {
+
+            foreach ($requestData['ring-categories'] as $queryString_key => $queryString_value_new) {
+
+                if ($requestData['style-categories'][0] == 'womens') {
+                    $queryString_value_new = $queryString_value_new . '-' . $requestData['style-categories'][0];
+                }
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
+                        $category_custom_query .= 'AND ( ';
+                    }
+                    // $category_custom_query .= '( ';
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($requestData['ring-categories'])) {
+                        $category_custom_query .= "  ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                }
+            }
+        }
+        if (isset($requestData['jewellery-categories']) && !empty($requestData['jewellery-categories'])) {
+            foreach ($requestData['jewellery-categories'] as $queryString_key => $queryString_value_new) {
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
                     if (!$queryString_key) {
                         $category_custom_query .= 'AND ( ';
                     }
@@ -1388,73 +1260,75 @@ if (!function_exists('validate_breadcrumb')) {
                     } else {
                         $category_custom_query .= ' ) ';
                     }
-                 }
-             }
-         }
- 
-         if ($is404) {
-             return null;
-         }
+                }
+            }
+        }
+
+        if ($is404) {
+            return null;
+        }
         if (empty($category_custom_query)) {
             return null;
         }
- 
-         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
-         $query = Products::where('status', 1)->whereRaw(DB::raw($category_custom_query));
- 
-         /** Search filter */
-         if (!empty($requestData['keyword'])) {
-             $keyword = $requestData['keyword'];
-             $query = $query->where('title', 'LIKE', "%$keyword%");
-         }
- 
-         if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
-             $metal_type = $requestData['metal_type'];
-             $query->whereHas('getProductVariation.variDetails', function ($query) use ($metal_type) {
-                 $query->where('value', $metal_type);
-             });
-         }
- 
- 
 
-         if (!empty($requestData['price-min']) && !empty($requestData['price-max'])) {
-             $query->whereHas('getProductVariation', function ($query) use ($requestData) {
-                 $query->whereBetween('regular_price', array($requestData['price-min'][0], $requestData['price-max'][0]));
-             });
-         }
- 
-         /** Search filter */
-         if (!empty($requestData['filter-by-shape'])) {
-             $shape = $requestData['filter-by-shape'];
-             $query = $query->whereIn('diamond_shape', $shape);
-         }
-         if (!empty($requestData['sorting'])) {
+        $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
+        $query = Products::where('status', 1)->whereRaw(DB::raw($category_custom_query));
+
+        /** Search filter */
+        if (!empty($requestData['keyword'])) {
+            $keyword = $requestData['keyword'];
+            $query = $query->where('title', 'LIKE', "%$keyword%");
+        }
+
+        if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
+            $metal_type = $requestData['metal_type'];
+            $query->whereHas('getProductVariation.variDetails', function ($query) use ($metal_type) {
+                $query->where('value', $metal_type);
+            });
+        }
+
+
+
+        if (!empty($requestData['price-min']) && !empty($requestData['price-max'])) {
+            $query->whereHas('getProductVariation', function ($query) use ($requestData) {
+                $query->whereBetween('regular_price', array($requestData['price-min'][0], $requestData['price-max'][0]));
+            });
+        }
+
+        /** Search filter */
+        if (!empty($requestData['filter-by-shape'])) {
+            $shape = $requestData['filter-by-shape'];
+            $query = $query->whereIn('diamond_shape', $shape);
+        }
+
+        if (!empty($requestData['sorting'])) {
             $sort = $requestData['sorting'];
             $query = $query->orderBy('title', $sort);
          }
-         // echo "checked ".$query->toSql();die;
-         $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
-         
-        
-         $productItems = "";
-         if ($getProductListFinal->count()) {
-             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
-         }
-         $isNextPage = $getProductListFinal->hasMorePages();
-         $nextPage = $getProductListFinal->currentPage() + 1;
- 
-         return [
-             'status' => 200,
-             'productItems' => $productItems,
-             'isNextPage' => $isNextPage,
-             'nextPage' => $nextPage,
-             'categoryData' => $categoryData
-         ];
-     }
- }
+
+        // echo "checked ".$query->toSql();die;
+        $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
 
 
-function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE) 
+        $productItems = "";
+        if ($getProductListFinal->count()) {
+            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
+        }
+        $isNextPage = $getProductListFinal->hasMorePages();
+        $nextPage = $getProductListFinal->currentPage() + 1;
+
+        return [
+            'status' => 200,
+            'productItems' => $productItems,
+            'isNextPage' => $isNextPage,
+            'nextPage' => $nextPage,
+            'categoryData' => $categoryData
+        ];
+    }
+}
+
+
+function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
 {
     $output = NULL;
 
@@ -1497,56 +1371,56 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     return $output;
 }
 
-    function getBrowser() 
-    {
-        $u_agent = $_SERVER['HTTP_USER_AGENT'];
-        $bname = 'Unknown';
-        $platform = 'Unknown';
-        $version = "";
+function getBrowser()
+{
+    $u_agent = $_SERVER['HTTP_USER_AGENT'];
+    $bname = 'Unknown';
+    $platform = 'Unknown';
+    $version = "";
 
-        if (preg_match('/linux/i', $u_agent)) {
+    if (preg_match('/linux/i', $u_agent)) {
         $platform = 'linux';
-        } elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
+    } elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
         $platform = 'mac';
-        } elseif (preg_match('/windows|win32/i', $u_agent)) {
+    } elseif (preg_match('/windows|win32/i', $u_agent)) {
         $platform = 'windows';
-        }
-        if (preg_match('/MSIE/i', $u_agent) && !preg_match('/Opera/i', $u_agent)) {
+    }
+    if (preg_match('/MSIE/i', $u_agent) && !preg_match('/Opera/i', $u_agent)) {
         $bname = 'Internet Explorer';
         $ub = "MSIE";
-        } elseif (preg_match('/Firefox/i', $u_agent)) {
+    } elseif (preg_match('/Firefox/i', $u_agent)) {
         $bname = 'Mozilla Firefox';
         $ub = "Firefox";
-        } elseif (preg_match('/OPR/i', $u_agent)) {
+    } elseif (preg_match('/OPR/i', $u_agent)) {
         $bname = 'Opera';
         $ub = "Opera";
-        } elseif (preg_match('/Chrome/i', $u_agent) && !preg_match('/Edge/i', $u_agent)) {
+    } elseif (preg_match('/Chrome/i', $u_agent) && !preg_match('/Edge/i', $u_agent)) {
         $bname = 'Google Chrome';
         $ub = "Chrome";
-        } elseif (preg_match('/Safari/i', $u_agent) && !preg_match('/Edge/i', $u_agent)) {
+    } elseif (preg_match('/Safari/i', $u_agent) && !preg_match('/Edge/i', $u_agent)) {
         $bname = 'Apple Safari';
         $ub = "Safari";
-        } elseif (preg_match('/Netscape/i', $u_agent)) {
+    } elseif (preg_match('/Netscape/i', $u_agent)) {
         $bname = 'Netscape';
         $ub = "Netscape";
-        } elseif (preg_match('/Edge/i', $u_agent)) {
+    } elseif (preg_match('/Edge/i', $u_agent)) {
         $bname = 'Edge';
         $ub = "Edge";
-        } elseif (preg_match('/Trident/i', $u_agent)) {
+    } elseif (preg_match('/Trident/i', $u_agent)) {
         $bname = 'Internet Explorer';
         $ub = "MSIE";
-        }
+    }
 
-        // finally get the correct version number
-        $known = array('Version', $ub, 'other');
-        $pattern = '#(?<browser>' . join('|', $known) .
-    ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
-        if (!preg_match_all($pattern, $u_agent, $matches)) {
+    // finally get the correct version number
+    $known = array('Version', $ub, 'other');
+    $pattern = '#(?<browser>' . join('|', $known) .
+        ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+    if (!preg_match_all($pattern, $u_agent, $matches)) {
         // we have no matching number just continue
-        }
-        // see how many we have
-        $i = count($matches['browser']);
-        if ($i != 1) {
+    }
+    // see how many we have
+    $i = count($matches['browser']);
+    if ($i != 1) {
         //we will have two since we are not using 'other' argument yet
         //see if version is before or after the name
         if (strripos($u_agent, "Version") < strripos($u_agent, $ub)) {
@@ -1554,189 +1428,223 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         } else {
             $version = $matches['version'][1];
         }
-        } else {
+    } else {
         $version = $matches['version'][0];
-        }
+    }
 
-        // check if we have a number
-        if ($version == null || $version == "") {
-            $version = "?";
-        }
+    // check if we have a number
+    if ($version == null || $version == "") {
+        $version = "?";
+    }
 
-        return array(
+    return array(
         'userAgent' => $u_agent,
         'name'      => $bname,
         'version'   => $version,
         'platform'  => $platform,
         'pattern'    => $pattern
-        );
-    }
+    );
+}
 
-    function getLabDiamondPrices($requestData){
-        if(isset($requestData['type']) && $requestData['type']){
-            $diamondCaratWeight = explode("-", trim($requestData['carat']));
-            $diamondColour = $requestData['color'];
-            $diamondClarity = $requestData['clarity'];
-            $diamondCertificate = $requestData['certificate'];
-            // $diamondShape = $requestData['diamondShape'];
-            $diamondGrade = isset($requestData['grade'])?$requestData['grade']:'';
-            $diamondType = $requestData['diamond_type'];
-        
-            if(isset($diamondType) && $diamondType == 'lab_grown'){
-                return LabPricesList::whereBetween('carat', [$diamondCaratWeight[0], $diamondCaratWeight[1]])->where(['color'=> $diamondColour, 'clarity'=>$diamondClarity,'is_active'=>1, 'is_deleted'=>0])->select('clarity','color','carat','price')->first();
-            }else{
-                return 0.00;
-            }
-        }else{
+function getLabDiamondPrices($requestData)
+{
+    if (isset($requestData['type']) && $requestData['type']) {
+        $diamondCaratWeight = explode("-", trim($requestData['carat']));
+        $diamondColour = $requestData['color'];
+        $diamondClarity = $requestData['clarity'];
+        $diamondCertificate = $requestData['certificate'];
+        // $diamondShape = $requestData['diamondShape'];
+        $diamondGrade = isset($requestData['grade']) ? $requestData['grade'] : '';
+        $diamondType = $requestData['diamond_type'];
+
+        if (isset($diamondType) && $diamondType == 'lab_grown') {
+            return LabPricesList::whereBetween('carat', [$diamondCaratWeight[0], $diamondCaratWeight[1]])->where(['color' => $diamondColour, 'clarity' => $diamondClarity, 'is_active' => 1, 'is_deleted' => 0])->select('clarity', 'color', 'carat', 'price')->first();
+        } else {
             return 0.00;
         }
+    } else {
+        return 0.00;
+    }
+}
+
+function getVariationDiamondPrices($requestData)
+{
+    $caratFrom = '0.30';
+    $caratTo = '0.39';
+    if ($requestData['diamondCaratWeight'] != '') {
+        $carat = explode('-', $requestData['diamondCaratWeight']);
+        $caratFrom = $carat[0];
+        $caratTo = $carat[1];
     }
 
-    function getVariationDiamondPrices($requestData){
-        $caratFrom = '0.30'; $caratTo = '0.39';
-        if($requestData['diamondCaratWeight']!=''){
-            $carat = explode('-',$requestData['diamondCaratWeight']);
-            $caratFrom = $carat[0]; $caratTo = $carat[1];
+    $colorFrom = $colorTo = 'D';
+    $colour = array();
+    if ($requestData['diamondColour'] != '') {
+        $colour = explode(',', $requestData['diamondColour']);
+        $colorFrom = $colorTo = $requestData['diamondColour'];
+    }
+
+    $clarityFrom = $clarityTo = 'SI2';
+    $clarity = array();
+    if ($requestData['diamondClarity'] != '') {
+        $clarity = explode(',', $requestData['diamondClarity']);
+        $clarityFrom = $clarityTo = $requestData['diamondClarity'];
+    }
+
+    $gradeFrom = $gradeTo = 'EX';
+    $grade = array();
+    if (isset($requestData['diamondGrade']) && $requestData['diamondGrade'] != '') {
+        $grade = explode(',', $requestData['diamondGrade']);
+        $gradeFrom = $gradeTo = $requestData['diamondGrade'];
+    }
+
+    $polishFrom = 'EX';
+    $polishTo = 'GD';
+    $polish = array();
+    $symmetryFrom = 'EX';
+    $symmetryTo = 'GD';
+    $symmetry = array();
+    $fluorescence = array();
+
+    $certificate = array();
+    if ($requestData['diamondCertificate'] != '') {
+        $certificate = explode(',', $requestData['diamondCertificate']);
+    }
+
+    $data = array('shape' => $requestData['diamondShape'], 'colorFrom' => $colorFrom, 'colorTo' => $colorTo, 'colour' => $colour, 'clarityFrom' => $clarityFrom, 'clarityTo' => $clarityTo, 'clarity' => $clarity, 'caratFrom' => $caratFrom, 'caratTo' => $caratTo, 'gradeFrom' => $gradeFrom, 'gradeTo' => $gradeTo, 'grade' => $grade, 'polishFrom' => $polishFrom, 'polishTo' => $polishTo, 'polish' => $polish, 'symmetryFrom' => $symmetryFrom, 'symmetryTo' => $symmetryTo, 'symmetry' => $symmetry, 'fluorescence' => $fluorescence, 'certificate' => $certificate, 'num_of_row' => 2, 'PageSize' => 1);
+
+    $hkData = getHKApiRecords($data);
+
+    $diamondPrice = 0.00;
+    if (isset($hkData) && !empty($hkData)) {
+        $diamondPrice = $hkData[0]['Amount'];
+    } else {
+        $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
+        if (isset($rapnetData) && !empty($rapnetData)) {
+            $diamondPrice = $rapnetData[0]->total_sales_price_in_currency;
         }
+    }
+    return [
+        'price' => $diamondPrice,
+    ];
+}
 
-        $colorFrom = $colorTo = 'D'; $colour = array();
-        if($requestData['diamondColour']!=''){
-            $colour = explode(',',$requestData['diamondColour']);
-            $colorFrom = $colorTo = $requestData['diamondColour'];
-        }
+function getRagularFilterPrices($getRequestData, $diamondType, $slug, $filterArray)
+{
+    if (isset($diamondType) && !empty($diamondType)) {
+        $diamondType = $diamondType;
+    } else {
+        $diamondType = 'mined_diamond';
+    }
+    $rrpPrice = $diamondType . '_rrp';
+    $getProductDetails = Products::where('slug', $slug)->first();
 
-        $clarityFrom = $clarityTo = 'SI2'; $clarity=array();
-        if($requestData['diamondClarity']!=''){
-            $clarity = explode(',',$requestData['diamondClarity']);
-            $clarityFrom = $clarityTo = $requestData['diamondClarity'];
-        }
+    // $getVariationsArray = ProductVariations::where('product_id',$getProductDetails->id)->pluck('id')->toArray();
+    $getProductVariationId = ProductVariations::where('product_id', $getProductDetails->id)->pluck('id')->toArray();
+    if (!empty($getProductVariationId)) {
+        $attributeCount = count($getRequestData['variations']);
+        foreach ($getProductVariationId as $key1 => $productVariationId) {
+            $variationDetails = array();
+            foreach ($getRequestData['variations'] as $key2 => $variations) {
+                $getVariDetails = ProductVariationDetails::where('variation_id', $productVariationId)
+                    ->where('value', $variations)
+                    ->get()
+                    ->toArray();
 
-        $gradeFrom = $gradeTo = 'EX'; $grade=array();
-        if(isset($requestData['diamondGrade']) && $requestData['diamondGrade']!=''){
-            $grade = explode(',',$requestData['diamondGrade']);
-            $gradeFrom = $gradeTo = $requestData['diamondGrade'];
-        }
-
-        $polishFrom = 'EX'; $polishTo = 'GD'; $polish=array();
-        $symmetryFrom = 'EX'; $symmetryTo = 'GD'; $symmetry=array();
-        $fluorescence = array();
-
-        $certificate = array();
-        if($requestData['diamondCertificate']!=''){
-            $certificate = explode(',',$requestData['diamondCertificate']);
-        }
-
-        $data = array('shape'=>$requestData['diamondShape'],'colorFrom'=>$colorFrom,'colorTo'=>$colorTo,'colour'=>$colour,'clarityFrom'=>$clarityFrom,'clarityTo'=>$clarityTo,'clarity'=>$clarity,'caratFrom'=>$caratFrom,'caratTo'=>$caratTo,'gradeFrom'=>$gradeFrom,'gradeTo'=>$gradeTo,'grade'=>$grade,'polishFrom'=>$polishFrom,'polishTo'=>$polishTo,'polish'=>$polish,'symmetryFrom'=>$symmetryFrom,'symmetryTo'=>$symmetryTo,'symmetry'=>$symmetry,'fluorescence'=>$fluorescence,'certificate'=>$certificate,'num_of_row'=>2,'PageSize'=>1);
-
-        $hkData = getHKApiRecords($data);
-        
-        $diamondPrice = 0.00;
-        if(isset($hkData) && !empty($hkData)){
-            $diamondPrice = $hkData[0]['Amount'];
-        }else{
-            $rapnetData = getRapnetApiRecordsDiamondSearch($data,1);
-            if(isset($rapnetData) && !empty($rapnetData)){
-                $diamondPrice = $rapnetData[0]->total_sales_price_in_currency;
+                if (!empty($getVariDetails))
+                    $variationDetails[] = $getVariDetails;
             }
+            if ($attributeCount == count($variationDetails))
+                break;
         }
-        return [
-            'price'=> $diamondPrice,
-        ];
     }
 
-    function getRagularFilterPrices($getRequestData,$diamondType,$slug,$filterArray){
-        if(isset($diamondType) && !empty($diamondType)){
-            $diamondType = $diamondType;
-        }else{
-            $diamondType = 'mined_diamond';
-        }
-        $rrpPrice = $diamondType.'_rrp';
-        $getProductDetails = Products::where('slug',$slug)->first();
-        
-        // $getVariationsArray = ProductVariations::where('product_id',$getProductDetails->id)->pluck('id')->toArray();
-        $getProductVariationId = ProductVariations::where('product_id', $getProductDetails->id)->pluck('id')->toArray();
-        if (!empty($getProductVariationId)) {
-            $attributeCount = count($getRequestData['variations']);
-            foreach ($getProductVariationId as $key1 => $productVariationId) {
-                $variationDetails = array();
-                foreach ($getRequestData['variations'] as $key2 => $variations) {
-                    $getVariDetails = ProductVariationDetails::where('variation_id', $productVariationId)
-                        ->where('value', $variations)
-                        ->get()
-                        ->toArray();
-
-                    if (!empty($getVariDetails))
-                        $variationDetails[] = $getVariDetails;
-                }
-                if ($attributeCount == count($variationDetails))
-                    break;
-            }
-        }
-
-        $categoryId = $getProductDetails->product_parent_category;
-        if(in_array('54',explode(',',$getProductDetails->categories))){
-            $categoryId = 54;
-        }
-
-        $getRegularPrices = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select('regular_price',"$diamondType as shopPrice","$rrpPrice as rrpPrice",'product_id','id')->first();
-
-        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
-
-        $result = [
-            'rrp_price'=> $getRegularPrices->rrpPrice,
-            'shop_price'=> $getRegularPrices->shopPrice,
-            'discounted_price'=> $getDiscountedPrice,
-            'parent_category' => $categoryId,
-        ];
-        return $result;
+    $categoryId = $getProductDetails->product_parent_category;
+    if (in_array('54', explode(',', $getProductDetails->categories))) {
+        $categoryId = 54;
     }
 
-    function getIncreaseDiscountedPrice($category,$price,$diamondType){
-       
-        $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
-                        $q->whereDate('end_date', '>', now());
-                    })
-                    ->with(['discount_data'])->where('category_id', $category)
-                    ->whereRaw('"'.$price.'" between `from_price` and `to_price`')
-                    ->when($diamondType, function ($q) use ($diamondType) {
-                        return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
-                    })
-                    ->where('discount', '!=', 1)
-                    ->where('status', 1)
-                    ->first();
-        
-        if(isset($disPercentage) && !empty($disPercentage)){
-            $discountedPrice = $price * (1 - $disPercentage->discount / 100);  
-            return $discountedPrice;
-        }
-        return $price;
-    }
+    $getRegularPrices = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])->select('regular_price', "$diamondType as shopPrice", "$rrpPrice as rrpPrice", 'product_id', 'id')->first();
 
-    function getFlatDiscountRanges($arrayPrices, $catId,$diamondType){
-        $disFlatPercentage = DiscountRange::whereHas('discount_data', function($q)  {
-                        $q->whereDate('end_date', '>', now());
-                    })
-                    ->with(['discount_data'])->where('category_id', $catId)
-                    ->whereRaw('"'.$arrayPrices['shop_price'].'" between `from_price` and `to_price`')
-                    ->where('diamond_type', $diamondType)
-                    ->where('discount', '!=', 1)
-                    ->where('discount_type', 'F')
-                    ->where('status', 1)
-                    ->first();
+    $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId, $getRegularPrices->shopPrice, $diamondType);
 
-        if(isset($disFlatPercentage) && !empty($disFlatPercentage)){
-            $arrayPrices['discounted_price'] = round($arrayPrices['shop_price'] * (1 - $disFlatPercentage->discount / 100));
-            return $arrayPrices;
-        }
-        return $arrayPrices;
+    $result = [
+        'rrp_price' => $getRegularPrices->rrpPrice,
+        'shop_price' => $getRegularPrices->shopPrice,
+        'discounted_price' => $getDiscountedPrice,
+        'parent_category' => $categoryId,
+    ];
+    return $result;
+}
+
+function getIncreaseDiscountedPrice($category, $price, $diamondType)
+{
+
+    $disPercentage = DiscountRange::whereHas('discount_data', function ($q) {
+        $q->whereDate('end_date', '>', now());
+    })
+        ->with(['discount_data'])->where('category_id', $category)
+        ->whereRaw('"' . $price . '" between `from_price` and `to_price`')
+        ->when($diamondType, function ($q) use ($diamondType) {
+            return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
+        })
+        ->where('status', 1)
+        ->where('discount', '!=', 1)
+        ->first();
+
+    if (isset($disPercentage) && !empty($disPercentage)) {
+        $discountedPrice = $price * (1 - $disPercentage->discount / 100);
+        return $discountedPrice;
     }
-    
-    function amountHariKrishnaRapnetChange($numPrice){
-        $marginAPIPercentage = MarginApiRange::where('api_type','harikrishna')->whereRaw('"'.$numPrice.'" between `from_price` and `to_price`')
+    return $price;
+}
+
+function getFlatDiscountRanges($arrayPrices, $catId, $diamondType)
+{
+    $disFlatPercentage = DiscountRange::whereHas('discount_data', function ($q) {
+        $q->whereDate('end_date', '>', now());
+    })
+        ->with(['discount_data'])->where('category_id', $catId)
+        ->whereRaw('"' . $arrayPrices['shop_price'] . '" between `from_price` and `to_price`')
+        ->where('diamond_type', $diamondType)
+        ->where('discount', '!=', 1)
+        ->where('discount_type', 'F')
         ->where('status', 1)
         ->first();
-        if(isset($marginAPIPercentage) && !empty($marginAPIPercentage)){
-            return $numPrice * $marginAPIPercentage->percentage;
+
+    if (isset($disFlatPercentage) && !empty($disFlatPercentage)) {
+        $arrayPrices['discounted_price'] = round($arrayPrices['shop_price'] * (1 - $disFlatPercentage->discount / 100));
+        return $arrayPrices;
+    }
+    return $arrayPrices;
+}
+
+function amountHariKrishnaRapnetChange($numPrice)
+{
+    $marginAPIPercentage = MarginApiRange::where('api_type', 'harikrishna')->whereRaw('"' . $numPrice . '" between `from_price` and `to_price`')
+        ->where('status', 1)
+        ->first();
+    if (isset($marginAPIPercentage) && !empty($marginAPIPercentage)) {
+        return $numPrice * $marginAPIPercentage->percentage;
+    }
+    return $numPrice;
+}   
+ 
+if (!function_exists("getBreadcrumbCategoryName")) {
+    function getBreadcrumbCategoryName($breadCrumbURL)
+    {
+        $breadcrumbArray = array_filter(explode('/',$breadCrumbURL));
+        $newDesignBreadcrumb = [];
+        foreach($breadcrumbArray as $key => $value){
+            $getCategoryName = Category::where('slug',$value)->value('name');
+            if($key == 1 && count($breadcrumbArray) > 1){
+                if($value == 'engagement-rings'){
+                    $value = 'diamond-engagement-rings';
+                }
+                $newDesignBreadcrumb[] = '<a href="/'.$value.'">'.$getCategoryName.'</a>'; 
+            }else{
+                $newDesignBreadcrumb[] = $getCategoryName; 
+            }
         }
         return $numPrice;
     }

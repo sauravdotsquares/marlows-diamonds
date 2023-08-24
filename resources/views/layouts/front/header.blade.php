@@ -74,7 +74,11 @@
                 <div class="middle-topbar-right">
                     <ul>
                         <li class="my-account-blk">
-                            <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
+                            @if(auth()->guard('customer')->check())   
+                                <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
+                            @else
+                                <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_LOGIN}}</a>
+                            @endif
                         </li>
                         <li class="my-whishlist-blk">
                             <?php
@@ -154,8 +158,8 @@
                     </a>
                 </div>
                 <div class="mobile-cart-wishlist">
-                <div class="mobile-wishlist mobile-acc">
-                            <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
+                    <div class="mobile-wishlist mobile-acc">
+                        <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
                     </div>
                     <div class="mobile-wishlist">
                         <?php

@@ -31,6 +31,7 @@
 		.policyimg{width: 40px;margin: 0 0 11px;}
 		.policysection a {color: #8e2e65;}
 		@media only screen and (max-width: 600px) {.policy0icon{border: 1px solid #8e2e65;padding: 10px 15px 0px;width: 48%;text-align: center;border-radius: 10px;margin-top: 10px;}}
+		
 		/* .carousel-thumbnails li{ -webkit-filter: brightness(80%); filter:brightness(80%); border: 1px solid transparent;}
 		.carousel-thumbnails li.active {filter: brightness(100%); border: 1px solid #8e2e65; border-radius: 1px;} */
 	</style>
@@ -595,11 +596,13 @@
 			});
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
 				changeDescription($(this));
+				console.log($(this));
 				getCustomPriceFinalFunction();
 				getSelectedDataVariation();
 			});
 
             $(document).on('change','#metal-type',function(){
+				console.log($(this).val());
 				getSelectedVariationsData();
 			});
 		})
@@ -612,7 +615,10 @@
 
 				if($(sel).attr('name')!='finger-size')
 					variations.push($(sel).val());
+				
 			});
+
+			
             var multistone = '{{$plainbandMulti}}';
             var jewellery = '{{$plainbandJewellery}}';
 			var data_slug = '{{url("/")}}';

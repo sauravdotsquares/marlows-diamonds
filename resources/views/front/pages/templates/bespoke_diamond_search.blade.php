@@ -889,7 +889,6 @@
 			addtobasketFunction($('#addtobasketselectedrowid').val());
 		});
 
-
 		$("input[name='payment_mode']").on('change',function(){
 			var mode_value = $(this).val();
 			var mode_check_value = '{{$checkDepositPercentage}}';
@@ -902,10 +901,9 @@
 		});
 		
 
-		function setPartialPaymentAmount() {
-
+		function setPartialPaymentAmount(index) {
 			$('#total-diamond-price').html("<strong>Partial Diamond Price:</strong> £ "+$('#partial_amount').val());
-			
+			$('#addtobasketselectedrowid').val(index);
 		}
 
 

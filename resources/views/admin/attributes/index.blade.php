@@ -14,7 +14,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <input name="title" type="text" class="form-control" id="title" value="{{ request()->title }}" placeholder="Search by title">
+                                    <input name="name" type="text" class="form-control" id="name" value="{{ request()->name }}" placeholder="Search by name">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <input name="slug" type="text" class="form-control" id="slug" value="{{ request()->slug }}" placeholder="Search by slug">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="card-footer text-right">
                             <button type="submit" class="btn btn-success">Search</button>
-                            <a href="{{ url('admin/pages') }}" class="btn btn-primary">Reset</a>
+                            <a href="{{ url('admin/attributes') }}" class="btn btn-primary">Reset</a>
                         </div>
                     </form>
                 </div>
@@ -31,7 +31,6 @@
         </div>
         </div>
     </section>
-
 
     <section class="content">
         <div class="container-fluid">
@@ -45,49 +44,53 @@
                     @endif
                     <div class="card">
                         <div class="card-header text-right">
-                            <a href="{{ url('admin/pages/create') }}" class="btn btn-primary">Add New Page</a>
+                            <a href="{{ url('admin/attributes/create') }}" class="btn btn-primary">Add New Attribute</a>
                             <a href="javascript:;"><button type="button" class="btn btn-primary search-button"><i class="fa fa-search"></i></button></a>
                          </div>
                         <div class="card-body">
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Title</th>
+                                        <th>Name</th>
                                         <th>Slug</th>
+                                        <th>Values</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Created</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (!empty($pages))
-                                        @foreach ($pages as $page)
-                                            <tr class="{{ $page->is_deleted ? 'bg-danger' : '' }}"
-                                                title="{{ $page->is_deleted ? 'This record is deleted' : '' }}">
-                                                <td>{{ $page->title }}</td>
-                                                <td>{{ $page->slug }}</td>
-                                                <td>{{ $page->created_at }}</td>
+                                    @if (!empty($attributes))
+                                        @foreach ($attributes as $attribute)
+                                            <tr class="{{ $attribute->is_deleted ? 'bg-danger' : '' }}"
+                                                title="{{ $attribute->is_deleted ? 'This record is deleted' : '' }}">
+                                                <td>{{ $attribute->name }}</td>
+                                                <td>{{ $attribute->slug }}</td>
+                                                <td>{{ $attribute->values }}</td>
+                                                <!-- <td>{{ $attribute->status }}</td> -->
+                                                <td>{{ $attribute->created_at }}</td>
                                                 <td>
-                                                    @if ($page->status == 1)
+                                                    @if ($attribute->status == 1)
                                                         <a title="Change Status"
-                                                            href="{{ url('admin/pages/status/' . base64_encode($page->id) . '/0') }}"><i
+                                                            href="{{ url('admin/attributes/status/' . base64_encode($attribute->id) . '/0') }}"><i
                                                                 class="fa fa-check " aria-hidden="true"></i></a>
                                                     @else
                                                         <a title="Change Status"
-                                                            href="{{ url('admin/pages/status/' . base64_encode($page->id) . '/1') }}"><i
+                                                            href="{{ url('admin/attributes/status/' . base64_encode($attribute->id) . '/1') }}"><i
                                                                 class="fa fa-times " aria-hidden="true"></i></a>
                                                     @endif
 
                                                     <a title="Edit"
-                                                        href="{{ url('admin/pages/update/' . base64_encode($page->id)) }}"><i
+                                                        href="{{ url('admin/attributes/update/' . base64_encode($attribute->id)) }}"><i
                                                             class="fa fa-edit " aria-hidden="true"></i></a>
 
-                                                    @if ($page->is_deleted)
+                                                    @if ($attribute->is_deleted)
                                                         <a class="confirm-and-reload" title="Restore deleted record ?"
-                                                            href="{{ url('admin/delete-page/' . base64_encode($page->id)) }}?revert=true"><i
+                                                            href="{{ url('admin/delete-attribute/' . base64_encode($attribute->id)) }}?revert=true"><i
                                                                 class="fa fa-trash-restore" aria-hidden="true"></i></a>
                                                     @else
                                                         <a class="confirm-and-reload" title="Delete Record ?"
-                                                            href="{{ url('admin/delete-page/' . base64_encode($page->id)) }}"><i
+                                                            href="{{ url('admin/delete-attribute/' . base64_encode($attribute->id)) }}"><i
                                                                 class="fa fa-trash" aria-hidden="true"></i></a>
                                                     @endif
                                                 </td>
@@ -97,15 +100,17 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Title</th>
+                                        <th>Name</th>
                                         <th>Slug</th>
+                                        <th>Values</th>
+                                        <th>Status</th>
                                         <th>Created</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
                             <div class="pagination-container float-right">
-                                {{ $pages->appends($_GET)->links('layouts.pagination') }}
+                              
                             </div>
                         </div>
                         <!-- /.card-body -->

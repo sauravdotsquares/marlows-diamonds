@@ -434,43 +434,7 @@
             }
         });
 
-        // $('#cust_email').on('blur',function(){
-        //     var data = '{!! isset(auth()->user()->email)?auth()->user()->email:'' !!}';
-        //     if(data){
-        //         //console.log("if");
-        //     }else{
-        //         if($(this).val() != ''){
-        //             getEmailCheck();
-        //         }
-        //     }
-        // });
-
     });
-
-    function getEmailCheck(){
-        if($('#cust_email').val() != ''){
-            console.log("if");
-            var customeremail = $('#cust_email').val();
-            $.ajax({
-                url: "{{ route('check.email.id') }}",
-                method: "POST",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    email: $('#cust_email').val(),
-                },
-                success: function (response) {
-                    $('#cust_email-error').remove();
-                    if(response){
-                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email('+customeremail+') is already exist Please Logged in </label>');
-                        $('#cust_email').val(" ");
-                        return response;
-                    }
-                }
-            });
-        }else{
-            console.log("else");
-        }
-    }
 
     $('form#loginRegisterForm').validate({
         rules: {
@@ -488,12 +452,12 @@
         },
         submitHandler: function () {
             $.ajax({
-                url: "{{ route('login.customer.account') }}",
+                url: "{{ route('login-customers') }}",
                 method: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    email: $('#email').val(),
-                    password: $('#password').val(),
+                    login_email: $('#email').val(),
+                    login_password: $('#password').val(),
                 },
                 success: function (response) {
                     if(response.status == 200){

@@ -15,7 +15,7 @@ class AddToCartController extends Controller
 {
     /**
      * Write code on Method
-     *
+     *      
      * @return response()
      */
     public function index()
@@ -34,62 +34,15 @@ class AddToCartController extends Controller
         $getActualPrice = new ProductController;
         $getPriceFunction = $getActualPrice->getProductVariationPrices($request);
 
+        /** Add item in cart for lab grown */
+        $productData = Products::with('getProductImages', 'getProductVariation')->where('slug', $request->slug)->first();
+        if (!empty($productData)) {
 
-        if (!empty($request['diamond_type']) && $request['diamond_type'] == 'lab_grown' && !empty($request->slug)) {
-            /** Add item in cart for lab grown */
-            $productData = Products::with('getProductImages', 'getProductVariation')->where('slug', $request->slug)->first();
-            if (!empty($productData)) {
-
-                /** If product already exists then show exit message */
-                $cart = session()->get('cart', []);
-                if (isset($cart[$productData->id])) {
-                    return response()->json(['error' => 'This product is already exists in cart']);
-                }
-
-                $customArray = [];
-                foreach ($request->all('') as $key => $value) {
-                    $customArray[$key] = $value;
-                    if (isset($key) && $key == 'jsondata') {
-                        foreach ($value as $key2 => $value2) {
-                            $customArray[$key2] = $value2;
-                        }
-                    }
-                }
-                $customArray['Clarity'] = !empty($request['clarity']) ? $request['clarity'] : '';
-                $customArray['Color'] = !empty($request['color']) ? $request['color'] : '';
-                $customArray['Carat'] = !empty($request['carat']) ? $request['carat'] : '';
-                $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : '';
-
-                unset($customArray['jsondata']);
-                unset($customArray['_token']);
-                unset($customArray['CertificateLink']);
-                unset($customArray['ImageLink']);
-                unset($customArray['CERT_NO']);
-                unset($customArray['Lab']);
-
-                $cart[$productData->id] = [
-                    "name" => $productData->title,
-                    'customArray' => $customArray,
-                    "quantity" => 1,
-                    // "price" => $request['lab_grown_price'],
-                    "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
-                    "vat" => getVATPriceFunction($request['setting_price']),
-                    "image" => $productData->getProductImages->image_url,
-                    "price_front" => $request['lab_grown_price'],
-                    "rrp_price"=> $getPriceFunction['allPrices']['rrp_price'],
-                    "shop_price"=> $getPriceFunction['allPrices']['shop_price'],
-                    'price' => $getPriceFunction['allPrices']['discounted_price'],
-                    "savePrice"=> $getPriceFunction['allPrices']['rrp_price'] - $getPriceFunction['allPrices']['discounted_price'],
-                    "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
-                    'getLabDiamondPrices' => $getPriceFunction['getLabDiamondPrices'],
-                ];
-
-                session()->put('cart', $cart);
-                return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully!']);
+            /** If product already exists then show exit message */
+            $cart = session()->get('cart', []);
+            if (isset($cart[$productData->id])) {
+                return response()->json(['error' => 'This product is already exists in cart']);
             }
-        }
-
-        if (isset($request['price']) && !empty($request['price'])) {
 
             $customArray = [];
             foreach ($request->all('') as $key => $value) {
@@ -100,137 +53,77 @@ class AddToCartController extends Controller
                     }
                 }
             }
+            $customArray['Clarity'] = !empty($request['clarity']) ? $request['clarity'] : '';
+            $customArray['Color'] = !empty($request['color']) ? $request['color'] : '';
+            $customArray['Carat'] = !empty($request['carat']) ? $request['carat'] : '';
+            $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : '';
+
             unset($customArray['jsondata']);
             unset($customArray['_token']);
+            unset($customArray['CertificateLink']);
+            unset($customArray['ImageLink']);
+            unset($customArray['CERT_NO']);
+            unset($customArray['Lab']);
 
-            $productData = Products::with('getProductImages', 'getProductVariation')->where('slug', $request->slug)->first();
-
-            $input = $request->all('');
-            unset($request['slug']);
-            unset($request['price']);
-            unset($request['shopPrice']);
-            unset($request['savePrice']);
-            unset($request['rrpPrice']);
-            unset($request['setting_price']);
-            unset($request['_token']);
-            unset($request['jsondata']);
-     
-
-            
-            // prd($customArray);
-
-            $titleHtml = '';
-
-
-            if (isset($productData) && !empty($productData->title)) {
-                // $titleHtml .= '<div class="cartproduct-title"><a href="'.env('APP_URL').'/'.'product/'.$input['slug'].'">'.$productData->title.'</a></div> <dl class="variation">';
-                $selectedAttributes = [];
-                foreach ($request->all('') as $key => $finalVal) {
-                    $selectedAttributes['title'] = $productData->title;
-                    $selectedAttributes[$key] = $finalVal;
-                    if ($key == 'certificatelink') {
-                        // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                        // $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
-                    } elseif ($key == 'imagelink') {
-                        // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                        // $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Image</a></dd>';
-                    } else {
-                        // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                        // $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
-                    }
-                }
-                $titleHtml .= ' </dl>';
-
-                $cart = session()->get('cart', []);
-
-                if (isset($cart[$productData->id])) {
-                    return response()->json(['error' => 'This product is already exists in cart']);
-                    // $cart[$productData->id]['quantity']++;
-                } else {
-
-                    $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : $request['choose_diamond'];
-
-                    $cart[$productData->id] = [
-                        "name" => $productData->title,
-                        // "selected_parameter"=> $selectedAttributes,
-                        'customArray' => $customArray,
-                        "quantity" => 1,
-                        // "price" => $input['price'],
-                        "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
-                        "vat" => getVATPriceFunction($input['setting_price']),
-                        "price_front" => $getPriceFunction['allPrices']['discounted_price'],
-                        "rrp_price"=> $getPriceFunction['allPrices']['rrp_price'],
-                        "shop_price"=> $getPriceFunction['allPrices']['shop_price'],
-                        'price' => $getPriceFunction['allPrices']['discounted_price'],
-                        "savePrice"=> $getPriceFunction['allPrices']['rrp_price'] - $getPriceFunction['allPrices']['discounted_price'],
-                        "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
-                        'getLabDiamondPrices' => $getPriceFunction['getLabDiamondPrices'],
-                        "image" => $productData->getProductImages->image_url
-                    ];
-                }
-                session()->put('cart', $cart);
-
-                return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully!']);
-            } else {
-                return response()->json(['error' => 'Not Match']);
-            }
-        } else {
-            return response()->json(['error' => 'Please Wait...']);
+            $cart[$productData->id] = [
+                "name" => $productData->title,
+                'customArray' => $customArray,
+                "quantity" => 1,
+                // "price" => $request['lab_grown_price'],
+                "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
+                "vat" => getVATPriceFunction($request['setting_price']),
+                "image" => $productData->getProductImages->image_url,
+                "price_front" => $request['lab_grown_price'],
+                "rrp_price" => $getPriceFunction['allPrices']['rrp_price'],
+                "shop_price" => $getPriceFunction['allPrices']['shop_price'],
+                'price' => $getPriceFunction['allPrices']['discounted_price'],
+                "savePrice" => $getPriceFunction['allPrices']['rrp_price'] - $getPriceFunction['allPrices']['discounted_price'],
+                "deposited_price" => $getPriceFunction['allPrices']['discounted_price'],
+                'getLabDiamondPrices' => $getPriceFunction['getLabDiamondPrices'],
+            ];
+            session()->put('cart', $cart);
+            return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully!']);
         }
-
+        return response()->json(['error' => 'Please Wait...']);
     }
 
+    /**
+     * Add to cart with diamond functionality
+     *
+     * @param Request $request
+     * @return void
+     */
     public function addToCartDiamond(Request $request)
     {
-
         if (isset($request->CERT_NO) && !empty($request->CERT_NO) && $request->CERT_NO > 0) {
+            /** If product already exists then show exit message */
+            $cart = session()->get('cart', []);
+            if (isset($cart[$request->CERT_NO])) {
+                return response()->json(['error' => 'This diamond is already exists in cart']);
+            }
 
             $input = $request->all('');
-            unset($request['slug']);
             unset($request['price']);
             unset($request['partial_amount']);
             unset($request['total_amount']);
             unset($request['_token']);
-
-            // $titleHtml = '';
-
-            // $titleHtml .= '<div class="cartproduct-title">Custom Diamond</div> <dl class="variation">';
             $selectedAttributes = [];
             foreach ($request->all('') as $key => $finalVal) {
-                // $selectedAttributes['title'] = 'Custom Diamond';
                 if (isset($finalVal) && !empty($finalVal)) {
                     $selectedAttributes[$key] = $finalVal;
-                    // if($key == 'certificatelink'){
-                    //     $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                    //     $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
-                    // }elseif($key == 'imagelink'){
-                    //     // Image Link is shown blank
-                    // }else{
-                    //     $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
-                    //     $titleHtml .= '<dd class="variation-Colour"><p>:-'.ucwords($finalVal).'</p></dd>';
-                    // }
-
-
                 }
             }
-            // $titleHtml .= ' </dl>';
-
-            $cart = session()->get('cart', []);  
-            if (isset($cart[$request->CERT_NO])) {
-                // $cart[$request->CERT_NO]['quantity']++;
-            } else {
-                $cart[$request->CERT_NO] = [
-                    "name" => 'Custom Diamond',
-                    "customArray" => $selectedAttributes,
-                    "quantity" => 1,
-                    "price" => isset($input['total_amount']) ? floatval(preg_replace('/[^\d.]/', '', $input['total_amount'])) : $input['price'],
-                    "deposited_price" => floatval(preg_replace('/[^\d.]/', '', $input['partial_amount'])),
-                    "vat" => getVATPriceFunction($input['partial_amount']),
-                    "image" => ''
-                ];
-            }
+            $cart = session()->get('cart', []);
+            $cart[$request->CERT_NO] = [
+                "name" => 'Custom Diamond',
+                "customArray" => $selectedAttributes,
+                "quantity" => 1,
+                "price" => isset($input['total_amount']) ? floatval(preg_replace('/[^\d.]/', '', $input['total_amount'])) : $input['price'],
+                "deposited_price" => floatval(preg_replace('/[^\d.]/', '', $input['partial_amount'])),
+                "vat" => getVATPriceFunction($input['partial_amount']),
+                "image" => ''
+            ];
             session()->put('cart', $cart);
-
             return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully!']);
         } else {
             return response()->json(['error' => 'Not Added...']);
@@ -269,7 +162,12 @@ class AddToCartController extends Controller
         }
     }
 
-
+    /**
+     * Checkout order with deko pay payament gateway functionality
+     *
+     * @param Request $request
+     * @return void
+     */
     public function checkoutOrder(Request $request)
     {
         $dekoEnabled = true;
