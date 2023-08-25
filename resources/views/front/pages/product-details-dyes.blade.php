@@ -22,47 +22,19 @@
 		.disabledAnchor a{pointer-events:none !important;cursor:default;color:#fff}span.price-not-found{font-size:14px;color:#8e2e65;font-weight:700}
 		.error{color:#e74c3c !important}div#finaldiamondprice del{font-size:20px}
 
-
+		
         .hide-items{ display: none; }
         .show-items{  display: flex; }
 		.metaltypeval{font-size: 15px;font-weight: bold;color:black}
 		.tableheading{font-size: 17px; font-weight: bold;color:#fff !important;background:#8e2e65 }
 		.tablehover:hover {background-color: #8e2e65; color: #fff}
-		.policysection
-    {
-        margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;
-    }
-    .policyheading
-    {
-        color: #8e2e65;
-    font-weight: bold;
-    text-transform: capitalize;
-    font-size: 13px;
-    }
-    .policy0icon
-		{
-            border: 1px solid #8e2e65;
-            padding: 7px 1px 0px;
-            width: 24%;
-            text-align: center;
-            border-radius: 10px;
-		}
-		.policyimg
-		{
-            width: 40px;
-            margin: 0 0 11px;
-		}
-		@media only screen and (max-width: 600px) {
-			.policy0icon
-		{
-		    border: 1px solid #8e2e65;
-            padding: 10px 15px 0px;
-            width: 48%;
-            text-align: center;
-			border-radius: 10px;
-			margin-top: 10px;
-		}
-		}
+		.policy0icon{border: 1px solid #8e2e65;padding: 10px 15px 0px;width: 24%;text-align: center;border-radius: 10px;}
+		.policysection{margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;}
+		.policyheading{color: #8e2e65;font-weight: bold;text-transform: capitalize;font-size: 13px;}
+		.policy0icon{border: 1px solid #8e2e65;padding: 7px 1px 0px;width: 24%;text-align: center;border-radius: 10px;}
+		.policyimg{width: 40px;margin: 0 0 11px;}
+		.policysection a {color: #8e2e65;}
+		@media only screen and (max-width: 600px) {.policy0icon{border: 1px solid #8e2e65;padding: 10px 15px 0px;width: 48%;text-align: center;border-radius: 10px;margin-top: 10px;}}
 </style>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -342,7 +314,7 @@
 					</a>
 					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
 					<a class="store-locator store-locator-border-right" href="{{asset('visit-us')}}">Store Locator</a>
-					<a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a>
+					<!-- <a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a> -->
 				</div>
 				<div class="finance-available" ng-controller="DekopayController">
 					<a href="javascript:void(0)" ng-click="financeOptions()">
@@ -354,14 +326,15 @@
 					<div class="doko-img">
 						<img src="{{asset('')}}assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
 					</div>
+					
+					
 				</div>
-
 				<div class="policysection">
-					<div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading">Lifetime manufacturing<br> guarantee </h6></div>
-					<div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading">Free Delivery <br> Collection </h6></div>
-					<div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> Certificate <br> Diamond </h6></div>
-					<div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading">30 Days<br> Return </h6></div>
-					</div>
+					<div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading"><a href="/terms">Free Delivery & <br> Collection </a> </h6></div>
+					<div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> <a href="/terms">Diamond Quality <br> Certificate </a> </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading"><a href="/terms">30 Days<br> Return </a> </h6></div>
+				</div>
 			</div>
 		</div>
 		       
@@ -492,7 +465,7 @@
 						guide, you can better understand the different types of diamonds and what shapes are the perfect
 						fit for you. Download your free guide today!</p>
 					<div class="viewguide-btn">
-						<a class="btn-bg-small" href="#">View Guide</a>
+						<a class="btn-bg-small" href="{{asset('/certified-diamond-terminology-guide')}}">View Guide</a>
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
@@ -600,7 +573,6 @@
 	<script>
 
 		function changeDiamondType(classToPerform="") {
-            console.log('classToPerform', classToPerform);
 
 			if(classToPerform == 'mined_item'){
 				$(".mined-certificate").removeAttr('style');
@@ -652,7 +624,7 @@
             $('textarea[name="description"]').val('');
             $("button[type='submit']").prop('disabled',false);
             $('#requestAppointment').modal('hide');
-            grecaptcha.reset();
+            // grecaptcha.reset();
         }
 
 		$(document).ready(function(){
@@ -700,13 +672,13 @@
                             processData: false,
                             data: form_data,
                             success: function (response) {
-                                blankForm();
                                 $("button[type='submit']").text("Send Message");
                                 if(response.status == 200){
                                     toastr.success(response.success);
                                 }else{
                                     toastr.info(response.error);
                                 }
+                                blankForm();
                             }
                         });
                     // } else {
@@ -752,7 +724,6 @@
 			
 
 			$(document).on('click','.refinedata',function(){
-				// console.log($(this).data('price'));
 				getCustomPriceFinalFunction(getNumberFromCurrency($(this).data('price')));
 				// $("#selected_diamond_price").val($(this).data('price'));
 				// $("#certificate_url").val($(this).data('certurl'));
@@ -957,7 +928,6 @@
 
                 },
                 success: function (res) {
-					// console.log(res);
 					if(res.success != '' && typeof res.success !== "undefined"){
 						if(res.cartcount){
 							$(".cartcount").text(res.cartcount);
@@ -1027,7 +997,6 @@
 			$('.type-variations-col').each(function() { 
 				// var caret=document.getElementById('lab_grown_carat').val();
 				let forId = $(this).find('label').attr('for');
-				console.log(forId);
 				let forText = $(this).find('label').text();
 				const diamondType = $('.diamond_type:checked').val();
 				if ((diamondType === 'lab_grown') && (forId === 'diamond-certificate' || forId === 'diamond-colour' || forId === 'diamond-clarity' || forId === 'carat')) {
@@ -1054,7 +1023,6 @@
                     catid: '{{$data->categories}}',
                 },
                 success: function (response) {
-                    // console.log(response.html);
                     $('#relatedProductData').html(" ");
                     if(response.html){
                         $('#relatedProductData').append(response.html);

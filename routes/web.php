@@ -409,7 +409,7 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('post/get-data','PageController@myPost');
     // Route::get('/blog-resources/{slug}', 'PageController@show');
 	Route::post('/visit-us', 'ContactUsFormController@ContactUsForm')->name('contact');
-	Route::post('/', 'MailListFormController@MailListForm')->name('maillist');
+	Route::post('/maillist', 'MailListFormController@MailListForm')->name('maillist');
 	// Route::get('{slug?}', 'UriController')->name('page_url')->where('slug','.+');
 
  

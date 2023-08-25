@@ -101,7 +101,7 @@ class DiamondFinderController
 
 				$rapnetRecords[$key]['Lab'] = $result->lab;
 				$rapnetRecords[$key]['oldAmount'] = $result->total_sales_price;
-				$rapnetRecords[$key]['Amount'] = amountHariKrishnaRapnetChange($result->total_sales_price);
+				$rapnetRecords[$key]['Amount'] = $result->total_sales_price;
 				$rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
 				$rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
 

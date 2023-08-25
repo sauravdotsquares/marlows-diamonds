@@ -38,8 +38,9 @@ class AppServiceProvider extends ServiceProvider
     }
 
     public function getNavMenu(){
-        $getData =  Menus::where('parent',0)->orderBy('id')->get()->toArray();
-        
+        $getData =  Menus::where('parent',0)->orderBy('id')->get();
+        $getData = chnageMenuLanguage($getData, 'langMenu', ['title'], "EN");
+      
         $menusArray = array();
         if(count($getData)>0){
             foreach ($getData as $key => $value) {
@@ -63,8 +64,9 @@ class AppServiceProvider extends ServiceProvider
     }
 
     public function getChildData($parent_id, $level){
-
-        $getData =  Menus::where('parent',$parent_id)->orderBy('id')->get()->toArray();
+        
+        $getData =  Menus::where('parent',$parent_id)->orderBy('id')->get();
+        $getData = chnageMenuLanguage($getData, 'langMenu', ['title'], "EN");
         $menusArray = array();
         $level++;
         foreach ($getData as $key => $value) {

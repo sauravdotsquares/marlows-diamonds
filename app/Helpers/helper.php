@@ -1105,25 +1105,25 @@ if (!function_exists('validate_breadcrumb')) {
     }
 
 
-    function getProductListing($queryString = null, $requestData = [])
-    {
-
-        /** generate custom query for categories */
-        $category_custom_query = "";
-        $is404 = false;
-        $categoryData = null;
-        $getAjaxResponses = true;
-        $page = 12;
-
-        if (isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings', $requestData['category'])) {
-            $requestData['category'] = [
-                'engagement-rings',
-                'eternity-rings',
-                'wedding-rings'
-            ];
-        }
-
-        if (isset($requestData['category']) && !empty($requestData['category'])) {
+     function getProductListing($queryString = null, $requestData = [])
+     {  
+ 
+         /** generate custom query for categories */
+         $category_custom_query = "";
+         $is404 = false;
+         $categoryData = null;
+         $getAjaxResponses = true;
+         $page = 12;
+ 
+         if (isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings', $requestData['category'])) {
+             $requestData['category'] = [
+                 'engagement-rings',
+                 'eternity-rings',
+                 'wedding-rings'
+             ];
+         }
+ 
+         if (isset($requestData['category']) && !empty($requestData['category'])) {
             foreach ($requestData['category'] as $queryString_key => $queryString_value_new) {
                 $slugCategory = Category::where('slug', $queryString_value_new)->first();
                 if (!empty($slugCategory)) {
@@ -1649,3 +1649,75 @@ if (!function_exists("getBreadcrumbCategoryName")) {
         return implode(' / ',$newDesignBreadcrumb);
     }
 }
+    
+    if (!function_exists('chnageColumnAccordingToLanguage')) {
+        function chnageColumnAccordingToLanguage($data, $relation, $colum_arr = [], $defult_language = null)
+        {
+            if ($defult_language == null)
+                $defult_language = "EN";
+            if ($defult_language != env('DEFULT_LANG_CODE')) {
+    
+                if (isset($data[0])) {
+                    foreach ($data as $key => $value) {
+                        if (isset($value->$relation[0])) {
+                            foreach ($value->$relation as $value1) {
+                                if ($value1->lang == $defult_language) {
+                                    foreach ($colum_arr as $colum_key => $colum_value) {
+                                        $data[$key]->$colum_value = $value1->$colum_value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (isset($data->$relation)) {
+                        foreach ($data->$relation as $value1) {
+                            if ($value1->lang == $defult_language) {
+                                foreach ($colum_arr as $colum_key => $colum_value) {
+                                    $data->$colum_value = $value1->$colum_value;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return $data;
+        }
+    }
+    
+    
+if (!function_exists('chnageMenuLanguage')) {
+    function chnageMenuLanguage($data, $relation, $colum_arr = [], $defult_language = null)
+    {
+        if ($defult_language == null)
+            $defult_language = getDefultAdminLanguage();
+        // if ($defult_language != env('DEFULT_LANG_CODE')) {
+
+            if (isset($data[0])) {
+                foreach ($data as $key => $value) {
+                    if (isset($value->$relation[0])) {
+                        foreach ($value->$relation as $value1) {
+                            if ($value1->lang == $defult_language) {
+                                foreach ($colum_arr as $colum_key => $colum_value) {
+                                    $data[$key]->$colum_value = $value1->$colum_value;
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                if (isset($data->$relation)) {
+                    foreach ($data->$relation as $value1) {
+                        if ($value1->lang == $defult_language) {
+                            foreach ($colum_arr as $colum_key => $colum_value) {
+                                $data->$colum_value = $value1->$colum_value;
+                            }
+                        }
+                    }
+                }
+            }
+        // }
+        return $data;
+    }
+}
+

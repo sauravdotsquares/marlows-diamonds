@@ -230,7 +230,7 @@
                     can withstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality
                     and longevity.</p>
                 <div class="explore-btn">
-                    <a class="btn-bg-small" href="/product-category/engagement-rings">EXPLORE ENGAGEMENT RINGS</a>
+                    <a class="btn-bg-small" href="/diamond-engagement-rings">EXPLORE ENGAGEMENT RINGS</a>
                 </div>
             </div>
             <div class="rating-img">

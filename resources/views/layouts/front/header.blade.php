@@ -1,4 +1,5 @@
 @inject('header_settings', 'App\Models\Settings')
+@inject('header_settingss', 'App\Models\SettingsLang')
 <style>
     .discount_timer{
         font-weight: 800;
@@ -9,6 +10,7 @@
         width: 38.33%;
         font-weight: 800;
     }
+    .search-suggestion.hide_254 {display: none;}
 </style>
 <!-- Header Start here -->
 <header class="header-main">
@@ -160,7 +162,17 @@
                         <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
                     </div>
                     <div class="mobile-wishlist">
-                            <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                        <?php
+                                $getArray = session('wishlist');
+                                if (isset($getArray) && count($getArray)) {
+                                    $wishlistIcon = 'fa-heart';
+                                } else {
+                                    $wishlistIcon = 'fa-heart-o';
+                                }
+                            ?>
+                            <a href="{{ route('products.wishlist') }}" title="Wishlist"><i
+                                    class="fa {{ $wishlistIcon }} wishcount" aria-hidden="true"></i>
+                            </a>
                     </div>
                     <div class="mobile-cart">
                         <a href="{{ route('product.cart') }}">
@@ -229,7 +241,7 @@
                             <input type="text" name="search" class="typeahead" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
                             <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
-                        <div class="search-suggestion" ng-if="searchResults.length>0" ng-cloak>
+                        <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
                             <div class="search-suggestion-list" ng-repeat="result in searchResults">
                                 <a href="/product/<%result.slug%>">
                                     <div class="search-suggestion-img">

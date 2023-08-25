@@ -214,11 +214,11 @@
         </div>
     </div>
     <div class="policysection">
-        <div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading">Lifetime manufacturing<br> guarantee </h6></div>
-        <div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading">Free Delivery <br> Collection </h6></div>
-        <div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> Certificate <br> Diamond </h6></div>
-        <div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading">30 Days<br> Return </h6></div>
-        </div>
+        <div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+        <div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading"><a href="/terms"> Free Delivery & <br> Collection  </a> </h6></div>
+        <div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> <a href="/terms"> Diamond Quality <br> Certificate </a> </h6></div>
+        <div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
+    </div>
 </div>
 <!-- FAQ Section start here -->
 
@@ -289,6 +289,10 @@
 </div>
 
 </div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> a8c57ba2f6b1a830c8906be47c00fb468ab680c0
 @endsection
 @section('js')
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -296,7 +300,7 @@
 <script>
     $(document).ready(function() {
 
-
+        
         $("#slider").slider({
             range: true,
             min: 100,
@@ -347,12 +351,6 @@
         var input0 = document.getElementById('input-carat-min');
         var input1 = document.getElementById('input-carat-max');
         var inputs = [input0, input1];
-
-        $('.show-more-content').hide();
-        $('.show-more').click(function() {
-            $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
-        });
-
 
         $('#resetFilterButton').on('click', function() {
             $('.filter-item-data').prop("checked", false);

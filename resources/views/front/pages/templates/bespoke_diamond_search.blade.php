@@ -524,7 +524,7 @@
 										<th>Clarity</th>
 										<th ng-if="shape=='ROUND'">Cut</th>
 										<th>Cert</th>
-										<th>Diamond Price inc VAT</th>
+										<th>Diamond Price</th>
 										<th>Certificate</th>
 										<th>Image</th>
 										<th>Select</th>
@@ -881,6 +881,7 @@
 
 		$(document).on('change', "[id^=selectedDiamondCheckBox]", function() {
 			var index = parseInt($(this).attr("id").replace("selectedDiamondCheckBox",''));
+			$('#addtobasketselectedrowid').val(index);
 			setPartialPaymentAmount(index);
 		});
 

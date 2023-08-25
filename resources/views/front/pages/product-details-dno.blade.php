@@ -24,49 +24,14 @@
 		.metaltypeval{font-size: 15px;font-weight: bold;color:black}
 		.tableheading{font-size: 17px; font-weight: bold;color:#fff !important;background:#8e2e65 }
 		.tablehover:hover {background-color: #8e2e65; color: #fff}
-		.policy0icon
-		{
-		    border: 1px solid #8e2e65;
-            padding: 10px 15px 0px;
-            width: 24%;
-            text-align: center;
-			border-radius: 10px;
-		}
-		.policysection
-    {
-        margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;
-    }
-    .policyheading
-    {
-        color: #8e2e65;
-    font-weight: bold;
-    text-transform: capitalize;
-    font-size: 13px;
-    }
-    .policy0icon
-		{
-            border: 1px solid #8e2e65;
-            padding: 7px 1px 0px;
-            width: 24%;
-            text-align: center;
-            border-radius: 10px;
-		}
-		.policyimg
-		{
-            width: 40px;
-            margin: 0 0 11px;
-		}
-		@media only screen and (max-width: 600px) {
-			.policy0icon
-		{
-		    border: 1px solid #8e2e65;
-            padding: 10px 15px 0px;
-            width: 48%;
-            text-align: center;
-			border-radius: 10px;
-			margin-top: 10px;
-		}
-		}
+		.policy0icon{border: 1px solid #8e2e65;padding: 10px 15px 0px;width: 24%;text-align: center;border-radius: 10px;}
+		.policysection{margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;}
+		.policyheading{color: #8e2e65;font-weight: bold;text-transform: capitalize;font-size: 13px;}
+    	.policy0icon{border: 1px solid #8e2e65;padding: 7px 1px 0px;width: 24%;text-align: center;border-radius: 10px;}
+		.policyimg{width: 40px;margin: 0 0 11px;}
+		.policysection a {color: #8e2e65;}
+		@media only screen and (max-width: 600px) {.policy0icon{border: 1px solid #8e2e65;padding: 10px 15px 0px;width: 48%;text-align: center;border-radius: 10px;margin-top: 10px;}}
+		
 		/* .carousel-thumbnails li{ -webkit-filter: brightness(80%); filter:brightness(80%); border: 1px solid transparent;}
 		.carousel-thumbnails li.active {filter: brightness(100%); border: 1px solid #8e2e65; border-radius: 1px;} */
 	</style>
@@ -90,7 +55,7 @@
 		<div class="product-detail-row flexed flex-flex-wrap">
 
 			<div class="product-info-media">
-				{{-- <a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
+				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 
 				{{-- <?php if($isExclusive && count($videosForProduct)){ ?>
 
@@ -276,11 +241,12 @@
 					</div>
 				</div>
 				<div class="policysection">
-					<div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading">Lifetime manufacturing<br> guarantee </h6></div>
-					<div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading">Free Delivery <br> Collection </h6></div>
-					<div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> Certificate <br> Diamond </h6></div>
-					<div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading">30 Days<br> Return </h6></div>
-					</div>
+					<div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading"><a href="/terms">Free Delivery & <br> Collection </a> </h6></div>
+					<div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> <a href="/terms">Diamond Quality <br> Certificate</a> </h6></div>
+					<div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading"><a href="/terms">30 Days<br> Return </a> </h6></div>
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -535,7 +501,7 @@
             $('textarea[name="description"]').val('');
             $("button[type='submit']").prop('disabled',false);
             $('#requestAppointment').modal('hide');
-            grecaptcha.reset();
+            // grecaptcha.reset();
         }
 
 
@@ -597,14 +563,13 @@
                             processData: false,
                             data: form_data,
                             success: function (response) {
-                                blankForm();
-                                $("button[type='submit']").text("Send Message");
-
+								$("button[type='submit']").text("Send Message");
                                 if(response.status == 200){
-                                    toastr.success(response.success);
+									toastr.success(response.success);
                                 }else{
-                                    toastr.info(response.error);
+									toastr.info(response.error);
                                 }
+								blankForm();
                             }
                         });
                     // } else {
@@ -952,7 +917,7 @@
 						    $('#shopPrice').html('');
 						}else{
 						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
-							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price).toFixed(2)) + ' | ');
+							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
 						}
 						$('#finaldiamondprice').html(' <span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 						
@@ -1012,10 +977,10 @@
 				$('#carousel-selector-'+index).closest('li').addClass('active');
 			});
 			
-            $(document).on('click','.product-gallery__trigger',function(e){
+			$(document).on('click','.product-gallery__trigger',function(e){
 				e.preventDefault();
-				$('#carousel-zoom .item:first-child a').click();
-            });
+				$('#carousel .owl-item.active a').click();
+			});
 
 			$(document).on('click','.carousel-thumbnail-item', function(){
 				const itemPosition = $(this).data('slide-to');

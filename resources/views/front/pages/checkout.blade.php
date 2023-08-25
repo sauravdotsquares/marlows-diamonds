@@ -246,7 +246,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php $total = 0; $totalVat = 0; $totalPrice = 0; $depositedPrice = 0; @endphp
+                                    @php $total = 0; $totalPrice = 0; $depositedPrice = 0; @endphp
                                     @if(session('cart'))
                                         @foreach(session('cart') as $id => $details)
                                             @php 
@@ -254,7 +254,6 @@
                                                 $totalPrice += $details['price'] * $details['quantity']; 
                                                 $depositedPrice += $details['deposited_price'] * $details['quantity'];
                                             @endphp
-                                            @php $totalVat += str_replace( ',', '', $details['vat'] ) * $details['quantity'] @endphp
                                         <tr class="checkcart-item">
                                             <td class="checkpr-name">
                                                 @if(isset($details['customArray']['slug']) && !empty($details['customArray']['slug']))
@@ -360,14 +359,12 @@
                                         <th>Subtotal</th>
                                         <td>
                                             <strong>{{MY_CURRENCY_SYMBOL}}{{ $total }}</strong>
-                                            <small class="tax_label"> (incl. VAT)</small>
                                         </td>
                                     </tr>
                                     <tr class="checkout-cart-total">
                                         <th>Total</th>
                                         <td>
                                             <strong>{{MY_CURRENCY_SYMBOL}}{{ $total }}</strong>
-                                            <small class="tax_label">(includes {{MY_CURRENCY_SYMBOL}}{{isset($totalVat)?$totalVat:0.00}} VAT)</small>
                                         </td>
                                     </tr>
                                 </tfoot>

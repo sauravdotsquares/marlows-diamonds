@@ -27,8 +27,6 @@ class MailListFormController extends Controller
             'title' => 'required',
             'email' => 'required|email',
             'description' => 'required',
-            'custom_url' => 'required',
-            'g-recaptcha-response' => 'required'
         ]);
         //  Store data in database
         Enquiries::create($request->all());

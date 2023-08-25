@@ -258,7 +258,7 @@
             </div>
             <p class="cart-empty woocommerce-info"> Your Wishlist is currently empty.</p>
             <div class="return-to-shop">
-                <a class="btn-bg-small" href="{{ url('/') }}">Return To Shop</a>
+                <a class="btn-bg-small" href="{{ url('/diamond-engagement-rings') }}">Return To Shop</a>
             </div>
         </div>
     </div>
