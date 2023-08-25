@@ -40,7 +40,7 @@
 
                             {{-- <div class="append-data">
 
-                                <?php //foreach ($oldFormData as $old_key => $old_value) { ?>
+                                <?php foreach ($oldFormData as $old_key => $old_value) { ?>
                                     <div class="combinations" id="data-id">
                                         <div class="row">
 
@@ -48,7 +48,7 @@
                                                 <div class="form-group">
                                                     <label for="product_type">Product type </label>
                                                     <select class="form-control" id="product_type" name="form_data[{{$old_key}}][product_type]">
-                                                        <?php //foreach ($dataToPass['product_type'] as $product_type_key => $product_type_value) { ?>
+                                                        <?php foreach ($dataToPass['product_type'] as $product_type_key => $product_type_value) { ?>
                                                             <option {{ $old_value && $old_value['product_type'] == $product_type_value['id'] ? 'selected' : '' }} value="{{ $product_type_value['id'] }}">{{ $product_type_value['name'] }}</option>
                                                         <?php } ?>
                                                     </select>
@@ -60,7 +60,7 @@
                                                 <div class="form-group">
                                                     <label for="metal_types">Metal type </label>
                                                     <select class="form-control" id="metal_types" name="form_data[{{$old_key}}][metal_types]">
-                                                        <?php //foreach ($dataToPass['metal_types'] as $metal_types_key => $metal_types_value) { ?>
+                                                        <?php foreach ($dataToPass['metal_types'] as $metal_types_key => $metal_types_value) { ?>
                                                             <option {{ $old_value && $old_value['metal_types'] == $metal_types_value['id'] ? 'selected' : '' }} value="{{ $metal_types_value['id'] }}">{{ $metal_types_value['name'] }}</option>
                                                         <?php } ?>
                                                     </select>

@@ -1646,8 +1646,9 @@ if (!function_exists("getBreadcrumbCategoryName")) {
                 $newDesignBreadcrumb[] = $getCategoryName; 
             }
         }
-        return $numPrice;
+        return implode(' / ',$newDesignBreadcrumb);
     }
+}
     
     if (!function_exists('chnageColumnAccordingToLanguage')) {
         function chnageColumnAccordingToLanguage($data, $relation, $colum_arr = [], $defult_language = null)
@@ -1685,38 +1686,38 @@ if (!function_exists("getBreadcrumbCategoryName")) {
     }
     
     
-    if (!function_exists('chnageMenuLanguage')) {
-        function chnageMenuLanguage($data, $relation, $colum_arr = [], $defult_language = null)
-        {
-            if ($defult_language == null)
-                $defult_language = getDefultAdminLanguage();
-            // if ($defult_language != env('DEFULT_LANG_CODE')) {
-    
-                if (isset($data[0])) {
-                    foreach ($data as $key => $value) {
-                        if (isset($value->$relation[0])) {
-                            foreach ($value->$relation as $value1) {
-                                if ($value1->lang == $defult_language) {
-                                    foreach ($colum_arr as $colum_key => $colum_value) {
-                                        $data[$key]->$colum_value = $value1->$colum_value;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    if (isset($data->$relation)) {
-                        foreach ($data->$relation as $value1) {
+if (!function_exists('chnageMenuLanguage')) {
+    function chnageMenuLanguage($data, $relation, $colum_arr = [], $defult_language = null)
+    {
+        if ($defult_language == null)
+            $defult_language = getDefultAdminLanguage();
+        // if ($defult_language != env('DEFULT_LANG_CODE')) {
+
+            if (isset($data[0])) {
+                foreach ($data as $key => $value) {
+                    if (isset($value->$relation[0])) {
+                        foreach ($value->$relation as $value1) {
                             if ($value1->lang == $defult_language) {
                                 foreach ($colum_arr as $colum_key => $colum_value) {
-                                    $data->$colum_value = $value1->$colum_value;
+                                    $data[$key]->$colum_value = $value1->$colum_value;
                                 }
                             }
                         }
                     }
                 }
-            // }
-            return $data;
-        }
+            } else {
+                if (isset($data->$relation)) {
+                    foreach ($data->$relation as $value1) {
+                        if ($value1->lang == $defult_language) {
+                            foreach ($colum_arr as $colum_key => $colum_value) {
+                                $data->$colum_value = $value1->$colum_value;
+                            }
+                        }
+                    }
+                }
+            }
+        // }
+        return $data;
     }
-    
+}
+

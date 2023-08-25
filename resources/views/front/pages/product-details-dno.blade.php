@@ -55,7 +55,7 @@
 		<div class="product-detail-row flexed flex-flex-wrap">
 
 			<div class="product-info-media">
-				{{-- <a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a> --}}
+				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 
 				{{-- <?php if($isExclusive && count($videosForProduct)){ ?>
 
@@ -977,10 +977,10 @@
 				$('#carousel-selector-'+index).closest('li').addClass('active');
 			});
 			
-            $(document).on('click','.product-gallery__trigger',function(e){
+			$(document).on('click','.product-gallery__trigger',function(e){
 				e.preventDefault();
-				$('#carousel-zoom .item:first-child a').click();
-            });
+				$('#carousel .owl-item.active a').click();
+			});
 
 			$(document).on('click','.carousel-thumbnail-item', function(){
 				const itemPosition = $(this).data('slide-to');
