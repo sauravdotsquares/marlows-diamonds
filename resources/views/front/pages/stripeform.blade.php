@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="stripePayModal" tabindex="-1" role="dialog" aria-labelledby="stripePayModalLabel" aria-hidden="true">
+<div class="modal fade stripe-modal-class" id="stripePayModal" tabindex="-1" role="dialog" aria-labelledby="stripePayModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,9 +27,9 @@
                                 <label class='control-label'>Name on Card</label>
                                 <input class='form-control' size='4' type='text'>
                             </div>
-                            <div class='col-xs-12 col-md-6 form-group required'>
+                            <div class='col-xs-12 col-md-6 form-group required cardnumberdiv'>
                                 <label class='control-label'>Card Number</label>
-                                <input autocomplete='off' class='form-control card-number' size='20' type='text'>
+                                <input autocomplete='off' class='form-control card-number' size='20' type='text'> <img class="card-images" src="{{asset('assets/images/cards.png')}}">
                             </div>
                         </div>
                         <div class='form-row row'>

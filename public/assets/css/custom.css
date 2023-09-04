@@ -1320,6 +1320,27 @@ padding: 0;right: 10px;}
 padding: 0;right: 10px;}
 /*grown diamond css end*/
 
+
+
+/*popup css*/
+.modal-open .modal.stripe-modal-class .modal-dialog {top: 50%;position: absolute;left: 50%;transform: translate(-50%, -50%) !important;max-width: 700px;width: 100%; margin:0;}
+.modal-open .modal.stripe-modal-class .modal-dialog .modal-header {background:#8e2e65; padding: 8px 0;}
+.modal-open .modal.stripe-modal-class .modal-dialog .modal-header h5 {color: #fff;font-weight: bold;font-size: 20px;width: 100%;text-align: center;}
+.modal-open .modal.stripe-modal-class .modal-dialog .modal-header button.close {color: #fff;opacity: 1;background: none;border: none;margin: 0 8px 0 0px;}
+.modal-open .modal.stripe-modal-class .modal-dialog .modal-header button.close span {font-size: 24px;font-weight: bold;}
+
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .form-row.row {margin-bottom: 15px;}
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form label {font-size: 15px;font-weight: bold; margin: 0 0 5px;}
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form input {border: 1px solid #d1d1d1;box-shadow: none;font-size: 14px;border-radius: 5px;}
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .cardnumberdiv {position: relative;}
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .cardnumberdiv img.card-images {position: absolute;bottom: 21%;right: 25px;}
+
+.modal-open .modal.stripe-modal-class .modal-dialog .modal-content .modal-body form button {margin: auto;display: table;width: 100%;background: #8e2e65;border: 1px solid #8e2e65;}
+.modal-open .modal.stripe-modal-class .modal-dialog .modal-content .modal-body form button:hover {box-shadow: 5px 5px 0 rgba(0,0,0,0.8);color: #fff;}
+
+.modal-open .modal.stripe-modal-class .modal-dialog .modal-footer {display: none;}
+/*popup css end*/
+
 @media(max-width:1400px){
 	.post-bar .post-bar-center p {
 		font-size: 12px;
@@ -1396,8 +1417,13 @@ padding: 0;right: 10px;}
 
 span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 
-
-
+/*popup css*/
+.modal-open .modal.stripe-modal-class .modal-dialog{ max-width:90%; }
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .form-row.row {margin-bottom: 0;}
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .form-row.row .required {margin: 0 0 15px;}
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form input{ font-size:13px; }
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .cardnumberdiv img.card-images{width: 96px;}
+/*popup css end*/
 }
 
 @media(max-width:575px){
