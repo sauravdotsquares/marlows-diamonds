@@ -379,6 +379,7 @@
 
                                 @include('front.pages.payments.paypal',['totalAmount'=>$total])
                                 @include('front.pages.payments.dekopay',['totalAmount'=>$total])
+                                @include('front.pages.payments.stripepay',['totalAmount'=>$total])
                             </ul>
                         </div>
                         <div class="checkout-place-order">
@@ -403,7 +404,7 @@
         </div>
     </div>
 </div>
-
+@include('front.pages.stripeform',['totalAmount'=>$total])
 @endsection
 
 @section('js')
@@ -426,10 +427,17 @@
                 case 'paypal':
                     $(".paypal-pay-box").show('slow');
                     $(".deko-pay-box").hide('slow');
+                    $(".stripe-pay-box").hide('slow');
                     break;
                 case 'dekopay':
                     $(".paypal-pay-box").hide('slow');
                     $(".deko-pay-box").show('slow');
+                    $(".stripe-pay-box").hide('slow');
+                    break;
+                case 'stripe':
+                    $(".paypal-pay-box").hide('slow');
+                    $(".deko-pay-box").hide('slow');
+                    $(".stripe-pay-box").show('slow');
                     break;
             }
         });
@@ -601,6 +609,9 @@
                     if(response.status == 200){
                         if($('#selected_payment_type').val() == 'paypal'){
                             window.location.href = "{{route('make.payment')}}/"+response.order_dt;
+                        }else if($('#selected_payment_type').val() == 'stripe'){
+                            $('#tokenOrdId').val(btoa(response.order_dt));
+                            $('#stripePayModal').modal('show');
                         }else{
                             window.location.href = "{{route('make.dekopay')}}/"+response.order_dt;
                         }
