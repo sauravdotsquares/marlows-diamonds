@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\UrlRedirects;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Front\StripeController;
 
 Route::get('/clear-cache', function() {
 	Artisan::call('optimize:clear');
@@ -435,12 +436,16 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
 	Route::get('products/payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
-
+	
 	Route::post('users/customer-user-address','LoginController@changeCustomerUserAddress')->name('users.customer.address');
 	Route::post('users/update-customer-account-details','LoginController@changeCustomerAccountDetails')->name('update.customer.account.details');
-
+	
 	Route::post('users/get-order-details','LoginController@getOrderDetails')->name('get.order.details');
 	Route::post('users/get-order-details-page','LoginController@getOrderDetailsPage')->name('get.order.details.pages');
+	
+	Route::get('products/handle-stripe-payment/{order_id?}', 'StripeController@stripe')->name('make.stripe-payment');
+	Route::get('products/cancel-stripe-payment', 'StripeController@paymentCancel')->name('cancel.stripe.payment');
+	Route::get('products/payment-stripe-success', 'StripeController@paymentSuccess')->name('success.stripe.payment');
 	/*
 	*** Reset Password
 	*/
@@ -498,3 +503,5 @@ Route::group(['prefix' => 'api/v1'], function() {
 
 Route::any('{all}/{subpage}','Front\ProductController@productListPage')->where('all', '.*');
 
+Route::get('stripe', [StripeController::class, 'stripe']);
+Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');

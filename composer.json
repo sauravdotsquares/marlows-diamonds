@@ -20,7 +20,8 @@
         "raiym/instagram-php-scraper": "*",
         "santigarcor/laratrust": "^7.1",
         "seansch/rapnet": "dev-master",
-        "srmklive/paypal": "^1.0"
+        "srmklive/paypal": "^1.0",
+        "stripe/stripe-php": "^12.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
