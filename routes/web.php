@@ -503,5 +503,3 @@ Route::group(['prefix' => 'api/v1'], function() {
 
 Route::any('{all}/{subpage}','Front\ProductController@productListPage')->where('all', '.*');
 
-Route::get('stripe', [StripeController::class, 'stripe']);
-Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
