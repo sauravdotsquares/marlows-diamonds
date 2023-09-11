@@ -56,20 +56,8 @@
 			<div class="product-info-media">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 
-				{{-- <?php if($isExclusive && count($videosForProduct)){ ?>
-
-					<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
-						@if(isset($videosForProduct) && !empty($videosForProduct[0]['vari_video']))
-							<source src="{{ asset('storage/'.$videosForProduct[0]['vari_video'])}}" type="video/mp4" type="video/mp4" />
-						@else
-							<source src="" type="video/mp4" type="video/mp4" />
-						@endif
-					</video>
-
-				<?php }else{ ?> --}}
-
-					@if($plainbandMulti==false)
-						<div id="carousel" class="owl-carousel">
+				@if($plainbandMulti==false)
+						<div id="carousel" class="owl-carousel"> 
 							@if($variationImages)
 								@foreach($variationImages as $images)
 									<div class="item product-items-carousel">
@@ -92,12 +80,12 @@
 
 										@if(isset($images->is_featured) && $images->is_featured != 1)
 											<div class="item product-items-carousel">
-												<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">
-													<?php if(in_array($ext,$video_extensions)){ ?>
+												<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">				
+													<?php if(in_array($ext,$video_extensions)){ ?>													
 														<video style="width: 100%;" loop autoplay muted="1" playsinline>
 															<source class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" type="video/mp4" type="video/mp4" />
 														</video>
-													<?php }else{ ?>
+													<?php }else{ ?>										
 														<img class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
 													<?php } ?>
 												</a>
@@ -115,6 +103,18 @@
 							</ol>
 						<?php } ?>
 					@else
+						<div id="carousel1" class="owl-carousel1"> 
+							@if($prodImages)
+								@foreach($prodImages as $key => $images)
+									@if(isset($images->image_url) && !preg_match("/\.(mp4)$/", $images->image_url))
+										<div class="item product-items-carousel @if($key == 0) active @endif">
+											<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">
+											</a>
+										</div>
+									@endif
+								@endforeach
+							@endif
+						</div>
 						<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 								<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
@@ -123,7 +123,6 @@
 							@endif
 						</video>
 					@endif
-				{{-- <?php } ?> --}}
                   <div id="myDivChanges"></div>
 			
 			</div>
@@ -974,6 +973,7 @@
             $(document).on('click','.product-gallery__trigger',function(e){
 				e.preventDefault();
 				$('#carousel .owl-item.active a').click();
+				$('#carousel1 .product-items-carousel.active a').click();
             });
 
 			$(document).on('click','.carousel-thumbnail-item', function(){
