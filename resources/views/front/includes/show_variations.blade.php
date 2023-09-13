@@ -2,7 +2,7 @@
 <div class="type-variations-col">
     <label for="{{$final_attr['slug']}}">{{$final_attr['name']}}  
         @if($final_attr['slug'] == 'finger-size')
-        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#myModal">Guide
+        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#myModalRingGuide">Guide
             </a>
         @endif
     </label>

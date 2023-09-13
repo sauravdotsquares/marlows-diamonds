@@ -1426,17 +1426,17 @@ class ProductController extends Controller
         $getRegularPrices = getRagularFilterPrices($request->all(), $request['diamond_type'], $request->slug, $request->metal_type);
         $getLabDiamondPrices = 0;
 
-        if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
-            if (isset($request->type) && $request->type) {
-                if (isset($request->diamond_type) && $request->diamond_type == 'mined_diamond') {
-                    $getLabDiamondPrices = $this->getCustomApiFilterData($request);
-                } else {
-                    $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
-                }
-            }
-        } else {
-            $getLabDiamondPrices = $request->selectedDiamondPrice;
-        }
+        // if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
+        //     if (isset($request->type) && $request->type) {
+        //         if (isset($request->diamond_type) && $request->diamond_type == 'mined_diamond') {
+        //             $getLabDiamondPrices = $this->getCustomApiFilterData($request);
+        //         } else {
+        //             $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
+        //         }
+        //     }
+        // } else {
+        //     $getLabDiamondPrices = $request->selectedDiamondPrice;
+        // }
 
         $resultedArray = array_map(function ($num) use ($getLabDiamondPrices) {
             return round($num + $getLabDiamondPrices, 2);
