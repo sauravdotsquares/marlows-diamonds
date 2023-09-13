@@ -7,13 +7,13 @@
     <div class="payment-box-main-drop deko-pay-box " style="display:none;">
         <div class="finance-available-options">
             <input type="hidden" value="{{ $totalAmount }}" id="totalOrder">
-            <input type="hidden" value="ONIB12-21.9" id="default_code">
+            <input type="hidden" value="ONIB12-22.9" id="default_code">
             <input type="hidden" value="10" id="default_perc">
             <input type="hidden" value="{{env('DEKOPAY_API_KEY')}}" id="myapi">
             <input type="hidden" value="{{env('DEKOPAY_MODE')}}" id="url_check">
             <input type="hidden" name="preSetValue" id="preSetValue" value="{{env('DEKOPAY_MIN_AMT_EMI')}}">
 
-            <input type="hidden" name="payPro" id="payPro" value="ONIB12-21.9">
+            <input type="hidden" name="payPro" id="payPro" value="ONIB12-22.9">
             <input type="hidden" name="payPer" id="payPer" value="10">
             <p>Pay securely by Credit or Debit card or internet banking through Dekopay
                 Secure Servers.</p>
@@ -37,11 +37,10 @@
                     </div>
                     <div class="payment-cc-details-values">
                     <select id="terms" name="term" ng-model="term" ng-change="dekoInit()">
-                        <option value="ONIB12-21.9" ng-selected="ONIB12-21.9"> 12 Months Promotional Credit (21.9%)</option>
-                        <option value="ONIB18-21.9"> 18 Months Promotional Credit (21.9%)</option>
-                        <option value="ONIB24-21.9"> 24 Months Promotional Credit (21.9%)</option>
-                        <option value="ONIB36-21.9"> 36 Months Promotional Credit (21.9%)</option>
-                        <option value="ONIB48-21.9"> 48 Months Promotional Credit (21.9%)</option>
+                        <option value="ONIB12-22.9" selected="ONIB12-22.9"> 12 Months Promotional Credit (22.9%)</option>
+                        <option value="ONIB24-22.9"> 24 Months Promotional Credit (22.9%)</option>
+                        <option value="ONIB36-22.9"> 36 Months Promotional Credit (22.9%)</option>
+                        <option value="ONIB48-22.9"> 48 Months Promotional Credit (22.9%)</option>
                     </select>
 
                     </div>
