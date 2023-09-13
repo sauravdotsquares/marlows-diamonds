@@ -556,7 +556,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal" id="myModal">
+<div class="modal guide-mode" id="myModalRingGuide">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- Modal Header -->

@@ -57,19 +57,6 @@
 			<div class="product-info-media">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 
-				{{-- <?php if($isExclusive && count($videosForProduct)){ ?>
-
-					<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
-						@if(isset($videosForProduct) && !empty($videosForProduct[0]['vari_video']))
-							<source src="{{ asset('storage/'.$videosForProduct[0]['vari_video'])}}" type="video/mp4" type="video/mp4" />
-						@else
-							<source src="" type="video/mp4" type="video/mp4" />
-						@endif
-					</video>
-
-				<?php }else{ ?> --}}
-
-					@if($plainbandMulti==false)
 						<div id="carousel" class="owl-carousel">
 							@if($variationImages)
 								@foreach($variationImages as $images)
@@ -79,7 +66,7 @@
 										</a>
 									</div>
 								@endforeach
-							@endif
+						
 
 							@if(isset($prodImages) && $prodImages)
 								@foreach($prodImages as $images)
@@ -124,7 +111,7 @@
 							@endif
 						</video>
 					@endif
-				{{-- <?php } ?> --}}
+				
                   <div id="myDivChanges"></div>
 			
 			</div>
