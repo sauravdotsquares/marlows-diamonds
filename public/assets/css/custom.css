@@ -1345,7 +1345,7 @@ padding: 0;right: 10px;}
 .modal-open .modal.stripe-modal-class .modal-dialog form#payment-form label {font-size: 15px;font-weight: bold; margin: 0 0 5px;}
 .modal-open .modal.stripe-modal-class .modal-dialog form#payment-form input {border: 1px solid #d1d1d1;box-shadow: none;font-size: 14px;border-radius: 5px;}
 .modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .cardnumberdiv {position: relative;}
-.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .cardnumberdiv img.card-images {position: absolute;bottom: 21%;right: 25px;}
+.modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .cardnumberdiv img.card-images {position: absolute;right: 25px;}
 
 .modal-open .modal.stripe-modal-class .modal-dialog .modal-content .modal-body form button {margin: auto;display: table;width: 100%;background: #8e2e65;border: 1px solid #8e2e65;}
 .modal-open .modal.stripe-modal-class .modal-dialog .modal-content .modal-body form button:hover {box-shadow: 5px 5px 0 rgba(0,0,0,0.8);color: #fff;}
