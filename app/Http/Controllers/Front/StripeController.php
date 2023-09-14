@@ -57,7 +57,7 @@ class StripeController extends Controller
             // return $e->getMessage();
         }
      
-        
+        session()->forget('cart');
         $getOrderDetails = Order::where('token',$request->stripeToken)->update([
             'paymentccdetails' => $getStripeData->balance_transaction,
             'currency_symbol' => $getStripeData->currency,

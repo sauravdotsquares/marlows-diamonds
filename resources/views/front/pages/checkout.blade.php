@@ -411,8 +411,19 @@
 <script src="{{$url}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="http://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
 <script>
     $(document).ready(function () {
+
+        $('#card_number').mask('0000 0000 0000 0000');
+        $('#cvv_number').mask('000');
+        $('#expiry_month').mask('00');
+        $('#expiry_year').mask('0000');
+
+        $('#stripePayModal').on('click', 'button.close', function (eventObject) {
+            $('#stripePayModal').modal('hide');
+        });
+
         $('.showlogin').on('click', function () {
             $(".checkout-login-form").toggle(200);
         });
@@ -442,6 +453,51 @@
             }
         });
 
+    });
+
+    jQuery.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z]+$/i.test(value);
+    }, "Letters only please"); 
+
+    $('form#payment-form').validate({
+        rules: {
+            name_of_card: {
+                required: true,
+                lettersonly: true,
+            },
+            card_number: {
+                required: true,
+            },
+            cvv_number: {
+                required: true,
+            },
+            expiry_month: {
+                required: true,
+                number: true
+            },
+            expiry_year: {
+                required: true,
+                number: true
+            }
+        },
+        messages: {
+            name_of_card: {
+                required: "Name of card is required",
+            },
+            card_number: "Card number is required",
+            cvv_number: "CVV/CVC is required",
+            expiry_month: {
+                required: "Please Enter valid month",
+                number:"Please Enter valid min month",
+            },
+            expiry_year: {
+                required: "Please Enter valid year",
+                number:"Please Enter valid min year",
+            },
+        },
+        submitHandler: function () {
+            return true;
+        }
     });
 
     $('form#loginRegisterForm').validate({
