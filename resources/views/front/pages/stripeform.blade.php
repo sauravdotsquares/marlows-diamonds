@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="stripePayModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="stripePayModalLabel">Payment with Stripe </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -25,26 +25,26 @@
                         <div class='form-row row'>
                             <div class='col-xs-12 col-md-6 form-group required'>
                                 <label class='control-label'>Name on Card</label>
-                                <input class='form-control' size='4' type='text'>
+                                <input class='form-control' required id="nameOfCard" name="name_of_card" size='4' type='text'>
                             </div>
                             <div class='col-xs-12 col-md-6 form-group required cardnumberdiv'>
                                 <label class='control-label'>Card Number</label>
-                                <input autocomplete='off' class='form-control card-number' size='20' type='text'> <img class="card-images" src="{{asset('assets/images/cards.png')}}">
+                                <input autocomplete='off' class='form-control card-number' id="card_number" name="card_number" required size='20' type='text'> <img class="card-images" src="{{asset('assets/images/cards.png')}}">
                             </div>
                         </div>
                         <div class='form-row row'>
                             <div class='col-xs-12 col-md-4 form-group cvc required'>
-                                <label class='control-label'>CVC</label>
-                                <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text'>
+                                <label class='control-label'>CVV</label>
+                                <input autocomplete='off' id="cvv_number" name="cvv_number" class='form-control card-cvc' required placeholder='ex. 311' size='3' type='text'>
                             </div>
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
                                 <label class='control-label'>Expiration Month</label>
-                                <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
+                                <input class='form-control card-expiry-month' name="expiry_month" id="expiry_month" required placeholder='MM' size='2' min="1" max="12" type='text'>
                             </div>
                             <input type="hidden" id="tokenOrdId" name="tokenOrdId" value="">
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
                                 <label class='control-label'>Expiration Year</label>
-                                <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
+                                <input class='form-control card-expiry-year' id="expiry_year" name="expiry_year" required placeholder='YYYY' size='4' min="{{ date('Y')}}" type='text'>
                             </div>
                         </div>
                         <div class="form-row row">
@@ -105,9 +105,6 @@ $(function() {
       } else {
           /* token contains id, last4, and card type */
           var token = response['id'];
-        //   console.log("token=====>");
-        //   console.log(token);
-        //   return false;
           $form.find('input[type=text]').empty();
           $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
           $form.get(0).submit();
