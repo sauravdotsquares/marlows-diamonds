@@ -94,7 +94,7 @@
 									@endif
 								@endforeach
 							@endif
-						</div>
+					
 						<?php
 							$thumbailsAllowed =	getMasterValuesByType('slider_thumbnails');
 							if(in_array($data->id, $thumbailsAllowed)){
@@ -111,9 +111,9 @@
 							@endif
 						</video>
 					@endif
-				
-                  <div id="myDivChanges"></div>
-			
+			</div>
+                  <div id="myDivChanges"></div>	
+				  
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
