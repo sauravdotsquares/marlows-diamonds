@@ -286,7 +286,7 @@
     <div class="engagement-ring-img-content">
         <div class="container">
     <h2>Find the perfect engagement ring</h2>
-    <button class="reset-filer-btn"> <a href="https://admin.marlowsdiamonds.com/storage/MarlowsDiamonds-PremiumContent-Guide-3.pdf"> View Guide </a> </button>
+    <button class="reset-filer-btn"> <a href="https://admin.marlowsdiamonds.com/storage/MarlowsDiamonds-PremiumContent-Guide-3.pdf" target="_blank"> View Guide </a> </button>
 </div>
 </div>
 </div>
