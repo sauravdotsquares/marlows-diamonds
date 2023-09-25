@@ -28,12 +28,6 @@
                             echo " / ";
                         }
 
-                        // echo "asdfads<pre>";
-                        // print_r("url-====>".$url);
-                        // echo "<br>";
-                        // print_r("Path====>".$path);
-                        // die;
-
                         echo getBreadcrumbCategoryName($url); 
                     ?>
                 </span>
@@ -54,7 +48,7 @@
                             <div class="item">
                                 
                                 @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
-                                    <img src="{{ asset('storage/'.$product_item_item->category_images)}}" >
+                                    <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product_item_item->category_images }}" >
                                 @else
                                     <img src="https://devstaging.marlows-diamonds.co.uk/storage/Products/CX9-SC48_00003_1650365432.jpg"> 
                                 @endif
