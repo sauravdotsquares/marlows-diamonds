@@ -94,7 +94,7 @@ h2,.heading-h-two{font-size:22px}
 .laboratory-grown {padding: 40px 0;}
 .vieworderd-table {overflow-x: scroll;}
 .account-main-content #orderDataTable_filter, .account-main-content #orderDataTable_paginate {float: none;margin: 20px 0 0 0;}
-.joinour-mailing{ max-width: 100%; padding: 30px 0;}
+.joinour-mailing{ max-width: 100%; padding: 30px 15px;}
 .width-50 {flex: 0 0 100%;-ms-flex: 0 0 100%;max-width: 100%;}
 .buying-engagementguide-page h1{ font-size: 22px;}
 .buying-engagementguide-page p {font-size: 14px;line-height: 23px;}
