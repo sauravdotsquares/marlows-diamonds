@@ -379,6 +379,7 @@
 
                                 @include('front.pages.payments.paypal',['totalAmount'=>$total])
                                 @include('front.pages.payments.dekopay',['totalAmount'=>$total])
+                                @include('front.pages.payments.stripepay',['totalAmount'=>$total])
                             </ul>
                         </div>
                         <div class="checkout-place-order">
@@ -403,15 +404,26 @@
         </div>
     </div>
 </div>
-
+@include('front.pages.stripeform',['totalAmount'=>$total])
 @endsection
 
 @section('js')
 <script src="{{$url}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script>
     $(document).ready(function () {
+
+        $('#card_number').mask('0000 0000 0000 0000');
+        $('#cvv_number').mask('000');
+        $('#expiry_month').mask('00');
+        $('#expiry_year').mask('0000');
+
+        $('#stripePayModal').on('click', 'button.close', function (eventObject) {
+            $('#stripePayModal').modal('hide');
+        });
+
         $('.showlogin').on('click', function () {
             $(".checkout-login-form").toggle(200);
         });
@@ -426,51 +438,67 @@
                 case 'paypal':
                     $(".paypal-pay-box").show('slow');
                     $(".deko-pay-box").hide('slow');
+                    $(".stripe-pay-box").hide('slow');
                     break;
                 case 'dekopay':
                     $(".paypal-pay-box").hide('slow');
                     $(".deko-pay-box").show('slow');
+                    $(".stripe-pay-box").hide('slow');
+                    break;
+                case 'stripe':
+                    $(".paypal-pay-box").hide('slow');
+                    $(".deko-pay-box").hide('slow');
+                    $(".stripe-pay-box").show('slow');
                     break;
             }
         });
 
-        // $('#cust_email').on('blur',function(){
-        //     var data = '{!! isset(auth()->user()->email)?auth()->user()->email:'' !!}';
-        //     if(data){
-        //         //console.log("if");
-        //     }else{
-        //         if($(this).val() != ''){
-        //             getEmailCheck();
-        //         }
-        //     }
-        // });
-
     });
 
-    function getEmailCheck(){
-        if($('#cust_email').val() != ''){
-            console.log("if");
-            var customeremail = $('#cust_email').val();
-            $.ajax({
-                url: "{{ route('check.email.id') }}",
-                method: "POST",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    email: $('#cust_email').val(),
-                },
-                success: function (response) {
-                    $('#cust_email-error').remove();
-                    if(response){
-                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email('+customeremail+') is already exist Please Logged in </label>');
-                        $('#cust_email').val(" ");
-                        return response;
-                    }
-                }
-            });
-        }else{
-            console.log("else");
+    jQuery.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z]+$/i.test(value);
+    }, "Letters only please"); 
+
+    $('form#payment-form').validate({
+        rules: {
+            name_of_card: {
+                required: true,
+                lettersonly: true,
+            },
+            card_number: {
+                required: true,
+            },
+            cvv_number: {
+                required: true,
+            },
+            expiry_month: {
+                required: true,
+                number: true
+            },
+            expiry_year: {
+                required: true,
+                number: true
+            }
+        },
+        messages: {
+            name_of_card: {
+                required: "Name of card is required",
+            },
+            card_number: "Card number is required",
+            cvv_number: "CVV/CVC is required",
+            expiry_month: {
+                required: "Please Enter valid month",
+                number:"Please Enter valid min month",
+            },
+            expiry_year: {
+                required: "Please Enter valid year",
+                number:"Please Enter valid min year",
+            },
+        },
+        submitHandler: function () {
+            return true;
         }
-    }
+    });
 
     $('form#loginRegisterForm').validate({
         rules: {
@@ -488,10 +516,13 @@
         },
         submitHandler: function () {
             $.ajax({
+                // url: "{{ route('login-customers') }}",
                 url: "{{ route('login.customer.account') }}",
                 method: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
+                    // login_email: $('#email').val(),
+                    // login_password: $('#password').val(),
                     email: $('#email').val(),
                     password: $('#password').val(),
                 },
@@ -637,6 +668,9 @@
                     if(response.status == 200){
                         if($('#selected_payment_type').val() == 'paypal'){
                             window.location.href = "{{route('make.payment')}}/"+response.order_dt;
+                        }else if($('#selected_payment_type').val() == 'stripe'){
+                            $('#tokenOrdId').val(btoa(response.order_dt));
+                            $('#stripePayModal').modal('show');
                         }else{
                             window.location.href = "{{route('make.dekopay')}}/"+response.order_dt;
                         }

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\UrlRedirects;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Front\StripeController;
 
 Route::get('/clear-cache', function() {
 	Artisan::call('optimize:clear');
@@ -456,7 +457,9 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::any('/deko-api/dekopay-csn-url', 'DekoPayController@dekopayCsnUrl');
 
 
-
+	Route::get('products/handle-stripe-payment/{order_id?}', 'StripeController@stripe')->name('make.stripe-payment');
+	Route::get('products/cancel-stripe-payment', 'StripeController@paymentCancel')->name('cancel.stripe.payment');
+	Route::get('products/payment-stripe-success', 'StripeController@paymentSuccess')->name('success.stripe.payment');
 
 
 	
@@ -502,3 +505,4 @@ Route::group(['prefix' => 'api/v1'], function() {
 
 Route::any('{all}/{subpage}','Front\ProductController@productListPage')->where('all', '.*');
 
+Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
