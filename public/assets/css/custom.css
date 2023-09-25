@@ -428,7 +428,8 @@ box-shadow: none;z-index: 1;height: 30px;text-align: center;font-weight: bold;bo
 .product-grid-row{ margin: 0 -10px; }
 .product-items-item-info {padding: 0;border-radius: 4px;position: relative;height: 100%;border: 1px solid #dedede;overflow: hidden;box-shadow: 0px 0px 15px 0px #e7e5e5;}
 .product-items-item-info:hover{	box-shadow: 0px 1px 7px rgba(53, 53, 53, 0.2);}
-.product-items-item-info .product-item-top {display: flex;align-items: center;justify-content: space-between;width: 100%;padding: 10px;}
+.product-items-item-info .product-item-top {display: flex;align-items: center;justify-content: space-between;width: 100%;padding: 10px; 
+z-index: 9; position: relative;}
 .product-items-item-info .product-onsale {padding:0;font-size: 16px;font-weight: bold;color: #000;z-index: 9;}
 .product-items-item-info .product-item-top .wishlist-heart {float: right;font-size: 21px;color: #932d63;}
 
@@ -1186,6 +1187,15 @@ del#shopPrice {margin-right: 5px;}
 h6.policyheading a { color: #8e2e65;}
 
 
+/*cookies css*/
+.defaultpages-cols h2.cookies_heading {font-size: 24px !important;color: #000 !important;font-weight: 900 !important;margin: 0 0 24px;}
+.defaultpages-cols h5 {font-size: 18px;font-family: Lato;color: #000;font-weight: 900;margin: 0 0 5px;} 
+/*cookies css end*/
+
+/*footer css*/
+.location-header a {color: #000;text-decoration: none;}
+.disclaimer-content .footer-reg {color: #fff;text-decoration: navajowhite;}
+/*footer css end*/
 
 
 
@@ -1473,6 +1483,11 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .payment-box-main-drop{ font-size: 13px; padding: 15px 15px 20px;}
 .payment-cc-details-values { width: 100%;}
 /** checkout **/
+
+/*login css*/
+.login-reg-box{ min-height: auto;}
+/*login css end*/
+
 }
 
 @media(max-width:575px){
@@ -1512,7 +1527,7 @@ right: 10px !important;
 @media only screen and (max-width: 720px) and (min-width: 576px) {
 .product-panel-new .nav-toggle {display: block; // or inline-block or inline : which ever is appropriate for you.}
 
-.product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width: 300px;}
+.product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width:100%;}
 .product-panel-new .sortbtn {width: 122px !important;}
 }
 
