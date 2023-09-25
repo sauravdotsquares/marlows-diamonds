@@ -1194,7 +1194,7 @@ h6.policyheading a { color: #8e2e65;}
 
 /*footer css*/
 .location-header a {color: #000;text-decoration: none;}
-.disclaimer-content .footer-reg {color: #fff;text-decoration: navajowhite;}
+.disclaimer-content .footer-reg {color: #fff;text-decoration:none; margin: 10px 0 7px;display: inline-block;}
 /*footer css end*/
 
 
@@ -1488,6 +1488,10 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .login-reg-box{ min-height: auto;}
 /*login css end*/
 
+/*diamond-education css*/
+.defaultpages-wrap iframe.note-video-clip {width: 100%;}
+/*diamond-education css end*/
+
 }
 
 @media(max-width:575px){
@@ -1534,7 +1538,7 @@ right: 10px !important;
 @media only screen and (max-width: 576px) and (min-width: 320px) {
 .product-panel-new .nav-toggle {display: block; // or inline-block or inline : which ever is appropriate for you.}
 
-.product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width: 300px;}
+.product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width: 100%;}
 
 .product-panel-new .search-item {width: 134px !important;}
 
