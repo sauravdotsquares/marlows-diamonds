@@ -4,163 +4,202 @@
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
-<style>
-    .ui-slider-handle {
-        width: 35px !important;
-        font-size: small !important;
-        color: #FF0000 !important;
-        text-align: center !important;
-    }
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    .ui-slider .ui-slider-handle {
-        height: 1.5em;
-        color: #8e2e65 !important;
-    }
-
-    .ui-widget-header {
-        background: #8e2e65 !important;
-    }
-
-    .ui-state-hover,
-    .ui-widget-content .ui-state-hover,
-    .ui-widget-header .ui-state-hover,
-    .ui-state-focus,
-    .ui-widget-content .ui-state-focus,
-    .ui-widget-header .ui-state-focus {
-        border-color: #8e2e65 !important;
-        outline: none;
-        box-shadow: none;
-        background: #fff !important;
-    }
-
-    .error {
-        color: #e74c3c !important;
-    }
-
-    .srchniput-fil span {
-        font-size: 13px;
-        background: #ffff;
-        position: absolute;
-        left: 8px;
-        top: -22px;
-        padding: 0px 4px;
-        display: inline-block;
-    }
-        .nav-toggle{
-        display : none; // display none for everyone
-        }
-
-        /* Landscape phone to portrait tablet  show the button */
-        @media only screen and (max-width: 991px) and (min-width: 320px) {
-
-        .nav-toggle{
-        display : block; // or inline-block or inline : which ever is appropriate for you.
-        }
-        .filter-item
-        {
-            display:inline-block;
-            vertical-align:top;
-            margin-right: 60px;
-        }
-    }
-</style>
 @endsection
+
+
 <div class="container product-panel-new">
-<div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
-    <div class="container">
-        <div class="category-banner-text">
-            <h1>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h1>
-            <p>{!! !empty($categoryData->short_description) ? $categoryData->short_description : '' !!}</p>
+    <?php 
+        
+    
+    ?>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <p class="burgarmenu">
+                <a href="{{ url('/') }}">Home </a> 
+                <span>
+                    <?php 
+                        $url = $path;
+                        if(isset($url) && !empty($url)){
+                            echo " / ";
+                        }
+
+                        // echo "asdfads<pre>";
+                        // print_r("url-====>".$url);
+                        // echo "<br>";
+                        // print_r("Path====>".$path);
+                        // die;
+
+                        echo getBreadcrumbCategoryName($url); 
+                    ?>
+                </span>
+            </p>
+
+            <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+
+            <center>
+                <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3>
+            </center>
+
+            <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
+                @foreach ($filter_items as $filter_key => $filter_item)
+                    
+
+                    @if($filter_item->slug == 'style-categories')
+                        @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
+                            <div class="item">
+                                
+                                @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
+                                    <img src="{{ asset('storage/'.$product_item_item->category_images)}}" >
+                                @else
+                                    <img src="https://devstaging.marlows-diamonds.co.uk/storage/Products/CX9-SC48_00003_1650365432.jpg"> 
+                                @endif
+                                <p> <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a></p>
+                            </div>
+                        @endforeach
+                    @endif
+
+                @endforeach
+
+            </div>
+            <div>
+            </div>
         </div>
     </div>
-</div>
-<div>
-    <center><button href="#collapse1" class="nav-toggle btn" style="background-color: #8e2e65; color:#fff"><i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category</button></center>
-</div>
+
 
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
     <div class="container">
         <div class="category-listing-row">
-            <div id="collapse1" class="category-sidebar-wrap">
+            <div class="category-sidebar-wrap category-sidebar-left">
                 <div>
-                <div class="filter-container">
-                    <input type="text" name="title" class="search-item" id="search" value="" placeholder="Search here">
-                    @foreach ($filter_items as $filter_key => $filter_item)
-                    <div class="filter-item">
-                        <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{ $filter_item->slug }}" />
-                        <div class="category-filter-title">
-                            <h3>{{ $filter_item->name }}</h3>
-                        </div>
-                        <ul>
-                            @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
-                            <li>
-                                @php
-                                $checkVariable = 'true';
-                                $checkVariableNew = '';
-                                @endphp
+                    <div class="filter-clear">
+                        <button href="#collapse1" class="nav-toggle btn" style=""><i class="fa fa-angle-down" style="color:#993168"></i>  Filter </button>
+                        <a href="javascript:void(0)" class="clearallfilter-desktop resetFilterButton" id="resetFilterButton">All Filter Category</a>
+                        <div class="dropdown sortmobile">
+                            <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>
+                            <select class="form-control dropdown-content" name="sortingMSelect" id="sortingMSelect">
+                                <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
+                                <option value="asc">A to Z</option>
+                                <option value="desc">Z to A</option>
+                                <!-- <option value="price-min">Low to High</option>
+                                <option value="price-max">High to Low</option> -->
+                              </select>
 
-                                @if (in_array(Str::lower($product_item_item->item_value), $slugs))
-                                <?php
-                                $checkVariable = 'false';
-                                $checkVariableNew = 'checked';
-                                ?>
-                                @elseif(in_array(Str::lower(Str::replace(' ', '-', $product_item_item->item_name)), $slugs))
-                                <?php
-                                $checkVariable = 'false';
-                                $checkVariableNew = 'checked';
-                                ?>
-                                @endif
+                            </div>
+                    </div>
+                    <div class="filter-container" id="collapse1">
+                        @foreach ($filter_items as $filter_key => $filter_item)
+                        <div class="filter-item">
+                            <input type="hidden" name="filter_item_slug" class="filter_item_slug" value="{{ $filter_item->slug }}" />
+                            <div class="accordion-item">
+                                <div class="category-filter-title">
 
-                                @if (isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
-                                <div class="diamond-field-contens col-lg-9">
-                                    <div class="diamond-field-inner-bar">
-                                        <div class="range_carat_wap">
+                                            <h6><b>{{ $filter_item->name }}</b></h6>
 
-                                            <div class="srchniput-fil">
-                                                <div class="minrange">
-                                                    <span>Min</span>
-                                                    <input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
-                                                </div>
-                                                <div class="maxrange">
-                                                    <span>Max</span>
-                                                    <input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
-                                                </div>
-                                            </div>
-
-                                            <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
-                                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 19.1489%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5745%;"></span>
-                                            </div>
-                                            <div class="srchniput-fil">
-                                                <input type="hidden" class="sliderValue filter-item-data" data-index="0" value="100" id="input-carat-min" name="price-min" autocomplete="off">
-                                                <input type="hidden" class="sliderValue filter-item-data" data-index="1" value="150000" id="input-carat-max" name="price-max" autocomplete="off">
-                                            </div>
-                                        </div>
-                                    </div>
+                                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ $filter_item->slug }}" aria-expanded="true" aria-controls="collapse{{ $filter_item->slug }}" style="background: #fff;border:none;"></button>
                                 </div>
-                                @else
-                                <input type="{{ $filter_item->input_type }}" name="{{ $filter_item->slug }}" {{ $checkVariableNew }} onclick="return {{ $checkVariable }};" value="{{ $product_item_item->item_value }}" class="filter-item-data">
-                                {{ $product_item_item->item_name }}
-                                @endif
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endforeach
-                    <div class="reset-filer-container">
-                        <a href="javascript:void(0)" id="resetFilterButton"><button class="reset-filer-btn">Reset search</button></a>
-                    </div>
+                                <ul>
+                                    <div id="collapse{{ $filter_item->slug }}" class="accordion-collapse collapse show" aria-labelledby="{{ $filter_item->slug }}" data-bs-parent="#accordionExample">
+                                        @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
+                                        <div class="accordion-body">
+                                            <li>
+                                                @php
+                                                $checkVariable = 'true';
+                                                $checkVariableNew = '';
+                                                @endphp
 
+                                                @if (in_array(Str::lower($product_item_item->item_value), $slugs))
+                                                <?php
+                                                $checkVariable = 'false';
+                                                $checkVariableNew = 'checked';
+                                                ?>
+                                                @elseif(in_array(Str::lower(Str::replace(' ', '-', $product_item_item->item_name)), $slugs))
+                                                <?php
+                                                $checkVariable = 'false';
+                                                $checkVariableNew = 'checked';
+                                                ?>
+                                                @endif
+
+                                                @if (isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
+                                                <div class="diamond-field-contens col-lg-9">
+                                                    <div class="diamond-field-inner-bar">
+                                                        <div class="range_carat_wap">
+                                                            <div class="srchniput-fil">
+                                                                <div class="minrange">
+                                                                    <span>Min</span>
+                                                                    <input id="sliderRangeSetMin" disabled="" data-index="0" class="sliderValue" value="100">
+                                                                </div>
+                                                                <div class="maxrange">
+                                                                    <span>Max</span>
+                                                                    <input id="sliderRangeSetMax" disabled="" data-index="1" class="sliderValue" value="150000">
+                                                                </div>
+                                                            </div>
+
+                                                            <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                                                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 19.1489%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 59.5745%;"></span>
+                                                            </div>
+                                                            <div class="srchniput-fil">
+                                                                <input type="hidden" class="sliderValue filter-item-data" data-index="0" value="100" id="input-carat-min" name="price-min" autocomplete="off">
+                                                                <input type="hidden" class="sliderValue filter-item-data" data-index="1" value="150000" id="input-carat-max" name="price-max" autocomplete="off">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @else
+                                                <input type="{{ $filter_item->input_type }}" name="{{ $filter_item->slug }}" {{ $checkVariableNew }} onclick="return {{ $checkVariable }};" value="{{ $product_item_item->item_value }}" class="filter-item-data">
+                                                {{ $product_item_item->item_name }}
+                                                @endif
+                                            </li>
+                                        </div>
+                                        @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        @endforeach
+                        <div class="reset-filer-container">
+                            <a href="javascript:void(0)" id="resetFilterButton" class="resetFilterButton"><button class="reset-filer-btn"> 
+                                See All 
+                            </button></a>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-            </div>
             <div class="category-list-wrap">
+                <div class="row">
+                    <div class="category-list-top">
+                    <div class="category-list-item">
+                        <!-- <p>Item <span id="productCountData">{{$product_count}}</span></p> -->
+                        <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile resetFilterButton" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
+                    </div>
+                    <div class="category-list-item-searchsort dropdown-content-desktop">
+                          <input type="text" name="title" class="search-item empty" id="searchd" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+                            <div class="dropdown">
+                            <select class="form-control dropdown-content" name="sortingDSelect" id="sortingDSelect">
+                                <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
+                                <option value="asc">A to Z</option>
+                                <option value="desc">Z to A</option>
+                                <!-- <option value="price-min">Low to High</option>
+                                <option value="price-max">High to Low</option> -->
+                              </select>
+
+                            </div>
+                    </div>
+</div>
+
+                </div>
                 <input type="hidden" id="pagescroll" value="1">
                 <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
                 <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
 
                 <div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>
                 <br>
-                <div class="search-result"> @include('front.includes.productCard')</div>
+                <div class="search-result" style="margin-top: -15px;"> @include('front.includes.productCard')</div>
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
@@ -193,19 +232,32 @@
     </div>
 </div>
 <!-- FAQ Section start here -->
+
+<!-- Section Reviews -->
+<div class="container">
+    <div class="rating-review-block">
+        <div class="owl-carousel owl-theme slider-review">
+            @include('front.pages.reviews')
+        </div>
+    </div>
+</div>
+
+<!-- FAQ Section end here -->
 <div class="faq-section engagement-ring-faq">
     <div class="container">
         <div class="head-para-three">
-            <div class="heading-h-three">
+            <h2 class="heading-h-three">
                 Engagement Ring FAQ’s
-            </div>
-            <p>Some of the most common Engagement Ring Q&A's</p>
+            </h2>
+            <h3 style="font-size: 15px;">Some of the most common Engagement Ring Q&A's</h3>
         </div>
         <div class="faq-list">
             <div class="accordion" id="accordionExample">
+
                 @php
                 $getEngagementFaqs = getEngagementFaqs();
                 @endphp
+
                 @foreach($getEngagementFaqs as $key => $faq)
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="{{$faq->id}}">
@@ -228,34 +280,30 @@
                         </div>
                     </div>
                     @endforeach
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="engagement-ring-img">
+    <img src="{{url('/images/viewguide.PNG')}}">
 
-<!-- FAQ Section end here -->
 
-<!-- Section Reviews -->
-<div class="container">
-    <div class="rating-review-block">
-        <div class="owl-carousel owl-theme slider-review">
-            @include('front.pages.reviews')
-        </div>
-    </div>
+    <div class="engagement-ring-img-content">
+        <div class="container">
+    <h2>Find the perfect engagement ring</h2>
+    <button class="reset-filer-btn"> View Guide </button>
+</div>
+</div>
 </div>
 
 </div>
-
 @endsection
-
-
-
-
-
 @section('js')
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -284,7 +332,7 @@
                 var value2 = $("#slider").slider("values", 1);
 
                 $("#showProductList").html('');
-                sendDataValues();
+                sendDataValues(1,'append'); 
             },
         });
 
@@ -311,18 +359,24 @@
         var input1 = document.getElementById('input-carat-max');
         var inputs = [input0, input1];
 
-        $('#resetFilterButton').on('click', function() {
+        $('.resetFilterButton').on('click', function() {
             $('.filter-item-data').prop("checked", false);
             var value = '{{$path}}';
             var arrVars = value.split("/");
 
             var value1 = arrVars[0];
             var value2 = arrVars[1];
+            if(value1 == 'diamond-engagement-rings'){
+                value1 = 'engagement-rings';
+            }
             $("input[name=category][value=" + value1 + "]").prop('checked', true);
             $("input[name=style-categories][value=" + value2 + "]").prop('checked', true);
-            $("input[name=filter-by-shape][value=" + value2.toUpperCase() + "]").prop('checked', true);
+            if(value2 !== undefined){
+                $("input[name=filter-by-shape][value=" + value2 + "]").prop('checked', true);
+                $("input[name=jewellery-categories][value=" + value2 + "]").prop('checked', true);
+            }
             $("#showProductList").html('');
-            sendDataValues();
+            sendDataValues(1,'append');
         });
 
         var value = '{{$path}}';
@@ -480,11 +534,18 @@
     });
     $(document).on('change', ".filter-item-data", function() {
         $("#showProductList").html('');
-        sendDataValues();
+        sendDataValues(1,'append');
     });
 
-    // $("#showProductList").html('');
-    // sendDataValues();
+    $(document).on('change', "#sortingDSelect", function() {
+        $("#showProductList").html('');
+        sendDataValues(1,'append',$(this).val());
+    });
+
+    $(document).on('change', "#sortingMSelect", function() {
+       $("#showProductList").html('');
+        sendDataValues(1,'append',$(this).val());
+   });
 
     $(window).scroll(function() {
         var scroll = $('#scrollFlag').val();
@@ -495,18 +556,19 @@
         }
     });
 
-    $('#search').on('keyup', function() {
+    $('#searchd').on('keyup', function() {
         let searchTextData = $(this).val();
         if (searchTextData.length > 2) {
             $("#showProductList").html('');
             sendDataValues(1, 'html');
         } else if (searchTextData.length == 0) {
-            var page = $('#pagescroll').val();
-            sendDataValues(page, 'append');
+            location.reload();
+            // var page = $('#pagescroll').val();
+            // sendDataValues(page, 'append');
         }
     });
 
-    function sendDataValues(page, type = 'append') {
+    function sendDataValues(page, type = 'append',sorting='asc') {
         // $("input[name=filter-by-shape]").attr('onclick', 'return false;');
         // filterShapechanged();
         $('.ajax-load').show();
@@ -516,9 +578,11 @@
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
-                'keyword': $('#search').val(),
+                'sorting': sorting,
+                'keyword': $('#searchd').val(),
                 'path': '{{ $path }}',
-                'page': page
+                'page': page,
+                'per_page_product': 70
             },
             success: function(res) {
                 // filterShapechanged();
@@ -534,39 +598,155 @@
                 } else {
                     $("#showProductList").html(res.productItems);
                 }
+                $('#productCountData').text(res.product_count);
                 $('#sectionHeight').val($('#showProductList').height());
                 $('#scrollFlag').val(0);
             }
         });
     }
+
+  
 </script>
 <script>
     $(document).ready(function() {
-        var collapse1value= document.getElementById('collapse1');
+
+       var collapse1value = document.getElementById('collapse1');
         if (screen.width <= 320 || screen.width <= 991) {
-            collapse1value.style.display="none";
-        }
-        else
-        {
+            collapse1value.style.display = "none";
+        } else {
             // collapse1value.style.display="block11";
         }
-		  $('.nav-toggle').click(function(){
-			//get collapse content selector
-			var collapse_content_selector = $(this).attr('href');					
- 
-			//make the collapse content to be shown or hide
-			var toggle_switch = $(this);
-			$(collapse_content_selector).toggle(function(){
-			  if($(this).css('display')=='none'){
-                                //change the button label to be 'Show'
-				toggle_switch.html('<i class="fa fa-plus" style="font-size:15px;color:#fff"></i> All Filter Category');
-			  }else{
-                                //change the button label to be 'Hide'
-				toggle_switch.html('<i class="fa fa-minus" style="font-size:15px;color:#fff;"></i> All Filter Category');
-			  }
-			});
-		  });
- 
-		});	
-    </script>
+        $('.nav-toggle').click(function() {
+            //get collapse content selector
+            var collapse_content_selector = $(this).attr('href');
+
+            //make the collapse content to be shown or hide
+            var toggle_switch = $(this);
+            $(collapse_content_selector).toggle(function() {
+                if ($(this).css('display') == 'none') {
+                    //change the button label to be 'Show'
+                    toggle_switch.html('<i class="fa fa-angle-down" style="color:#993168"></i>  Filter');
+                } else {
+                    //change the button label to be 'Hide'
+                    toggle_switch.html('<i class="fa fa-angle-up" style="color:#993168"></i>  Filter');
+                }
+            });
+        });
+
+        $(document).on('click', "[id^=productWishList]", function () {
+            var index = parseInt($(this).attr("id").replace("productWishList", ''));
+            var product_slug = $('#productWishList'+index).data('productslug');
+            addtobasketFunction('{{route("set-product-wishlist")}}',product_slug,index);
+        });
+
+    });
+
+    function addtobasketFunction(getUrl,product_slug,index){
+        var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
+        var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
+        var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');
+        var shopPricedata= $('#shopPrice.shopPriceval').text().replace(/[^\0-9.-]+/g, '');
+
+        let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
+        
+        let diamondCaratWeight;
+        let diamondColour;
+        var diamondShape;
+        let diamondGrade;
+        let diamondClarity;
+        let diamondCertificate;
+        if($('.diamond_type:checked').val() == 'mined_diamond'){
+            diamondCaratWeight = $('#carat').val();
+            diamondColour = $('#diamond-colour').val();
+            diamondShape = $('#selected_diamond_shape').val();
+            diamondGrade = $('#diamond-grade').val();
+            diamondClarity = $('#diamond-clarity').val();
+            diamondCertificate = $('#diamond-certificate').val();
+        }else if($('.diamond_type:checked').val() == 'lab_grown'){
+            diamondCaratWeight = $('#lab_grown_carat').val();
+            diamondColour = $('#lab_grown_colour').val();
+            diamondShape = $('#selected_diamond_shape').val();
+            diamondGrade = '';
+            diamondClarity = $('#lab_grown_clarity').val();
+            diamondCertificate = '';
+        }
+
+        var variations = [];
+        $('.type-variations-row select').each(function(i, sel){
+
+            if($(sel).attr('name')!='finger-size')
+                variations.push($(sel).val());
+        });
+
+
+        $.ajax({
+            type: 'POST',
+            url: getUrl,
+            data: {
+                '_token': "{{csrf_token()}}",
+                'carat' : $('#carat').val(),
+                'variations' : variations,
+                'total-diamond-weight' : $('#total-diamond-weight').val(),
+                'color' : $('#diamond-colour').val(),
+                'clarity' : $('#diamond-clarity').val(),
+                'width-mm' : $('#width-mm').val(),
+                'grade' : $('#diamond-grade').val(),
+                'fingersize' : $('#finger-size').val(),
+                'metal_type' : $('#metal-type').val(),
+                'certificate' : $('#diamond-certificate').val(),
+                'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
+                'slug' : product_slug,
+                'price':parseInt(trdata) || 0,
+                'rrpPrice':parseInt(rrpPrice) || 0,
+                'savePrice':parseInt(savePriceval) || 0,
+                'shopPrice':parseInt(shopPricedata) || 0,
+                'diamond_type' : $(".diamond_type:checked").val(),
+                'discounted_price':parseInt($('#selected_discounted_price').val()) || 0, 
+                'final_price':parseInt($('#selected_final_price').val()) || 0, 
+                'setting_price': parseInt(trdata) || 0, 
+            },
+            success: function (res) {
+                if(res.success != '' && typeof res.success !== "undefined"){
+                    if(res.cartcount){
+                        $(".cartcount").text(res.cartcount);
+                    }
+                    if(res.wishcount){
+                        $('#productWishList'+index).children('i').removeClass('fa-heart-o');
+                        $('#productWishList'+index).children('i').addClass('fa-heart');
+                        // $(".wishcount").removeClass('fa-heart-o');
+                        // $(".wishcount").addClass('fa-heart');
+                    }
+                    toastr.success(res.success);
+                }else{
+                    toastr.info(res.error);
+                }
+            }
+        });
+    }
+
+    $(function() {
+        var owl = $(".owl-carousel");
+        owl.owlCarousel({
+            items: 7,
+            margin: 2,
+            loop: true,
+            nav: false,
+            responsive: {
+                320: {
+                    items: 2
+                },
+                480: {
+                    items: 3
+                },
+                769: {
+                    items: 4
+                },
+                991: {
+                    items: 6
+                }
+            }
+        });
+    });
+</script>
+</script>
 @endsection

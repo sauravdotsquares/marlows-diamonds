@@ -2,8 +2,8 @@
     <input type="radio" name="payment_type" required="required" value="dekopay">
     <label class="deko_label">
         Dekopay
-        <img src="{{asset('')}}assets/images/dek_one.png" alt="deko">
     </label>
+    <img src="{{asset('')}}assets/images/dek_one.png" alt="deko">
     <div class="payment-box-main-drop deko-pay-box " style="display:none;">
         <div class="finance-available-options">
             <input type="hidden" value="{{ $totalAmount }}" id="totalOrder">

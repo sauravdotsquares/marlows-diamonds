@@ -1267,117 +1267,115 @@ if (!function_exists('validate_breadcrumb')) {
             }
             $getAjaxResponses = false;
             $page = '';
-         } elseif (!empty($queryString)) {
-             $conditions = 'AND';
-             if(isset($queryString[1]) && !empty($queryString[1])){
-                 if(isset($queryString[2]) && $queryString[1] == 'womens'){
-                     $queryString[2] = $queryString[2].'-'.$queryString[1];
-                     $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
-                     
-                     if(isset($queryString) && count($queryString) != 3 ){
-                        $is404 = true;
-                     }
-                     $conditions = 'AND';
-                 }else{
-                   
-                    $getQueryStringCount = count($queryString);
-                    $queryString = Category::whereIn('slug',$queryString)->orderBy('id','asc')->pluck('slug')->toArray();
-                   
-                    $conditions = 'AND';
-                    if($getQueryStringCount != count($queryString)){
+        } elseif (!empty($queryString)) {
+            $conditions = 'AND';
+            if (isset($queryString[1]) && !empty($queryString[1])) {
+                if (isset($queryString[2]) && $queryString[1] == 'womens') {
+                    $queryString[2] = $queryString[2] . '-' . $queryString[1];
+                    $queryString = Category::whereIn('slug', $queryString)->orderBy('id', 'asc')->pluck('slug')->toArray();
+
+                    if (isset($queryString) && count($queryString) != 3) {
                         $is404 = true;
                     }
-                 }
+                    $conditions = 'AND';
+                } else {
+
+                    $getQueryStringCount = count($queryString);
+                    $queryString = Category::whereIn('slug', $queryString)->orderBy('id', 'asc')->pluck('slug')->toArray();
+
+                    $conditions = 'AND';
+                    if ($getQueryStringCount != count($queryString)) {
+                        $is404 = true;
+                    }
+                }
             }
 
-             if (isset($queryString[0]) && $queryString[0] == 'diamond-engagement-rings') {
-                 $queryString = [
-                     'diamond-engagement-rings',
-                     'engagement-rings',
-                 ];
-                 $conditions = 'OR';
-             }
-             if (isset($queryString[0]) && $queryString[0] == 'diamonds-rings') {
-                 $queryString = [
-                     'engagement-rings',
-                     'eternity-rings',
-                     'wedding-rings'
-                 ];
-                 $conditions = 'OR';
-             }
-             
-             foreach ($queryString as $queryString_key => $queryString_value) {
-                 $slugCategory = Category::where('slug', $queryString_value)->first();
- 
-                 if (!empty($slugCategory)) {
-                     if (!$queryString_key) {
-                         $category_custom_query .= '( ';
-                     }
-                     $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-                     if ($queryString_key + 1 != count($queryString)) {
-                         $category_custom_query .= " $conditions ";
-                     } else {
-                         $category_custom_query .= ' ) ';
-                     }
-                 } else {
-                     $is404 = true;
-                 }
+            if (isset($queryString[0]) && $queryString[0] == 'diamond-engagement-rings') {
+                $queryString = [
+                    'diamond-engagement-rings',
+                    'engagement-rings',
+                ];
+                $conditions = 'OR';
+            }
+            if (isset($queryString[0]) && $queryString[0] == 'diamonds-rings') {
+                $queryString = [
+                    'engagement-rings',
+                    'eternity-rings',
+                    'wedding-rings'
+                ];
+                $conditions = 'OR';
+            }
+
+            foreach ($queryString as $queryString_key => $queryString_value) {
+                $slugCategory = Category::where('slug', $queryString_value)->first();
+
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
+                        $category_custom_query .= '( ';
+                    }
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($queryString)) {
+                        $category_custom_query .= " $conditions ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                } else {
+                    $is404 = true;
+                }
                 if (current($queryString) == $queryString_value) {
                     $categoryData = $slugCategory;
-                }elseif (last($queryString) == $queryString_value){
+                } elseif (last($queryString) == $queryString_value) {
                     $categoryData = $slugCategory;
                 }
-             }
-         } else {
-             $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
-         }
+            }
+        } else {
+            $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
+        }
 
-         if (isset($requestData['style-categories']) && !empty($requestData['style-categories'])) {
-             foreach ($requestData['style-categories'] as $queryString_key => $queryString_value_new) {
-                 $slugCategory = Category::where('slug', $queryString_value_new)->first();
-                 if (!empty($slugCategory)) {
-                     if (!$queryString_key) {
-                         $category_custom_query .= 'AND ( ';
-                     }
-                     // $category_custom_query .= '( ';
-                     $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-                     if ($queryString_key + 1 != count($requestData['style-categories'])) {
-                         $category_custom_query .= "  ";
-                     } else {
-                         $category_custom_query .= ' ) ';
-                     }
-                 }
-             }
-         }
- 
-         if (isset($requestData['ring-categories']) && !empty($requestData['ring-categories'])) {
-             
-           
- 
-             foreach ($requestData['ring-categories'] as $queryString_key => $queryString_value_new) {
-                 
-                 if($requestData['style-categories'][0] == 'womens'){
-                     $queryString_value_new = $queryString_value_new.'-'.$requestData['style-categories'][0];
-                 }
-                 $slugCategory = Category::where('slug', $queryString_value_new)->first();
-                 if (!empty($slugCategory)) {
-                     if (!$queryString_key) {
-                         $category_custom_query .= 'AND ( ';
-                     }
-                     // $category_custom_query .= '( ';
-                     $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
-                     if ($queryString_key + 1 != count($requestData['ring-categories'])) {
-                         $category_custom_query .= "  ";
-                     } else {
-                         $category_custom_query .= ' ) ';
-                     }
-                 }
-             }
-         }
-         if (isset($requestData['jewellery-categories']) && !empty($requestData['jewellery-categories'])) {
-             foreach ($requestData['jewellery-categories'] as $queryString_key => $queryString_value_new) {
-                 $slugCategory = Category::where('slug', $queryString_value_new)->first();
-                 if (!empty($slugCategory)) {
+        if (isset($requestData['style-categories']) && !empty($requestData['style-categories'])) {
+            foreach ($requestData['style-categories'] as $queryString_key => $queryString_value_new) {
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
+                        $category_custom_query .= 'AND ( ';
+                    }
+                    // $category_custom_query .= '( ';
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($requestData['style-categories'])) {
+                        $category_custom_query .= "  ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                }
+            }
+        }
+
+        if (isset($requestData['ring-categories']) && !empty($requestData['ring-categories'])) {
+
+            foreach ($requestData['ring-categories'] as $queryString_key => $queryString_value_new) {
+
+                if ($requestData['style-categories'][0] == 'womens') {
+                    $queryString_value_new = $queryString_value_new . '-' . $requestData['style-categories'][0];
+                }
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
+                    if (!$queryString_key) {
+                        $category_custom_query .= 'AND ( ';
+                    }
+                    // $category_custom_query .= '( ';
+                    $category_custom_query .= " find_in_set('" . $slugCategory->id . "',categories) ";
+                    if ($queryString_key + 1 != count($requestData['ring-categories'])) {
+                        $category_custom_query .= "  ";
+                    } else {
+                        $category_custom_query .= ' ) ';
+                    }
+                }
+            }
+        }
+        if (isset($requestData['jewellery-categories']) && !empty($requestData['jewellery-categories'])) {
+            foreach ($requestData['jewellery-categories'] as $queryString_key => $queryString_value_new) {
+                $slugCategory = Category::where('slug', $queryString_value_new)->first();
+                if (!empty($slugCategory)) {
                     if (!$queryString_key) {
                         $category_custom_query .= 'AND ( ';
                     }
@@ -1388,69 +1386,79 @@ if (!function_exists('validate_breadcrumb')) {
                     } else {
                         $category_custom_query .= ' ) ';
                     }
-                 }
-             }
-         }
- 
-         if ($is404) {
-             return null;
-         }
+                }
+            }
+        }
+
+        if ($is404) {
+            return null;
+        }
         if (empty($category_custom_query)) {
             return null;
         }
- 
-         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
-         $query = Products::where('status', 1)->whereRaw(DB::raw($category_custom_query));
- 
-         /** Search filter */
-         if (!empty($requestData['keyword'])) {
-             $keyword = $requestData['keyword'];
-             $query = $query->where('title', 'LIKE', "%$keyword%");
-         }
- 
-         if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
-             $metal_type = $requestData['metal_type'];
-             $query->whereHas('getProductVariation.variDetails', function ($query) use ($metal_type) {
-                 $query->where('value', $metal_type);
-             });
-         }
- 
- 
 
-         if (!empty($requestData['price-min']) && !empty($requestData['price-max'])) {
-             $query->whereHas('getProductVariation', function ($query) use ($requestData) {
-                 $query->whereBetween('regular_price', array($requestData['price-min'][0], $requestData['price-max'][0]));
-             });
-         }
- 
-         /** Search filter */
-         if (!empty($requestData['filter-by-shape'])) {
-             $shape = $requestData['filter-by-shape'];
-             $query = $query->whereIn('diamond_shape', $shape);
-         }
-         if (!empty($requestData['sorting'])) {
+        $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
+
+        if(isset($requestData['per_page_product']) && !empty($requestData['per_page_product'])){
+            $page = $requestData['per_page_product'];
+        }
+        $query = Products::where('status', 1)->whereRaw(DB::raw($category_custom_query));
+
+        /** Search filter */
+        if (!empty($requestData['keyword'])) {
+            // echo "if<pre>";
+            // print_r("checking again");
+            // die;
+            $keyword = $requestData['keyword'];
+            $query = $query->where('title', 'LIKE', "%$keyword%");
+        }
+
+        if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
+            $metal_type = $requestData['metal_type'];
+            $query->whereHas('getProductVariation.variDetails', function ($query) use ($metal_type) {
+                $query->where('value', $metal_type);
+            });
+        }
+
+        if (!empty($requestData['price-min']) && !empty($requestData['price-max'])) {
+            $query->whereHas('getProductVariation', function ($query) use ($requestData) {
+                $query->whereBetween('regular_price', array($requestData['price-min'][0], $requestData['price-max'][0]));
+            });
+        }
+
+        /** Search filter */
+        if (!empty($requestData['filter-by-shape'])) {
+            $shape = $requestData['filter-by-shape'];
+            $query = $query->whereIn('diamond_shape', $shape);
+        }
+
+        if (!empty($requestData['sorting'])) {
             $sort = $requestData['sorting'];
             $query = $query->orderBy('title', $sort);
          }
-         // echo "checked ".$query->toSql();die;
-         $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
-         
-        
-         $productItems = "";
-         if ($getProductListFinal->count()) {
-             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
-         }
-         $isNextPage = $getProductListFinal->hasMorePages();
-         $nextPage = $getProductListFinal->currentPage() + 1;
- 
-         return [
-             'status' => 200,
-             'productItems' => $productItems,
-             'isNextPage' => $isNextPage,
-             'nextPage' => $nextPage,
-             'categoryData' => $categoryData
-         ];
-     }
+
+        // echo "checked ".$query->toSql();die;
+        $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
+
+
+        $productItems = "";
+        if ($getProductListFinal->count()) {
+            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
+        }
+        $isNextPage = $getProductListFinal->hasMorePages();
+        $nextPage = $getProductListFinal->currentPage() + 1;
+        // echo "count<pre>";
+        // print_r($getProductListFinal->count());
+        // die;
+        return [
+            'status' => 200,
+            'productItems' => $productItems,
+            'isNextPage' => $isNextPage,
+            'nextPage' => $nextPage,
+            'product_count'=> $getProductListFinal->count(),
+            'categoryData' => $categoryData
+        ];
+    }
  }
 
 
@@ -1811,4 +1819,22 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
             return $data;
         }
     }
+
+if (!function_exists("getBreadcrumbCategoryName")) {
+    function getBreadcrumbCategoryName($breadCrumbURL)
+    {
+        $breadcrumbArray = array_filter(explode('/',$breadCrumbURL));
+        $newDesignBreadcrumb = [];
+        $breadcrumbDesign = '';
+        foreach($breadcrumbArray as $key => $value){
+            $getCategoryName = Category::where('slug',$value)->value('name');
+            if(count($breadcrumbArray) >= $key){
+
+                $breadcrumbDesign .= "/".$value;
+            }
+            $newDesignBreadcrumb[$key] = '<a href="'.$breadcrumbDesign.'">'.$getCategoryName.'</a>';
+        }
+        return implode(' / ',$newDesignBreadcrumb);
+    }
+}
     

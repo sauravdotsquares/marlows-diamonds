@@ -1027,7 +1027,7 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->take(4)->get();
+        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->where('status',1)->take(4)->get();
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $view = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
@@ -1625,6 +1625,12 @@ class ProductController extends Controller
     }
 
 
+    /**
+     * Get Product Listing page direct hitting url
+     *
+     * @param [type] $all
+     * @return void
+     */
     public function productListPage($all)
     {
         $request = request();
@@ -1634,6 +1640,8 @@ class ProductController extends Controller
         if (!empty($productListingData)) {
 
             $productItems = $productListingData['productItems'];
+            $product_count = $productListingData['product_count'];
+            
             $isNextPage = $productListingData['isNextPage'];
             $nextPage = $productListingData['nextPage'];
             $categoryData = $productListingData['categoryData'];
@@ -1671,6 +1679,7 @@ class ProductController extends Controller
             return view('front.pages.product_listing_page', compact([
                 'filterItemTextData',
                 'productItems',
+                'product_count',
                 'isNextPage',
                 'nextPage',
                 'filter_items',
@@ -1684,18 +1693,30 @@ class ProductController extends Controller
         }
     }
 
+   /**
+     * Get Product Listing Data 
+     *
+     * @param Request $request
+     * @return void
+     */
     public function getProductListData(Request $request)
     {
         $dataArray = [];
         if (isset($request->ids) && !empty($request->ids)) {
-            foreach ($request->ids as $key => $value) {
+           foreach ($request->ids as $key => $value) {
                 $dataArray[$value['name']][] = $value['value'];
             }
-        }
+          }
+          $sorting = 'ASC';
+            if (isset($request->sorting) && !empty($request->sorting)) {
+               $sorting = $request->sorting;
+            }
+        $dataArray['sorting'] = $request->sorting;
         $dataArray['page'] = $request->page;
+        $dataArray['per_page_product'] = $request->per_page_product;
         $dataArray['keyword'] = $request->keyword;
         $slugs = explode('/', $request->path);
-        return $productListingData = getProductListing($slugs, $dataArray);
+        return $productListingData = getProductListing($slugs, $dataArray, $sorting);
         return view('front.includes.productCard', $productListingData);
     }
 

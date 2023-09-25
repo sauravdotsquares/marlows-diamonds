@@ -114,8 +114,8 @@ class ProductController
 
          $getSearchedData = Products::with('getProductImages')->select("title",'id','slug')
                 ->where("title","LIKE","%$request->name%")
+				->where('status',1)
                 ->get();
-        //echo '<pre>';print_r($getSearchedData[0]->getProductImages->image_url);   die; 
         return json_encode($getSearchedData);
     }
 }
