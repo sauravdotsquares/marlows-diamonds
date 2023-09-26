@@ -436,16 +436,25 @@
             $('#selected_payment_type').val($(this).val());
             switch ($(this).val()) {
                 case 'paypal':
+                    $(".via_deko_payment").removeClass('dekopaymentgateway_wrap');
+                    $(".stripe_payment").removeClass('stripepaymentgateway_wrap');
+                    $(".paypal_payment").addClass('paypalpaymentgateway_wrap');
                     $(".paypal-pay-box").show('slow');
                     $(".deko-pay-box").hide('slow');
                     $(".stripe-pay-box").hide('slow');
                     break;
                 case 'dekopay':
+                    $(".stripe_payment").removeClass('stripepaymentgateway_wrap');
+                    $(".paypal_payment").removeClass('paypalpaymentgateway_wrap');
+                    $(".via_deko_payment").addClass('dekopaymentgateway_wrap');
                     $(".paypal-pay-box").hide('slow');
                     $(".deko-pay-box").show('slow');
                     $(".stripe-pay-box").hide('slow');
                     break;
                 case 'stripe':
+                    $(".via_deko_payment").removeClass('dekopaymentgateway_wrap');
+                    $(".paypal_payment").removeClass('paypalpaymentgateway_wrap');
+                    $(".stripe_payment").addClass('stripepaymentgateway_wrap');
                     $(".paypal-pay-box").hide('slow');
                     $(".deko-pay-box").hide('slow');
                     $(".stripe-pay-box").show('slow');
