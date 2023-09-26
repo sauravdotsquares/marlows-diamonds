@@ -337,11 +337,8 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </div>
-
 
 <!-- Related Product start heRe -->
 <div class="related-products-section">
@@ -555,27 +552,6 @@
   </div>
 </div>
 
-<!-- Modal -->
-<div class="modal guide-mode" id="myModalRingGuide">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
-      </div>
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 <!-- Modal -->
 @include('front.includes.dekopay-finance-options')
@@ -592,7 +568,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
-							
+
 		function changeDiamondType(classToPerform="") {
 
 			if(classToPerform == 'mined_item'){

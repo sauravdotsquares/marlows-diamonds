@@ -58,14 +58,6 @@ Route::group(['prefix' => 'admin','middleware' => ['employee'], 'as' => 'admin.'
 		Route::post('/pages/edit/{id}', 'PageController@edit');
 		Route::get('/delete-page/{id}', 'PageController@delete');
 		Route::get('/pages/status/{id}/{status}', 'PageController@status');
-		// Pages Route
-		Route::get('/attributes', 'AttributeController@index')->name('attributes');
-		Route::get('/attributes/create', 'AttributeController@create')->name('create');
-		Route::post('/attributes/add', 'AttributeController@add')->name('add');
-		Route::get('/attributes/update/{id}', 'AttributeController@update')->name('create');
-		Route::post('/attributes/edit/{id}', 'AttributeController@edit');
-		Route::get('/delete-attribute/{id}', 'AttributeController@delete');
-		Route::get('/attributes/status/{id}/{status}', 'AttributeController@status');
 		// Blog/Posts Routes
 		Route::get('/posts', 'PostController@index')->name('posts');
 		Route::get('/posts/create', 'PostController@create')->name('create');
@@ -384,6 +376,10 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
     Route::post('/register-customers', 'LoginController@registerCustomer')->name('register-customers');
     Route::post('/login-customers', 'LoginController@loginCustomer')->name('login-customers');
 
+    Route::post('/login-customer-account', 'LoginController@getLoginRegisterAccount')->name('login.customer.account');
+
+    Route::post('/check-email-id', 'LoginController@checkEmailId')->name('check.email.id');
+
 	Route::get('repnetapi','ProductController@getNewRepNetFunction');
 	//Route::any('/exclusive', 'ProductController@exclusiveMarlows')->name('products.exclusive');
 
@@ -429,23 +425,19 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/set-product-wishlist/{slug?}', 'WishlistController@addToWishlist')->name('set-product-wishlist');
 	Route::delete('product/remove-from-wishlist', 'WishlistController@removeWishlist')->name('remove.from.wishlist');
 
-	// Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
+	Route::post('products/products-final-price','ProductPriceController@getProductFinalPrice')->name('products-final-price');
 
-	// Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
+	Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
 
 	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
 	Route::get('products/payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
-	
+
 	Route::post('users/customer-user-address','LoginController@changeCustomerUserAddress')->name('users.customer.address');
 	Route::post('users/update-customer-account-details','LoginController@changeCustomerAccountDetails')->name('update.customer.account.details');
-	
+
 	Route::post('users/get-order-details','LoginController@getOrderDetails')->name('get.order.details');
 	Route::post('users/get-order-details-page','LoginController@getOrderDetailsPage')->name('get.order.details.pages');
-	
-	Route::get('products/handle-stripe-payment/{order_id?}', 'StripeController@stripe')->name('make.stripe-payment');
-	Route::get('products/cancel-stripe-payment', 'StripeController@paymentCancel')->name('cancel.stripe.payment');
-	Route::get('products/payment-stripe-success', 'StripeController@paymentSuccess')->name('success.stripe.payment');
 	/*
 	*** Reset Password
 	*/
@@ -463,6 +455,16 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::any('/deko-api/dekopay-cancelled', 'DekoPayController@dekopayCancelled');
 	Route::any('/deko-api/dekopay-referred', 'DekoPayController@dekopayReferred');
 	Route::any('/deko-api/dekopay-csn-url', 'DekoPayController@dekopayCsnUrl');
+
+
+	Route::get('products/handle-stripe-payment/{order_id?}', 'StripeController@stripe')->name('make.stripe-payment');
+	Route::get('products/cancel-stripe-payment', 'StripeController@paymentCancel')->name('cancel.stripe.payment');
+	Route::get('products/payment-stripe-success', 'StripeController@paymentSuccess')->name('success.stripe.payment');
+
+
+	
+	
+	
 
 	// {slug2?}/{slug3?}
 	Route::get('{page}', 'PageController@page')->name('page');
@@ -503,5 +505,4 @@ Route::group(['prefix' => 'api/v1'], function() {
 
 Route::any('{all}/{subpage}','Front\ProductController@productListPage')->where('all', '.*');
 
-// Route::get('stripe', [StripeController::class, 'stripe']);
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');

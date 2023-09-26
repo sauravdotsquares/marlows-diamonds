@@ -6,64 +6,59 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SeoScripts;
 
-class SeoScriptsController extends Controller
-{
+class SeoScriptsController extends Controller{
+    
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->view_path = "admin.seo_scripts.";
     }
 
     /**
      * List all items
-     *
-     * @param Request $request
-     * @return void
      */
-    public function list(Request $request)
-    {
+    public function list(Request $request){
+        
+        
+        // $data = get_ip_info("Visitor");
+        // prd($data);
 
         $page_title = "Seo Scripts";
         $breadcrumb = [
             ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],
             ["name" => "Home", "url" => url('/admin'), "icon" => "fa fa-home"],
-
+           
         ];
         populate_breadcrumb($breadcrumb);
 
-        $query = SeoScripts::where(['is_deleted' => 0]);
+        $query = SeoScripts::where(['is_deleted'=>0]);
 
         $query = getFilter(SeoScripts::class, $query, $request->all());
 
         $data = $query->paginate(10);
 
-        return view($this->view_path . 'list', compact(['page_title', 'data']));
-    }
+        return view($this->view_path . 'list', compact(['page_title','data']));
+    }//endof list
 
     /**
      * Add a new record
-     *
-     * @param Request $request
-     * @return void
      */
-    public function add(Request $request)
-    {
+    public function add(Request $request){
         $page_title = "Seo Scripts";
         $breadcrumb = [
             ["name" => "Add", "url" => route("admin.seo_scripts.add"), "icon" => ""],
             ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],
             ["name" => "Home", "url" => url('/admin'), "icon" => "fa fa-home"],
-
-
+          
+           
         ];
         populate_breadcrumb($breadcrumb);
 
-        if ($request->isMethod('post')) {
+        if($request->isMethod('post')){
             $validated = $request->validate([
                 'page' => 'required',
                 'header_script' => 'required_without_all:footer_script',
                 'footer_script' => 'required_without_all:header_script',
-            ], [
+            ],[
                 'page.required' => 'Please enter page url',
                 'header_script.required_without_all' => 'Please type scripts for header or footer',
                 'footer_script.required_without_all' => 'Please type scripts for header or footer',
@@ -74,99 +69,88 @@ class SeoScriptsController extends Controller
             $record->header_script = $validated['header_script'];
             $record->footer_script = $validated['footer_script'];
             $record->save();
-            return redirect()->route('admin.seo_scripts.list')->with('success', 'Script added successfully');
+            return redirect()->route('admin.seo_scripts.list')->with('success','Script added successfully');
         }
 
         return view($this->view_path . 'add');
-    }
+    }//endof add
 
     /**
      * Edit a record
-     *
-     * @param Request $request
-     * @return void
      */
-    public function edit(Request $request)
-    {
+    public function edit(Request $request){
 
         $record = SeoScripts::where('id', $request['id'])->first();
-        if (!empty($record)) {
+        if(!empty($record)){
 
             $page_title = "Seo Scripts";
             $breadcrumb = [
                 ["name" => "Edit", "url" => route("admin.seo_scripts.edit", $record->id), "icon" => ""],
-                ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],
+                ["name" => "Seo Scripts", "url" => route("admin.seo_scripts.list"), "icon" => ""],       
                 ["name" => "Home", "url" => url('/admin'), "icon" => "fa fa-home"],
-
+            
             ];
             populate_breadcrumb($breadcrumb);
 
-            if ($request->isMethod('post')) {
+            if($request->isMethod('post')){
                 $validated = $request->validate([
                     'page' => 'required|url',
                     'header_script' => 'required_without_all:footer_script',
                     'footer_script' => 'required_without_all:header_script',
-                ], [
+                ],[
                     'page.required' => 'Please enter page url',
                     'header_script.required_without_all' => 'Please type scripts for header or footer',
                     'footer_script.required_without_all' => 'Please type scripts for header or footer',
                 ]);
-
+    
                 $record->page = $validated['page'];
                 $record->header_script = $validated['header_script'];
                 $record->footer_script = $validated['footer_script'];
                 $record->save();
-                return redirect()->route('admin.seo_scripts.list')->with('success', 'Script has been updated successfully');
+                return redirect()->route('admin.seo_scripts.list')->with('success','Script has been updated successfully');
             }
-            return view($this->view_path . 'edit', compact(['record']));
+
+
+
+            return view($this->view_path . 'edit',compact(['record']));
         }
         return redirect()->route('admin.seo_scripts.list')->with('error', 'Record not identified');
-    }
+    }//endof edit
 
     /**
-     * Change status of record
-     *
-     * @param Request $request
-     * @return void
+     * change status of record
      */
-    public function changeStatus(Request $request)
-    {
+    public function changeStatus(Request $request){
         $record = SeoScripts::where('id', $request['id'])->first();
-        if (!empty($record)) {
+        if(!empty($record)){
             $record->is_active = $record->is_active ? 0 : 1;
             $record->save();
             return redirect()->route('admin.seo_scripts.list')->with('success', 'Status has been updated successfully');
         }
         return redirect()->route('admin.seo_scripts.list')->with('error', 'Record not identified');
-    }
+    }//endof changeStatus
 
     /**
      * Delete a record
-     *
-     * @param Request $request
-     * @return void
      */
-    public function delete(Request $request)
-    {
+    public function delete(Request $request){
         $record = SeoScripts::where('id', $request['id'])->first();
-        if (!empty($record)) {
+        if(!empty($record)){
             $record->is_deleted = 1;
             $record->save();
             return redirect()->route('admin.seo_scripts.list')->with('success', 'Record has been deleted successfully');
         }
         return redirect()->route('admin.seo_scripts.list')->with('error', 'Record not identified');
-    }
+    }//endof delete
+
 
     /**
      * Edit a record
-     *
-     * @param Request $request
-     * @return void
      */
-    public function view(Request $request)
-    {
+    public function view(Request $request){
+
         $record = SeoScripts::where('id', $request['id'])->first();
-        if (!empty($record)) {
+        if(!empty($record)){
 
             $page_title = "Seo Scripts";
             $breadcrumb = [
@@ -176,8 +160,9 @@ class SeoScriptsController extends Controller
             ];
             populate_breadcrumb($breadcrumb);
 
-            return view($this->view_path . 'view', compact(['record']));
+            return view($this->view_path . 'view',compact(['record']));
         }
         return redirect()->route('admin.seo_scripts.list')->with('error', 'Record not identified');
-    } //endof edit
+    }//endof edit
+
 }

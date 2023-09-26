@@ -516,12 +516,15 @@
         },
         submitHandler: function () {
             $.ajax({
-                url: "{{ route('login-customers') }}",
+                // url: "{{ route('login-customers') }}",
+                url: "{{ route('login.customer.account') }}",
                 method: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    login_email: $('#email').val(),
-                    login_password: $('#password').val(),
+                    // login_email: $('#email').val(),
+                    // login_password: $('#password').val(),
+                    email: $('#email').val(),
+                    password: $('#password').val(),
                 },
                 success: function (response) {
                     if(response.status == 200){

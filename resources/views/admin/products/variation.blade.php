@@ -48,32 +48,32 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="form-label-group">
-                            <label for="mined_diamond_rrp">Mined Diamond RRP</label>
-                            <input data-field="mined_diamond_rrp" type="text" id="mined_diamond_rrp" name="data[{{$index}}][mined_diamond_rrp]" class="form-control" placeholder="Sale Price" value="{{$variation['mined_diamond_rrp']}}">
+                            <label for="vari_mined">Mined Diamond RRP</label>
+                            <input data-field="vari_mined" type="text" id="mined_diamond_rrp" name="data[{{$index}}][mined_diamond_rrp]" class="form-control" placeholder="Sale Price" value="{{$variation['mined_diamond_rrp']}}">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="form-label-group">
-                            <label for="mined_diamond">Mined Diamond</label>
-                            <input data-field="mined_diamond" type="text" id="mined_diamond" name="data[{{$index}}][mined_diamond]" class="form-control" placeholder="Sale Price" value="{{$variation['mined_diamond']}}">
+                            <label for="vari_mined">Mined Diamond</label>
+                            <input data-field="vari_mined" type="text" id="mined_diamond" name="data[{{$index}}][mined_diamond]" class="form-control" placeholder="Sale Price" value="{{$variation['mined_diamond']}}">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="form-label-group">
-                            <label for="lab_grown_rrp">Lab Grown Diamond RRP</label>
-                            <input data-field="lab_grown_rrp" type="text" id="lab_grown_rrp" name="data[{{$index}}][lab_grown_rrp]" class="form-control" placeholder="Regular Price" value="{{$variation['lab_grown_rrp']}}">
+                            <label for="vari_lab">Lab Grown Diamond RRP</label>
+                            <input data-field="vari_lab" type="text" id="lab_grown_rrp" name="data[{{$index}}][lab_grown_rrp]" class="form-control" placeholder="Regular Price" value="{{$variation['lab_grown_rrp']}}">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="form-label-group">
-                            <label for="lab_grown">Lab Grown Diamond</label>
-                            <input data-field="lab_grown" type="text" id="lab_grown" name="data[{{$index}}][lab_grown]" class="form-control" placeholder="Regular Price" value="{{$variation['lab_grown']}}">
+                            <label for="vari_lab">Lab Grown Diamond</label>
+                            <input data-field="vari_lab" type="text" id="lab_grown" name="data[{{$index}}][lab_grown]" class="form-control" placeholder="Regular Price" value="{{$variation['lab_grown']}}">
                         </div>
                     </div>
                 </div>

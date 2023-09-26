@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-
 use App\Models\Posts;
 //use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 
@@ -13,7 +12,15 @@ class PostController
      */
     public function index()
     {
-        $posts = Posts::orderBy('id', 'DESC')->where('status', 1)->get();
-        return view('front.pages.templates.blog_template', compact('posts'));
+        // $breadcrumb = [
+            // ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
+            // ["name" => "Posts", "url" => route("admin.posts"), "icon" => "fa fa-home"],
+
+        // ];
+        // populate_breadcrumb($breadcrumb);
+		$posts = Posts::orderBy('id','DESC')->where('status',1)->get();
+		return view('front.pages.templates.blog_template', compact('posts')); 
+		
     }
 }
+  

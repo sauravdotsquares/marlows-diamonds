@@ -6,7 +6,9 @@
 
 		<div class="product-items-item-info">
 			<div class="product-item-top">
-			<div class="product-onsale">On Sale</div>
+			<div class="product-onsale">
+				<!-- On Sale -->
+			</div>
 									@php
 							$wishlist = session()->get('wishlist', []);
 							// dd($wishlist);
@@ -63,7 +65,7 @@
 					@endif
 
 					 <?php if(!empty($product->ProductVariationMinMaxPrice->MinPrice) && !empty($product->ProductVariationMinMaxPrice->MinPrice) && $product->ProductVariationMinMaxPrice->MinPrice != 0){ ?>
-                        <p> <strong>Price: </strong> <span>  {{MY_CURRENCY_SYMBOL}} {{round(($product->ProductVariationMinMaxPrice->MinPrice),2)}} </span> </p>
+                        <!-- <p> <strong>Price: </strong> <span>  {{MY_CURRENCY_SYMBOL}} {{round(($product->ProductVariationMinMaxPrice->MinPrice),2)}} </span> </p> -->
 					<?php } ?> 
 				</div>
 			</div>

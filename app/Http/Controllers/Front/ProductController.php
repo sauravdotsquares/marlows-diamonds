@@ -39,14 +39,6 @@ use billythekid\dekopay\Core\DekoPayApiClient;
 class ProductController extends Controller
 {
 
-    /**
-     * Get Product Category
-     *
-     * @param [type] $cat1
-     * @param [type] $cat2
-     * @param [type] $cat3
-     * @return void
-     */
     public function productCategory($cat1 = null, $cat2 = null, $cat3 = null)
     {
         $request = request();
@@ -114,15 +106,11 @@ class ProductController extends Controller
         return view('front.pages.product-listing', ['data' => $getCatId, 'cat1' => $cat1, 'cat2' => $cat2, 'cat3' => $cat3]);
     }
 
-    /**
-     * Product Details records
-     *
-     * @param Request $request
-     * @param [type] $productSlug
-     * @return void
-     */
     public function productDetails(Request $request, $productSlug = null)
     {
+
+
+
         $dekoEnabled = true;
         $client = new DekoPayApiClient('', '', env('DEKOPAY_API_KEY'));
         $pay_url =  env('DEKOPAY_MODE');
@@ -136,7 +124,8 @@ class ProductController extends Controller
 
 
         if ($productSlug != null) {
-            $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('status', 1)->where('slug', $productSlug)->first();
+            // $productSlug = str_replace("_","-",$productSlug);
+            $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('status',1)->where('slug', $productSlug)->first();
 
             if (empty($getProduct)) {
                 /** If data not found with existing slug then check in redirections table and redirect */
@@ -261,11 +250,6 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Get Ids function
-     *
-     * @return void
-     */
     public function getIds()
     {
         $ids =  [$this->id];
@@ -275,12 +259,6 @@ class ProductController extends Controller
         return $ids;
     }
 
-    /**
-     * Get Product List Function
-     *
-     * @param Request $request
-     * @return void
-     */
     public function getProductList(Request $request)
     {
 
@@ -326,30 +304,71 @@ class ProductController extends Controller
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $notInList = 0;
             foreach ($getProductListFinal as $product_list_key => $product_list_value) {
+
+
                 $minMaxPrice = Products::getMinMaxPrice($product_list_value->id);
                 if ($minMaxPrice) {
                     $getProductListFinal[$product_list_key]->minimumValue = $minMaxPrice['minimumValue'];
                     $getProductListFinal[$product_list_key]->maximumValue = $minMaxPrice['maximumValue'];
                 }
+                // $categories = explode(',', $product_list_value->categories);
+                // $combinations = ProductVariationsMaster::where(['product_id'=> $product_list_value->id, 'is_deleted'=> 0, 'is_active'=>1 ])
+                //                 ->orderBy('price','DESC')
+                //                 ->pluck('price');
+                // if(!empty($combinations) && $combinations && $combinations->count()){
+                //     $combinations = $combinations->toArray();
+                //     $min = min($combinations);
+                //     $max = max($combinations);
+                //     $minimumValue = (55/ 100) * $min;
+                //     $maximumValue = $max;
+                //     /** Inside this */
+                //     $getProductListFinal[$product_list_key]->minimumValue = $minimumValue;
+                //     $getProductListFinal[$product_list_key]->maximumValue = $maximumValue;
+                // }else{
+                //     $categorySlgs = Category::whereIn('id',$categories)->pluck('slug');
+                //     if($categorySlgs->count()){
+                //         $categorySlgs = $categorySlgs->toArray();
+                //     }
+                //     if(!in_array('8', $categories) && !in_array('exclusive-to-marlows', $categorySlgs) ){
+                //         $product_variations = ProductVariations::where(['product_id'=> $product_list_value->id])->pluck('regular_price');
+                //         if(!empty($product_variations) && $product_variations->count()){
+                //             $product_variations = $product_variations->toArray();
+                //             $getProductListFinal[$product_list_key]->minimumValue = min($product_variations);
+                //             $getProductListFinal[$product_list_key]->maximumValue = max($product_variations);
+                //         }
+                //     }
+                // }
             }
             $getAjaxResponses = false;
-            $view = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
+            $view = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
             $view = '';
             $getProductListFinal = '';
         }
 
         return response()->json(['page' => $getProductListFinal, 'html' => $view]);
+        // echo "<pre>";
+        // print_r($view);
+        // die;
+        // echo "<pre>";
+        // print_r($getProductListFinal);
+        // die;
+        // $cateArrayData = [];
+        // $getnewArray = $this->getSingleArray($cateArrayData,$getParentData,0);
+        // print_r($getnewArray);
+        // die;
+        // $getProductIds = Products::where()->
+        // if(isset($getParentData) && !empty($getParentData) && $getParentData['parent_id'] == 0){
+        //     $catId = $getParentData['id'];
+        //     $getProductList = Products::whereRaw("find_in_set('".$catId."',categories)")
+        //     ->get();
+        // }
+        // echo "aad<pre>";
+        // print_r($catId);
+        // print_r($getParentData);
+        // die;
     }
 
-    /**
-     * Get Single array in products 
-     *
-     * @param [type] $blankArray
-     * @param [type] $cateArray
-     * @param integer $level
-     * @return void
-     */
     public function getSingleArray($blankArray, $cateArray, $level = 0)
     {
         $level++;
@@ -368,12 +387,6 @@ class ProductController extends Controller
         return json_encode($blankArray);
     }
 
-    /**
-     * Get New Rapnet Function
-     *
-     * @param Type|null $var
-     * @return void
-     */
     public function getNewRepNetFunction(Type $var = null)
     {
         $getArray = [
@@ -422,12 +435,6 @@ class ProductController extends Controller
         return true;
     }
 
-    /**
-     * Get Custom Filter function
-     *
-     * @param Request $request
-     * @return void
-     */
     public function getCustomFilter(Request $request)
     {
 
@@ -533,12 +540,6 @@ class ProductController extends Controller
         return response()->json(['status' => 'Not attribute selected']);
     }
 
-    /**
-     * Get Product Video Funcitonality
-     *
-     * @param Request $request
-     * @return void
-     */
     public function getProductVideo(Request $request)
     {
         $getProduct = Products::where('slug', $request->slug)->select('id')->first();
@@ -559,12 +560,6 @@ class ProductController extends Controller
         return response()->json($getProductVariationId);
     }
 
-    /**
-     * Get custom api filter data functionality
-     *
-     * @param Request $request
-     * @return void
-     */
     public function getCustomApiFilterData(Request $request)
     {
         $caratFrom = '0.30';
@@ -637,7 +632,7 @@ class ProductController extends Controller
         $hkData = getHKApiRecords($data);
         $hkData = array_map(array($this, "amountChange"), $hkData);
         $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
-
+        
         $rapnetRecords = [];
         if (!empty($rapnetData)) {
             foreach ($rapnetData as $key => $result) {
@@ -668,14 +663,14 @@ class ProductController extends Controller
         $apiData['data'] = Arr::collapse([$hkData, $rapnetRecords]);
 
         $apiData['VAT'] = getVAT();
-
+        
         if (!empty($apiData['data'])) {
-            if ($request->type && $request->diamond_type == "mined_diamond") {
-                if (isset($request->selectedDiamondPrice) && !empty($request->selectedDiamondPrice)) {
+            if($request->type && $request->diamond_type == "mined_diamond"){
+                if(isset($request->selectedDiamondPrice) && !empty($request->selectedDiamondPrice)){
                     return $request->selectedDiamondPrice;
                 }
                 return $apiData['data'][0]['Amount'];
-            } else {
+            }else{
                 $dataArray = [];
                 foreach ($apiData['data'] as $key => $data) {
                     $dataArray[] = View::make('front.includes.product_detail_diamonds', ['key' => $key, 'apiRecords' => $data, 'VAT' => $apiData['VAT']])->render();
@@ -694,13 +689,7 @@ class ProductController extends Controller
             $num['Amount'] = $num['Amount'] * $marginAPIPercentage->percentage;
         return $num;
     }
-
-    /**
-     * AutoComplete Function
-     *
-     * @param Request $request
-     * @return void
-     */
+    
     public function autocomplete(Request $request)
     {
         $getSearchedData = Products::with(['getProductImages'])->select("title", 'id', 'slug')
@@ -711,12 +700,6 @@ class ProductController extends Controller
         return response()->json(['html' => $view]);
     }
 
-    /**
-     * Get Selected Variations Data functionality
-     *
-     * @param Request $request
-     * @return void
-     */
     public function getSelectedVariationsData(Request $request)
     {
 
@@ -764,6 +747,7 @@ class ProductController extends Controller
                     })
                     ->where(['product_id' => $productData->id, 'is_deleted' => 0, 'is_active' => 1])
                     ->first();
+                // ->toArray();
 
 
 
@@ -774,6 +758,7 @@ class ProductController extends Controller
                         ->where('variations_id->metal_types', $selectedMetalTypeId)
                         ->where('variations_id->product_type', $productType)
                         ->first();
+                    // ->toArray();
 
                     if (!empty($combinationsPriceFormula)) {
 
@@ -808,8 +793,13 @@ class ProductController extends Controller
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
                         $newArray['regular_price'] = round($price);
                         $newArray['discount_data'] =  $getDiscountRange;
+                        // $newArray['now'] =  now();
                         $newArray['regular_price_with_vat'] = round($price);
+                        // $newArray['regular_price_with_vat_discount'] = round($price);
                         $newArray['regular_price_with_vat_discount'] = round($price) - round($price_after_discount);
+
+                        // $newArray['regular_price_with_vat'] = $totalPrice ? number_format((float)$totalPrice, 2, '.', '') : '0.00';
+                        // $newArray['regular_price_with_vat_discount'] = number_format((float)$price, 2, '.', '');
 
                         return response()->json($newArray);
                     }
@@ -826,6 +816,8 @@ class ProductController extends Controller
 
             $prod_categories = explode(',', $getProduct->categories);
 
+            // prd($prod_categories);
+
             if (in_array("18", $prod_categories)) {
                 $prod_categories = ['18'];
                 $checkPlanCatArray = Category::whereIn('id', $prod_categories)->first()->toArray();
@@ -833,10 +825,15 @@ class ProductController extends Controller
                 $checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
             }
 
+            // prd($checkPlanCatArray);
+
             $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date', 'is_login_users')
                 ->where('category_id', $checkPlanCatArray['id'])
                 ->where('status', 1)
                 ->first();
+
+            // echo 'asdf';
+            // prd($disPercentage);
 
             $getProductVariationId = ProductVariations::where('product_id', $product_id)
                 ->pluck('id')
@@ -854,6 +851,7 @@ class ProductController extends Controller
 
 
                 $attributeCount = count($request->variations);
+                // prd($getProductVariationId);
 
                 foreach ($getProductVariationId as $key1 => $productVariationId) {
                     $variationDetails = array();
@@ -875,6 +873,7 @@ class ProductController extends Controller
 
             $vat = getVAT(); // Fixed 1.2
 
+            // echo 'vat:- '. $vat;die;
             $newArray = [];
             if (isset($getVariDetails) && !empty($getVariDetails)) {
 
@@ -897,6 +896,7 @@ class ProductController extends Controller
 
                 $regular_p_final = (($regular_p_final) * $increaseDiscount);
 
+                // prd($disPercentage);
                 if (isset($disPercentage) && !empty($disPercentage)) {
                     $disPercentage = $disPercentage->toArray();
 
@@ -913,6 +913,9 @@ class ProductController extends Controller
                         } else {
                             $increaseDiscount = 1;
                         }
+
+                        // echo $regular_p_final * $increaseDiscount;
+                        // echo (($regular_p_final) * $increaseDiscount);die;
 
                         $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
 
@@ -954,6 +957,10 @@ class ProductController extends Controller
                     $categorySlugs = $categorySlugs->toArray();
                 }
 
+                // echo "asdfds<pre>";
+
+                // die;
+
                 /** Discount not applicable to exclusive to marlows */
                 if (in_array('exclusive-to-marlows', $categorySlugs)) {
                     $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
@@ -972,9 +979,11 @@ class ProductController extends Controller
 
                     if ($request->diamond_type == 'lab_grown') {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->lab_grown;
+                        // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->lab;
                         $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->lab_grown;
                     } elseif ($request->diamond_type == 'mined_diamond') {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->mined_diamond;
+                        // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->mined;
                         $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->mined_diamond;
                     } else {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
@@ -1004,12 +1013,7 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Get Related Product List Functionality
-     *
-     * @param Request $request
-     * @return void
-     */
+
     public function getRelatedProductList(Request $request)
     {
         $getCatIdArray = explode(',', $request->catid);
@@ -1023,9 +1027,9 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->take(4)->get();
+        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->where('status',1)->take(4)->get();
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
-            $view = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
+            $view = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
             $view = '';
         }
@@ -1033,23 +1037,11 @@ class ProductController extends Controller
         return response()->json(['html' => $view]);
     }
 
-    /**
-     * Exclusive Marlows Links
-     *
-     * @param Request $request
-     * @return void
-     */
     public function exclusiveMarlows(Request $request)
     {
         return View::make('front.pages.exclusive_products');
     }
 
-    /**
-     * Product Slugs
-     *
-     * @param Request $request
-     * @return void
-     */
     public function productSlugs(Request $request)
     {
         /** TODO:
@@ -1092,6 +1084,8 @@ class ProductController extends Controller
                 $blog_affected_records++;
             }
         }
+        echo 'Blog affected records:- ' . $blog_affected_records;
+
         /** Product categories */
         $product_categories_slugs = [
             "engagement-rings",
@@ -1121,14 +1115,312 @@ class ProductController extends Controller
         echo '<br>';
         echo "product categories total updated:- " . $product_categories_total_updated;
         die;
+
+        // $filePath = public_path("imports/redirection_phase_2.csv");
+        // $file = fopen($filePath, "r");
+        // $newItemsAdded = 0;
+        // $existingItems = 0;
+        // $totalRecords = 0;
+        // //ini_set('memory_limit', '-1');
+        // set_time_limit(500);
+        //  try {
+        //     $records = [];
+        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+        //         $totalRecords++;
+        //         // $old_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0]));
+        //         // $new_url = urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1]));
+        //         $records[] = [
+        //             'old_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[0])),
+        //             'new_url' => urlencode(str_replace('https://marlows-diamonds.co.uk','',$getData[1])),
+        //         ];
+        //     }
+        //     $collection = collect($records);
+        //     foreach ($collection->chunk(100) as  $chunk) {
+        //         $chunk = $chunk->toArray();
+        //         foreach ($chunk as $key => $value) {
+        //             $item = UrlRedirects::where('old_url', $value['old_url'])->first();
+        //             if(!empty($item)){
+        //                 $item->new_url = $value['new_url'];
+        //                 $item->is_deleted = 0;
+        //                 $item->save();
+        //                 $existingItems++;
+        //             }else{
+        //                 $new_url = new UrlRedirects();
+        //                 $new_url->old_url = $value['old_url'];
+        //                 $new_url->new_url = $value['new_url'];
+        //                 $new_url->save();
+        //                 $newItemsAdded++;
+        //             }
+        //         }
+        //         // HKDiamondStock::insert($chunk->toArray());
+        //         // $recordsAdded = $recordsAdded + $chunk->count();
+        //     }
+        //     echo 'existingItems:- ' . $existingItems;
+        //     echo '<br>';
+        //     echo 'newItemsAdded:- ' . $newItemsAdded;
+        //     echo '<br>';
+        //     echo 'Total itmes :- ' . $totalRecords;
+        //     //prd($records);
+        // } catch (\Exception $th) {
+        //     prd($th);
+        //     echo 'totalRecordsAdded:- '. $newItemsAdded;die;
+        // }
+
+
+
+        // $filePath = public_path('revert_redirect.json');
+        // $fileData = file_get_contents($filePath, "r");
+        // $urls = json_decode($fileData);
+
+        // $totalAffectedRecords = 0;
+        // foreach($urls as $url){
+        //     $old_url =  urlencode($url);
+        //     $redirectInfo = UrlRedirects::where('old_url',$old_url)->where('is_deleted',0)->first();
+        //     if(!empty($redirectInfo)){
+        //         $redirectInfo->is_deleted = 1;
+        //         $redirectInfo->save();
+        //         $totalAffectedRecords++;
+        //     }
+        // }
+
+        // echo 'totalAffectedRecords:- ' . $totalAffectedRecords . '<br>';
+        // echo 'totalRecords:- ' . count($urls);die;
+
+        // $productSlugs =
+        // Products::select(['slug','id','title','description','lab_description','categories'])
+        // ->whereRaw('FIND_IN_SET(2, categories) OR FIND_IN_SET(47, categories)')
+        // ->get();
+        // // ;
+        // // prd($productSlugs->toSql());
+
+        // $fileName = date('d-m-Y') .'-product-new-urls.csv';
+        // $headers = array(
+        //     "Content-type"        => "text/csv; charset=utf-8",
+        //     "Content-Disposition" => "attachment; filename=$fileName",
+        //     "Pragma"              => "no-cache",
+        //     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        //     "Expires"             => "0"
+        // );
+
+        // $columns = array('id', 'Slug','title', 'Description','Lab description','Html description','Html lab description');
+        // $callback = function() use($productSlugs, $columns) {
+        //     $file = fopen('php://output', 'w');
+        //     fputcsv($file, $columns);
+
+        //     foreach ($productSlugs as $key => $value) {
+
+        //         $replaceText = [
+        //             "Diamond Color F-G Clarity VS-SI",
+        //             "Diamond Colour F-G Clarity VS-SI",
+        //             "Diamond quality is FVS",
+        //             "Diamond colour F, Clarity VS",
+        //             "Diamond color F-G diamond clarity VS-SI",
+        //             "Diamond colour F-G diamond clarity VS-SI",
+        //             "Diamond Colour G-H Clarity SI",
+        //             "Diamond Clarity G-H SI",
+        //             "Diamond Color G-H Clarity SI",
+        //             "G SI Quality",
+        //         ];
+
+        //         $lab_description =  $value->description;
+        //         foreach ($replaceText as $replace_key => $replace_value) {
+        //             $lab_description = str_replace($replace_value, 'Diamond Color D-E Clarity VVS',$lab_description );
+        //         }
+
+
+        //         $row['id']  = $value->id;
+        //         $row['slug']  = $value->slug;
+        //         $row['title']  = $value->title;
+        //         $row['description']  = strip_tags($value->description);
+        //         $row['lab_description']  = strip_tags($lab_description);
+        //         $row['description_with_html']  = $value->description;
+        //         $row['lab_description_with_html']  = $lab_description;
+        //         fputcsv($file, array($row['id'],$row['slug'],$row['title'], $row['description'], $row['lab_description'], $row['description_with_html'], $row['lab_description_with_html']));
+        //     }
+        //     fclose($file);
+        // };
+
+        // return response()->stream($callback, 200, $headers);
+
+
+        // %2Fblog-resources%2Fpage%2F9
+        // $data = UrlRedirects::where(['type'=>'other', 'is_active'=>1 ])->get();
+        // foreach ($data as $key => $value) {
+        //     // $data
+        //     $value->old_url = urlencode($value->old_url);
+        //     $value->new_url = urlencode($value->new_url);
+        //     $value->is_active = 0;
+        //     $value->save();
+        // }
+        // echo $data->count();
+
+        // SitemapUrls::generateXml();
+
+        /** Import all redirect urls */
+        // TODO:
+        //SELECT * FROM `md_products` WHERE dfinder_status=1 AND lab_description is null;
+        // $add_description = "<div>All of our sustainable diamonds in this section come with independent diamond reports (GIA/IGI/WGI/GCAL) for peace of mind. All our diamonds are grown in labs under our supervision with the aim to achieve carbon neutrality within these labs by 2030. These diamonds are polished by semi automatic machines to achieve perfection with cut polish and symmetry. None of our lab grown diamonds have any fluorescence, as such no sparkle is lost. Our diamonds are manufactured under our Trademark (pending) Green Earth Diamonds</div>";
+        // $products = Products::where('dfinder_status',1)->whereNull('lab_description')->get();
+        // $totalUpdated = 0;
+        // foreach ($products as $product_key => $product_value) {
+        //     $product_value->lab_description = $add_description .'<br />'. $product_value->description;
+        //     if($product_value->save()){$totalUpdated++;}
+        // }
+        // echo 'Total updated:- ' . $totalUpdated;
+        // prd();
+
+        // $filePath = public_path('exports/products_description_live.csv');
+        // $file = fopen($filePath, "r");
+        // $totalRecordsAdded = 0;
+
+        // try {
+        //     $records = [];
+        //     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+
+        //         $product = Products::where('id', $getData[0])->first();
+        //         // $records[] = $getData;
+        //         if(!empty($product)){
+        //             $product->old_description = $product->description;
+        //             $product->description = '<p>' . $getData[3] . '</p>';
+        //             $product->lab_description = '<p>'. $getData[4] . '</p>';
+        //             $product->save();
+        //             $totalRecordsAdded++;
+        //         }
+
+        //     }
+        //     // prd($records);
+        //     echo 'totalRecordsAdded- success:- '. $totalRecordsAdded;die;
+        // } catch (\Exception $th) {
+        //     prd($th);
+        //     echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+        // }die;
+        // TODO:
+
+        // while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){
+        //     $old =  $getData[0];
+        //     $new = str_replace('https://marlows-diamonds.co.uk','',$getData[1]);
+
+        //     $data = UrlRedirects::where(['old_url'=> $old, 'is_deleted'=>0])->first();
+        //     if(empty($data)){
+        //         $newRedirect = new UrlRedirects();
+        //         $newRedirect->old_url = urlencode($old);
+        //         $newRedirect->new_url = urlencode($new);
+        //         $newRedirect->type = "other";
+        //         $newRedirect->save();
+        //         $totalRecordsAdded++;
+        //     }
+
+        // }
+        // echo 'totalRecordsAdded:- '. $totalRecordsAdded;die;
+
+        // prd($totalRecords);
+
+        /** Export all products urls */
+        // $productSlugs = Products::select(['slug','id','old_slug'])->get();
+        // $fileName = date('d-m-Y') .'-product-new-urls.csv';
+        // $headers = array(
+        //     "Content-type"        => "text/csv",
+        //     "Content-Disposition" => "attachment; filename=$fileName",
+        //     "Pragma"              => "no-cache",
+        //     "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        //     "Expires"             => "0"
+        // );
+
+        // $columns = array('id', 'Current url', 'Old url');
+        // $baseUrl = "https://marlows-diamonds.co.uk/product/";
+        // $callback = function() use($productSlugs, $columns, $baseUrl) {
+        //     $file = fopen('php://output', 'w');
+        //     fputcsv($file, $columns);
+
+        //     foreach ($productSlugs as $key => $value) {
+        //         $row['id']  = $value->id;
+        //         $row['product']  = $baseUrl . $value->slug;
+        //         $row['old_url']  = $baseUrl . $value->old_slug;
+        //         fputcsv($file, array($row['id'],$row['product'], $row['old_url']));
+        //     }
+        //     fclose($file);
+        // };
+
+        // return response()->stream($callback, 200, $headers);
+
+        // prd($productSlugs);
+
+        // $productSlugs = Products::pluck('old_slug','id')->toArray();
+        // $affectedRows = 0;
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+        //         $product_data->slug = $product_data->old_slug;
+        //         $product_data->save();
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+
+
+        // $productSlugs = Products::pluck('slug','id')->toArray();
+        // $dataToRevert = [];
+        // $affectedRows = 0;
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('id', $key)->first();
+        //     if(!empty($product_data)){
+        //         $new_slug = generateSlugProductPurpose($product_data->title,Products::class, "slug",$product_data->id);
+        //         $dataToRevert[$affectedRows]['id'] = $product_data->id;
+        //         $dataToRevert[$affectedRows]['old_slug'] = $value   ;
+        //         $dataToRevert[$affectedRows]['new_slug'] = $new_slug;
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($dataToRevert);
+
+
+        // $productSlugs = [
+        //     "wed002" => "D Shaped Wedding Band | Wed002",
+        //     "wed004" => "Court Shape Wedding Band | Wed004",
+        //     "wed005" => "Rounded Inner Flatter Style Wedding Band | Wed005",
+        //     "wed006" => "Rounded Inner Flatter Style Wedding Band | Wed006",
+        //     "wed007" => "Chunky Wedding Bands | Wed007",
+        //     "wed010" => "Court Shape Wedding Ring | Wed010",
+        //     "wed021" => "Court Shape Wedding Ring | Wed021",
+        //     "wed022" => "D Shaped Wedding Band | Wed022",
+        //     "wed023" => "Modern 6mm Wedding Band | Wed023",
+        //     "wed026" => "Cut Out Diamond Wedding Band | Wed026",
+        //     "wed027" => "6mm Court Shaped Round Wedding Band | Wed027",
+        //     "wed028" => "5mm Flat Round Cut Diamond Wedding Band | Wed028",
+        //     "wed029" => "7mm Princess Cut Diamonds Wedding Band | Wed029",
+        //     "wed030" => "6mm Court Shaped Wedding Band | Wed030",
+        // ];
+
+        // $affectedRows = 0;
+        // // $productSlugs = Products::pluck('slug','id')->toArray();
+        // foreach ($productSlugs as $key => $value) {
+        //     $product_data = Products::where('slug', $key)->first();
+        //     if(!empty($product_data)){
+
+        //         $new_slug = generateSlugProductPurpose($value,Products::class, "slug",$product_data->id);
+
+        //         $product_data->slug = $new_slug;
+        //         $product_data->old_slug = $key;
+        //         $product_data->title = $value;
+        //         $product_data->save();
+
+        //         $url_data = UrlRedirects::where('old_url', $key)->first();
+        //         if(!empty($url_data)){
+        //             $url_data->new_url = $new_slug;
+        //             $url_data->save();
+        //         }else{
+        //             $new_redirect = new UrlRedirects();
+        //             $new_redirect->type = "product";
+        //             $new_redirect->old_url = $key;
+        //             $new_redirect->new_url = $new_slug;
+        //             $new_redirect->save();
+        //         }
+        //         $affectedRows = $affectedRows + 1;
+        //     }
+        // }
+        // prd($affectedRows);
     }
 
-    /**
-     * Product Listing Data
-     *
-     * @param Request $request
-     * @return void
-     */
+
     public function productListingData(Request $request)
     {
 
@@ -1155,18 +1447,52 @@ class ProductController extends Controller
                 'message' => "Something went wrong"
             ]);
         }
+        // prd($productListingData);
+
+        // // echo ;die;
+        // $pageNo = !empty($request['page']) ? $request['page'] : 1;
+
+        // // $categoryIds = [
+        // //     1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54
+        // // ];
+
+        // $query = Products::with('getProductImages')->where('status',1);
+
+
+        // $category_custom_query = "";
+        // foreach ($categoryIds as $cat_key => $cat_value) {
+        //     if(!$cat_key){  $category_custom_query .= '( '; }
+        //     $category_custom_query .= " find_in_set('".$cat_value."',categories)";
+        //     if($cat_key+1 != count($categoryIds)){ $category_custom_query .= " OR "; }
+        //     else{ $category_custom_query .= ' ) '; }
+        // }
+
+        // $getProductListFinal = $query->whereRaw(DB::raw($category_custom_query))->paginate(16,['*'],'page',$pageNo);
+
+        // $productItems = "";
+        // if($getProductListFinal->count()){
+        //     $productItems = view('front.ajax.productlistajax', compact('getProductListFinal'))->render();
+        // }
+        // $nextPage = $pageNo+1;
+        // $token = csrf_token();
+        // if($request->ajax()){
+        //     return response()->json([
+        //         'status' => $getProductListFinal->count() ? true : false,
+        //         'html' => $productItems,
+        //         'nextPage' => $nextPage,
+        //         'token' => $token
+        //     ]);
+        // }
 
         return view('front.pages.multi-category-product-listing', compact(['productItems', 'nextPage']));
     }
 
-    /**
-     * Generate Sitemap Functionality
-     *
-     * @param Request $request
-     * @return void
-     */
+
     public function generateSitemap(Request $request)
     {
+
+        // ->where('status',1)
+        // ->where('status',1)
         $products = Products::select('slug', 'updated_at')->groupBy('slug')->get();
         $posts = Posts::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
         $posts_categories = PostCategory::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
@@ -1203,13 +1529,7 @@ class ProductController extends Controller
         ])->header('Content-Type', 'text/xml');
     }
 
-    /**
-     * Categories Sitemap Funcitonality
-     *
-     * @param integer $level
-     * @param string $prefix
-     * @return void
-     */
+
     public function categoriesSitemap($level = 0, $prefix = "")
     {
 
@@ -1227,15 +1547,9 @@ class ProductController extends Controller
         return $html;
     }
 
-    /**
-     * Get Category HTML Sitemap function
-     *
-     * @param integer $level
-     * @param string $prefix
-     * @return void
-     */
     public function categoriesHtmlSitemap($level = 0, $prefix = "")
     {
+
         $rows = Category::select(['name', 'title', 'id', 'parent_id', 'slug', 'updated_at'])
             ->where('slug', '!=', 'all-products')
             ->where('parent_id', $level)->get();
@@ -1250,13 +1564,7 @@ class ProductController extends Controller
         return $html;
     }
 
-    /**
-     * Attach parent slug to category function
-     *
-     * @param string $categorySlugs
-     * @param string $dataToReturn
-     * @return void
-     */
+
     public function attachParentSlugToCategory($categorySlugs = "", $dataToReturn = "")
     {
 
@@ -1272,15 +1580,12 @@ class ProductController extends Controller
         return $dataToReturn;
     }
 
-    /**
-     * HTML Site Map function
-     *
-     * @param Request $request
-     * @return void
-     */
+
     public function htmlSiteMap(Request $request)
     {
 
+        // ->where('status',1)
+        // ->where('status',1)
         $products = Products::select('slug', 'updated_at', 'title')->groupBy('slug')->get();
         $posts = Posts::select('slug', 'updated_at', 'title')->groupBy('slug')->where('status', 1)->get();
         $posts_categories = PostCategory::select('slug', 'updated_at', 'name')->groupBy('slug')->where('status', 1)->get();
@@ -1319,6 +1624,7 @@ class ProductController extends Controller
         ]));
     }
 
+
     /**
      * Get Product Listing page direct hitting url
      *
@@ -1334,6 +1640,7 @@ class ProductController extends Controller
         if (!empty($productListingData)) {
 
             $productItems = $productListingData['productItems'];
+            $product_count = $productListingData['product_count'];
             
             $isNextPage = $productListingData['isNextPage'];
             $nextPage = $productListingData['nextPage'];
@@ -1372,6 +1679,7 @@ class ProductController extends Controller
             return view('front.pages.product_listing_page', compact([
                 'filterItemTextData',
                 'productItems',
+                'product_count',
                 'isNextPage',
                 'nextPage',
                 'filter_items',
@@ -1385,7 +1693,7 @@ class ProductController extends Controller
         }
     }
 
-    /**
+   /**
      * Get Product Listing Data 
      *
      * @param Request $request
@@ -1394,7 +1702,6 @@ class ProductController extends Controller
     public function getProductListData(Request $request)
     {
         $dataArray = [];
-        
         if (isset($request->ids) && !empty($request->ids)) {
            foreach ($request->ids as $key => $value) {
                 $dataArray[$value['name']][] = $value['value'];
@@ -1404,56 +1711,48 @@ class ProductController extends Controller
             if (isset($request->sorting) && !empty($request->sorting)) {
                $sorting = $request->sorting;
             }
-      
-      
-      
         $dataArray['sorting'] = $request->sorting;
         $dataArray['page'] = $request->page;
+        $dataArray['per_page_product'] = $request->per_page_product;
         $dataArray['keyword'] = $request->keyword;
         $slugs = explode('/', $request->path);
         return $productListingData = getProductListing($slugs, $dataArray, $sorting);
         return view('front.includes.productCard', $productListingData);
     }
 
-    /**
-     * Get Product Variation Prices Function final price functions
-     *
-     * @param Request $request
-     * @return void
-     */
     public function getProductVariationPrices(Request $request)
     {
-        $getRegularPrices = getRagularFilterPrices($request->all(), $request['diamond_type'], $request->slug, $request->metal_type);
+        $getRegularPrices = getRagularFilterPrices($request->all(),$request['diamond_type'], $request->slug, $request->metal_type);
         $getLabDiamondPrices = 0;
 
-        // if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
-        //     if (isset($request->type) && $request->type) {
-        //         if (isset($request->diamond_type) && $request->diamond_type == 'mined_diamond') {
-        //             $getLabDiamondPrices = $this->getCustomApiFilterData($request);
-        //         } else {
-        //             $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
-        //         }
-        //     }
-        // } else {
-        //     $getLabDiamondPrices = $request->selectedDiamondPrice;
-        // }
+        if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
+            if(isset($request->type) && $request->type){
+                if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
+                    $getLabDiamondPrices = $this->getCustomApiFilterData($request);
+                }else{
+                    $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
+                }
+            }
+        }else{
+            $getLabDiamondPrices = $request->selectedDiamondPrice;
+        }
 
-        $resultedArray = array_map(function ($num) use ($getLabDiamondPrices) {
-            return round($num + $getLabDiamondPrices, 2);
+        $resultedArray = array_map(function($num) use ($getLabDiamondPrices) {
+            return round($num + $getLabDiamondPrices,2);
         }, $getRegularPrices);
         unset($resultedArray['parent_category']);
-        if (isset($resultedArray) && !empty($resultedArray)) {
+        if(isset($resultedArray) && !empty($resultedArray)){
             return [
-                'status' => 200,
-                'allPrices' => getFlatDiscountRanges($resultedArray, $getRegularPrices['parent_category'], $request['diamond_type']),
-                'getLabDiamondPrices' => round($getLabDiamondPrices, 2),
+                'status'=> 200,
+                'allPrices'=>getFlatDiscountRanges($resultedArray,$getRegularPrices['parent_category'],$request['diamond_type']),
+                'getLabDiamondPrices'=>round($getLabDiamondPrices,2),
             ];
         }
 
         return [
-            'status' => 500,
-            'allPrices' => 0.00,
-            'getLabDiamondPrices' => 0.00,
+            'status'=> 500,
+            'allPrices'=>0.00,
+            'getLabDiamondPrices'=>0.00,
         ];
     }
 }

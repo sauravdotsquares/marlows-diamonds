@@ -768,6 +768,28 @@
             });
 		}
 
+		function getFinalPrice(){
+			$('#addtobasket').addClass('disabledAnchor');
+			$.ajax({
+                type: 'POST',
+                url: '{{route("products-final-price")}}',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'variation_price' : parseFloat($('#selected_variation_price').val()),
+					'slug': '{{$data->slug}}'
+                },
+                success: function (res) {
+					$('#finaldiamondprice').html("");
+					if(res != ''){
+						$('#finaldiamondprice').text(res);
+						$('#selected_final_price').val(res);
+						$('#addtobasket').removeClass('disabledAnchor');
+					}else{
+						$('#finaldiamondprice').text("");
+					}
+                }
+            });
+		}
 
         function getRelatedProduct(){
             $.ajax({

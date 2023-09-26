@@ -8,8 +8,8 @@ use App\Models\Posts;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\PostCategoryController;
 use Intervention\Image\Facades\Image;
-use URL;
 
+use URL;
 class PostController extends Controller
 {
     /**
@@ -22,6 +22,8 @@ class PostController extends Controller
         $breadcrumb = [
             ["name" => "Blogs", "url" => route("admin.posts")],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+         
+
         ];
         populate_breadcrumb($breadcrumb);
         $posts = Posts::orderBy('id','DESC');
@@ -36,8 +38,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $breadcrumb = [
             ["name" => "Add New Blog", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
@@ -45,85 +46,97 @@ class PostController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
         $posts = Posts::all();
-        return view('admin.posts.create', compact('posts'));
-    }
-
+        return view('admin.posts.create',compact('posts'));
+	}
+	
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function add(Request $request)
-    {
+    public function add(Request $request){
+
+
         $input = $request->all();
-        $request->validate([
+		 $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
+          
         ]);
-
-        if ($request->hasFile('image')) {
-            $image = single_storage_image_upload($request->file('image'), 'Post', '500', '300');
+		
+		if($request->hasFile('image')) {
+			
+			// $image = $request->file('image');
+			// $imageName = $image->getClientOriginalName();
+			// $fileName =  'public/news/' . time() . '-' . $imageName;
+			// Image::make($image)->resize(600,300)->save(storage_path('app/' . $fileName));
+			// $news->image = $fileName;
+  
+            $image = single_storage_image_upload($request->file('image'),'Post','500','300');
+            // $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
         }
-
-        if (empty($image)) {
-            $input['image'] = '';
-        } else {
-            $input['image'] = $image;
-        }
-
-        $input['categories'] = !empty($request->categories) ? implode(",", $request->categories) : "";
-        $input['faq_category'] = !empty($request->faq_category) ? implode(",", $request->faq_category) : "";
-        Posts::create($input);
+		
+		// echo "Check";
+		// print_r($image);
+		// die;
+		
+		if(empty($image)){
+			$input['image'] = '';
+		}
+		else{
+			
+			$input['image'] = $image;
+		}
+		
+		$input['categories'] = !empty($request->categories)?implode(",",$request->categories):"";
+		$input['faq_category'] = !empty($request->faq_category)?implode(",",$request->faq_category):"";
+        $posts = Posts::create($input);
 
         return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Added Successfully');
     }
-
-    /**
-     * Upload Editor Images 
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function uploadEditorImage(Request $request)
-    {
+	
+	public function uploadEditorImage(Request $request) {
         if ($files = $request->file('file')) {
-            $image = single_storage_image_upload($request->file('file'), 'PostsNew');
+            $image = single_storage_image_upload($request->file('file'),'PostsNew');
+			// echo $image;
+			// die;
             $file_path = \Storage::url($image);
             $url = asset($file_path);
-            $imgURL = '<img alt="Upload item" src="' . $url . '" />';
-            echo '/storage/' . $image;
+            $imgURL = '<img alt="Upload item" src="'.$url.'" />';
+            echo '/storage/'.$image;
             exit();
         }
     }
-
+	
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($postid = null)
-    {
+    public function update($postid=null){
         $breadcrumb = [
             ["name" => "Dashboard", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+
         ];
         populate_breadcrumb($breadcrumb);
-
-        $id = base64_decode($postid);
-        if ($id == '') {
+		
+		$id = base64_decode($postid);
+		if ($id == '') {
             return 'URL NOT FOUND';
         }
-
-        $posts = Posts::find($id);
-        if (empty($posts)) {
+		
+		$posts = Posts::find($id);
+		if (empty($posts)) {
             return 'URL NOT FOUND';
         }
         $posts = Posts::find($id);
-        return view('admin.posts.edit', compact('posts'));
-    }
+		//dd($posts );
+        return view('admin.posts.edit',compact('posts'));
+	}
 
     /**
      * Show the form for editing the specified resource.
@@ -131,10 +144,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $postid)
-    {
-
-        $id = base64_decode($postid);
+    public function edit(Request $request, $postid) {
+        
+		$id = base64_decode($postid);
         if ($id == '') {
             return 'URL NOT FOUND';
         }
@@ -145,30 +157,44 @@ class PostController extends Controller
             return 'URL NOT FOUND';
         }
 
+       
+
         $input = $request->all();
-        $request->validate([
+		$request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
             'status' => 'required',
-
+			
         ]);
-        /*image update*/
-        if ($request->hasFile('image')) {
-            $image = single_storage_image_upload($request->file('image'), 'Post', '500', '300');
+		/*image update*/
+       if($request->hasFile('image')) {
+
+            //$image_array = [];
+
+            //foreach ($request->file('image') as $image) {
+                
+                $image = '';
+                $image = single_storage_image_upload($request->file('image'),'Post','500','300');
+				// $image = single_storage_image_upload($request->file('image'),'Post','1200','600');
+            //}
         }
 
-        if (empty($image)) {
-        } else {
-            $input['image'] = $image;
-        }
-        $input['categories'] = !empty($request->categories) ? implode(",", $request->categories) : "";
-        $input['faq_category'] = !empty($request->faq_category) ? implode(',', $request->faq_category) : "";
+        
+       if(empty($image)){
+			//$input['image'] = '';
+		}
+		else{
+			
+			$input['image'] = $image;
+		}
+		$input['categories'] = !empty($request->categories)?implode(",",$request->categories):"";
+        $input['faq_category'] = !empty($request->faq_category)?implode(',',$request->faq_category):"";
         $posts->fill($input)->save();
 
         return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Updated Successfully');
     }
 
-
+    
 
     /**
      * Remove the specified resource from storage.
@@ -176,23 +202,16 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($postid)
-    {
+    public function delete($postid) {
         $id = base64_decode($postid);
-        Posts::find($id)->delete();
-        return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Deleted Successfully');
+        Posts::find($id)->delete(); 
+		return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Deleted Successfully');
     }
-
-    /**
-     * Changes Status 
-     *
-     * @param [type] $ids
-     * @param [type] $status
-     * @return void
+	 /**
+     * Status
      */
-    public function status($ids, $status)
-    {
-        $ids = base64_decode($ids);
+	public function status($ids,$status) { 
+        $ids = base64_decode($ids);       
         $posts =  Posts::find($ids);
         if (empty($posts)) {
             return 'URL NOT FOUND';
@@ -200,7 +219,9 @@ class PostController extends Controller
 
         $input['status'] = $status;
         unset($input['_token']);
+        
         $posts->fill($input)->save();
+
         return redirect()->action('Admin\PostController@index')->with('alert-success', 'Page Status Updated Successfully');
     }
 }

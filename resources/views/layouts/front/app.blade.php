@@ -17,7 +17,7 @@
     @elseif(env('APP_ENV')=='production')
       <meta name="robots" content="index">
     @endif
-    
+
     @if (request()->path() == "engagement-rings")
       @include('layouts.front.engagement_rings_sechma')
     @endif

@@ -31,7 +31,6 @@
 		.policyimg{width: 40px;margin: 0 0 11px;}
 		.policysection a {color: #8e2e65;}
 		@media only screen and (max-width: 600px) {.policy0icon{border: 1px solid #8e2e65;padding: 10px 15px 0px;width: 48%;text-align: center;border-radius: 10px;margin-top: 10px;}}
-		
 		/* .carousel-thumbnails li{ -webkit-filter: brightness(80%); filter:brightness(80%); border: 1px solid transparent;}
 		.carousel-thumbnails li.active {filter: brightness(100%); border: 1px solid #8e2e65; border-radius: 1px;} */
 	</style>
@@ -57,7 +56,8 @@
 			<div class="product-info-media">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 
-						<div id="carousel" class="owl-carousel">
+				@if($plainbandMulti==false)
+						<div id="carousel" class="owl-carousel"> 
 							@if($variationImages)
 								@foreach($variationImages as $images)
 									<div class="item product-items-carousel">
@@ -66,7 +66,7 @@
 										</a>
 									</div>
 								@endforeach
-						
+							@endif
 
 							@if(isset($prodImages) && $prodImages)
 								@foreach($prodImages as $images)
@@ -80,12 +80,12 @@
 
 										@if(isset($images->is_featured) && $images->is_featured != 1)
 											<div class="item product-items-carousel">
-												<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">
-													<?php if(in_array($ext,$video_extensions)){ ?>
+												<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">				
+													<?php if(in_array($ext,$video_extensions)){ ?>													
 														<video style="width: 100%;" loop autoplay muted="1" playsinline>
 															<source class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" type="video/mp4" type="video/mp4" />
 														</video>
-													<?php }else{ ?>
+													<?php }else{ ?>										
 														<img class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
 													<?php } ?>
 												</a>
@@ -94,7 +94,7 @@
 									@endif
 								@endforeach
 							@endif
-					
+						</div>
 						<?php
 							$thumbailsAllowed =	getMasterValuesByType('slider_thumbnails');
 							if(in_array($data->id, $thumbailsAllowed)){
@@ -103,6 +103,18 @@
 							</ol>
 						<?php } ?>
 					@else
+						<div id="carousel1" class="owl-carousel1"> 
+							@if($prodImages)
+								@foreach($prodImages as $key => $images)
+									@if(isset($images->image_url) && !preg_match("/\.(mp4)$/", $images->image_url))
+										<div class="item product-items-carousel @if($key == 0) active @endif">
+											<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">
+											</a>
+										</div>
+									@endif
+								@endforeach
+							@endif
+						</div>
 						<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 								<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
@@ -111,9 +123,8 @@
 							@endif
 						</video>
 					@endif
-			</div>
-                  <div id="myDivChanges"></div>	
-				  
+                  <div id="myDivChanges"></div>
+			
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -583,13 +594,11 @@
 			});
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
 				changeDescription($(this));
-				console.log($(this));
 				getCustomPriceFinalFunction();
 				getSelectedDataVariation();
 			});
 
             $(document).on('change','#metal-type',function(){
-				console.log($(this).val());
 				getSelectedVariationsData();
 			});
 		})
@@ -602,10 +611,7 @@
 
 				if($(sel).attr('name')!='finger-size')
 					variations.push($(sel).val());
-				
 			});
-
-			
             var multistone = '{{$plainbandMulti}}';
             var jewellery = '{{$plainbandJewellery}}';
 			var data_slug = '{{url("/")}}';
@@ -964,10 +970,11 @@
 				$('#carousel-selector-'+index).closest('li').addClass('active');
 			});
 			
-			$(document).on('click','.product-gallery__trigger',function(e){
+            $(document).on('click','.product-gallery__trigger',function(e){
 				e.preventDefault();
 				$('#carousel .owl-item.active a').click();
-			});
+				$('#carousel1 .product-items-carousel.active a').click();
+            });
 
 			$(document).on('click','.carousel-thumbnail-item', function(){
 				const itemPosition = $(this).data('slide-to');

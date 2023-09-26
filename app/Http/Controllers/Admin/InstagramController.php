@@ -10,15 +10,11 @@ use App\Http\Controllers\Admin\InstaLibraryController;
 
 class InstagramController extends Controller
 {
-    /**
-     * Display records
-     *
-     * @return void
-     */
+
     public function index()
     {
         $params = array(
-            'get_code' => isset($_GET['code']) ? $_GET['code'] : '',
+            'get_code' => isset( $_GET['code'] ) ? $_GET['code'] : '',
             'access_token' => config('instagram.access_token'),
             'user_id' => '',
         );
@@ -26,10 +22,12 @@ class InstagramController extends Controller
         $user = $iguser->getUser();
 
         $params = array(
-            'get_code' => isset($_GET['code']) ? $_GET['code'] : '',
+            'get_code' => isset( $_GET['code'] ) ? $_GET['code'] : '',
             'access_token' => config('instagram.access_token'),
             'user_id' => $user['id']
         );
+
+        $igMedia = new InstaLibraryController($params);
 
         $userMedia = $iguser->getUsersMedia($user['id']);
 
@@ -37,25 +35,26 @@ class InstagramController extends Controller
         foreach ($userMedia['data'] as $key  => $value) {
 
             $images[$key] = [
-                'image_link' => str_replace("&amp;", "&", $value['media_url']),
-                'insta_link' => "",
+                'image_link'=> str_replace("&amp;","&", $value['media_url']),
+                'insta_link'=>"",
             ];
 
             $path = $images[$key]['image_link'];
-            $imageName = $key . '.webp';
+            $imageName = $key.'.webp';
             $img = public_path('images/Instagram/') . $imageName;
 
-            $fileNameToStore = 'Instagram' . '/' . $imageName;
+            $fileNameToStore = 'Instagram'.'/'.$imageName;
+
 
             InstagramData::create([
-                'insta_id' => $value['id'],
-                'link' => $value['permalink'],
-                'image_url' => $fileNameToStore,
-                'alt' => $value['caption'],
-                'title' => $value['caption'],
-                'media_type' => $value['media_type'],
-                'insta_timestamp' => $value['timestamp'],
-                'username' => $value['username'],
+                'insta_id'=> $value['id'],
+                'link'=>$value['permalink'],
+                'image_url'=>$fileNameToStore,
+                'alt'=>$value['caption'],
+                'title'=>$value['caption'],
+                'media_type'=>$value['media_type'],
+                'insta_timestamp'=>$value['timestamp'],
+                'username'=>$value['username'],
             ]);
 
             file_put_contents($img, file_get_contents($path));
@@ -72,40 +71,26 @@ class InstagramController extends Controller
     {
         $getInstaData = InstagramData::latest()->value('created_at');
 
-        if (isset($getInstaData) && !empty($getInstaData)) {
+        if(isset($getInstaData) && !empty($getInstaData)){
             $currentDate = date('d-m-Y');
             $getDBRecordDate = $getInstaData->format('d-m-Y');
-            if ($currentDate != $getDBRecordDate) {
+            if($currentDate != $getDBRecordDate){
                 return $this->finalMainInstaFunction();
-            } else {
+            }else{
                 return false;
             }
-        } else {
+        }else{
             return $this->finalMainInstaFunction();
         }
     }
 
-    /**
-     * Get Protected Value
-     *
-     * @param [type] $obj
-     * @param [type] $name
-     * @return void
-     */
-    function getProtectedValue($obj, $name)
-    {
+    function getProtectedValue($obj, $name) {
         $array = (array)$obj;
-        $prefix = chr(0) . '*' . chr(0);
-        return $array[$prefix . $name];
+        $prefix = chr(0).'*'.chr(0);
+        return $array[$prefix.$name];
     }
 
-    /**
-     * Final Main Insta Functions
-     *
-     * @return void
-     */
-    function finalMainInstaFunction()
-    {
+    function finalMainInstaFunction(){
         ini_set("allow_url_fopen", 1);
 
         $instagram = \InstagramScraper\Instagram::withCredentials(new \GuzzleHttp\Client(), 'marlows_diamonds', '1580@Marlows30', new Psr16Adapter('Files'));
@@ -124,23 +109,23 @@ class InstagramController extends Controller
             mkdir(storage_path('app/public/Instagram'), 0777);
         }
 
-        InstagramData::truncate();
+        $getInstaData = InstagramData::truncate();
         foreach ($accountMedias as $key  => $accountMedia) {
             $images[$key] = [
-                'image_link' => str_replace("&amp;", "&", $accountMedia->getimageHighResolutionUrl()),
-                'insta_link' => "",
+                'image_link'=> str_replace("&amp;","&", $accountMedia->getimageHighResolutionUrl()),
+                'insta_link'=>"",
             ];
 
             $path = $images[$key]['image_link'];
-            $imageName = $key . '.png';
+            $imageName = $key.'.png';
             $img = storage_path('app/public/Instagram/') . $imageName;
 
-            $fileNameToStore = 'Instagram' . '/' . $imageName;
+            $fileNameToStore = 'Instagram'.'/'.$imageName;
 
-            InstagramData::create([
-                'link' => $this->getProtectedValue($accountMedia, 'link'),
-                'image_url' => $fileNameToStore,
-                'title' => "No Title",
+            $getInstaData = InstagramData::create([
+                'link'=>$this->getProtectedValue($accountMedia,'link'),
+                'image_url'=>$fileNameToStore,
+                'title'=>"No Title",
             ]);
 
             file_put_contents($img, file_get_contents($path));

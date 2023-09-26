@@ -13,24 +13,23 @@
 
 <div class="container product-panel-new">
 
-
-
     <div class="row">
         <div class="col-sm-12">
             <p class="burgarmenu">
                 <a href="{{ url('/') }}">Home </a> 
                 <span>
                     <?php 
-                        $url = $_SERVER['REQUEST_URI'];
+                        $url = $path;
                         if(isset($url) && !empty($url)){
                             echo " / ";
                         }
+
                         echo getBreadcrumbCategoryName($url); 
                     ?>
                 </span>
             </p>
 
-            <input type="text" name="title" class="search-item empty search-mobile" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+            <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="&#xF002; Search for product" aria-label="Search">
 
             <center>
                 <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3>
@@ -45,7 +44,7 @@
                             <div class="item">
                                 
                                 @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
-                                    <img src="{{ asset('storage/'.$product_item_item->category_images)}}" >
+                                    <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product_item_item->category_images }}" >
                                 @else
                                     <img src="https://devstaging.marlows-diamonds.co.uk/storage/Products/CX9-SC48_00003_1650365432.jpg"> 
                                 @endif
@@ -70,15 +69,15 @@
                 <div>
                     <div class="filter-clear">
                         <button href="#collapse1" class="nav-toggle btn" style=""><i class="fa fa-angle-down" style="color:#993168"></i>  Filter </button>
-                        <a href="javascript:void(0)" class="clearallfilter-desktop" id="resetFilterButton">All Filter Category</a>
+                        <a href="javascript:void(0)" class="clearallfilter-desktop resetFilterButton" id="resetFilterButton">All Filter Category</a>
                         <div class="dropdown sortmobile">
                             <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>
-                            <select class="form-control dropdown-content" name="exampleSelect" id="exampleSelect">
+                            <select class="form-control dropdown-content" name="sortingMSelect" id="sortingMSelect">
                                 <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
                                 <option value="asc">A to Z</option>
                                 <option value="desc">Z to A</option>
-                                <option value="price-min">Low to High</option>
-                                <option value="price-max">High to Low</option>
+                                <!-- <option value="price-min">Low to High</option>
+                                <option value="price-max">High to Low</option> -->
                               </select>
 
                             </div>
@@ -153,7 +152,9 @@
                         </div>
                         @endforeach
                         <div class="reset-filer-container">
-                            <a href="javascript:void(0)" id="resetFilterButton"><button class="reset-filer-btn"> See All (234)</button></a>
+                            <a href="javascript:void(0)" id="resetFilterButton" class="resetFilterButton"><button class="reset-filer-btn"> 
+                                See All 
+                            </button></a>
                         </div>
 
                     </div>
@@ -163,18 +164,18 @@
                 <div class="row">
                     <div class="category-list-top">
                     <div class="category-list-item">
-                        <p>Item 282</p>
-                        <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
+                        <!-- <p>Item <span id="productCountData">{{$product_count}}</span></p> -->
+                        <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile resetFilterButton" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
                     </div>
                     <div class="category-list-item-searchsort dropdown-content-desktop">
-                          <input type="text" name="title" class="search-item empty" id="search" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+                          <input type="text" name="title" class="search-item empty" id="searchd" value="" placeholder="&#xF002; Search for product" aria-label="Search">
                             <div class="dropdown">
-                            <select class="form-control dropdown-content" name="exampleSelect" id="exampleSelect">
+                            <select class="form-control dropdown-content" name="sortingDSelect" id="sortingDSelect">
                                 <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
                                 <option value="asc">A to Z</option>
                                 <option value="desc">Z to A</option>
-                                <option value="price-min">Low to High</option>
-                                <option value="price-max">High to Low</option>
+                                <!-- <option value="price-min">Low to High</option>
+                                <option value="price-max">High to Low</option> -->
                               </select>
 
                             </div>
@@ -278,21 +279,15 @@
 
 <div class="engagement-ring-img">
     <img src="{{url('/images/viewguide.PNG')}}">
-
-
     <div class="engagement-ring-img-content">
         <div class="container">
     <h2>Find the perfect engagement ring</h2>
-    <button class="reset-filer-btn"> View Guide </button>
+    <button class="reset-filer-btn"> <a href="https://admin.marlowsdiamonds.com/storage/MarlowsDiamonds-PremiumContent-Guide-3.pdf" target="_blank"> View Guide </a> </button>
 </div>
 </div>
 </div>
 
 </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> a8c57ba2f6b1a830c8906be47c00fb468ab680c0
 @endsection
 @section('js')
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -325,7 +320,7 @@
                 var value2 = $("#slider").slider("values", 1);
 
                 $("#showProductList").html('');
-                sendDataValues(); 
+                sendDataValues(1,'append'); 
             },
         });
 
@@ -352,18 +347,24 @@
         var input1 = document.getElementById('input-carat-max');
         var inputs = [input0, input1];
 
-        $('#resetFilterButton').on('click', function() {
+        $('.resetFilterButton').on('click', function() {
             $('.filter-item-data').prop("checked", false);
             var value = '{{$path}}';
             var arrVars = value.split("/");
 
             var value1 = arrVars[0];
             var value2 = arrVars[1];
+            if(value1 == 'diamond-engagement-rings'){
+                value1 = 'engagement-rings';
+            }
             $("input[name=category][value=" + value1 + "]").prop('checked', true);
             $("input[name=style-categories][value=" + value2 + "]").prop('checked', true);
-            $("input[name=filter-by-shape][value=" + value2.toUpperCase() + "]").prop('checked', true);
+            if(value2 !== undefined){
+                $("input[name=filter-by-shape][value=" + value2 + "]").prop('checked', true);
+                $("input[name=jewellery-categories][value=" + value2 + "]").prop('checked', true);
+            }
             $("#showProductList").html('');
-            sendDataValues();
+            sendDataValues(1,'append');
         });
 
         var value = '{{$path}}';
@@ -521,15 +522,18 @@
     });
     $(document).on('change', ".filter-item-data", function() {
         $("#showProductList").html('');
-        sendDataValues();
+        sendDataValues(1,'append');
     });
 
-    $(document).on('change', "#exampleSelect", function() {
-       $("#showProductList").html('');
-        sendDataValues();
-   });
+    $(document).on('change', "#sortingDSelect", function() {
+        $("#showProductList").html('');
+        sendDataValues(1,'append',$(this).val());
+    });
 
-    
+    $(document).on('change', "#sortingMSelect", function() {
+       $("#showProductList").html('');
+        sendDataValues(1,'append',$(this).val());
+   });
 
     $(window).scroll(function() {
         var scroll = $('#scrollFlag').val();
@@ -540,18 +544,19 @@
         }
     });
 
-    $('#search').on('keyup', function() {
+    $('#searchd').on('keyup', function() {
         let searchTextData = $(this).val();
         if (searchTextData.length > 2) {
             $("#showProductList").html('');
             sendDataValues(1, 'html');
         } else if (searchTextData.length == 0) {
-            var page = $('#pagescroll').val();
-            sendDataValues(page, 'append');
+            location.reload();
+            // var page = $('#pagescroll').val();
+            // sendDataValues(page, 'append');
         }
     });
 
-    function sendDataValues(page, type = 'append') {
+    function sendDataValues(page, type = 'append',sorting='asc') {
         // $("input[name=filter-by-shape]").attr('onclick', 'return false;');
         // filterShapechanged();
         $('.ajax-load').show();
@@ -561,11 +566,11 @@
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
-                
-                'sorting': $("#exampleSelect").val(),
-                'keyword': $('#search').val(),
+                'sorting': sorting,
+                'keyword': $('#searchd').val(),
                 'path': '{{ $path }}',
-                'page': page
+                'page': page,
+                'per_page_product': 70
             },
             success: function(res) {
                 // filterShapechanged();
@@ -581,6 +586,7 @@
                 } else {
                     $("#showProductList").html(res.productItems);
                 }
+                $('#productCountData').text(res.product_count);
                 $('#sectionHeight').val($('#showProductList').height());
                 $('#scrollFlag').val(0);
             }

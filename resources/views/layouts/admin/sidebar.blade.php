@@ -201,31 +201,9 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item @if(request()->segment(2) == 'attributes') menu-is-opening menu-open @endif">
-            <a href="#" class="nav-link @if(request()->segment(2) == 'attributes') active @endif">
-              <i class="nav-icon fa fa-book"></i>
-              <p>
-                Attributes
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/admin/attributes" class="nav-link @if(request()->segment(2) == 'attributes' && request()->segment(3) != 'create') active @endif">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Attributes</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/attributes/create" class="nav-link @if(request()->segment(2) == 'attributes' && request()->segment(3) == 'create') active @endif">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add Attribute</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+
           {{-- <li class="nav-item">
-            <a href="{{  route('admin.app_products.list') }}" class="nav-link">
+            <a href="{{  route('admin.app_products.list') }}" class="nav-link ">
               <i class="nav-icon fa fa-cart-plus"></i>
               <p>
                 Products new

@@ -6,50 +6,37 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\LabPricesList;
-use URL;
 
-class LabPricesListController extends Controller
-{
-    /**
-     * Constucter functions
-     */
-    public function __construct()
-    {
+use URL;
+class LabPricesListController extends Controller{
+
+    public function __construct(){
         $this->lab_price_path = "admin.labprices.";
     }
 
-    /**
-     * START:: lab price crud work
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function labPriceList(Request $request)
-    {
+    /** START:: lab price crud work */
+    public function labPriceList(Request $request){
+        
         $breadcrumb = [
             ["name" => "Engagement lab price", "url" => route("admin.lab_price_variations.list"), "icon" => "fas fa-dollar-sign"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
+          
+
         ];
         populate_breadcrumb($breadcrumb);
         $page_title = "Engagement lab price";
 
-        $query = LabPricesList::orderBy('id', 'DESC')->where(['is_deleted' => 0]);
+        $query = LabPricesList::orderBy('id','DESC')->where(['is_deleted'=>0]);
 
         $query = getFilter(LabPricesList::class, $query, $request->query());
 
         $data = $query->paginate(10);
 
-        return view($this->lab_price_path . 'index', compact(['data', 'page_title']));
-    } //endof 
+        return view($this->lab_price_path . 'index', compact(['data','page_title']));
+    }//endof 
 
-    /**
-     * Lab Price Additions
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function labPriceAdd(Request $request)
-    {
+    public function labPriceAdd(Request $request){
+        
         $breadcrumb = [
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Engagement lab price", "url" => route("admin.lab_price_variations.list"), "icon" => "fas fa-dollar-sign"],
@@ -58,7 +45,7 @@ class LabPricesListController extends Controller
         populate_breadcrumb($breadcrumb);
         $page_title = "Add engagement lab price variation";
 
-        if ($request->isMethod('post')) {
+        if($request->isMethod('post')){
 
             /** create validations */
             $validated = $request->validate([
@@ -66,7 +53,7 @@ class LabPricesListController extends Controller
                 'color' => 'required|max:100',
                 'carat' => 'required|max:100',
                 "price" => "required|max:100",
-            ], [
+            ],[
                 'clarity.required' => 'Please enter clarity',
                 'color.required' =>  'Please enter color',
                 'carat.required' =>  'Please enter carat',
@@ -79,58 +66,43 @@ class LabPricesListController extends Controller
             $new_record->carat = $validated['carat'];
             $new_record->price = $validated['price'];
             $new_record->save();
-            return redirect()->route('admin.lab_price_variations.list')->with('success', 'Record has been created successfully');
+            return redirect()->route('admin.lab_price_variations.list')->with('success','Record has been created successfully');
         }
-        return view($this->lab_price_path . 'add', compact(['page_title']));
-    } //endof 
 
-    /**
-     * Lab Price Change Status
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function labPriceChangeStatus(Request $request)
-    {
+
+        return view($this->lab_price_path . 'add', compact(['page_title']));
+    }//endof 
+
+    public function labPriceChangeStatus(Request $request){
+    
         $id = $request['id'];
         $record = LabPricesList::where('id', $id)->first();
 
-        if (!empty($record)) {
+        if(!empty($record)){
             $record->is_active = $record->is_active ? 0 : 1;
             $record->save();
-            return  response()->json(['status' => 'success', 'message' => 'Status has been updated successfully']);
+            return  response()->json(['status'=>'success', 'message'=> 'Status has been updated successfully' ]);
         }
-        return  response()->json(['status' => 'error', 'message' => 'Record not identified']);
-    } //endof 
+        return  response()->json(['status'=>'error', 'message'=> 'Record not identified' ]);
+    }//endof 
 
-    /**
-     * Lab Price Delete
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function labPriceDelete(Request $request)
-    {
+
+    public function labPriceDelete(Request $request){
+    
         $id = $request['id'];
         $record = LabPricesList::where('id', $id)->first();
 
-        if (!empty($record)) {
+        if(!empty($record)){
             $record->is_deleted = 1;
             $record->save();
-            return  response()->json(['status' => 'success', 'message' => 'Record has been deleted successfully']);
+            return  response()->json(['status'=>'success', 'message'=> 'Record has been deleted successfully' ]);
         }
-        return  response()->json(['status' => 'error', 'message' => 'Record not identified']);
-    } //endof 
+        return  response()->json(['status'=>'error', 'message'=> 'Record not identified' ]);
+    }//endof 
 
-    /**
-     * Lab Price Edit Functions
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function labPriceEdit(Request $request)
-    {
 
+    public function labPriceEdit(Request $request){
+        
         $breadcrumb = [
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
             ["name" => "Engagement lab price", "url" => route("admin.lab_price_variations.list"), "icon" => "fas fa-dollar-sign"],
@@ -141,12 +113,12 @@ class LabPricesListController extends Controller
         $page_title = "Edit engagement lab price variation";
 
         $id = $request['id'];
-        $data = LabPricesList::where('id', $id)->first();
-        if (empty($data)) {
-            return redirect()->route('admin.lab_price_variations.list')->with('error', 'Record is not identified');
+        $data = LabPricesList::where('id',$id)->first();
+        if(empty($data)){
+            return redirect()->route('admin.lab_price_variations.list')->with('error','Record is not identified');
         }
 
-        if ($request->isMethod('post')) {
+        if($request->isMethod('post')){
 
             /** create validations */
             $validated = $request->validate([
@@ -154,7 +126,7 @@ class LabPricesListController extends Controller
                 'color' => 'required|max:100',
                 'carat' => 'required|max:100',
                 "price" => "required|max:100",
-            ], [
+            ],[
                 'clarity.required' => 'Please enter clarity',
                 'color.required' =>  'Please enter color',
                 'carat.required' =>  'Please enter carat',
@@ -166,10 +138,18 @@ class LabPricesListController extends Controller
             $data->carat = $validated['carat'];
             $data->price = $validated['price'];
             $data->save();
-            return redirect()->route('admin.lab_price_variations.list')->with('success', 'Record has been updated successfully');
+            return redirect()->route('admin.lab_price_variations.list')->with('success','Record has been updated successfully');
         }
 
 
-        return view($this->lab_price_path . 'edit', compact(['data', 'page_title']));
-    } //endof 
+        return view($this->lab_price_path . 'edit',compact(['data','page_title']));
+    }//endof 
+
+
 }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */

@@ -15,25 +15,113 @@ use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
-    /**
-     * Display Records
-     *
-     * @return void
-     */
     public function index()
     {
-        if (auth()->guard('customer')->check()) {
+        if(auth()->guard('customer')->check()){
             return redirect(route('my_accounts'));
         }
         return view('front.loginpages.loginpage');
     }
 
-    /**
-     * Register Customer function
-     *
-     * @param Request $request
-     * @return void
-     */
+    public function getLoginRegisterAccount(Request $request)
+    {
+
+        $getUserExists = User::where('email',$request->email)->first();
+        $details = $request->only('email', 'password');
+        $details['is_active'] = 1;
+        
+        if(isset($getUserExists) && !empty($getUserExists)){
+            $getLoginResponse = $this->login($details);
+            if(isset($getLoginResponse) && $getLoginResponse){
+                return response()->json(['status'=>200,'success'=>'success']);
+            }else{
+                return response()->json(['status'=>500,'error'=>'email or password not matched']);
+            }
+        }
+
+        if(isset($request->email) && isset($request->password)){
+            $getRegisterResponse = $this->register($details);
+            if(isset($getRegisterResponse) && $getRegisterResponse){
+                $getLoginResponse = $this->login($details);
+                if(isset($getLoginResponse) && $getLoginResponse){
+                    return response()->json(['status'=>200,'success'=>'success']);
+                }else{
+                    return response()->json(['status'=>500,'error'=>'email or password not matched']);
+                }
+            }
+        }
+        return response()->json(['error'=>'Email and password is required']);
+    }
+
+    public function register($userDetails){
+
+        if(isset($userDetails['email'])){
+            // echo "if";
+            // die;
+            $getInsertedDetails = User::create([
+                'name' => 'customer',
+                'email' => $userDetails['email'],
+                'username' => isset($userDetails['username'])?$userDetails['username']:'customer',
+                'password' => bcrypt(isset($userDetails['password'])?$userDetails['password']:'123456789'),
+                'nicename' => 'Customers',
+                'user_role' => 3,
+                'is_active' => 1
+            ]);
+            return $getInsertedDetails;
+        }
+
+        return false;
+    }
+
+    public function registerLoginFrontPage($userDetails){
+
+        if(isset($userDetails['email'])){
+            // echo "if";
+            // die;
+            $getInsertedDetails = User::create([
+                'name' => 'customer',
+                'email' => $userDetails['email'],
+                'username' => isset($userDetails['username'])?$userDetails['username']:'customer',
+                'password' => bcrypt(isset($userDetails['password'])?$userDetails['password']:'123456789'),
+                'nicename' => 'Customers',
+                'user_role' => 3,
+                'is_active' => 1
+            ]);
+            return true;
+        }
+
+        return false;
+    }
+
+    public function login($userDetails){
+        if(isset($userDetails['email'])){
+            $getDetails = [
+                'email'=>$userDetails['email'],
+                'password'=>isset($userDetails['password'])?$userDetails['password']:'123456789',
+            ];
+        }
+        if(isset($getDetails) && !empty($getDetails)){
+            if(Auth::guard('customer')->attempt($userDetails, true)){
+                // Auth::guard('customer')->login(Auth::user(), true);
+                $getUserId = User::where('email',$userDetails['email'])->first();
+                return $getUserId;
+            }
+        }
+        return false;
+    }
+
+    public function loginPageFunction($userDetails){
+        
+        if (Auth::guard('customer')->attempt($userDetails)) {
+            if(Auth::attempt($userDetails, true)){
+                Auth::guard('customer')->login(Auth::user(), true);
+                return true;
+            }
+        }else{
+            return false;
+        }
+    }
+
     public function registerCustomer(Request $request)
     {
         $request->validate([
@@ -42,16 +130,17 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         unset($request['_token']);
+        $getRegisterResponse = $this->registerLoginFrontPage($request->all(''));
 
-        $getRegisterResponse = $this->registerFrontEndUsers($request->all(''));
+        if(isset($getRegisterResponse) && $getRegisterResponse == 1){
+            $getLoginResponse = $this->loginPageFunction($request->all(''));
 
-        if (isset($getRegisterResponse) && !empty($getRegisterResponse)) {
-            $getLoginResponse = $this->loginFrontPageFunction($request->all(''));
-            if (isset($getLoginResponse) && $getLoginResponse) {
+            if(isset($getLoginResponse) && $getLoginResponse == 1){
                 return redirect(route('my_accounts'));
+            }else{
+                $msg = "Incorrect login credentials";
             }
-            $msg = "Incorrect login credentials";
-        } else {
+        }else{
             $msg = "Please fill required parameter";
         }
 
@@ -59,36 +148,48 @@ class LoginController extends Controller
         return redirect(route('my-account'));
     }
 
-    /**
-     * Login Customer Function
-     *
-     * @param Request $request
-     * @return void
-     */
+    public function registerCheckoutCustomer($userDetails)
+    {
+        $getRegisterResponse = $this->register($userDetails);
+        // if(isset($getRegisterResponse) && $getRegisterResponse == 1){
+        //     $getLoginResponse = $this->login($userDetails);
+        //     return $getLoginResponse;
+        // }
+        return $getRegisterResponse;
+    }
+
     public function loginCustomer(Request $request)
     {
-        $request->validate([
-            'login_email' => 'required|max:255',
-            'login_password' => 'required',
-        ]);
         unset($request['_token']);
-        $getActiveResponse = $this->checkEmailActiveFunction($request->login_email);
-        if (isset($getActiveResponse) && $getActiveResponse) {
-            $userDetails = [
-                'email' => $request->login_email,
-                'password' => $request->login_password,
-            ];
-            $getLoginResponse = $this->loginFrontPageFunction($userDetails);
-            if (isset($getLoginResponse) && $getLoginResponse) {
-                if ($request->ajax()) {
-                    return response()->json(['status' => 200, 'success' => 'success']);
+
+        if(isset($request->email) && !empty($request->email) && isset($request->password) && !empty($request->password)){
+           
+            $userActive = DB::table('users')
+            ->where('email', $request->email)
+            ->where( 'is_active', 1)
+            ->first();
+
+            if(isset($userActive) && !empty($userActive)){
+                $getLoginResponse = $this->loginPageFunction($request->all(''));
+                if(isset($getLoginResponse) && $getLoginResponse == 1){
+                    return redirect(route('my_accounts'));
+                }else{
+                    $msg = "Incorrect login credentials";
                 }
-                return redirect(route('my_accounts'));
+            }else{
+                $msg = "Incorrect login credentials";
             }
+
+        }else{
+            $msg = "Please fill required parameter";
         }
-        $request->session()->flash('error', "Incorrect login credentials");
+        $request->session()->flash('error', $msg);
+        // alert('test');
         return redirect(route('my-account'));
     }
+
+
+   
 
     /**
      * Log out account user.
@@ -98,38 +199,38 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $request->session()->flash('error', 'You have successfully logout');
+
         Session::flush();
+
         Auth::guard('customer')->logout();
+
         return redirect(route('my-account'));
     }
 
-    /**
-     * Dashboard Page function
-     *
-     * @param Request $request
-     * @return void
-     */
     public function dashboardPage(Request $request)
     {
-        if (Auth::check()) {
-            $getUserDetails = $getUsersDetails = User::with('getCustomerAddressFunction')->where('id', Auth::guard('customer')->user()->id)->first();
-            $getCountries = Country::get();
 
-            return view('front.loginpages.dashboardpage', compact('getUserDetails', 'getCountries'));
+        if(Auth::guard('customer')->check()){
+            $getUserDetails = $getUsersDetails = User::with('getCustomerAddressFunction')->where('id',Auth::guard('customer')->user()->id)->first();
+            $getCountries = Country::get();
+    
+            return view('front.loginpages.dashboardpage',compact('getUserDetails','getCountries'));
         }
+
     }
 
-    /**
-     * Change Customer User Address Functions
-     *
-     * @param Request $request
-     * @return void
-     */
+    public function checkEmailId(Request $request)
+    {
+        $checkEmail = User::where('email',$request->email)->count();
+
+        return response()->json($checkEmail);
+    }
+
     public function changeCustomerUserAddress(Request $request)
     {
-        if (auth()->guard('customer')->check()) {
-            $getCustomerAddress = CustomerAddress::where('user_id', Auth::guard('customer')->user()->id)->first();
-            if ($getCustomerAddress) {
+        if(auth()->guard('customer')->check()){
+            $getCustomerAddress = CustomerAddress::where('user_id',Auth::guard('customer')->user()->id)->first();
+            if($getCustomerAddress){
                 $getCustomerAddress->user_id = Auth::guard('customer')->user()->id;
                 $getCustomerAddress->order_id = 1;
                 $getCustomerAddress->first_name = $request->first_name;
@@ -145,7 +246,7 @@ class LoginController extends Controller
                 $getCustomerAddress->email = $request->email;
                 $getCustomerAddress->order_notes = $request->order_notes;
                 $getCustomerAddress->save();
-            } else {
+            }else{
                 $getCustomerAddress = new CustomerAddress;
                 $getCustomerAddress->user_id = Auth::guard('customer')->user()->id;
                 $getCustomerAddress->order_id = 1;
@@ -169,16 +270,12 @@ class LoginController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Changes customer Account Details Function
-     *
-     * @param Request $request
-     * @return void
-     */
+
     public function changeCustomerAccountDetails(Request $request)
     {
-        if (isset($request->old_password) && isset($request->new_password) && isset($request->confirm_password)) {
+        if(isset($request->old_password) && isset($request->new_password) && isset($request->confirm_password)){
             $this->validate($request, [
+                // 'username'     => 'required|unique:users',
                 'old_password'     => 'required',
                 'new_password'     => 'required|min:6',
                 'confirm_password' => 'required|same:new_password',
@@ -186,119 +283,48 @@ class LoginController extends Controller
 
             $data = $request->all();
 
-            if (!\Hash::check($data['old_password'], Auth::guard('customer')->user()->password)) {
+            if(!\Hash::check($data['old_password'], Auth::guard('customer')->user()->password)){
 
-                return back()->with('error', 'You have entered wrong password');
-            } else {
+                return back()->with('error','You have entered wrong password');
+
+            }else{
                 User::where('email', Auth::guard('customer')->user()->email)->update([
-                    'name' => $request->name,
-                    'nicename' => $request->nicename,
+                    'name'=> $request->name,
+                    'nicename'=> $request->nicename,
                     'password' => Hash::make($request->new_password),
                 ]);
                 // here you will write password update code
-                return back()->with('success', 'You have successfully updated account details');
+                return back()->with('success','You have successfully updated account details');
             }
-        } else {
+        }else{
             User::where('email', Auth::guard('customer')->user()->email)->update([
-                'name' => $request->name,
-                'nicename' => $request->nicename,
+                'name'=> $request->name,
+                'nicename'=> $request->nicename,
             ]);
             // here you will write password update code
-            return back()->with('success', 'You have successfully updated account details');
+            return back()->with('success','You have successfully updated account details');
         }
     }
 
-    /**
-     * Get Order Details Functions
-     *
-     * @param Request $request
-     * @return void
-     */
     public function getOrderDetails(Request $request)
     {
-        $getOrderDetails = Order::with('getOrderDetailsFunction')->whereNotNull('custom_order_id')->latest()->where('user_id', Auth::guard('customer')->user()->id)->get();
+        $getOrderDetails = Order::with('getOrderDetailsFunction')->whereNotNull('custom_order_id')->latest()->where('user_id',Auth::guard('customer')->user()->id)->get();
 
-        if (count($getOrderDetails)) {
-            $view = view('front.ajax.user-order-list', compact('getOrderDetails'))->render();
-            return response()->json(['html' => $view]);
+        if(count($getOrderDetails)){
+            $view = view('front.ajax.user-order-list',compact('getOrderDetails'))->render();
+            return response()->json(['html'=> $view]);
         }
     }
 
-    /**
-     * Get Order Details Page
-     *
-     * @param Request $request
-     * @return void
-     */
     public function getOrderDetailsPage(Request $request)
     {
-        $getOrderDetails = Order::with('getOrderDetailsFunction')->where('token', $request->token)->first();
+        $getOrderDetails = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first();
 
-        if ($getOrderDetails) {
-            $view = view('front.ajax.user-order-details', compact('getOrderDetails'))->render();
-            return response()->json(['html' => $view]);
+        if($getOrderDetails){
+            $view = view('front.ajax.user-order-details',compact('getOrderDetails'))->render();
+            return response()->json(['html'=> $view]);
         }
-        return response()->json(['html' => '']);
+        return response()->json(['html'=> '']);
     }
 
-    /**
-     * Register Frontend users
-     *
-     * @param [type] $userDetails
-     * @return void
-     */
-    function registerFrontEndUsers($userDetails)
-    {
-        if (isset($userDetails['email'])) {
-            $getInsertedDetails = User::updateOrCreate(['email' => $userDetails['email']], [
-                'name' => 'customer',
-                'email' => $userDetails['email'],
-                'username' => isset($userDetails['username']) ? $userDetails['username'] : 'customer',
-                'password' => bcrypt(isset($userDetails['password']) ? $userDetails['password'] : '123456789'),
-                'nicename' => 'Customers',
-                'user_role' => 3,
-                'is_active' => 1
-            ]);
-            return $getInsertedDetails;
-        }
-        return false;
-    }
-
-    /**
-     * Login Frontend Page function
-     *
-     * @param [type] $userDetails
-     * @return void
-     */
-    public function loginFrontPageFunction($userDetails)
-    {
-        if (Auth::guard('customer')->attempt($userDetails)) {
-            if (Auth::attempt($userDetails, true)) {
-                Auth::guard('customer')->login(Auth::user(), true);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Check email activation functions
-     *
-     * @param [type] $email
-     * @return void
-     */
-    function checkEmailActiveFunction($email)
-    {
-
-        $userActive = DB::table('users')
-            ->where('email', $email)
-            ->where('is_active', 1)
-            ->first();
-
-        if (isset($userActive) &&  !empty($userActive)) {
-            return true;
-        }
-        return false;
-    }
 }

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use URL;
 
+use URL;
 class UserController extends Controller
 {
     /**
@@ -17,17 +17,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        $getData = User::where('user_role', 3)->latest()->get();
-        $breadcrumb = [
+        $getData = User::where('user_role',3)->latest()->get();
+		// return response()->json($getData);
+		$breadcrumb = [
             ["name" => "User", "url" => route("admin.users"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
-        $result = [
-            'getData' => $getData,
+		$result = [
+            'getData'=>$getData,
         ];
-        return view('admin.users.index', $result);
+		return view('admin.users.index',$result);
+		
     }
 
     /**
@@ -35,8 +37,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $breadcrumb = [
             ["name" => "Add User", "url" => route("admin.users"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
@@ -44,31 +45,32 @@ class UserController extends Controller
         ];
         populate_breadcrumb($breadcrumb);
         $users = User::all();
-        return view('admin.users.create', compact('users'));
-    }
-
+        return view('admin.users.create',compact('users'));
+	}
+	
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function add(Request $request)
-    {
+    public function add(Request $request){
 
-        $input = $request->all();
-        $request->validate([
+        
+		$input = $request->all();
+		$request->validate([
             'name' => 'required|max:255',
             'username' => 'required',
-            'is_active' => 'required',
-            'password' => 'min:6|required_with:confirm_password|same:confirm_password',
-            'confirm_password' => 'min:6',
-
+			'is_active' => 'required',
+			'password' => 'min:6|required_with:confirm_password|same:confirm_password',
+			'confirm_password' => 'min:6',
+            
+			
         ]);
-
-        $input['user_role'] = 3;
-        $input['password'] = bcrypt($request->password);
-        User::create($input);
+		
+		$input['user_role'] = 3;
+		$input['password'] = bcrypt($request->password);
+		$users = User::create($input);
 
         return redirect()->action('Admin\UserController@index')->with('alert-success', 'User Added Successfully');
     }
@@ -79,27 +81,27 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($userid = null)
-    {
+    public function update($userid=null){
         $breadcrumb = [
             ["name" => "Edit User", "url" => route("admin.dashboard"), "icon" => "fa fa-dashboard"],
             ["name" => "Home", "url" => route("admin.dashboard"), "icon" => "fa fa-home"],
 
         ];
         populate_breadcrumb($breadcrumb);
-
-        $id = base64_decode($userid);
-        if ($id == '') {
+		
+		$id = base64_decode($userid);
+		if ($id == '') {
             return 'URL NOT FOUND';
         }
-
-        $users = User::find($id);
-        if (empty($users)) {
+		
+		$users = User::find($id);
+		if (empty($users)) {
             return 'URL NOT FOUND';
         }
         $users = User::find($id);
-        return view('admin.users.edit', compact('users'));
-    }
+		//dd($users );
+        return view('admin.users.edit',compact('users'));
+	}
 
     /**
      * Show the form for editing the specified resource.
@@ -107,22 +109,40 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $userid)
-    {
-        $id = base64_decode($userid);
+    public function edit(Request $request, $userid) {
+        
+		$id = base64_decode($userid);
         if ($id == '') {
             return 'URL NOT FOUND';
         }
+
         $users = User::findOrFail($id);
+
         if (empty($users)) {
             return 'URL NOT FOUND';
         }
+
+       
+
         $input = $request->all();
+		
+		// echo "<pre>";
+		// print_r($input);
+		// die;
+		
+		// $request->validate([
+            // 'name' => 'required|max:255',
+            // 'description' => 'required',
+            // 'status' => 'required',
+			
+        // ]);
+		
         $users->fill($input)->save();
+
         return redirect()->action('Admin\UserController@index')->with('alert-success', 'User Updated Successfully');
     }
 
-
+    
 
     /**
      * Remove the specified resource from storage.
@@ -130,30 +150,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($userid)
-    {
+    public function delete($userid) {
         $id = base64_decode($userid);
-        User::find($id)->delete();
-        return redirect()->action('Admin\UserController@index')->with('success', 'User Deleted Successfully');
+        User::find($id)->delete(); 
+		return redirect()->action('Admin\UserController@index')->with('success', 'User Deleted Successfully');
     }
-
-    /**
+	 /**
      * Status
-     *
-     * @param [type] $ids
-     * @param [type] $status
-     * @return void
      */
-    public function status($ids, $status)
-    {
-        $ids = base64_decode($ids);
+	public function status($ids,$status) { 
+        $ids = base64_decode($ids);       
         $users =  User::find($ids);
         if (empty($users)) {
             return 'URL NOT FOUND';
         }
+
         $input['is_active'] = $status;
         unset($input['_token']);
+        
         $users->fill($input)->save();
+
         return redirect()->action('Admin\UserController@index')->with('alert-success', 'User Status Updated Successfully');
     }
 }

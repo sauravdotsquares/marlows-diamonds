@@ -30,19 +30,19 @@
                                     @csrf
                                     <div class="checkout-form-group">
                                         <label class="input-label">Email address <abbr class="required">*</abbr></label>
-                                        <input type="text" required="required" name="login_email" id="login_email" class="form-control">
+                                        <input type="text" required="required" name="email" id="email" class="form-control">
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Password  <abbr class="required">*</abbr></label>
-                                        <input type="password" required="required" name="login_password" id="login_password" class="form-control">
+                                        <input type="password" required="required" name="password" id="password" class="form-control">
                                     </div>
                                     <div class="action-login">
                                         <button class="btn-bg-small" type="submit">Login</button>
-                                        <label class="rememberme">
-                                            <input type="checkbox">
-                                            <span>Remember me</span>
-                                        </label>
-                                    </div>
+                                            <label class="rememberme">
+                                                <input type="checkbox">
+                                                <span>Remember me</span>
+                                            </label>
+                                        </div>
                                     <div class="lostpassword">
                                         <a href="/users/forget-password">Lost your password</a>
                                     </div>
@@ -61,7 +61,7 @@
                                     @csrf
                                     <div class="checkout-form-group">
                                         <label class="input-label">Username <abbr class="required">*</abbr></label>
-                                        <input type="text" name="username" id="username" value="{{ old('username') }}" required="required" class="form-control {{ $errors->has('username') ? 'error' : '' }}">
+                                        <input type="text" name="username" id="username" required="required" class="form-control {{ $errors->has('username') ? 'error' : '' }}">
                                         @if ($errors->has('username'))
                                             <div class="error">
                                                 {{ $errors->first('username') }}
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Email address <abbr class="required">*</abbr></label>
-                                        <input type="email" name="email" id="email" value="{{ old('email') }}" required="required" class="form-control {{ $errors->has('email') ? 'error' : '' }}">
+                                        <input type="email" name="email" id="email" required="required" class="form-control {{ $errors->has('email') ? 'error' : '' }}">
                                         @if ($errors->has('email'))
                                         <div class="error">
                                             {{ $errors->first('email') }}
@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Password <abbr class="required">*</abbr></label>
-                                        <input type="password" name="password" id="password" value="{{ old('password') }}" required="required" class="form-control {{ $errors->has('password') ? 'error' : '' }}">
+                                        <input type="password" name="password" id="password" required="required" class="form-control {{ $errors->has('password') ? 'error' : '' }}">
                                         @if ($errors->has('password'))
                                             <div class="error">
                                                 {{ $errors->first('password') }}
