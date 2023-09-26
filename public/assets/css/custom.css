@@ -351,7 +351,7 @@ p.burgarmenu span {color: #8e2e65;}
 .listing-slider .owl-stage-outer .owl-item .item a {color: #8e2e65; font-weight: bold; font-size: 18px; text-decoration: none; }
 .category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top;  margin-top: 9px;}
 .category-sidebar-wrap h3 {font-weight: bold;font-size: 24px; font-family: 'Lato';color: #8e2e65; margin: 0;}
-.category-sidebar-wrap a#resetFilterButton {color: #000;}
+.category-sidebar-wrap a#resetFilterButton {color: #000; text-decoration: none;font-size: 18px; font-weight: bold;}
 .category-sidebar-wrap .filter-clear {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-pack: justify;-ms-flex-pack: justify;
 justify-content: space-between;-webkit-box-align: center;-ms-flex-align: center;align-items: center; margin: 0 0 10px;}
 .category-sidebar-wrap .filter-item .accordion-item {border: none;}
@@ -393,33 +393,11 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65; margin: 0 0 15
 box-shadow: none;z-index: 1;height: 30px;text-align: center;font-weight: bold;border: 1px solid #d6d6d6;}
 
 .engagement-ring-img{ position:relative; }
-.engagement-ring-img .engagement-ring-img-content {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    z-index: 9;
-    width: 100%;
-}
-.engagement-ring-img .engagement-ring-img-content h2 {
-    max-width: 400px;
-    width: 100%;
-    color: #fff;
-    font-size: 50px;
-    line-height: 56px;
-}
-.engagement-ring-img .engagement-ring-img-content button {
-    width: auto;
-    background-color: #8e2e65;
-    color: #fff;
-    font-size: 15px;
-    padding: 14px 26px;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-weight: 700;
-    display: inline-block;
-    border: 1px solid #8e2e65;
-    margin:15px 0 15px;
-}
+.engagement-ring-img .engagement-ring-img-content {position: absolute; top: 50%; transform: translate(0, -50%); z-index: 9; width: 100%; }
+.engagement-ring-img .engagement-ring-img-content h2 {max-width: 400px; width: 100%; color: #fff; font-size: 50px; line-height: 56px; }
+.engagement-ring-img .engagement-ring-img-content button {width: auto; background-color: #8e2e65; color: #fff; font-size: 15px; padding: 14px 26px; text-transform: uppercase;
+text-decoration: none; font-weight: 700; display: inline-block; border: 1px solid #8e2e65; margin:15px 0 15px;}
+.engagement-ring-img .engagement-ring-img-content button a {color: #fff;text-decoration: none;}
 
 
 .is-active .category-product-filter-icon img, .category-product-filter-icon:hover img { filter: brightness(0) saturate(100%) invert(19%) sepia(95%) saturate(1175%) hue-rotate(293deg) brightness(98%) contrast(87%) }
@@ -1414,7 +1392,7 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 
 .category-listing-row {display: -webkit-box; display: -ms-flexbox; display: flex; -ms-flex-wrap: wrap; flex-wrap: wrap;}
 .category-list-wrap{ order:1 }
-.category-sidebar-wrap{ width:100%; }
+.category-sidebar-wrap{ /*width:100%; */}
 
 
 .footer-social a {margin: 0 7px 0 0;}
@@ -1446,6 +1424,7 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .blog-list-sidebar-first.desktop-sidebar, .blog-list-sidebar.desktop-sidebar{ display: none; }
 .blog-list-sidebar-first.mobile-sidebar .accordion-body ul li:last-child a {border: none;}
 .blog-list-sidebar-first.mobile-sidebar .accordion .accordion-collapse {padding: 0;}
+
 
 
 /*grown diamond css*/
@@ -1526,21 +1505,21 @@ right: 10px !important;
 }
 
 @media only screen and (max-width: 991px) and (min-width: 720px) {
-.product-panel-new .nav-toggle {display: block; // or inline-block or inline : which ever is appropriate for you.}
+.product-panel-new .nav-toggle {display: block; padding: 0;}
 
-.product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width: 300px;}
+.product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 10px;width:48%;}
 
 }
 
 @media only screen and (max-width: 720px) and (min-width: 576px) {
-.product-panel-new .nav-toggle {display: block; // or inline-block or inline : which ever is appropriate for you.}
+.product-panel-new .nav-toggle {display: block;}
 
 .product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width:100%;}
 .product-panel-new .sortbtn {width: 122px !important;}
 }
 
 @media only screen and (max-width: 576px) and (min-width: 320px) {
-.product-panel-new .nav-toggle {display: block; // or inline-block or inline : which ever is appropriate for you.}
+.product-panel-new .nav-toggle {display: block;}
 
 .product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width: 100%;}
 

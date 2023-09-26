@@ -67,9 +67,10 @@
         <div class="category-listing-row">
             <div class="category-sidebar-wrap category-sidebar-left">
                 <div>
+                    <a href="javascript:void(0)" class="clearallfilter-desktop resetFilterButton" id="resetFilterButton">All Filter Category</a>
                     <div class="filter-clear">
                         <button href="#collapse1" class="nav-toggle btn" style=""><i class="fa fa-angle-down" style="color:#993168"></i>  Filter </button>
-                        <a href="javascript:void(0)" class="clearallfilter-desktop resetFilterButton" id="resetFilterButton">All Filter Category</a>
+                       
                         <div class="dropdown sortmobile">
                             <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>
                             <select class="form-control dropdown-content" name="sortingMSelect" id="sortingMSelect">
@@ -152,9 +153,8 @@
                         </div>
                         @endforeach
                         <div class="reset-filer-container">
-                            <a href="javascript:void(0)" id="resetFilterButton" class="resetFilterButton"><button class="reset-filer-btn"> 
-                                See All 
-                            </button></a>
+                            <a href="javascript:void(0)" id="resetFilterButton" class="resetFilterButton">
+                                See All </a>
                         </div>
 
                     </div>
