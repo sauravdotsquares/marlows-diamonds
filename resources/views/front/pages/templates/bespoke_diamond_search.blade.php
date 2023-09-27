@@ -563,10 +563,12 @@
 							</div>
 						</div>
 						<div data-pagination=""
-				             data-num-pages="totalPages"
-				             data-current-page="currentPage"
-				             data-max-size="maxSize"
-				             data-boundary-links="true" ng-click="pageChanged()">
+							ng-if="isPagignationShow"
+							data-num-pages="totalPages"
+							data-current-page="currentPage"
+							data-max-size="maxSize"
+							data-boundary-links="true" 
+							ng-click="pageChanged()">
 						</div>
 					</div>
 					<input type="hidden" id="addtobasketselectedrowid" value="0">
