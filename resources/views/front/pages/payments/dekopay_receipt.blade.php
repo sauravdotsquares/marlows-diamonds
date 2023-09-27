@@ -35,7 +35,7 @@
 			<input type="hidden" name="Finance[Code]" value="{{$orderDekopayFinance->finCodes}}" id="submit_finance_code">
 			<input type="hidden" name="Finance[Deposit]" value="{{$orderDekopayFinance->depositAmt}}" id="submit_finance_deposit">
 
-			<a href="{{$result}}" id="submit_dekopay_payment_form" class="btn btn-primary" disabled="disabled">Click here to complete your finance application</a>
+			<a href="{{$result}}" id="submit_dekopay_payment_form" class="btn btn-primary" disabled="disabled">Checking...</a>
 			
 		</form>
 	</div>
@@ -60,7 +60,7 @@
 		$('#submit_dekopay_payment_form').text('Redirecting in '+minutes + ':' + seconds);
 		timer2 = minutes + ':' + seconds;
 		if(timer2=='-1:59'){
-			$('#submit_dekopay_payment_form').text('Click here to complete your finance application');
+			$('#submit_dekopay_payment_form').text('Checking...');
 			$('#submit_dekopay_payment_form').removeAttr('disabled');
 		}
 
@@ -68,7 +68,7 @@
 
 	setTimeout(function(){
 		 window.location.href = '{{$result}}';
-	 },1500);
+	 },5000);
 </script>
 
 @endsection
