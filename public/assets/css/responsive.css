@@ -228,9 +228,9 @@ h3,.heading-h-three{font-size:28px}
 	display: inline-block;
 }
 .product-grid-items-item {
-	flex: 0 0 33%;
-	max-width: 33%;
-	-ms-flex: 0 0 33%;
+	flex: 0 0 33.33%;
+	max-width: 33.33%;
+	-ms-flex: 0 0 33.33%;
 }
 .category-sidebar-wrap {width: 30%;}
 .category-list-wrap {width: 69%;}
@@ -308,6 +308,12 @@ h3,.heading-h-three{font-size:28px}
     max-width: 115px;
     position: relative;
 }
+
+
+/*filter design css*/
+.category-sidebar-wrap .accordion-item .category-filter-title h6{ font-size:15px; }
+/*filter design css end*/
+
 }
 
 /** media only for header responsive **/
@@ -390,14 +396,13 @@ h3,.heading-h-three{font-size:28px}
 
 .engagement-ring-img .engagement-ring-img-content h2 {font-size: 36px;line-height: 42px;}
 
-.category-sidebar-wrap a#resetFilterButton { color: #fff;text-decoration: none;font-weight: normal;text-align: center;border-left: 1px solid #ccc;
-padding: 6px 14px;font-size: 16px;background: #8e2e65;margin: auto;display: table;margin-bottom: 18px;border-radius: 6px;position: relative; display: none;}
-.category-sidebar-wrap a#resetFilterButton:before {content: '';font-family: 'FontAwesome';margin: 0 6px 0 0px;}
-
+.category-sidebar-wrap a#resetFilterButton { display: none;}
+/*.category-sidebar-wrap a#resetFilterButton:before {content: '';font-family: 'FontAwesome';margin: 0 6px 0 0px; display: none;}*/
+.category-sidebar-wrap .reset-filer-container a#resetFilterButton{ display:inline-block; width:auto; }
 
 /*filter design css*/
 .category-sidebar-wrap .filter-container {margin-top: 60px;}
-.category-sidebar-wrap .filter-clear{ position:absolute; top:60px; z-index: 9}
+.category-sidebar-wrap .filter-clear{ position:absolute; top:55px; z-index: 9}
 /*filter design css end*/
 }
 
@@ -426,6 +431,7 @@ background-repeat: no-repeat;width: 26px;height: 24px;top: -11px;left: -15px;bac
 
 .category-list-wrap .category-list-top {display: none;}
 
+.category-sidebar-wrap .filter-container {margin-top: 25px;}
 .category-sidebar-wrap .filter-container ul {margin: 0;}
 .category-sidebar-wrap .clearallfilter-desktop {display: none;}
 .category-sidebar-wrap .sortmobile {display: block; width: 50%; position: relative;border-left: 1px solid #ccc;}
@@ -437,7 +443,7 @@ height: 35px; width: auto;margin: auto;}
 .category-list-wrap .category-list-top .category-list-item-searchsort .dropdown-content-mobile {display: none;}
 .category-list-wrap .category-list-top .category-list-item-searchsort.dropdown-content-desktop {display: none;}
 
-
+.category-sidebar-wrap .reset-filer-container a#resetFilterButton{ width:100%; }
 }
 
 
