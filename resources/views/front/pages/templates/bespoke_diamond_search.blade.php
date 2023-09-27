@@ -567,7 +567,7 @@
 							data-num-pages="totalPages"
 							data-current-page="currentPage"
 							data-max-size="maxSize"
-							data-boundary-links="true" 
+							data-boundary-links="false" 
 							ng-click="pageChanged()">
 						</div>
 					</div>
