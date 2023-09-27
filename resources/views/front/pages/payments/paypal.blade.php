@@ -1,4 +1,4 @@
-<li class="cc_payment_methods paypal_payment">
+<li class="cc_payment_methods paypal_payment paypalpaymentgateway_wrap">
     <input type="radio" name="payment_type" checked required="required" value="paypal">
     <label class="paypal_label">
         Paypal
