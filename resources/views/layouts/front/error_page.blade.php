@@ -25,8 +25,8 @@
     <script>
       var systemBaseUrl = '<?php echo url("/"); ?>/';
     </script>
-    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}" defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js" defer></script>
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
     <style>
       [ng-cloak] {  display: none !important; }
     </style>
@@ -74,15 +74,15 @@
       const mapMarker = '{{ asset("images/map_marker.png") }}';
     </script>
 
-<script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}" defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.js" defer></script>
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}" defer></script>
-<script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}" defer></script>
-<script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}" defer></script>
-<script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}" defer></script>
+<script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.js"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
+<script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
+<script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
+<script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 {{-- .env('VERSION') --}}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU" defer ></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
 
 
 @yield('js')
