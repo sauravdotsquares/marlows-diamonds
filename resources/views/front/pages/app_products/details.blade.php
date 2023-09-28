@@ -120,8 +120,8 @@
 	const productSlug = '{{  $product->slug }}';
 </script>
 
-<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
-<script src="{{ asset('assets/js/custom/product_details.js') }}"></script>
+<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}" defer></script>
+<script src="{{ asset('assets/js/custom/product_details.js') }}" defer></script>
 <script>
 $(document).ready(function() {
     var $owl = $('#carousel'); 

@@ -28,7 +28,7 @@
   
   @yield('css')
   <!-- jQuery -->
-    <script src="{{ asset('admin/plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{ asset('admin/plugins/jquery/jquery.min.js')}}" defer></script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -53,39 +53,39 @@
   var csrf_token = '<?php echo csrf_token(); ?>';
 </script>
 <!-- Bootstrap -->
-<script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
+<script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}" defer></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}" defer></script>
 <!-- overlayScrollbars -->
-<script src="{{ asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}" defer></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('admin/dist/js/adminlte.js')}}"></script>
+<script src="{{ asset('admin/dist/js/adminlte.js')}}" defer></script>
 
 <!-- PAGE PLUGINS -->
 <!-- jQuery Mapael -->
-<script src="{{ asset('admin/plugins/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
-<script src="{{ asset('admin/plugins/raphael/raphael.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/jquery-mapael/jquery.mapael.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/jquery-mapael/maps/usa_states.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/jquery-mousewheel/jquery.mousewheel.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/raphael/raphael.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/jquery-mapael/jquery.mapael.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/jquery-mapael/maps/usa_states.min.js')}}" defer></script>
 
-<script src="{{ asset('admin/plugins/chart.js/Chart.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/chart.js/Chart.min.js')}}" defer></script>
 
-<script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}" defer></script>
 
-<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.print.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}" defer></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
-<script src="{{ asset('admin/plugins/moment/moment.min.js')}}"></script>
-<script src="{{ asset('admin/dist/js/pages/dashboard2.js')}}"></script>
-<script src="{{ asset('admin/js/admin.js')}}"></script>
+<script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/sweetalert2/sweetalert2.min.js')}}" defer></script>
+<script src="{{ asset('admin/plugins/moment/moment.min.js')}}" defer></script>
+<script src="{{ asset('admin/dist/js/pages/dashboard2.js')}}" defer></script>
+<script src="{{ asset('admin/js/admin.js')}}" defer></script>
 
 
 <script>
