@@ -74,7 +74,11 @@
                 <div class="middle-topbar-right">
                     <ul>
                         <li class="my-account-blk">
+                        @if(auth()->guard('customer')->check())   
                             <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
+                        @else
+                            <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_LOGIN}}</a>
+                        @endif
                         </li>
                         <li class="my-whishlist-blk">
                             <?php
@@ -144,7 +148,7 @@
                     <a href="{{url('/')}}" title="{{$header_settings->get_options('site_title')}}">
                         @if($header_settings->get_options('logo')!='')
                             <img src="{{asset('images/logo/'.$header_settings->get_options('logo'))}}" alt="{{$header_settings->get_options('site_title')}}">
-
+                            
                         @elseif($header_settings->get_options('site_title')!='')
                             <div>{{$header_settings->get_options('site_title')}}</div>
                             <span>{{$header_settings->get_options('site_tagline')}}</span>

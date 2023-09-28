@@ -11,6 +11,12 @@
     <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
     <meta name="keywords" content="{!! isset($data->meta_keyword)?$data->meta_keyword:'' !!}">
+    
+    @if (env('APP_ENV')=='local')
+      <meta name="robots" content="noindex">
+    @elseif(env('APP_ENV')=='production')
+      <meta name="robots" content="index">
+    @endif
 
     @if (request()->path() == "engagement-rings")
       @include('layouts.front.engagement_rings_sechma')

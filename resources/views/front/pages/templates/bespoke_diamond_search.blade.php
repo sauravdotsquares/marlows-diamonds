@@ -563,10 +563,12 @@
 							</div>
 						</div>
 						<div data-pagination=""
-				             data-num-pages="totalPages"
-				             data-current-page="currentPage"
-				             data-max-size="maxSize"
-				             data-boundary-links="true" ng-click="pageChanged()">
+							ng-if="isPagignationShow"
+							data-num-pages="totalPages"
+							data-current-page="currentPage"
+							data-max-size="maxSize"
+							data-boundary-links="false" 
+							ng-click="pageChanged()">
 						</div>
 					</div>
 					<input type="hidden" id="addtobasketselectedrowid" value="0">
@@ -905,7 +907,7 @@
 		function setPartialPaymentAmount() {
 
 			$('#total-diamond-price').html("<strong>Partial Diamond Price:</strong> £ "+$('#partial_amount').val());
-			
+			$('#addtobasketselectedrowid').val(index);
 		}
 
 
