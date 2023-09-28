@@ -346,8 +346,8 @@
 @endsection
 @section('js')
 <script src='https://www.google.com/recaptcha/api.js' async></script>
-<script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}" defer></script>
+<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}" defer></script>
 <script>
     grecaptcha.ready(function() {
         grecaptcha.execute('6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN', {

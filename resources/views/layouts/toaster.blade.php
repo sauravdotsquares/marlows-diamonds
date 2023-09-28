@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="{{ asset('admin/plugins/toastr/toastr.min.css')}}">
-<script src="{{ asset('admin/plugins/toastr/toastr.min.js')}}"></script>
+<script src="{{ asset('admin/plugins/toastr/toastr.min.js')}}" defer></script>
 <script>
 
     function showToaster(status='error', message='') {
