@@ -21,7 +21,7 @@ $getInstaData = getInstagramDataDetails();
         </div>
     </div>
     <div class="insta-btn">
-        <a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
+        <a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
     </div>
 </div>
 @endif
