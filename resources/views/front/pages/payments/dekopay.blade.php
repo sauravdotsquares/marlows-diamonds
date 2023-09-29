@@ -1,5 +1,5 @@
 <li class="cc_payment_methods via_deko_payment" ng-controller="DekopayController" ng-init="financeOptionsCheckout()">  
-    <input type="radio" name="payment_type" required="required" value="dekopay">
+    <input type="radio" name="payment_type" required="required" value="dekopay" autocomplete="off">
     <label class="deko_label">
         Dekopay
     </label>
