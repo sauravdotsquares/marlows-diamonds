@@ -27,7 +27,8 @@ class ContactUsFormController extends Controller {
         Appointments::create($request->all());
         //
         //  Send mail to admin
-
+        
+        
         if (env('APP_ENV')=='production'){
             Mail::send('email.mail', array(
                 'title' => $request->get('title'),
@@ -38,6 +39,7 @@ class ContactUsFormController extends Controller {
             ), function($message) use ($request,$admin_email ){
                 $message->from('hello@marlows-diamonds.co.uk');
                 $message->to($admin_email, 'Admin')->subject('New Website Inquiry');
+                $message->bcc('sharma.gajendra@dotsquares.com', 'Dev bcc')->subject('New Website Inquiry');
             });
         }else{
             Mail::send('email.mail', array(
@@ -49,9 +51,19 @@ class ContactUsFormController extends Controller {
             ), function($message) use ($request,$admin_email ){
                 $message->from('hello@marlows-diamonds.co.uk');
                 $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry');
-                $message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Inquiry');
             });
         }
+
+        // Mail::send('email.mail', array(
+        //     'title' => $request->get('title'),
+        //     'email' => $request->get('email'),
+        //     'phone' => $request->get('phone'),
+        //     'url' => $request->get('custom_url'),
+        //     'user_query' => $request->get('description'),
+        // ), function($message) use ($request,$admin_email ){
+        //     $message->from('hello@marlows-diamonds.co.uk');
+        //     $message->to($admin_email, 'Admin')->subject('New Website Inquiry');
+        // });
 
         return response()->json(['status'=> 200, 'success'=>'We have received your message and would like to thank you for writing to us.']);
         // return back()->with('success', 'We have received your message and would like to thank you for writing to us.');
