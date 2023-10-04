@@ -273,6 +273,13 @@ if (!function_exists('validate_breadcrumb')) {
 			return ($relatedposts);
 		}
 	}
+	if (!function_exists("getEngagementRingsPosts")) {
+    function getEngagementRingsPosts()
+		{
+			$relatedposts = Posts::take(10)->orderBy('id', 'DESC')->where('categories', 18)->where('status', 1)->select('title','slug','description','image')->get();
+			return ($relatedposts);
+		}
+	}
 	if (!function_exists("getFaqs")) {
     function getFaqs()
 		{
