@@ -129,6 +129,10 @@
 @include('front.includes.featuredproduct')
 <!-- Best Selling Marlow's Diamond Jewellery end here -->
 
+<!-- Best Post Carousel Block start here -->
+@include('front.includes.postcarouselblock')
+<!-- Best Post Carousel Block start here -->
+
 <!-- two banner section end -->
 
 <!-- Your Journery of a lifetime start here start-->
