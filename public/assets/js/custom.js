@@ -50,7 +50,7 @@ $('.owlslidertwo').owlCarousel({
                 items:2
             },
             991:{
-                items:3
+                items:4
             },
             1400:{
                 items:4
