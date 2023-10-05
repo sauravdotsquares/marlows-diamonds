@@ -1,10 +1,10 @@
-<div class="best-selling-marlows">
+<div class="best-selling-marlows-blog">
     <div class="container">
         <div class="head-para-three">
             <h2 class="heading-h-three"> Marlow's Diamond Blog</h2>
         </div>
         <div class="blog-carousel-item-slider">
-            <div class="owl-carousel owl-theme owlslidertwo st-arrows">
+            <div class="owl-carousel blog-carousel-engagement">
                 @foreach(getEngagementRingsPosts() as $key => $getRelatedPosts)
                     <div class="item">
                         <div class="blog-carousel-info">

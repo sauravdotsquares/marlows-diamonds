@@ -286,9 +286,11 @@ textarea.input-control{height:100px}
 
 /** left right img text**/
 .leftright-text p{font-size:15px;color:#2b2b2b;line-height:1.6}
+.leftright-imt-col.leftright-text p a {color: #8e2e65; text-decoration: none;}
 .leftright-imt-col.leftright-text{text-align:center;padding:0 60px 0 60px}
 .leftright-imt-col{width:100%;flex:0 0 50%;-ms-flex:0 0 50%;max-width:50%}
-.leftright-img-text-wraper{background:#fbfcfd;margin:0 0 80px 0}
+.leftright-img-text-wraper{background:#fbfcfd;margin:0 0 00px 0}
+.leftright-img-text-wraper:nth-child(2) {margin-bottom: 80px;}
 .leftright-img img{width:100%}
 .leftright-heading.heading-h-three{font-size:35px}
 
@@ -1283,6 +1285,24 @@ height: 50px;background: #8e2e65;color: #fff;text-align: center;}
 .inspiration-box h3 {text-align: center;font-size: 20px;text-decoration: none;font-weight: bold;font-family: 'Lato';margin: 22px 0;}
 /*ring size page css end*/
 
+
+/*engagement ring blog slider css*/
+.blog-carousel-item-slider .owl-carousel {margin-top: 30px; padding: 0 15px;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info {border: 1px solid #ccc;height: 270px;overflow: hidden; transition: all 0.2s ease;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info:hover {background:#8e2e65;transition: all 0.2s ease;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info .blog-carousel-image a {height: 200px;display: inline-block;width: 100%;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info .blog-carousel-item-details a {text-align: center; width: 100%;
+display: inline-block; color: #000; font-size: 15px; text-decoration: none;padding:5px 24px;font-weight: 500;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info:hover .blog-carousel-item-details a {color: #fff;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info .blog-carousel-image a img {height: 100%;object-fit: cover; width: 100%;}
+
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {top: 50%;transform: translateY(-50%);position: absolute;left: -12px;
+border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {top: 50%;transform: translateY(-50%);position: absolute;right: -12px;
+border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button span {font-size: 37px;line-height: 22px;}
+/*engagement ring blog slider css end*/
+
 /*footer css*/
 .location-header a {color: #000;text-decoration: none;}
 .disclaimer-content .footer-reg {color: #fff;text-decoration:none; margin: 10px 0 7px;display: inline-block;}
@@ -1403,6 +1423,10 @@ height: 50px;background: #8e2e65;color: #fff;text-align: center;}
 .post-bar .post-bar-center a span {
     transition: initial;
 }
+
+.post-bar .header-post-bar-left{ text-align:left !important; }
+.post-bar .post-bar-right.header-post-bar-left {text-align: right !important;}
+
 #location_map * {
 	-moz-transition: none;
 	-webkit-transition: none;
@@ -1508,6 +1532,15 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .category-sidebar-wrap{ /*width:100%; */}
 
 
+/*engagement ring blog slider css*/
+.best-selling-marlows-blog {padding: 0 45px;}
+/*engagement ring blog slider css end*/
+
+/*engagement ring blog slider css*/
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {left: -53px;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {right: -53px;}
+/*engagement ring blog slider css end*/
+
 .footer-social a {margin: 0 7px 0 0;}
 
 }
@@ -1549,7 +1582,9 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .payment-box-main-drop{ font-size:15px; }
 /** checkout **/
 
+/*engagement ring blog slider css*/
 
+/*engagement ring blog slider css end*/
     }
 
 
@@ -1583,6 +1618,12 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 /*diamond-education css*/
 .defaultpages-wrap iframe.note-video-clip {width: 100%;}
 /*diamond-education css end*/
+
+/*engagement ring blog slider css*/
+.best-selling-marlows-blog {padding: 0 0px;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {left: 0;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {right: 0;}
+/*engagement ring blog slider css end*/
 
 /** checkout **/
 .payment-box-main-drop{ font-size: 13px; padding: 15px 15px 20px;}

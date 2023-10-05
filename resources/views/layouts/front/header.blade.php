@@ -15,6 +15,12 @@
 <!-- Header Start here -->
 <header class="header-main">
     <!-- Mobile Top Start here -->
+
+    <?php
+        $now = new DateTime("now");
+        $dist_future = new DateTime($header_settings->get_options('discount-date'));
+    ?>
+
     <div class="top-bar-mob">
         <div class="container">
             <div class="owl-carousel owl-theme mobil-bar">
@@ -274,6 +280,7 @@
                 <div class="post-bar-left header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
                 </div>
+                @if($dist_future > $now)
                 <div class="post-bar-center" style="height: 40px;">
                     {{-- <a href="{{ route('products.exclusive') }}" >
                         <span> Exclusive to Marlows </span>
@@ -287,6 +294,7 @@
 
                     </p>
                 </div>
+                @endif
                 <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
                 </div>
@@ -305,7 +313,7 @@
         var countDownDate = new Date(discountDate).getTime();
         var myfunc = setInterval(function() {
 
-        var now = new Date().getTime();
+        var now = new Date().getTime();      
         var timeleft = countDownDate - now;
 
         // Calculating the days, hours, minutes and seconds left

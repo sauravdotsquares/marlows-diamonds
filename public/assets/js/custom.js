@@ -46,10 +46,36 @@ $('.owlslidertwo').owlCarousel({
             0:{
                 items:1
             },
-            600:{
+            575:{
+                items:2
+            },
+            991:{
                 items:3
             },
-            1000:{
+            1400:{
+                items:4
+            }
+        }
+    });
+
+
+$('.blog-carousel-engagement').owlCarousel({
+        loop:true,
+        margin:20,
+        nav:true,
+        dots:false,
+        responsive:{
+            0:{
+                items:1
+            },
+
+            575:{
+                items:2
+            },
+            991:{
+                items:3
+            },
+            1400:{
                 items:4
             }
         }
