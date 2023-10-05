@@ -129,9 +129,6 @@
 @include('front.includes.featuredproduct')
 <!-- Best Selling Marlow's Diamond Jewellery end here -->
 
-<!-- Best Post Carousel Block start here -->
-@include('front.includes.postcarouselblock')
-<!-- Best Post Carousel Block start here -->
 
 <!-- two banner section end -->
 
@@ -145,6 +142,10 @@
 </div>
 <!-- Your Journery of a lifetime start here end-->
 
+
+<!-- Best Post Carousel Block start here -->
+@include('front.includes.postcarouselblock')
+<!-- Best Post Carousel Block start here -->
 
 <!-- FAQ Section start here -->
 <div class="faq-section engagement-ring-faq">
