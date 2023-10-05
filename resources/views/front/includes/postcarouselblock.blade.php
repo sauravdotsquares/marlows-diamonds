@@ -3,12 +3,12 @@
         <div class="head-para-three">
             <h2 class="heading-h-three"> Marlow's Diamond Blog</h2>
         </div>
-        <div class="product-item-slider">
+        <div class="blog-carousel-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
                 @foreach(getEngagementRingsPosts() as $key => $getRelatedPosts)
                     <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
+                        <div class="blog-carousel-info">
+                            <div class="blog-carousel-image">
                                 <a href="{{asset('blog/'.$getRelatedPosts->slug)}}">
                                     @if(isset($getRelatedPosts->image) && !empty($getRelatedPosts->image))
                                         <img src="{{ asset('storage/'.$getRelatedPosts->image)}}"  onerror="this.src='{{asset('/images/marlowsdiamonds-logo.png')}}'" alt="{{$getRelatedPosts->title}}">
@@ -17,8 +17,8 @@
                                     @endif
                                 </a>
                             </div>
-                            <div class="product-item-details">
-                                <div class="product-titles-small">
+                            <div class="blog-carousel-item-details">
+                                <div class="blog-carousel-titles-small">
                                     <a href="{{asset('blog/'.$getRelatedPosts->slug)}}"> {{$getRelatedPosts->title}}</a>
                                 </div>
                             </div>
