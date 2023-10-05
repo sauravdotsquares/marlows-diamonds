@@ -10,350 +10,559 @@
 </div>-->
 
 <div class="ring-guide-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ring-personal-desc">
+                    <h1>{{$data->title}}</h1>
+                    <p>Popping into one of our stores and having your finger measured is the most accurate way to determine your ring size, but if you need to find out from the comfort of your own home, we’re here to help with these handy tips.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ring-personal-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/ring-personal-gold.png" alt=""></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="container">
-		<div class="row">
-	<div class="col-md-6">
-		<div class="ring-personal-desc">
-			<h1>{{$data->title}}</h1>
-			<p>Popping into one of our stores and having your finger measured is the most accurate way to determine your ring size, but if you need to find out from the comfort of your own home, we’re here to help with these handy tips.</p>
-		</div>
-	</div>
+    <div class="ring-size-tabing">
+        <h3>RING SIZE CONVERSION CHARTS</h3>
+        <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">UK RING SIZES</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">UK to US Ring Size Conversion</button>
+                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">UK to EU Ring Size Conversion</button>
+            </div>
+        </nav>
+        <div class="tab-content p-3 border bg-light" id="nav-tabContent">
+            <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="panel-body table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ring Size</th>
+                                <th>Circumference (mm)</th>
+                                <th>Ring Size</th>
+                                <th>Circumference (mm)</th>
+                                <th>Ring Size</th>
+                                <th>Circumference (mm)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td>37.8</td>
+                                <td>J</td>
+                                <td>48.7</td>
+                                <td>S</td>
+                                <td>60.2</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>39.1</td>
+                                <td>K</td>
+                                <td>50.0</td>
+                                <td>T</td>
+                                <td>61.4</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>40.4</td>
+                                <td>L</td>
+                                <td>51.2</td>
+                                <td>U</td>
+                                <td>62.7</td>
+                            </tr>
+                            <tr>
+                                <td>D</td>
+                                <td>41.7</td>
+                                <td>M</td>
+                                <td>52.5</td>
+                                <td>V</td>
+                                <td>64.0</td>
+                            </tr>
+                            <tr>
+                                <td>E</td>
+                                <td>42.9</td>
+                                <td>N</td>
+                                <td>53.8</td>
+                                <td>W</td>
+                                <td>65.3</td>
+                            </tr>
+                            <tr>
+                                <td>F</td>
+                                <td>44.2</td>
+                                <td>O</td>
+                                <td>55.1</td>
+                                <td>X</td>
+                                <td>66.6</td>
+                            </tr>
+                            <tr>
+                                <td>G</td>
+                                <td>45.5</td>
+                                <td>P</td>
+                                <td>56.3</td>
+                                <td>Y</td>
+                                <td>67.8</td>
+                            </tr>
+                            <tr>
+                                <td>H</td>
+                                <td>46.8</td>
+                                <td>Q</td>
+                                <td>57.6</td>
+                                <td>Z</td>
+                                <td>68.5</td>
+                            </tr>
+                            <tr>
+                                <td>I</td>
+                                <td>48.0</td>
+                                <td>R</td>
+                                <td>58.9</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr> </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="panel-body table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>UK</th>
+                                <th>US &amp; Canada</th>
+                                <th>UK</th>
+                                <th>US &amp; Canada</th>
+                                <th>UK</th>
+                                <th>US &amp; Canada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td>1/2</td>
+                                <td>K</td>
+                                <td>5 <span class="small-text">1/4</span></td>
+                                <td>S <span class="small-text">1/2</span></td>
+                                <td>9 <span class="small-text">1/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>1</td>
+                                <td>K <span class="small-text">1/2</span></td>
+                                <td>5 <span class="small-text">1/2</span></td>
+                                <td>-</td>
+                                <td>9 <span class="small-text">1/2</span></td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>1 <span class="small-text">1/2</span></td>
+                                <td>L</td>
+                                <td>5 <span class="small-text">3/4</span></td>
+                                <td>T</td>
+                                <td>9 <span class="small-text">3/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>D</td>
+                                <td>2</td>
+                                <td>L <span class="small-text">1/2</span></td>
+                                <td>6</td>
+                                <td>T <span class="small-text">1/2</span></td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>D <span class="small-text">1/2</span></td>
+                                <td>2 <span class="small-text">1/4</span></td>
+                                <td>M</td>
+                                <td>6 <span class="small-text">1/4</span></td>
+                                <td>U</td>
+                                <td>10 <span class="small-text">1/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>E</td>
+                                <td>2 <span class="small-text">1/2</span></td>
+                                <td>M <span class="small-text">1/2</span></td>
+                                <td>6 <span class="small-text">1/2</span></td>
+                                <td>U <span class="small-text">1/2</span></td>
+                                <td>10 <span class="small-text">1/2</span></td>
+                            </tr>
+                            <tr>
+                                <td>E <span class="small-text">1/2</span></td>
+                                <td>2 <span class="small-text">3/4</span></td>
+                                <td>N</td>
+                                <td>6 <span class="small-text">3/4</span></td>
+                                <td>V</td>
+                                <td>10 <span class="small-text">3/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>F</td>
+                                <td>3</td>
+                                <td>O</td>
+                                <td>7</td>
+                                <td>V <span class="small-text">1/2</span></td>
+                                <td>11</td>
+                            </tr>
+                            <tr>
+                                <td>F <span class="small-text">1/2</span></td>
+                                <td>3 <span class="small-text">1/4</span></td>
+                                <td>O <span class="small-text">1/2</span></td>
+                                <td>7 <span class="small-text">1/4</span></td>
+                                <td>W</td>
+                                <td>11 <span class="small-text">1/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>G</td>
+                                <td>3 <span class="small-text">1/2</span></td>
+                                <td>P</td>
+                                <td>7 <span class="small-text">1/2</span></td>
+                                <td>W <span class="small-text">1/2</span></td>
+                                <td>11 <span class="small-text">1/2</span></td>
+                            </tr>
+                            <tr>
+                                <td>G <span class="small-text">1/2</span></td>
+                                <td>3 <span class="small-text">3/4</span></td>
+                                <td>P <span class="small-text">1/2</span></td>
+                                <td>7 <span class="small-text">3/4</span></td>
+                                <td>X</td>
+                                <td>11 <span class="small-text">3/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>H</td>
+                                <td>4</td>
+                                <td>Q</td>
+                                <td>8</td>
+                                <td>Y</td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>H <span class="small-text">1/2</span></td>
+                                <td>4 <span class="small-text">1/4</span></td>
+                                <td>Q <span class="small-text">1/2</span></td>
+                                <td>8 <span class="small-text">1/4</span></td>
+                                <td>Y <span class="small-text">1/2</span></td>
+                                <td>12 <span class="small-text">1/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>I</td>
+                                <td>4 <span class="small-text">1/2</span></td>
+                                <td>R</td>
+                                <td>8 <span class="small-text">1/2</span></td>
+                                <td>Z</td>
+                                <td>12 <span class="small-text">1/2</span></td>
+                            </tr>
+                            <tr>
+                                <td>J</td>
+                                <td>4 <span class="small-text">3/4</span></td>
+                                <td>R <span class="small-text">1/2</span></td>
+                                <td>8 <span class="small-text">3/4</span></td>
+                                <td>Z <span class="small-text">1/2</span></td>
+                                <td>12 <span class="small-text">3/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>J <span class="small-text">1/2</span></td>
+                                <td>5</td>
+                                <td>S</td>
+                                <td>9</td>
+                                <td>-</td>
+                                <td>13</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <div class="panel-body table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>UK</th>
+                                <th>EU</th>
+                                <th>UK</th>
+                                <th>EU</th>
+                                <th>UK</th>
+                                <th>EU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td></td>
+                                <td>K</td>
+                                <td>49 <span class="small-text">5/8</span></td>
+                                <td>S <span class="small-text">1/2</span></td>
+                                <td>60 <span class="small-text">1/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td></td>
+                                <td>K <span class="small-text">1/2</span></td>
+                                <td>50 <span class="small-text">1/4</span></td>
+                                <td>T</td>
+                                <td>60 <span class="small-text">7/8</span></td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>40 <span class="small-text">1/2</span></td>
+                                <td>L</td>
+                                <td>50 <span class="small-text">7/8</span></td>
+                                <td>T <span class="small-text">1/2</span></td>
+                                <td>61 <span class="small-text">1/2</span></td>
+                            </tr>
+                            <tr>
+                                <td>D</td>
+                                <td>41 <span class="small-text">1/2</span></td>
+                                <td>L <span class="small-text">1/2</span></td>
+                                <td>51 <span class="small-text">1/2</span></td>
+                                <td>U</td>
+                                <td>62 <span class="small-text">1/8</span></td>
+                            </tr>
+                            <tr>
+                                <td>D <span class="small-text">1/2</span></td>
+                                <td>42 <span class="small-text">1/8</span></td>
+                                <td>M</td>
+                                <td>52 <span class="small-text">1/8</span></td>
+                                <td>U <span class="small-text">1/2</span></td>
+                                <td>62 <span class="small-text">3/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>E</td>
+                                <td>42 <span class="small-text">3/4</span></td>
+                                <td>M <span class="small-text">1/2</span></td>
+                                <td>52 <span class="small-text">3/4</span></td>
+                                <td>V</td>
+                                <td>63 <span class="small-text">3/8</span></td>
+                            </tr>
+                            <tr>
+                                <td>E <span class="small-text">1/2</span></td>
+                                <td>43 <span class="small-text">3/8</span></td>
+                                <td>N</td>
+                                <td>53 <span class="small-text">3/8</span></td>
+                                <td>V <span class="small-text">1/2</span></td>
+                                <td>63 <span class="small-text">3/8</span></td>
+                            </tr>
+                            <tr>
+                                <td>F</td>
+                                <td>44</td>
+                                <td>O</td>
+                                <td>54 <span class="small-text">5/8</span></td>
+                                <td>W</td>
+                                <td>64 <span class="small-text">5/8</span></td>
+                            </tr>
+                            <tr>
+                                <td>F <span class="small-text">1/2</span></td>
+                                <td>44 <span class="small-text">5/8</span></td>
+                                <td>O <span class="small-text">1/2</span></td>
+                                <td>55 <span class="small-text">1/2</span></td>
+                                <td>W <span class="small-text">1/2</span></td>
+                                <td>65 <span class="small-text">1/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>G</td>
+                                <td>45 <span class="small-text">1/4</span></td>
+                                <td>P</td>
+                                <td>55 <span class="small-text">7/8</span></td>
+                                <td>X</td>
+                                <td>65 <span class="small-text">7/8</span></td>
+                            </tr>
+                            <tr>
+                                <td>G <span class="small-text">1/2</span></td>
+                                <td>45 <span class="small-text">7/8</span></td>
+                                <td>P <span class="small-text">1/2</span></td>
+                                <td>56 <span class="small-text">3/4</span></td>
+                                <td>Y</td>
+                                <td>67 <span class="small-text">1/8</span></td>
+                            </tr>
+                            <tr>
+                                <td>H</td>
+                                <td>46 <span class="small-text">1/2</span></td>
+                                <td>Q</td>
+                                <td>57 <span class="small-text">1/8</span></td>
+                                <td>Y <span class="small-text">1/2</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>H <span class="small-text">1/2</span></td>
+                                <td></td>
+                                <td>Q <span class="small-text">1/2</span></td>
+                                <td>58</td>
+                                <td>Z</td>
+                                <td>67 <span class="small-text">3/4</span></td>
+                            </tr>
+                            <tr>
+                                <td>I</td>
+                                <td>47 <span class="small-text">1/8</span></td>
+                                <td>R</td>
+                                <td>58 <span class="small-text">3/8</span></td>
+                                <td>Z <span class="small-text">1/2</span></td>
+                                <td>68 <span class="small-text">3/8</span></td>
+                            </tr>
+                            <tr>
+                                <td>J</td>
+                                <td>48 <span class="small-text">3/8</span></td>
+                                <td>R <span class="small-text">1/2</span></td>
+                                <td>59</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>J <span class="small-text">1/2</span></td>
+                                <td>49</td>
+                                <td>S</td>
+                                <td>59 <span class="small-text">5/8</span></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-	<div class="col-md-6"><div class="ring-personal-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/ring-personal-gold.png" alt=""></div></div>
-</div>
-</div>
-
-</div>
-
-
-	<div class="container">
-
-	<!--<div class="ring-guide-text">
-			<h2>Popping into one of our stores and having your finger measured is the most accurate way to determine your ring size, but if you need to find out from the comfort of your own home, we’re here to help with these handy tips.</h2>
-		</div>-->
-
-		<div class="ring-size-tabing">
-			<h3>UK to US Ring Size Conversion</h3>
-			<nav>
-			<div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-				<button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
-				<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-				<button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
-			</div>
-		</nav>
-		<div class="tab-content p-3 border bg-light" id="nav-tabContent">
-			<div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-				<div class="panel-body table-responsive">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-			</div>
-			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-<div class="panel-body table-responsive">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-			</div>
-			<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-<div class="panel-body table-responsive">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                        <th>Ring Size</th>
-                                        <th>Circumference (mm)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>A</td>
-                                        <td>37.8</td>
-                                        <td>J</td>
-                                        <td>48.7</td>
-                                        <td>S</td>
-                                        <td>60.2</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-			</div>
-
-		</div>
-<h5>Measure your UK ring size in mm before using our UK to US ring size chart to find your perfect fit in US (and Canadian) measurements.</h5>
-	</div>
+        </div>
+        <h5>Measure your UK ring size in mm before using our UK to US ring size chart to find your perfect fit in US (and Canadian) measurements.</h5>
+    </div>
 </div>
 
 <div class="printing-ring-chart">
-<div class="container">
-<div class="row">
+    <div class="container">
+        <div class="row">
 
-<div class="col-sm-12 col-md-12 col-lg-8">
-	<div class="guide-chart-desc">
-		<h3>How to measure UK ring size at home</h3>
-		<p>We’ve created a printable ring sizer chart (actual size) to make finding your perfect ring size easy – just follow these simple steps!</p>
+            <div class="col-sm-12 col-md-12 col-lg-8">
+                <div class="guide-chart-desc">
+                    <h3>How to measure UK ring size at home</h3>
+                    <p>We've created a printable ring sizer chart (actual size) to make finding your perfect ring size easy - just follow these simple steps!</p>
 
-		<ol>
-			<li>Download and print off our ring sizer on A4 paper</li>
-			<li>Cut around the sizer tool</li>
-			<li>Place the tool around your finger</li>
-			<li>Pull the end through the slot</li>
-			<li>Pull it to fit snugly around your finger</li>
-			<li>Make sure it slides over your knuckle</li>
-			<li>Find the letter the arrow is pointing to and reveal your ring size</li>
-			<li>Remember that thicker band widths need a larger size</li>
-		</ol>
-		<p>Please note that this is only a guide and will not take into account the style of ring.</p>
+                    <ol>
+                        <li>Download and print off our ring sizer on A4 paper</li>
+                        <li>Cut around the sizer tool</li>
+                        <li>Place the tool around your finger</li>
+                        <li>Pull the end through the slot</li>
+                        <li>Pull it to fit snugly around your finger</li>
+                        <li>Make sure it slides over your knuckle</li>
+                        <li>Find the letter the arrow is pointing to and reveal your ring size</li>
+                        <li>Remember that thicker band widths need a larger size</li>
+                    </ol>
+                    <p>Please note that this is only a guide and will not take into account the style of ring.</p>
 
-		<a href="#" class="btn-bg-large">Download The ring size guide</a>
-	</div>
-	</div>
+                    <a href="#" class="btn-bg-large">Download The ring size guide</a>
+                </div>
+            </div>
 
-	<div class="col-sm-12 col-md-12 col-lg-4">
-		<div class="guide-chart-img">
-			<a href="{{asset('assets/images/marlos-ring-size.jpg')}}" target="_blank"><img src="{{asset('assets/images/marlos-ring-size-2.jpg')}}" alt=""></a>
-		</div>
-	</div>
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="guide-chart-img">
+                    <a href="{{asset('assets/images/marlos-ring-size.jpg')}}" target="_blank"><img src="{{asset('assets/images/marlos-ring-size-2.jpg')}}" alt=""></a>
+                </div>
+            </div>
 
 
-</div>
-</div>
+        </div>
+    </div>
 
 </div>
 
 
 <div class="search-engage">
-	
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6">
-				<div class="search-engage-box">
-					<a href="#">
-				<div class="search-engage-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring1.jpg" alt=""></div>
 
-				<div class="search-engage-desc">
-				<h3>Searching for the perfect engagement ring?</h3>
-				<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-				<a href="#" class="btn-bg-large">View More</a>
-				</div>
-					</a>
-				</div>
-			</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="search-engage-box">
+                    <a href="#">
+                        <div class="search-engage-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring1.jpg" alt=""></div>
 
-			<div class="col-md-6">
-				<div class="search-engage-box">
-					<a href="#">
-				<div class="search-engage-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring2.jpg" alt=""></div>
+                        <div class="search-engage-desc">
+                            <h3>Searching for the perfect engagement ring?</h3>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                            <a href="#" class="btn-bg-large">View More</a>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
-				<div class="search-engage-desc">
-				<h3>Searching for the perfect engagement ring?</h3>
-				<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-				<a href="#" class="btn-bg-large">View More</a>
-				</div>
-					</a>
-				</div>
-			</div>
+            <div class="col-md-6">
+                <div class="search-engage-box">
+                    <a href="#">
+                        <div class="search-engage-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring2.jpg" alt=""></div>
 
-		</div>
-	</div>
+                        <div class="search-engage-desc">
+                            <h3>Searching for the perfect engagement ring?</h3>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                            <a href="#" class="btn-bg-large">View More</a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 
 <div class="sizing-tip-sec">
-	
-	<div class="container">
-		<div class="sizing-tip-sec-inner">
-		<div class="row">
-			<div class="sizing-tip-desc">
-		<h2>How to measure a ring in secret</h2>
-		<p>When you’re measuring ring size, don’t forget these useful tips.</p>
-	</div>
-			<div class="col-sm-6 col-md-6 col-lg-4">
-				<div class="sizing-tip-box">
-					<span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/engage-ring-1.png" alt=""></span>
-					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
-				</div>
-			</div>
 
-			<div class="col-sm-6 col-md-6 col-lg-4">
-				<div class="sizing-tip-box">
-					<span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring-3.jpg" alt=""></span>
-					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
-				</div>
-			</div>
+    <div class="container">
+        <div class="sizing-tip-sec-inner">
+            <div class="row">
+                <div class="sizing-tip-desc">
+                    <h2>How to measure a ring in secret</h2>
+                    <p>When you’re measuring ring size, don’t forget these useful tips.</p>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="sizing-tip-box">
+                        <span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/engage-ring-1.png" alt=""></span>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
+                    </div>
+                </div>
 
-			<div class="col-sm-6 col-md-6 col-lg-4">
-				<div class="sizing-tip-box">
-					<span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/engage-ring-2.png" alt=""></span>
-					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
-				</div>
-			</div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="sizing-tip-box">
+                        <span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring-3.jpg" alt=""></span>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="sizing-tip-box">
+                        <span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/engage-ring-2.png" alt=""></span>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
+                    </div>
+                </div>
 
 
 
-</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
 
 <div class="ring-personal-tips">
-<div class="container">
-		<div class="row">
-	<div class="col-md-6">
-		<div class="ring-personal-desc">
-			<h3>Ready to shop rings or need some proposal tips?</h3>
-			<p>Whether you’re looking for an engagement ring, wedding ring or a designer piece, explore our ring collection and find the one you love. Need some ideas on how to propose? Our helpful guide has you covered.</p>
-			<a href="#" class="btn-bg-large">Shop All Rings</a>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ring-personal-desc">
+                    <h3>Ready to shop rings or need some proposal tips?</h3>
+                    <p>Whether you're looking for an engagement ring, wedding ring or a designer piece, explore our ring collection and find the one you love. Need some ideas on how to propose? Our helpful guide has you covered.</p>
+                    <a href="#" class="btn-bg-large">Shop All Rings</a>
+                </div>
+            </div>
 
-	<div class="col-md-6"><div class="ring-personal-img"><img src="{{asset('assets/images/ring-personal-gold.png')}}" alt=""></div></div>
-</div>
-</div>
+            <div class="col-md-6">
+                <div class="ring-personal-img"><img src="{{asset('assets/images/ring-personal-gold.png')}}" alt=""></div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
 
 
 <div class="guide-secret">
-	
+
     <div class="container">
         <div class="head-para-three">
             <h2 class="heading-h-three"> How to measure UK ring size in secret</h2>
@@ -364,24 +573,24 @@
                 <div class="item">
                     <div class="product-info">
                         <div class="product-item-details">
-                        	<h3>Try On For Size</h3>
-                        	<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
+                            <h3>Try On For Size</h3>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
                         </div>
                     </div>
                 </div>
                 <div class="item">
                     <div class="product-info">
                         <div class="product-item-details">
-                        	<h3>Try On For Size</h3>
-                        	<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
+                            <h3>Try On For Size</h3>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
                         </div>
                     </div>
                 </div>
                 <div class="item">
                     <div class="product-info">
                         <div class="product-item-details">
-                        	<h3>Try On For Size</h3>
-                        	<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
+                            <h3>Try On For Size</h3>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words</p>
                         </div>
                     </div>
                 </div>
@@ -393,55 +602,51 @@
 
 
 <div class="friendy-expert-sec">
-	<div class="friendly-img"><img src="{{asset('assets/images/friendly-expert.jpg')}}" alt=""></div>
+    <div class="friendly-img"><img src="{{asset('assets/images/friendly-expert.jpg')}}" alt=""></div>
 
-<div class="friendy-expert-desc"><h3>Lorem ipsum dolar simple</h3>
-<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution</p>
-<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has</p>
+    <div class="friendy-expert-desc">
+        <h3>Lorem ipsum dolar simple</h3>
+        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution</p>
+        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has</p>
 
-<a href="#" class="btn-bg-large">Fing Out More</a>
-</div>
+        <a href="#" class="btn-bg-large">Fing Out More</a>
+    </div>
 </div>
 
 
 
 <div class="inspiration-sec">
-	<div class="container">
-		<div class="row">
-		<div class="col-sm-12 col-md-6 col-lg-4 ">
-		<div class="inspiration-box">
-			<a href="#">
-				<div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-1.jpg')}}" alt=""></div>
-				<h3>Diamond Buying Guide</h3>
-			</a>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4 ">
+                <div class="inspiration-box">
+                    <a href="#">
+                        <div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-1.jpg')}}" alt=""></div>
+                        <h3>Diamond Buying Guide</h3>
+                    </a>
+                </div>
+            </div>
 
 
-		<div class="col-sm-12 col-md-6 col-lg-4 ">
-		<div class="inspiration-box">
-			<a href="#">
-				<div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-2.jpg')}}" alt=""></div>
-				<h3>Diamond Buying Guide</h3>
-			</a>
-		</div>
-	</div>
+            <div class="col-sm-12 col-md-6 col-lg-4 ">
+                <div class="inspiration-box">
+                    <a href="#">
+                        <div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-2.jpg')}}" alt=""></div>
+                        <h3>Diamond Buying Guide</h3>
+                    </a>
+                </div>
+            </div>
 
-		<div class="col-sm-12 col-md-6 col-lg-4 ">
-		<div class="inspiration-box">
-			<a href="#">
-				<div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-3.jpg')}}" alt=""></div>
-				<h3>Diamond Buying Guide</h3>
-			</a>
-		</div>
-	</div>
+            <div class="col-sm-12 col-md-6 col-lg-4 ">
+                <div class="inspiration-box">
+                    <a href="#">
+                        <div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-3.jpg')}}" alt=""></div>
+                        <h3>Diamond Buying Guide</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
-
-	</div>
-</div>
-
-
-
-
-
 @endsection
