@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="ring-personal-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/ring-personal-gold.png" alt=""></div>
+                <div class="ring-personal-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/ring-personal-gold.png'}}" alt=""></div>
             </div>
         </div>
     </div>
@@ -453,7 +453,7 @@
 
             <div class="col-sm-12 col-md-12 col-lg-4">
                 <div class="guide-chart-img">
-                    <a href="{{asset('assets/images/marlos-ring-size.jpg')}}" target="_blank"><img src="{{asset('assets/images/marlos-ring-size-2.jpg')}}" alt=""></a>
+                    <a href="{{env('APP_IMAGE_URL').'/assets/images/marlos-ring-size.jpg'}}" target="_blank"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlos-ring-size-2.jpg'}}" alt=""></a>
                 </div>
             </div>
 
@@ -471,7 +471,7 @@
             <div class="col-md-6">
                 <div class="search-engage-box">
                     <a href="#">
-                        <div class="search-engage-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring1.jpg" alt=""></div>
+                        <div class="search-engage-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/enage-ring1.jpg'}}" alt=""></div>
 
                         <div class="search-engage-desc">
                             <h3>Searching for the perfect engagement ring?</h3>
@@ -485,7 +485,7 @@
             <div class="col-md-6">
                 <div class="search-engage-box">
                     <a href="#">
-                        <div class="search-engage-img"><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring2.jpg" alt=""></div>
+                        <div class="search-engage-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/enage-ring2.jpg'}}" alt=""></div>
 
                         <div class="search-engage-desc">
                             <h3>Searching for the perfect engagement ring?</h3>
@@ -512,21 +512,21 @@
                 </div>
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
-                        <span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/engage-ring-1.png" alt=""></span>
+                        <span><img src="{{env('APP_IMAGE_URL').'/assets/images/engage-ring-1.png'}}" alt=""></span>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                     </div>
                 </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
-                        <span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/enage-ring-3.jpg" alt=""></span>
+                        <span><img src="{{env('APP_IMAGE_URL').'/assets/images/enage-ring-3.jpg'}}" alt=""></span>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                     </div>
                 </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
-                        <span><img src="https://devstaging.marlows-diamonds.co.uk/assets/images/engage-ring-2.png" alt=""></span>
+                        <span><img src="{{env('APP_IMAGE_URL').'/assets/images/engage-ring-2.png'}}" alt=""></span>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                     </div>
                 </div>
@@ -552,7 +552,7 @@
             </div>
 
             <div class="col-md-6">
-                <div class="ring-personal-img"><img src="{{asset('assets/images/ring-personal-gold.png')}}" alt=""></div>
+                <div class="ring-personal-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/ring-personal-gold.png'}}" alt=""></div>
             </div>
         </div>
     </div>
@@ -602,7 +602,7 @@
 
 
 <div class="friendy-expert-sec">
-    <div class="friendly-img"><img src="{{asset('assets/images/friendly-expert.jpg')}}" alt=""></div>
+    <div class="friendly-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/friendly-expert.jpg'}}" alt=""></div>
 
     <div class="friendy-expert-desc">
         <h3>Lorem ipsum dolar simple</h3>
@@ -621,7 +621,7 @@
             <div class="col-sm-12 col-md-6 col-lg-4 ">
                 <div class="inspiration-box">
                     <a href="#">
-                        <div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-1.jpg')}}" alt=""></div>
+                        <div class="inspiration-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/inspiration-img-1.jpg'}}" alt=""></div>
                         <h3>Diamond Buying Guide</h3>
                     </a>
                 </div>
@@ -631,7 +631,7 @@
             <div class="col-sm-12 col-md-6 col-lg-4 ">
                 <div class="inspiration-box">
                     <a href="#">
-                        <div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-2.jpg')}}" alt=""></div>
+                        <div class="inspiration-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/inspiration-img-2.jpg'}}" alt=""></div>
                         <h3>Diamond Buying Guide</h3>
                     </a>
                 </div>
@@ -640,7 +640,7 @@
             <div class="col-sm-12 col-md-6 col-lg-4 ">
                 <div class="inspiration-box">
                     <a href="#">
-                        <div class="inspiration-img"><img src="{{asset('assets/images/inspiration-img-3.jpg')}}" alt=""></div>
+                        <div class="inspiration-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/inspiration-img-3.jpg'}}" alt=""></div>
                         <h3>Diamond Buying Guide</h3>
                     </a>
                 </div>

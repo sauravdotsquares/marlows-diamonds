@@ -41,7 +41,7 @@
 		<div class="col-md-9">
 			<div id="post-data" class="post-data-col"></div>
 			<div class="ajax-load text-center" style="display:none">
-				<p><img alt="Loader image" src="{{ asset('/images/spinner.gif') }}">Loading More post</p>
+				<p><img alt="Loader image" src="{{ env('APP_IMAGE_URL').'/images/spinner.gif' }}">Loading More post</p>
 			</div>
 		</div>
 		<div class="col-lg-3">
@@ -50,7 +50,7 @@
 					<input value="{{ request()->searchKeyword }}" type="text" name="search" class="blog-search-input" placeholder="Search for blog.." autocomplete="off">
 					<button class="seach-btn" type="button">
 						<img class="search-icon"
-						src="{{ asset('assets/images/search.png') }}" alt="search"></button>
+						src="{{ env('APP_IMAGE_URL').'/assets/images/search.png' }}" alt="search"></button>
 				</div>
 			</div>
 
@@ -146,7 +146,7 @@
 	</div>
 </div>
 {{-- <div class="ajax-load text-center" style="display:none">
-	<p><img alt="Loader image" src="{{ asset('/images/spinner.gif') }}">Loading More post</p>
+	<p><img alt="Loader image" src="{{ env('APP_IMAGE_URL').'/images/spinner.gif' }}">Loading More post</p>
 </div> --}}
 <!-- Section Reviews -->
 <div class="container">
@@ -163,9 +163,9 @@
 
 <script>
 
-	const searchIcon = "{{ asset('assets/images/search.png') }}";
-	const searchLoadingIcon = "{{ asset('assets/images/blog_data_loading.gif') }}";
-	const loadingDataImg = "{{ asset('/images/spinner.gif') }}";
+	const searchIcon = "{{ env('APP_IMAGE_URL').'/assets/images/search.png' }}";
+	const searchLoadingIcon = "{{ env('APP_IMAGE_URL').'/assets/images/blog_data_loading.gif' }}";
+	const loadingDataImg = "{{ env('APP_IMAGE_URL').'/images/spinner.gif' }}";
 
 	const slugForData = "<?php echo !empty($blogCategorySlug) ? $blogCategorySlug : request()->segment(1) ?>"
 	var page = 1;

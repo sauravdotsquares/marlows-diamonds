@@ -58,70 +58,70 @@
 											<li class="active-diamond">
 
 												<button type="button" class="btn active-diamond  shape_btn">
-													<img src="assets/images/round-1.png" alt="">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/round-1.png'}}" alt="">
 													<span>Round</span>
 													<input checked="checked" value="ROUND" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/pear-1.png" alt="pearl">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/pear-1.png'}}" alt="pearl">
 													<span>Pear</span>
 													<input value="PEAR" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/marquee-1.png" alt="marquise">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/marquee-1.png'}}" alt="marquise">
 													<span>Marquise </span>
 													<input value="MARQUISE" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/heart-1.png" alt="heart">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/heart-1.png'}}" alt="heart">
 													<span>Heart</span>
 													<input value="HEART" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/asscher.png" alt="Asscher">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/asscher.png'}}" alt="Asscher">
 													<span>Asscher</span>
 													<input value="ASSCHER" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/priceless-1.png" alt="priceless">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/priceless-1.png'}}" alt="priceless">
 													<span>Princess</span>
 													<input value="PRINCESS" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/radiant.png" alt="radiant">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/radiant.png'}}" alt="radiant">
 													<span>Radiant</span>
 													<input value="RADIANT" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/emerald-1.png" alt="Emerald">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/emerald-1.png'}}" alt="Emerald">
 													<span>Emerald</span>
 													<input value="EMERALD" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/oval-1.png" alt="Oval">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/oval-1.png'}}" alt="Oval">
 													<span>Oval</span>
 													<input value="OVAL" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
-													<img src="assets/images/cushion.png" alt="cushion">
+													<img src="{{env('APP_IMAGE_URL').'/assets/images/cushion.png'}}" alt="cushion">
 													<span>Cushion</span>
 													<input value="CUSHION" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
@@ -162,7 +162,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
 												<div class="m-quote-pop">
 													{{CARAT_TOOLTIP}}
 												</div>
@@ -195,7 +195,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
 												<div class="m-quote-pop">
 													{{COLOUR_TOOLTIP}}
 												</div>
@@ -268,7 +268,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
 												<div class="m-quote-pop">
 													{{CLARITY_TOOLTIP}}
 												</div>
@@ -312,7 +312,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
 												<div class="m-quote-pop">
 													{{CUT_GRADE_TOOLTIP}}
 												</div>
@@ -355,7 +355,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
 												<div class="m-quote-pop">
 													{{POLISH_TOOLTIP}}
 												</div>
@@ -398,7 +398,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
 												<div class="m-quote-pop">
 													{{SYMMETRY_TOOLTIP}}
 												</div>
@@ -454,7 +454,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
 												<div class="m-quote-pop">
 													{{FLUORESCENCE_TOOLTIP}}
 												</div>
@@ -490,7 +490,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="assets/images/marlows-info-icon.png" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
 												<div class="m-quote-pop">
 													{{CERTIFICATE_TOOLTIP}}
 												</div>

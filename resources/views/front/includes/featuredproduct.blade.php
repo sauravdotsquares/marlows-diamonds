@@ -18,9 +18,9 @@
                                 <div class="product-image">
                                     <a href="{{asset('product/'.$product->slug)}}">
                                         @if(isset($product->getProductImages) && !empty($product->getProductImages->thumb_image_url))
-                                            <img src="{{ asset('storage/'.$product->getProductImages->thumb_image_url)}}" alt="{{$product->title}}">
+                                            <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->thumb_image_url }}" alt="{{$product->title}}">
                                         @elseif(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
-                                            <img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="{{$product->title}}">
+                                            <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}">
                                         @endif
                                     </a>
                                 </div>

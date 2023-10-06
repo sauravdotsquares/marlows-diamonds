@@ -29,7 +29,7 @@
                             </div>
                             <div class='col-xs-12 col-md-6 form-group required cardnumberdiv'>
                                 <label class='control-label'>Card Number</label>
-                                <img class="card-images" src="{{asset('assets/images/cards.png')}}">
+                                <img class="card-images" src="{{env('APP_IMAGE_URL').'/assets/images/cards.png'}}">
                                 <input autocomplete='off' class='form-control card-number' id="card_number" name="card_number" required size='20' type='text'> 
                             </div>
                         </div>

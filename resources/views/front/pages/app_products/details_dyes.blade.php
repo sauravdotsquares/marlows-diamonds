@@ -56,7 +56,7 @@
 							<?php foreach ($prodImages as $key => $images) { ?>
 								<div class="item @if($key==0) active @endif">
 									<a data-fancybox="gallery1" href="{{ url( 'uploads/' . $images->image_url) }}" data-caption="{{  $images->original_image_name }}"></a>
-									<img src="{{ url( 'uploads/' . $images->image_url) }}">
+									<img src="{{ env('APP_IMAGE_URL').'uploads/' . $images->image_url }}">
 								</div>
 							<?php } ?>
 						<?php } ?>						

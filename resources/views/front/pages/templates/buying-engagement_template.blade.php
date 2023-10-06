@@ -114,7 +114,7 @@
 					</div>
 					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-img">
-							<img src="assets/images/Marlows-06.jpg" alt="img guide">
+							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-06.jpg'}}" alt="img guide">
 						</div>
 					</div>
 				</div>
@@ -125,7 +125,7 @@
 				<div class="row">
 					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-img">
-							<img src="assets/images/Marlows-04.jpg" alt="img guide">
+							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-04.jpg'}}" alt="img guide">
 						</div>
 					</div>
 					<div class="col-lg-6  col-md-6">
@@ -155,7 +155,7 @@
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
-							<img src="assets/images/Marlows-05.jpg" alt="img guide">
+							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-05.jpg'}}" alt="img guide">
 						</div>
 					</div>
 				</div>
@@ -166,7 +166,7 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
-							<img src="assets/images/Marlows-03.jpg" alt="img guide">
+							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-03.jpg'}}" alt="img guide">
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
@@ -197,7 +197,7 @@
 					</div>
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
-							<img src="assets/images/Marlows-02.jpg" alt="img guide">
+							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-02.jpg'}}" alt="img guide">
 						</div>
 					</div>
 				</div>
@@ -208,7 +208,7 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
-							<img src="assets/images/Marlows-01.jpg" alt="img guide">
+							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-01.jpg'}}" alt="img guide">
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
@@ -255,7 +255,7 @@
 					<div class="col-md-6 col-sm-6">
 						<div class="whatdimond-cols">
 							<div class="whatdimond-cols-img">
-								<img src="assets/images/pasted-image-0-1-300x300.png" alt="image1">
+								<img src="{{env('APP_IMAGE_URL').'/assets/images/pasted-image-0-1-300x300.png'}}" alt="image1">
 							</div>
 							<div class="whatdimond-cols-text">
 								Solitaire Diamond Engagement Rings
@@ -265,7 +265,7 @@
 					<div class="col-md-6 col-sm-6">
 						<div class="whatdimond-cols">
 							<div class="whatdimond-cols-img">
-								<img src="assets/images/unnamed-300x300.png" alt="image1">
+								<img src="{{env('APP_IMAGE_URL').'/assets/images/unnamed-300x300.png'}}" alt="image1">
 							</div>
 							<div class="whatdimond-cols-text">
 								Halo Diamond Engagement Rings
@@ -275,7 +275,7 @@
 					<div class="col-md-6 col-sm-6">
 						<div class="whatdimond-cols">
 							<div class="whatdimond-cols-img">
-								<img src="assets/images/pasted-image-0-300x300.png" alt="image1">
+								<img src="{{env('APP_IMAGE_URL').'/assets/images/pasted-image-0-300x300.png'}}" alt="image1">
 							</div>
 							<div class="whatdimond-cols-text">
 								Shoulder Set Diamond Engagement Rings
@@ -285,7 +285,7 @@
 					<div class="col-md-6 col-sm-6">
 						<div class="whatdimond-cols">
 							<div class="whatdimond-cols-img">
-								<img src="assets/images/unnamed-1-300x300.png" alt="image1">
+								<img src="{{env('APP_IMAGE_URL').'/assets/images/unnamed-1-300x300.png'}}" alt="image1">
 							</div>
 							<div class="whatdimond-cols-text">
 								Multistone Diamond Engagement Rings
@@ -328,7 +328,7 @@
 								any difference at all, therefore the clarity chart is required to grade the true quality of the diamond.
 							</p>
 							<div class="whatdiamond-imgs">
-								<img src="assets/images/diamond-clarity.png" alt="diamond-clarity">
+								<img src="{{env('APP_IMAGE_URL').'/assets/images/diamond-clarity.png'}}" alt="diamond-clarity">
 							</div>
 						</div>
 					</div>
@@ -349,7 +349,7 @@
 								<li><strong> Scintillation:</strong>The level of sparkle, and the pattern of light and dark areas caused by the reflections within the diamond</li>
 							</ul>
 							<div class="whatdiamond-imgs">
-								<img src="assets/images/diamond-cut.png" alt="diamond-cut">
+								<img src="{{env('APP_IMAGE_URL').'/assets/images/diamond-cut.png'}}" alt="diamond-cut">
 							</div>
 						</div>
 					</div>
@@ -449,7 +449,7 @@
 							  So, while your white diamond might be white by definition, it may appear slightly tinted. The less body colour that they have, the greater their value will be.
 							</p>
 							<div class="whatdiamond-imgs">
-								<img src="assets/images/marlows-diamond-colour.png" alt="diamond-cut">
+								<img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-diamond-colour.png'}}" alt="diamond-cut">
 							</div>
 							<p>
 								The colour is tested when the stone is upside down so that less light is reflected, and it's easier to judge the colour or lack of.
@@ -532,7 +532,7 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="whichring-col">
-							<img src="assets/images/metal-colours.png" alt="">
+							<img src="{{env('APP_IMAGE_URL').'/assets/images/metal-colours.png'}}" alt="">
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
@@ -714,7 +714,7 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="whatsthere-cols text-center">
-							<img src="assets/images/unnamed-2.png" alt="image">
+							<img src="{{env('APP_IMAGE_URL').'/assets/images/unnamed-2.png'}}" alt="image">
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-6">
