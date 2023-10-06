@@ -10,7 +10,7 @@
 ?>
 
 <!-- category header banner start -->
-<div class="category-banner" style="background-image:url({{asset('')}}assets/images/engagement-rings-banner.png)">
+<div class="category-banner" style="background-image:url({{env('APP_IMAGE_URL').'/assets/images/engagement-rings-banner.png'}})">
     <div class="container">
         <div class="category-banner-text">
             <h1>{!! isset($data->title)?$data->title:'' !!}</h1>
@@ -34,7 +34,7 @@
                         <div class="filter-tags-row flexed flex-flex-wrap ">
                             <div class="filter-tags-col <%subCat.active_status%>" ng-repeat="subCat in subCats">
                                 <div class="category-product-filter-icon">
-                                    <a href="<%subCat.url%>"><img src="{{asset('storage')}}<%subCat.hover_icon%>" alt="icon"></a>
+                                    <a href="<%subCat.url%>"><img src="{{env('APP_IMAGE_URL').'/storage'}}<%subCat.hover_icon%>" alt="icon"></a>
                                 </div>
                                 <div class="category-product-filter-text">
                                     <a href="<%subCat.url%>"><%subCat.name%></a>
@@ -50,7 +50,7 @@
                         <div class="filter-tags-row flexed flex-flex-wrap cols-ryt-tags <%parent_cat%>">
                             <div class="filter-tags-col <%subSubCat.active_status%>"  ng-repeat="subSubCat in subSubCats">
                                 <div class="category-product-filter-icon">
-                                    <a href="<%subSubCat.url%>"><img src="{{asset('storage')}}<%subSubCat.hover_icon%>" alt="icon"></a>
+                                    <a href="<%subSubCat.url%>"><img src="{{env('APP_IMAGE_URL').'/storage'}}<%subSubCat.hover_icon%>" alt="icon"></a>
                                 </div>
                                 <div class="category-product-filter-text">
                                     <a href="<%subSubCat.url%>"><%subSubCat.name%> </a>
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="ajax-load text-center" style="display:block">
-                    <img alt="Product loader" src="{{asset('assets/images/spinner-ring.gif')}}"><p>Loading More Products</p>
+                    <img alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif'}}"><p>Loading More Products</p>
                 </div>
 
                 {!! isset($data->description)?$data->description:'' !!}
@@ -100,10 +100,10 @@
                                         <img src="{{$details['customArray']['ImageLink']}}" width="100" height="100"
                                         class="img-responsive" />
                                     @elseif(isset($details['image']) && !empty($details['image']))
-                                        <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
+                                        <img src="{{env('APP_IMAGE_URL').'/storage/'.$details['image']}}" width="100" height="100"
                                         class="img-responsive" />
                                     @else
-                                        <img src="{{asset('images/waiting_img.png')}}" width="100" height="100" class="img-responsive" />
+                                        <img src="{{env('APP_IMAGE_URL').'/images/waiting_img.png'}}" width="100" height="100" class="img-responsive" />
                                     @endif
                                 </div>
                                 <div class="side-cart-delete">
@@ -148,7 +148,7 @@
                             @if($i <= 8)
                                 <div class="side-recently-col">
                                     <a class="side-recently-pr-name" href="{{asset('product/'.$ProductDetails['slug'])}}">{{$ProductDetails['name']}}</a>
-                                    <a class="side-recently-pr-img" href="{{asset('product/'.$ProductDetails['slug'])}}"><img src="{{asset('storage/'.$ProductDetails['image'])}}"
+                                    <a class="side-recently-pr-img" href="{{asset('product/'.$ProductDetails['slug'])}}"><img src="{{env('APP_IMAGE_URL').'/storage/'.$ProductDetails['image']}}"
                                             alt="image"></a>
                                 </div>
                             @endif

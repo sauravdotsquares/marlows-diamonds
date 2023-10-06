@@ -25,7 +25,7 @@
 			
 				<a href="{{asset('product/'.$product->slug)}}"  class="{{ $thumbnailGif ? 'product-hov' : '' }}" >
 					@if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
-						<img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="{{$product->title}}">
+						<img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}">
 					@endif
 
 					<?php if($thumbnailGif){ ?>
@@ -35,10 +35,10 @@
 						  
 						  
 						  	<?php if($thumbnailGif->extension == "gif"){ ?>
-						  		<img src="{{ asset('storage/' . $thumbnailGif->image_url )}}" class="product-hover-video" >
+								<img src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" class="product-hover-video" >
 						  	<?php }else if($thumbnailGif->extension == "mp4"){ ?>
 								<video class="product-hover-video" muted="muted" playsinline >
-									<source src="{{ asset('storage/'.  $thumbnailGif->image_url)}}" type="video/mp4">
+									<source src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" type="video/mp4">
 								</video>
 							<?php } ?>
 					<?php } ?>

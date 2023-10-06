@@ -11,9 +11,9 @@
                             <div class="blog-carousel-image">
                                 <a href="{{asset('blog/'.$getRelatedPosts->slug)}}">
                                     @if(isset($getRelatedPosts->image) && !empty($getRelatedPosts->image))
-                                        <img src="{{ asset('storage/'.$getRelatedPosts->image)}}"  onerror="this.src='{{asset('/images/marlowsdiamonds-logo.png')}}'" alt="{{$getRelatedPosts->title}}">
+                                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$getRelatedPosts->image}}" alt="{{$getRelatedPosts->title}}">
                                     @else
-                                        <img src="{{asset('/images/marlowsdiamonds-logo.png')}}" onerror="this.src='{{asset('/images/marlowsdiamonds-logo.png')}}'"/>
+                                        <img src="{{env('APP_IMAGE_URL').'/images/marlowsdiamonds-logo.png'}}" />
                                     @endif
                                 </a>
                             </div>

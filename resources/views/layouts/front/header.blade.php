@@ -103,7 +103,7 @@
                         <li class="dropdown">
                             <a href="{{ route('product.cart') }}">
 
-                                <img src="{{asset('')}}assets/images/cart-color.png" alt="cart">
+                                <img src="{{env('APP_IMAGE_URL').'/assets/images/cart-color.png'}}" alt="cart">
                                 <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
                                 {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
 
@@ -153,7 +153,7 @@
                 <div class="site-logo-main">
                     <a href="{{url('/')}}" title="{{$header_settings->get_options('site_title')}}">
                         @if($header_settings->get_options('logo')!='')
-                            <img src="{{asset('images/logo/'.$header_settings->get_options('logo'))}}" alt="{{$header_settings->get_options('site_title')}}">
+                            <img src="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" alt="{{$header_settings->get_options('site_title')}}">
                         @elseif($header_settings->get_options('site_title')!='')
                             <div>{{$header_settings->get_options('site_title')}}</div>
                             <span>{{$header_settings->get_options('site_tagline')}}</span>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="mobile-cart">
                         <a href="{{ route('product.cart') }}">
-                            <img src="{{asset('')}}/assets/images/cart-color-black.png" alt="cart">
+                            <img src="{{env('APP_IMAGE_URL').'/assets/images/cart-color-black.png'}}" alt="cart">
                             <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
                         <span class="mob-cart-number cartcount">{{ count((array) session('cart')) }}</span>
                         </a>
@@ -205,7 +205,7 @@
                         </div>
                     </div>
                         <div class="mobile-serch-box">
-                            <img src="{{asset('')}}assets/images/search.png" alt="search">
+                            <img src="{{env('APP_IMAGE_URL').'/assets/images/search.png'}}" alt="search">
                             Search for products...
                         </div>
                     <nav class="nav-navbars">
@@ -244,13 +244,13 @@
                     <form ng-controller="CommonController" >
                         <div class="formgroup">
                             <input type="text" name="search" class="typeahead" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
-                            <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
+                            <button class="seach-btn" type="button"><img src="{{env('APP_IMAGE_URL').'/assets/images/search.png'}}" alt="search"></button>
                         </div>
                         <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
                             <div class="search-suggestion-list" ng-repeat="result in searchResults">
                                 <a href="/product/<%result.slug%>">
                                     <div class="search-suggestion-img">
-                                        <img src="{{asset('/storage')}}/<%result.get_product_images.image_url%>" alt="Marlow's Diamond">
+                                        <img src="{{env('APP_IMAGE_URL').'/storage'}}/<%result.get_product_images.image_url%>" alt="Marlow's Diamond">
                                     </div>
                                     <div class="search-suggestion-text">
                                         <div class="search-suggestion-title">

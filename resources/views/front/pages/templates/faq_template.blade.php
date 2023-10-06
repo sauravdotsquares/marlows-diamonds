@@ -3,7 +3,7 @@
 @extends('layouts.front.app')
 @section('content')
 <!-- category header banner start -->
-<div class="category-banner" style="background-image:url(assets/images/blog-main-bg.jpg)">
+<div class="category-banner" style="background-image:url({{env('APP_IMAGE_URL').'/assets/images/blog-main-bg.jpg'}})">
    <div class="container">
       <div class="category-banner-text">
          <h1>{!!isset($data->title)?$data->title:""!!}</h1>

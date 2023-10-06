@@ -29,7 +29,7 @@
             </div>
             <div class="main-banner-col banner-ryt-col">
                 <div class="main-banner-ryt-img">
-                    <img src="{{ asset('assets/images/ring-img.webp') }}" alt="Ring image">
+                    <img src="{{env('APP_IMAGE_URL').'/assets/images/ring-img.webp' }}" alt="Ring image">
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="{{ asset('product-category/diamond-jewellery') }}"><img src="assets/images/diamond-jewellery.png" alt="Diamond Jewellery"></a>
+                                <a href="{{ asset('product-category/diamond-jewellery') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/diamond-jewellery.png'}}" alt="Diamond Jewellery"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -68,7 +68,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="{{ asset('engagement-rings') }}"><img src="assets/images/engagement-ring.png" alt="Engagement Ring"></a>
+                                <a href="{{ asset('engagement-rings') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/engagement-ring.png'}}" alt="Engagement Ring"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -87,7 +87,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="{{ asset('product-category/wedding-rings') }}"><img src="assets/images/wedding-ring.png" alt="Wedding Rings"></a>
+                                <a href="{{ asset('product-category/wedding-rings') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/wedding-ring.png'}}" alt="Wedding Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -107,7 +107,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="{{ asset('product-category/engagement-rings/multi-stone') }}"><img src="assets/images/multi-stone.png" alt="Multi Stone Rings"></a>
+                                <a href="{{ asset('product-category/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -143,18 +143,18 @@
                     </div>
                     <p>For over three generations, we’ve been helping countless happy couples express love and commitment and we believe in quality and commitment as much as you do..</p>
                     <p class="second-para">Our diamonds and gemstones are better valued than any like-for-like comparison with any other UK jeweller. Our fancy shape diamonds like ovals, marquises, emeralds cuts, and cushion shapes are polished to the highest standards. We guarantee most of our diamonds visually appear larger than their carat weight. Our polishers create each diamond to maximize its proportions and not its carat weight, hence our 1ct will look like anyone else's 1.25ct. Come into any of our stores to learn more about the way we choose our rough diamonds so that the polished end product gets the best yield to maximise visual sparkle and appearance. This ensures you get the best visual appearance and sparkle for your budget. As we cannot be beaten on price, if you have seen something elsewhere, just send us a link and we will beat the price if cost is your deciding factor.</p>
-                    <video src="/storage/HomePageVideos/homeopagevideo.mp4" controls id="video" poster="/storage/HomePageVideos/homeopagevideo.png"></video>
+                    <video src="{{env('APP_IMAGE_URL').'/storage/HomePageVideos/homeopagevideo.mp4'}}" controls id="video" poster="/storage/HomePageVideos/homeopagevideo.png"></video>
                 </div>
                 
 
                 <div class="rating-img">
-                    <img src="assets/images/top2.png" alt="rating star">
+                    <img src="{{env('APP_IMAGE_URL').'/assets/images/top2.png'}}" alt="rating star">
                 </div>
                 <div class="whychoose-rows flex-flex-wrap flexed">
                     <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/warranty.png" alt="Lifetime Warranty">
+                                <img src="{{env('APP_IMAGE_URL').'/assets/images/warranty.png'}}" alt="Lifetime Warranty">
                             </div>
                             <div class="whychoose-col-text">
                                 Lifetime Warranty T&c Apply
@@ -164,7 +164,7 @@
                     <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/diamond.png" alt="GIA Certified Diamonds">
+                                <img src="{{env('APP_IMAGE_URL').'/assets/images/diamond.png'}}" alt="GIA Certified Diamonds">
                             </div>
                             <div class="whychoose-col-text">
                                 GIA Certified Diamonds
@@ -174,7 +174,7 @@
                     <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/favourite.png" alt="70 Years Experience">
+                                <img src="{{env('APP_IMAGE_URL').'/assets/images/favourite.png'}}" alt="70 Years Experience">
                             </div>
                             <div class="whychoose-col-text">
                                 70 Years Experience
@@ -184,7 +184,7 @@
                     <a href="javascipt:;" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="assets/images/exchange.png" alt="FREE 30 Day Returns">
+                                <img src="{{env('APP_IMAGE_URL').'/assets/images/exchange.png'}}" alt="FREE 30 Day Returns">
                             </div>
                             <div class="whychoose-col-text">
                                 FREE 30 Day Returns. T&c Apply
@@ -234,7 +234,7 @@
                 </div>
             </div>
             <div class="rating-img">
-                <img src="assets/images/top3.png" alt="rating star">
+                <img src="{{env('APP_IMAGE_URL').'/assets/images/top3.png'}}" alt="rating star">
             </div>
 
             <div class="rating-review-block">

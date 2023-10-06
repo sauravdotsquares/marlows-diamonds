@@ -1,6 +1,6 @@
 @extends('layouts.front.app')
 @section('content')
-<div class="category-banner" style="background-image:url({{asset('')}}assets/images/PremiumContent-Header.jpg)">
+<div class="category-banner" style="background-image:url({{env('APP_IMAGE_URL').'/assets/images/PremiumContent-Header.jpg'}})">
 	<div class="container">
 		<div class="category-banner-text">
 			<h1>{{$data->title}}</h1>
@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col-lg-6  col-md-6">
 				<div class="certified-diamond-img">
-					<img src="{{asset('')}}assets/images/marlows-diamonds-terminology-guide-showcase.png" alt="Marlows-diamonds-terminology-guide-showcase">
+					<img src="{{ env('APP_IMAGE_URL').'/assets/images/marlows-diamonds-terminology-guide-showcase.png' }}" alt="Marlows-diamonds-terminology-guide-showcase">
 				</div>
 			</div>
 			<div class="col-lg-6 col-md-6">
