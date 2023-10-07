@@ -23,7 +23,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="/engagement-rings/solitaire"><img src="assets/images/CR10-SE45_0003.jpg" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
+							<a href="/engagement-rings/solitaire"><img src="{{env('APP_IMAGE_URL').'/assets/images/CR10-SE45_0003.jpg'}}" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<h3 class="ring-pr-title">
@@ -41,7 +41,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="/engagement-rings/halo/"><img src="assets/images/DSR21-Images_0003.jpg" alt="HALO ENGAGEMENT RINGS"></a>
+							<a href="/engagement-rings/halo/"><img src="{{env('APP_IMAGE_URL').'/assets/images/DSR21-Images_0003.jpg'}}" alt="HALO ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<h3 class="ring-pr-title">
@@ -59,7 +59,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="/engagement-rings/shoulder-set/"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
+							<a href="/engagement-rings/shoulder-set/"><img src="{{env('APP_IMAGE_URL').'/assets/images/CX9-SL28_00003-1.jpg'}}" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<h3 class="ring-pr-title">
@@ -77,7 +77,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="/engagement-rings/multi-stone/"><img src="assets/images/R3-143_0003.jpg" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
+							<a href="/engagement-rings/multi-stone/"><img src="{{env('APP_IMAGE_URL').'/assets/images/R3-143_0003.jpg'}}" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<h3 class="ring-pr-title">
@@ -108,7 +108,7 @@
 		<div class="leftright-img-text-wraper">
 			<div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
 				<div class="leftright-imt-col leftright-img">
-					<img src="assets/images/banner-hand.jpg" alt="banner-hand">
+					<img src="{{env('APP_IMAGE_URL').'/assets/images/banner-hand.jpg'}}" alt="banner-hand">
 				</div>
 				<div class="leftright-imt-col leftright-text">
 					<h2 class="leftright-heading heading-h-three">
@@ -212,7 +212,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-one.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-one.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -222,7 +222,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-two.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-two.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -232,7 +232,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-three.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-three.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -242,7 +242,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-four.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-four.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -252,7 +252,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-five.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-five.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>

@@ -369,11 +369,9 @@
 					<div class="leftright-heading heading-h-three">
 						Choose Your Diamond with Marlow’s Terminology Guide
 					</div>
-					<p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond
-						guide, you can better understand the different types of diamonds and what shapes are the perfect
-						fit for you. Download your free guide today!</p>
+					<p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond guide, you can better understand the different types of diamonds and what shapes are the perfect fit for you. Download your free guide today!</p>
 					<div class="viewguide-btn">
-						<a class="btn-bg-small" href="#">View Guide</a>
+						<a class="btn-bg-small" href="/certified-diamond-terminology-guide">View Guide</a>
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">

@@ -23,7 +23,7 @@
         $customImage = isset($data->blog_title_details->image)?$data->blog_title_details->image:'';
     }
 ?>
-<div class="category-banner" style="background-image:url({{asset('storage/'.$customImage)}})">
+<div class="category-banner" style="background-image:url({{env('APP_IMAGE_URL').'/storage/'.$customImage}})">
 	<div class="container">
 		<div class="category-banner-text">
 			<h1>{{isset($data->title)?$data->title:$title}}</h1>
