@@ -261,7 +261,7 @@
 					{!!$data->description ? $data->description : $data->description!!}
 				</div>
 				<div class="product-decriptions product-description-common product-description-common_lab_item">
-					{!! $data->lab_description ? $data->lab_description.'<br>'.$data->description :  $data->description  !!}
+					{!! $data->lab_description ? $data->description.'<br>'.$data->lab_description :  $data->description  !!}
 				</div>
 				<div class="price-section">
 					<div style="display: flex;">
@@ -358,8 +358,54 @@
 </div>
 <!-- Related Product end heRe -->
 
+
+@php
+	$getEngagementFaqs = getFaqByCategory(20);
+@endphp
+
+@if(isset($getEngagementFaqs) && sizeof($getEngagementFaqs))
+	<!-- FAQ Section start here -->
+	<div class="faq-section engagement-ring-faq">
+		<div class="container">
+			<div class="head-para-three">
+				<h2 class="heading-h-three">
+					{{ isset($data->faq_title)?$data->faq_title:'Engagement Ring FAQ’s' }}
+				</h2>
+				<p>Some of the most common Q&A's</p>
+			</div>
+			<div class="faq-list">
+				<div class="accordion" id="accordionExample">
+					@foreach($getEngagementFaqs as $key => $faq)
+					<div class="accordion-item">
+						<h3 class="accordion-header" id="{{$faq->id}}">
+							@if($key == 0)
+							<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
+								@else
+								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
+									@endif
+									{{isset($faq->title)?$faq->title:""}}
+								</button>
+						</h3>
+						@if($key == 0)
+						<div id="collapse{{$faq->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
+							@else
+							<div id="collapse{{$faq->id}}" class="accordion-collapse collapse" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
+								@endif
+								<div class="accordion-body">
+									{!! isset($faq->description)?$faq->description:"" !!}
+								</div>
+							</div>
+						</div>
+						@endforeach
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- FAQ Section End -->
+@endif
 <!-- FAQ Section start here -->
-<div class="faq-section">
+<!-- <div class="faq-section">
 	<div class="container">
 		<div class="head-para-three">
 			<div class="heading-h-three">
@@ -446,7 +492,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 <!-- FAQ Section end here -->
 
 <!-- image and text start here -->
@@ -458,9 +504,7 @@
 					<div class="leftright-heading heading-h-three">
 						Choose Your Diamond with Marlow’s Terminology Guide
 					</div>
-					<p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond
-						guide, you can better understand the different types of diamonds and what shapes are the perfect
-						fit for you. Download your free guide today!</p>
+					<p>Start your journey towards your finding your perfect engagement ring with our insightful diamond guide. Gain a better understanding of the different types of diamond engagement rings and the meaning behind diamond cut, colour, clarity, and carat. Download your free guide today!</p>
 					<div class="viewguide-btn">
 						<a class="btn-bg-small" href="{{asset('/certified-diamond-terminology-guide')}}">View Guide</a>
 					</div>
