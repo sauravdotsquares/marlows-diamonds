@@ -15,7 +15,7 @@
             <div class="col-md-6">
                 <div class="ring-personal-desc">
                     <h1>{{$data->title}}</h1>
-                    <!-- <p>In the ancient times, the Egyptians believed that a circle represented eternity which led to the tradition of married couples wearing breaded reed rings on the ring finger of their left hand which is said to have veins connecting directly to the heart.</p> -->
+                    <p>Popping into one of our stores and having your finger measured is the most accurate way to determine your ring size, but if you need to find out from the comfort of your own home, we’re here to help with these handy tips.</p>
                 </div>
             </div>
             <div class="col-md-6">
@@ -24,24 +24,18 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <p>In the ancient times, the Egyptians believed that a circle represented eternity which led to the tradition of married couples wearing breaded reed rings on the ring finger of their left hand which is said to have veins connecting directly to the heart.</p>
-    <p>Fast forward to 1940s that produced a viral ad campaign saying “A diamond is forever” and <a href="/engagement-rings" target="_blank">diamond engagement rings</a> became a representation of love and lifetime commitment. In fact, in today’s time, you will not see any engagement or proposal deemed complete without a <a href="/gia-certified-diamonds/" target="_blank">GIA certified diamond rin</a><strong><a href="/gia-certified-diamonds/" target="_blank">g</a></strong>&nbsp;donning the hands of the girl.</p>
 
-    <p>Now since the GIA certified diamond rin<strong>gs</strong>&nbsp;could be highly valued, it becomes extremely important to select not just a ring that would be liked by your partner but also the correct size of the band. The best way to get the right size of your finger is by visiting a jeweller and getting him to measure it.</p>
 
-    <p>However, we have some other methods that would help you measure the ring size at home so that you can place your ring order online with ease.</p>
-</div>
 <div class="container">
     <div class="ring-size-tabing">
         <h3>RING SIZE CONVERSION CHARTS</h3>
-        <!-- <nav>
+        <nav>
             <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">UK RING SIZES</button>
                 <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">UK to US Ring Size Conversion</button>
                 <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">UK to EU Ring Size Conversion</button>
             </div>
-        </nav> -->
+        </nav>
         <div class="tab-content p-3 border bg-light" id="nav-tabContent">
             <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="panel-body table-responsive">
@@ -432,7 +426,7 @@
     </div>
 </div>
 
-<!-- <div class="printing-ring-chart">
+<div class="printing-ring-chart">
     <div class="container">
         <div class="row">
 
@@ -467,10 +461,10 @@
         </div>
     </div>
 
-</div> -->
+</div>
 
 
-<!-- <div class="search-engage">
+<div class="search-engage">
 
     <div class="container">
         <div class="row">
@@ -505,7 +499,7 @@
         </div>
     </div>
 
-</div> -->
+</div>
 
 <div class="sizing-tip-sec">
 
@@ -519,95 +513,34 @@
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
                         <span><img src="{{env('APP_IMAGE_URL').'/assets/images/engage-ring-1.png'}}" alt=""></span>
-                        <p><strong>Method 1: Refer a Perfectly Fitting Ring</strong></p>
-                       
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><em>Things You Need:</em></p>
-                                    <ul>
-                                        <li>A ring that fits the engagement ring finger</li>
-                                        <li>A measuring ruler</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><em>How to Measure:</em></p>
-                                    <ul>
-                                        <li>Measure the internal diameter of the ring (excluding the metal part) in millimetres.</li>
-                                        <li>Use the size conversion chart available on the jeweller's website to know the right size of your ring.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <p>This is one of the simplest methods to measure the size of the ring.</p>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                     </div>
                 </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
                         <span><img src="{{env('APP_IMAGE_URL').'/assets/images/enage-ring-3.jpg'}}" alt=""></span>
-                        <div class="container">
-                            <p><strong>Method 2: Use a Floss or String</strong></p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5>Things You Need:</h5>
-                                    <ul>
-                                        <li>Floss or String</li>
-                                        <li>A measuring ruler</li>
-                                        <li>Marker or Pen</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5>How to Measure:</h5>
-                                    <ul>
-                                        <li>Cut a 6-inch long floss or string.</li>
-                                        <li>Roll the string around the base (just below the knuckles) of the ring finger.</li>
-                                        <li>Take a pen and mark the string wherever it ends.</li>
-                                        <li>Unfold the string and place it adjacent to a measuring ruler. The number appearing closest to the marked point is
-                                            the size of your ring in millimetres.</li>
-                                        <li>Use the size conversion chart available on the jeweller's website to know the right size of your ring.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                     </div>
                 </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
                         <span><img src="{{env('APP_IMAGE_URL').'/assets/images/engage-ring-2.png'}}" alt=""></span>
-                        <p><strong>Method 3: Use a Paper Strip</strong></p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><em>Things You Need:</em></p>
-                                    <ul>
-                                        <li>A paper strip</li>
-                                        <li>A measuring ruler</li>
-                                        <li>Marker or Pen</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><em>How to Measure:</em></p>
-                                    <ul>
-                                        <li>Cut a 100-millimetre long thin paper strip.</li>
-                                        <li>Roll the paper around the base (just below the knuckles) of the ring finger.</li>
-                                        <li>Take a pen and mark the point wherever the two ends of the paper meet.</li>
-                                        <li>Unfold the paper and place it adjacent to a measuring ruler. The number appearing closest to the marked point is
-                                            the size of your ring in millimetres.</li>
-                                        <li>Use the size conversion chart available on the jeweller’s website to know the right size of your ring.</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour.</p>
                     </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>
+
 </div>
 
-<!-- <div class="ring-personal-tips">
+
+<div class="ring-personal-tips">
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -624,16 +557,18 @@
         </div>
     </div>
 
-</div> -->
+</div>
+
+
 
 <div class="guide-secret">
 
     <div class="container">
-        <div class="">
-            <h2 class=""> Get a Ring of Your Choice at Home At <a href="/" target="_blank">Marlow's Diamonds</a></h2>
-            <p>you can choose among a variety of GIA certified diamond rings and we will resize it according to your requirements. Though the above methods work perfectly to find the correct size of the ring, you can connect with our team of experts and we will guide you in taking the measurements properly.</p>
+        <div class="head-para-three">
+            <h2 class="heading-h-three"> How to measure UK ring size in secret</h2>
+            <p>Want to know how to measure ring size in top secret style? These helpful tips will be your go-to guide. Here’s how to find their ring size and make it the most unforgettable surprise of their life…</p>
         </div>
-        <!-- <div class="product-item-slider">
+        <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
                 <div class="item">
                     <div class="product-info">
@@ -660,13 +595,13 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
 </div>
 
 
-<!-- <div class="friendy-expert-sec">
+<div class="friendy-expert-sec">
     <div class="friendly-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/friendly-expert.jpg'}}" alt=""></div>
 
     <div class="friendy-expert-desc">
@@ -676,11 +611,11 @@
 
         <a href="#" class="btn-bg-large">Fing Out More</a>
     </div>
-</div> -->
+</div>
 
 
 
-<!-- <div class="inspiration-sec">
+<div class="inspiration-sec">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-4 ">
@@ -713,5 +648,5 @@
         </div>
 
     </div>
-</div> -->
+</div>
 @endsection
