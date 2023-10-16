@@ -4,6 +4,18 @@
 @section('css')
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.css" rel="stylesheet" />
+	<style>
+		label#title-error {
+			color: #ff0000;
+		}
+		label#email-error {
+			color: #ff0000;
+		}
+		label#description-error {
+			color: #ff0000;
+		}
+		.joinour-mailing-form .error {color: #000;}
+	</style>
 @endsection
 <!-- guide main -->
 <div class="buying-engagementguide-page">
