@@ -499,10 +499,10 @@
 									</div>
 								</div>
 							</div>
-
-							<!-- <div class="chooseshop-btn text-center">
-							<a class="btn-bg-small" href="#">Search</a>
-						</div> -->
+							<div class="chooseshop-btn text-center">
+								<a class="btn-bg-small" href="javascript:window.location.reload(true)">
+									Reset All </a>
+							</div>
 						</div>
 
 					</form>
