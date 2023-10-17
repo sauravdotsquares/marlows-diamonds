@@ -243,8 +243,8 @@
                     </div>
                     <form ng-controller="CommonController" >
                         <div class="formgroup">
-                            <input type="text" name="search" class="typeahead" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
-                            <button class="seach-btn" type="button"><img src="{{env('APP_IMAGE_URL').'/assets/images/search.png'}}" alt="search"></button>
+                            <input type="text" name="search" class="typeahead search-selection-text" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
+                            <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
                         </div>
                         <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
                             <div class="search-suggestion-list" ng-repeat="result in searchResults">
@@ -308,6 +308,13 @@
 
 
 <script>
+        $(".search-selection-text").focusin(function(){
+            $('.search-suggestion').css('display','block');
+        });
+        $(".search-selection-text").focusout(function(){
+            $('.search-suggestion').css('display','none');
+        });
+       
         let discountText = "{{$header_settings->get_options('discount-text-header')}}";
         let discountDate = "{{$header_settings->get_options('discount-date')}}";
         var countDownDate = new Date(discountDate).getTime();
