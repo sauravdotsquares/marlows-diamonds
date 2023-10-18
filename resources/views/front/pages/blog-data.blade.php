@@ -5,9 +5,10 @@
 					<div class="blos-listbox-img">
 						{{--  Change after SEO discuss 05Jan2023 seo_change --}}
 						<a href="{{url('/blog/'.$post->slug)}}">
-						 @if(!empty(($post->image)))
-                           <img src="{{asset('storage/'.$post->image)}}"  alt="{{$post->title}}">
-                         @else <img src="{{url('/images/marlowsdiamonds-logo.png')}}"  alt="{{$post->title}}">
+						@if(!empty(($post->image)))
+                           <img src="{{ env('APP_IMAGE_URL').'/storage/'.$post->image }}"  alt="{{$post->title}}">
+                         @else 
+						 	<img src="{{ env('APP_IMAGE_URL').'/images/marlowsdiamonds-logo.png' }}"  alt="{{$post->title}}">
 						 @endif
 						</a>
 					</div>

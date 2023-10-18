@@ -44,7 +44,7 @@
                                                     aria-hidden="true"></i></button>
                                         </td> -->
                                         <td class="wish-product-thumbnail-col">
-                                            <a href="#"><img src="../assets/images/RC2019B_00003-225x225.jpg" alt="image"></a>
+                                            <a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/RC2019B_00003-225x225.jpg'}}" alt="image"></a>
                                         </td>
                                         <td class="wish-product-name-col">
                                             <a href="{{ asset('product/'.$details['titleSlug']) }}">{{ $details['titleName'] }}</a>
@@ -130,7 +130,7 @@
                                         <button class="removew-items-td"><i class="fa fa-times" aria-hidden="true"></i></button>
                                     </td>
                                     <td class="wish-product-thumbnail-col">
-                                        <a href="#"><img src="../assets/images/RC2019B_00003-225x225.jpg" alt="image"></a>
+                                        <a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/RC2019B_00003-225x225.jpg'}}" alt="image"></a>
                                     </td>
                                     <td class="wish-product-name-col">
                                         <a href="#">BRIE | Marquise shape Halo and shoulder channel set Engagement Ring</a>

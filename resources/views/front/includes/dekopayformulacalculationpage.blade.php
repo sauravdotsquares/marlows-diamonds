@@ -88,9 +88,7 @@
                                 <p class="priced"> <span id="noTerm">12</span> </p>
                             </li>
                         </ul>
-                        <p class="finance_options_provided">Finance options powered by <img
-                                src="/images/Deko_landscape_colour_whiteBG200px_wide.png"
-                                style="height:25px;" class="nolazy" alt="DEKO"></p>
+                        <p class="finance_options_provided">Finance options powered by <img src="{{ env('APP_IMAGE_URL').'/images/Deko_landscape_colour_whiteBG200px_wide.png' }}" style="height:25px;" class="nolazy" alt="DEKO"></p>
 
                         <input type="hidden" id="enableId" value="OCFDefault"> <br>
                         <div>

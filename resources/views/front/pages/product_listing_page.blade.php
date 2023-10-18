@@ -46,7 +46,7 @@
                                 @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
                                     <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product_item_item->category_images }}" >
                                 @else
-                                    <img src="https://devstaging.marlows-diamonds.co.uk/storage/Products/CX9-SC48_00003_1650365432.jpg"> 
+                                    <img src="{{env('APP_IMAGE_URL').'/storage/Products/CX9-SC48_00003_1650365432.jpg'}}"> 
                                 @endif
                                 <p> <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a></p>
                             </div>
@@ -193,12 +193,12 @@
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
-                    <img alt="Product loader" src="{{ asset('assets/images/spinner-ring.gif') }}">
+                    <img alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif' }}">
                     <p>Loading More Products</p>
                     <button style="display: none;" class="ajax-load-btn">Load more data</button>
                 </div>
                 <div class="ajax-loader">
-                    <img src="{{ asset('images/spinner.gif') }}" id="loading-data-image" class="img-responsive" style="display:none;" />
+                    <img src="{{env('APP_IMAGE_URL').'/images/spinner.gif' }}" id="loading-data-image" class="img-responsive" style="display:none;" />
                 </div>
                 <br>
                 <br>
@@ -215,10 +215,10 @@
         </div>
     </div>
     <div class="policysection">
-        <div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
-        <div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading"><a href="/terms"> Free Delivery & <br> Collection  </a> </h6></div>
-        <div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> <a href="/terms"> Diamond Quality <br> Certificate </a> </h6></div>
-        <div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
+        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/warranty.png'}}" class="policyimg"> <h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/shipped.png'}}" class="policyimg"><h6 class="policyheading"><a href="/terms"> Free Delivery & <br> Collection  </a> </h6></div>
+        <div class="policy0icon" ><img src="{{env('APP_IMAGE_URL').'/images/certificate.png'}}"class="policyimg"><h6 class="policyheading"> <a href="/terms"> Diamond Quality <br> Certificate </a> </h6></div>
+        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/return.jpg'}}"class="policyimg"><h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
     </div>
 </div>
 <!-- FAQ Section start here -->
@@ -278,11 +278,11 @@
 </div>
 
 <div class="engagement-ring-img">
-    <img src="{{url('/images/viewguide.PNG')}}">
+    <img src="{{env('APP_IMAGE_URL').'/images/viewguide.PNG'}}">
     <div class="engagement-ring-img-content">
         <div class="container">
     <h2>Find the perfect engagement ring</h2>
-    <button class="reset-filer-btn"> <a href="https://admin.marlowsdiamonds.com/storage/MarlowsDiamonds-PremiumContent-Guide-3.pdf" target="_blank"> View Guide </a> </button>
+    <button class="reset-filer-btn"> <a href="{{env('APP_IMAGE_URL').'/storage/MarlowsDiamonds-PremiumContent-Guide-3.pdf'}}" target="_blank"> View Guide </a> </button>
 </div>
 </div>
 </div>

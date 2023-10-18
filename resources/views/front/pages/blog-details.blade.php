@@ -39,7 +39,7 @@
 						</div>
 					<div class="blog-main-img">
 						@if(!empty(($data->image)))
-                           <img src="{{asset('storage/'.$data->image)}}" alt="{{$data->title}}">
+                           <img src="{{ env('APP_IMAGE_URL').'/storage/'.$data->image }}" alt="{{$data->title}}">
                         @endif
 					</div>
 					<div class="blogdetail-desc">
@@ -49,12 +49,6 @@
 			</div>
 			<div class="col-lg-3">
 				<div class="blog-search-field">
-					{{-- <div class="formgroup">
-						<input value="{{ request()->searchKeyword }}" type="text" name="search" class="blog-search-input" placeholder="Search for blog.." autocomplete="off">
-						<button class="seach-btn" type="button">
-							<img class="search-icon"
-							src="{{ asset('assets/images/search.png') }}" alt="search"></button>
-					</div> --}}
 				</div>
 	
 				<div class="blogdetails-sidebar blog-list-sidebar blog-list-sidebar-first mobile-sidebar">
@@ -156,7 +150,7 @@
 		<div class="container">
 			<div class="head-para-three">
 				<h2 class="heading-h-three">
-					{{ isset($data->faq_title)?$data->faq_title:'FAQ’s' }}
+					{{ isset($data->faq_title)?$data->faq_title:"FAQ's" }}
 				</h2>
 				<p>Some of the most common Q&A's</p>
 			</div>
@@ -166,18 +160,18 @@
 					<div class="accordion-item">
 						<h3 class="accordion-header" id="{{$faq->id}}">
 							@if($key == 0)
-							<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
-								@else
+								<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
+							@else
 								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
-									@endif
+							@endif
 									{{isset($faq->title)?$faq->title:""}}
 								</button>
 						</h3>
 						@if($key == 0)
-						<div id="collapse{{$faq->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
-							@else
+							<div id="collapse{{$faq->id}}" class="accordion-collapse collapse show" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
+						@else
 							<div id="collapse{{$faq->id}}" class="accordion-collapse collapse" aria-labelledby="{{$faq->id}}" data-bs-parent="#accordionExample">
-								@endif
+						@endif
 								<div class="accordion-body">
 									{!! isset($faq->description)?$faq->description:"" !!}
 								</div>
@@ -209,14 +203,11 @@
 				<div class="item">
 			    	<div class="blos-listbox">
 						<div class="blos-listbox-img">
-							{{--  Change after SEO discuss 05Jan2023 seo_change --}}
-							{{-- <a href="/blog/{{isset($post->slug)?$post->slug:""}}"> --}}
 							<a href="{{ url('/blog/' . (isset($post->slug)?$post->slug:"")) }}">
-								{{-- <img src="{{asset('storage/'.$post->image)}}" alt="{{$post->title}}"> --}}
 								@if(!empty(($post->image)))
-									<img src="{{asset('storage/'.$post->image)}}"  alt="{{$post->title}}">
+									<img src="{{ env('APP_IMAGE_URL').'/storage/'.$post->image }}" alt="{{$post->title}}">
 								@else 
-									<img src="{{url('/images/marlowsdiamonds-logo.png')}}"  alt="{{$post->title}}">
+									<img src="{{ env('APP_IMAGE_URL').'/images/marlowsdiamonds-logo.png' }}" alt="{{$post->title}}">
 								@endif
 							</a>
 						</div>
@@ -226,17 +217,13 @@
 								<span><i class="fa fa-clock-o" aria-hidden="true"></i> {{isset($post->created_at)?$post->created_at->format('M d, Y'):""}} </span>
 							</div>
 							<div class="blos-list-title">
-								{{--  Change after SEO discuss 05Jan2023 seo_change --}}
 								<a href="{{ url('/blog/' . (isset($post->slug)?$post->slug:"")) }}">{{isset($post->title)?$post->title:""}}</a>
-								{{-- <a href="/blog/{{isset($post->slug)?$post->slug:""}}">{{isset($post->title)?$post->title:""}}</a> --}}
 							</div>
 							<div class="blos-list-desc">
 								{{isset($post->short_description)?$post->short_description:""}}
 							</div>
 							<div class="blog-readmore">
-								{{--  Change after SEO discuss 05Jan2023 seo_change --}}
 								<a class="btn-bg-small" href="{{ url('/blog/' . (isset($post->slug)?$post->slug:"")) }}">Read More</a>
-								{{-- <a class="btn-bg-small" href="/blog/{{isset($post->slug)?$post->slug:""}}">Read More</a> --}}
 							</div>
 						</div>
 					</div>

@@ -9,7 +9,7 @@
         margin: 0px 70px;
     }
 </style>
-<div class="category-banner" style="background-image:url({{asset('assets/images/engagement-rings-banner.png')}})">
+<div class="category-banner" style="background-image:url({{env('APP_IMAGE_URL').'/assets/images/engagement-rings-banner.png'}})">
     <div class="container">
         <div class="category-banner-text">
             <h1>SITEMAP</h1>

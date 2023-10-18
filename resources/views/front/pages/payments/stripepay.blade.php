@@ -3,5 +3,5 @@
     <label class="stripe_label">
         Stripe
     </label>
-    <img src="{{asset('assets/images/stripe_icon.png')}}" alt="stripe">
+    <img src="{{env('APP_IMAGE_URL').'/assets/images/stripe_icon.png'}}" alt="stripe">
 </li>

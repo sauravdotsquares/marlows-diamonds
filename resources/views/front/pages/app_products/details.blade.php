@@ -43,8 +43,8 @@
                     @if($product->images)
                         @foreach($product->images as $images)
                             <div class="item">
-                                <a data-fancybox="gallery{{$images->id}}" href="{{asset('/uploads/'.$images->image)}}" data-caption="{{isset($product->title)?$product->title:''}}">
-                                    <img src="{{asset('/uploads/'.$images->image)}}" alt="{{isset($product->title)?$product->title:''}}">
+                                <a data-fancybox="gallery{{$images->id}}" href="{{env('APP_IMAGE_URL').'/uploads/'.$images->image}}" data-caption="{{isset($product->title)?$product->title:''}}">
+                                    <img src="{{env('APP_IMAGE_URL').'/uploads/'.$images->image}}" alt="{{isset($product->title)?$product->title:''}}">
                                 </a>
                             </div>
                         @endforeach

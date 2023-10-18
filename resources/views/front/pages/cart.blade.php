@@ -43,10 +43,10 @@
                                                 <img src="{{$details['customArray']['ImageLink']}}" width="100" height="100"
                                                 class="img-responsive" />
                                             @elseif(isset($details['image']) && !empty($details['image']))
-                                                <img src="{{asset('storage/'.$details['image'])}}" width="100" height="100"
+                                                <img src="{{env('APP_IMAGE_URL').'/storage/'.$details['image']}}" width="100" height="100"
                                                 class="img-responsive" />
                                             @else
-                                                <img src="{{asset('assets/images/marlowsdiamonds-logo.png')}}" width="70" height="100" class="img-responsive" />
+                                                <img src="{{env('APP_IMAGE_URL').'/assets/images/marlowsdiamonds-logo.png'}}" width="70" height="100" class="img-responsive" />
                                             @endif
                                         </div>
                                         <div class="cart-nameitem">

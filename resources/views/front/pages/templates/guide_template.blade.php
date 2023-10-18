@@ -2,7 +2,7 @@
 @section('content')
 
 <!-- header banner start -->
-<div class="category-banner" style="background-image:url({{asset('storage/'.$data->image)}})">
+<div class="category-banner" style="background-image:url({{env('APP_IMAGE_URL').'/storage/'.$data->image'}}}})">
 	<div class="container">
 		<div class="category-banner-text">
 			<h1>{!!isset($data->subtitle)?$data->subtitle:""!!}</h1>
@@ -23,7 +23,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/CR10-SE45_0003.jpg" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
+							<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/CR10-SE45_0003.jpg'}}" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -41,7 +41,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/DSR21-Images_0003.jpg" alt="HALO ENGAGEMENT RINGS"></a>
+							<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/DSR21-Images_0003.jpg'}}" alt="HALO ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -59,7 +59,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/CX9-SL28_00003-1.jpg" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
+							<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/CX9-SL28_00003-1.jpg'}}" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -77,7 +77,7 @@
 				<div class="col-lg-3 col-sm-6 col-md-3">
 					<div class="ring-pr-items">
 						<div class="ring-pr-image">
-							<a href="#"><img src="assets/images/R3-143_0003.jpg" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
+							<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/R3-143_0003.jpg'}}" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
 						</div>
 						<div class="ring-pr-details">
 							<div class="ring-pr-title">
@@ -108,7 +108,7 @@
 		<div class="leftright-img-text-wraper">
 			<div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
 				<div class="leftright-imt-col leftright-img">
-					<img src="assets/images/banner-hand.jpg" alt="banner-hand">
+					<img src="{{env('APP_IMAGE_URL').'/assets/images/banner-hand.jpg'}}" alt="banner-hand">
 				</div>
 				<div class="leftright-imt-col leftright-text">
 					<div class="leftright-heading heading-h-three">
@@ -137,7 +137,7 @@
 			    <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="SADIE | Eternity Style Ring"></a>
+			    			<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/RC2027_00003-400x400.jpg'}}" alt="SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -155,7 +155,7 @@
 			    <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="SADIE | Eternity Style Ring"></a>
+			    			<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/RC2027_00003-400x400.jpg'}}" alt="SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -173,7 +173,7 @@
 			     <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="SADIE | Eternity Style Ring"></a>
+			    			<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/RC2027_00003-400x400.jpg'}}" alt="SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -191,7 +191,7 @@
 			     <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt=" SADIE | Eternity Style Ring"></a>
+			    			<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/RC2027_00003-400x400.jpg'}}" alt=" SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -209,7 +209,7 @@
 			     <div class="item">
 			    	<div class="product-info">
 			    		<div class="product-image">
-			    			<a href="#"><img src="assets/images/RC2027_00003-400x400.jpg" alt="SADIE | Eternity Style Ring"></a>
+			    			<a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/RC2027_00003-400x400.jpg'}}" alt="SADIE | Eternity Style Ring"></a>
 			    		</div>
 			    		<div class="product-item-details">
 			    			<div class="product-titles-small">
@@ -310,7 +310,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-one.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-one.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -320,7 +320,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-two.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-two.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -330,7 +330,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-three.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-three.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -340,7 +340,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-four.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-four.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -350,7 +350,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-five.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-five.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>

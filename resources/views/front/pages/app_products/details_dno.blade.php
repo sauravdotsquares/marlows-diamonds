@@ -109,8 +109,8 @@
                         @if($variationImages)
                             @foreach($variationImages as $images)
                                 <div class="item">
-                                    <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
-                                        <img src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
+                                    <a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" data-caption="{{isset($data->title)?$data->title:''}}">
+                                        <img src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
                                     </a>
                                 </div>
                             @endforeach
@@ -125,8 +125,8 @@
                                     @endphp
                                     @if(isset($images->is_featured) && $images->is_featured != 1)
                                         <div class="item">
-                                            <a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}">
-                                                <img src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
+                                            <a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{$explode1[0]}}">
+                                                <img src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
                                             </a>
                                         </div>
                                     @endif
@@ -231,7 +231,7 @@
 						</p>
 					</a>
 					<div class="doko-img">
-						<img src="{{asset('')}}assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
+						<img src="{{env('APP_IMAGE_URL').'assets/images/Deko_square_colour_whiteBG200px_wide.png'}}" alt="doko">
 					</div>
 				</div> --}}
 
@@ -367,7 +367,7 @@
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
-					<img src="/assets/images/perfect-ring.jpg" alt="perfect-ring">
+					<img src="{{env('APP_IMAGE_URL').'/assets/images/perfect-ring.jpg'}}" alt="perfect-ring">
 				</div>
 
 			</div>

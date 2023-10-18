@@ -10,9 +10,9 @@
     <a href="{{asset('product/'.$product->slug)}}">
         <div class="search-suggestion-img">
             @if(isset($product->getProductImages->image_url) && !empty($product->getProductImages->image_url))
-                <img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="{{$product->title}}">
+                <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}">
             @else
-                <img src="" alt="img">
+                <img src="{{ env('APP_IMAGE_URL').'/images/marlowsdiamonds-logo.png' }}" alt="{{$product->title}}" onerror="this.src='{{env('APP_IMAGE_URL').'/images/marlowsdiamonds-logo.png'}}'">
             @endif
         </div>
         <div class="search-suggestion-text">

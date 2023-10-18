@@ -61,8 +61,8 @@
 							@if($variationImages)
 								@foreach($variationImages as $images)
 									<div class="item product-items-carousel">
-										<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
-											<img class="thumbnail-src" src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
+										<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" data-caption="{{isset($data->title)?$data->title:''}}">
+											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
 										</a>
 									</div>
 								@endforeach
@@ -83,10 +83,10 @@
 												<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">				
 													<?php if(in_array($ext,$video_extensions)){ ?>													
 														<video style="width: 100%;" loop autoplay muted="1" playsinline>
-															<source class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" type="video/mp4" type="video/mp4" />
+															<source class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" type="video/mp4" type="video/mp4" />
 														</video>
 													<?php }else{ ?>										
-														<img class="thumbnail-src" src="{{asset('/storage/'.$images->image_url)}}" alt="{{isset($data->title)?$data->title:''}}">
+														<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
 													<?php } ?>
 												</a>
 											</div>
@@ -235,14 +235,14 @@
 						</p>
 					</a>
 					<div class="doko-img">
-						<img src="{{asset('')}}assets/images/Deko_square_colour_whiteBG200px_wide.png" alt="doko">
+						<img src="{{env('APP_IMAGE_URL').'/assets/images/Deko_square_colour_whiteBG200px_wide.png'}}" alt="doko">
 					</div>
 				</div>
 				<div class="policysection">
-					<div class="policy0icon"><img src="{{asset('/images/warranty.png')}}" class="policyimg"><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
-					<div class="policy0icon"><img src="{{asset('/images/shipped.png')}}"class="policyimg"><h6 class="policyheading"><a href="/terms">Free Delivery & <br> Collection </a> </h6></div>
-					<div class="policy0icon" ><img src="{{asset('/images/certificate.png')}}"class="policyimg"><h6 class="policyheading"> <a href="/terms">Diamond Quality <br> Certificate</a> </h6></div>
-					<div class="policy0icon"><img src="{{asset('/images/return.jpg')}}"class="policyimg"><h6 class="policyheading"><a href="/terms">30 Days<br> Return </a> </h6></div>
+					<div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/warranty.png'}}" class="policyimg"><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+					<div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/shipped.png'}}"class="policyimg"><h6 class="policyheading"><a href="/terms">Free Delivery & <br> Collection </a> </h6></div>
+					<div class="policy0icon" ><img src="{{env('APP_IMAGE_URL').'/images/certificate.png'}}"class="policyimg"><h6 class="policyheading"> <a href="/terms">Diamond Quality <br> Certificate</a> </h6></div>
+					<div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/return.jpg'}}"class="policyimg"><h6 class="policyheading"><a href="/terms">30 Days<br> Return </a> </h6></div>
 				</div>
 
 			</div>
@@ -415,15 +415,13 @@
 					<div class="leftright-heading heading-h-three">
 						Choose Your Diamond with Marlow’s Terminology Guide
 					</div>
-					<p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond
-						guide, you can better understand the different types of diamonds and what shapes are the perfect
-						fit for you. Download your free guide today!</p>
+					<p>Whilst Diamonds are stunning they can be difficult to judge with naked eyes. With our diamond guide, you can better understand the different types of diamonds and what shapes are the perfect fit for you. Download your free guide today!</p>
 					<div class="viewguide-btn">
-						<a class="btn-bg-small" href="#">View Guide</a>
+						<a class="btn-bg-small" href="/certified-diamond-terminology-guide">View Guide</a>
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
-					<img src="/assets/images/perfect-ring.jpg" alt="perfect-ring">
+					<img src="{{env('APP_IMAGE_URL').'/assets/images/perfect-ring.jpg'}}" alt="perfect-ring">
 				</div>
 
 			</div>
@@ -535,7 +533,7 @@
 	<script src="{{ asset('assets/vendors/fancybox-master/dist/jquery.fancybox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
-		const imagesPath = "{{asset('/storage/')}}/";
+		const imagesPath = "{{env('APP_IMAGE_URL').'/storage/'}}/";
 		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
 
         function blankForm(){

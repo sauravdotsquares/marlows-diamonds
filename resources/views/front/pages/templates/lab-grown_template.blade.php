@@ -4,7 +4,7 @@
 
 
 <!-- category header banner start -->
-<div class="category-banner" style="background-image:url(assets/images/Marlows-Lab-Grown-Diamonds-Banner.png)">
+<div class="category-banner" style="background-image:url({{env('APP_IMAGE_URL').'/assets/images/Marlows-Lab-Grown-Diamonds-Banner.png'}})">
 	<div class="container">
 		<div class="category-banner-text">
 			<h1>{{$data->title}}</h1>
@@ -142,7 +142,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-one.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-one.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -152,7 +152,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-two.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-two.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -162,7 +162,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-three.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-three.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -172,7 +172,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-four.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-four.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -182,7 +182,7 @@
 		    <div class="item">
 		    	<div class="instaphoto-info">
 		    		<div class="instaphoto-img">
-		    			<img src="assets/images/insta-img-five.jpg" alt="insta photo">
+		    			<img src="{{env('APP_IMAGE_URL').'/assets/images/insta-img-five.jpg'}}" alt="insta photo">
 		    		</div>
 		    		<div class="insta-link">
 		    			<a href="https://www.instagram.com/marlows_diamonds"><i class="fa fa-instagram" aria-hidden="true"></i></a>

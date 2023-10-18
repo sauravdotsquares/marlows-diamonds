@@ -286,9 +286,11 @@ textarea.input-control{height:100px}
 
 /** left right img text**/
 .leftright-text p{font-size:15px;color:#2b2b2b;line-height:1.6}
+.leftright-imt-col.leftright-text p a {color: #8e2e65; text-decoration: none;}
 .leftright-imt-col.leftright-text{text-align:center;padding:0 60px 0 60px}
 .leftright-imt-col{width:100%;flex:0 0 50%;-ms-flex:0 0 50%;max-width:50%}
-.leftright-img-text-wraper{background:#fbfcfd;margin:0 0 80px 0}
+.leftright-img-text-wraper{background:#fbfcfd;margin:0 0 00px 0}
+.leftright-img-text-wraper:nth-child(2) {margin-bottom: 80px;}
 .leftright-img img{width:100%}
 .leftright-heading.heading-h-three{font-size:35px}
 
@@ -1176,6 +1178,131 @@ h6.policyheading a { color: #8e2e65;}
 .defaultpages-cols h5 {font-size: 18px;font-family: Lato;color: #000;font-weight: 900;margin: 0 0 5px;} 
 /*cookies css end*/
 
+
+/*ring size page css*/
+
+.ring-guide-banner{ background: url(../images/ring-personal-bg.jpg) no-repeat;background-size: cover;height: 100%;position: relative; padding:50px 0;
+margin-bottom: 60px; height:auto; background-size: cover; background-position: top;}
+.ring-guide-banner:after{background: rgba(0, 0, 0, 0.2); width: 100%; height: 100%; position: absolute; top: 0; content: '';}
+.ring-guide-banner .row {align-items: center;}
+.ring-guide-banner .ring-personal-desc { z-index: 99; position: relative;}
+.ring-guide-banner .ring-personal-desc h1 {font-weight: bold; color: #fff;}
+.ring-guide-banner .ring-personal-desc p {color: #fff;font-size: 20px;line-height: 1.9;margin: 0 0 15px 0;}
+.ring-guide-banner .ring-personal-img { text-align: center;z-index: 9;position: relative; width: 200px; margin: auto;}
+
+
+.defaultpages-wrap {padding: 40px 0;font-size: 16px;line-height: 30px;width: 100%;}
+.ring-guide-text {max-width: 700px;width: 100%;margin: auto;text-align: center;}
+.ring-guide-text h2 {font-size: 20px;font-family: 'Lato';line-height: 30px;}
+.ring-size-tabing {margin: 50px 0;}
+.ring-size-tabing h3 {text-align: center;font-weight: 600;font-family: 'Playfair Display';margin: 0 0 60px;}
+.ring-size-tabing .nav-tabs .nav-link {padding:10px 35px;margin: 0 10px -1px 0;font-size: 17px;font-weight: 600;color: #293241;text-transform: uppercase;
+border: 2px solid #e6e5e1;border-bottom: none;border-radius: 5px 5px 0 0;z-index: 1;position: relative;transition: all 0.3s ease 0s;}
+.ring-size-tabing .nav-tabs .nav-link.active {background: #8e2e65;color: #fff;}
+
+
+.ring-size-tabing #nav-tabContent {padding: 0 !important;border: none !important;background: none !important;}
+.ring-size-tabing #nav-tabContent .tab-pane table.table thead tr th {background: #8e2e65;color: #fff;font-size: 18px; text-align: center;}
+.ring-size-tabing #nav-tabContent .tab-pane table.table tbody tr:hover>* {background: #ffebf6;}
+.ring-size-tabing #nav-tabContent .tab-pane table.table tr td {font-size: 16px;font-weight: bold;padding: 11px 9px;text-align: center;}
+.ring-size-tabing h5 {text-align: center; font-size: 14px; font-family: 'Lato'; color: #000; font-weight: bold; }
+
+.printing-ring-chart .row {align-items: center;}
+.printing-ring-chart {background: #fafbfd;display: inline-block;width: 100%; padding: 60px 0;}
+.printing-ring-chart .guide-chart-img {border: 4px solid #8e2e65;}
+.printing-ring-chart .guide-chart-img img {width: 100%;height: 100%;}
+.printing-ring-chart .guide-chart-desc {padding: 0 0 0 30px;}
+.printing-ring-chart .guide-chart-desc p{ color:#000; }
+.printing-ring-chart .guide-chart-desc ol {padding: 0 0 0 20px;}
+.printing-ring-chart .guide-chart-desc ol li {font-size: 18px;color: #000;}
+
+.search-engage {margin: 60px 0;}
+.search-engage-box {border-radius: 15px;overflow: hidden;border: 1px solid #ccc;height: 100%;transition: all 0.2s ease;}
+.search-engage-box:hover {transition: all 0.2s ease;background: #8e2e65;}
+.search-engage-box:hover a{ color:#fff; transition: all 0.2s ease;}
+.search-engage-box a{ text-decoration:none; }
+.search-engage-box .search-engage-desc {padding: 10px 60px 30px;}
+.search-engage-box a.btn-bg-large {margin: auto;display: table;background: none;color: #000;border: none;padding: 0; text-decoration: none;}
+.search-engage-box a.btn-bg-large:hover {box-shadow: none;}
+.search-engage-box .search-engage-img img {width: 100%;height: 100%;object-fit: cover;}
+.search-engage-box h3 {text-align: center;font-size: 22px;text-decoration: none;font-weight: bold;font-family: 'Lato';margin: 22px 0;}
+.search-engage-box p {color: #000;text-align: center;}
+.search-engage-box:hover h3, .search-engage-box:hover p, .search-engage-box:hover a.btn-bg-large {color: #fff;}
+
+
+.sizing-tip-sec {background:#efefef;background-size: cover;height: 100%;position: relative; padding: 50px 0; z-index: 0;}
+/*.sizing-tip-sec:after {background: rgba(0, 0, 0, 0.5);content: '';height: 100%;width: 100%;position: absolute;top: 0;}*/
+.sizing-tip-sec .sizing-tip-sec-inner {z-index: 99;position: relative;}
+.sizing-tip-sec .sizing-tip-desc {margin: 0 0 30px;}
+
+.sizing-tip-sec .sizing-tip-desc h3 {color: #000;text-align: center;font-size: 20px; margin: 0; font-family: 'Lato';}
+.sizing-tip-sec .sizing-tip-desc h2 {z-index: 99;position: relative;margin:0px 0 18px; color: #000; text-align: center;}
+.sizing-tip-sec .sizing-tip-desc p{ color:#000; text-align: center; } 
+
+.sizing-tip-sec .sizing-tip-sec-inner .sizing-tip-box {background: #fff;display: inline-block;border-radius: 10px;padding: 15px;width: 100%; border: 1px solid #ccc;
+height: 100%;}
+.sizing-tip-sec .sizing-tip-sec-inner .sizing-tip-box span { width: auto;height: auto;float: none;color: #fff;margin: auto;display: table;
+margin-bottom: 16px;}
+.sizing-tip-sec .sizing-tip-sec-inner .sizing-tip-box span img {width: 75px;}
+.sizing-tip-sec .sizing-tip-sec-inner .sizing-tip-box p { text-align: center;max-width: 100%;float: right;vertical-align: top;width: 100%;
+color: #000; line-height: 30px;}
+
+.guide-secret {margin: 60px 0;}
+.guide-secret .head-para-three {max-width: 700px;width: 100%;margin: auto;text-align: center;margin-bottom: 35px;}
+.guide-secret .product-item-slider {padding: 0;}
+.guide-secret .product-item-slider .product-info {padding: 20px;background: #f6f6f6;border: 1px solid #ccc;height: 100%;border-radius: 10px;}
+.guide-secret .product-item-slider .product-info h3 {font-weight: bold;font-size: 22px;}
+
+.guide-secret .product-item-slider .owl-nav {position: absolute;display: block;top: 50%;width: 100%;}
+.guide-secret .product-item-slider .owl-theme.st-arrows .owl-nav .owl-prev {left: -35px;}
+.guide-secret .product-item-slider .owl-theme .owl-nav .owl-next, .owl-theme.st-arrows .owl-nav .owl-prev {
+top: 50%;transform: translateY(-50%);position: absolute;right: -35px;}
+.guide-secret .product-item-slider .owl-theme.st-arrows .owl-nav [class*="owl-"] {border: 3px solid rgba(255,255,255,0.5);width: 50px;
+height: 50px;background: #8e2e65;color: #fff;text-align: center;}
+
+.friendy-expert-sec {display: flex; background: #efefef; align-items: center;}
+.friendy-expert-sec .friendly-img {width: 50%;}
+.friendy-expert-sec .friendy-expert-desc {width: 33%; padding: 0 35px;}
+.friendy-expert-sec .friendy-expert-desc h3 span {font-weight: bold; display:block;}
+.friendy-expert-sec .friendy-expert-desc a.btn-bg-large {margin-top: 15px;}
+
+.ring-personal-tips{ display: none; background: url(../images/ring-personal-bg-personal.jpg) no-repeat;background-size: cover;height: 100%;position: relative; padding:85px 0; }
+/*.ring-personal-tips:after{background: rgba(0, 0, 0, 0.2); width: 100%; height: 100%; position: absolute; top: 0; content: '';}*/
+.ring-personal-tips .row {align-items: center;}
+.ring-personal-tips .ring-personal-desc {z-index: 99;position: relative;}
+.ring-personal-tips .ring-personal-desc h3 {font-weight: bold; color: #fff;}
+.ring-personal-tips .ring-personal-desc p {color: #fff}
+.ring-personal-tips .ring-personal-img { text-align: center;z-index: 9;position: relative;}
+
+
+.inspiration-sec {margin: 60px 0;}
+.inspiration-box {border-radius: 15px;overflow: hidden;border: 1px solid #ccc;height: 100%;transition:all 0.2s ease;}
+.inspiration-box:hover {transition:all 0.2s ease;background: #8e2e65;}
+.inspiration-box a{ text-decoration:none; }
+.inspiration-box:hover h3{ color:#fff; }
+.inspiration-box .inspiration-img {height: 300px;}
+.inspiration-box .inspiration-img img {height: 100%;object-fit: cover; width: 100%;}
+.inspiration-box h3 {text-align: center;font-size: 20px;text-decoration: none;font-weight: bold;font-family: 'Lato';margin: 22px 0;}
+/*ring size page css end*/
+
+
+/*engagement ring blog slider css*/
+.blog-carousel-item-slider .owl-carousel {margin-top: 30px; padding: 0 15px;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info {border: 1px solid #ccc;height: 270px;overflow: hidden; transition: all 0.2s ease;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info:hover {background:#8e2e65;transition: all 0.2s ease;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info .blog-carousel-image a {height: 200px;display: inline-block;width: 100%;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info .blog-carousel-item-details a {text-align: center; width: 100%;
+display: inline-block; color: #000; font-size: 15px; text-decoration: none;padding:5px 24px;font-weight: 500;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info:hover .blog-carousel-item-details a {color: #fff;}
+.blog-carousel-item-slider .owl-carousel .item .blog-carousel-info .blog-carousel-image a img {height: 100%;object-fit: cover; width: 100%;}
+
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {top: 50%;transform: translateY(-50%);position: absolute;left: -12px;
+border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {top: 50%;transform: translateY(-50%);position: absolute;right: -12px;
+border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button span {font-size: 37px;line-height: 22px;}
+/*engagement ring blog slider css end*/
+
 /*footer css*/
 .location-header a {color: #000;text-decoration: none;}
 .disclaimer-content .footer-reg {color: #fff;text-decoration:none; margin: 10px 0 7px;display: inline-block;}
@@ -1296,6 +1423,10 @@ h6.policyheading a { color: #8e2e65;}
 .post-bar .post-bar-center a span {
     transition: initial;
 }
+
+.post-bar .header-post-bar-left{ text-align:left !important; }
+.post-bar .post-bar-right.header-post-bar-left {text-align: right !important;}
+
 #location_map * {
 	-moz-transition: none;
 	-webkit-transition: none;
@@ -1401,6 +1532,15 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .category-sidebar-wrap{ /*width:100%; */}
 
 
+/*engagement ring blog slider css*/
+.best-selling-marlows-blog {padding: 0 45px;}
+/*engagement ring blog slider css end*/
+
+/*engagement ring blog slider css*/
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {left: -53px;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {right: -53px;}
+/*engagement ring blog slider css end*/
+
 .footer-social a {margin: 0 7px 0 0;}
 
 }
@@ -1442,7 +1582,9 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .payment-box-main-drop{ font-size:15px; }
 /** checkout **/
 
+/*engagement ring blog slider css*/
 
+/*engagement ring blog slider css end*/
     }
 
 
@@ -1476,6 +1618,12 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 /*diamond-education css*/
 .defaultpages-wrap iframe.note-video-clip {width: 100%;}
 /*diamond-education css end*/
+
+/*engagement ring blog slider css*/
+.best-selling-marlows-blog {padding: 0 0px;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {left: 0;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {right: 0;}
+/*engagement ring blog slider css end*/
 
 /** checkout **/
 .payment-box-main-drop{ font-size: 13px; padding: 15px 15px 20px;}

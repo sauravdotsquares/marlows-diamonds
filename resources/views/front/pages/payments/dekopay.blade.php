@@ -1,9 +1,9 @@
 <li class="cc_payment_methods via_deko_payment" ng-controller="DekopayController" ng-init="financeOptionsCheckout()">  
-    <input type="radio" name="payment_type" required="required" value="dekopay">
+    <input type="radio" name="payment_type" required="required" value="dekopay" autocomplete="off">
     <label class="deko_label">
         Dekopay
     </label>
-    <img src="{{asset('')}}assets/images/dek_one.png" alt="deko">
+    <img src="{{ env('APP_IMAGE_URL').'/assets/images/dek_one.png' }}" alt="deko">
     <div class="payment-box-main-drop deko-pay-box " style="display:none;">
         <div class="finance-available-options">
             <input type="hidden" value="{{ $totalAmount }}" id="totalOrder">
@@ -18,7 +18,7 @@
             <p>Pay securely by Credit or Debit card or internet banking through Dekopay
                 Secure Servers.</p>
             <div class="deko_finance">
-                <img src="../assets/images/Deko_square_colour_whiteBG200px_wide.png"
+                <img src="{{ env('APP_IMAGE_URL').'/assets/images/Deko_square_colour_whiteBG200px_wide.png' }}"
                     alt="deko">
                 <span> Finance Options </span>
             </div>

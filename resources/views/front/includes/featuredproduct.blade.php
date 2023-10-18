@@ -18,9 +18,9 @@
                                 <div class="product-image">
                                     <a href="{{asset('product/'.$product->slug)}}">
                                         @if(isset($product->getProductImages) && !empty($product->getProductImages->thumb_image_url))
-                                            <img src="{{ asset('storage/'.$product->getProductImages->thumb_image_url)}}" alt="{{$product->title}}">
+                                            <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->thumb_image_url }}" alt="{{$product->title}}">
                                         @elseif(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
-                                            <img src="{{ asset('storage/'.$product->getProductImages->image_url)}}" alt="{{$product->title}}">
+                                            <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}">
                                         @endif
                                     </a>
                                 </div>
@@ -29,8 +29,8 @@
                                         <a href="{{asset('product/'.$product->slug)}}"> {{$product->title}}</a>
                                     </div>
                                     <div class="product-price">
-                                        {{MY_CURRENCY_SYMBOL}}
-                                        {{isset($product->ProductVariationMinMaxPrice->MaxPrice)?$product->ProductVariationMinMaxPrice->MaxPrice:0.00}}
+                                        <!-- {{MY_CURRENCY_SYMBOL}}
+                                        {{isset($product->ProductVariationMinMaxPrice->MaxPrice)?$product->ProductVariationMinMaxPrice->MaxPrice:0.00}} -->
                                     </div>
                                     <div class="product-action-btn">
                                         <a class="btn-bg-small" href="{{asset('product/'.$product->slug)}}">Select Options</a>

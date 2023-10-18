@@ -15,7 +15,7 @@
 					</div>
 				</div>
 				<div class="leftright-imt-col leftright-img">
-					<img src="{{  url('assets/images/perfect-ring.jpg') }}" alt="perfect-ring">
+					<img src="{{  env('APP_IMAGE_URL').'assets/images/perfect-ring.jpg' }}" alt="perfect-ring">
 				</div>
 
 			</div>
