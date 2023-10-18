@@ -71,7 +71,7 @@
 
 				<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 					@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
-						<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
+						<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
 					@else
 						<source src="" type="video/mp4" type="video/mp4" />
 					@endif

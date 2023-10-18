@@ -61,8 +61,8 @@
 							@if($variationImages)
 								@foreach($variationImages as $images)
 									<div class="item product-items-carousel">
-										<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" data-caption="{{isset($data->title)?$data->title:''}}">
-											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
+										<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
+											<img class="thumbnail-src" src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
 										</a>
 									</div>
 								@endforeach
@@ -117,7 +117,7 @@
 						</div>
 						<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
-								<source src="{{ asset('storage/'.$data->getProductVariation[0]->vari_video)}}" type="video/mp4" type="video/mp4" />
+								<source src="{{env('APP_IMAGE_URL').'storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
 							@else
 								<source src="" type="video/mp4" type="video/mp4" />
 							@endif
@@ -533,7 +533,7 @@
 	<script src="{{ asset('assets/vendors/fancybox-master/dist/jquery.fancybox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
-		const imagesPath = "{{env('APP_IMAGE_URL').'/storage/'}}/";
+		const imagesPath = "{{asset('/storage/')}}/";
 		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
 
         function blankForm(){
