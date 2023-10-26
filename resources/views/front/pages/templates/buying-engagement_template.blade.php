@@ -113,8 +113,6 @@
 		<div class="container">
 			<!-- list -->
 			<div class="buying-guide-listss">
-				<div class="row">
-					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>Is Buying An Engagement Ring Online A Good Idea?</h3>
 							<p>The idea of whether you should buy an engagement ring
@@ -123,24 +121,16 @@
 								especially if you don’t know where to start or what ring style to go for.
 								But don’t worry if you’re currently in this predicament, as we’ve got you covered.</p>
 						</div>
-					</div>
-					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-06.jpg'}}" alt="img guide">
 						</div>
-					</div>
-				</div>
 			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss">
-				<div class="row">
-					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-04.jpg'}}" alt="img guide">
 						</div>
-					</div>
-					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>Planning To Propose Over Lockdown?</h3>
 							<p>Despite the current pandemic, the rate of people popping the big question has not dropped at all - if anything, we’ve seen this number grow.
@@ -149,14 +139,10 @@
 								consultations being taken digitally. But even before COVID was a thing, choosing the right engagement ring online was never
 								going to be an easy task. With that in mind, here are some essentials that you should have prepared if you’re ordering a ring as a surprise.</p>
 						</div>
-					</div>
-				</div>
 			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss ">
-				<div class="row">
-					<div class="col-lg-6  col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>Things To Consider When Buying An Engagement Ring Online</h3>
 							<p>If you were looking for a guide to choosing an engagement ring, to help you choose
@@ -164,24 +150,17 @@
 								 <p>Buying an engagement ring online can be a daunting task, so where do you begin? Start by asking yourself the following questions one step at a time.
 									  Build your knowledge of engagement rings and learn the difference between various metals, stones and settings, and don’t forget the essentials.</p>
 						</div>
-					</div>
-					<div class="col-lg-6 col-md-6">
+
 						<div class="buying-guidelist-img">
 							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-05.jpg'}}" alt="img guide">
 						</div>
-					</div>
-				</div>
 			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss">
-				<div class="row">
-					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-03.jpg'}}" alt="img guide">
 						</div>
-					</div>
-					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>Should You Buy A GIA Certified Diamond Engagement Ring?</h3>
 							<p>Our first piece of advice is that you need to buy a GIA Certified diamond engagement ring.
@@ -189,14 +168,10 @@
 								 but also because you’ll receive a true representation of the product quality. So, rather than trusting a jeweller that
 								  speaks about the relevant diamond terms, trust one that has had them certified</p>
 						</div>
-					</div>
-				</div>
 			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss">
-				<div class="row">
-					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-text">
 							<h3>What Should The Budget Be?</h3>
 							<p>This is custom heading element</p>
@@ -206,24 +181,18 @@
 								 or compromise on things like the wedding and honeymoon.</p>
 							<p>This is custom heading element</p>
 						</div>
-					</div>
-					<div class="col-lg-6 col-md-6">
 						<div class="buying-guidelist-img">
 							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-02.jpg'}}" alt="img guide">
 						</div>
-					</div>
-				</div>
 			</div>
 			<!-- list end -->
 			<!-- list -->
 			<div class="buying-guide-listss">
-				<div class="row">
-					<div class="col-lg-6 col-md-6">
+
 						<div class="buying-guidelist-img">
 							<img src="{{env('APP_IMAGE_URL').'/assets/images/Marlows-01.jpg'}}" alt="img guide">
 						</div>
-					</div>
-					<div class="col-lg-6 col-md-6">
+
 						<div class="buying-guidelist-text">
 							<h3>What Is The Right Ring Size?</h3>
 							<p>Are you buying an engagement ring without knowing size? The ring size is sometimes overlooked until the final moments of engagement
@@ -232,8 +201,6 @@
 							<p>However, finding the right engagement ring size is not a straightforward task if you want to keep things secret. Fortunately,
 								we can recommend a few ways to find out the ring size without spilling the beans.</p>
 						</div>
-					</div>
-				</div>
 			</div>
 			<!-- list end -->
 		</div>
@@ -256,7 +223,7 @@
 	</div>
 
 	<!--What Diamond Setting To Go For? -->
-	<div class="whatdiamond-to">
+	<div class="whatdiamond-to whatdiamond-to-buying">
 		<div class="container">
 			<h3>What Diamond Setting To Go For?</h3>
 			<p>There are four main types of settings available for diamond engagement rings. When buying online, you’ll often come across <br>
@@ -264,7 +231,7 @@
 				 Learn about their differences below:</p>
 			<div class="whatdiamond-list">
 				<div class="row">
-					<div class="col-md-6 col-sm-6">
+					<div class="col-md-3 col-sm-6">
 						<div class="whatdimond-cols">
 							<div class="whatdimond-cols-img">
 								<img src="{{env('APP_IMAGE_URL').'/assets/images/pasted-image-0-1-300x300.png'}}" alt="image1">
@@ -274,7 +241,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 col-sm-6">
+					<div class="col-md-3 col-sm-6">
 						<div class="whatdimond-cols">
 							<div class="whatdimond-cols-img">
 								<img src="{{env('APP_IMAGE_URL').'/assets/images/unnamed-300x300.png'}}" alt="image1">
@@ -284,7 +251,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 col-sm-6">
+					<div class="col-md-3 col-sm-6">
 						<div class="whatdimond-cols">
 							<div class="whatdimond-cols-img">
 								<img src="{{env('APP_IMAGE_URL').'/assets/images/pasted-image-0-300x300.png'}}" alt="image1">
@@ -294,7 +261,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 col-sm-6">
+					<div class="col-md-3 col-sm-6">
 						<div class="whatdimond-cols">
 							<div class="whatdimond-cols-img">
 								<img src="{{env('APP_IMAGE_URL').'/assets/images/unnamed-1-300x300.png'}}" alt="image1">
