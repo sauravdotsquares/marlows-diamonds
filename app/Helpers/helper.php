@@ -1836,10 +1836,13 @@ if (!function_exists("getBreadcrumbCategoryName")) {
         foreach($breadcrumbArray as $key => $value){
             $getCategoryName = Category::where('slug',$value)->value('name');
             if(count($breadcrumbArray) >= $key){
-
                 $breadcrumbDesign .= "/".$value;
             }
-            $newDesignBreadcrumb[$key] = '<a href="'.$breadcrumbDesign.'">'.$getCategoryName.'</a>';
+            if(!next($breadcrumbArray)) {
+                $newDesignBreadcrumb[$key] = '<a href="javascript:void(0);">'.$getCategoryName.'</a>';
+            }else{
+                $newDesignBreadcrumb[$key] = '<a href="'.$breadcrumbDesign.'">'.$getCategoryName.'</a>';
+            }
         }
         return implode(' / ',$newDesignBreadcrumb);
     }
