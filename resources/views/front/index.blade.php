@@ -292,16 +292,18 @@
                                     class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
                             </div>
                         </div>
-                        <div class="google-capatcha form-controls">
-                            <div class="g-recaptcha"
-                                data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
-                            </div>
-                            @if ($errors->has('g-recaptcha-response'))
-                                <div class="error">
-                                    {{ $errors->first('g-recaptcha-response') }}
+                        @if(env('APP_ENV') == 'production')
+                            <div class="google-capatcha form-controls">
+                                <div class="g-recaptcha"
+                                    data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
                                 </div>
-                            @endif
-                        </div>
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <div class="error">
+                                        {{ $errors->first('g-recaptcha-response') }}
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
                         <div class="action-btn">
                             <button class="white-bg-btn" type="submit">Subscribe</button>
                         </div>
@@ -372,10 +374,15 @@
         grecaptcha.reset();
     }
 
+    jQuery.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z," "]+$/i.test(value);
+    }, "Letters and spaces only please"); 
+
     $('form#contactForm').validate({
         rules: {
             title: {
-                required: true
+                required: true,
+                lettersonly: true
             },
             email: {
                 required: true,

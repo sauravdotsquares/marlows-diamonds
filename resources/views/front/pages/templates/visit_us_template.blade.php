@@ -190,17 +190,28 @@ $(document).ready(function() {
         grecaptcha.reset();
     }
 
+    $.validator.addMethod("phoneno", function(phone_number, element) {
+        phone_number = phone_number.replace(/\s+/g, "");
+        return phone_number.length > 9 ;
+    }, "Please specify a valid phone number");
+
+    jQuery.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z," "]+$/i.test(value);
+    }, "Letters and spaces only please"); 
+
     $('form#contactForm').validate({
         rules: {
             title: {
-                required: true
+                required: true,
+                lettersonly: true
             },
             email: {
                 required: true,
                 email: true
             },
             phone: {
-                required: true,
+                digits: true,
+                phoneno:true
             },
             description: {
                 required: true,
@@ -216,6 +227,7 @@ $(document).ready(function() {
             },
             phone: {
                 required: 'Phone is required',
+                digits: 'Phone is only Digits',
             },
             description: {
                 required: 'Description is required',
