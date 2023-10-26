@@ -750,11 +750,21 @@
 			});
 
 			$('#addtobasket').on('click',function(){
-				addtobasketFunction('{{route("add.to.cart")}}');
+				addtobasketFunction('{{route("add.to.cart")}}','{{$data->slug}}','');
+			});
+
+			$(document).on('change', "[id^=productWishList]", function () {
+      			var index = parseInt($(this).attr("id").replace("attributevari", ''),'{{$data->slug}}','');
+			});
+
+			$(document).on('click', "[id^=productWishListRelated]", function () {
+				var index = parseInt($(this).attr("id").replace("productWishListRelated", ''));
+				var product_slug = $('#productWishListRelated'+index).data('productslug');
+				addtobasketFunction('{{route("set-product-wishlist")}}',product_slug,index);
 			});
 
 			$("#productWishList").on('click',function(){
-				addtobasketFunction('{{route("set-product-wishlist")}}');
+				addtobasketFunction('{{route("set-product-wishlist")}}','{{$data->slug}}','');
 			});
 			$(document).on('change','#metal-type',function(){
 				getProdVideo('onChange');
@@ -902,8 +912,7 @@
 
 		}
 
-		function addtobasketFunction(getUrl){
-
+		function addtobasketFunction(getUrl,product_slug=null,index=null){
 			let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
 			
 			let diamondCaratWeight;
@@ -947,7 +956,7 @@
 					'fingersize' : $('#finger-size').val(),
 					'metal_type' : $('#metal-type').val(),
 					'certificate' : diamondCertificate,
-					'slug' : '{{$data->slug}}',
+					'slug' : product_slug,
 					'setting_price': lab_grown_price, //parseFloat($('#price').val()) || 0;
 					'price': lab_grown_price, //parseFloat($('#price').val()) || 0;
 					'selectedDiamondPrice' : $('#getLabDiamondPrices').val(),
@@ -972,11 +981,25 @@
 							$(".cartcount").text(res.cartcount);
 						}
 						if(res.wishcount){
-							$(".wishcount").removeClass('fa-heart-o');
-							$(".wishcount").addClass('fa-heart');
+							if(index>0){
+								$('#productWishListRelated'+index).children('i').addClass('fa-heart');
+								$('#productWishListRelated'+index).children('i').removeClass('fa-heart-o');
+							}else{
+								$('#productWishList'+index).children('i').removeClass('fa-heart-o');
+								$('#productWishList'+index).children('i').addClass('fa-heart');
+							}
 						}
 						toastr.success(res.success);
 					}else{
+						if(res.error){
+							if(index>0){
+								$('#productWishListRelated'+index).children('i').removeClass('fa-heart');
+								$('#productWishListRelated'+index).children('i').addClass('fa-heart-o');
+							}else{
+								$('#productWishList'+index).children('i').removeClass('fa-heart');
+								$('#productWishList'+index).children('i').addClass('fa-heart-o');
+							}
+						}
 						toastr.info(res.error);
 					}
                 }

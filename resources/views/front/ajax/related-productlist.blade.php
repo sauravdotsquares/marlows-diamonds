@@ -5,7 +5,7 @@
             <div class="product-items-item-image">
                 <a href="{{asset('product/'.$product->slug)}}">
                     @if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
-                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}">
+                        <img loading="lazy" src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}">
                     @endif
                 </a>
             </div>
