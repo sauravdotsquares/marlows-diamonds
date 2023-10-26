@@ -308,12 +308,12 @@
 
 
 <script>
-        $(".search-selection-text").focusin(function(){
-            $('.search-suggestion').css('display','block');
-        });
-        $(".search-selection-text").focusout(function(){
-            $('.search-suggestion').css('display','none');
-        });
+        // $(".search-selection-text").focusin(function(){
+        //     $('.search-suggestion').css('display','block');
+        // });
+        // $(".search-selection-text").focusout(function(){
+        //     $('.search-suggestion').css('display','none');
+        // });
        
         let discountText = "{{$header_settings->get_options('discount-text-header')}}";
         let discountDate = "{{$header_settings->get_options('discount-date')}}";
