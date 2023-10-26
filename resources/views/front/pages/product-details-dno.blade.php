@@ -630,12 +630,19 @@
 			//getFinalPrice();
 
 			$('#addtobasket').on('click',function(){
-				addtobasketFunction('{{route("add.to.cart")}}');
+				addtobasketFunction('{{route("add.to.cart")}}','{{$data->slug}}','');
 			});
 
 			$("#productWishList").on('click',function(){
-				addtobasketFunction('{{route("set-product-wishlist")}}')
+				addtobasketFunction('{{route("set-product-wishlist")}}','{{$data->slug}}','')
 			});
+
+			$(document).on('click', "[id^=productWishListRelated]", function () {
+				var index = parseInt($(this).attr("id").replace("productWishListRelated", ''));
+				var product_slug = $('#productWishListRelated'+index).data('productslug');
+				addtobasketFunction('{{route("set-product-wishlist")}}',product_slug,index);
+			});
+
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
 				changeDescription($(this));
 				getCustomPriceFinalFunction();
@@ -762,7 +769,7 @@
             });
 		}
 
-		function addtobasketFunction(getUrl){
+		function addtobasketFunction(getUrl,product_slug=null,index=null){
             var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
 			var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
 			var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');
@@ -816,7 +823,7 @@
 					'metal_type' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
                     'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
-					'slug' : '{{$data->slug}}',
+					'slug' : product_slug,
 					'price':parseInt(trdata) || 0,
 					'rrpPrice':parseInt(rrpPrice) || 0,
 					'savePrice':parseInt(savePriceval) || 0,
@@ -832,11 +839,25 @@
 							$(".cartcount").text(res.cartcount);
 						}
 						if(res.wishcount){
-							$(".wishcount").removeClass('fa-heart-o');
-							$(".wishcount").addClass('fa-heart');
+							if(index>0){
+								$('#productWishListRelated'+index).children('i').addClass('fa-heart');
+								$('#productWishListRelated'+index).children('i').removeClass('fa-heart-o');
+							}else{
+								$('#productWishList'+index).children('i').removeClass('fa-heart-o');
+								$('#productWishList'+index).children('i').addClass('fa-heart');
+							}
 						}
 						toastr.success(res.success);
 					}else{
+						if(res.error){
+							if(index>0){
+								$('#productWishListRelated'+index).children('i').removeClass('fa-heart');
+								$('#productWishListRelated'+index).children('i').addClass('fa-heart-o');
+							}else{
+								$('#productWishList'+index).children('i').removeClass('fa-heart');
+								$('#productWishList'+index).children('i').addClass('fa-heart-o');
+							}
+						}
 						toastr.info(res.error);
 					}
                 }

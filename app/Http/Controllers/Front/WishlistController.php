@@ -54,7 +54,11 @@ class WishlistController extends Controller
             $wishlist = session()->get('wishlist', []);
 
             if(isset($wishlist[$productData->id])) {
-                return response()->json(['error'=>'Already added!']);
+                $content = new Request([
+                    'id'=>$productData->id,
+                ]);
+                $this->removeWishlist($content);
+                return response()->json(['error'=>'Removed!']);
             } else {
                 $wishlist[$productData->id] = [
                     "titleName" => $titleName,
@@ -85,7 +89,7 @@ class WishlistController extends Controller
                 unset($cart[$request->id]);
                 session()->put('wishlist', $cart);
             }
-            session()->flash('success', 'Product removed successfully');
+            session()->flash('successwishlist', 'Product removed successfully');
         }
     }
 

@@ -193,7 +193,7 @@
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
-                    <img alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif' }}">
+                    <img loading="lazy" alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif' }}">
                     <p>Loading More Products</p>
                     <button style="display: none;" class="ajax-load-btn">Load more data</button>
                 </div>
