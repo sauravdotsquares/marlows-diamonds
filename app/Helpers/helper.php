@@ -254,7 +254,7 @@ if (!function_exists('validate_breadcrumb')) {
 	if (!function_exists("getCategories")) {
     function getCategories()
 		{
-			$postcategories = PostCategory::all();
+			$postcategories = PostCategory::orderBy('name','asc')->get();
 			return ($postcategories);
 		}
 	}
