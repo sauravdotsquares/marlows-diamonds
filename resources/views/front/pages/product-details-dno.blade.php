@@ -221,7 +221,7 @@
 						<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
 					</div>
 					<div class="product-req-appointment">
-						<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+						<a type="button" class="btn-bg-small" data-bs-toggle="modal" onclick="$('label.error').css('display', 'none');return false;" data-bs-target="#requestAppointment">
 							Request an Appointment
 						</a>
 					</div>
