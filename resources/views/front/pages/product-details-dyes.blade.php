@@ -644,9 +644,8 @@
 			getCustomFilter();
 			setTimeout(function(){
 				changeDiamondType($(event.target).attr("id"));
-				
 			}, 500);
-			getCustomPriceFinalFunction();
+			// getCustomPriceFinalFunction();
 			let getDiamondType = $(this).val();
 			getSelectedDataVariation();
 			if(getDiamondType == 'lab_grown'){
@@ -778,9 +777,9 @@
 			$("#productWishList").on('click',function(){
 				addtobasketFunction('{{route("set-product-wishlist")}}','{{$data->slug}}','');
 			});
-			$(document).on('change','#metal-type',function(){
-				getProdVideo('onChange');
-			});
+			// $(document).on('change','#metal-type',function(){
+			// 	getProdVideo('onChange');
+			// });
 
 			
 
@@ -1086,7 +1085,7 @@
 			});
 			designTable += `</table>`;
 			$('#myDivChanges').html(designTable);
-			}
+		}
 
         function getRelatedProduct(){
             $.ajax({
