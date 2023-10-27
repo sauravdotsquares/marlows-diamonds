@@ -21,7 +21,7 @@ use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Category;
-use App\Models\Discount;
+use App\Models\Attributes;
 use App\Models\Popups;
 use App\Models\MarginApiRange;
 use App\Models\DiscountRange;
@@ -1845,6 +1845,19 @@ if (!function_exists("getBreadcrumbCategoryName")) {
             }
         }
         return implode(' / ',$newDesignBreadcrumb);
+    }
+}
+
+if (!function_exists("checkFingerSizeAvailable")) {
+    function checkFingerSizeAvailable($getFingerSize)
+    {
+        $getAttributeValues = Attributes::where('slug','finger-size')->select('name','slug','values')->first();
+        $getFingerSizeArray = explode("|",$getAttributeValues->values);
+        $getFingerSizeArray = array_map('trim', $getFingerSizeArray);
+        if(in_array(trim($getFingerSize),$getFingerSizeArray)){
+            return true;
+        }
+        return false;
     }
 }
     

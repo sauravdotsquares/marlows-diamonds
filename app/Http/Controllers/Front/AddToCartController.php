@@ -48,6 +48,12 @@ class AddToCartController extends Controller
 
                 $customArray = [];
                 foreach ($request->all('') as $key => $value) {
+                    if ($key == 'fingersize') {
+                        $getFingerValueVariable = checkFingerSizeAvailable($value);
+                        if($getFingerValueVariable === false){
+                            return response()->json(['error' => 'Not Match']);
+                        }
+                    }
                     $customArray[$key] = $value;
                     if (isset($key) && $key == 'jsondata') {
                         foreach ($value as $key2 => $value2) {
@@ -128,6 +134,12 @@ class AddToCartController extends Controller
                 foreach ($request->all('') as $key => $finalVal) {
                     $selectedAttributes['title'] = $productData->title;
                     $selectedAttributes[$key] = $finalVal;
+                    if ($key == 'fingersize') {
+                        $getFingerValueVariable = checkFingerSizeAvailable($value);
+                        if($getFingerValueVariable === false){
+                            return response()->json(['error' => 'Not Match']);
+                        }
+                    }
                     if ($key == 'certificatelink') {
                         // $titleHtml .= '<dt class="variation-Colour">'.ucwords($key).'</dt>';
                         // $titleHtml .= '<dd class="variation-Colour"><a href="'.$finalVal.'" target="_blank">:-View Certificate</a></dd>';
