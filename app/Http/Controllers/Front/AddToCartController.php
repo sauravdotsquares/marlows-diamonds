@@ -210,7 +210,7 @@ class AddToCartController extends Controller
                 if($key == 'Carat'){
                     $getCaratStatus = checkCaratDiamondValue($finalVal);
                     if($getCaratStatus === false){
-                        return response()->json(['error' => 'Something went wrong in Carat...']);
+                        return response()->json(['error' => 'Something went wrong...']);
                     }
                 }else if($key == 'Shape'){
                     $getDiamondShapeStatus = checkDiamondTypeValue($finalVal);
