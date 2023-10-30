@@ -1860,4 +1860,79 @@ if (!function_exists("checkFingerSizeAvailable")) {
         return false;
     }
 }
+
+if (!function_exists("checkCaratDiamondValue")) {
+    function checkCaratDiamondValue($getCaratValue)
+    {
+        $minCarat = 0.3;
+        $maxCarat = 5.0;
+        if($minCarat <= $getCaratValue && $maxCarat >= $getCaratValue){
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists("checkDiamondTypeValue")) {
+    function checkDiamondTypeValue($getDiamondType)
+    {
+        $diamondTypeArray = [
+            'ROUND','PEAR','MARQUISE','HEART','ASSCHER','PRINCESS','RADIANT','EMERALD','OVAL','CUSHION'
+        ];
+        if(in_array(strtoupper($getDiamondType),$diamondTypeArray)){
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists("checkDiamondColourValue")) {
+    function checkDiamondColourValue($getDiamondColour)
+    {
+        $diamondColourArray = [
+            'D','E','F','G','H','I','J','K'
+        ];
+        if(in_array($getDiamondColour,$diamondColourArray)){
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists("checkDiamondClarityValue")) {
+    function checkDiamondClarityValue($getDiamondClarity)
+    {
+        $diamondClarityArray = [
+            'I1','IF','SI1','SI2','VS1','VS2','VVS1','VVS2'
+        ];
+        if(in_array($getDiamondClarity,$diamondClarityArray)){
+            return true;
+        }
+        return false;
+    }
+}
+if (!function_exists("checkDiamondCutGradeValue")) {
+    function checkDiamondCutGradeValue($getDiamondCutGrade)
+    {
+        $diamondCutGradeArray = [
+            'VG','EX','GD','Excellent','Very Good','Good'
+        ];
+        if(in_array($getDiamondCutGrade,$diamondCutGradeArray)){
+            return true;
+        }
+        return false;
+    }
+}
+if (!function_exists("checkDiamondLabValue")) {
+    function checkDiamondLabValue($getDiamondLab)
+    {
+        $diamondLabArray = [
+            'GIA','IGI'
+        ];
+        if(in_array($getDiamondLab,$diamondLabArray)){
+            return true;
+        }
+        return false;
+    }
+}
     
