@@ -1422,8 +1422,9 @@ if (!function_exists('validate_breadcrumb')) {
 
         if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
             $metal_type = $requestData['metal_type'];
+            
             $query->whereHas('getProductVariation.variDetails', function ($query) use ($metal_type) {
-                $query->where('value', $metal_type);
+                $query->whereIn('value', $metal_type);
             });
         }
 
