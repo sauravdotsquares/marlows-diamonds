@@ -151,7 +151,7 @@
                     <img src="{{env('APP_IMAGE_URL').'/assets/images/top2.png'}}" alt="rating star">
                 </div>
                 <div class="whychoose-rows flex-flex-wrap flexed">
-                    <a href="javascipt:;" class="whychoose-col whychoose-link">
+                    <a href="/terms" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="{{env('APP_IMAGE_URL').'/assets/images/warranty.png'}}" alt="Lifetime Warranty">
@@ -171,7 +171,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="javascipt:;" class="whychoose-col whychoose-link">
+                    <a href="/diamond-certificates/" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="{{env('APP_IMAGE_URL').'/assets/images/favourite.png'}}" alt="70 Years Experience">
@@ -181,7 +181,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="javascipt:;" class="whychoose-col whychoose-link">
+                    <a href="/delivery-and-returns-policy" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="{{env('APP_IMAGE_URL').'/assets/images/exchange.png'}}" alt="FREE 30 Day Returns">
