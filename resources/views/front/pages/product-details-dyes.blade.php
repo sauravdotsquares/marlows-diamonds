@@ -748,7 +748,7 @@
 
 			// TODO: getSelectedAttributePrice();
 
-			$(document).on('change', "#metal-type,#finger-size,#lab_grown_carat,#lab_grown_colour,#lab_grown_clarity,#carat,#diamond-colour,#diamond-clarity,#diamond-certificate", function(){
+			$(document).on('change', "#metal-type,#finger-size,#lab_grown_carat,#lab_grown_colour,#lab_grown_clarity,#carat,#diamond-colour,#diamond-clarity,#diamond-certificate,#diamond-grade", function(){
 				getSelectedAttributePrice();
 				getProdVideo();
 				getCustomPriceFinalFunction();
@@ -1072,16 +1072,16 @@
 				let forId = $(this).find('label').attr('for');
 				let forText = $(this).find('label').text();
 				const diamondType = $('.diamond_type:checked').val();
-				if ((diamondType === 'lab_grown') && (forId === 'diamond-certificate' || forId === 'diamond-colour' || forId === 'diamond-clarity' || forId === 'carat')) {
-				} else if ((diamondType === 'mined_diamond') && (forId === 'lab_grown_carat' || forId === 'lab_grown_colour' || forId === 'lab_grown_clarity')) {
+				if ((diamondType === 'lab_grown') && (forId === 'diamond-certificate' || forId === 'diamond-colour' || forId === 'diamond-clarity' || forId === 'carat' || forId === 'diamond-grade')) {
+				} else if ((diamondType === 'mined_diamond') && (forId === 'lab_grown_carat' || forId === 'lab_grown_colour' || forId === 'lab_grown_clarity' )) {
 				} else {
-			  designTable += `
-				<tr>
-				<td>${forText}</td>
-				<td>${$('#'+forId).val()}</td>
-				</tr>
-			`;
-			}			
+					designTable += `
+						<tr>
+						<td>${forText}</td>
+						<td>${$('#'+forId).val()}</td>
+						</tr>
+					`;
+				}			
 			});
 			designTable += `</table>`;
 			$('#myDivChanges').html(designTable);
