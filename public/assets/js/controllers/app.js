@@ -12,21 +12,18 @@ var base_url = systemBaseUrl + 'api/v1/';
 MarlowsAPP.controller("CommonController",function($scope, $http,$compile) {
     
     $scope.searchProducts = function(){
-        // console.log($scope.search);
+        //console.log($scope.search);
         var url  = base_url+"searchProducts";
-        if($scope.search){
-            $http({
-                method  : 'POST',
-                url     : url,
-                data    : {name:$scope.search}
-            }).success(function(data) {
-                    // console.log(data);
-                    $('.search-suggestion').show();
-                    $scope.searchResults = data;
-            });
-        }else{
-            $('.search-suggestion').hide();
-        }
+        $http({
+            method  : 'POST',
+            url     : url,
+            data    : {name:$scope.search}
+
+        }).success(function(data) {
+           // console.log(data);
+            $scope.searchResults = data;
+            
+        });
     }
 
    
