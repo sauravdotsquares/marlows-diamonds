@@ -73,7 +73,7 @@
                 @if ( $nextPage)
                     <div class="ajax-load text-center" style="display:block">
                         <button style="display: none;" class="more-records" data-pageNo="{{$nextPage}}" >Click for more records</button>
-                        <img alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif'}}"><p>Loading More Products</p>
+                        <img loading="lazy" alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif'}}"><p>Loading More Products</p>
                     </div>
                 @endif
 

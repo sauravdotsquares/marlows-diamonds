@@ -18,7 +18,7 @@
 								$wishListClass = "fa-heart";
 							}
 						@endphp
-						<a href="javascript:void(0);" class="wishlist-heart" id="productWishList{{$product->id}}" data-productslug="{{$product->slug}}"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
+						<a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{$product->id}}" data-productslug="{{$product->slug}}"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
 			</div>
 
 			<div class="product-items-item-image">

@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="ajax-load text-center" style="display:block">
-                    <img alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif'}}"><p>Loading More Products</p>
+                    <img alt="Product loader" loading="lazy" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif'}}"><p>Loading More Products</p>
                 </div>
 
                 {!! isset($data->description)?$data->description:'' !!}

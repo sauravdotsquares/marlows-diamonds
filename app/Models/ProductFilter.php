@@ -21,6 +21,6 @@ class ProductFilter extends Model
 
 
     public function product_items(){
-        return $this->hasMany(ProductFilterItems::class, 'product_filter_id');
+        return $this->hasMany(ProductFilterItems::class, 'product_filter_id')->orderBy('item_name','asc');
     }
 }

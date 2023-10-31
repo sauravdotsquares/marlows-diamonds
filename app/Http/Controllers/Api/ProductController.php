@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Products;
 use Illuminate\Support\Arr;
+use \stdClass;
 
 
 class ProductController
@@ -111,11 +112,13 @@ class ProductController
     }
 
     public function searchProducts(Request $request){
-
-         $getSearchedData = Products::with('getProductImages')->select("title",'id','slug')
-                ->where("title","LIKE","%$request->name%")
-				->where('status',1)
-                ->get();
-        return json_encode($getSearchedData);
+		if(isset($request->name) && !empty($request->name)){
+			$getSearchedData = Products::with('getProductImages')->select("title",'id','slug')
+				   ->where("title","LIKE","%$request->name%")
+				   ->where('status',1)
+				   ->get();
+		   return json_encode($getSearchedData);
+		}
+		return response()->json(new stdClass());
     }
 }

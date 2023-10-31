@@ -303,7 +303,7 @@
 						<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
 					</div>
 					<div class="product-req-appointment">
-						<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+						<a type="button" class="btn-bg-small" onclick="$('label.error').css('display', 'none');return false;" data-bs-toggle="modal" data-bs-target="#requestAppointment">
 						Request an Appointment
 						</a>
 					</div>
@@ -644,9 +644,8 @@
 			getCustomFilter();
 			setTimeout(function(){
 				changeDiamondType($(event.target).attr("id"));
-				
 			}, 500);
-			getCustomPriceFinalFunction();
+			// getCustomPriceFinalFunction();
 			let getDiamondType = $(this).val();
 			getSelectedDataVariation();
 			if(getDiamondType == 'lab_grown'){
@@ -667,19 +666,30 @@
             // grecaptcha.reset();
         }
 
+		$.validator.addMethod("phoneno", function(phone_number, element) {
+			phone_number = phone_number.replace(/\s+/g, "");
+			return phone_number.length > 9 ;
+		}, "Please specify a valid phone number");
+
+		jQuery.validator.addMethod("lettersonly", function(value, element) {
+			return this.optional(element) || /^[a-z," "]+$/i.test(value);
+		}, "Letters and spaces only please"); 
+
 		$(document).ready(function(){
             $('form#contactForm').validate({
                 rules: {
                     title: {
-                        required: true
+                        required: true,
+						lettersonly: true
                     },
                     email: {
                         required: true,
                         email: true
                     },
-                    phone: {
-                        required: true,
-                    },
+					phone: {
+						digits: true,
+						phoneno:true
+					},
                     description: {
                         required: true,
                     }
@@ -694,6 +704,7 @@
                     },
                     phone: {
                         required: 'Phone is required',
+						digits: 'Phone is only Digits',
                     },
                     description: {
                         required: 'Description is required',
@@ -737,7 +748,7 @@
 
 			// TODO: getSelectedAttributePrice();
 
-			$(document).on('change', "#metal-type,#finger-size,#lab_grown_carat,#lab_grown_colour,#lab_grown_clarity,#carat,#diamond-colour,#diamond-clarity,#diamond-certificate", function(){
+			$(document).on('change', "#metal-type,#finger-size,#lab_grown_carat,#lab_grown_colour,#lab_grown_clarity,#carat,#diamond-colour,#diamond-clarity,#diamond-certificate,#diamond-grade", function(){
 				getSelectedAttributePrice();
 				getProdVideo();
 				getCustomPriceFinalFunction();
@@ -750,15 +761,25 @@
 			});
 
 			$('#addtobasket').on('click',function(){
-				addtobasketFunction('{{route("add.to.cart")}}');
+				addtobasketFunction('{{route("add.to.cart")}}','{{$data->slug}}','');
+			});
+
+			$(document).on('change', "[id^=productWishList]", function () {
+      			var index = parseInt($(this).attr("id").replace("attributevari", ''),'{{$data->slug}}','');
+			});
+
+			$(document).on('click', "[id^=productWishListRelated]", function () {
+				var index = parseInt($(this).attr("id").replace("productWishListRelated", ''));
+				var product_slug = $('#productWishListRelated'+index).data('productslug');
+				addtobasketFunction('{{route("set-product-wishlist")}}',product_slug,index);
 			});
 
 			$("#productWishList").on('click',function(){
-				addtobasketFunction('{{route("set-product-wishlist")}}');
+				addtobasketFunction('{{route("set-product-wishlist")}}','{{$data->slug}}','');
 			});
-			$(document).on('change','#metal-type',function(){
-				getProdVideo('onChange');
-			});
+			// $(document).on('change','#metal-type',function(){
+			// 	getProdVideo('onChange');
+			// });
 
 			
 
@@ -902,8 +923,7 @@
 
 		}
 
-		function addtobasketFunction(getUrl){
-
+		function addtobasketFunction(getUrl,product_slug=null,index=null){
 			let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
 			
 			let diamondCaratWeight;
@@ -947,7 +967,7 @@
 					'fingersize' : $('#finger-size').val(),
 					'metal_type' : $('#metal-type').val(),
 					'certificate' : diamondCertificate,
-					'slug' : '{{$data->slug}}',
+					'slug' : product_slug,
 					'setting_price': lab_grown_price, //parseFloat($('#price').val()) || 0;
 					'price': lab_grown_price, //parseFloat($('#price').val()) || 0;
 					'selectedDiamondPrice' : $('#getLabDiamondPrices').val(),
@@ -972,11 +992,25 @@
 							$(".cartcount").text(res.cartcount);
 						}
 						if(res.wishcount){
-							$(".wishcount").removeClass('fa-heart-o');
-							$(".wishcount").addClass('fa-heart');
+							if(index>0){
+								$('#productWishListRelated'+index).children('i').addClass('fa-heart');
+								$('#productWishListRelated'+index).children('i').removeClass('fa-heart-o');
+							}else{
+								$('#productWishList'+index).children('i').removeClass('fa-heart-o');
+								$('#productWishList'+index).children('i').addClass('fa-heart');
+							}
 						}
 						toastr.success(res.success);
 					}else{
+						if(res.error){
+							if(index>0){
+								$('#productWishListRelated'+index).children('i').removeClass('fa-heart');
+								$('#productWishListRelated'+index).children('i').addClass('fa-heart-o');
+							}else{
+								$('#productWishList'+index).children('i').removeClass('fa-heart');
+								$('#productWishList'+index).children('i').addClass('fa-heart-o');
+							}
+						}
 						toastr.info(res.error);
 					}
                 }
@@ -1038,20 +1072,20 @@
 				let forId = $(this).find('label').attr('for');
 				let forText = $(this).find('label').text();
 				const diamondType = $('.diamond_type:checked').val();
-				if ((diamondType === 'lab_grown') && (forId === 'diamond-certificate' || forId === 'diamond-colour' || forId === 'diamond-clarity' || forId === 'carat')) {
-				} else if ((diamondType === 'mined_diamond') && (forId === 'lab_grown_carat' || forId === 'lab_grown_colour' || forId === 'lab_grown_clarity')) {
+				if ((diamondType === 'lab_grown') && (forId === 'diamond-certificate' || forId === 'diamond-colour' || forId === 'diamond-clarity' || forId === 'carat' || forId === 'diamond-grade')) {
+				} else if ((diamondType === 'mined_diamond') && (forId === 'lab_grown_carat' || forId === 'lab_grown_colour' || forId === 'lab_grown_clarity' )) {
 				} else {
-			  designTable += `
-				<tr>
-				<td>${forText}</td>
-				<td>${$('#'+forId).val()}</td>
-				</tr>
-			`;
-			}			
+					designTable += `
+						<tr>
+						<td>${forText}</td>
+						<td>${$('#'+forId).val()}</td>
+						</tr>
+					`;
+				}			
 			});
 			designTable += `</table>`;
 			$('#myDivChanges').html(designTable);
-			}
+		}
 
         function getRelatedProduct(){
             $.ajax({

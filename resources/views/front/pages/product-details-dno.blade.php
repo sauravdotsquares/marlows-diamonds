@@ -117,7 +117,7 @@
 						</div>
 						<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
-								<source src="{{env('APP_IMAGE_URL').'storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
+								<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
 							@else
 								<source src="" type="video/mp4" type="video/mp4" />
 							@endif
@@ -221,7 +221,7 @@
 						<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to basket</a>
 					</div>
 					<div class="product-req-appointment">
-						<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+						<a type="button" class="btn-bg-small" data-bs-toggle="modal" onclick="$('label.error').css('display', 'none');return false;" data-bs-target="#requestAppointment">
 							Request an Appointment
 						</a>
 					</div>
@@ -559,20 +559,31 @@
 			}
 		}
 
+		$.validator.addMethod("phoneno", function(phone_number, element) {
+			phone_number = phone_number.replace(/\s+/g, "");
+			return phone_number.length > 9 ;
+		}, "Please specify a valid phone number");
+
+		jQuery.validator.addMethod("lettersonly", function(value, element) {
+			return this.optional(element) || /^[a-z," "]+$/i.test(value);
+		}, "Letters and spaces only please"); 
+
 		$(document).ready(function(){
 
             $('form#contactForm').validate({
                 rules: {
-                    title: {
-                        required: true
+					title: {
+                        required: true,
+						lettersonly: true
                     },
                     email: {
                         required: true,
                         email: true
                     },
-                    phone: {
-                        required: true,
-                    },
+					phone: {
+						digits: true,
+						phoneno:true
+					},
                     description: {
                         required: true,
                     }
@@ -587,6 +598,7 @@
                     },
                     phone: {
                         required: 'Phone is required',
+						digits: 'Phone is only Digits',
                     },
                     description: {
                         required: 'Description is required',
@@ -630,12 +642,19 @@
 			//getFinalPrice();
 
 			$('#addtobasket').on('click',function(){
-				addtobasketFunction('{{route("add.to.cart")}}');
+				addtobasketFunction('{{route("add.to.cart")}}','{{$data->slug}}','');
 			});
 
 			$("#productWishList").on('click',function(){
-				addtobasketFunction('{{route("set-product-wishlist")}}')
+				addtobasketFunction('{{route("set-product-wishlist")}}','{{$data->slug}}','')
 			});
+
+			$(document).on('click', "[id^=productWishListRelated]", function () {
+				var index = parseInt($(this).attr("id").replace("productWishListRelated", ''));
+				var product_slug = $('#productWishListRelated'+index).data('productslug');
+				addtobasketFunction('{{route("set-product-wishlist")}}',product_slug,index);
+			});
+
 			$(document).on('change','.type-variations-col select, .d-type-input input',function(){
 				changeDescription($(this));
 				getCustomPriceFinalFunction();
@@ -762,7 +781,7 @@
             });
 		}
 
-		function addtobasketFunction(getUrl){
+		function addtobasketFunction(getUrl,product_slug=null,index=null){
             var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
 			var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
 			var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');
@@ -816,7 +835,7 @@
 					'metal_type' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
                     'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
-					'slug' : '{{$data->slug}}',
+					'slug' : product_slug,
 					'price':parseInt(trdata) || 0,
 					'rrpPrice':parseInt(rrpPrice) || 0,
 					'savePrice':parseInt(savePriceval) || 0,
@@ -832,11 +851,25 @@
 							$(".cartcount").text(res.cartcount);
 						}
 						if(res.wishcount){
-							$(".wishcount").removeClass('fa-heart-o');
-							$(".wishcount").addClass('fa-heart');
+							if(index>0){
+								$('#productWishListRelated'+index).children('i').addClass('fa-heart');
+								$('#productWishListRelated'+index).children('i').removeClass('fa-heart-o');
+							}else{
+								$('#productWishList'+index).children('i').removeClass('fa-heart-o');
+								$('#productWishList'+index).children('i').addClass('fa-heart');
+							}
 						}
 						toastr.success(res.success);
 					}else{
+						if(res.error){
+							if(index>0){
+								$('#productWishListRelated'+index).children('i').removeClass('fa-heart');
+								$('#productWishListRelated'+index).children('i').addClass('fa-heart-o');
+							}else{
+								$('#productWishList'+index).children('i').removeClass('fa-heart');
+								$('#productWishList'+index).children('i').addClass('fa-heart-o');
+							}
+						}
 						toastr.info(res.error);
 					}
                 }

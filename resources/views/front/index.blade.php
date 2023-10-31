@@ -151,7 +151,7 @@
                     <img src="{{env('APP_IMAGE_URL').'/assets/images/top2.png'}}" alt="rating star">
                 </div>
                 <div class="whychoose-rows flex-flex-wrap flexed">
-                    <a href="javascipt:;" class="whychoose-col whychoose-link">
+                    <a href="/terms" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="{{env('APP_IMAGE_URL').'/assets/images/warranty.png'}}" alt="Lifetime Warranty">
@@ -171,7 +171,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="javascipt:;" class="whychoose-col whychoose-link">
+                    <a href="/diamond-certificates/" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="{{env('APP_IMAGE_URL').'/assets/images/favourite.png'}}" alt="70 Years Experience">
@@ -181,7 +181,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="javascipt:;" class="whychoose-col whychoose-link">
+                    <a href="/delivery-and-returns-policy" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
                                 <img src="{{env('APP_IMAGE_URL').'/assets/images/exchange.png'}}" alt="FREE 30 Day Returns">
@@ -292,16 +292,18 @@
                                     class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
                             </div>
                         </div>
-                        <div class="google-capatcha form-controls">
-                            <div class="g-recaptcha"
-                                data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
-                            </div>
-                            @if ($errors->has('g-recaptcha-response'))
-                                <div class="error">
-                                    {{ $errors->first('g-recaptcha-response') }}
+                        @if(env('APP_ENV') == 'production')
+                            <div class="google-capatcha form-controls">
+                                <div class="g-recaptcha"
+                                    data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
                                 </div>
-                            @endif
-                        </div>
+                                @if ($errors->has('g-recaptcha-response'))
+                                    <div class="error">
+                                        {{ $errors->first('g-recaptcha-response') }}
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
                         <div class="action-btn">
                             <button class="white-bg-btn" type="submit">Subscribe</button>
                         </div>
@@ -372,10 +374,15 @@
         grecaptcha.reset();
     }
 
+    jQuery.validator.addMethod("lettersonly", function(value, element) {
+        return this.optional(element) || /^[a-z," "]+$/i.test(value);
+    }, "Letters and spaces only please"); 
+
     $('form#contactForm').validate({
         rules: {
             title: {
-                required: true
+                required: true,
+                lettersonly: true
             },
             email: {
                 required: true,

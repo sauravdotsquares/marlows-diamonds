@@ -24,15 +24,15 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="ring-size-content">
+    <div class="container">
     <p>In the ancient times, the Egyptians believed that a circle represented eternity which led to the tradition of married couples wearing breaded reed rings on the ring finger of their left hand which is said to have veins connecting directly to the heart.</p>
     <p>Fast forward to 1940s that produced a viral ad campaign saying “A diamond is forever” and <a href="/engagement-rings" target="_blank">diamond engagement rings</a> became a representation of love and lifetime commitment. In fact, in today’s time, you will not see any engagement or proposal deemed complete without a <a href="/gia-certified-diamonds/" target="_blank">GIA certified diamond rin</a><strong><a href="/gia-certified-diamonds/" target="_blank">g</a></strong>&nbsp;donning the hands of the girl.</p>
 
     <p>Now since the GIA certified diamond rin<strong>gs</strong>&nbsp;could be highly valued, it becomes extremely important to select not just a ring that would be liked by your partner but also the correct size of the band. The best way to get the right size of your finger is by visiting a jeweller and getting him to measure it.</p>
 
     <p>However, we have some other methods that would help you measure the ring size at home so that you can place your ring order online with ease.</p>
-</div>
-<div class="container">
+
     <div class="ring-size-tabing">
         <h3>RING SIZE CONVERSION CHARTS</h3>
         <!-- <nav>
@@ -431,6 +431,7 @@
         <h5>Measure your UK ring size in mm before using our UK to US ring size chart to find your perfect fit in US (and Canadian) measurements.</h5>
     </div>
 </div>
+</div>
 
 <!-- <div class="printing-ring-chart">
     <div class="container">
@@ -518,38 +519,36 @@
                 </div>
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
+                        <div class="sizing-tip-desc-head">
                         <span><img src="{{env('APP_IMAGE_URL').'/assets/images/engage-ring-1.png'}}" alt=""></span>
                         <p><strong>Method 1: Refer a Perfectly Fitting Ring</strong></p>
+                    </div>
                        
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><em>Things You Need:</em></p>
+                                <div class="sizing-tip-box-inner">
+                                    <h5>Things You Need:</h5>
                                     <ul>
                                         <li>A ring that fits the engagement ring finger</li>
                                         <li>A measuring ruler</li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
-                                    <p><em>How to Measure:</em></p>
+                                <div class="sizing-tip-box-inner">
+                                    <h5>How to Measure:</h5>
                                     <ul>
                                         <li>Measure the internal diameter of the ring (excluding the metal part) in millimetres.</li>
                                         <li>Use the size conversion chart available on the jeweller's website to know the right size of your ring.</li>
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
                         <p>This is one of the simplest methods to measure the size of the ring.</p>
                     </div>
                 </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
+                        <div class="sizing-tip-desc-head">
                         <span><img src="{{env('APP_IMAGE_URL').'/assets/images/enage-ring-3.jpg'}}" alt=""></span>
-                        <div class="container">
                             <p><strong>Method 2: Use a Floss or String</strong></p>
-                            <div class="row">
-                                <div class="col-md-6">
+                        </div>
+                                <div class="sizing-tip-box-inner">
                                     <h5>Things You Need:</h5>
                                     <ul>
                                         <li>Floss or String</li>
@@ -557,7 +556,7 @@
                                         <li>Marker or Pen</li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="sizing-tip-box-inner">
                                     <h5>How to Measure:</h5>
                                     <ul>
                                         <li>Cut a 6-inch long floss or string.</li>
@@ -569,26 +568,24 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                         </div>
 
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
+                        <div class="sizing-tip-desc-head">
                         <span><img src="{{env('APP_IMAGE_URL').'/assets/images/engage-ring-2.png'}}" alt=""></span>
                         <p><strong>Method 3: Use a Paper Strip</strong></p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><em>Things You Need:</em></p>
+                    </div>
+                                <div class="sizing-tip-box-inner">
+                                    <h5>Things You Need:</h5>
                                     <ul>
                                         <li>A paper strip</li>
                                         <li>A measuring ruler</li>
                                         <li>Marker or Pen</li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
-                                    <p><em>How to Measure:</em></p>
+                                <div class="sizing-tip-box-inner">
+                                    <h5>How to Measure:</h5>
                                     <ul>
                                         <li>Cut a 100-millimetre long thin paper strip.</li>
                                         <li>Roll the paper around the base (just below the knuckles) of the ring finger.</li>
@@ -598,8 +595,6 @@
                                         <li>Use the size conversion chart available on the jeweller’s website to know the right size of your ring.</li>
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

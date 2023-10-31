@@ -594,7 +594,7 @@
 							<a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">
 								Add to basket
 							</a>
-							<a type="button" class="btn-bg-small" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+							<a type="button" class="btn-bg-small" onclick="$('label.error').css('display', 'none');return false;" data-bs-toggle="modal" data-bs-target="#requestAppointment">
 								Request an Appointment
 							</a>
 						</div>
@@ -721,20 +721,30 @@
 		event.preventDefault();
 	}
 
+	$.validator.addMethod("phoneno", function(phone_number, element) {
+		phone_number = phone_number.replace(/\s+/g, "");
+		return phone_number.length > 9 ;
+	}, "Please specify a valid phone number");
+
+	jQuery.validator.addMethod("lettersonly", function(value, element) {
+		return this.optional(element) || /^[a-z," "]+$/i.test(value);
+	}, "Letters and spaces only please"); 
 
 	jQuery(document).ready(function($){
 
 		$('form#contactForm').validate({
 			rules: {
 				title: {
-					required: true
+					required: true,
+					lettersonly: true
 				},
 				email: {
 					required: true,
 					email: true
 				},
 				phone: {
-					required: true,
+					digits: true,
+					phoneno:true
 				},
 				description: {
 					required: true,
@@ -750,6 +760,7 @@
 				},
 				phone: {
 					required: 'Phone is required',
+					digits: 'Phone is only Digits',
 				},
 				description: {
 					required: 'Description is required',

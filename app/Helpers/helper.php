@@ -21,7 +21,7 @@ use App\Models\Products;
 use App\Models\InstagramData;
 use App\Models\Masters;
 use App\Models\Category;
-use App\Models\Discount;
+use App\Models\Attributes;
 use App\Models\Popups;
 use App\Models\MarginApiRange;
 use App\Models\DiscountRange;
@@ -254,7 +254,7 @@ if (!function_exists('validate_breadcrumb')) {
 	if (!function_exists("getCategories")) {
     function getCategories()
 		{
-			$postcategories = PostCategory::all();
+			$postcategories = PostCategory::orderBy('name','asc')->get();
 			return ($postcategories);
 		}
 	}
@@ -1422,8 +1422,9 @@ if (!function_exists('validate_breadcrumb')) {
 
         if (!empty($requestData['metal_type']) && $requestData['metal_type'] != 'undefined') {
             $metal_type = $requestData['metal_type'];
+            
             $query->whereHas('getProductVariation.variDetails', function ($query) use ($metal_type) {
-                $query->where('value', $metal_type);
+                $query->whereIn('value', $metal_type);
             });
         }
 
@@ -1836,12 +1837,103 @@ if (!function_exists("getBreadcrumbCategoryName")) {
         foreach($breadcrumbArray as $key => $value){
             $getCategoryName = Category::where('slug',$value)->value('name');
             if(count($breadcrumbArray) >= $key){
-
                 $breadcrumbDesign .= "/".$value;
             }
-            $newDesignBreadcrumb[$key] = '<a href="'.$breadcrumbDesign.'">'.$getCategoryName.'</a>';
+            if(!next($breadcrumbArray)) {
+                $newDesignBreadcrumb[$key] = '<a href="javascript:void(0);">'.$getCategoryName.'</a>';
+            }else{
+                $newDesignBreadcrumb[$key] = '<a href="'.$breadcrumbDesign.'">'.$getCategoryName.'</a>';
+            }
         }
         return implode(' / ',$newDesignBreadcrumb);
+    }
+}
+
+if (!function_exists("checkFingerSizeAvailable")) {
+    function checkFingerSizeAvailable($getFingerSize)
+    {
+        $getAttributeValues = Attributes::where('slug','finger-size')->select('name','slug','values')->first();
+        $getFingerSizeArray = explode("|",$getAttributeValues->values);
+        $getFingerSizeArray = array_map('trim', $getFingerSizeArray);
+        if(in_array(trim($getFingerSize),$getFingerSizeArray)){
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists("checkCaratDiamondValue")) {
+    function checkCaratDiamondValue($getCaratValue)
+    {
+        $minCarat = 0.3;
+        $maxCarat = 5.0;
+        if($minCarat <= $getCaratValue && $maxCarat >= $getCaratValue){
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists("checkDiamondTypeValue")) {
+    function checkDiamondTypeValue($getDiamondType)
+    {
+        $diamondTypeArray = [
+            'ROUND','PEAR','MARQUISE','HEART','ASSCHER','PRINCESS','RADIANT','EMERALD','OVAL','CUSHION'
+        ];
+        if(in_array(strtoupper($getDiamondType),$diamondTypeArray)){
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists("checkDiamondColourValue")) {
+    function checkDiamondColourValue($getDiamondColour)
+    {
+        $diamondColourArray = [
+            'D','E','F','G','H','I','J','K'
+        ];
+        if(in_array($getDiamondColour,$diamondColourArray)){
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists("checkDiamondClarityValue")) {
+    function checkDiamondClarityValue($getDiamondClarity)
+    {
+        $diamondClarityArray = [
+            'I1','IF','SI1','SI2','VS1','VS2','VVS1','VVS2'
+        ];
+        if(in_array($getDiamondClarity,$diamondClarityArray)){
+            return true;
+        }
+        return false;
+    }
+}
+if (!function_exists("checkDiamondCutGradeValue")) {
+    function checkDiamondCutGradeValue($getDiamondCutGrade)
+    {
+        $diamondCutGradeArray = [
+            'VG','EX','GD','Excellent','Very Good','Good'
+        ];
+        if(in_array($getDiamondCutGrade,$diamondCutGradeArray)){
+            return true;
+        }
+        return false;
+    }
+}
+if (!function_exists("checkDiamondLabValue")) {
+    function checkDiamondLabValue($getDiamondLab)
+    {
+        $diamondLabArray = [
+            'GIA','IGI'
+        ];
+        if(in_array($getDiamondLab,$diamondLabArray)){
+            return true;
+        }
+        return false;
     }
 }
     
