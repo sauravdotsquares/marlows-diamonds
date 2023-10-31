@@ -16,7 +16,7 @@
 			</li>
 			<li>
 				{{--  Change after SEO discuss 05Jan2023 seo_change --}}
-				<a href="{{asset('blog/'.$data->slug)}}">{{isset($data->title)?$data->title:'Title'}}</a>
+				{{isset($data->title)?$data->title:'Title'}}
 			</li>
 
 		</ul>
