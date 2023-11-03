@@ -48,7 +48,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="{{ asset('product-category/diamond-jewellery') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/diamond-jewellery.png'}}" alt="Diamond Jewellery"></a>
+                                <a href="{{ asset('/diamond-jewellery') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/diamond-jewellery.png'}}" alt="Diamond Jewellery"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -59,7 +59,7 @@
                                     most special moments.
                                 </div>
                                 <div class="product-action-btn">
-                                    <a class="btn-bg-small" href="{{ asset('product-category/diamond-jewellery') }}">Shop
+                                    <a class="btn-bg-small" href="{{ asset('/diamond-jewellery') }}">Shop
                                         Now</a>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="{{ asset('product-category/wedding-rings') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/wedding-ring.png'}}" alt="Wedding Rings"></a>
+                                <a href="{{ asset('/wedding-rings') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/wedding-ring.png'}}" alt="Wedding Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -98,7 +98,7 @@
                                     from our collection.
                                 </div>
                                 <div class="product-action-btn">
-                                    <a class="btn-bg-small" href="{{ asset('product-category/wedding-rings') }}">Shop
+                                    <a class="btn-bg-small" href="{{ asset('/wedding-rings') }}">Shop
                                         Now</a>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="{{ asset('product-category/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
-                                        href="{{ asset('product-category/engagement-rings/multi-stone') }}">Shop Now</a>
+                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
                                 </div>
                             </div>
                         </div>
