@@ -1676,6 +1676,7 @@ class ProductController extends Controller
             }
 
             $data = $categoryData;
+            $pageData = Pages::where('slug','engagement-rings')->where(['status'=>1, 'is_deleted'=>0])->first();
             return view('front.pages.product_listing_page', compact([
                 'filterItemTextData',
                 'productItems',
@@ -1685,6 +1686,7 @@ class ProductController extends Controller
                 'filter_items',
                 'categoryData',
                 'data',
+                'pageData',
                 'path',
                 'slugs'
             ]));
