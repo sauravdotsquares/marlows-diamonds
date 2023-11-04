@@ -346,7 +346,7 @@ input.input-control{height:38px}
 .product-filter-col:first-child {border-right: 2px solid #EFEFEF;max-width: 45%;flex: 0 0 45%;-ms-flex: 0 0 45%;}
 
 /*filter design css*/
-p.burgarmenu {padding: 0 15px;margin-top: 30px;}
+p.burgarmenu {padding: 0 15px;margin-top: 0px;}
 p.burgarmenu a {color: #000; text-decoration: none;}
 p.burgarmenu span {color: #8e2e65;}
 .category-sidebar-wrap .sortmobile {display: none;}
@@ -1176,7 +1176,7 @@ del#shopPrice {margin-right: 5px;}
 .product-panel-new .accordion-body {padding: 0 15px;}
 .product-panel-new .srchniput-fil span {font-size: 13px;background: #ffff;position: absolute;left: 8px;top: -22px;padding: 0px 4px;display: inline-block;}
 .product-panel-new .nav-toggle {display: none;}
-.product-panel-new .policysection{margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;}
+.product-panel-new .policysection{margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;margin-bottom: 50px;}
 .product-panel-new .policyheading{color: #8e2e65;font-weight: bold;text-transform: capitalize;font-size: 13px;}
 .product-panel-new .policy0icon{border: 1px solid #8e2e65;padding: 7px 1px 0px;width: 24%;text-align: center;border-radius: 10px;}
 .product-panel-new .policyimg{width: 50px;margin: 0 0 11px;}
