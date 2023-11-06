@@ -317,7 +317,7 @@
 <!-- CHoose a dreamy end here-->
 @if(isset($url) && $url == 'diamond-engagement-rings')
 <!-- Banner Text Section-->
-<div class="findmatch-wrap">
+<div class="findmatch-wrap perfect-ring-guidepartner">
 	<div class="container">
 		<div class="leftright-img-text-wraper">
 			<div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
