@@ -83,7 +83,7 @@
     </div>
 
     <!-- Bottom to top -->
-    <div class="botto-to-top">
+    <div class="botto-to-top" style="display:none;">
         <div class="container">
             <span id="scroll-to-top"><i class="fa fa-angle-up" aria-hidden="true"></i></span>
         </div>
