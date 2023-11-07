@@ -24,18 +24,26 @@ class PageController
     {
         
         if($slug!=null){
-
-
+            
+            
             $pageData = Pages::where('slug',$slug)->where(['status'=>1, 'is_deleted'=>0])->first();
             $pageCategory = PostCategory::where('slug',$slug)->first();
             $productCategories = Category::where('slug',$slug)->first();
-            
+           
             if($pageData){
+                if($pageData->slug == 'engagement-rings'){
+                    $redirectTo = route('page', '/diamond-engagement-rings');
+                    return redirect($redirectTo, 302);
+                }
                 /** Slug belongs to page */
                 return view('front.pages.templates.'.$pageData->template.'',['data'=>$pageData]);//,'showdata'=>$blogdata]);
             }elseif($pageCategory){
                 /** Slug belongs to blog Category */
-                $redirectTo = route('blog_list', $pageCategory->slug);
+                if($pageCategory->slug == 'diamond-engagement-ring'){
+                    $redirectTo = route('page', '/diamond-engagement-rings');
+                }else{
+                    $redirectTo = route('blog_list', $pageCategory->slug);
+                }
                 return redirect($redirectTo, 301);
             }elseif($productCategories){
                 $productController = new ProductController();
