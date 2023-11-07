@@ -1681,6 +1681,7 @@ class ProductController extends Controller
                 'filterItemTextData',
                 'productItems',
                 'product_count',
+                'productListingData',
                 'isNextPage',
                 'nextPage',
                 'filter_items',

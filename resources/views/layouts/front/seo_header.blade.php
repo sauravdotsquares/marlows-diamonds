@@ -5,7 +5,13 @@
   <link rel="alternate" href="https://marlows-diamonds.co.uk/" hreflang="en-gb" />
 
 {{-- OG Canonical --}}
-<link rel="canonical" href="{{url()->current()}}" />
+<link rel="canonical" href="{{request()->fullUrl()}}" />
+@if(isset($productListingData['previous_url']) && !empty($productListingData['previous_url']))
+  <link rel="prev" href="{{$productListingData['previous_url']}}" />
+@endif
+@if(isset($productListingData['next_url']) && !empty($productListingData['next_url']))
+  <link rel="next" href="{{$productListingData['next_url']}}" />
+@endif
 
 {{-- OG Tags --}}
 <meta property="og:locale" content="en_GB" />
