@@ -1464,6 +1464,8 @@ if (!function_exists('validate_breadcrumb')) {
             'isNextPage' => $isNextPage,
             'nextPage' => $nextPage,
             'product_count'=> $getProductListFinal->count(),
+            'previous_url'=> $getProductListFinal->previousPageUrl(),
+            'next_url'=> $getProductListFinal->nextPageUrl(),
             'categoryData' => $categoryData
         ];
     }
