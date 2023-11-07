@@ -101,7 +101,7 @@
 
 @yield('js')
 <script>
-
+  
 
 
   $(document).ready(function(){
@@ -157,10 +157,12 @@
 </script>
 <script>
     $(window).scroll(function(){
-        if ($(this).scrollTop() > 50) {
+        if ($(this).scrollTop() >= 50) {
            $('.header-main').addClass('sticky-header');
+            $('.botto-to-top').fadeIn(200);    // Fade in the arrow
         } else {
            $('.header-main').removeClass('sticky-header');
+           $('.botto-to-top').fadeOut(200);   // Else fade out the arrow
         }
     });
 </script>

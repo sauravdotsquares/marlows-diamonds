@@ -346,7 +346,7 @@ input.input-control{height:38px}
 .product-filter-col:first-child {border-right: 2px solid #EFEFEF;max-width: 45%;flex: 0 0 45%;-ms-flex: 0 0 45%;}
 
 /*filter design css*/
-p.burgarmenu {padding: 0 15px;margin-top: 30px;}
+p.burgarmenu {padding: 0 15px;margin-top: 0px;}
 p.burgarmenu a {color: #000; text-decoration: none;}
 p.burgarmenu span {color: #8e2e65;}
 .category-sidebar-wrap .sortmobile {display: none;}
@@ -602,6 +602,9 @@ label.label {display: block;margin: 0 0 5px 0;}
 /** Engagement ring page **/
 .journery-life-wraper {text-align: center;margin: 50px 0 60px 0;}
 .journery-life-wraper p {color: #3B3B3B;font-size: 15px;max-width: 1070px;margin: 0 auto 17px auto;line-height: 24px;}
+
+.engagement-ringtwo-bnner .leftright-img-text-wraper .leftright-imt-rows {margin: 0 0 45px;}
+
 .engagement-ringtwo-bnner .leftright-img-text-wraper{ margin: 0; }
 .findmatch-wrap .leftright-img-text-wraper {margin: 0;}
 .choosedreamy-wrap {padding: 40px 0 70px 0;}
@@ -1176,7 +1179,7 @@ del#shopPrice {margin-right: 5px;}
 .product-panel-new .accordion-body {padding: 0 15px;}
 .product-panel-new .srchniput-fil span {font-size: 13px;background: #ffff;position: absolute;left: 8px;top: -22px;padding: 0px 4px;display: inline-block;}
 .product-panel-new .nav-toggle {display: none;}
-.product-panel-new .policysection{margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;}
+.product-panel-new .policysection{margin-top: 20px;display: flex;flex-wrap: wrap;justify-content: space-between;margin-bottom: 50px;}
 .product-panel-new .policyheading{color: #8e2e65;font-weight: bold;text-transform: capitalize;font-size: 13px;}
 .product-panel-new .policy0icon{border: 1px solid #8e2e65;padding: 7px 1px 0px;width: 24%;text-align: center;border-radius: 10px;}
 .product-panel-new .policyimg{width: 50px;margin: 0 0 11px;}
@@ -1523,6 +1526,12 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .modal.guide-mode .modal-dialog .modal-content .modal-footer {display: none;}
 .modal.guide-mode .modal-dialog .modal-content .modal-header button.btn-close:focus {box-shadow: none;}
 
+.botto-to-top {position: fixed;bottom: 64px;right: 41px;z-index: 999; border: none; padding: 0;}
+.botto-to-top #scroll-to-top {color: #fff;font-size: 32px;cursor: pointer;background: #742251;width: 40px;
+height: 40px;display: inline-block;border-radius: 50px;}
+.botto-to-top #scroll-to-top i.fa.fa-angle-up {line-height: 37px;}
+
+
 @media(max-width:1400px){
 	.post-bar .post-bar-center p {
 		font-size: 12px;
@@ -1558,6 +1567,10 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {left: -53px;}
 .blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {right: -53px;}
 /*engagement ring blog slider css end*/
+
+/** Engagement ring page **/
+.leftright-imt-col.leftright-text h2 {font-size: 23px;}
+/** Engagement ring page end**/
 
 .footer-social a {margin: 0 7px 0 0;}
 
@@ -1611,6 +1624,8 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 /*ring size guide css*/
 .guide-secret h2 a{ display: block;}
 /*ring size guide css end*/
+
+.engagement-ringtwo-bnner .leftright-img-text-wraper .leftright-imt-rows .leftright-text {padding-top: 40px;padding-bottom: 40px;}
 }
 
 
@@ -1645,6 +1660,10 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .defaultpages-wrap iframe.note-video-clip {width: 100%;}
 /*diamond-education css end*/
 
+/** Engagement ring page **/
+.perfect-ring-guidepartner .leftright-imt-rows .leftright-text {order: 2;}
+/** Engagement ring page end**/
+
 /*engagement ring blog slider css*/
 .best-selling-marlows-blog {padding: 0 0px;}
 .blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {left: 0;}
@@ -1656,6 +1675,8 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .payment-cc-details-values { width: 100%;}
 /** checkout **/
 .guide-secret h2{ font-size:24px; }
+
+.botto-to-top{right: 0;}
 }
 
 @media(max-width:575px){

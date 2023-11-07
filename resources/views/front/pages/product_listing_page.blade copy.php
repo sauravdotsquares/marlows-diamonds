@@ -9,8 +9,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 @endsection
+<?php 
+    // echo "fdsfafdsfds <pre>";
+    // print_r($categoryData);
+    // die;
 
-
+?>
+<!-- header banner start -->
 <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
     <div class="container">
         <div class="category-banner-text">
@@ -19,7 +24,10 @@
         </div>
     </div>
 </div>
+<!-- header banner end -->
+
 <div class="container product-panel-new">
+
     <div class="row">
         <div class="col-sm-12">
             <p class="burgarmenu">
@@ -36,121 +44,37 @@
                 </span>
             </p>
 
-            @if(isset($url) && $url == 'diamond-engagement-rings')
-            <!-- Choose a dreamy start here-->
-            <div class="choosedreamy-wrap">
-                <div class="container">
-                    <div class="head-para-three">
-                        <h2 class="heading-h-three">Choose A Dream Setting for Your Engagement Ring</h2>
-                    </div>
-                    <div class="rings-grid-wrap">
-                        <div class="row">
-                            <div class="col-lg-3 col-sm-6 col-md-3">
-                                <div class="ring-pr-items">
-                                    <div class="ring-pr-image">
-                                        <a href="/engagement-rings/solitaire"><img src="{{env('APP_IMAGE_URL').'/assets/images/CR10-SE45_0003.jpg'}}" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
-                                    </div>
-                                    <div class="ring-pr-details">
-                                        <h3 class="ring-pr-title">
-                                            SOLITAIRE ENGAGEMENT RINGS
-                                        </h3>
-                                        <div class="ring-pr-desc">
-                                            <p>Solitaire rings are classics for a reason. Their single stone setting exudes beauty like no other with a jaw-dropping centrepiece. This is the best of all diamond engagement rings if you want a flashy simple design.</p>
-                                        </div>
-                                        <div class="ring-pr-shop-btn">
-                                            <a class="btn-bg-small" href="/engagement-rings/solitaire">Shop Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-md-3">
-                                <div class="ring-pr-items">
-                                    <div class="ring-pr-image">
-                                        <a href="/engagement-rings/halo/"><img src="{{env('APP_IMAGE_URL').'/assets/images/DSR21-Images_0003.jpg'}}" alt="HALO ENGAGEMENT RINGS"></a>
-                                    </div>
-                                    <div class="ring-pr-details">
-                                        <h3 class="ring-pr-title">
-                                            HALO ENGAGEMENT RINGS
-                                        </h3>
-                                        <div class="ring-pr-desc">
-                                            <p>Halo rings are solitaires made better! Complimented by a halo of smaller diamonds, the centre stone looks gorgeous in every way. If you love solitaires but want something extra, then this is the diamond ring for you.</p>
-                                        </div>
-                                        <div class="ring-pr-shop-btn">
-                                            <a class="btn-bg-small" href="/engagement-rings/halo/">Shop Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-md-3">
-                                <div class="ring-pr-items">
-                                    <div class="ring-pr-image">
-                                        <a href="/engagement-rings/shoulder-set/"><img src="{{env('APP_IMAGE_URL').'/assets/images/CX9-SL28_00003-1.jpg'}}" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
-                                    </div>
-                                    <div class="ring-pr-details">
-                                        <h3 class="ring-pr-title">
-                                            SHOULDER SET ENGAGEMENT RINGS
-                                        </h3>
-                                        <div class="ring-pr-desc">
-                                            <p>Want more sparkle? Go for shoulder set rings with a band of encrusted diamonds that make your ring all the more special. A dazzling solitaire with little diamonds along the way can make all the difference.</p>
-                                        </div>
-                                        <div class="ring-pr-shop-btn">
-                                            <a class="btn-bg-small" href="/engagement-rings/shoulder-set/">Shop Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-sm-6 col-md-3">
-                                <div class="ring-pr-items">
-                                    <div class="ring-pr-image">
-                                        <a href="/engagement-rings/multi-stone/"><img src="{{env('APP_IMAGE_URL').'/assets/images/R3-143_0003.jpg'}}" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
-                                    </div>
-                                    <div class="ring-pr-details">
-                                        <h3 class="ring-pr-title">
-                                            MULTI-STONE ENGAGEMENT RINGS
-                                        </h3>
-                                        <div class="ring-pr-desc">
-                                            <p>Why stop at one when you can have many? Make a statement with diamond engagement rings in multi-stone settings. Unique styles and combinations are waiting for you.</p>
-                                        </div>
-                                        <div class="ring-pr-shop-btn">
-                                            <a class="btn-bg-small" href="/engagement-rings/multi-stone/">Shop Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="&#xF002; Search for product" aria-label="Search">
 
             <center>
-                <!-- <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3> -->
+                <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3>
             </center>
 
-            @else
-                <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
-                    @foreach ($filter_items as $filter_key => $filter_item)
-                        @if($filter_item->slug == 'style-categories')
-                            @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
-                                <div class="item">
-                                    @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
-                                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product_item_item->category_images }}" >
-                                    @else
-                                        <img src="{{env('APP_IMAGE_URL').'/storage/Products/CX9-SC48_00003_1650365432.jpg'}}"> 
-                                    @endif
-                                    <p> <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a></p>
-                                </div>
-                            @endforeach
-                        @endif
-                    @endforeach
-                </div>
-            @endif
+            <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
+                @foreach ($filter_items as $filter_key => $filter_item)
+                    
+
+                    @if($filter_item->slug == 'style-categories')
+                        @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
+                            <div class="item">
+                                
+                                @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
+                                    <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product_item_item->category_images }}" >
+                                @else
+                                    <img src="{{env('APP_IMAGE_URL').'/storage/Products/CX9-SC48_00003_1650365432.jpg'}}"> 
+                                @endif
+                                <p> <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a></p>
+                            </div>
+                        @endforeach
+                    @endif
+
+                @endforeach
+
+            </div>
+            <div>
+            </div>
         </div>
     </div>
-
-    
-
 
 
 <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
@@ -312,54 +236,8 @@
         <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/return.jpg'}}"class="policyimg"><h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
     </div>
 </div>
-
-
-<!-- CHoose a dreamy end here-->
-@if(isset($url) && $url == 'diamond-engagement-rings')
-<!-- Banner Text Section-->
-<div class="findmatch-wrap perfect-ring-guidepartner">
-	<div class="container">
-		<div class="leftright-img-text-wraper">
-			<div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
-				
-				<div class="leftright-imt-col leftright-text">
-					<h2 class="leftright-heading heading-h-three">
-						Find Your Perfect Ring for Your Partner
-					</h2>
-					<p>Once you've found your perfect match, you should choose the perfect engagement ring that suits her personality and look. We bring to you a curated assortment of diamond engagement rings in the most beautiful designs, stone settings, diamond shapes, and ring sizes.</p>
-					<p>Our diamond engagement rings are fully natural and unique, designed in our lab. We only use ethically sourced diamonds in our engagement rings. Additionally, we offer diamonds that are graded by the GIA, so you can be confident that they are of high quality. Adorning our sparkling stones will bring you joy and warmth for the rest of your lives.</p>
-					<div class="viewguide-btn">
-						<a class="btn-bg-small" href="/diamond-engagement-rings">Shop Now</a>
-					</div>
-				</div>
-                <div class="leftright-imt-col leftright-img">
-					<img src="{{env('APP_IMAGE_URL').'/assets/images/banner-hand.jpg'}}" alt="banner-hand">
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<!-- Best Selling Marlow's Diamond Jewellery start here -->
-<!-- Best Selling Marlow's Diamond Jewellery end here -->
-
-<!-- Your Journery of a lifetime start here start-->
-<div class="journery-life-wraper">
-	<div class="container">
-		{!! isset($pageData->description)?$pageData->description:"" !!}
-	</div>
-</div>
-<!-- Your Journery of a lifetime start here end-->
-
-<!-- Best Post Carousel Block start here -->
-@include('front.includes.postcarouselblock')
-<!-- Best Post Carousel Block start here -->
-
 <!-- FAQ Section start here -->
 
-
-
-@endif
 <!-- Section Reviews -->
 <div class="container">
     <div class="rating-review-block">
@@ -374,7 +252,7 @@
     <div class="container">
         <div class="head-para-three">
             <h2 class="heading-h-three">
-                Engagement Ring FAQ’s
+                Engagement Ring FAQ's
             </h2>
             <h3 style="font-size: 15px;">Some of the most common Engagement Ring Q&A's</h3>
         </div>
@@ -414,6 +292,17 @@
     </div>
 </div>
 
+<!-- FAQ Section end here -->
+
+<!-- Section Reviews -->
+<div class="container">
+	<div class="rating-review-block">
+		<div class="owl-carousel owl-theme slider-review">
+			@include('front.pages.reviews')
+		</div>
+	</div>
+</div>
+
 @include('front.includes.instagram-section')
 <div class="engagement-ring-img">
     <img src="{{env('APP_IMAGE_URL').'/images/viewguide.PNG'}}">
@@ -426,6 +315,9 @@
 </div>
 
 </div>
+
+
+
 @endsection
 @section('js')
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
