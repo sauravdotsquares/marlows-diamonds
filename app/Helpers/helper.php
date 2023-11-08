@@ -1448,6 +1448,13 @@ if (!function_exists('validate_breadcrumb')) {
         // echo "checked ".$query->toSql();die;
         $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
 
+        if($getProductListFinal->currentPage() > $getProductListFinal->lastPage()){
+            return [
+                'status' => 404,
+                'page_status'=> 1,
+                'redirect_url'=> $getProductListFinal->path()
+            ];
+        }
 
         $productItems = "";
         if ($getProductListFinal->count()) {
