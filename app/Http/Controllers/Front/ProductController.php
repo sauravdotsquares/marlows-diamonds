@@ -1504,7 +1504,7 @@ class ProductController extends Controller
             'my-account',
             'products/cart',
             'products/wishlist',
-            '/users/forget-password',
+            'users/forget-password',
         ];
 
         $categorySitemap = $this->categoriesSitemap();
@@ -1514,7 +1514,7 @@ class ProductController extends Controller
             if (!empty($category_value)) {
                 $categoryItem = explode('@', $category_value);
                 $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
-                $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') . '/product-category/' . $categoryUrl;
+                $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') .'/'. $categoryUrl;
                 $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
             }
         }
@@ -1606,7 +1606,7 @@ class ProductController extends Controller
             if (!empty($category_value)) {
                 $categoryItem = explode('@', $category_value);
                 $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
-                $categoryUrlsList[$category_key]['url'] = url('product-category/' . $categoryUrl);
+                $categoryUrlsList[$category_key]['url'] = url($categoryUrl);
                 $categoryUrlsList[$category_key]['name'] = $categoryItem[1];
             }
         }
@@ -1637,6 +1637,9 @@ class ProductController extends Controller
         $path =  $request->path();
         $slugs = explode('/', $path);
         $productListingData = getProductListing($slugs, request()->all());
+        if($productListingData['status'] == 404){
+            return redirect($productListingData['redirect_url']);
+        }
         if (!empty($productListingData)) {
 
             $productItems = $productListingData['productItems'];
