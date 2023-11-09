@@ -1496,7 +1496,7 @@ class ProductController extends Controller
         $products = Products::select('slug', 'updated_at')->groupBy('slug')->get();
         $posts = Posts::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
         $posts_categories = PostCategory::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
-        $pages = Pages::select('slug', 'updated_at')->groupBy('slug')->where(['status' => 1, 'is_deleted' => 0])->get();
+        $pages = Pages::select('slug', 'updated_at')->groupBy('slug')->where('slug', '!=', 'engagement-rings')->where(['status' => 1, 'is_deleted' => 0])->get();
 
         $otherPages = [
             'product/wishlist',
@@ -1513,12 +1513,13 @@ class ProductController extends Controller
         foreach ($dataOfCategories as $category_key => $category_value) {
             if (!empty($category_value)) {
                 $categoryItem = explode('@', $category_value);
-                $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
-                $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') .'/'. $categoryUrl;
-                $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
+                if($categoryItem[0] !== 'engagement-rings'){
+                    $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
+                    $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') .'/'. $categoryUrl;
+                    $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
+                }
             }
         }
-
         return response()->view('front.sitemap', [
             'products' => $products,
             'posts' => $posts,
@@ -1535,8 +1536,13 @@ class ProductController extends Controller
 
         $rows = Category::select(['name', 'title', 'id', 'parent_id', 'slug', 'updated_at'])
             ->where('slug', '!=', 'all-products')
-            ->where('status',1)
             ->where('parent_id', $level)->get();
+
+        // echo "asdf gajendrasfad<pre>";
+        // print_r(count($rows));
+        // // print_r($rows);
+        // die;
+
         $html = '';
         if ($rows->count()) {
             $rows = $rows->toArray();
