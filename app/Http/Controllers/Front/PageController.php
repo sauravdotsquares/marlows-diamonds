@@ -29,29 +29,29 @@ class PageController
             $pageData = Pages::where('slug',$slug)->where(['status'=>1, 'is_deleted'=>0])->first();
             $pageCategory = PostCategory::where('slug',$slug)->first();
             $productCategories = Category::where('slug',$slug)->first();
-           
+            if ($pageCategory->slug == 'engagement-rings'){
+                $redirectTo = route('page', '/diamond-engagement-rings');
+                return redirect($redirectTo, 302);
+            }
             if($pageData){
-                if($pageData->slug == 'engagement-rings'){
-                    $redirectTo = route('page', '/diamond-engagement-rings');
-                    return redirect($redirectTo, 302);
-                }
+                // if($pageData->slug == 'engagement-rings'){
+                //     $redirectTo = route('page', '/diamond-engagement-rings');
+                //     return redirect($redirectTo, 302);
+                // }
                 /** Slug belongs to page */
                 return view('front.pages.templates.'.$pageData->template.'',['data'=>$pageData]);//,'showdata'=>$blogdata]);
             }elseif($pageCategory){
                 /** Slug belongs to blog Category */
                 if($pageCategory->slug == 'diamond-engagement-ring'){
                     $redirectTo = route('page', '/diamond-engagement-rings');
-                } else if ($pageCategory->slug == 'engagement-rings'){
-                    $redirectTo = route('page', '/diamond-engagement-rings');
-                    return redirect($redirectTo, 302);
                 } else {
                     $redirectTo = route('blog_list', $pageCategory->slug);
                 }
                 return redirect($redirectTo, 301);
-            }elseif($productCategories){
+            } else if ($productCategories){
                 $productController = new ProductController();
                 return $productController->productListPage(request()->path());
-            }else{
+            } else {
                 return view('layouts.errors.404');
 			}
             
