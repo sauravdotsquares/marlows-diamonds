@@ -1535,6 +1535,7 @@ class ProductController extends Controller
 
         $rows = Category::select(['name', 'title', 'id', 'parent_id', 'slug', 'updated_at'])
             ->where('slug', '!=', 'all-products')
+            ->where('status',1)
             ->where('parent_id', $level)->get();
         $html = '';
         if ($rows->count()) {
