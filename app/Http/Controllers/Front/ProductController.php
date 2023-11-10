@@ -19,7 +19,7 @@ use App\Models\Masters;
 use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\UrlRedirects;
-use App\Models\LabPricesList;
+use App\Models\Menus;
 use App\Models\SitemapUrls;
 use App\Models\Posts;
 use App\Models\PostCategory;
@@ -1497,10 +1497,11 @@ class ProductController extends Controller
         $posts = Posts::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
         $posts_categories = PostCategory::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
         $pages = Pages::select('slug', 'updated_at')->groupBy('slug')->where('slug', '!=', 'engagement-rings')->where(['status' => 1, 'is_deleted' => 0])->get();
+        $menuCategoryLinks = Menus::select('slug as url', 'updated_at')->where('slug', '!=', '/engagement-rings/')->whereBetween('id',[1,31])->where(['status' => 1])->groupBy('slug')->get();
 
         $otherPages = [
+            'homepage'=>'/',
             'product/wishlist',
-            '/',
             'my-account',
             'products/cart',
             'products/wishlist',
@@ -1514,7 +1515,7 @@ class ProductController extends Controller
             if (!empty($category_value)) {
                 $categoryItem = explode('@', $category_value);
                 if($categoryItem[0] !== 'engagement-rings'){
-                    $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
+                   $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
                     $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') .'/'. $categoryUrl;
                     $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
                 }
@@ -1526,7 +1527,7 @@ class ProductController extends Controller
             'posts_categories' => $posts_categories,
             'pages' => $pages,
             'otherPages' => $otherPages,
-            'categoryUrlsList' => $categoryUrlsList
+            'categoryUrlsList' => $menuCategoryLinks
         ])->header('Content-Type', 'text/xml');
     }
 
