@@ -781,6 +781,11 @@
             });
 		}
 
+		toastr.options = {
+			"preventDuplicates": true,
+			"preventOpenDuplicates": true
+		};
+
 		function addtobasketFunction(getUrl,product_slug=null,index=null){
             var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
 			var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
@@ -870,7 +875,7 @@
 								$('#productWishList'+index).children('i').addClass('fa-heart-o');
 							}
 						}
-						toastr.info(res.error);
+						toastr.error(res.error);
 					}
                 }
             });
