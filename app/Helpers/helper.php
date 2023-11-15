@@ -1308,7 +1308,8 @@ if (!function_exists('validate_breadcrumb')) {
                 $queryString = [
                     'engagement-rings',
                     'eternity-rings',
-                    'wedding-rings'
+                    'wedding-rings',
+                    'diamonds-rings'
                 ];
                 $conditions = 'OR';
             }
