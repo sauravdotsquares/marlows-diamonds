@@ -676,6 +676,10 @@
 		}, "Letters and spaces only please"); 
 
 		$(document).ready(function(){
+			toastr.options = {
+				"preventDuplicates": true,
+				"preventOpenDuplicates": true
+			};
             $('form#contactForm').validate({
                 rules: {
                     title: {
@@ -1011,7 +1015,7 @@
 								$('#productWishList'+index).children('i').addClass('fa-heart-o');
 							}
 						}
-						toastr.info(res.error);
+						toastr.error(res.error);
 					}
                 }
             });
