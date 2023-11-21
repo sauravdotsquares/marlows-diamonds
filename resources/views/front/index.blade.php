@@ -23,7 +23,7 @@
                     {{-- <p> <strong> A diamond is forever, so should be yours. </strong> </p> --}}
                     <p><strong>Over 2500 mined and lab grown diamonds in stock to take away at online prices</strong></p>
                     <div class="shop-engage-btn">
-                        <a class="btn-bg-large" href="{{ asset('engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
+                        <a class="btn-bg-large" href="{{ asset('diamond-engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     <div class="item">
                         <div class="product-info">
                             <div class="product-image">
-                                <a href="{{ asset('engagement-rings') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/engagement-ring.png'}}" alt="Engagement Ring"></a>
+                                <a href="{{ asset('diamond-engagement-rings') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/engagement-ring.png'}}" alt="Engagement Ring"></a>
                             </div>
                             <div class="product-item-details">
                                 <div class="product-titles">
@@ -79,7 +79,7 @@
                                     for your special day.
                                 </div>
                                 <div class="product-action-btn">
-                                    <a class="btn-bg-small" href="{{ asset('engagement-rings') }}">Shop Now</a>
+                                    <a class="btn-bg-small" href="{{ asset('diamond-engagement-rings') }}">Shop Now</a>
                                 </div>
                             </div>
                         </div>
@@ -116,6 +116,142 @@
                                 <div class="product-description">
                                     Why stick to classic solitaires when you can have a stunning multi-stone ring in a
                                     unique arrangement?
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small"
+                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Solitaire Engagement Rings
+                                </div>
+                                <div class="product-description">
+                                    Why stick to classic solitaires when you can have a stunning multi-stone ring in a
+                                    unique arrangement?
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small"
+                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Shoulder Set Engagement Rings
+                                </div>
+                                <div class="product-description">
+                                    Why stick to classic solitaires when you can have a stunning multi-stone ring in a
+                                    unique arrangement?
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small"
+                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Halo Rings
+                                </div>
+                                <div class="product-description">
+                                    Why stick to classic solitaires when you can have a stunning multi-stone ring in a
+                                    unique arrangement?
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small"
+                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Women's Wedding Rings
+                                </div>
+                                <div class="product-description">
+                                   Women's Wedding Rings
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small"
+                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Men's Wedding Rings
+                                </div>
+                                <div class="product-description">
+                                    Men's Content description
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small"
+                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Diamond Rings
+                                </div>
+                                <div class="product-description">
+                                   Dummy Contents
+                                </div>
+                                <div class="product-action-btn">
+                                    <a class="btn-bg-small"
+                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="product-info">
+                            <div class="product-image">
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}"><img src="{{env('APP_IMAGE_URL').'/assets/images/multi-stone.png'}}" alt="Multi Stone Rings"></a>
+                            </div>
+                            <div class="product-item-details">
+                                <div class="product-titles">
+                                    Eternity Rings
+                                </div>
+                                <div class="product-description">
+                                    Eternity Rings Description
                                 </div>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
@@ -230,7 +366,7 @@
                     can withstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality
                     and longevity.</p>
                 <div class="explore-btn">
-                    <a class="btn-bg-small" href="/diamond-engagement-rings">EXPLORE ENGAGEMENT RINGS</a>
+                    <a class="btn-bg-small" href="/diamonds-rings">Explore Diamond Rings</a>
                 </div>
             </div>
             <div class="rating-img">

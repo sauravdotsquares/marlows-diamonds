@@ -20,6 +20,8 @@
 
     @if (request()->path() == "engagement-rings")
       @include('layouts.front.engagement_rings_sechma')
+    @elseif (request()->path() == "diamond-engagement-rings")
+      @include('layouts.front.engagement_rings_sechma')
     @endif
 
     @include('layouts.front.seo_header')
