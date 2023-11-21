@@ -277,12 +277,16 @@ $(window).scroll(function(e)
         offsetBottom = offsetTop + offsetRange;
 
     $("#video").each(function () { 
+        var mediaVideo = this;
+        if (mediaVideo.paused) {
+            return false;
+        } 
       var y1 = $(this).offset().top;
       var y2 = offsetTop;
       if (y1 + $(this).outerHeight(true) < y2 || y1 > offsetBottom) {
         this.pause(); 
       } else {
-      this.play(); 
+        this.play(); 
       }
     });
 });
