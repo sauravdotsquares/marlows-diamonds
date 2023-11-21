@@ -261,7 +261,7 @@ textarea.input-control{height:100px}
 .marlows-diamond-title{color:#fff}
 /** Marlows Diamond End **/
 .best-selling-marlows{padding:40px 0 50px 0}
-.product-titles-small a{font-family:Playfair Display;color:#444;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;text-decoration:none}
+.product-titles-small a{font-family:Playfair Display;color:#444;font-size:16px;white-space:wrap;text-overflow:ellipsis;display:block;text-decoration:none}
 .product-price{color:#444;font-size:17px;margin:9px 0 20px 0}
 .explore-btn{margin:26px 0 0 0}
 .shopfrom-block{padding:60px 0 40px 0}

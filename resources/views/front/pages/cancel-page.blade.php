@@ -16,7 +16,7 @@
     <div class="orders-warp order-cancel-page">
         <div class="container">
             <div class="order-data">{{$response}}</div>
-            <a href="{{ url('product-category/engagement-rings') }}" class="grey-btn-large"> Continue Shopping</a>
+            <a href="{{ url('/diamond-engagement-rings') }}" class="grey-btn-large"> Continue Shopping</a>
         </div>
     </div>
 <?php } ?>

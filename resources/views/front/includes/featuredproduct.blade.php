@@ -26,7 +26,9 @@
                                 </div>
                                 <div class="product-item-details">
                                     <div class="product-titles-small">
-                                        <a href="{{asset('product/'.$product->slug)}}"> {{$product->title}}</a>
+                                        <a href="{{asset('product/'.$product->slug)}}">
+                                            {{$product->title}}
+                                        </a>
                                     </div>
                                     <div class="product-price">
                                         <!-- {{MY_CURRENCY_SYMBOL}}
