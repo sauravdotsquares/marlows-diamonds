@@ -4,6 +4,9 @@
 @media(max-width:1400px){
 	.friendy-expert-sec .friendy-expert-desc h3 {font-size: 24px;}
 	.friendy-expert-sec .friendy-expert-desc { width: 40%;}
+
+.friendy-expert-sec .friendy-expert-desc h2 {font-size: 24px;}
+.guide-secret .product-item-slider .product-info h3 {font-weight: bold;font-size: 18px;}
 	}
 	
 	@media(max-width:991px){
@@ -255,7 +258,7 @@
 	}
 	
 	.head-mini-search .formgroup {
-		max-width: 160px;
+		/*max-width: 160px;*/
 	}
 	
 	
@@ -267,19 +270,24 @@
 		.chepaest-lab-left {max-width: 640px;padding: 18px 38px;}
 		.chepaest-lab-left p {font-size: 14px;line-height: 23px;margin: 0 0 15px 0;}
 		.chepaest-lab-left h2 {font-size: 23px;margin: 0 0 19px 0;}
-		.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 7px;font-size: 10px;}
+		.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 5px;font-size: 12px;}
 		.main-navigaiton .nav-navbars .level-zero .fa-angle-down {right: -4px;}
 	}
 	
 	
 	
 	@media(max-width:1199px){
+
+	.head-mini-search{ width:260px; }
+	.head-mini-search .formgroup {max-width:100%;position: relative;}
+	.head-mini-search {width: 190px;}
+	.middle-topbar-right li{margin: 0 0 0 16px;}
 	.product-info-media .owl-carousel {position: relative;margin: 0;float: right;width: 75%;}
 	
 	
 	.main-navigaiton .nav-navbars .level-zero > span > a {
-		padding: 15px 5px;
-		font-size: 9px;
+		padding: 15px 4px;
+		font-size: 10px;
 	}
 	
 	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {
@@ -323,7 +331,7 @@
 	.friendy-expert-sec .friendy-expert-desc h3 {font-size: 20px;}
 	.friendy-expert-sec .friendy-expert-desc { width:50%;}
 	/*ring size page css end*/
-	
+
 	}
 	
 	/** media only for header responsive **/
@@ -331,6 +339,8 @@
 	
 	
 	@media(max-width:1024px){
+	.sticky-header .middle-topbar{ display:none; }
+	.sticky-header .logo-menu-bar{ top:0; }
 	.navbars-show{ overflow: hidden;}
 	.top-bar{display:none}
 	.top-bar-mob{display:block}
@@ -364,6 +374,9 @@
 	.main-navigaiton .nav-navbars .level-zero.show-menus > .inner-submenu{display:block;}
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu li .fa-angle-right {position: absolute;right: 25px;top: 9px;color: #000;font-size: 20px;cursor: pointer; text-align: center; width: 22px;}
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one.show-menus .inner-submenu{display: block;}
+
+	.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu, .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one
+	 {width: 100%; float: none;}
 	
 	.search-suggestion {width: 98%;margin: auto; left: 0;}
 	.post-bar{
@@ -426,7 +439,7 @@
 	.printing-ring-chart .guide-chart-img { margin: auto; display: table;margin-top: 30px;}
 	.printing-ring-chart .guide-chart-desc {padding: 0 0 0 0;}
 	.friendy-expert-sec{ display:block; }
-	.friendy-expert-sec .friendly-img {width: 100%;}
+	.friendy-expert-sec .friendly-img {width: 100%; height: auto; display: block;}
 	.friendy-expert-sec .friendy-expert-desc {width: 100%;padding: 30px 28px;}
 	.inspiration-sec .col-lg-4 {margin-bottom: 30px;}
 	.inspiration-box h3{ font-size:16px; }
@@ -480,6 +493,8 @@
 	.category-sidebar-wrap .reset-filer-container a#resetFilterButton{ width:100%; }
 	
 	/*ring size page css*/
+	.inspiration-sec h2, .friendy-expert-sec .friendy-expert-desc h2, .guide-secret h2, .sizing-tip-sec .sizing-tip-desc h2, .ring-size-tabing h4 { font-size: 22px;}
+
 	.ring-guide-banner .ring-personal-desc h1{ text-align:center; }
 	.ring-guide-banner .ring-personal-desc p{ text-align:center; font-size:16px; margin: 0px 0 30px 0; }
 	.ring-size-tabing .nav-tabs .nav-link {padding: 10px 18px;margin: 0 3px -1px 0;font-size: 11px;}
@@ -487,6 +502,8 @@
 	.search-engage .col-md-6:first-child {margin: 0 0 30px;}
 	.search-engage-box .search-engage-desc {padding: 10px 15px 30px;}
 	.guide-secret{padding: 0 30px;}
+
+	.sizing-tip-sec .sizing-tip-sec-inner .sizing-tip-box h3 {font-size: 18px;}
 	/*ring size page css end*/
 
 	.post-bar .header-post-bar-wraper{ display:block; }
@@ -529,6 +546,8 @@
 	.inspiration-box .inspiration-img {height: 240px;}
 	.guide-secret .product-item-slider .product-info h3{ font-size:18px; }
 	/*ring size page css end*/
+
+	.guide-secret .product-item-slider .product-info{ min-height:auto; max-height:inherit; }
 	}
 	
 	

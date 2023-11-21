@@ -79,6 +79,37 @@
                 </div>
                 <div class="middle-topbar-right">
                     <ul>
+                        <li>
+                            <div class="head-mini-search">
+                        <div class="remve-mobile-serch-box">
+                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                        </div>
+                        <form ng-controller="CommonController" >
+                            <div class="formgroup">
+                                <input type="text" name="search" class="typeahead search-selection-text" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
+                                <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
+                            </div>
+                            <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
+                                <div class="search-suggestion-list" ng-repeat="result in searchResults">
+                                    <a href="/product/<%result.slug%>">
+                                        <div class="search-suggestion-img">
+                                            <img src="{{env('APP_IMAGE_URL').'/storage'}}/<%result.get_product_images.image_url%>" alt="Marlow's Diamond">
+                                        </div>
+                                        <div class="search-suggestion-text">
+                                            <div class="search-suggestion-title">
+                                                <%result.title%>
+                                            </div>
+    
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="search-suggestion" ng-if="searchResults.length==0" ng-cloak>
+                                <p>No Product Found.</p>
+                            </div>
+                        </form>
+                    </div>
+                        </li>
                         <li class="my-account-blk">
                         @if(auth()->guard('customer')->check())   
                             <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
@@ -163,7 +194,7 @@
                     </a>
                 </div>
                 <div class="mobile-cart-wishlist">
-                <div class="mobile-wishlist mobile-acc">
+                    <div class="mobile-wishlist mobile-acc">
                             <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
                     </div>
                     <div class="mobile-wishlist">
@@ -237,36 +268,6 @@
                     </div>
                 </div>
 
-                <div class="head-mini-search">
-                    <div class="remve-mobile-serch-box">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                    </div>
-                    <form ng-controller="CommonController" >
-                        <div class="formgroup">
-                            <input type="text" name="search" class="typeahead search-selection-text" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
-                            <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
-                        </div>
-                        <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
-                            <div class="search-suggestion-list" ng-repeat="result in searchResults">
-                                <a href="/product/<%result.slug%>">
-                                    <div class="search-suggestion-img">
-                                        <img src="{{env('APP_IMAGE_URL').'/storage'}}/<%result.get_product_images.image_url%>" alt="Marlow's Diamond">
-                                    </div>
-                                    <div class="search-suggestion-text">
-                                        <div class="search-suggestion-title">
-                                            <%result.title%>
-                                        </div>
-
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="search-suggestion" ng-if="searchResults.length==0" ng-cloak>
-                            <p>No Product Found.</p>
-                        </div>
-                    </form>
-
-                </div>
             </div>
         </div>
     </div>
