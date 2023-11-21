@@ -209,7 +209,7 @@ class PayPalPaymentController extends Controller
 
             if ($result->getState() == 'approved') {
                 $getOrderDetails = Order::where('token',$request->token)->update(['status'=>2]);
-                
+
                 $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first()->toArray();
 
                 if (isset($getOrderDetailsMail['email_status']) && $getOrderDetailsMail['email_status'] == 2) {
