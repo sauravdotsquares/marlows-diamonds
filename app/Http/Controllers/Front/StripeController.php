@@ -69,6 +69,10 @@ class StripeController extends Controller
 
         $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token', $request->stripeToken)->first()->toArray();
 
+        if (isset($getOrderDetailsMail['email_status']) && $getOrderDetailsMail['email_status'] == 2) {
+            return Redirect::route('home');
+        }
+
         $admin_email = Settings::where("option_name", 'admin_email')->value('option_value');
         $transaction_emails = Settings::where("option_name", 'transaction_emails')->value('option_value');
 
@@ -109,7 +113,8 @@ class StripeController extends Controller
                 $message->cc("sharma.gajendra@dotsquares.com", 'Customer')->subject('Your Marlows Diamonds order has been received!');
             });
         }
-
+        Order::where('token',$request->token)->update(['email_status'=>2]);
+        
         $result = [
             'pay' => $getOrderDetailsMail,
             'response' => 'Your Order number(' . $getOrderDetailsMail['custom_order_id'] . ') has been successfully paid',

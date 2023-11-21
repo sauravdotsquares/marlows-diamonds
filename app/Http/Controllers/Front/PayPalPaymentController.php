@@ -139,30 +139,54 @@ class PayPalPaymentController extends Controller
 
         $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first()->toArray();
 
+        if (isset($getOrderDetailsMail['email_status']) && $getOrderDetailsMail['email_status'] == 2) {
+            return Redirect::route('home');
+        }
+
         $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
         $transaction_emails = Settings::where("option_name",'transaction_emails')->value('option_value');
 
         $data = [
             'data' => $getOrderDetailsMail
         ];
+        if (env('APP_ENV') == 'production') {
+            $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
+                Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request,$admin_email, $transaction_emails ){
+                $message->from('hello@marlows-diamonds.co.uk');
 
-        $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
-            Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request,$admin_email, $transaction_emails ){
-            $message->from('hello@marlows-diamonds.co.uk');
-
-            $admin_email_london = "london@marlows-diamonds.co.uk";
-            $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
-            
-            /** add cc for more users */
-            if(!empty($transaction_emails)){
-                $emails_to_cc = explode(',', $transaction_emails);
-                foreach ($emails_to_cc as $email_to_cc) {
-                    $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                $admin_email_london = "london@marlows-diamonds.co.uk";
+                $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+                
+                /** add cc for more users */
+                if(!empty($transaction_emails)){
+                    $emails_to_cc = explode(',', $transaction_emails);
+                    foreach ($emails_to_cc as $email_to_cc) {
+                        $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                    }
                 }
-            }
-            
-            $message->cc($request['customer_email'], 'Customer')->subject('Marlows Diamonds: Your transaction not completed.');
-        });
+                
+                $message->cc($request['customer_email'], 'Customer')->subject('Marlows Diamonds: Your transaction not completed.');
+            });
+        } else if (env('APP_ENV') == 'local') {
+            $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
+            Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request, $transaction_emails ){
+                $message->from('hello@marlows-diamonds.co.uk');
+
+                $admin_email_london = 'sharma.gajendra@dotsquares.com';
+                $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+                
+                /** add cc for more users */
+                if(!empty($transaction_emails)){
+                    $emails_to_cc = explode(',', $transaction_emails);
+                    foreach ($emails_to_cc as $email_to_cc) {
+                        $message->cc('sharma.gajendra@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                    }
+                }
+                
+                $message->cc($request['customer_email'], 'Customer')->subject('Marlows Diamonds: Your transaction not completed.');
+            });
+        }
+        Order::where('token',$request->token)->update(['email_status'=>2]);
 
         $result = [
             'response' => 'Your Order number('.$getOrderDetailsMail['custom_order_id'].') has been cancelled',
@@ -185,8 +209,12 @@ class PayPalPaymentController extends Controller
 
             if ($result->getState() == 'approved') {
                 $getOrderDetails = Order::where('token',$request->token)->update(['status'=>2]);
-
+                
                 $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first()->toArray();
+
+                if (isset($getOrderDetailsMail['email_status']) && $getOrderDetailsMail['email_status'] == 2) {
+                    return Redirect::route('home');
+                }
 
                 $admin_email = Settings::where("option_name",'admin_email')->value('option_value');
                 $transaction_emails = Settings::where("option_name",'transaction_emails')->value('option_value');
@@ -194,23 +222,43 @@ class PayPalPaymentController extends Controller
                 $data = [
                     'data' => $getOrderDetailsMail
                 ];
+                if (env('APP_ENV') == 'production') {
+                    $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
+                        Mail::send('email.orderstatus', array(
+                        'data1' => $data,
+                    ), function($message) use ($request,$admin_email, $transaction_emails ){
+                        $message->from('hello@marlows-diamonds.co.uk');
+                        $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
 
-                $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
-                    Mail::send('email.orderstatus', array(
-                    'data1' => $data,
-                ), function($message) use ($request,$admin_email, $transaction_emails ){
-                    $message->from('hello@marlows-diamonds.co.uk');
-                    $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
-
-                    if(!empty($transaction_emails)){
-                        $emails_to_cc = explode(',', $transaction_emails);
-                        foreach ($emails_to_cc as $email_to_cc) {
-                            $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                        if(!empty($transaction_emails)){
+                            $emails_to_cc = explode(',', $transaction_emails);
+                            foreach ($emails_to_cc as $email_to_cc) {
+                                $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                            }
                         }
-                    }
 
-                    $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
-                });
+                        $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
+                    });
+                } else if (env('APP_ENV') == 'local') {
+                    $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
+                        Mail::send('email.orderstatus', array(
+                        'data1' => $data,
+                    ), function($message) use ($request,$admin_email, $transaction_emails ){
+                        $message->from('hello@marlows-diamonds.co.uk');
+                        $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('Your Marlows Diamonds order has been received!');
+
+                        if(!empty($transaction_emails)){
+                            $emails_to_cc = explode(',', $transaction_emails);
+                            foreach ($emails_to_cc as $email_to_cc) {
+                                $message->cc('sharma.gajendra@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                            }
+                        }
+
+                        $message->cc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
+                    });
+                }
+
+                Order::where('token',$request->token)->update(['email_status'=>2]);
                 
                 $result = [
                     'pay' => $getOrderDetailsMail,
