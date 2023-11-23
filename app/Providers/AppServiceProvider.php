@@ -75,6 +75,7 @@ class AppServiceProvider extends ServiceProvider
             $menusArray[$key]['icon'] = $value['icon'];
             $menusArray[$key]['target'] = $value['target'];
             $menusArray[$key]['title'] = $value['tooltip'];
+            $menusArray[$key]['image_link'] = $value['image_link'];
             $menusArray[$key]['class_level'] = 'level-'.$level;
             $child = $this->getChildData($value['id'], $level);
             if(count($child)>0){

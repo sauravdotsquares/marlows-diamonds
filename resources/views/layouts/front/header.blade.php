@@ -244,8 +244,8 @@
                         <ul class="static-megamenu">
 
                             @if(!empty($navbars))
-
-                                @foreach($navbars as $navbarItem)
+                                
+                                @foreach($navbars as $keyCount => $navbarItem)
                                     <li class="level-zero submenu {{$navbarItem['class_level']}}">
                                         <span>
                                             <a href="{{url($navbarItem['href'])}}">
@@ -257,7 +257,7 @@
 
                                         </span>
                                         @if(isset($navbarItem['children']) && count($navbarItem['children']) > 0)
-                                            @include('layouts.front.menus-sub', ['subs' => $navbarItem['children']])
+                                            @include('layouts.front.menus-sub', ['subs' => $navbarItem['children'],'count'=>$keyCount, 'titlename' => $navbarItem['title']])
                                         @endif
                                     </li>
                                 @endforeach

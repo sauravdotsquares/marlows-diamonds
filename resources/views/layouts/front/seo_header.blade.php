@@ -1,8 +1,8 @@
 @inject('header_settings', 'App\Models\Settings')
 
   <!-- for hreflang keywords for all suggested country Start -->
-  <link rel="alternate" href="https://marlowsdiamonds.com/" hreflang="x-default" />
-  <link rel="alternate" href="https://marlows-diamonds.co.uk/" hreflang="en-gb" />
+  <link rel="alternate" href="https://marlowsdiamonds.com{{(Request::path() != '/')?'/'.Request::path():''}}" hreflang="x-default" />
+  <link rel="alternate" href="https://marlows-diamonds.co.uk{{(Request::path() != '/')?'/'.Request::path():''}}" hreflang="en-gb" />
 
 {{-- OG Canonical --}}
 <link rel="canonical" href="{{request()->fullUrl()}}" />

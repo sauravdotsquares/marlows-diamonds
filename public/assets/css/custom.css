@@ -166,8 +166,8 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one .inner-submenu{right:-100%;top:0}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li .fa-angle-right {position: absolute;right: 13px;top: 13px;z-index: 11;}
 
-.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu {width: 400px;}
-.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one {float: left;width: 50%;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu {width: 485px;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one {float: left;width: 100%;}
 
 @keyframes fadeIn{from{opacity:0;transform:translate3d(0,-7%,0)}
 to{opacity:1;transform:translate3d(0,0,0)}
@@ -1351,6 +1351,12 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .location-header a {color: #000;text-decoration: none;}
 .disclaimer-content .footer-reg {color: #fff;text-decoration:none; margin: 10px 0 7px;display: inline-block;}
 /*footer css end*/
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu ul {width: 50%;float: left;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one h4 {padding: 0 18px;text-decoration: none;color: #c1c1c1;font-weight: normal;text-transform: uppercase;font-size: 13px;font-family: 'Lato';margin: 16px 0 8px;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one a {padding: 6px 20px;}
+.main-navigaiton .nav-navbars .level-zero .inner-submenu li a img.shapeimg-style {width: 30px;margin: 0 10px 0 0px;}
+
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one h4.shapestyledesign-section {margin-top: 70px;}
 
 
 
