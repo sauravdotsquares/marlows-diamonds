@@ -144,7 +144,7 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .mobile-cart-wishlist{display:none;align-items:center}
 .navbar-toggler{display:none}
 .sticky-header .middle-topbar {position: fixed;top: 0;left: 0;right: 0;z-index: 9;background: #fff;box-shadow: 0 2px 3px rgba(0,0,0,0.2);}
-.sticky-header .logo-menu-bar{position:fixed;top:83px;left:0;right:0;z-index:9;box-shadow:0 2px 3px rgba(0,0,0,0.2)}
+.sticky-header .logo-menu-bar{position:fixed;top:83px;left:0;right:0;z-index:8;box-shadow:0 2px 3px rgba(0,0,0,0.2)}
 .logo-menu-bar-wrap{align-items:center;position:relative}
 .main-navigaiton .nav-navbars .level-zero{display:inline-block;vertical-align:top;position:relative; margin: 0px 0px 0 4px;}
 .main-navigaiton .nav-navbars .level-zero a{text-decoration:none;color:#444;font-weight:bold;text-transform:uppercase;font-size:13px}
@@ -169,10 +169,10 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu {width: 485px;}
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu ul {width: 50%;float: left; padding: 15px 0 25px;}
-.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one {float: left;width: 100%;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one {float: left;width: 100%; margin-top: 7px;}
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one h4 {padding: 0 18px;text-decoration: none;color: #c1c1c1;font-weight: normal;
  text-transform: uppercase;font-size: 13px;font-family: 'Lato';margin:0px 0 8px;}
-.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one a {padding: 6px 20px 12px;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one a {padding: 6px 20px;}
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one a.submenu-heading {padding-bottom: 0;}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li a img.shapeimg-style {width: 30px;margin: 0 10px 0 0px;}
 
