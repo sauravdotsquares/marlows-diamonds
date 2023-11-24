@@ -270,11 +270,15 @@
 		.chepaest-lab-left {max-width: 640px;padding: 18px 38px;}
 		.chepaest-lab-left p {font-size: 14px;line-height: 23px;margin: 0 0 15px 0;}
 		.chepaest-lab-left h2 {font-size: 23px;margin: 0 0 19px 0;}
-		.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 5px;font-size: 12px;}
+		.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 10px;font-size: 12px;}
 		.main-navigaiton .nav-navbars .level-zero .fa-angle-down {right: -4px;}
 	}
 	
-	
+
+	@media(max-width:1300px){	
+.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 5px;font-size: 12px;}
+}
+
 	
 	@media(max-width:1199px){
 
@@ -360,7 +364,7 @@
 	.mobile-cart-wishlist{display:flex;order:3;position:relative}
 	.navbar-toggler{display:block; padding: 0;}
 	.menus-wraper .navbar-toggler{padding:0 15px 0 16px}
-	.main-navigaiton .nav-navbars .level-zero{display:block}
+	.main-navigaiton .nav-navbars .level-zero{display:block; clear: both;}
 	
 	.main-navigaiton .nav-navbars .level-zero > span > a{display:block;color:#000;padding:10px 20px;text-transform:capitalize;font-size:14px}
 	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: 25px;top: 12px;color: #000;font-size: 20px;z-index: 11; cursor: pointer; width: 22px; text-align: center;}
@@ -376,7 +380,7 @@
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one.show-menus .inner-submenu{display: block;}
 
 	.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu, .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one
-	 {width: 100%; float: none;}
+	 {width: 100%; float: none; padding-left: 0;}
 	
 	.search-suggestion {width: 98%;margin: auto; left: 0;}
 	.post-bar{
