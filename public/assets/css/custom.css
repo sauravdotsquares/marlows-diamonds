@@ -162,12 +162,36 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu{background:#fff;box-shadow:0 2px 3px rgba(0,0,0,0.15);position:absolute;top:160%;width:250px;transition:all 300ms ease-in-out; z-index: 9; }
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li{display:block;position:relative}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li a{padding:12px 20px;display:block;position:relative}
-.main-navigaiton .nav-navbars .level-zero .inner-submenu li a i{float:right;font-size:15px;position:relative}
+.main-navigaiton .nav-navbars .level-zero .inner-submenu li a i{float:left;font-size:15px;position:relative}
+.main-navigaiton .nav-navbars .level-zero .inner-submenu li a i.diamond-icon{background: url('../images/diamond-submenu-icon.png') no-repeat;}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one .inner-submenu{right:-100%;top:0}
 .main-navigaiton .nav-navbars .level-zero .inner-submenu li .fa-angle-right {position: absolute;right: 13px;top: 13px;z-index: 11;}
 
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu {width: 485px;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu ul {width: 50%;float: left; padding: 15px 0 25px;}
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one {float: left;width: 100%;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one h4 {padding: 0 18px;text-decoration: none;color: #c1c1c1;font-weight: normal;
+ text-transform: uppercase;font-size: 13px;font-family: 'Lato';margin:0px 0 8px;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one a {padding: 6px 20px 12px;}
+.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one a.submenu-heading {padding-bottom: 0;}
+.main-navigaiton .nav-navbars .level-zero .inner-submenu li a img.shapeimg-style {width: 30px;margin: 0 10px 0 0px;}
+
+.main-navigaiton .nav-navbars .level-zero .inner-submenu li a i.diamond-icon {background: url(../images/diamond-submenu-icon.png) no-repeat;display: inline-block;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_solitaire {background-position: -2px -2px;width: 24px;height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_shoulder-set {background-position:-2px -40px;width: 24px;height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_halo {background-position:-1px -76px;width: 24px;height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_multi-stone {background-position: -1px -109px; width: 24px; height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_round {background-position: -45px 0px;width: 24px;height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_oval {background-position:-45px -42px; width: 24px; height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_cushion {background-position: -44px -82px;width: 24px;height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_heart {background-position: -44px -119px; width: 24px; height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_pear {background-position: -44px -154px; width: 24px; height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_marquise {background-position: -44px -193px; width: 24px; height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_emerald {background-position: -44px -238px; width: 24px; height: 24px;}
+.main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_princess {background-position: -44px -279px;width: 24px;height: 24px;}
+
+
+
 
 @keyframes fadeIn{from{opacity:0;transform:translate3d(0,-7%,0)}
 to{opacity:1;transform:translate3d(0,0,0)}
@@ -1351,12 +1375,8 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .location-header a {color: #000;text-decoration: none;}
 .disclaimer-content .footer-reg {color: #fff;text-decoration:none; margin: 10px 0 7px;display: inline-block;}
 /*footer css end*/
-.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu ul {width: 50%;float: left;}
-.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one h4 {padding: 0 18px;text-decoration: none;color: #c1c1c1;font-weight: normal;text-transform: uppercase;font-size: 13px;font-family: 'Lato';margin: 16px 0 8px;}
-.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one a {padding: 6px 20px;}
-.main-navigaiton .nav-navbars .level-zero .inner-submenu li a img.shapeimg-style {width: 30px;margin: 0 10px 0 0px;}
 
-.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one h4.shapestyledesign-section {margin-top: 70px;}
+
 
 
 
