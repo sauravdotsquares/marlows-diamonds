@@ -54,7 +54,7 @@
       <!--  gtag('js', new Date());-->
       <!--  gtag('config', 'UA-1365164-1');-->
       <!--</script>-->
-    
+      
     
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -66,6 +66,7 @@
     {!! (!empty($seoScriptData) && !empty($seoScriptData->header_script)) ? $seoScriptData->header_script : '' !!}
     @if(env('APP_ENV')=='production')
       <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"307000705", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
+      @yield('successtrackingscript')
     @endif
 </head>
 <body ng-app="MarlowsAPP">

@@ -2,6 +2,14 @@
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
+@section('successtrackingscript')
+<?php 
+    $value = array_sum(array_column(session('cart'),'deposited_price'));
+?>
+<script>
+    window.uetq = window.uetq || [];window.uetq.push('event', 'add_to_cart', {"revenue_value":"{{$value}}","currency":"GBP"});
+</script>
+@endsection
 @section('content')
 <div class="category-banner" style="background-image:url(../assets/images/cart-bg.jpg)">
     <div class="container">
@@ -29,7 +37,7 @@
                         </thead>
                         <tbody>
                             @php $total = 0 @endphp
-
+                            
                             @foreach(session('cart') as $id => $details)
 
                             @php
