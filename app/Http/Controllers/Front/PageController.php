@@ -41,6 +41,8 @@ class PageController
                 /** Slug belongs to blog Category */
                 if($pageCategory->slug == 'diamond-engagement-ring'){
                     $redirectTo = route('page', '/diamond-engagement-rings');
+                }elseif($pageCategory->slug == 'diamond-rings' ){
+                    $redirectTo = route('page', '/diamonds-rings');
                 }else{
                     $redirectTo = route('blog_list', $pageCategory->slug);
                 }
