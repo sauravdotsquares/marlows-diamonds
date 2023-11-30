@@ -1614,6 +1614,9 @@ class ProductController extends Controller
             if (!empty($category_value)) {
                 $categoryItem = explode('@', $category_value);
                 $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
+                if($categoryUrl == 'wedding-rings/womens/diamond-band-womens/' || $categoryUrl == 'wedding-rings/womens/plain-band-womens/'){
+                    $categoryUrl = str_replace('-womens/', '/', $categoryUrl);
+                }
                 $categoryUrlsList[$category_key]['url'] = url($categoryUrl);
                 $categoryUrlsList[$category_key]['name'] = $categoryItem[1];
             }
@@ -1646,7 +1649,7 @@ class ProductController extends Controller
         $slugs = explode('/', $path);
         $productListingData = getProductListing($slugs, request()->all());
         if($productListingData['status'] == 404){
-            return redirect($productListingData['redirect_url']);
+            return view('layouts.errors.404');
         }
         if (!empty($productListingData)) {
 
