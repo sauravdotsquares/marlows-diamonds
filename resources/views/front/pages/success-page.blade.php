@@ -1,4 +1,9 @@
 @extends('layouts.front.app')
+@section('successtrackingscript')
+    <script>
+        window.uetq = window.uetq || [];window.uetq.push('event', 'purchase', {"revenue_value":"{{$pay['final_price']}}","currency":"GBP"});
+    </script>
+@endsection
 @section('google-ecommerce')
     <?php
     if(!empty($pay)){
