@@ -19,7 +19,7 @@ class Menus extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'id','parent','title','slug','icon', 'target','tooltip','status'
+        'id','parent','title','slug','icon','image_link', 'target','tooltip','status'
     ];
 
     public function langMenu()
