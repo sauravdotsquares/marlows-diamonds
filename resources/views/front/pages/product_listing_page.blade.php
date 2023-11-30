@@ -135,9 +135,9 @@
                             @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
                                 <div class="item">
                                     @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
-                                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product_item_item->category_images }}" >
+                                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product_item_item->category_images }}" alt="{{$product_item_item->item_name}}">
                                     @else
-                                        <img src="{{env('APP_IMAGE_URL').'/storage/Products/CX9-SC48_00003_1650365432.jpg'}}"> 
+                                        <img src="{{env('APP_IMAGE_URL').'/storage/Products/CX9-SC48_00003_1650365432.jpg'}}" alt="{{$product_item_item->item_name}}"> 
                                     @endif
                                     <p> <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a></p>
                                 </div>
@@ -284,12 +284,12 @@
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
-                    <img loading="lazy" alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif' }}">
+                    {{--<img loading="lazy" alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif' }}">--}}
                     <p>Loading More Products</p>
                     <button style="display: none;" class="ajax-load-btn">Load more data</button>
                 </div>
                 <div class="ajax-loader">
-                    <img src="{{env('APP_IMAGE_URL').'/images/spinner.gif' }}" id="loading-data-image" class="img-responsive" style="display:none;" />
+                    {{--<img src="{{env('APP_IMAGE_URL').'/images/spinner.gif' }}" id="loading-data-image" class="img-responsive" style="display:none;" /> --}}
                 </div>
                 <br>
                 <br>
@@ -416,7 +416,7 @@
 
 @include('front.includes.instagram-section')
 <div class="engagement-ring-img">
-    <img src="{{env('APP_IMAGE_URL').'/images/viewguide.PNG'}}">
+    <img src="{{env('APP_IMAGE_URL').'/images/viewguide.PNG'}}" alt="Find the perfect engagement ring">
     <div class="engagement-ring-img-content">
         <div class="container">
     <h2>Find the perfect engagement ring</h2>

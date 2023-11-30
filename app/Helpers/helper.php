@@ -1399,10 +1399,18 @@ if (!function_exists('validate_breadcrumb')) {
         }
 
         if ($is404) {
-            return null;
+            return [
+                'status' => 404,
+                'page_status'=> 1,
+                'redirect_url'=> '/'
+            ];
         }
         if (empty($category_custom_query)) {
-            return null;
+            return [
+                'status' => 404,
+                'page_status'=> 1,
+                'redirect_url'=> '/'
+            ];
         }
 
         $pageNo = !empty($requestData['page']) ? $requestData['page'] : 1;
