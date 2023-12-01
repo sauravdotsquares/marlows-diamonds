@@ -93,7 +93,7 @@
                                 <div class="search-suggestion-list" ng-repeat="result in searchResults">
                                     <a href="/product/<%result.slug%>">
                                         <div class="search-suggestion-img">
-                                            <img src="{{env('APP_IMAGE_URL').'/storage'}}/<%result.get_product_images.image_url%>" alt="Marlow's Diamond">
+                                            <img ng-src="{{env('APP_IMAGE_URL').'/storage'}}/<% result.get_product_images.image_url || 'defult.png' %>" alt="Marlow's Diamond">
                                         </div>
                                         <div class="search-suggestion-text">
                                             <div class="search-suggestion-title">
