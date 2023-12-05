@@ -1954,4 +1954,26 @@ if (!function_exists("checkDiamondLabValue")) {
         return false;
     }
 }
+if (!function_exists("getImageOptimizeDetails")) {
+    function getImageOptimizeDetails($imageUrl,$width,$height)
+    {
+        $path_parts = pathinfo($imageUrl);
+
+        file_exists("test.txt");
+        $filename = 'tempfolderpath/'.$path_parts['basename'];
+
+        if (file_exists($filename)) {
+            $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
+        } else {
+            // Image manipulation
+            $img = Image::make(env('APP_IMAGE_URL').$imageUrl)->resize($width, $height);
+            $tempPath = public_path('tempfolderpath');
+            $tempFile = $tempPath . '/' . $path_parts['basename'];
+            $img->save($tempFile);
+            // Pass the image URL to the view
+            $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
+        }
+        return $imageUrl;
+    }
+}
     
