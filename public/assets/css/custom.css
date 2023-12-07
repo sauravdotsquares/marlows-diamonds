@@ -210,6 +210,10 @@ textarea.input-control{height:100px}
 .mobile-serch-box{background:#f4f4f4;border-radius:40px;height:40px;margin:22px 16px 20px;padding:5px 12px;display:none;align-items:center;cursor:pointer;color:#c2c2c2}
 .mobile-serch-box img{max-width:21px;margin-right:6px}
 .remve-mobile-serch-box{display:none}
+
+.mobile-serch-box form {width: 100%;position: relative;}
+.mobile-serch-box form .formgroup input.typeahead {width: 100%;border: none;background: none;padding: 0 0 0 32px;}
+.mobile-serch-box form button.seach-btn {top: 0px;}
 /** logo and menus css end **/
 
 
