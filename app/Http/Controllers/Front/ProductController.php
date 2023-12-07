@@ -1493,7 +1493,7 @@ class ProductController extends Controller
 
         // ->where('status',1)
         // ->where('status',1)
-        $products = Products::select('slug', 'updated_at')->groupBy('slug')->get();
+        $products = Products::select('slug', 'updated_at')->where('status',1)->groupBy('slug')->get();
         $posts = Posts::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
         $posts_categories = PostCategory::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
         $pages = Pages::select('slug', 'updated_at')->groupBy('slug')->where('slug', '!=', 'engagement-rings')->where(['status' => 1, 'is_deleted' => 0])->get();

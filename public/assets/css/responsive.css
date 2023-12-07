@@ -389,7 +389,7 @@
 	.main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu, .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one
 	 {width: 100%; float: none; padding-left: 0;}
 	
-	.search-suggestion {width: 98%;margin: auto; left: 0;}
+	.search-suggestion {width: 100%;margin: auto; left: 0;z-index: 99;}
 	.post-bar{
 		/* display:none */
 		display: inline-block;
