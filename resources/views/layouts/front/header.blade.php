@@ -236,8 +236,30 @@
                         </div>
                     </div>
                         <div class="mobile-serch-box">
-                            <img src="{{env('APP_IMAGE_URL').'/assets/images/search.png'}}" alt="search">
-                            Search for products...
+                            <form ng-controller="CommonController" >
+                                <div class="formgroup">
+                                    <input type="text" name="search" class="typeahead search-selection-text" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
+                                    <button class="seach-btn" type="button"><img src="{{asset('')}}assets/images/search.png" alt="search"></button>
+                                </div>
+                                <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
+                                    <div class="search-suggestion-list" ng-repeat="result in searchResults">
+                                        <a href="/product/<%result.slug%>">
+                                            <div class="search-suggestion-img">
+                                                <img ng-src="{{env('APP_IMAGE_URL').'/storage'}}/<% result.get_product_images.image_url || 'defult.png' %>" alt="Marlow's Diamond">
+                                            </div>
+                                            <div class="search-suggestion-text">
+                                                <div class="search-suggestion-title">
+                                                    <%result.title%>
+                                                </div>
+        
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="search-suggestion" ng-if="searchResults.length==0" ng-cloak>
+                                    <p>No Product Found.</p>
+                                </div>
+                            </form>
                         </div>
                     <nav class="nav-navbars">
 
