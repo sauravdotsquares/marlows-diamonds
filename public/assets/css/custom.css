@@ -21,7 +21,7 @@
 }
 
 /** GLobal Css **/
-body{font-size:14px;font-family:'Lato';color:#626262;line-height:1.5;padding:0;margin:0}
+body{font-size:14px;font-family:'Lato';color:#626262;line-height:1.5;padding:0;margin:0;}
 img{max-width:100%}
 *,*:after,*:before{box-sizing:border-box;-webkit-box-sizing:border-box;}
 h1,h2,h3,h4,h5,h6,.heading-h-one,.heading-h-two,.heading-h-three,.heading-h-four{font-family:'Playfair Display';margin:0 0 15px;font-weight:400}
@@ -63,6 +63,9 @@ label {color: #000;font-size: 14px;}
 textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .optional {padding: 0 0 0 3px;}
 
+.main-banner-col.banner-left-col{ position:relative; }
+.main-banner-col.banner-left-col:after {background: url(../images/santaimg.png) no-repeat;content: '';width: 150px;background-size: 100%;
+right: -149px;position: absolute;height: 100%;top: 44px;}
 
 /** Loader Settings Css */
 .loader.body-loader {position: fixed;top: 50%;left: 0;right: 0;margin: auto;transform: translateY(-50%);padding: 30px 0;}
@@ -95,10 +98,15 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .flexed{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}
 .flex-justify-between{-webkit-justify-content:space-between;justify-content:space-between;}
 .flex-items-center{-webkit-align-items:center;align-items:center}
+
+.leftright-img-text .leftright-img-text-wraper .flex-items-center {background: url(../images/christmax-marlows-banner-footer.png) no-repeat;
+    background-size:cover;background-position: center;}
+
 .flex-flex-wrap{-webkit-flex-wrap:wrap;flex-wrap:wrap}
 
 /** header css start here **/
-.header-main {position: relative;z-index: 99;}
+.header-main {position: relative;z-index: 99; background: url(../images/christmax-marlows-banner.jpg) no-repeat;background-position: center; height:100%;
+background-size: cover;}
 /** top bar css start **/
 .top-bar{background:#8e2e65;text-align:center;color:#fff}
 .top-bar p{margin:0;line-height:30px}
@@ -123,7 +131,7 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .middle-topbar-left a{color:#878787;text-decoration:none; display: inline-block;}
 .middle-topbar-left a:hover{color:#8e2e65}
 .middle-topbar-left a i{color:#8e2e65;font-size:18px;padding:0 11px 0 0;position:relative;top:1px}
-.middle-topbar{border-bottom:1px solid #efefef;padding:21px 0;position:relative}
+.middle-topbar{border-bottom:1px solid #efefef;padding:21px 0;position:relative; background: rgba(255, 255, 255, 0.8); display: inline-block; width: 100%;}
 .middle-topbar-right li{display:inline-block;vertical-align:middle;margin:0 0 0 30px}
 .location-drop{position:absolute;box-shadow:0 1px 10px rgba(0,0,0,.25);background:#fff;width:370px;z-index:9;padding:10px 15px;top:100%;left:0;display:none}
 .location-top-h:hover .location-drop{display:block}
@@ -140,11 +148,11 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 /** middle top bar css end **/
 
 /** logo and menus css start **/
-.logo-menu-bar{padding:15px 0;background:#fff;width:100%}
+.logo-menu-bar{padding:15px 0 10px; background: rgba(255, 255, 255, 0.8); width:100%}
 .mobile-cart-wishlist{display:none;align-items:center}
 .navbar-toggler{display:none}
 .sticky-header .middle-topbar {position: fixed;top: 0;left: 0;right: 0;z-index: 9;background: #fff;box-shadow: 0 2px 3px rgba(0,0,0,0.2);}
-.sticky-header .logo-menu-bar{position:fixed;top:83px;left:0;right:0;z-index:8;box-shadow:0 2px 3px rgba(0,0,0,0.2)}
+.sticky-header .logo-menu-bar{position:fixed;top:83px;left:0;right:0;z-index:8;box-shadow:0 2px 3px rgba(0,0,0,0.2);background: #fff;}
 .logo-menu-bar-wrap{align-items:center;position:relative}
 .main-navigaiton .nav-navbars .level-zero{display:inline-block;vertical-align:top;position:relative; margin: 0px 0px 0 4px;}
 .main-navigaiton .nav-navbars .level-zero a{text-decoration:none;color:#444;font-weight:bold;text-transform:uppercase;font-size:13px}
@@ -227,7 +235,7 @@ textarea.input-control{height:100px}
 /** header post bar css end **/
 
 /** Footer Css Start here  **/
-.footer-main{background:#8e2e65;padding:45px 0 30px;color:#fff;line-height:25px}
+.footer-main{background:#8e2e65 url(../images/christmax-marlows-banner-footer.png) no-repeat; padding:45px 0 30px;color:#fff;line-height:25px; background-position: center;}
 .column-one-fifth{flex:0 0 20%;-ms-flex:0 0 20%;max-width:20%;width:100%;padding:0 16px}
 .footer-links-row{margin:0 -16px}
 .footer-title h4{margin:0 0 15px 0;font-size:18px;font-weight:600;font-family:"Lato";line-height:25px}
@@ -250,7 +258,7 @@ textarea.input-control{height:100px}
 
 /** Home banner  start here**/
 .banner-left-col{flex:0 0 46%;-ms-flex:0 0 46%;max-width:46%;background:#f7f8fa;display:flex}
-.banner-ryt-col{flex:0 0 54%;-ms-flex:0 0 54%;max-width:54%;text-align:center;background:#fdfdfd}
+.banner-ryt-col{flex:0 0 54%;-ms-flex:0 0 54%;max-width:54%;text-align:center;background:#fff5f7}
 .main-banner-col{width:100%;padding:0 15px}
 .main-banner-left-text{max-width:560px;margin:auto;padding:20px 20px}
 .main-banner-left-text p{font-size:20px;color:#2b2b2b;line-height:1.9;margin:0 0 15px 0}
@@ -260,7 +268,7 @@ textarea.input-control{height:100px}
 
 /** Shop from best section start **/
 .head-para-three{text-align:center;margin:0 0 26px 0}
-.shopfrom-best{padding:63px 0 50px}
+.shopfrom-best{padding:63px 0 50px;}
 .product-info{text-align:center;padding:0 25px 20px}
 .product-item-details{padding-top:10px}
 .product-titles{font-family:'Playfair Display';font-size:25px;color:#2b2b2b;line-height:1.2}
@@ -282,10 +290,11 @@ textarea.input-control{height:100px}
 .head-para-three p{font-size:15px;color:#2b2b2b;line-height:1.6;margin:0;}
 .head-para-three p.second-para{padding-bottom: 25px}
 .head-para-three video#video{width: 80%; object-fit: inherit;}
-.whychoose-marlows{background:#fafbfd;padding:30px 0 50px 0}
+.whychoose-marlows{background:#fafbfd;padding:30px 0 50px 0; background: url(../images/christmax-marlows-banner-footer.png) no-repeat;background-size: cover;
+background-position: center;}
 .rating-img{text-align:center;margin:0 0 17px 0}
 .whychoose-col{padding:0 6px;flex:0 0 25%;-ms-flex:0 0 25%;max-width:25%;width:100%;text-align:center}
-.whychoose-col-inner{border:1px dashed #979797;padding:50px 30px 20px 30px;height:100%}
+.whychoose-col-inner{border:1px dashed #979797;padding:50px 30px 20px 30px;height:100%;     background: #fff}
 .whychoose-col-inner:hover .whychoose-col-img{transform:translateY(-8px)}
 .whychoose-rows{margin:0 -6px}
 .whychoose-col-text{font-size:18px;font-family:"Playfair Display";color:#2b2b2b;line-height:1.2;margin:5px 0 0 0}
@@ -1439,7 +1448,7 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .location-container {
     display: flex;
     align-items: center;
-        background: #f6f6f7;
+        background: #f6f6f7 url(../images/location-img.png) no-repeat;
 }
 .location-left-section {
     width: 50%;
@@ -1489,6 +1498,7 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 }
 .post-bar .post-bar-center {
     height: auto !important;
+    position: relative;
 }
 .post-bar .post-bar-center a:hover {
     color: #903C6C;
@@ -1497,6 +1507,14 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .post-bar .post-bar-center a span {
     transition: initial;
 }
+
+.post-bar .post-bar-center:before {
+background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
+left: 83px;background-size: 26px;bottom: -4px;}
+
+.post-bar .post-bar-center:after {
+background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
+right:78px;background-size: 26px;bottom: -4px;}
 
 .post-bar .header-post-bar-left{ text-align:left !important; }
 .post-bar .post-bar-right.header-post-bar-left {text-align: right !important;}
@@ -1594,6 +1612,17 @@ height: 40px;display: inline-block;border-radius: 50px;}
 
 
 .category-sidebar-left .accordion-item ul .accordion-collapse li{ font-size:15px; }
+
+.post-bar .post-bar-center:before {
+background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
+left:81px;background-size: 26px;bottom: -7px;}
+
+}
+
+
+@media(max-width:1350){
+    .post-bar .post-bar-center:after{right: 64px;}
+    .post-bar .post-bar-center:before {left:65px;}
 }
 
 @media(max-width:1199px){
@@ -1627,11 +1656,20 @@ height: 40px;display: inline-block;border-radius: 50px;}
 
 .footer-social a {margin: 0 7px 0 0;}
 
+
+.post-bar .post-bar-center:before {left:45px;}
+
+.post-bar .post-bar-center:after {right:45px;}
 }
 .whychoose-link{
 	text-decoration: none;
 }
 
+@media(max-width:1024px){
+.post-bar .post-bar-center:before {left:-30px;}
+
+.post-bar .post-bar-center:after {right:-30px;}
+}
 
 @media(min-width:992px){
 .blog-list-sidebar-first.mobile-sidebar {display: none;}
@@ -1679,6 +1717,10 @@ height: 40px;display: inline-block;border-radius: 50px;}
 /*ring size guide css end*/
 
 .engagement-ringtwo-bnner .leftright-img-text-wraper .leftright-imt-rows .leftright-text {padding-top: 40px;padding-bottom: 40px;}
+
+.post-bar .post-bar-center:before {left:-30px;}
+
+.post-bar .post-bar-center:after {right:-30px;}
 }
 
 
@@ -1729,6 +1771,10 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 /** checkout **/
 
 .botto-to-top{right: 0;}
+
+.post-bar .post-bar-center:before { display:none; }
+
+.post-bar .post-bar-center:after {display:none;}
 }
 
 @media(max-width:575px){
