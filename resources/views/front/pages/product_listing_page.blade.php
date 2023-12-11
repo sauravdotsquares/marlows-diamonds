@@ -3,7 +3,7 @@
 @section('css')
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -436,7 +436,7 @@
 </div>
 @endsection
 @section('js')
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function() {

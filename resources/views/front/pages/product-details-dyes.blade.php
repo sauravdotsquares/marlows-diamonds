@@ -38,7 +38,7 @@
 </style>
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.css" rel="stylesheet" />
+	<link href="{{ asset('assets/css/jquery.fancybox.css?').env('VERSION')}}" rel="stylesheet" />
 
 @endsection
 

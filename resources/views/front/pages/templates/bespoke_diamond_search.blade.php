@@ -4,7 +4,7 @@
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
 
 <style>
 	.ui-slider-handle{
@@ -690,7 +690,7 @@
 @section('js')
 {{-- <script src="{{ asset('assets/js/nouislider.js?').env('VERSION') }}"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
