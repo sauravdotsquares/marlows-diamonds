@@ -3,7 +3,7 @@
 @section('css')
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -306,10 +306,18 @@
         </div>
     </div>
     <div class="policysection">
-        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/warranty.png'}}" class="policyimg" alt="Warranty"> <h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
-        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/shipped.png'}}" class="policyimg" alt="Delivery"><h6 class="policyheading"><a href="/terms"> Free Delivery & <br> Collection  </a> </h6></div>
-        <div class="policy0icon" ><img src="{{env('APP_IMAGE_URL').'/images/certificate.png'}}"class="policyimg"alt="Quality"><h6 class="policyheading"> <a href="/terms"> Diamond Quality <br> Certificate </a> </h6></div>
-        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/return.jpg'}}"class="policyimg"alt="Return"><h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
+        <div class="policy0icon">
+            <i class="diamond-icon search-lifetimewarranty"></i>
+            <h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+        <div class="policy0icon">
+            <i class="diamond-icon search-freedelivery"></i>
+            <h6 class="policyheading"><a href="/terms"> Free Delivery & <br> Collection  </a> </h6></div>
+        <div class="policy0icon" >
+            <i class="diamond-icon search-diamondquality"></i>
+            <h6 class="policyheading"> <a href="/terms"> Diamond Quality <br> Certificate </a> </h6></div>
+        <div class="policy0icon">
+            <i class="diamond-icon search-returnpolicy"></i>
+            <h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
     </div>
 </div>
 
@@ -428,7 +436,7 @@
 </div>
 @endsection
 @section('js')
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function() {
