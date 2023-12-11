@@ -42,7 +42,7 @@
     </script>
     
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js"></script>
+    <script src="{{ asset('assets/js/angular.js') }}"></script>
     <style>
       [ng-cloak] {  display: none !important; }
     </style>
@@ -95,7 +95,7 @@
     </script>
 
 <script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular-sanitize.js"></script>
+<script src="{{ asset('assets/js/angular-sanitize.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
