@@ -1452,6 +1452,8 @@ if (!function_exists('validate_breadcrumb')) {
         if (!empty($requestData['sorting'])) {
             $sort = $requestData['sorting'];
             $query = $query->orderBy('title', $sort);
+         }else{
+            $query = $query->orderBy('title', 'asc');
          }
 
         // echo "checked ".$query->toSql();die;
