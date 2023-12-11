@@ -3,7 +3,7 @@
     <label class="deko_label">
         Dekopay
     </label>
-    <img src="{{ env('APP_IMAGE_URL').'/assets/images/dek_one.png' }}" alt="deko">
+    <i class="diamond-icon deko-checkout"></i>
     <div class="payment-box-main-drop deko-pay-box " style="display:none;">
         <div class="finance-available-options">
             <input type="hidden" value="{{ $totalAmount }}" id="totalOrder">
