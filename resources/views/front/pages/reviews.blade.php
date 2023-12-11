@@ -9,7 +9,7 @@
 			{{isset($review->title)?$review->title:""}}
 		</div>
 		<div class="reviewr-star">
-			<img src="{{env('APP_IMAGE_URL').'/assets/images/stars.png'}}" alt="star">
+		    <i class="diamond-icon search-reviewssection"></i>
 		</div>
 		<div class="reviewr-review-text">
 			{!! isset($review->description)?$review->description:"" !!}<a class="show-more" href="javascript:void(0)">Read more</a>

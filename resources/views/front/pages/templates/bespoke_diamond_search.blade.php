@@ -162,7 +162,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
 													{{CARAT_TOOLTIP}}
 												</div>
@@ -195,7 +195,9 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)">
+												    <i class="diamond-icon info-icon"></i>
+												    </a>
 												<div class="m-quote-pop">
 													{{COLOUR_TOOLTIP}}
 												</div>
@@ -268,7 +270,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
 													{{CLARITY_TOOLTIP}}
 												</div>
@@ -312,7 +314,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
 													{{CUT_GRADE_TOOLTIP}}
 												</div>
@@ -355,7 +357,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
 													{{POLISH_TOOLTIP}}
 												</div>
@@ -398,7 +400,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
 													{{SYMMETRY_TOOLTIP}}
 												</div>
@@ -454,7 +456,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
 													{{FLUORESCENCE_TOOLTIP}}
 												</div>
@@ -490,7 +492,7 @@
 										</div>
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
-												<a class="ma-info-icon" href="javascript:void(0)"><img src="{{env('APP_IMAGE_URL').'/assets/images/marlows-info-icon.png'}}" alt="marlows-info-icon"></a>
+												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
 													{{CERTIFICATE_TOOLTIP}}
 												</div>

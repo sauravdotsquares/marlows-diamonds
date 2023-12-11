@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="ring-personal-img"><img src="{{env('APP_IMAGE_URL').'/assets/images/ring-personal-gold.png'}}" alt=""></div>
+                <div class="ring-personal-img"><i class="diamond-icon search-ringpersonalimg"></i></div>
             </div>
         </div>
     </div>
@@ -410,7 +410,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
                         <div class="sizing-tip-desc-head">
-                            <span><img src="{{env('APP_IMAGE_URL').'/assets/images/engage-ring-1.png'}}" alt=""></span>
+                            <span><i class="diamond-icon search-fittingring"></i></span>
                             <h3>Method 1: Use a Perfectly Fitting Ring </h3>
                         </div>
                         <p>
@@ -473,7 +473,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
                         <div class="sizing-tip-desc-head">
-                            <span><img src="{{env('APP_IMAGE_URL').'/assets/images/enage-ring-3.jpg'}}" alt=""></span>
+                            <span><i class="diamond-icon search-stringfloss"></i></span>
                             <h3>Method 2: Use String or Floss</h3>
 
                         </div>
@@ -524,7 +524,7 @@
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="sizing-tip-box">
                         <div class="sizing-tip-desc-head">
-                            <span><img src="{{env('APP_IMAGE_URL').'/assets/images/engage-ring-2.png'}}" alt=""></span>
+                            <span><i class="diamond-icon search-paperstrip"></i></span>
                             <h3>Method 3: Use a Paper Strip</h3>
 
                         </div>

@@ -328,13 +328,13 @@
                 
 
                 <div class="rating-img">
-                    <img src="{{env('APP_IMAGE_URL').'/assets/images/top2.png'}}" alt="rating star">
+                    <i class="diamond-icon search-starviews"></i>
                 </div>
                 <div class="whychoose-rows flex-flex-wrap flexed">
                     <a href="/terms" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="{{env('APP_IMAGE_URL').'/assets/images/warranty.png'}}" alt="Lifetime Warranty">
+                                <i class="diamond-icon search-lifetime"></i>
                             </div>
                             <div class="whychoose-col-text">
                                 Lifetime Warranty T&c Apply
@@ -344,7 +344,7 @@
                     <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="{{env('APP_IMAGE_URL').'/assets/images/diamond.png'}}" alt="GIA Certified Diamonds">
+                               <i class="diamond-icon search-giacertified"></i>
                             </div>
                             <div class="whychoose-col-text">
                                 GIA Certified Diamonds
@@ -354,7 +354,7 @@
                     <a href="/diamond-certificates/" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="{{env('APP_IMAGE_URL').'/assets/images/favourite.png'}}" alt="70 Years Experience">
+                                <i class="diamond-icon search-experienced"></i>
                             </div>
                             <div class="whychoose-col-text">
                                 70 Years Experience
@@ -364,7 +364,7 @@
                     <a href="/delivery-and-returns-policy" class="whychoose-col whychoose-link">
                         <div class="whychoose-col-inner">
                             <div class="whychoose-col-img">
-                                <img src="{{env('APP_IMAGE_URL').'/assets/images/exchange.png'}}" alt="FREE 30 Day Returns">
+                                <i class="diamond-icon search-terms-conditions"></i>
                             </div>
                             <div class="whychoose-col-text">
                                 FREE 30 Day Returns. T&c Apply
@@ -414,7 +414,7 @@
                 </div>
             </div>
             <div class="rating-img">
-                <img src="{{env('APP_IMAGE_URL').'/assets/images/top3.png'}}" alt="rating star">
+               <i class="diamond-icon search-starviews"></i>
             </div>
 
             <div class="rating-review-block">
