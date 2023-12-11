@@ -1,7 +1,7 @@
 @extends('layouts.front.app')
 @section('successtrackingscript')
     <script>
-        window.uetq = window.uetq || [];window.uetq.push('event', 'purchase', {"revenue_value":"{{$pay['final_price']}}","currency":"GBP"});
+        window.uetq = window.uetq || [];window.uetq.push('event', 'purchase', {"revenue_value":"{{isset($pay['final_price'])?$pay['final_price']:0.00}}","currency":"GBP"});
     </script>
 @endsection
 @section('google-ecommerce')
