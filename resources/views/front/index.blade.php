@@ -367,7 +367,7 @@
                                 <i class="diamond-icon search-terms-conditions"></i>
                             </div>
                             <div class="whychoose-col-text">
-                                FREE 30 Day Returns. T&c Apply
+                                30 Day Returns. T&c Apply
                             </div>
                         </div>
                     </a>
