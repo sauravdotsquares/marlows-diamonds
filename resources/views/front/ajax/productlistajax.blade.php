@@ -25,7 +25,7 @@
 			
 				<a href="{{asset('product/'.$product->slug)}}"  class="{{ $thumbnailGif ? 'product-hov' : '' }}" >
 					@if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
-						<img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}">
+						<img src="{{ getImageOptimizeDetails('/storage/'.$product->getProductImages->image_url,'217','217')}}" alt="{{$product->title}}">
 					@endif
 
 					<?php if($thumbnailGif){ ?>
