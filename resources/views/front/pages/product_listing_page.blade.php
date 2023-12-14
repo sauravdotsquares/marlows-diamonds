@@ -3,7 +3,7 @@
 @section('css')
 <link href="{{ asset('assets/css/nouislider.css') }}" rel="stylesheet">
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css">
+<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -48,7 +48,7 @@
                             <div class="col-lg-3 col-sm-6 col-md-3">
                                 <div class="ring-pr-items">
                                     <div class="ring-pr-image">
-                                        <a href="/engagement-rings/solitaire"><img src="{{env('APP_IMAGE_URL').'/assets/images/CR10-SE45_0003.jpg'}}" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
+                                        <a href="/engagement-rings/solitaire"><img src="{{ getImageOptimizeDetails('/assets/images/CR10-SE45_0003.jpg','299','299')}}" alt="SOLITAIRE ENGAGEMENT RINGS"></a>
                                     </div>
                                     <div class="ring-pr-details">
                                         <h3 class="ring-pr-title">
@@ -66,7 +66,7 @@
                             <div class="col-lg-3 col-sm-6 col-md-3">
                                 <div class="ring-pr-items">
                                     <div class="ring-pr-image">
-                                        <a href="/engagement-rings/halo/"><img src="{{env('APP_IMAGE_URL').'/assets/images/DSR21-Images_0003.jpg'}}" alt="HALO ENGAGEMENT RINGS"></a>
+                                        <a href="/engagement-rings/halo/"><img src="{{getImageOptimizeDetails('/assets/images/DSR21-Images_0003.jpg','299','299')}}" alt="HALO ENGAGEMENT RINGS"></a>
                                     </div>
                                     <div class="ring-pr-details">
                                         <h3 class="ring-pr-title">
@@ -84,7 +84,7 @@
                             <div class="col-lg-3 col-sm-6 col-md-3">
                                 <div class="ring-pr-items">
                                     <div class="ring-pr-image">
-                                        <a href="/engagement-rings/shoulder-set/"><img src="{{env('APP_IMAGE_URL').'/assets/images/CX9-SL28_00003-1.jpg'}}" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
+                                        <a href="/engagement-rings/shoulder-set/"><img src="{{getImageOptimizeDetails('/assets/images/CX9-SL28_00003-1.jpg','299','299')}}" alt="SHOULDER SET ENGAGEMENT RINGS"></a>
                                     </div>
                                     <div class="ring-pr-details">
                                         <h3 class="ring-pr-title">
@@ -102,7 +102,7 @@
                             <div class="col-lg-3 col-sm-6 col-md-3">
                                 <div class="ring-pr-items">
                                     <div class="ring-pr-image">
-                                        <a href="/engagement-rings/multi-stone/"><img src="{{env('APP_IMAGE_URL').'/assets/images/R3-143_0003.jpg'}}" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
+                                        <a href="/engagement-rings/multi-stone/"><img src="{{getImageOptimizeDetails('/assets/images/R3-143_0003.jpg','299','299')}}" alt="MULTI-STONE ENGAGEMENT RINGS"></a>
                                     </div>
                                     <div class="ring-pr-details">
                                         <h3 class="ring-pr-title">
@@ -135,9 +135,9 @@
                             @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
                                 <div class="item">
                                     @if(isset($product_item_item->category_images) && !empty($product_item_item->category_images))
-                                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product_item_item->category_images }}" alt="{{$product_item_item->item_name}}">
+                                        <img src="{{ getImageOptimizeDetails('/storage/'.$product_item_item->category_images,'217','217')}}" alt="{{$product_item_item->item_name}}">
                                     @else
-                                        <img src="{{env('APP_IMAGE_URL').'/storage/Products/CX9-SC48_00003_1650365432.jpg'}}" alt="{{$product_item_item->item_name}}"> 
+                                        <img src="{{getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg','217','217')}}" alt="{{$product_item_item->item_name}}"> 
                                     @endif
                                     <p> <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a></p>
                                 </div>
@@ -306,10 +306,18 @@
         </div>
     </div>
     <div class="policysection">
-        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/warranty.png'}}" class="policyimg" alt="Warranty"> <h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
-        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/shipped.png'}}" class="policyimg" alt="Delivery"><h6 class="policyheading"><a href="/terms"> Free Delivery & <br> Collection  </a> </h6></div>
-        <div class="policy0icon" ><img src="{{env('APP_IMAGE_URL').'/images/certificate.png'}}"class="policyimg"alt="Quality"><h6 class="policyheading"> <a href="/terms"> Diamond Quality <br> Certificate </a> </h6></div>
-        <div class="policy0icon"><img src="{{env('APP_IMAGE_URL').'/images/return.jpg'}}"class="policyimg"alt="Return"><h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
+        <div class="policy0icon">
+            <i class="diamond-icon search-lifetimewarranty"></i>
+            <h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
+        <div class="policy0icon">
+            <i class="diamond-icon search-freedelivery"></i>
+            <h6 class="policyheading"><a href="/terms"> Free Delivery & <br> Collection  </a> </h6></div>
+        <div class="policy0icon" >
+            <i class="diamond-icon search-diamondquality"></i>
+            <h6 class="policyheading"> <a href="/terms"> Diamond Quality <br> Certificate </a> </h6></div>
+        <div class="policy0icon">
+            <i class="diamond-icon search-returnpolicy"></i>
+            <h6 class="policyheading"><a href="/terms"> 30 Days<br> Return </a> </h6></div>
     </div>
 </div>
 
@@ -428,7 +436,7 @@
 </div>
 @endsection
 @section('js')
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $(document).ready(function() {

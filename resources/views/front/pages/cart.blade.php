@@ -4,7 +4,11 @@
 @endsection
 @section('successtrackingscript')
 <?php 
-    $value = array_sum(array_column(session('cart'),'deposited_price'));
+    if(session('cart')){
+        $value = array_sum(array_column(session('cart'),'deposited_price'));
+    }else{
+        $value = 0.0;
+    }
 ?>
 <script>
     window.uetq = window.uetq || [];window.uetq.push('event', 'add_to_cart', {"revenue_value":"{{$value}}","currency":"GBP"});
