@@ -11,7 +11,7 @@ $getInstaData = getInstagramDataDetails();
                     <div class="instaphoto-info">
                         <div class="instaphoto-img">
                             <?php 
-                                $instagramImageUrl = getImageOptimizeDetails('/images/'.$insta->image_url,'256','370');
+                                //$instagramImageUrl = getImageOptimizeDetails('/images/'.$insta->image_url,'256','370');
                             ?>
                             <img src="{{ asset('/images/'.$insta->image_url) }}" alt="{{isset($insta->alt)?$insta->alt:'GIA Certified Diamond Jewellery Supplier | London and Birmingham'}}" loading="lazy">
                         </div>
