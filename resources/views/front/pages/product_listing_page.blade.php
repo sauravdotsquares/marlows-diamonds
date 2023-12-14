@@ -341,7 +341,7 @@
 					</div>
 				</div>
                 <div class="leftright-imt-col leftright-img">
-					<img src="{{env('APP_IMAGE_URL').'/assets/images/banner-hand.jpg'}}" alt="banner-hand">
+					<img src="{{getImageOptimizeDetails('/assets/images/banner-hand.jpg','675','552')}}" alt="banner-hand">
 				</div>
 			</div>
 		</div>
