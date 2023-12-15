@@ -424,7 +424,7 @@
 
 @include('front.includes.instagram-section')
 <div class="engagement-ring-img">
-    <img src="{{env('APP_IMAGE_URL').'/images/viewguide.PNG'}}" alt="Find the perfect engagement ring">
+    <img src="{{getImageOptimizeDetails('/assets/images/banner-hand.jpg','695','696')}}" alt="banner-hand">
     <div class="engagement-ring-img-content">
         <div class="container">
     <h2>Find the perfect engagement ring</h2>
