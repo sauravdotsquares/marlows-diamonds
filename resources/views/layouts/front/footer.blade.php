@@ -77,7 +77,6 @@
                 <div class="fcontent-column disclaimer-content">
                     <b>Birmingham Store:</b> 46-47 Warstone Lane Hockley, Birmingham B18 6JJ.<br><b>Email: </b><a style="color:#fff; text-decoration: none;" href="mailto:hello@marlows-diamonds.co.uk">hello@marlows-diamonds.co.uk</a><br>
                     <b>London Store:</b> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ. <br> Registraton No. 00867377. VAT No. GB 111114741<br>
-                    <b>London Store:</b> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ. <br> Registraton No. 00867377. VAT No. GB 111114741<br>
                 </div>
 
             </div>
