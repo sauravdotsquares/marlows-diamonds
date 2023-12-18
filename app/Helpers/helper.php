@@ -670,7 +670,7 @@ if (!function_exists('validate_breadcrumb')) {
     if (!function_exists("getInstagramDataDetails")) {
         function getInstagramDataDetails()
         {
-            $getInstaData = InstagramData::latest()->limit(15)->where('media_type', '!=', 'VIDEO')->get();
+            $getInstaData = InstagramData::limit(15)->where('media_type', '!=', 'VIDEO')->get();
             return $getInstaData;
         }
     }
