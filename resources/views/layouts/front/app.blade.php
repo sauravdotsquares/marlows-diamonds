@@ -101,6 +101,7 @@
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
+<script src="{{asset('/assets/js/jquery.lazyload.min.js?').env('VERSION')}}"></script>
 {{-- .env('VERSION') --}}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
 
@@ -111,6 +112,9 @@
 
 
   $(document).ready(function(){
+
+      // for lazyload functions applied in instagram section images.
+      $('.instaphoto-img img').lazyload();
     
       $('.show-more-content').hide();
       $('.show-more').click(function(){
