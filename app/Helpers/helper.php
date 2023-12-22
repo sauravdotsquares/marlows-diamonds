@@ -1470,6 +1470,12 @@ if (!function_exists('validate_breadcrumb')) {
         $productItems = "";
         if ($getProductListFinal->count()) {
             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
+        } else {
+            return [
+                'status' => 404,
+                'page_status'=> 1,
+                'redirect_url'=> $getProductListFinal->path()
+            ];
         }
         $isNextPage = $getProductListFinal->hasMorePages();
         $nextPage = $getProductListFinal->currentPage() + 1;
@@ -1713,8 +1719,11 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         if(in_array('54',explode(',',$getProductDetails->categories))){
             $categoryId = 54;
         }
-
-        $getRegularPrices = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select('regular_price',"$diamondType as shopPrice","$rrpPrice as rrpPrice",'product_id','id')->first();
+        try {
+            $getRegularPrices = ProductVariations::where('id',$variationDetails[0][0]['variation_id'])->select('regular_price',"$diamondType as shopPrice","$rrpPrice as rrpPrice",'product_id','id')->first();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
 
         $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
 
