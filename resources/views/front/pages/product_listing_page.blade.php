@@ -73,7 +73,7 @@
                                 <div class="ring-pr-items">
                                     <div class="ring-pr-image">
                                         <a href="/engagement-rings/solitaire">
-                                            <img src="{{ asset('http://127.0.0.1:8011/storage/'.$preContentData->image_url) }}" alt="SOLITAIRE ENGAGEMENT RINGS">
+                                            <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
                                         </a>
                                     </div>
                                     <div class="ring-pr-details">
@@ -328,7 +328,7 @@
 				</div>
                 @if(isset($postContent->image_url) && !empty($postContent->image_url))
                 <div class="leftright-imt-col leftright-img">
-					<img src="{{asset('http://127.0.0.1:8011/storage/'.$postContent->image_url)}}" alt="banner-hand">
+					<img src="{{env('APP_IMAGE_STAG_URL').'/storage/'.$postContent->image_url}}" alt="banner-hand">
 				</div>
                 @endif
 			</div>
