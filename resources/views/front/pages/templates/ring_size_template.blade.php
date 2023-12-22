@@ -30,7 +30,9 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="ring-personal-img"><i class="diamond-icon search-ringpersonalimg"></i></div>
+                <div class="ring-personal-img">
+                    <img src="{{env('APP_IMAGE_URL').'/assets/images/ring-personal-gold.png'}}" alt="">
+                </div>
             </div>
         </div>
     </div>
