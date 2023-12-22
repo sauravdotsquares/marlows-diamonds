@@ -243,10 +243,14 @@ class ProductController extends Controller
                     );
                 }
             } else {
-                return view('layouts.errors.404');
+                $getActualSlug = getProductCategorySlug($productSlug);
+                $makeNewURL = '/' .$getActualSlug;
+
+                return Redirect::to($makeNewURL, 301);
             }
         } else {
-            return view('layouts.errors.404');
+            $makeNewURL = '/' .'/diamonds-rings';
+            return Redirect::to($makeNewURL, 301);
         }
     }
 

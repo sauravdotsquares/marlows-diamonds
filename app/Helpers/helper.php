@@ -1470,6 +1470,12 @@ if (!function_exists('validate_breadcrumb')) {
         $productItems = "";
         if ($getProductListFinal->count()) {
             $productItems = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
+        } else {
+            return [
+                'status' => 404,
+                'page_status'=> 1,
+                'redirect_url'=> $getProductListFinal->path()
+            ];
         }
         $isNextPage = $getProductListFinal->hasMorePages();
         $nextPage = $getProductListFinal->currentPage() + 1;
@@ -1976,6 +1982,19 @@ if (!function_exists("getImageOptimizeDetails")) {
             $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
         }
         return $imageUrl;
+    }
+}
+
+if (!function_exists("getProductCategorySlug")) {
+    function getProductCategorySlug($productSlug)
+    {
+        $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $productSlug)->first();
+
+        $prod_categories = explode(',', $getProduct->categories);
+
+        $getCatId = Category::whereIn('id', $prod_categories)->where('parent_id',0)->select('name','title','slug')->first();
+
+        return $getCatId->slug;
     }
 }
     
