@@ -80,7 +80,7 @@
                                         <h3 class="ring-pr-title">
                                             {{$preContentData->heading}}
                                         </h3>
-                                        <div class="ring-pr-desc">
+                                        <div class="ring-pr-desc" style="height: 100px;">
                                             {!! $preContentData->description !!}
                                         </div>
                                         <div class="ring-pr-shop-btn">
@@ -318,8 +318,6 @@
 						{{$postContent->heading}}
 					</h2>
                     {!! $postContent->description !!}
-					<!-- <p>Once you've found your perfect match, you should choose the perfect engagement ring that suits her personality and look. We bring to you a curated assortment of diamond engagement rings in the most beautiful designs, stone settings, diamond shapes, and ring sizes.</p>
-					<p>Our diamond engagement rings are fully natural and unique, designed in our lab. We only use ethically sourced diamonds in our engagement rings. Additionally, we offer diamonds that are graded by the GIA, so you can be confident that they are of high quality. Adorning our sparkling stones will bring you joy and warmth for the rest of your lives.</p> -->
                     @if($postContent->button_check == 1)
 					<div class="viewguide-btn">
 						<a class="btn-bg-small" href="{{ $postContent->button_url }}">{{ $postContent->button_title }}</a>
@@ -332,9 +330,10 @@
 				</div>
                 @endif
 			</div>
-		</div>
+        </div>
 	</div>
 </div>
+<br>
 @endforeach
 @endif
 
