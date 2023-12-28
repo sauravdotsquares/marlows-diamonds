@@ -124,7 +124,7 @@ class Category extends Model
     }
     public function getPostContentAttribute()
     {
-        return CategoryPrecontent::where('category_id',$this->id)->where('content_position',2)->where('status',1)->latest()->limit(4)->get();
+        return CategoryPrecontent::where('category_id',$this->id)->where('content_position',2)->where('status',1)->limit(4)->get();
     }
      
 }
