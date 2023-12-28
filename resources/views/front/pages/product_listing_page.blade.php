@@ -81,7 +81,7 @@
                                             {{$preContentData->heading}}
                                         </h3>
                                         <div class="ring-pr-desc" style="height: 130px;">
-                                            {!! Str::limit($preContentData->description, 200, ' ...') !!}
+                                            {!! Str::limit(strip_tags($preContentData->description), 200, ' ...') !!}
                                         </div>
                                         <div class="ring-pr-shop-btn">
                                             @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
