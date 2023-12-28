@@ -80,7 +80,7 @@
                                         <h3 class="ring-pr-title">
                                             {{$preContentData->heading}}
                                         </h3>
-                                        <div class="ring-pr-desc" style="height: 100px;">
+                                        <div class="ring-pr-desc" style="height: 130px;">
                                             {!! $preContentData->description !!}
                                         </div>
                                         <div class="ring-pr-shop-btn">
