@@ -58,7 +58,8 @@ class StripeController extends Controller
             // return view('layouts.errors.404');
             // Session::flash ('fail-message', "Error! Please Try again.");
             // return Redirect::back();
-            return $e->getMessage();
+            Session::flash ('fail-message', $e->getMessage());
+            return Redirect::back();
         }
      
         session()->forget('cart');
