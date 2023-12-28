@@ -120,11 +120,11 @@ class Category extends Model
 
     public function getPreContentAttribute()
     {
-        return CategoryPrecontent::where('category_id',$this->id)->where('content_position',1)->where('status',1)->get();
+        return CategoryPrecontent::where('category_id',$this->id)->where('content_position',1)->where('status',1)->latest()->limit(4)->get();
     }
     public function getPostContentAttribute()
     {
-        return CategoryPrecontent::where('category_id',$this->id)->where('content_position',2)->where('status',1)->get();
+        return CategoryPrecontent::where('category_id',$this->id)->where('content_position',2)->where('status',1)->latest()->limit(4)->get();
     }
      
 }
