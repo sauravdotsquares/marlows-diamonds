@@ -27,6 +27,11 @@
         </ul>
     </div>
 @endif
+@if (\Session::has('fail-message'))
+    <div class="alert alert-danger">
+        {!! \Session::get('fail-message') !!}
+    </div>
+@endif
 
 <div class="checkout-wraper">
     <div class="container">
