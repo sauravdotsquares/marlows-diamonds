@@ -44,7 +44,11 @@
                                                     aria-hidden="true"></i></button>
                                         </td> -->
                                         <td class="wish-product-thumbnail-col">
-                                            <a href="#"><img src="{{env('APP_IMAGE_URL').'/assets/images/RC2019B_00003-225x225.jpg'}}" alt="image"></a>
+                                            @if(isset($details['image']) && !empty($details['image']))
+                                                <a href="{{ asset('product/'.$details['titleSlug']) }}"><img src="{{env('APP_IMAGE_URL').'/storage/'.$details['image']}}" alt="{{ $details['titleName'] }}"></a>
+                                            @else
+                                                <a href="{{ asset('product/'.$details['titleSlug']) }}"><img src="{{env('APP_IMAGE_URL').'/storage/images/RC2019B_00003-225x225.jpg'}}" alt="{{ $details['titleName'] }}"></a>
+                                            @endif
                                         </td>
                                         <td class="wish-product-name-col">
                                             <a href="{{ asset('product/'.$details['titleSlug']) }}">{{ $details['titleName'] }}</a>
