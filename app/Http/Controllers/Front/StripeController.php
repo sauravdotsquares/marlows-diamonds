@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\Settings;
 use Stripe;
 use Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class StripeController extends Controller
 {
@@ -53,8 +55,11 @@ class StripeController extends Controller
                 "description" => "This payment is testing purpose of techsolutionstuff",
             ]);
         } catch (\Exception $e) {
-            return view('layouts.errors.404');
-            // return $e->getMessage();
+            // return view('layouts.errors.404');
+            // Session::flash ('fail-message', "Error! Please Try again.");
+            // return Redirect::back();
+            Session::flash ('fail-message', $e->getMessage());
+            return Redirect::back();
         }
      
         session()->forget('cart');

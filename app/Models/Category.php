@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\CategoryPrecontent;
 
 class Category extends Model
 {
@@ -13,7 +14,7 @@ class Category extends Model
 
     protected $fillable = ['name','title','slug','parent_id','short_description','description','image_url','meta_title','meta_keyword','meta_description','enable_filter','sort_order','active_icon','hover_icon','status','is_category_page'];
 
-    protected $appends = ['parent_details','parent_cate'];
+    protected $appends = ['parent_details','parent_cate','pre_content','post_content'];
 
     public function getParentDetailsAttribute()
     {
@@ -115,6 +116,15 @@ class Category extends Model
             }
             else{ return [$parentData];}
         }
+    }
+
+    public function getPreContentAttribute()
+    {
+        return CategoryPrecontent::where('category_id',$this->id)->where('content_position',1)->where('status',1)->latest()->limit(4)->get();
+    }
+    public function getPostContentAttribute()
+    {
+        return CategoryPrecontent::where('category_id',$this->id)->where('content_position',2)->where('status',1)->limit(4)->get();
     }
      
 }

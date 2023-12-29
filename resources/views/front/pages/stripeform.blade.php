@@ -45,7 +45,7 @@
                             <input type="hidden" id="tokenOrdId" name="tokenOrdId" value="">
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
                                 <label class='control-label'>Expiration Year</label>
-                                <input class='form-control card-expiry-year' id="expiry_year" name="expiry_year" required placeholder='YYYY' size='4' min="{{ date('Y')}}" type='text'>
+                                <input class='form-control card-expiry-year' id="expiry_year" name="expiry_year" required placeholder='YYYY' size='4' type='text'>
                             </div>
                         </div>
                         <div class="form-row row">
@@ -60,6 +60,9 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            <div class="stripeValidationerror" style="display:none;">
+
             </div>
         </div>
     </div>
@@ -99,10 +102,8 @@ $(function() {
 
   function stripeResponseHandler(status, response) {
       if (response.error) {
-          $('.error')
-              .removeClass('hide')
-              .find('.alert')
-              .text(response.error.message);
+            $('.stripeValidationerror').show();
+            $('.stripeValidationerror').text(response.error.message);
       } else {
           /* token contains id, last4, and card type */
           var token = response['id'];

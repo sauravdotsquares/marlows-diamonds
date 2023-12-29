@@ -4,6 +4,15 @@
     .error {
         color: #e74c3c;
     }
+    .stripeValidationerror {
+        color: #8f5154;
+        background: #f3dede;
+        text-align: center;
+        padding: 10px 0px;
+        font-weight: 600;
+        border: 1px solid #e3d0d4;
+        margin: 0px 14px 14px;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
@@ -16,6 +25,11 @@
         <ul>
             <li>{!! \Session::get('error') !!}</li>
         </ul>
+    </div>
+@endif
+@if (\Session::has('fail-message'))
+    <div class="alert alert-danger">
+        {!! \Session::get('fail-message') !!}
     </div>
 @endif
 
