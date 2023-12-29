@@ -81,7 +81,7 @@
                                             {{$preContentData->heading}}
                                         </h3>
                                         @if(isset($preContentData->description) && !empty($preContentData->description))
-                                            <div class="ring-pr-desc" style="height: 130px;">
+                                            <div class="ring-pr-desc">
                                                 {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
                                             </div>
                                         @endif
