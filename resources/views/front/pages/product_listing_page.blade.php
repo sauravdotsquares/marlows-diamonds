@@ -80,9 +80,11 @@
                                         <h3 class="ring-pr-title">
                                             {{$preContentData->heading}}
                                         </h3>
-                                        <div class="ring-pr-desc" style="height: 130px;">
-                                            {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
-                                        </div>
+                                        @if(isset($preContentData->description) && !empty($preContentData->description))
+                                            <div class="ring-pr-desc" style="height: 130px;">
+                                                {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                                            </div>
+                                        @endif
                                         <div class="ring-pr-shop-btn">
                                             @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
                                                 <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:'/engagement-rings/solitaire'}}">{{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}</a>
