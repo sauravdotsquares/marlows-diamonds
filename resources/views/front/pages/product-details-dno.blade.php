@@ -725,8 +725,7 @@
 						.trigger('refresh.owl.carousel')
 						.trigger('stop.owl.autoplay')
 						.trigger('play.owl.autoplay',[7000, 300])
-					}else if(res.vari_image!='' && res.vari_image!=null){
-
+					}else if(res.vari_image!='' && res.vari_image!=null && res.vari_video==null){
 						const items = $('#carousel').find('.owl-item');
 						items.each((index, element)=>{
 							$(element).find('.product-items-carousel').attr('data-position', index);
