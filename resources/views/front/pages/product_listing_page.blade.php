@@ -81,9 +81,9 @@
                                             {{$preContentData->heading}}
                                         </h3>
                                         @if(isset($preContentData->description) && !empty($preContentData->description))
-                                            <div class="ring-pr-desc">
-                                                {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
-                                            </div>
+                                        <div class="ring-pr-desc">
+                                            {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                                        </div>
                                         @endif
                                         <div class="ring-pr-shop-btn">
                                             @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
@@ -99,7 +99,9 @@
                 </div>
             </div>
 
-            <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+            <div class="category-list-item-searchsort dropdown-content-desktop">
+                <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="Search for product" aria-label="Search">
+            </div>
 
             <center>
                 <!-- <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3> -->
@@ -236,7 +238,7 @@
                         <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile resetFilterButton" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
                     </div>
                     <div class="category-list-item-searchsort dropdown-content-desktop">
-                          <input type="text" name="title" class="search-item empty" id="searchd" value="" placeholder="&#xF002; Search for product" aria-label="Search">
+                          <input type="text" name="title" class="search-item empty" id="searchd" value="" placeholder="Search for product" aria-label="Search">
                             <div class="dropdown">
                             <select class="form-control dropdown-content" name="sortingDSelect" id="sortingDSelect">
                                 <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
