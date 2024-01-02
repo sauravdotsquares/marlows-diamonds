@@ -72,9 +72,11 @@
                             <div class="{{$customCss}}">
                                 <div class="ring-pr-items">
                                     <div class="ring-pr-image">
-                                        <a href="/engagement-rings/solitaire">
-                                            <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
-                                        </a>
+                                        @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
+                                            <a href="/engagement-rings/solitaire">
+                                                <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
+                                            </a>
+                                        @endif
                                     </div>
                                     <div class="ring-pr-details">
                                         <h3 class="ring-pr-title">
