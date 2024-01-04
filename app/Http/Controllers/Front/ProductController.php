@@ -20,7 +20,7 @@ use App\Models\ProductVariationsMaster;
 use App\Models\GlobalCombinationsVariations;
 use App\Models\UrlRedirects;
 use App\Models\Menus;
-use App\Models\SitemapUrls;
+use App\Models\ActiveCategoryUrl;
 use App\Models\Posts;
 use App\Models\PostCategory;
 use App\Models\Pages;
@@ -1650,68 +1650,72 @@ class ProductController extends Controller
     {
         $request = request();
         $path =  $request->path();
-        $slugs = explode('/', $path);
-        $productListingData = getProductListing($slugs, request()->all());
-        if($productListingData['status'] == 404){
-            return view('layouts.errors.404');
-        }
-        if (!empty($productListingData)) {
 
-            $productItems = $productListingData['productItems'];
-            $product_count = $productListingData['product_count'];
-            
-            $isNextPage = $productListingData['isNextPage'];
-            $nextPage = $productListingData['nextPage'];
-            $categoryData = $productListingData['categoryData'];
+        $getActiveURLs = ActiveCategoryUrl::where('url',$path)->first();
 
-            $path = request()->path();
-
-            /** Items for filter */
-            $filter_items = ProductFilter::whereHas('product_items', function ($query) {
-                $query->where(['is_deleted' => 0, 'is_active' => 1]);
-            })
-                ->with('product_items')
-                ->where(['is_deleted' => 0, 'is_active' => 1])
-                ->get();
-
-            $slugText = '';
-            if (isset($slugs[1]) && !empty($slugs[1])) {
-                $slugText = $slugs[1];
-            } elseif (isset($slugs[0]) && !empty($slugs[0])) {
-                $slugText = $slugs[0];
+        if(isset($getActiveURLs) && !empty($getActiveURLs)){
+            $slugs = explode('/', $path);
+            $productListingData = getProductListing($slugs, request()->all());
+            if($productListingData['status'] == 404){
+                return view('layouts.errors.404');
             }
+            if (!empty($productListingData)) {
+    
+                $productItems = $productListingData['productItems'];
+                $product_count = $productListingData['product_count'];
+                
+                $isNextPage = $productListingData['isNextPage'];
+                $nextPage = $productListingData['nextPage'];
+                $categoryData = $productListingData['categoryData'];
+    
+                $path = request()->path();
+    
+                /** Items for filter */
+                $filter_items = ProductFilter::whereHas('product_items', function ($query) {
+                    $query->where(['is_deleted' => 0, 'is_active' => 1]);
+                })
+                    ->with('product_items')
+                    ->where(['is_deleted' => 0, 'is_active' => 1])
+                    ->get();
+    
+                $slugText = '';
+                if (isset($slugs[1]) && !empty($slugs[1])) {
+                    $slugText = $slugs[1];
+                } elseif (isset($slugs[0]) && !empty($slugs[0])) {
+                    $slugText = $slugs[0];
+                }
+    
+                $filterItemTextData = ProductFilterItems::where('item_slug', $slugText)->select('top_text', 'bottom_text')->first();
 
-            $filterItemTextData = ProductFilterItems::where('item_slug', $slugText)->select('top_text', 'bottom_text')->first();
-
-
-            if ($request->isMethod('POST')) {
-                return response()->json([
-                    "status" => true,
-                    "productItems" => $productItems,
-                    "isNextPage" => $isNextPage,
-                    "nextPage" => $nextPage
-                ]);
+    
+                if ($request->isMethod('POST')) {
+                    return response()->json([
+                        "status" => true,
+                        "productItems" => $productItems,
+                        "isNextPage" => $isNextPage,
+                        "nextPage" => $nextPage
+                    ]);
+                }
+    
+                $data = $categoryData;
+                $pageData = Pages::where('slug','engagement-rings')->where(['status'=>1, 'is_deleted'=>0])->first();
+                return view('front.pages.product_listing_page', compact([
+                    'filterItemTextData',
+                    'productItems',
+                    'product_count',
+                    'productListingData',
+                    'isNextPage',
+                    'nextPage',
+                    'filter_items',
+                    'categoryData',
+                    'data',
+                    'pageData',
+                    'path',
+                    'slugs'
+                ]));
             }
-
-            $data = $categoryData;
-            $pageData = Pages::where('slug','engagement-rings')->where(['status'=>1, 'is_deleted'=>0])->first();
-            return view('front.pages.product_listing_page', compact([
-                'filterItemTextData',
-                'productItems',
-                'product_count',
-                'productListingData',
-                'isNextPage',
-                'nextPage',
-                'filter_items',
-                'categoryData',
-                'data',
-                'pageData',
-                'path',
-                'slugs'
-            ]));
-        } else {
-            return view('layouts.errors.404');
         }
+        return view('layouts.errors.404');
     }
 
    /**
