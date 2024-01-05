@@ -1869,7 +1869,7 @@ if (!function_exists("getBreadcrumbCategoryName")) {
                 $breadcrumbDesign .= "/".$value;
             }
             if(!next($breadcrumbArray)) {
-                $newDesignBreadcrumb[$key] = '<a href="javascript:void(0);">'.$getCategoryName.'</a>';
+                $newDesignBreadcrumb[$key] = ''.$getCategoryName.'';
             }else{
                 $newDesignBreadcrumb[$key] = '<a href="'.$breadcrumbDesign.'">'.$getCategoryName.'</a>';
             }
