@@ -72,10 +72,10 @@
                             <div class="{{$customCss}}">
                                 <div class="ring-pr-items">
                                     <div class="ring-pr-image">
-                                        @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
-                                            <a href="/engagement-rings/solitaire">
-                                                <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
-                                            </a>
+                                    @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
+                                        <a href="/engagement-rings/solitaire">
+                                            <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
+                                        </a>
                                         @endif
                                     </div>
                                     <div class="ring-pr-details">
@@ -83,9 +83,9 @@
                                             {{$preContentData->heading}}
                                         </h3>
                                         @if(isset($preContentData->description) && !empty($preContentData->description))
-                                        <div class="ring-pr-desc">
-                                            {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
-                                        </div>
+                                            <div class="ring-pr-desc">
+                                                {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                                            </div>
                                         @endif
                                         <div class="ring-pr-shop-btn">
                                             @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
@@ -121,10 +121,10 @@
                                         <img src="{{getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg','217','217')}}" alt="{{$product_item_item->item_name}}"> 
                                     @endif
                                     <p> 
-                                        @if(isset($product_item_item->parent_category_slug) && !empty($product_item_item->parent_category_slug->parent_cate->slug))
-                                        <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a>
-                                        @endif
-                                    </p>
+                                    @if(isset($product_item_item->parent_category_slug) && !empty($product_item_item->parent_category_slug->parent_cate->slug))
+                                    <a href="{{ url($product_item_item->parent_category_slug->parent_cate->slug.'/'.$product_item_item->item_slug)}}">{{$product_item_item->item_name}}</a>
+                                    @endif
+                                </p>
                                 </div>
                             @endforeach
                         @endif
@@ -182,12 +182,12 @@
 
                                                 @if (in_array(Str::lower($product_item_item->item_value), $slugs))
                                                 <?php
-                                                $checkVariable = 'true';
+                                                $checkVariable = 'false';
                                                 $checkVariableNew = 'checked';
                                                 ?>
                                                 @elseif(in_array(Str::lower(Str::replace(' ', '-', $product_item_item->item_name)), $slugs))
                                                 <?php
-                                                $checkVariable = 'true';
+                                                $checkVariable = 'false';
                                                 $checkVariableNew = 'checked';
                                                 ?>
                                                 @endif
@@ -218,6 +218,7 @@
                                                     </div>
                                                 </div>
                                                 @else
+                                                <!-- <input type="radio" onclick="javascript:window.location.href='http://stackoverflow.com'; return false;" /> -->
 
                                                     <?php 
                                                         if($filter_item->slug == 'ring-categories'){
@@ -229,7 +230,7 @@
                                                                     $getParameterArray[2] =  $product_item_item->filter_category_slug;
                                                                 }
     
-                                                                $url = '/'.implode('/',$getParameterArray);
+                                                                $url = URL::to('/').'/'.implode('/',$getParameterArray);
                                                             }elseif($product_item_item->filter_category_slug == 'plain-band'){
                                                                 $getParameterArray = explode('/',Request::path());
                                                                 if(count($getParameterArray) == 1){
@@ -237,10 +238,10 @@
                                                                 }else{
                                                                     $getParameterArray[2] =  $product_item_item->filter_category_slug;
                                                                 }
-                                                                $url = '/'.implode('/',$getParameterArray);
+                                                                $url = URL::to('/').'/'.implode('/',$getParameterArray);
                                                             }else{
                                                                 if(!empty($product_item_item->filter_category_slug)){
-                                                                    $url = asset('/').$product_item_item->filter_category_slug;
+                                                                    $url = URL::to('/').'/'.$product_item_item->filter_category_slug;
                                                                 }else{
                                                                     $url = 'javascript:void(0);';
                                                                 }
@@ -252,18 +253,16 @@
                                                         }elseif($filter_item->slug == 'style-categories'){
                                                             $url = URL::to('/').$product_item_item->filter_category_slug;
                                                         }elseif($filter_item->slug == 'metal_type'){
-                                                            // echo "checking ";
-                                                            // die;
                                                             $url = 'javascript:void(0);';
                                                         }elseif($filter_item->slug == 'category'){
                                                             $url = URL::to('/').'/'.$product_item_item->filter_category_slug;
                                                         }
                                                     ?>
 
-                                                    <input type="{{ $filter_item->input_type }}" name="{{ $filter_item->slug }}" {{ $checkVariableNew }} onclick="return {{ $checkVariable }};" value="{{ $product_item_item->item_value }}" class="filter-item-data">
-                                                    <a href="{{$url}}">
+   
+                                                <input type="{{ $filter_item->input_type }}" data-slug="{{$url}}" name="{{ $filter_item->slug }}" {{ $checkVariableNew }} onclick="return {{ $checkVariable }};" value="{{ $product_item_item->item_value }}" class="filter-item-data">
                                                         {{ $product_item_item->item_name }}
-                                                    </a>
+                                                        
                                                 @endif
                                             </li>
                                         </div>
@@ -288,7 +287,7 @@
                         <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile resetFilterButton" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
                     </div>
                     <div class="category-list-item-searchsort dropdown-content-desktop">
-                          <input type="text" name="title" class="search-item empty" id="searchd" value="" placeholder="Search for product" aria-label="Search">
+                        <input type="text" name="title" class="search-item empty" id="searchd" value="" placeholder="Search for product" aria-label="Search">
                             <div class="dropdown">
                             <select class="form-control dropdown-content" name="sortingDSelect" id="sortingDSelect">
                                 <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
@@ -574,6 +573,15 @@
             // $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
             $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display', 'none');
             $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display', 'none');
+
+            $("input[name=category][value='eternity-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='wedding-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='diamond-jewellery']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'; return false;");
+            
+            // $("input[name=category][value='eternity-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='wedding-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='diamond-jewellery']").parent('li').wrap("<a href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'></a>");
+            
         }
 
         if (arrVars[0] == 'eternity-rings') {
@@ -590,6 +598,16 @@
 
             $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display', 'none');
             $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display', 'none');
+
+
+            $("input[name=category][value='engagement-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='wedding-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='diamond-jewellery']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'; return false;");
+
+
+            // $("input[name=category][value='engagement-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='wedding-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='diamond-jewellery']").parent('li').wrap("<a href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'></a>");
         }
 
 
@@ -606,6 +624,14 @@
             $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display', 'none');
 
             $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display', 'none');
+
+            $("input[name=category][value='engagement-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='eternity-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='diamond-jewellery']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'; return false;");
+
+            // $("input[name=category][value='eternity-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='engagement-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='diamond-jewellery']").parent('li').wrap("<a href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'></a>");
         }
 
         if (arrVars[0] == 'engagement-rings') {
@@ -618,6 +644,14 @@
             // $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
             $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display', 'none');
             $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display', 'none');
+
+            $("input[name=category][value='wedding-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='eternity-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='diamond-jewellery']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'; return false;");
+
+            // $("input[name=category][value='eternity-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='wedding-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='diamond-jewellery']").parent('li').wrap("<a href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'></a>");
         }
 
         if (arrVars[0] == 'diamond-jewellery') {
@@ -631,47 +665,102 @@
             $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display', 'none');
             $("input[name=filter_item_slug][value='style-categories']").parent('.filter-item').css('display', 'none');
             $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display', 'none');
+
+            $("input[name=category][value='wedding-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'; return false;");
+            $("input[name=category][value='engagement-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'; return false;");
+
+            // $("input[name=category][value='engagement-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'></a>");
+            // $("input[name=category][value='wedding-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'></a>");
         }
 
         if (arrVars[1] == 'halo' || arrVars[1] == 'shoulder-set' || arrVars[1] == 'solitaire' || arrVars[1] == 'multi-stone') {
-            // $("input[name=style-categories]").attr('onclick', 'return false;');
+            $("input[name=style-categories]").attr('onclick', 'return false;');
         }
-        // filterShapechanged();
-        // filterStylechanged();
-        // filterRingTypechanged();
-        // filterJewelleryTypechanged();
+        filterShapechanged();
+        filterStylechanged();
+        filterRingTypechanged();
+        filterJewelleryTypechanged();
     });
 
     function filterShapechanged() {
-        $('input[name="filter-by-shape"]:checked').each(function() {
-            if (this.value != '') {
-                $("input[name=filter-by-shape]").attr('onclick', 'return false;');
-            }
-        });
+        getFilterStyleChangedWithClass('filter-by-shape');
+        // var valuesFilterShapechanged = $("input[name='filter-by-shape']:checked")
+        //       .map(function(){return $(this).val();}).get();
+
+        // if(valuesFilterShapechanged.length != 0){
+        //     var dynamicFilterShapechanged = {};
+        //     $("input[name='filter-by-shape']:not(:checked)").each(function() {
+        //         var key = $(this).val();
+        //         var value = $(this).data('slug');
+        //         dynamicFilterShapechanged[key] = value;
+        //     });
+          
+        //     $.each(dynamicFilterShapechanged, function( index, value ) {
+        //         $("input[name=filter-by-shape][value='"+index+"']").parent('li').wrap("<a href='"+value+"'></a>");
+        //     });
+        // }else{
+        //     console.log("not available");
+        // }
+
+        // $('input[name="filter-by-shape"]:checked').each(function() {
+        //     if (this.value != '') {
+        //         $("input[name=filter-by-shape]").attr('onclick', 'return false;');
+        //     }
+        // });
     }
 
     function filterStylechanged() {
-        $('input[name="style-categories"]:checked').each(function() {
+        getFilterStyleChangedWithClass('style-categories');
+       
+    }
+
+
+    function getFilterStyleChangedWithClass(inputFieldNameValue){
+        var valuesCheckedValues = $("input[name='"+inputFieldNameValue+"']:checked")
+              .map(function(){return $(this).val();}).get();
+              
+        if(valuesCheckedValues.length != 0){
+
+            
+
+            var dynamicKeyValuePairs = {};
+            $("input[name='"+inputFieldNameValue+"']:not(:checked)").each(function() {
+                
+                var key = $(this).val();
+                var value = $(this).data('slug');
+                dynamicKeyValuePairs[key] = value;
+            });
+          
+            $.each(dynamicKeyValuePairs, function( index, value ) {
+                $("input[name="+inputFieldNameValue+"][value='"+index+"']").parent('li').attr('onclick', "javascript:window.location.href='"+value+"'; return false;");
+
+                // $("input[name="+inputFieldNameValue+"][value='"+index+"']").parent('li').wrap("<a href='"+value+"'></a>");
+            });
+        }
+        
+        $('input[name="'+inputFieldNameValue+'"]:checked').each(function() {
             if (this.value != '') {
-                $("input[name=style-categories]").attr('onclick', 'return false;');
+                $("input[name="+inputFieldNameValue+"]").attr('onclick', 'return false;'); 
             }
         });
     }
 
     function filterRingTypechanged() {
-        $('input[name="ring-categories"]:checked').each(function() {
-            if (this.value != '') {
-                $("input[name=ring-categories]").attr('onclick', 'return false;');
-            }
-        });
+        getFilterStyleChangedWithClass("ring-categories");
+        // $('input[name="ring-categories"]:checked').each(function() {
+        //     if (this.value != '') {
+        //         $("input[name=ring-categories]").attr('onclick', 'return false;');
+        //     }
+        // });
     }
 
     function filterJewelleryTypechanged() {
-        $('input[name="jewellery-categories"]:checked').each(function() {
-            if (this.value != '') {
-                $("input[name=jewellery-categories]").attr('onclick', 'return false;');
-            }
-        });
+        getFilterStyleChangedWithClass("jewellery-categories");
+        // $('input[name="jewellery-categories"]:checked').each(function() {
+        //     if (this.value != '') {
+        //         $("input[name=jewellery-categories]").attr('onclick', 'return false;');
+        //     }
+        // });
     }
 
     $(document).on('mouseenter', '.product-hover-affect', function(event) {

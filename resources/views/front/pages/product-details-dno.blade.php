@@ -931,7 +931,7 @@
 			$('#myDivChanges').html(designTable);
 		}
 		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
-			
+			getSelectedVariationsData();
 			let diamondCaratWeight;
 			let diamondColour;
 			var diamondShape;
