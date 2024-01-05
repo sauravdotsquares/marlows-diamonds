@@ -1731,11 +1731,17 @@ class ProductController extends Controller
            foreach ($request->ids as $key => $value) {
                 $dataArray[$value['name']][] = $value['value'];
             }
-          }
-          $sorting = 'ASC';
-            if (isset($request->sorting) && !empty($request->sorting)) {
-               $sorting = $request->sorting;
+        }
+
+        if(count($dataArray) == 2){
+            if($dataArray['category']['0'] == 'wedding-rings' && ($dataArray['ring-categories']['0'] == 'plain-band' || $dataArray['ring-categories']['0'] == 'diamond-band')){
+                $dataArray['style-categories'][] = 'mens';
             }
+        }
+        $sorting = 'ASC';
+        if (isset($request->sorting) && !empty($request->sorting)) {
+            $sorting = $request->sorting;
+        }
         $dataArray['sorting'] = $request->sorting;
         $dataArray['page'] = $request->page;
         $dataArray['per_page_product'] = $request->per_page_product;
