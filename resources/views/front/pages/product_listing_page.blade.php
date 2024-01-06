@@ -283,7 +283,7 @@
                 <div class="row">
                     <div class="category-list-top">
                     <div class="category-list-item">
-                        <!-- <p>Item <span id="productCountData">{{$product_count}}</span></p> -->
+                        <p>Item <span id="productCountData">{{$product_count}}</span></p>
                         <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile resetFilterButton" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
                     </div>
                     <div class="category-list-item-searchsort dropdown-content-desktop">
@@ -574,6 +574,8 @@
             $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display', 'none');
             $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display', 'none');
 
+            $("input[name=category][value='diamonds-rings']").prop('checked', true).attr('onclick', 'return false;');
+
             $("input[name=category][value='eternity-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'; return false;");
             $("input[name=category][value='wedding-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'; return false;");
             $("input[name=category][value='diamond-jewellery']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'; return false;");
@@ -598,7 +600,7 @@
 
             $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display', 'none');
             $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display', 'none');
-
+            $("input[name=category][value='diamonds-rings']").prop('checked', true).attr('onclick', 'return false;');
 
             $("input[name=category][value='engagement-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'; return false;");
             $("input[name=category][value='wedding-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'; return false;");
@@ -629,6 +631,7 @@
             $("input[name=category][value='eternity-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'; return false;");
             $("input[name=category][value='diamond-jewellery']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'; return false;");
 
+            $("input[name=category][value='diamonds-rings']").prop('checked', true).attr('onclick', 'return false;');
             // $("input[name=category][value='eternity-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'></a>");
             // $("input[name=category][value='engagement-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'></a>");
             // $("input[name=category][value='diamond-jewellery']").parent('li').wrap("<a href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'></a>");
@@ -649,6 +652,7 @@
             $("input[name=category][value='eternity-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'; return false;");
             $("input[name=category][value='diamond-jewellery']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'; return false;");
 
+            $("input[name=category][value='diamonds-rings']").prop('checked', true).attr('onclick', 'return false;');
             // $("input[name=category][value='eternity-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='eternity-rings']").data('slug')+"'></a>");
             // $("input[name=category][value='wedding-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'></a>");
             // $("input[name=category][value='diamond-jewellery']").parent('li').wrap("<a href='"+$("input[name=category][value='diamond-jewellery']").data('slug')+"'></a>");
@@ -669,6 +673,7 @@
             $("input[name=category][value='wedding-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'; return false;");
             $("input[name=category][value='engagement-rings']").parent('li').attr('onclick', "javascript:window.location.href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'; return false;");
 
+            $("input[name=category][value='diamonds-rings']").prop('checked', true).attr('onclick', 'return false;');
             // $("input[name=category][value='engagement-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='engagement-rings']").data('slug')+"'></a>");
             // $("input[name=category][value='wedding-rings']").parent('li').wrap("<a href='"+$("input[name=category][value='wedding-rings']").data('slug')+"'></a>");
         }
@@ -853,8 +858,8 @@
                 // filterShapechanged();
                 $('#pagescroll').val(res.nextPage);
 
-                if (res.productItems == "") {
-                    $('.ajax-load').html("No more products found");
+                if (res.status == 404 || res.productItems == "") {
+                    $('.ajax-load').html("0 Product Found");
                     return false;
                 }
                 $('.ajax-load').hide();

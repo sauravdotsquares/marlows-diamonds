@@ -1565,13 +1565,13 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
     transition: initial;
 }
 
-.post-bar .post-bar-center:before {
+/* .post-bar .post-bar-center:before {
 background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
-left: 83px;background-size: 26px;bottom: -4px;}
+left: 83px;background-size: 26px;bottom: -4px;} */
 
-.post-bar .post-bar-center:after {
+/* .post-bar .post-bar-center:after {
 background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
-right:78px;background-size: 26px;bottom: -4px;}
+right:78px;background-size: 26px;bottom: -4px;} */
 
 .post-bar .header-post-bar-left{ text-align:left !important; }
 .post-bar .post-bar-right.header-post-bar-left {text-align: right !important;}
@@ -1670,9 +1670,9 @@ height: 40px;display: inline-block;border-radius: 50px;}
 
 .category-sidebar-left .accordion-item ul .accordion-collapse li{ font-size:15px; }
 
-.post-bar .post-bar-center:before {
+/* .post-bar .post-bar-center:before {
 background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
-left:81px;background-size: 26px;bottom: -7px;}
+left:81px;background-size: 26px;bottom: -7px;} */
 
 }
 
