@@ -112,10 +112,10 @@ class StripeController extends Controller
                 if (!empty($transaction_emails)) {
                     $emails_to_cc = explode(',', $transaction_emails);
                     foreach ($emails_to_cc as $email_to_cc) {
-                        $message->cc("sharma.gajendra@dotsquares.com", 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');
+                        $message->cc("raubi.gaur@dotsquares.com", 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');
                     }
                 }
-                $message->cc("sharma.gajendra@dotsquares.com", 'Customer')->subject('Your Marlows Diamonds order has been received!');
+                $message->cc("sanyukta.chauhan@dotsquares.com", 'Customer')->subject('Your Marlows Diamonds order has been received!');
             });
         }
         Order::where('token',$request->token)->update(['email_status'=>2]);
