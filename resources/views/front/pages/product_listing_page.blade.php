@@ -860,6 +860,7 @@
 
                 if (res.status == 404 || res.productItems == "") {
                     $('.ajax-load').html("0 Product Found");
+                    $('#productCountData').text(0);
                     return false;
                 }
                 $('.ajax-load').hide();
