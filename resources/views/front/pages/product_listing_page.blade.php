@@ -920,7 +920,6 @@
         $(document).on('click', "[id^=productWishListRelated]", function () {
             var index = parseInt($(this).attr("id").replace("productWishListRelated", ''));
             var product_slug = $('#productWishListRelated'+index).data('productslug');
-            console.log(product_slug);
             addtobasketFunction('{{route("set-product-wishlist")}}',product_slug,index);
         });
 
@@ -1003,6 +1002,11 @@
                             $('#productWishList'+index).children('i').removeClass('fa-heart-o');
                             $('#productWishList'+index).children('i').addClass('fa-heart');
                         }
+
+                        if(res.wishcount > 0){
+                            $('.my-whishlist-blk a i').removeClass('fa-heart-o');
+                            $('.my-whishlist-blk a i').addClass('fa-heart');
+                        }
                     }
                     toastr.success(res.success);
                 }else{
@@ -1013,6 +1017,10 @@
                         }else{
                             $('#productWishList'+index).children('i').removeClass('fa-heart');
                             $('#productWishList'+index).children('i').addClass('fa-heart-o');
+                        }
+                        if(res.wishcount == 0){
+                            $('.my-whishlist-blk a i').removeClass('fa-heart');
+                            $('.my-whishlist-blk a i').addClass('fa-heart-o');
                         }
                     }
                     toastr.info(res.error);

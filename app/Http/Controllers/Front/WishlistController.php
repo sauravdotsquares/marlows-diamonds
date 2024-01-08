@@ -58,7 +58,7 @@ class WishlistController extends Controller
                     'id'=>$productData->id,
                 ]);
                 $this->removeWishlist($content);
-                return response()->json(['error'=>'Removed!']);
+                return response()->json(['error'=>'Removed!','wishcount'=>count((array) session('wishlist'))]);
             } else {
                 $wishlist[$productData->id] = [
                     "titleName" => $titleName,
