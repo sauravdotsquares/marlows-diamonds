@@ -221,7 +221,13 @@
                                                 <!-- <input type="radio" onclick="javascript:window.location.href='http://stackoverflow.com'; return false;" /> -->
 
                                                     <?php 
+
+                                                        $getCategoryWiseCount = '';
+
                                                         if($filter_item->slug == 'ring-categories'){
+
+                                                            $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug);
+
                                                             if($product_item_item->filter_category_slug == 'diamond-band'){
                                                                 $getParameterArray = explode('/',Request::path());
                                                                 if(count($getParameterArray) == 1){
@@ -247,22 +253,29 @@
                                                                 }
                                                             }
                                                         }elseif($filter_item->slug == 'jewellery-categories'){
+                                                            $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug);
                                                             $url = URL::to('/').$product_item_item->filter_category_slug;
                                                         }elseif($filter_item->slug == 'filter-by-shape'){
+                                                            // $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug);
+
                                                             $url = URL::to('/').$product_item_item->filter_category_slug;
                                                         }elseif($filter_item->slug == 'style-categories'){
+                                                            $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug);
+                                                            
                                                             $url = URL::to('/').$product_item_item->filter_category_slug;
                                                         }elseif($filter_item->slug == 'metal_type'){
                                                             $url = 'javascript:void(0);';
                                                         }elseif($filter_item->slug == 'category'){
+
+                                                            $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug);
+
                                                             $url = URL::to('/').'/'.$product_item_item->filter_category_slug;
                                                         }
                                                     ?>
 
    
                                                 <input type="{{ $filter_item->input_type }}" data-slug="{{$url}}" name="{{ $filter_item->slug }}" {{ $checkVariableNew }} onclick="return {{ $checkVariable }};" value="{{ $product_item_item->item_value }}" class="filter-item-data">
-                                                        {{ $product_item_item->item_name }}
-                                                        
+                                                        {{ $product_item_item->item_name }} {{($getCategoryWiseCount != '')?"(".$getCategoryWiseCount.")":'' }} 
                                                 @endif
                                             </li>
                                         </div>

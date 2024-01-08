@@ -2000,4 +2000,40 @@ if (!function_exists("getProductCategorySlug")) {
         return $getCatId->slug;
     }
 }
+
+if (!function_exists("getCategoryWiseCount")) {
+    function getCategoryWiseCount($categorySlug)
+    {
+        $getCatIdConditions = '';
+        if($categorySlug == 'diamond-engagement-rings'){
+            $categorySlug = 'engagement-rings';
+            $getCatId = Category::where('slug', $categorySlug)->select('id','name','title','slug')->first();
+            $getCatIdConditions = 'FIND_IN_SET('.$getCatId->id.', categories)';
+        }elseif($categorySlug == 'diamonds-rings'){
+            $finalCount = 0;
+            $categorySlug = [
+                'engagement-rings',
+                'eternity-rings',
+                'wedding-rings'
+            ];
+            foreach($categorySlug as $key => $catevlues){
+                $getCatId = Category::where('slug', $catevlues)->select('id','name','title','slug')->first();
+                $getCatIdConditions = 'FIND_IN_SET('.$getCatId->id.', categories)';
+
+                $getCategoryWiseCount =  Products::with(['getProductImages', 'getProductVariation'])->whereRaw($getCatIdConditions)->where('status',1)->count();
+                $finalCount += $getCategoryWiseCount;
+            }  
+            
+            return $finalCount;
+        }else{
+            $getCatId = Category::where('slug', $categorySlug)->select('id','name','title','slug')->first();
+            if(isset($getCatId->id) && !empty($getCatId->id)){
+                $getCatIdConditions = 'FIND_IN_SET('.$getCatId->id.', categories)';
+            }else{
+                return 0;
+            }
+        }
+        return Products::with(['getProductImages', 'getProductVariation'])->whereRaw($getCatIdConditions)->where('status',1)->count();
+    }
+}
     
