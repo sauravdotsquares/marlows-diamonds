@@ -73,9 +73,9 @@
                                 <div class="ring-pr-items">
                                     <div class="ring-pr-image">
                                     @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
-                                        <a href="/engagement-rings/solitaire">
+                                        <!-- <a href="/engagement-rings/solitaire"> -->
                                             <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
-                                        </a>
+                                        <!-- </a> -->
                                         @endif
                                     </div>
                                     <div class="ring-pr-details">
@@ -89,7 +89,9 @@
                                         @endif
                                         <div class="ring-pr-shop-btn">
                                             @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
-                                                <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:'/engagement-rings/solitaire'}}">{{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}</a>
+                                                <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:''}}">
+                                                    {{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}
+                                                </a>
                                             @endif
                                         </div>
                                     </div>
