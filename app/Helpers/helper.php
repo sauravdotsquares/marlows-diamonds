@@ -1347,7 +1347,7 @@ if (!function_exists('validate_breadcrumb')) {
                 'princess',
                 'round'
             ];
-            if(in_array($queryString[1],$shapeArrayData)){
+            if(isset($queryString[1]) && in_array($queryString[1],$shapeArrayData)){
                 $slugCategory = Category::where('slug', 'like','%'.$queryString[1].'%')->get();
                 foreach($slugCategory as $keyItems => $cateValue){
                     $category_custom_query .= ' OR '. 'find_in_set('.$cateValue->id.',categories)';
