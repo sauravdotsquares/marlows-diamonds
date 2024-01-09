@@ -296,7 +296,7 @@
                 <div class="row">
                     <div class="category-list-top">
                     <div class="category-list-item">
-                        <p>Item <span id="productCountData">{{$product_count}}</span></p>
+                        <p><span id="productCountData">Showing {{$product_count}}</span></p>
                         <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile resetFilterButton" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
                     </div>
                     <div class="category-list-item-searchsort dropdown-content-desktop">
@@ -873,7 +873,7 @@
 
                 if (res.status == 404 || res.productItems == "") {
                     $('.ajax-load').html("0 Product Found");
-                    $('#productCountData').text(0);
+                    $('#productCountData').text("");
                     return false;
                 }
                 $('.ajax-load').hide();
@@ -882,7 +882,7 @@
                 } else {
                     $("#showProductList").html(res.productItems);
                 }
-                $('#productCountData').text(res.product_count);
+                $('#productCountData').text('Showing '+res.product_count);
                 $('#sectionHeight').val($('#showProductList').height());
                 $('#scrollFlag').val(0);
             }
