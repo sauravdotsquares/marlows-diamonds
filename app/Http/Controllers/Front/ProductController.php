@@ -1734,7 +1734,7 @@ class ProductController extends Controller
         }
 
         if(isset($dataArray['ring-categories']) && count($dataArray) == 2){
-            if($dataArray['category']['0'] == 'wedding-rings' && ($dataArray['ring-categories']['0'] == 'plain-band' || $dataArray['ring-categories']['0'] == 'diamond-band')){
+            if($dataArray['ring-categories']['0'] == 'plain-band' || $dataArray['ring-categories']['0'] == 'diamond-band'){
                 $dataArray['style-categories'][] = 'womens';
             }
         }

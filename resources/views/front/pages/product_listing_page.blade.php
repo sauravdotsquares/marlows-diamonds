@@ -226,7 +226,7 @@
 
                                                         if($filter_item->slug == 'ring-categories'){
 
-                                                            $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug);
+                                                            $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug,'ring-categories');
 
                                                             if($product_item_item->filter_category_slug == 'diamond-band'){
                                                                 $getParameterArray = explode('/',Request::path());
@@ -256,7 +256,7 @@
                                                             $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug);
                                                             $url = URL::to('/').$product_item_item->filter_category_slug;
                                                         }elseif($filter_item->slug == 'filter-by-shape'){
-                                                            // $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug);
+                                                            $getCategoryWiseCount = getCategoryWiseCount($product_item_item->item_slug,'filter-by-shape');
 
                                                             $url = URL::to('/').$product_item_item->filter_category_slug;
                                                         }elseif($filter_item->slug == 'style-categories'){
