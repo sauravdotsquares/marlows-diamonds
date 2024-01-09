@@ -622,7 +622,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 
 /** Blog Details**/
 .breadcrumb-navs {padding: 11px 0 20px 0;}
-.breadcrumb-navs ul li {display: inline-block;margin: 0 15px 0 0; position: relative; color: #979797;}
+.breadcrumb-navs ul li {display: inline-block;margin: 0 15px 0 0; position: relative; color: #979797; font-size: 15px;}
 .breadcrumb-navs ul li a{ text-decoration: none; font-size: 15px; color: #000;font-weight: bold; }
 .breadcrumb-navs ul li a:hover{color: #8e2e65}
 .breadcrumb-navs ul li:not(:last-child)::after {content: "\f105";font-family: FontAwesome;right: -10px;position: absolute;top: 0px;bottom: 0;margin: auto;font-size: 15px;}
