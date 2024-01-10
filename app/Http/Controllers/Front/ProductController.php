@@ -1660,7 +1660,7 @@ class ProductController extends Controller
                 return view('layouts.errors.404');
             }
             if (!empty($productListingData)) {
-    
+                
                 $productItems = $productListingData['productItems'];
                 $product_count = $productListingData['product_count'];
                 
@@ -1696,7 +1696,7 @@ class ProductController extends Controller
                         "nextPage" => $nextPage
                     ]);
                 }
-    
+                
                 $data = $categoryData;
                 $pageData = Pages::where('slug','engagement-rings')->where(['status'=>1, 'is_deleted'=>0])->first();
                 return view('front.pages.product_listing_page', compact([
