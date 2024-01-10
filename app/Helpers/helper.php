@@ -1508,7 +1508,8 @@ if (!function_exists('validate_breadcrumb')) {
             'product_count'=> $getProductListFinal->count(),
             'previous_url'=> $getProductListFinal->previousPageUrl(),
             'next_url'=> $getProductListFinal->nextPageUrl(),
-            'categoryData' => $categoryData
+            'categoryData' => $categoryData,
+            'totalProductCount' => $getProductListFinal->total(),
         ];
     }
  }

@@ -298,7 +298,7 @@
                 <div class="row">
                     <div class="category-list-top">
                     <div class="category-list-item">
-                        <p><span id="productCountData">Showing {{$product_count}}</span></p>
+                        <p><span id="productCountData">Showing {{$product_count}} of {{isset($productListingData['totalProductCount'])?$productListingData['totalProductCount']:12}}</span></p>
                         <a href="javascript:void(0)" class="clearallfilter-desktop clearallfilter-mobile resetFilterButton" id="resetFilterButton">   <i class="fa fa-angle-down" style="font-size:15px;color:#993168" aria-hidden="true"></i>  All Filter Category</a>
                     </div>
                     <div class="category-list-item-searchsort dropdown-content-desktop">
@@ -327,9 +327,9 @@
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
-                    {{--<img loading="lazy" alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif' }}">--}}
-                    <p>Loading More Products</p>
-                    <button style="display: none;" class="ajax-load-btn">Load more data</button>
+                    <!-- <img loading="lazy" alt="Product loader" src="{{env('APP_IMAGE_URL').'/assets/images/spinner-ring.gif' }}"> -->
+                    <!-- <p>Loading More Products</p>
+                    <button style="display: none;" class="ajax-load-btn">Load more data</button> -->
                 </div>
                 <div class="ajax-loader">
                     {{--<img src="{{env('APP_IMAGE_URL').'/images/spinner.gif' }}" id="loading-data-image" class="img-responsive" style="display:none;" /> --}}
@@ -497,6 +497,15 @@
 <script>
     $(document).ready(function() {
 
+        $(document).on('click', '.pagination a',function(event)
+        {
+            $('li').removeClass('active');
+            $(this).parent('li').addClass('active');
+            event.preventDefault();
+            var myurl = $(this).attr('href');
+            var page=$(this).attr('href').split('page=')[1];
+            sendDataValues(page);
+        });
 
         $("#slider").slider({
             range: true,
@@ -832,14 +841,25 @@
         sendDataValues(1,'append',$(this).val());
    });
 
-    $(window).scroll(function() {
-        var scroll = $('#scrollFlag').val();
-        if (scroll == 0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
-            var page = $('#pagescroll').val();
-            // sendDataValues(page);
-            $('#scrollFlag').val(1);
+   $(window).on('hashchange', function() {
+        if (window.location.hash) {
+            var page = window.location.hash.replace('#', '');
+            if (page == Number.NaN || page <= 0) {
+                return false;
+            }else{
+                getData(page);
+            }
         }
     });
+
+    // $(window).scroll(function() {
+    //     var scroll = $('#scrollFlag').val();
+    //     if (scroll == 0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
+    //         var page = $('#pagescroll').val();
+    //         sendDataValues(page);
+    //         // $('#scrollFlag').val(1);
+    //     }
+    // });
 
     $('#searchd').on('keyup', function() {
         let searchTextData = $(this).val();
@@ -867,10 +887,11 @@
                 'keyword': $('#searchd').val(),
                 'path': '{{ $path }}',
                 'page': page,
-                'per_page_product': 70
+                'per_page_product': 12
             },
             success: function(res) {
                 // filterShapechanged();
+                // console.log(res);
                 $('#pagescroll').val(res.nextPage);
 
                 if (res.status == 404 || res.productItems == "") {
@@ -880,11 +901,11 @@
                 }
                 $('.ajax-load').hide();
                 if (type == 'append') {
-                    $("#showProductList").append(res.productItems);
+                    $("#showProductList").html(res.productItems);
                 } else {
                     $("#showProductList").html(res.productItems);
                 }
-                $('#productCountData').text('Showing '+res.product_count);
+                $('#productCountData').text('Showing '+res.product_count+ ' of '+res.totalProductCount);
                 $('#sectionHeight').val($('#showProductList').height());
                 $('#scrollFlag').val(0);
             }
