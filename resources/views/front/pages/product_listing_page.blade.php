@@ -622,7 +622,7 @@
             // $("input[name=category][value='diamond-jewellery']").attr('disabled', 'disabled');
             $("input[name=filter_item_slug][value='filter-by-shape']").parent('.filter-item').css('display', 'none');
 
-            $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display', 'none');
+            // $("input[name=filter_item_slug][value='ring-categories']").parent('.filter-item').css('display', 'none');
             $("input[name=filter_item_slug][value='jewellery-categories']").parent('.filter-item').css('display', 'none');
             $("input[name=category][value='diamonds-rings']").prop('checked', true).attr('onclick', 'return false;');
 
