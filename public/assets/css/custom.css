@@ -65,8 +65,8 @@ textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .optional {padding: 0 0 0 3px;}
 
 .main-banner-col.banner-left-col{ position:relative; }
-.main-banner-col.banner-left-col:after {background: url(../images/santaimg.png) no-repeat;content: '';width: 150px;background-size: 100%;
-right: -149px;position: absolute;height: 100%;top: 44px;}
+/*.main-banner-col.banner-left-col:after {background: url(../images/santaimg.png) no-repeat;content: '';width: 150px;background-size: 100%;
+right: -149px;position: absolute;height: 100%;top: 44px;}*/
 
 /** Loader Settings Css */
 .loader.body-loader {position: fixed;top: 50%;left: 0;right: 0;margin: auto;transform: translateY(-50%);padding: 30px 0;}
@@ -100,14 +100,10 @@ right: -149px;position: absolute;height: 100%;top: 44px;}
 .flex-justify-between{-webkit-justify-content:space-between;justify-content:space-between;}
 .flex-items-center{-webkit-align-items:center;align-items:center}
 
-.leftright-img-text .leftright-img-text-wraper .flex-items-center {background: url(../images/christmax-marlows-banner-footer.png) no-repeat;
-    background-size:cover;background-position: center;}
-
 .flex-flex-wrap{-webkit-flex-wrap:wrap;flex-wrap:wrap}
 
 /** header css start here **/
-.header-main {position: relative;z-index: 99; background: url(../images/christmax-marlows-banner.jpg) no-repeat;background-position: center; height:100%;
-background-size: cover;}
+.header-main {position: relative;z-index: 99; height:100%;}
 /** top bar css start **/
 .top-bar{background:#8e2e65;text-align:center;color:#fff}
 .top-bar p{margin:0;line-height:30px}
@@ -127,7 +123,7 @@ background-size: cover;}
 .navbar-toggler .togglebar-nav{cursor:pointer;color:#902f66;position:relative;height:30px;width:30px}
 .navbar-toggler .togglebar-nav span{cursor:pointer;color:#902f66;background:#902f66;width:33px;height:2px;display:block;position:relative;border-radius:4px;margin:7px 0}
 .mobile-wishlist{margin:0 9px 0 0}
-.mobile-wishlist a{color:#000;font-size:20px}
+.mobile-wishlist a{color:#8e2e65;font-size:20px}
 .middle-topbar-left .whatsapp-top-h,.middle-topbar-left .location-top-h{display:inline-block;vertical-align:middle;margin:0 30px 0 0}
 .middle-topbar-left a{color:#878787;text-decoration:none; display: inline-block;}
 .middle-topbar-left a:hover{color:#8e2e65}
@@ -239,7 +235,7 @@ textarea.input-control{height:100px}
 /** header post bar css end **/
 
 /** Footer Css Start here  **/
-.footer-main{background:#8e2e65 url(../images/christmax-marlows-banner-footer.png) no-repeat; padding:45px 0 30px;color:#fff;line-height:25px; background-position: center;}
+.footer-main{background:#8e2e65; padding:45px 0 30px;color:#fff;line-height:25px;}
 .column-one-fifth{flex:0 0 20%;-ms-flex:0 0 20%;max-width:20%;width:100%;padding:0 16px}
 .footer-links-row{margin:0 -16px}
 .footer-content-wrap .paymentgate-logo i.diamond-icon.search-payment-icons {background-position: -156px -77px;width: 100%;height: 41px;}
@@ -263,7 +259,7 @@ textarea.input-control{height:100px}
 
 /** Home banner  start here**/
 .banner-left-col{flex:0 0 46%;-ms-flex:0 0 46%;max-width:46%;background:#f7f8fa;display:flex}
-.banner-ryt-col{flex:0 0 54%;-ms-flex:0 0 54%;max-width:54%;text-align:center;background:#fff5f7}
+.banner-ryt-col{flex:0 0 54%;-ms-flex:0 0 54%;max-width:54%;text-align:center;background:#fdfdfd}
 .main-banner-col{width:100%;padding:0 15px}
 .main-banner-left-text{max-width:560px;margin:auto;padding:20px 20px}
 .main-banner-left-text p{font-size:20px;color:#2b2b2b;line-height:1.9;margin:0 0 15px 0}
@@ -301,8 +297,7 @@ textarea.input-control{height:100px}
 .head-para-three p{font-size:15px;color:#2b2b2b;line-height:1.6;margin:0;}
 .head-para-three p.second-para{padding-bottom: 25px}
 .head-para-three video#video{width: 80%; object-fit: inherit;}
-.whychoose-marlows{background:#fafbfd;padding:30px 0 50px 0; background: url(../images/christmax-marlows-banner-footer.png) no-repeat;background-size: cover;
-background-position: center;}
+.whychoose-marlows{background:#fafbfd;padding:30px 0 50px 0; }
 .rating-img{text-align:center;margin:0 0 25px 0}
 .whychoose-wraper .rating-img i.diamond-icon.search-starviews {background-position: -424px -2px;width: 152px;height: 81px;}
 .shopfrom-block .rating-img i.diamond-icon.search-starviews {background-position: -148px 4px;width: 249px;height: 70px;}
@@ -366,6 +361,11 @@ background-position: center;}
 .joinour-heading p{font-size:15px;line-height:1.6;margin:0}
 .joinour-mailing{background:#8e2e65;padding:50px 0}
 .joinour-mailing-form .form-col label{color:#fff;display:block;font-weight:700;font-size:13px;line-height:1.3;margin:0 0 4px 0}
+.joinour-mailing-form form#contactForm input {width: 100%;height: 42px;border: none;padding: 0 11px;background: #fff;border-radius: 2px; font-size: 14px;}
+.joinour-mailing-form form#contactForm textarea {width: 100%;height: 100px;border: none;padding:7px 11px;background: #fff;border-radius: 2px; font-size: 14px;}
+.joinour-mailing-form form#contactForm .action-btn .white-bg-btn {border: none;padding: 9px 20px;background-color: #fff;}
+.joinour-mailing-form form#contactForm .action-btn .white-bg-btn:hover {color: #000; background: #fff; box-shadow: 5px 5px 0 rgb(0, 0, 0 / 80%);}
+
 .input-control{width:100%;border:1px solid #ccc;padding:6px 10px;color:#333;font-size:16px;font-family:"Lato"}
 input.input-control{height:38px}
 .form-col{width:100%;padding:8px 10px}
@@ -415,8 +415,8 @@ input.input-control{height:38px}
 /*filter design css*/
 p.burgarmenu {padding: 0 15px;margin-top: 0px; font-size: 15px;}
 p.burgarmenu a {color: #000; text-decoration: none; font-weight: bold;}
-p.burgarmenu span {color: #8e2e65;}
-p.burgarmenu span a {font-weight: normal;color: #979797;}
+p.burgarmenu span {color: #979797;}
+p.burgarmenu span a {font-weight: bold;color: #000;}
 p.burgarmenu a:hover {color: #8e2e65;}
 
 .category-sidebar-wrap .sortmobile {display: none;}
@@ -464,8 +464,12 @@ text-decoration: none;font-weight: 700;display: inline-block;border: 1px solid #
 .category-list-wrap {width: 76%;display: inline-block;vertical-align: top;padding-left: 30px; margin-top: 10px;}
 .category-list-wrap .category-list-top {display: flex;justify-content: space-between;align-items: center;}
 .category-list-wrap .category-list-top .category-list-item p {margin: 0;}
-.category-list-wrap .category-list-top .category-list-item-searchsort {display: -webkit-box;display: -ms-flexbox;display: flex;}
-.category-list-wrap .category-list-top .category-list-item-searchsort input {background: #eff0f1;border-radius: 5px;margin: 0 10px 0 0px;}
+.category-list-wrap .category-list-top .category-list-item-searchsort {display: -webkit-box;display: -ms-flexbox;display: flex; position: relative;}
+.category-list-wrap .category-list-top .category-list-item-searchsort:before {content: '';font-family: 'FontAwesome';font-size: 15px;position: absolute;top: 2px;
+left: 6px; display: block;}
+
+.category-list-wrap .category-list-top .category-list-item-searchsort input {background: #eff0f1;border-radius: 5px;margin: 0 10px 0 0px; padding: 0 28px 0}
+
 .category-list-wrap .category-list-top .category-list-item-searchsort .dropdown .dropdown-content {position: relative;background: none;min-width: 113px;box-shadow: none;
 z-index: 1;height: 30px;text-align: left;font-weight: 500;border: 1px solid #d6d6d6;padding: 0 8px;font-size: 12px;}
 
@@ -485,7 +489,7 @@ text-decoration: none; font-weight: 700; display: inline-block; border: 1px soli
 .product-grid-items-item {flex: 0 0 25%;max-width: 25%;-ms-flex: 0 0 25%;width: 100%;padding: 10px 10px; text-align: center;}
 .product-grid-row{ margin: 0 -10px; }
 .product-items-item-info {padding: 0;border-radius: 4px;position: relative;height: 100%;border: 1px solid #dedede;overflow: hidden;box-shadow: 0px 0px 15px 0px #e7e5e5;}
-.product-items-item-info:hover{	box-shadow: 0px 1px 7px rgba(53, 53, 53, 0.2);}
+.product-items-item-info:hover{	box-shadow: 0px 1px 7px rgba(53, 53, 53, 0.2); outline: none;}
 .product-items-item-info .product-item-top {display: flex;align-items: center;justify-content: space-between;width: 100%;padding: 10px; 
 z-index: 9; position: relative;}
 .product-items-item-info .product-onsale {padding:0;font-size: 16px;font-weight: bold;color: #000;z-index: 9;}
@@ -617,9 +621,10 @@ label.label {display: block;margin: 0 0 5px 0;}
 .blos-listbox-img img {height: 204px;object-fit: cover;width: 100%;}
 
 /** Blog Details**/
-.breadcrumb-navs ul li {display: inline-block;margin: 0 15px 0 0; position: relative;}
-.breadcrumb-navs ul li a{ text-decoration: none; font-size: 14px; color: #505050 }
 .breadcrumb-navs {padding: 11px 0 20px 0;}
+.breadcrumb-navs ul li {display: inline-block;margin: 0 15px 0 0; position: relative; color: #979797; font-size: 15px;}
+.breadcrumb-navs ul li a{ text-decoration: none; font-size: 15px; color: #000;font-weight: bold; }
+.breadcrumb-navs ul li a:hover{color: #8e2e65}
 .breadcrumb-navs ul li:not(:last-child)::after {content: "\f105";font-family: FontAwesome;right: -10px;position: absolute;top: 0px;bottom: 0;margin: auto;font-size: 15px;}
 .blog-title h1 {font-weight: bold;font-size: 32px;}
 .blogdetails-left .blos-list-date {margin: 26px 0 18px 0;}
@@ -676,6 +681,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .visit-address-wraper {margin: 20px 0 25px 0;}
 .action-submit button:hover {background: #000;color: #fff;}
 .visit-map {margin: 0 0 10px 0;}
+.visit-form form .action-submit button:hover {box-shadow: 5px 5px 0 rgba(0,0,0,0.8);background: #fff;color: #000;}
 
 /** Engagement ring page **/
 .journery-life-wraper {text-align: center;margin: 50px 0 60px 0;}
@@ -1463,6 +1469,9 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 
 .product-grid-items-item.product-hover-affect .product-items-item-image {overflow: hidden;}
 .related-products-list .product-grid-items-item .product-items-item-image {height:345px;justify-content: center;}
+.product-grid-items-item.product-hover-affect .product-items-item-image:focus-visible, .product-grid-items-item.product-hover-affect .product-items-item-image:focus, 
+.product-grid-items-item.product-hover-affect .product-items-item-image a.product-hov img
+{ outline:none !important; }
 
 
 .product-grid-items-item.product-hover-affect .product-items-item-info .product-hover-video {display: none;}
@@ -1497,7 +1506,7 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .location-container {
     display: flex;
     align-items: center;
-        background: #f6f6f7 url(../images/location-img.png) no-repeat;
+        background: #f6f6f7;
 }
 .location-left-section {
     width: 50%;
@@ -1557,13 +1566,13 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
     transition: initial;
 }
 
-.post-bar .post-bar-center:before {
+/* .post-bar .post-bar-center:before {
 background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
-left: 83px;background-size: 26px;bottom: -4px;}
+left: 83px;background-size: 26px;bottom: -4px;} */
 
-.post-bar .post-bar-center:after {
+/* .post-bar .post-bar-center:after {
 background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
-right:78px;background-size: 26px;bottom: -4px;}
+right:78px;background-size: 26px;bottom: -4px;} */
 
 .post-bar .header-post-bar-left{ text-align:left !important; }
 .post-bar .post-bar-right.header-post-bar-left {text-align: right !important;}
@@ -1662,9 +1671,9 @@ height: 40px;display: inline-block;border-radius: 50px;}
 
 .category-sidebar-left .accordion-item ul .accordion-collapse li{ font-size:15px; }
 
-.post-bar .post-bar-center:before {
+/* .post-bar .post-bar-center:before {
 background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
-left:81px;background-size: 26px;bottom: -7px;}
+left:81px;background-size: 26px;bottom: -7px;} */
 
 }
 

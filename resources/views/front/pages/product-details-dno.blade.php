@@ -725,8 +725,7 @@
 						.trigger('refresh.owl.carousel')
 						.trigger('stop.owl.autoplay')
 						.trigger('play.owl.autoplay',[7000, 300])
-					}else if(res.vari_image!='' && res.vari_image!=null){
-
+					}else if(res.vari_image!='' && res.vari_image!=null && res.vari_video==null){
 						const items = $('#carousel').find('.owl-item');
 						items.each((index, element)=>{
 							$(element).find('.product-items-carousel').attr('data-position', index);
@@ -742,6 +741,16 @@
 							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
 							$('#variationVideo').attr('src', videoUrl);
 							$("#variationVideo")[0].play();
+						}
+					}else{
+						const items = $('#carousel').find('.owl-item');
+						items.each((index, element)=>{
+							$(element).find('.product-items-carousel').attr('data-position', index);
+						});
+						if(res.vari_image!='' && res.vari_image!=null){
+							variation_image = data_slug+'/storage/'+res.vari_image;
+							var $speed = 0;
+							$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
 						}
 					}
 					
@@ -922,7 +931,7 @@
 			$('#myDivChanges').html(designTable);
 		}
 		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
-			
+			getSelectedVariationsData();
 			let diamondCaratWeight;
 			let diamondColour;
 			var diamondShape;

@@ -1336,6 +1336,24 @@ if (!function_exists('validate_breadcrumb')) {
                     $categoryData = $slugCategory;
                 }
             }
+
+            $shapeArrayData = [
+                'cushion',
+                'emerald',
+                'heart',
+                'marquise',
+                'oval',
+                'pear',
+                'princess',
+                'round'
+            ];
+            if(isset($queryString[1]) && in_array($queryString[1],$shapeArrayData)){
+                $slugCategory = Category::where('slug', 'like','%'.$queryString[1].'%')->get();
+                foreach($slugCategory as $keyItems => $cateValue){
+                    $category_custom_query .= ' OR '. 'find_in_set('.$cateValue->id.',categories)';
+                }
+            }
+
         } else {
             $category_custom_query = "(find_in_set('8',categories)) OR (find_in_set('45',categories)) OR (find_in_set('47',categories))";
         }
@@ -1490,7 +1508,8 @@ if (!function_exists('validate_breadcrumb')) {
             'product_count'=> $getProductListFinal->count(),
             'previous_url'=> $getProductListFinal->previousPageUrl(),
             'next_url'=> $getProductListFinal->nextPageUrl(),
-            'categoryData' => $categoryData
+            'categoryData' => $categoryData,
+            'totalProductCount' => $getProductListFinal->total(),
         ];
     }
  }
@@ -1869,7 +1888,7 @@ if (!function_exists("getBreadcrumbCategoryName")) {
                 $breadcrumbDesign .= "/".$value;
             }
             if(!next($breadcrumbArray)) {
-                $newDesignBreadcrumb[$key] = '<a href="javascript:void(0);">'.$getCategoryName.'</a>';
+                $newDesignBreadcrumb[$key] = ''.$getCategoryName.'';
             }else{
                 $newDesignBreadcrumb[$key] = '<a href="'.$breadcrumbDesign.'">'.$getCategoryName.'</a>';
             }
@@ -1998,6 +2017,64 @@ if (!function_exists("getProductCategorySlug")) {
         $getCatId = Category::whereIn('id', $prod_categories)->where('parent_id',0)->select('name','title','slug')->first();
 
         return $getCatId->slug;
+    }
+}
+
+if (!function_exists("getCategoryWiseCount")) {
+    function getCategoryWiseCount($categorySlug,$typeCategory=null)
+    {
+        $getCatIdConditions = '';
+        if($categorySlug == 'diamond-engagement-rings'){
+            $categorySlug = 'engagement-rings';
+            $getCatId = Category::where('slug', $categorySlug)->select('id','name','title','slug')->first();
+            $getCatIdConditions = 'FIND_IN_SET('.$getCatId->id.', categories)';
+        }elseif($categorySlug == 'diamonds-rings'){
+            $finalCount = 0;
+            $categorySlug = [
+                'engagement-rings',
+                'eternity-rings',
+                'wedding-rings'
+            ];
+            foreach($categorySlug as $key => $catevlues){
+                $getCatId = Category::where('slug', $catevlues)->select('id','name','title','slug')->first();
+                $getCatIdConditions = 'FIND_IN_SET('.$getCatId->id.', categories)';
+
+                $getCategoryWiseCount =  Products::with(['getProductImages', 'getProductVariation'])->whereRaw($getCatIdConditions)->where('status',1)->count();
+                $finalCount += $getCategoryWiseCount;
+            }  
+            
+            return $finalCount;
+        }else{
+            if($typeCategory == 'filter-by-shape'){
+                $finalCount = 0;
+                $getCatId = Category::where('slug', 'like','%'.$categorySlug.'%')->select('id','name','title','slug')->get();
+                foreach($getCatId as $catevlues){
+                    $getCatIdConditions = 'FIND_IN_SET('.$catevlues->id.', categories)';
+                    $getCategoryWiseCount =  Products::with(['getProductImages', 'getProductVariation'])->whereRaw($getCatIdConditions)->where('status',1)->count();
+                    $finalCount += $getCategoryWiseCount;
+                }
+                return $finalCount;                
+            }
+
+            if($typeCategory == 'ring-categories'){
+                $finalCount = 0;
+                $getCatId = Category::where('slug', 'like','%'.$categorySlug.'%')->select('id','name','title','slug')->get();
+                foreach($getCatId as $catevlues){
+                    $getCatIdConditions = 'FIND_IN_SET('.$catevlues->id.', categories)';
+                    $getCategoryWiseCount =  Products::with(['getProductImages', 'getProductVariation'])->whereRaw($getCatIdConditions)->where('status',1)->count();
+                    $finalCount += $getCategoryWiseCount;
+                }
+                return $finalCount;  
+            }
+
+            $getCatId = Category::where('slug', $categorySlug)->select('id','name','title','slug')->first();
+            if(isset($getCatId->id) && !empty($getCatId->id)){
+                $getCatIdConditions = 'FIND_IN_SET('.$getCatId->id.', categories)';
+            }else{
+                return 0;
+            }
+        }
+        return Products::with(['getProductImages', 'getProductVariation'])->whereRaw($getCatIdConditions)->where('status',1)->count();
     }
 }
     
