@@ -1440,9 +1440,6 @@ if (!function_exists('validate_breadcrumb')) {
 
         /** Search filter */
         if (!empty($requestData['keyword'])) {
-            // echo "if<pre>";
-            // print_r("checking again");
-            // die;
             $keyword = $requestData['keyword'];
             $query = $query->where('title', 'LIKE', "%$keyword%");
         }
@@ -1497,12 +1494,11 @@ if (!function_exists('validate_breadcrumb')) {
         }
         $isNextPage = $getProductListFinal->hasMorePages();
         $nextPage = $getProductListFinal->currentPage() + 1;
-        // echo "count<pre>";
-        // print_r($getProductListFinal->count());
-        // die;
+        
         return [
             'status' => 200,
             'productItems' => $productItems,
+            'getProductListFinal' => $getProductListFinal,
             'isNextPage' => $isNextPage,
             'nextPage' => $nextPage,
             'product_count'=> $getProductListFinal->count(),
