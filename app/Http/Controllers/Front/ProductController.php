@@ -344,7 +344,7 @@ class ProductController extends Controller
                 // }
             }
             $getAjaxResponses = false;
-            $view = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
+            $view = view('front.ajax.related-productajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
             $view = '';
             $getProductListFinal = '';
@@ -1033,7 +1033,7 @@ class ProductController extends Controller
 
         $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->where('status',1)->take(4)->get();
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
-            $view = view('front.ajax.productlistajax', compact('getProductListFinal','getAjaxResponses'))->render();
+            $view = view('front.ajax.related-productajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
             $view = '';
         }

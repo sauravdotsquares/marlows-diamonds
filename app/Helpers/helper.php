@@ -1481,6 +1481,7 @@ if (!function_exists('validate_breadcrumb')) {
                 'redirect_url'=> $getProductListFinal->path()
             ];
         }
+        $getAjaxResponses = true;
 
         $productItems = "";
         if ($getProductListFinal->count()) {
