@@ -107,11 +107,5 @@
 			</table>
 		</div>
 	</table>
-    <?php 
-        echo "dsdsad dafaf<pre>";
-        print_r($data1);
-        die;
-    
-    ?>
 </body>
 </html>
