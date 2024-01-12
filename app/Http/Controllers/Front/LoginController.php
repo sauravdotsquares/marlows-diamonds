@@ -11,6 +11,7 @@ use App\Models\CustomerAddress;
 use App\Models\Order;
 use Session;
 use Hash;
+use Mail;
 use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
@@ -131,6 +132,30 @@ class LoginController extends Controller
         ]);
         unset($request['_token']);
         $getRegisterResponse = $this->registerLoginFrontPage($request->all(''));
+        $data =  [
+         'username'=> $request->username,   
+         'email'=> $request->email,   
+        ];
+
+        if (env('APP_ENV') == 'production') {
+            //$request['customer_email'] = $request->email;
+            Mail::send('email.registereduser-welcomemail',array('data1' => $data), function($message) use ($request ){
+                $message->from('hello@marlows-diamonds.co.uk');
+                // $admin_email_london = "london@marlows-diamonds.co.uk";
+                $admin_email_london = "sharma.gajendra@dotsquares.com";
+                $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+                
+                $message->cc($request->email, 'Customer')->subject('Marlows Diamonds: Your transaction not completed.');
+            });
+        } else if (env('APP_ENV') == 'local') {
+            Mail::send('email.registereduser-welcomemail',array('data1' => $data), function($message) use ($request){
+                $message->from('hello@marlows-diamonds.co.uk');
+                $admin_email_london = "sharma.gajendra@dotsquares.com";
+                $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+                
+                $message->cc($request->email, 'Customer')->subject('Marlows Diamonds: Your transaction not completed.');
+            });
+        }
 
         if(isset($getRegisterResponse) && $getRegisterResponse == 1){
             $getLoginResponse = $this->loginPageFunction($request->all(''));
