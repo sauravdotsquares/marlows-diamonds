@@ -70,9 +70,3 @@
 		</div>
 	</div>
 @endforeach
-{!! $getProductListFinal->links() !!}
-{{-- 
-@if($getAjaxResponses)
-	$getProductListFinal->links() 
-@endif
---}}
