@@ -14,6 +14,7 @@ use Intervention\Image\Facades\Image;
 use App\Models\Reviews;
 use App\Models\PostCategory;
 use App\Models\Posts;
+use App\Models\Pages;
 use App\Models\Faqs;
 use App\Models\FaqCategory;
 use App\Models\HKDiamondStock;
@@ -2029,7 +2030,7 @@ if (!function_exists("getCategoryWiseCount")) {
             $finalCount = 0;
             $categorySlug = [
                 'engagement-rings',
-                'eternity-rings',
+                //'eternity-rings',
                 'wedding-rings'
             ];
             foreach($categorySlug as $key => $catevlues){
@@ -2072,6 +2073,28 @@ if (!function_exists("getCategoryWiseCount")) {
             }
         }
         return Products::with(['getProductImages', 'getProductVariation'])->whereRaw($getCatIdConditions)->where('status',1)->count();
+    }
+}
+
+
+function getFaqByCategorySlug($slugPath)
+{
+    $pageData = Pages::where('slug',$slugPath)->where(['status'=>1, 'is_deleted'=>0])->select('id','faq_category')->first();
+
+    $slugSplitsValues = explode('/',$slugPath);
+    if(count($slugSplitsValues) == 2){
+        $postCategory = Posts::where('slug',$slugSplitsValues[1])->where(['status'=>1])->select('id','faq_category')->first();
+    }
+    $productCategories = Category::where('slug',$slugPath)->where(['status'=>1, 'is_deleted'=>0])->select('id','faq_category')->first();
+
+    if(isset($pageData) && !empty($pageData)){
+        return Faqs::where('categories',$pageData->faq_category)->get();
+    }else if(isset($postCategory) && !empty($postCategory)){
+        return Faqs::where('categories',$postCategory->faq_category)->get();
+    }else if(isset($productCategories) && !empty($productCategories)){
+        return Faqs::where('categories',$productCategories->faq_category)->get();
+    }else{
+        return [];
     }
 }
     
