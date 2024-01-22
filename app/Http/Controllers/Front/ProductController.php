@@ -244,12 +244,15 @@ class ProductController extends Controller
                 }
             } else {
                 $getActualSlug = getProductCategorySlug($productSlug);
-                $makeNewURL = '/' .$getActualSlug;
-
+                if(isset($getActualSlug) && !empty($getActualSlug)){
+                    $makeNewURL = '/' .$getActualSlug;
+                }else{
+                    $makeNewURL = asset('/diamonds-rings');
+                }
                 return Redirect::to($makeNewURL, 301);
             }
         } else {
-            $makeNewURL = '/' .'/diamonds-rings';
+            $makeNewURL = asset('/diamonds-rings');
             return Redirect::to($makeNewURL, 301);
         }
     }
