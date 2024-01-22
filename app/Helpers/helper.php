@@ -2010,11 +2010,13 @@ if (!function_exists("getProductCategorySlug")) {
     {
         $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('slug', $productSlug)->first();
 
-        $prod_categories = explode(',', $getProduct->categories);
-
-        $getCatId = Category::whereIn('id', $prod_categories)->where('parent_id',0)->select('name','title','slug')->first();
-
-        return $getCatId->slug;
+        if(isset($getProduct) && !empty($getProduct)){
+            $prod_categories = explode(',', $getProduct->categories);
+            $getCatId = Category::whereIn('id', $prod_categories)->where('parent_id',0)->select('name','title','slug')->first();
+            return $getCatId->slug;
+        }else{
+            return '';
+        }
     }
 }
 
