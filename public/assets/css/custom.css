@@ -1663,8 +1663,11 @@ height: 40px;display: inline-block;border-radius: 50px;}
 
 @media(max-width:1400px){
 	.post-bar .post-bar-center p {
-		font-size: 12px;
+		font-size: 15px;
 	}
+	span.header-heighlight-text.discount_timer {
+        font-size: 12px;
+    }
 
 .srchniput-fil input{font-size: 11px;}
 
@@ -1685,7 +1688,7 @@ left:81px;background-size: 26px;bottom: -7px;} */
 
 @media(max-width:1199px){
 	.post-bar .post-bar-center p {
-		font-size: 10px;
+		font-size: 15px;
 	}
 
 
