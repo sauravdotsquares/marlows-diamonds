@@ -44,9 +44,9 @@
                                 <li class="nav-item" role="presentation">
                                     <a href="javascript:void(0)" class="nav-link" id="accountd-tab" data-bs-toggle="tab" data-bs-target="#accountd" type="button" role="tab" aria-controls="accountd" aria-selected="false">Account details</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a href="{{route('products.wishlist')}}">Wishlist</a>
-                                </li>
+                                </li> -->
                                 <!-- <li class="nav-item" role="presentation">
                                     <a href="javascript:void(0)" class="nav-link" id="auctions-tab" data-bs-toggle="tab" data-bs-target="#auctions" type="button" role="tab" aria-controls="auctions" aria-selected="false">Auctions settings</a>
                                 </li> -->
@@ -323,6 +323,9 @@
                 if(res.html){
                     $('#updateOrderDesign').append(res.html);
                     $('#orderDataTable').DataTable();
+                }else{
+                    $('#orderDataTable').css('display','none');
+                    $('#orderDataTableSection').html('<h6 style="color:#626262;font-size: xx-large;">No orders, please place an order</h6>');
                 }
             }
         });

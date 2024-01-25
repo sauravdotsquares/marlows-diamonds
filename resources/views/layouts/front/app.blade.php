@@ -18,11 +18,7 @@
       <meta name="robots" content="index">
     @endif
 
-    @if (request()->path() == "engagement-rings")
-      @include('layouts.front.engagement_rings_sechma')
-    @elseif (request()->path() == "diamond-engagement-rings")
-      @include('layouts.front.engagement_rings_sechma')
-    @endif
+    @include('layouts.front.engagement_rings_sechma')
 
     @include('layouts.front.seo_header')
 
