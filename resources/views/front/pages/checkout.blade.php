@@ -450,8 +450,6 @@
     $(document).ready(function () {
         $(document).on('click', "[id^=applyCouponCode]", function () {
             var index = parseInt($(this).attr("id").replace("applyCouponCode", ''));
-            console.log($('#coupon_code'+index).val());
-            console.log(index);
             $.ajax({
                 url: "{{ route('update.cart.coupon') }}",
                 method: "patch",
@@ -461,20 +459,19 @@
                     coupon_code: $('#coupon_code'+index).val(),
                 },
                 success: function (response) {
-                    console.log(response);
                     if(response.status == 200){
                         $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
                         $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
                         $('#applyCouponCode'+index).text(response.statustext);
                         $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
-                        $('#deposited_price').val(response.deposited_price);
+                        $('#deposited_price').val(response.finalPrice);
                         $('#couponCodeMessage'+index).html(response.errormsg);
                     }else if(response.status == 500){
                         $('#applyCouponCode'+index).text(response.statustext);
                         $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
                         $('#couponCodeMessage'+index).html(response.errormsg);
                         $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                        $('#deposited_price').val(response.deposited_price);
+                        $('#deposited_price').val(response.finalPrice);
                         $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
                     }
                 }
