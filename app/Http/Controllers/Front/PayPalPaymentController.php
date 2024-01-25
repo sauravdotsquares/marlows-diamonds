@@ -41,7 +41,7 @@ class PayPalPaymentController extends Controller
     {
         $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id',$orderId)->first();
         $maxOrderId = Order::max('custom_order_id');
-
+        
 
         if(isset($maxOrderId) && !empty($maxOrderId)){
             $generateCustomOrderId = '31002'.''.$getOrderDetails->user_id.''.$getOrderDetails->id;
@@ -51,12 +51,6 @@ class PayPalPaymentController extends Controller
 
         $getProdustItems = [];
         foreach($getOrderDetails->getOrderDetailsFunction as $key => $orderDetails){
-            // $getProdustItems[] = [
-            //     'name' => isset($orderDetails->product_details->title)?$orderDetails->product_details->title:'No Name',
-            //     'price' => isset($orderDetails->product_price)?$orderDetails->product_price:'1.00',
-            //     'desc'  => isset($orderDetails->product_details->tags)?$orderDetails->product_details->tags:'No Desc',
-            //     'qty' => isset($orderDetails->quantity)?$orderDetails->quantity:1,
-            // ];
             $item = new Item();
             $item->setName(isset($orderDetails->product_details->title)?$orderDetails->product_details->title:'No Name') /** item name **/
                         ->setCurrency(Config::get('paypal.currency','GBP'))
@@ -64,17 +58,6 @@ class PayPalPaymentController extends Controller
                         ->setPrice(isset($orderDetails->deposited_product_price)?$orderDetails->deposited_product_price:'1.00'); /** unit price **/
             $getProdustItems[] = $item;
         }
-
-
-        // $product = [];
-        // $product['items'] = $getProdustItems;
-
-        // $product['invoice_id'] = $orderId;
-        // $product['invoice_description'] = "Order #{$product['invoice_id']} Bill";
-        // $product['return_url'] = route('success.payment');
-        // $product['cancel_url'] = route('cancel.payment');
-        // $product['total'] = $getOrderDetails->final_price;
-
 
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');

@@ -321,7 +321,7 @@ class AddToCartController extends Controller
                     $result = [
                         'pre_deposited_price' => round($cart[$request->cartid]["pre_deposited_price"],2),
                         'deposited_price' => round($cart[$request->cartid]["deposited_price"],2),
-                        'status' => 400,
+                        'status' => 500,
                         'statustext' => 'Applied',
                         'errormsg' => 'Coupon Code is valid',
                         'finalPrice' => round($sumDepositedPrice,2)
