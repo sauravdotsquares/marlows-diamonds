@@ -479,7 +479,7 @@
     });
 
     jQuery.validator.addMethod("lettersonly", function(value, element) {
-        return this.optional(element) || /^[a-z]+$/i.test(value);
+        return this.optional(element) || /^[a-zA-Z\s]+$/i.test(value);
     }, "Letters only please"); 
 
     $('form#payment-form').validate({
