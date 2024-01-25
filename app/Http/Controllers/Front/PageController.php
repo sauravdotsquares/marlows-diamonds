@@ -33,7 +33,7 @@ class PageController
             if($pageData){
                 if($pageData->slug == 'engagement-rings'){
                     $redirectTo = route('page', '/diamond-engagement-rings');
-                    return redirect($redirectTo, 302);
+                    return redirect($redirectTo, 301);
                 }
                 /** Slug belongs to page */
                 return view('front.pages.templates.'.$pageData->template.'',['data'=>$pageData]);//,'showdata'=>$blogdata]);
