@@ -339,12 +339,17 @@
                                                             <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
                                                                 Applied
                                                             </a>
-                                                            <span id="couponCodeMessage{{$id}}">Coupon Code is Applied</span>
+                                                            <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
+                                                                Cancel
+                                                            </a>
                                                         @else
                                                             <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
                                                                 Apply
                                                             </a>
-                                                            <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
+                                                            <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
+                                                                Cancel
+                                                            </a>
+                                                            <!-- <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span> -->
                                                         @endif
                                                        
                                                     @endif
@@ -457,8 +462,42 @@
                     _token: '{{ csrf_token() }}',
                     cartid: index,
                     coupon_code: $('#coupon_code'+index).val(),
+                    coupon_status:1
                 },
                 success: function (response) {
+                    window.location.reload();
+                    if(response.status == 200){
+                        $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                        $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                        $('#applyCouponCode'+index).text(response.statustext);
+                        $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                        $('#deposited_price').val(response.finalPrice);
+                        $('#couponCodeMessage'+index).html(response.errormsg);
+                    }else if(response.status == 500){
+                        $('#applyCouponCode'+index).text(response.statustext);
+                        $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                        $('#couponCodeMessage'+index).html(response.errormsg);
+                        $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                        $('#deposited_price').val(response.finalPrice);
+                        $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', "[id^=applyCouponCodeCancel]", function () {
+            var index = parseInt($(this).attr("id").replace("applyCouponCodeCancel", ''));
+            $.ajax({
+                url: "{{ route('update.cart.coupon') }}",
+                method: "patch",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    cartid: index,
+                    coupon_code: $('#coupon_code'+index).val(),
+                    coupon_status:2
+                },
+                success: function (response) {
+                    window.location.reload();
                     if(response.status == 200){
                         $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
                         $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
@@ -730,7 +769,7 @@
                 contentType:false,
                 processData: false,
                 data: form_data,
-                success: function (response) {    
+                success: function (response) {   
                     $('.cc_place_order_btn button').text('Place Order');
                     $('.cc_place_order_btn button').prop('disabled', false);
                     if(response.status == 500){ 
