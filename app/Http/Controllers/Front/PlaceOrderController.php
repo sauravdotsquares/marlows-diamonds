@@ -96,7 +96,7 @@ class PlaceOrderController extends Controller
                 $getOrders->paymentccdetails = $request->paymentccdetails;
                 $getOrders->depositpercentage = $request->depositepercentage;
                 $getOrders->status = 0;
-                $getOrders->save();
+                $getOrders->save(); 
 
                 if($getOrders){
                     $getSessionProductData = session('cart');
@@ -108,10 +108,12 @@ class PlaceOrderController extends Controller
                             $getOrderDetails->user_id = $getEmailExists->id;
                             $getOrderDetails->order_product_details = json_encode($getProduct['customArray']);
                             $getOrderDetails->quantity = $getProduct['quantity'];
+                            $getOrderDetails->coupon_code = isset($getProduct['couponCodeText'])?$getProduct['couponCodeText']:NULL;
+                            $getOrderDetails->discount_percentage = isset($getProduct['couponCodePercentage'])?$getProduct['couponCodePercentage']:NULL;
                             $getOrderDetails->product_price = $getProduct['price'];
-                            $getOrderDetails->total_price = $getProduct['quantity']*$getProduct['price'];
-                            $getOrderDetails->deposited_product_price = $getProduct['quantity']*$getProduct['deposited_price'];
-                            $getOrderDetails->final_product_price = $getProduct['quantity']*$getProduct['price'];
+                            $getOrderDetails->total_price = $getProduct['price'];
+                            $getOrderDetails->deposited_product_price = $getProduct['deposited_price'];
+                            $getOrderDetails->final_product_price = $getProduct['price'];
                             $getOrderDetails->save();
                         }
 
