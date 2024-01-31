@@ -363,8 +363,6 @@ class AddToCartController extends Controller
                        
                     }else{
                         if(isset($valueData['customArray']['diamond_type']) && $valueData['customArray']['diamond_type'] == 'lab_grown') {
-                            // echo "<br>if if if if";
-                            // die;
                             $cart[$key]["cartId"] = $request->cartid;
                             $cart[$key]["couponCodeText"] = $request->coupon_code;
                             $cart[$key]["couponCodePercentage"] = $validateCouponCode->discount;
@@ -374,15 +372,38 @@ class AddToCartController extends Controller
                         }
                     }
                 }
+                $sumDepositedPrice = array_sum(array_column($cart,'deposited_price'));
+
+                $result = [
+                    'sessionCartValues' => $cart,
+                    'status' => 200,
+                    'statustext' => 'Applied',
+                    'errormsg' => 'Coupon Code is valid',
+                    'finalPrice' => round($sumDepositedPrice,2)
+                ];
+                
             }elseif($request->coupon_status == 2){
                 $cart[$key]["deposited_price"] = isset($cart[$key]["pre_deposited_price"])?$cart[$key]["pre_deposited_price"]:$cart[$key]["deposited_price"];
                 $cart[$key]["couponCodeText"] = '';
                 $cart[$key]["cartId"] = '';
                 $cart[$key]["couponCodePercentage"] = '';
                 session()->put('cart', $cart);
+
+                $sumDepositedPrice = array_sum(array_column($cart,'deposited_price'));
+
+                $result = [
+                    'sessionCartValues' => $cart,
+                    'status' => 500,
+                    'statustext' => 'Apply',
+                    'errormsg' => 'Coupon Code is Cancelled',
+                    'finalPrice' => round($sumDepositedPrice,2)
+                ];
             }
         }
-        return true;
+
+        return $result;
+
+        
     }
     
     /**

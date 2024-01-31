@@ -342,6 +342,7 @@
                                                             <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
                                                                 Cancel
                                                             </a>
+                                                            <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
                                                         @else
                                                             <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
                                                                 Apply
@@ -349,7 +350,7 @@
                                                             <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
                                                                 Cancel
                                                             </a>
-                                                            <!-- <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span> -->
+                                                            <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
                                                         @endif
                                                        
                                                     @endif
@@ -465,22 +466,38 @@
                     coupon_status:1
                 },
                 success: function (response) {
-                    window.location.reload();
-                    if(response.status == 200){
-                        $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                        $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                        $('#applyCouponCode'+index).text(response.statustext);
-                        $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
-                        $('#deposited_price').val(response.finalPrice);
-                        $('#couponCodeMessage'+index).html(response.errormsg);
-                    }else if(response.status == 500){
-                        $('#applyCouponCode'+index).text(response.statustext);
-                        $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
-                        $('#couponCodeMessage'+index).html(response.errormsg);
-                        $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                        $('#deposited_price').val(response.finalPrice);
-                        $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                    }
+                    $.each(response.sessionCartValues, function( keyIndex, value ) {
+                        $('#subtotalPrice'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                        // console.log(keyIndex + ": " + value.deposited_price.toFixed(2));
+                        // console.log("checking again ");
+                        $('#applyCouponCode'+keyIndex).text(response.statustext);
+                        $('#couponCodeMessage'+keyIndex).html(response.errormsg);
+                        $('#coupon_code'+keyIndex).val(value.couponCodeText);
+                        // alert( index + ": " + value );
+                    });
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#deposited_price').val(response.finalPrice);
+                    
+                    // console.log(response);
+                    // return false;
+                    // // window.location.reload();
+                    // if(response.status == 200){
+                       
+                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#applyCouponCode'+index).text(response.statustext);
+                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#deposited_price').val(response.finalPrice);
+                    //     $('#couponCodeMessage'+index).html(response.errormsg);
+                    // }else if(response.status == 500){
+                    //     $('#applyCouponCode'+index).text(response.statustext);
+                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#couponCodeMessage'+index).html(response.errormsg);
+                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#deposited_price').val(response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    // }
                 }
             });
         });
@@ -497,22 +514,38 @@
                     coupon_status:2
                 },
                 success: function (response) {
-                    window.location.reload();
-                    if(response.status == 200){
-                        $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                        $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                        $('#applyCouponCode'+index).text(response.statustext);
-                        $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
-                        $('#deposited_price').val(response.finalPrice);
-                        $('#couponCodeMessage'+index).html(response.errormsg);
-                    }else if(response.status == 500){
-                        $('#applyCouponCode'+index).text(response.statustext);
-                        $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
-                        $('#couponCodeMessage'+index).html(response.errormsg);
-                        $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                        $('#deposited_price').val(response.finalPrice);
-                        $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                    }
+                    $.each(response.sessionCartValues, function( keyIndex, value ) {
+                        $('#subtotalPrice'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                        // console.log(keyIndex + ": " + value.deposited_price.toFixed(2));
+                        // console.log("checking again ");
+                        $('#applyCouponCode'+keyIndex).text(response.statustext);
+                        $('#couponCodeMessage'+keyIndex).html(response.errormsg);
+                        $('#coupon_code'+keyIndex).val(value.couponCodeText);
+                        // alert( index + ": " + value );
+                    });
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#deposited_price').val(response.finalPrice);
+                    // console.log(response);
+                    
+                    // $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    // window.location.reload();
+                    // if(response.status == 200){
+                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#applyCouponCode'+index).text(response.statustext);
+                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#deposited_price').val(response.finalPrice);
+                    //     $('#couponCodeMessage'+index).html(response.errormsg);
+                    // }else if(response.status == 500){
+                    //     $('#applyCouponCode'+index).text(response.statustext);
+                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#couponCodeMessage'+index).html(response.errormsg);
+                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#deposited_price').val(response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    // }
                 }
             });
         });
