@@ -355,7 +355,7 @@ class AddToCartController extends Controller
     {
         $cart = session()->get('cart');
         foreach($cart as $key => $valueData){
-            if($request->coupon_status == 1){
+            if(isset($request->coupon_code) && $request->coupon_code != '' && $request->coupon_status == 1){
                 $validateCouponCode = CouponCodeDetail::where('coupon_code',$request->coupon_code)->where('diamond_type',$cart[$request->cartid]['customArray']["choose_diamond"])->first();
                 if((isset($validateCouponCode) && !empty($validateCouponCode))){ 
                    

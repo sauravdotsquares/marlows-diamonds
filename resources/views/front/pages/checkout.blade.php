@@ -332,28 +332,7 @@
                                                         <dt class="variation-FingerSize">Certificate: </dt>
                                                         <dd class="variation-FingerSize"><p >{{$details['customArray']['CERT_NO']}}</p></dd>
                                                     @endif
-                                                    @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
-                                                        <label for="coupon_code">Coupon Code</label>
-                                                        <input type="text" name="coupon_code" value="{{isset($details['couponCodeText'])?$details['couponCodeText']:''}}" id="coupon_code{{$id}}" class="form-control">
-                                                        @if(isset($details['couponCodeText']) && !empty($details['couponCodeText']))
-                                                            <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
-                                                                Applied
-                                                            </a>
-                                                            <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
-                                                                Cancel
-                                                            </a>
-                                                            <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
-                                                        @else
-                                                            <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
-                                                                Apply
-                                                            </a>
-                                                            <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
-                                                                Cancel
-                                                            </a>
-                                                            <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
-                                                        @endif
-                                                       
-                                                    @endif
+                                                   
                                                 </dl>
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
                                             </td>
@@ -393,7 +372,7 @@
                                         </tr>
                                         @endforeach
                                     @endif
-                                </tbody>
+                                </tbody>         
                                 <tfoot>
                                     <tr class="checkout-cart-subtotal">
                                         <th>Subtotal</th>
@@ -410,6 +389,32 @@
                                 </tfoot>
                             </table>
                         </div>
+                        @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
+
+                            <div class="checkout-coupan-code">
+                                <label for="coupon_code">Coupon Code</label>
+                                <input type="text" name="coupon_code" value="{{isset($details['couponCodeText'])?$details['couponCodeText']:''}}" id="coupon_code{{$id}}" class="form-control">
+                                @if(isset($details['couponCodeText']) && !empty($details['couponCodeText']))
+                                    <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
+                                    <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
+                                        Applied
+                                    </a>
+                                    <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
+                                        Cancel
+                                    </a>
+                                    
+                                @else
+                                    <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
+                                    <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
+                                        Apply
+                                    </a>
+                                    <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
+                                        Cancel
+                                    </a>
+                                    
+                                </div>
+                                @endif
+                        @endif
                         <input type="hidden" id="final_price" name="final_price" value="{{ $total }}">
                         <input type="hidden" id="total_price" name="total_price" value="{{ $totalPrice }}">
                         <input type="hidden" id="deposited_price" name="deposited_price" value="{{ $depositedPrice }}">

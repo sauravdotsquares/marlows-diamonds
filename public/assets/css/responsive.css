@@ -466,6 +466,8 @@
 	.post-bar .post-bar-wraper p{ font-size:10px; }
 	p#offer-text {font-size: 15px;}
 	.location-container{ background:#f6f6f7  url() }
+
+.checkout-coupan-code {margin-top: 30px;margin-bottom: 30px;width: 100%;float: right;margin-left: 30px;}
 	}
 	
 	@media(max-width:767px){
@@ -569,6 +571,8 @@
 	/*ring size page css end*/
 
 	.guide-secret .product-item-slider .product-info{ min-height:auto; max-height:inherit; }
+
+.checkout-coupan-code span {display: block;margin: 5px 0 0;}
 	}
 	
 	@media(max-width:479px){
