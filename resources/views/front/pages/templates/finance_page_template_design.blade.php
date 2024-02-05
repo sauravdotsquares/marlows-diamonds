@@ -299,7 +299,7 @@
                 <h3>Use of Your Personal Data</h3>
                 <p>In order to process your application, you will be asked to provide information about your personal, employment and financial situation. Deko share your personal data with their partner lenders so that they can make a decision about whether to offer you finance. Lenders perform a search with one or more Credit Reference Agencies to conduct their creditworthiness and affordability assessment to enable them to make their decision.</p>
 
-                <p>You can find out more about how Deko uses and protects your personal data in their <a href="/privacy-policy">Privacy Policy<</a> /p>
+                <p>You can find out more about how Deko uses and protects your personal data in their <a href="/privacy-policy">Privacy Policy</a> 
                 <p>Your lender will let you know where you can find more information about their privacy policy.</p>
             </div>
             <div class="finance-sec">
