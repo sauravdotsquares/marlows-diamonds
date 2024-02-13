@@ -689,6 +689,12 @@
 					'variations' : variations,
 				},
 				success: function (res) {
+				    
+				    if(diamond_type == 'lab_grown'){
+						$('.product-description-common_lab_grown').html(res.description);
+					}else if (diamond_type == 'mined_diamond'){
+						$('.product-description-common_mined').html(res.description);
+					}
 
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
 						const multipleImages = res.multi_vari_img.split(',');

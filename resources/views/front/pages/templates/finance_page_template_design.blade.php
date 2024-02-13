@@ -9,7 +9,7 @@
         </div>
     </div>
 </div>
-<div class="defaultpages-wrap">
+<div class="defaultpages-wrap finance-panel">
     <div class="container">
         <div class="defaultpages-cols">
 
@@ -24,7 +24,7 @@
 
                                 <a class="links-help" href="https://www.dekopay.com/for-customers">https://www.dekopay.com/for-customers</a>
 
-                                <p>Deko connects you with lenders whose finance options are best suited for you and your purchase. As a customer of Je Marlow & Sons Ltd your finance application will be considered by <b>Lender name.</b> <strong>If they decline your application, Deko will present your application to another lender with different acceptance criteria, so you have a second chance to be approved.</strong></p>
+                                <p>Deko connects you with lenders whose finance options are best suited for you and your purchase. As a customer of Je Marlow & Sons Ltd your finance application will be considered by <b>Omni Capital.</b></p>
 
                                 <p>To spread the cost of your purchase, simply choose Deko at the checkout and select the finance option that suits you. The application form is quick and simple and includes help text throughout to assist you. You will receive a decision from your lender in just a few seconds.</p>
                             </div>
@@ -76,7 +76,7 @@
                 <p>Here is an example of what you might see at checkout, with some handy explanations to help you understand what it all means. Please note that this is just an example, the format, layout and content of checkout finance calculators may vary.</p>
             </div>
             @include("front.includes.dekopayformulacalculationpage")
-            <div class="finance-sec desk-calculator">
+            <div class="finance-sec ">
                 <p>
                     Whichever finance option you choose to apply for, you need to be sure that you can afford to pay the deposit, and keep up with your monthly repayments. You should think about any changes to your situation that might occur during the term of the loan, which could impact on your finances - e.g. retirement, moving home, changing jobs, or any health issues which could affect your income or expenditure.
                 </p>
@@ -315,7 +315,7 @@
             <div class="finance-sec">
                 <h3>FCA Authorised</h3>
                 <p><strong> V1 FCA Authorised - Single Lender through Deko</strong></p>
-                <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority (FRN [Merchant FCA ID] ). We do not charge you for credit broking services. We will introduce you exclusively to [lender name] finance products provided by [lender name and trading name where applicable] through the Deko platform.</p>
+                <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority (FRN [Merchant FCA ID] ). We do not charge you for credit broking services. We will introduce you exclusively to Omni Capital's finance products provided by Omni Capital's through the Deko platform.</p>
                 <p><strong>V2 FCA Authorised - Multiple lenders (Deko panel + non-Deko)</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority (FRN [Merchant FCA ID] ). We do not charge you for credit broking services. We will introduce you to Finance available from a number of our partner lenders.</p>
                 <p><strong>V3 FCA Authorised - If you are offering finance through Deko with multiple Deko lenders</strong></p>
@@ -324,16 +324,16 @@
             <div class="finance-sec">
                 <h3>NON-FCA Authorised</h3>
                 <p><strong> V1 Non-FCA Authorised - If you introduce only exempt products from a single Deko lender</strong></p>
-                <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender. We do not charge you for credit broking services. We will introduce you exclusively to [Lender Name] finance products provided by [lender name and trading name where applicable] through the Deko platform.</p>
+                <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender. We do not charge you for credit broking services. We will introduce you exclusively to Omni Capital's finance products provided by Omni Capital's through the Deko platform.</p>
                 <p><strong>V2 Non-FCA Authorised - If you introduce only exempt products from multiple lenders (Deko panel + non-Deko)</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender . We do not charge you for credit broking services. We will introduce you limited finance products available from a number of our partner lenders.</p>
             </div>
             <div class="finance-sec">
                 <h3>IAR Merchant</h3>
                 <p><strong> V1 IAR - Single Lender through Deko</strong></p>
-                <p>Sailendra,Je Marlow & Sons Ltd is an Introducer Appointed Representative of Pay4Later Limited, trading as Deko, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Deko will introduce you exclusively to [lender name] finance products provided by [lender name and trading name where applicable] through the Deko platform.</p>
+                <p>Sailendra,Je Marlow & Sons Ltd is an Introducer Appointed Representative of Pay4Later Limited, trading as Deko, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Deko will introduce you exclusively to Omni Capital finance products provided by Omni Capital through the Deko platform.</p>
                 <p><strong>V2 IAR - Multiple lenders (Deko panel + non-Deko)</strong></p>
-                <p>Sailendra,Je Marlow & Sons Ltd is an Introducer Appointed Representative of Pay4Later Limited, trading as Deko, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Deko will introduce you exclusively to [lender name] finance products provided by [lender name and trading name where applicable] under this Introducer Appointed Representative arrangement. Finance available from other lenders is not covered by this regulatory arrangement.</p>
+                <p>Sailendra,Je Marlow & Sons Ltd is an Introducer Appointed Representative of Pay4Later Limited, trading as Deko, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Deko will introduce you exclusively to Omni Capital finance products provided by [Omni Capital and trading name where applicable] under this Introducer Appointed Representative arrangement. Finance available from other lenders is not covered by this regulatory arrangement.</p>
                 <p><strong>V3 IAR - If you are offering finance through Deko with multiple Deko lenders</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is an Introducer Appointed Representative of Pay4Later Limited, trading as Deko, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Finance is introduced through the Deko platform from a carefully selected panel of lenders. Whichever lender Deko introduces you to, Deko will typically receive a commission from them (either a fixed fee or a fixed percentage of the amount you borrow). For your reassurance, all of the lenders Deko works with could pay commission at different rates, but the commission received does not influence the interest rate you will pay. You will be offered the best rate available from Deko's partner lenders, based on the lenders' decision policies.</p>
             </div>

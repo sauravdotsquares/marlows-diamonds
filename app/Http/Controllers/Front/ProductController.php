@@ -711,6 +711,14 @@ class ProductController extends Controller
     {
 
         $productData = Products::where('slug', $request->slug)->first();
+
+        if($request->diamond_type == "lab_grown"){
+            $productData->description = strip_tags($productData->lab_description);
+        }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
+            $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
+        } 
+
+
         $runOldCode = true;
 
         if (!empty($productData)) {
@@ -798,6 +806,8 @@ class ProductController extends Controller
                         $newArray['multi_vari_video'] =  !empty($image['multi_vari_video']) ? $image['multi_vari_video'] : '';
                         $newArray['formula'] = true;
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
+                        $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+
                         $newArray['regular_price'] = round($price);
                         $newArray['discount_data'] =  $getDiscountRange;
                         // $newArray['now'] =  now();
@@ -976,6 +986,7 @@ class ProductController extends Controller
                     $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
                     $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                     $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['description'] = !empty($productData->description) ? $productData->description : '';
                     $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
                     return response()->json($newArray);
                 } elseif (in_array('bracelets', $categorySlugs)) {
@@ -983,6 +994,7 @@ class ProductController extends Controller
                     $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
                     $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                     $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                    $newArray['description'] = !empty($productData->description) ? $productData->description : '';
 
                     if ($request->diamond_type == 'lab_grown') {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->lab_grown;
@@ -1009,6 +1021,7 @@ class ProductController extends Controller
                 $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
                 $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                 $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                $newArray['description'] = !empty($productData->description) ? $productData->description : '';
                 $newArray['regular_price_with_vat'] = round($regular_p_final);
                 $newArray['regular_price_with_vat_discount'] = round($regular_p_discount_final);
 
