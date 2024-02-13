@@ -852,6 +852,7 @@
 					'grade' : $('#diamond-grade').val(),
 					'fingersize' : $('#finger-size').val(),
 					'metal_type' : $('#metal-type').val(),
+					'productMetalType' : $('#metal-type').val(),
 					'certificate' : $('#diamond-certificate').val(),
                     'choose_diamond': $('input[name="attribute_choose-your-diamond"]:checked').val(),
 					'slug' : product_slug,
