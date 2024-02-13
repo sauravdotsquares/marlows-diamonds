@@ -549,7 +549,7 @@ class ProductController extends Controller
 
     public function getProductVideo(Request $request)
     {
-        $getProduct = Products::where('slug', $request->slug)->select('id')->first();
+        $getProduct = Products::where('slug', $request->slug)->select('id','description','lab_description','short_description')->first();
 
         if (isset($getProduct) && !empty($getProduct->id)) {
             $getProductVariationId = ProductVariations::where('product_id', $getProduct->id)->pluck('id')->toArray();
@@ -717,7 +717,6 @@ class ProductController extends Controller
         }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
         } 
-
 
         $runOldCode = true;
 
