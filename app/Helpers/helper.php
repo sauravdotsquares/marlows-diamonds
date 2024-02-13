@@ -1704,6 +1704,14 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     }
 
     function getRagularFilterPrices($getRequestData,$diamondType,$slug,$filterArray){
+
+        $increasePercentage = 1;
+        if($diamondType == 'lab_grown'){
+            if ($getRequestData['productMetalType'] == '9ct White Gold' || $getRequestData['productMetalType'] == '9ct Yellow Gold' || $getRequestData['productMetalType'] == '9ct Rose Gold') {
+                $increasePercentage = 1.3;
+            }
+        }
+
         if(isset($diamondType) && !empty($diamondType)){
             $diamondType = $diamondType;
         }else{
@@ -1742,11 +1750,13 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
             return $e->getMessage();
         }
 
-        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
+
+        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice*$increasePercentage,$diamondType);
+
 
         $result = [
-            'rrp_price'=> $getRegularPrices->rrpPrice,
-            'shop_price'=> $getRegularPrices->shopPrice,
+            'rrp_price'=> $getRegularPrices->rrpPrice*$increasePercentage,
+            'shop_price'=> $getRegularPrices->shopPrice*$increasePercentage,
             'discounted_price'=> $getDiscountedPrice,
             'parent_category' => $categoryId,
         ];

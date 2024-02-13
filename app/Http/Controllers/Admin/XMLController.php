@@ -27,7 +27,7 @@ class XMLController extends Controller
         // });
 
         // Fetch records from database
-        $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->latest()
+        $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->where('status',1)->latest()
         // ->whereRaw("NOT find_in_set(8,categories)")
         ->get();
 
@@ -55,17 +55,32 @@ class XMLController extends Controller
 
         foreach($productArray as $key => $productArrayNew){
 
-            $diamondTypeArray = ["lab_grown","mined"];
+            $diamondTypeArray = ["lab_grown","mined_diamond"];
 
             foreach($productArrayNew->getProductVariation as $var => $dataArray){
                 foreach($diamondTypeArray as $diamondKey => $diamondType){
 
                     $prod_categories = explode(',',$productArrayNew->categories);
+                    if(in_array("54",$prod_categories) && $diamondType == 'lab_grown'){
+                        
+                    }else if(in_array("8", $prod_categories) && $diamondType == 'lab_grown'){
 
-                    if(in_array("8", $prod_categories) && $diamondType == 'lab_grown'){
+                        
                         // No entry in data
                         if (in_array("18", $prod_categories)){
-                            $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
+
+                            $arrayVariationValue = array_values(array_filter($dataArray->get_vari_details_id->pluck('value')->toArray()));
+                            $priceVariationArrayBeforePrices = new Request([
+                                'variations' => [
+                                    $arrayVariationValue
+                                ],
+                                'slug' => $productArrayNew->slug,
+                                'diamond_type' => $diamondType
+                            ]);
+
+                            $getFinalPriceArray = $this->getProductVariationPrices($priceVariationArrayBeforePrices);
+                            
+                            // $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
                             if(isset($getFinalPriceArray) && $getFinalPriceArray != 0){
                                 $title = '';
                                 $metalType = '';
@@ -111,7 +126,7 @@ class XMLController extends Controller
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
                                 $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
-                                $productPrice  =  round($getFinalPriceArray);
+                                $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
                                 $productCondition  =  'new';
                                 $productAvailability  =  'in stock';
                                 $productIdentifierExists  =  'no';
@@ -205,7 +220,18 @@ class XMLController extends Controller
                         }
 
                     }else{
-                        $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
+                        $arrayVariationValue = array_values(array_filter($dataArray->get_vari_details_id->pluck('value')->toArray()));
+                        $priceVariationArrayBeforePrices = new Request([
+                            // 'productMetalType' => '9ct Yellow Gold',
+                            'variations' => [
+                                $arrayVariationValue
+                            ],
+                            'slug' => $productArrayNew->slug,
+                            'diamond_type' => $diamondType
+                        ]);
+
+                        $getFinalPriceArray = $this->getProductVariationPrices($priceVariationArrayBeforePrices);
+                        
 
                         if(isset($getFinalPriceArray) && $getFinalPriceArray != 0){
                             $title = '';
@@ -255,7 +281,11 @@ class XMLController extends Controller
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
                                 $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
-                                $productPrice  =  round($getFinalPriceArray);
+                                $productRRPPrice  =  round($getFinalPriceArray['allPrices']['rrp_price']);
+                                $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
+                                if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
+                                    $productDiscountedPrice  =  round($getFinalPriceArray['allPrices']['discounted_price']);
+                                }
                                 // $productSalePrice  =  '';
                                 // $productSalePriceEffectiveDate  =  '';
                                 $productCondition  =  'new';
@@ -366,6 +396,43 @@ class XMLController extends Controller
 
         $dom->save($filePath);
 
+    }
+
+
+    public function getProductVariationPrices(Request $request)
+    {
+        $getRegularPrices = getRagularFilterPrices($request->all(),$request['diamond_type'], $request->slug, $request->metal_type);
+        $getLabDiamondPrices = 0;
+
+        if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
+            if(isset($request->type) && $request->type){
+                if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
+                    $getLabDiamondPrices = $this->getCustomApiFilterData($request);
+                }else{
+                    $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
+                }
+            }
+        }else{
+            $getLabDiamondPrices = $request->selectedDiamondPrice;
+        }
+
+        $resultedArray = array_map(function($num) use ($getLabDiamondPrices) {
+            return round($num + $getLabDiamondPrices,2);
+        }, $getRegularPrices);
+        unset($resultedArray['parent_category']);
+        if(isset($resultedArray) && !empty($resultedArray)){
+            return [
+                'status'=> 200,
+                'allPrices'=>getFlatDiscountRanges($resultedArray,$getRegularPrices['parent_category'],$request['diamond_type']),
+                'getLabDiamondPrices'=>round($getLabDiamondPrices,2),
+            ];
+        }
+
+        return [
+            'status'=> 500,
+            'allPrices'=>0.00,
+            'getLabDiamondPrices'=>0.00,
+        ];
     }
 
     public function getPriceCalculationFunction($productData,$diamondType,$finalPrices)
