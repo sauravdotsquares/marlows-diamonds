@@ -1707,7 +1707,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
 
         $increasePercentage = 1;
         if($diamondType == 'lab_grown'){
-            if ($getRequestData['productMetalType'] == '9ct White Gold' || $getRequestData['productMetalType'] == '9ct Yellow Gold' || $getRequestData['productMetalType'] == '9ct Rose Gold') {
+            if (isset($getRequestData['metal_type']) && ($getRequestData['metal_type'] == '9ct White Gold' || $getRequestData['metal_type'] == '9ct Yellow Gold' || $getRequestData['metal_type'] == '9ct Rose Gold')) {
                 $increasePercentage = 1.3;
             }
         }

@@ -45,7 +45,7 @@
                 <h3>Lender Arrangements</h3>
                 <p>All of Deko's lenders hold the required authorisation and permissions to provide you with credit. They need to meet high responsible lending standards, so you can rest assured that your application will be considered fairly and responsibly.</p>
 
-                <p>hichever lender Deko introduces you to, Deko may receive a commission from them (either a fixed fee or a fixed percentage of the amount you borrow). The lenders Deko works with pay commission at different rates, but the commission received does not influence the interest rate you pay. You will be offered the best rate available from Deko's partner lenders, based on the lenders decision policies. You have the right to know the amount of commission paid in relation to your application - if you'd like this, you can ask Deko's customer support team on <a href="support@dekopay.com">support@dekopay.com</a> or by phone on 0800 294 5891.</p>
+                <p>Whichever lender Deko introduces you to, Deko may receive a commission from them (either a fixed fee or a fixed percentage of the amount you borrow). The lenders Deko works with pay commission at different rates, but the commission received does not influence the interest rate you pay. You will be offered the best rate available from Deko's partner lenders, based on the lenders decision policies. You have the right to know the amount of commission paid in relation to your application - if you'd like this, you can ask Deko's customer support team on <a href="support@dekopay.com">support@dekopay.com</a> or by phone on 0800 294 5891.</p>
             </div>
 
             <div class="finance-sec finance-eligibility">
