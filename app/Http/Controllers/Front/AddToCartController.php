@@ -360,7 +360,8 @@ class AddToCartController extends Controller
                 if((isset($validateCouponCode) && !empty($validateCouponCode))){ 
                    
                     if(isset($cart[$key]["couponCodeText"]) && !empty($cart[$key]["couponCodeText"])){
-                       
+                        $validationMessage = "Coupon code is applied";
+                        $statusText = "Applied";
                     }else{
                         if(isset($valueData['customArray']['diamond_type']) && $valueData['customArray']['diamond_type'] == 'lab_grown') {
                             $cart[$key]["cartId"] = $request->cartid;
@@ -369,16 +370,25 @@ class AddToCartController extends Controller
                             $cart[$key]["pre_deposited_price"] = $valueData["deposited_price"];
                             $cart[$key]["deposited_price"] = $valueData["deposited_price"] * (1 - ($validateCouponCode->discount/100));
                             session()->put('cart', $cart);
+
+                            $validationMessage = "Coupon code is valid";
+                            $statusText = "Applied";
+                        }else{
+                            $validationMessage = "Coupon code is not valid";
+                            $statusText = "Apply";
                         }
                     }
+                }else{
+                    $validationMessage = "Coupon code is not valid";
+                    $statusText = "Apply";
                 }
                 $sumDepositedPrice = array_sum(array_column($cart,'deposited_price'));
 
                 $result = [
                     'sessionCartValues' => $cart,
                     'status' => 200,
-                    'statustext' => 'Applied',
-                    'errormsg' => 'Coupon Code is valid',
+                    'statustext' => $statusText,
+                    'errormsg' => $validationMessage,
                     'finalPrice' => round($sumDepositedPrice,2)
                 ];
                 
@@ -396,6 +406,15 @@ class AddToCartController extends Controller
                     'status' => 500,
                     'statustext' => 'Apply',
                     'errormsg' => 'Coupon Code is Cancelled',
+                    'finalPrice' => round($sumDepositedPrice,2)
+                ];
+            }else{
+                $sumDepositedPrice = array_sum(array_column($cart,'deposited_price'));
+                $result = [
+                    'sessionCartValues' => $cart,
+                    'status' => 500,
+                    'statustext' => 'Apply',
+                    'errormsg' => 'Coupon Code is required',
                     'finalPrice' => round($sumDepositedPrice,2)
                 ];
             }

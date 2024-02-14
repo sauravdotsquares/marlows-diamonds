@@ -395,25 +395,24 @@
                                 <label for="coupon_code">Coupon Code</label>
                                 <input type="text" name="coupon_code" value="{{isset($details['couponCodeText'])?$details['couponCodeText']:''}}" id="coupon_code{{$id}}" class="form-control">
                                 @if(isset($details['couponCodeText']) && !empty($details['couponCodeText']))
-                                    <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
+                                    <span id="couponCodeMessage{{$id}}"></span>
                                     <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
                                         Applied
                                     </a>
-                                    <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
+                                    <!-- <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
                                         Cancel
-                                    </a>
-                                    
+                                    </a> -->
                                 @else
-                                    <span id="couponCodeMessage{{$id}}">Coupon Code is not applied</span>
+                                    <span id="couponCodeMessage{{$id}}"></span>
                                     <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
                                         Apply
                                     </a>
-                                    <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
+                                    <!-- <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
                                         Cancel
-                                    </a>
-                                    
-                                </div>
+                                    </a> -->
+                                
                                 @endif
+                            </div>
                         @endif
                         <input type="hidden" id="final_price" name="final_price" value="{{ $total }}">
                         <input type="hidden" id="total_price" name="total_price" value="{{ $totalPrice }}">
