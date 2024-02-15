@@ -711,11 +711,20 @@ class ProductController extends Controller
     {
 
         $productData = Products::where('slug', $request->slug)->first();
-
+        
         if($request->diamond_type == "lab_grown"){
-            $productData->description = strip_tags($productData->lab_description);
+            $getArrayCategories = explode(',',$productData->categories);
+            if(in_array('18',$getArrayCategories)){
+                $productData->description = $productData->lab_description.' <br> '.$productData->description;
+            }else{
+                $productData->description = $productData->lab_description;
+            }
         }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('FVS', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('F, Clarity VS.', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('F-G diamond clarity VS-SI.', 'I-J. SI-I1', $productData->description));
         } 
 
         $runOldCode = true;
