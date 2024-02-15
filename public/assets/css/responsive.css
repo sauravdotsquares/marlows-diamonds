@@ -391,7 +391,7 @@
 	.mobile-cart-wishlist{display:flex;order:3;position:relative}
 	.navbar-toggler{display:block; padding: 0;}
 	.menus-wraper .navbar-toggler{padding:0 15px 0 16px}
-	.main-navigaiton .nav-navbars .level-zero{display:block; clear: both;}
+	.main-navigaiton .nav-navbars .level-zero{display:block; clear: both; margin: 0;}
 	
 	.main-navigaiton .nav-navbars .level-zero > span > a{display:block;color:#000;padding:10px 20px;text-transform:capitalize;font-size:14px}
 	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: 25px;top: 12px;color: #000;font-size: 20px;z-index: 11; cursor: pointer; width: 22px; text-align: center;}
