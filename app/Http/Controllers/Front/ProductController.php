@@ -720,11 +720,13 @@ class ProductController extends Controller
                 $productData->description = $productData->lab_description;
             }
         }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
+            $productData->description = strip_tags(str_replace('G/H VS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'I-J. SI-I1', $productData->description));
-            $productData->description = strip_tags(str_replace('FVS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('F, Clarity VS.', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('F-G diamond clarity VS-SI.', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('FVS', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('G-H SI', 'I-J. SI-I1', $productData->description));
         } 
 
         $runOldCode = true;
