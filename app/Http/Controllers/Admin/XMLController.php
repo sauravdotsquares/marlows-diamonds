@@ -27,7 +27,11 @@ class XMLController extends Controller
         // });
 
         // Fetch records from database
-        $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->latest()
+        // $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->latest()
+        // // ->whereRaw("NOT find_in_set(8,categories)")
+        // ->get();
+        
+        $getProductData = Products::with(['getProductImages','getProductGallery','getProductVariation'])->select('*')->where('status',1)->latest()
         // ->whereRaw("NOT find_in_set(8,categories)")
         ->get();
 
@@ -35,6 +39,339 @@ class XMLController extends Controller
         echo "XML Done";
     }
 
+    // public function createXMLfileNewFormat($productArray){
+
+    //     if (!file_exists(public_path('files/'))) {
+    //         mkdir(public_path('files/'), 0777);
+    //     }
+
+    //     $filePath = public_path('files/book_final.xml');
+
+    //     $dom     = new \DOMDocument('1.0', 'utf-8');
+
+    //     $root = $dom->createElement('rss');
+    //     $root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:g', 'http://base.google.com/ns/1.0');
+    //     $root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:c', 'http://base.google.com/ns/1.0');
+    //     $root->setAttributeNS('', 'version', '2.0');
+    //     $root->setAttributeNS('', 'encoding', 'utf-8');
+
+    //     $channelNew = $dom->createElement('channel');
+
+    //     foreach($productArray as $key => $productArrayNew){
+
+    //         $diamondTypeArray = ["lab_grown","mined"];
+
+    //         foreach($productArrayNew->getProductVariation as $var => $dataArray){
+    //             foreach($diamondTypeArray as $diamondKey => $diamondType){
+
+    //                 $prod_categories = explode(',',$productArrayNew->categories);
+
+    //                 if(in_array("8", $prod_categories) && $diamondType == 'lab_grown'){
+    //                     // No entry in data
+    //                     if (in_array("18", $prod_categories)){
+    //                         $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
+    //                         if(isset($getFinalPriceArray) && $getFinalPriceArray != 0){
+    //                             $title = '';
+    //                             $metalType = '';
+    //                             $price = '';
+    //                             $caratType = '';
+    //                             $widthType = '';
+    //                             $diamondWeight = '';
+    //                             $linkQuery = '';
+    //                             foreach($dataArray->get_vari_details_id as $key2 => $var2){
+    //                                 $var2->key = str_replace("attri_","",$var2->key);
+    //                                 if($var2->value){
+    //                                     $linkQuery .= $linkQuery ? '&diamond_type='.$diamondType.'&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
+    //                                 }
+    //                                 if(isset($var2->key) && $var2->key == 'metal-type'){
+    //                                     $metalType .= $var2->value;
+    //                                 }
+
+    //                                 if(isset($var2->key) && $var2->key == 'carat'){
+    //                                     $caratType .= $var2->value;
+    //                                 }
+
+    //                                 if(isset($var2->key) && $var2->key == 'total-diamond-weight'){
+    //                                     $diamondWeight .= $var2->value;
+    //                                 }
+
+    //                                 if(isset($var2->key) && $var2->key == 'width-mm'){
+    //                                     $widthType = $var2->value;
+    //                                 }
+
+    //                                 $price = $dataArray->regular_price;
+    //                             }
+
+
+    //                             $productGroupId        =  'ig_'.$productArrayNew->id;
+    //                             $productName = htmlspecialchars($productArrayNew->title.' - '.(($caratType!='')?$caratType.' - ':'').(($diamondWeight!='')?$diamondWeight.' - ':'').(($widthType!='')?$widthType.' - ':'').(($diamondType!='')?$diamondType.' - ':'').$metalType);
+
+    //                             $productId        =  'p_id_'.md5($productName);
+
+
+
+    //                             $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
+
+    //                             $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
+    //                             $productLink     =  url('').'/product/'.$productArrayNew->slug;
+    //                             $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
+    //                             $productPrice  =  round($getFinalPriceArray);
+    //                             $productCondition  =  'new';
+    //                             $productAvailability  =  'in stock';
+    //                             $productIdentifierExists  =  'no';
+
+    //                             $productType  =  $productArrayNew->cat_details;
+
+    //                             $product = $dom->createElement('item');
+
+    //                             $productid  = $dom->createElement('g:id', $productId);
+    //                             $product->appendChild($productid);
+
+    //                             $title   = $dom->createElement('g:title', $productName);
+
+    //                             $product->appendChild($title);
+
+    //                             $description   = $dom->createElement('g:description', $productDescription);
+
+    //                             $product->appendChild($description);
+
+    //                             $item_group_id   = $dom->createElement('g:item_group_id', $productGroupId);
+
+    //                             $product->appendChild($item_group_id);
+
+    //                             $link    = $dom->createElement('g:link', htmlentities($productQueryLink));
+
+    //                             $product->appendChild($link);
+
+    //                             $link    = $dom->createElement('g:product_type', $productType);
+
+    //                             $product->appendChild($link);
+
+    //                             // $link    = $dom->createElement('g:google_product_category', '200');
+
+    //                             // $product->appendChild($link);
+
+    //                             $image_link     = $dom->createElement('g:image_link', $productImageLink);
+
+    //                             $product->appendChild($image_link);
+
+    //                             $condition = $dom->createElement('g:condition', $productCondition);
+
+    //                             $product->appendChild($condition);
+
+    //                             $availability = $dom->createElement('g:availability', $productAvailability);
+
+    //                             $product->appendChild($availability);
+
+    //                             $price = $dom->createElement('g:price', $productPrice.' GBP ');
+
+    //                             $product->appendChild($price);
+
+    //                             $price = $dom->createElement('g:brand', 'Marlows Diamonds');
+
+    //                             $product->appendChild($price);
+
+    //                             $price = $dom->createElement('g:canonical_link', $productLink);
+
+    //                             $product->appendChild($price);
+
+    //                             foreach($productArrayNew->getProductGallery as $key => $addImages){
+    //                                 $additional_image_link = $dom->createElement('g:additional_image_link', url('').'/storage/'.$addImages->image_url);
+
+    //                                 $product->appendChild($additional_image_link);
+    //                             }
+
+
+
+    //                             $shipping_label = $dom->createElement('g:shipping_label', 0.00);
+
+    //                             $product->appendChild($shipping_label);
+
+    //                             $gender = $dom->createElement('g:gender', 'Female');
+
+    //                             $product->appendChild($gender);
+
+    //                             $age_group = $dom->createElement('g:age_group', 'Adult');
+
+    //                             $product->appendChild($age_group);
+
+    //                             $metal = $dom->createElement('g:metal', $metalType);
+
+    //                             $product->appendChild($metal);
+
+    //                             $identifier_exists = $dom->createElement('g:identifier_exists', $productIdentifierExists);
+
+    //                             $product->appendChild($identifier_exists);
+
+    //                             $channelNew->appendChild($product);
+    //                             $root->appendChild($channelNew);
+    //                         }
+    //                     }
+
+    //                 }else{
+    //                     $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
+
+    //                     if(isset($getFinalPriceArray) && $getFinalPriceArray != 0){
+    //                         $title = '';
+    //                         $metalType = '';
+    //                         $price = '';
+    //                         $caratType = '';
+    //                         $widthType = '';
+    //                         $diamondWeight = '';
+    //                         $linkQuery = '';
+    //                         foreach($dataArray->get_vari_details_id as $key2 => $var2){
+    //                             $var2->key = str_replace("attri_","",$var2->key);
+    //                             if($var2->value){
+    //                                 $linkQuery .= $linkQuery ? '&diamond_type='.$diamondType.'&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
+    //                             }
+    //                             if(isset($var2->key) && $var2->key == 'metal-type'){
+    //                                 $metalType .= $var2->value;
+    //                             }
+
+    //                             if(isset($var2->key) && $var2->key == 'carat'){
+    //                                 $caratType .= $var2->value;
+    //                             }
+
+    //                             if(isset($var2->key) && $var2->key == 'total-diamond-weight'){
+    //                                 $diamondWeight .= $var2->value;
+    //                             }
+
+    //                             if(isset($var2->key) && $var2->key == 'width-mm'){
+    //                                 $widthType = $var2->value;
+    //                             }
+
+    //                             $price = $dataArray->regular_price;
+    //                         }
+
+
+    //                         if(isset($linkQuery) && !empty($linkQuery)){
+    //                             $productGroupId        =  'ig_'.$productArrayNew->id;
+    //                             $productName = htmlspecialchars($productArrayNew->title.' - '.(($caratType!='')?$caratType.' - ':'').(($diamondWeight!='')?$diamondWeight.' - ':'').(($widthType!='')?$widthType.' - ':'').(($diamondType!='')?$diamondType.' - ':'').$metalType);
+
+    //                             $productId        =  'p_id_'.md5($productName);
+
+
+
+    //                             $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
+    //                             // $productDescription = str_replace(['<p>', '</p>'], '', $productDescription);
+
+
+    //                             $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
+    //                             $productLink     =  url('').'/product/'.$productArrayNew->slug;
+    //                             $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
+    //                             $productPrice  =  round($getFinalPriceArray);
+    //                             // $productSalePrice  =  '';
+    //                             // $productSalePriceEffectiveDate  =  '';
+    //                             $productCondition  =  'new';
+    //                             // $productShippingWeight  =  '1.00 lb';
+    //                             $productAvailability  =  'in stock';
+    //                             $productIdentifierExists  =  'no';
+    //                             // $productAdditionalImageLink  =  'https://mccoyhome.com/media/catalog/product/s/q/squareall6.jpeg';
+    //                             $productType  =  $productArrayNew->cat_details;
+
+    //                             $product = $dom->createElement('item');
+
+    //                             $productid  = $dom->createElement('g:id', $productId);
+    //                             $product->appendChild($productid);
+
+    //                             $title   = $dom->createElement('g:title', $productName);
+
+    //                             $product->appendChild($title);
+
+    //                             $description   = $dom->createElement('g:description', $productDescription);
+
+    //                             $product->appendChild($description);
+
+    //                             $item_group_id   = $dom->createElement('g:item_group_id', $productGroupId);
+
+    //                             $product->appendChild($item_group_id);
+
+    //                             $link    = $dom->createElement('g:link', htmlentities($productQueryLink));
+
+    //                             $product->appendChild($link);
+
+    //                             $link    = $dom->createElement('g:product_type', $productType);
+
+    //                             $product->appendChild($link);
+
+    //                             // $link    = $dom->createElement('g:google_product_category', '200');
+
+    //                             // $product->appendChild($link);
+
+    //                             $image_link     = $dom->createElement('g:image_link', $productImageLink);
+
+    //                             $product->appendChild($image_link);
+
+    //                             $condition = $dom->createElement('g:condition', $productCondition);
+
+    //                             $product->appendChild($condition);
+
+    //                             $availability = $dom->createElement('g:availability', $productAvailability);
+
+    //                             $product->appendChild($availability);
+
+    //                             $price = $dom->createElement('g:price', $productPrice.' GBP ');
+
+    //                             $product->appendChild($price);
+
+    //                             $price = $dom->createElement('g:brand', 'Marlows Diamonds');
+
+    //                             $product->appendChild($price);
+
+    //                             $price = $dom->createElement('g:canonical_link', $productLink);
+
+    //                             $product->appendChild($price);
+
+    //                             foreach($productArrayNew->getProductGallery as $key => $addImages){
+    //                                 $additional_image_link = $dom->createElement('g:additional_image_link', url('').'/storage/'.$addImages->image_url);
+
+    //                                 $product->appendChild($additional_image_link);
+    //                             }
+
+
+
+    //                             $shipping_label = $dom->createElement('g:shipping_label', 0.00);
+
+    //                             $product->appendChild($shipping_label);
+
+    //                             $gender = $dom->createElement('g:gender', 'Female');
+
+    //                             $product->appendChild($gender);
+
+    //                             $age_group = $dom->createElement('g:age_group', 'Adult');
+
+    //                             $product->appendChild($age_group);
+
+    //                             $metal = $dom->createElement('g:metal', $metalType);
+
+    //                             $product->appendChild($metal);
+
+    //                             $identifier_exists = $dom->createElement('g:identifier_exists', $productIdentifierExists);
+
+    //                             $product->appendChild($identifier_exists);
+
+    //                             $channelNew->appendChild($product);
+    //                             $root->appendChild($channelNew);
+    //                         }
+
+
+    //                     }
+
+
+    //                 }
+
+    //             }
+
+    //         }
+
+    //     }
+
+    //     $dom->appendChild($root);
+
+    //     $dom->save($filePath);
+
+    // }
+    
     public function createXMLfileNewFormat($productArray){
 
         if (!file_exists(public_path('files/'))) {
@@ -55,17 +392,42 @@ class XMLController extends Controller
 
         foreach($productArray as $key => $productArrayNew){
 
-            $diamondTypeArray = ["lab_grown","mined"];
+            // echo "afsfafsdf In foreach sadasda dfaf <pre>";
+            // print_r($productArrayNew);
+            // die;
+
+            $diamondTypeArray = ["lab_grown","mined_diamond"];
 
             foreach($productArrayNew->getProductVariation as $var => $dataArray){
                 foreach($diamondTypeArray as $diamondKey => $diamondType){
 
                     $prod_categories = explode(',',$productArrayNew->categories);
+                    if(in_array("54",$prod_categories) && $diamondType == 'lab_grown'){
+                        
+                    }else if(in_array("8", $prod_categories) && $diamondType == 'lab_grown'){
 
-                    if(in_array("8", $prod_categories) && $diamondType == 'lab_grown'){
+                        
                         // No entry in data
                         if (in_array("18", $prod_categories)){
-                            $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
+
+
+                            $arrayVariationValue = array_values(array_filter($dataArray->get_vari_details_id->pluck('value')->toArray()));
+                            $priceVariationArrayBeforePrices = new Request([
+                                'variations' => [
+                                    $arrayVariationValue
+                                ],
+                                'slug' => $productArrayNew->slug,
+                                'diamond_type' => $diamondType
+                            ]);
+
+                            $getFinalPriceArray = $this->getProductVariationPrices($priceVariationArrayBeforePrices);
+                            
+
+
+                            // echo "Engagement rings if<pre>";
+                            // print_r($getFinalPriceArray);
+                            // die;
+                            // $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
                             if(isset($getFinalPriceArray) && $getFinalPriceArray != 0){
                                 $title = '';
                                 $metalType = '';
@@ -111,7 +473,7 @@ class XMLController extends Controller
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
                                 $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
-                                $productPrice  =  round($getFinalPriceArray);
+                                $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
                                 $productCondition  =  'new';
                                 $productAvailability  =  'in stock';
                                 $productIdentifierExists  =  'no';
@@ -205,7 +567,18 @@ class XMLController extends Controller
                         }
 
                     }else{
-                        $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
+                        $arrayVariationValue = array_values(array_filter($dataArray->get_vari_details_id->pluck('value')->toArray()));
+                        $priceVariationArrayBeforePrices = new Request([
+                            // 'productMetalType' => '9ct Yellow Gold',
+                            'variations' => [
+                                $arrayVariationValue
+                            ],
+                            'slug' => $productArrayNew->slug,
+                            'diamond_type' => $diamondType
+                        ]);
+
+                        $getFinalPriceArray = $this->getProductVariationPrices($priceVariationArrayBeforePrices);
+                        
 
                         if(isset($getFinalPriceArray) && $getFinalPriceArray != 0){
                             $title = '';
@@ -255,7 +628,11 @@ class XMLController extends Controller
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
                                 $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
-                                $productPrice  =  round($getFinalPriceArray);
+                                $productRRPPrice  =  round($getFinalPriceArray['allPrices']['rrp_price']);
+                                $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
+                                if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
+                                    $productDiscountedPrice  =  round($getFinalPriceArray['allPrices']['discounted_price']);
+                                }
                                 // $productSalePrice  =  '';
                                 // $productSalePriceEffectiveDate  =  '';
                                 $productCondition  =  'new';
@@ -366,6 +743,43 @@ class XMLController extends Controller
 
         $dom->save($filePath);
 
+    }
+
+
+    public function getProductVariationPrices(Request $request)
+    {
+        $getRegularPrices = getRagularFilterPrices($request->all(),$request['diamond_type'], $request->slug, $request->metal_type);
+        $getLabDiamondPrices = 0;
+
+        if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
+            if(isset($request->type) && $request->type){
+                if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
+                    $getLabDiamondPrices = $this->getCustomApiFilterData($request);
+                }else{
+                    $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
+                }
+            }
+        }else{
+            $getLabDiamondPrices = $request->selectedDiamondPrice;
+        }
+
+        $resultedArray = array_map(function($num) use ($getLabDiamondPrices) {
+            return round($num + $getLabDiamondPrices,2);
+        }, $getRegularPrices);
+        unset($resultedArray['parent_category']);
+        if(isset($resultedArray) && !empty($resultedArray)){
+            return [
+                'status'=> 200,
+                'allPrices'=>getFlatDiscountRanges($resultedArray,$getRegularPrices['parent_category'],$request['diamond_type']),
+                'getLabDiamondPrices'=>round($getLabDiamondPrices,2),
+            ];
+        }
+
+        return [
+            'status'=> 500,
+            'allPrices'=>0.00,
+            'getLabDiamondPrices'=>0.00,
+        ];
     }
 
     public function getPriceCalculationFunction($productData,$diamondType,$finalPrices)

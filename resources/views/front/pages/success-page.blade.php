@@ -4,37 +4,35 @@
         window.uetq = window.uetq || [];window.uetq.push('event', 'purchase', {"revenue_value":"{{isset($pay['final_price'])?$pay['final_price']:0.00}}","currency":"GBP"});
     </script>
 @endsection
+
+
 @section('google-ecommerce')
     <?php
-    if(!empty($pay)){
+        if(!empty($pay)){
+            
             $getCustomOrderData = array();
             $getCustomOrderData['transaction_id'] = $pay['custom_order_id'];
             $getCustomOrderData['affiliation'] = 'Marlows online store';
-            $getCustomOrderData['value'] = $pay['final_price'];
+            $getCustomOrderData['value'] = $pay['deposited_price'];
             $getCustomOrderData['currency'] = "GBP";
-            $getCustomOrderData['tax'] = getVATPriceFunction($pay['final_price']);
-            $getCustomOrderData['shipping'] = 0;
             $getCustomOrderData['items'] = array();
             foreach($pay['get_order_details_function'] as $value2){
                 $getCustomOrderData['items'][] = array(
                     'id' => $value2['id'],
                     'name' => isset($value2['product_details']['title'])?$value2['product_details']['title']:'custom_diamond',
-                    'list_name' => 'Search Results',
                     'brand' => 'Marlows',
                     'category' => isset($value2['product_details']['cat_details'])?$value2['product_details']['cat_details']:'custom_diamond',
                     'variant'=> 'Black',
-                    'list_position' => 1,
-                    'quantity'=> $value2['quantity'],
-                    'price' => $value2['total_price'],
-                    'deposited_price' => isset($value2['deposited_product_price'])?$value2['deposited_product_price']:$value2['total_price'],
+                    'quantity'=> 1,
+                    'price' => $value2['deposited_product_price'],
                 );
             }
         }
     ?>
-    
-<?php if(!empty($getCustomOrderData)){ ?>
-    <script> gtag('event', 'purchase', {!!  json_encode($getCustomOrderData) !!});</script>
-<?php } ?>
+    <?php if(isset($getCustomOrderData) && !empty($getCustomOrderData)){ ?>
+        <script> gtag('event', 'purchase', {!!  json_encode($getCustomOrderData) !!});</script>
+    <?php } ?>
+
 
 @endsection
 @section('content')
@@ -48,7 +46,7 @@
             </div>
         </div>
     </div>
-    <?php if(!empty($getCustomOrderData)){ ?>
+    <?php if(isset($getCustomOrderData) && !empty($getCustomOrderData)){ ?>
     <div class="orders-warp order-success-page">
         <div class="container">
             <div class="order-data">{{$response}}</div>
@@ -60,4 +58,18 @@
 @endsection
 
 @section('js')
+<?php if(isset($getCustomOrderData) && !empty($getCustomOrderData)){ ?>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        'event':'order_complete',
+        'order_id': '{{$pay['custom_order_id']}}',
+        'order_value': '{{$pay['deposited_price']}}',
+        'order_currency': 'GBP',
+        'enhanced_conversion_data': {
+          "email": "{{$pay['user_details']['email']}}",
+          }
+      });
+    </script>
+<?php } ?>
 @endsection
