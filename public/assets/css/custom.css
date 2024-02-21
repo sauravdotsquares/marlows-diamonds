@@ -837,6 +837,16 @@ z-index: 11;}
 .checkcart-item dl dd p {color: #707070;margin: 0 0 3px 0;}
 .checkcart-item dl dt, .checkcart-item dl dd {font-weight: normal;font-size: 14px;margin: 0;}
 .checkcart-item dl dt {float: left;clear: none;width: auto;}
+
+.checkout-coupan-code {border:1px solid #e5e5e5;padding: 15px 15px 20px;border-radius: 11px;background: #fff4fa; margin-top: 30px;    width: 30%;
+float: right;margin-left: 30px;}
+.checkout-coupan-code label {font-weight: bold;margin: 0 0 2px;}
+.checkout-coupan-code input#coupon_code105 {box-shadow: none;margin: 0 0 0px;border:1px solid #e5e5e5; display: inline-block;}
+.checkout-coupan-code a {background-color: #8e2e65;color: #fff;font-size: 12px;padding: 11px 20px;
+text-transform: uppercase;text-decoration: none;display: inline-block;font-weight: 700;border: 1px solid #8e2e65;margin: 15px 10px 0 0px;}
+.checkout-coupan-code a:hover {box-shadow: 5px 5px 0 rgba(0,0,0,0.8);color: #fff;}
+.checkout-coupan-code span {width: 100%;display: inline-block;}
+
 .name-pr-cart strong {margin: 0 0 0 4px;}
 
 .name-pr-cart {font-size: 15px;margin: 0 0 4px 0;}
@@ -1661,6 +1671,34 @@ height: 40px;display: inline-block;border-radius: 50px;}
 .botto-to-top #scroll-to-top i.fa.fa-angle-up {line-height: 37px;}
 
 
+/*finance css*/
+.finance-sec {margin: 0 0 35px;}
+.finance-sec-weneed .row {align-items: center;}
+.finance-sec .finance-whatwe-content {padding: 0 40px 0 0px;}
+.finance-sec img.deko-cart-img {margin: 30px 0;}
+.finance-sec h3 {font-weight: bold;}
+.finance-sec p b {color: #000;}
+.finance-sec p strong {color: #6c3655;}
+.finance-sec h4 {color:#8e2e65;font-weight: bold;font-size: 18px;margin: 15px 0 5px;}
+
+.finance-eligibility ul { margin: 30px 0 30px;padding: 0 0 0 0px;display: flex;justify-content: space-between;height: 100%;flex-wrap: wrap;}
+.finance-eligibility ul li { color: #000;list-style: none;border: 1px solid #cfcfcf;width: 18%;vertical-align: top;text-align: center;border-radius: 20px;padding: 30px 15px;
+font-size: 15px;margin: 0 7px 15px;transition: all 0.2s ease;}
+.finance-eligibility ul li:hover{border:1px solid #8e2e65; transition: all 0.2s ease;}
+.finance-eligibility ul li img.deko-eligibility-img {display: block;margin: auto;margin-bottom: 15px;}
+
+.desk-calculator .deko-calculator-inner {margin: 0 0 30px;}
+.desk-calculator .finance-calculator {background: #fff7fc;border-radius: 10px;overflow: hidden;}
+.desk-calculator .finance-calculator h4 {background: #8e2e65;margin: 0;text-align: center;color: #fff;padding: 15px 15px;font-size: 24px;
+text-transform: capitalize;}
+.desk-calculator .finance-calculator table {border:1px solid #ffedf7;margin: 0;overflow: hidden;}
+.desk-calculator .finance-calculator table select {width: 100%;border: 1px solid #e5e5e5;padding: 8px 7px;}
+.desk-calculator .finance-calculator table tr:nth-child(even) {background: #fff;}
+.desk-calculator .finance-calculator td {font-weight: bold;}
+.desk-calculator .finance-calculator td:last-child {text-align: right;width: 40%;}
+.desk-calculator .finance-calculator table tr:last-child td {border: none;}
+/*finance css end*/
+
 @media(max-width:1400px){
 	.post-bar .post-bar-center p {
 		font-size: 15px;
@@ -1677,6 +1715,10 @@ height: 40px;display: inline-block;border-radius: 50px;}
 /* .post-bar .post-bar-center:before {
 background: url(../images/christmax-tree.png) no-repeat;content: '';width: 30px;height: 100%;display: inline-block;position: absolute;
 left:81px;background-size: 26px;bottom: -7px;} */
+
+/*finance css*/
+.finance-eligibility ul li{    line-height: 23px;}
+/*finance css end*/
 
 }
 
@@ -1783,6 +1825,10 @@ left:81px;background-size: 26px;bottom: -7px;} */
 .post-bar .post-bar-center:before {left:-30px;}
 
 .post-bar .post-bar-center:after {right:-30px;}
+
+/*finance css*/
+.finance-eligibility ul li{ width:48%; }
+/*finance css end*/
 }
 
 
@@ -1843,7 +1889,12 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .footer-content-wrap {margin: 30px -15px 86px;}
 /*footer css end*/
 
+/*finance css*/
+.finance-eligibility ul li{ width:45%; }
+.finance-sec .finance-whatwe-content {padding: 0 0px 0 0px;}
+/*finance css end*/
 }
+
 
 @media(max-width:575px){
 .post-data-col .col-lg-4.col-sm-6 {width: 100%;}
@@ -1858,6 +1909,10 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 /*grown diamond css end*/
 
 .ring-pr-desc {max-height:inherit;min-height:auto; height: auto !important;}
+
+/*finance css*/
+.finance-eligibility ul li{ width:100%; height:auto; }
+/*finance css end*/
 }
 
 

@@ -2,8 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Finance Options</h5>
-                {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                <h5 class="modal-title" id="exampleModalLabel">Finance Calculator</h5>
             </div>
             <div class="modal-body">
                 <div class="col-lg-12">
@@ -24,11 +23,10 @@
                                 <p> Finance Type : </p>
                                 <p>
                                     <select id="terms" name="term">
-                                        <option value="ONIB12-16.9" selected=""> 12 Months Credit 16.9%</option>
-                                        <option value="ONIB18-16.9"> 18 Months Credit 16.9%</option>
-                                        <option value="ONIB24-16.9"> 24 Months Credit 16.9%</option>
-                                        <option value="ONIB36-16.9"> 36 Months Credit 16.9%</option>
-                                        <option value="ONIB48-16.9"> 48 Months Credit 16.9%</option>
+                                        <option value="ONIB12-22.9" selected=""> 12 Months Credit 22.9%</option>
+                                        <option value="ONIB24-22.9"> 24 Months Credit 22.9%</option>
+                                        <option value="ONIB36-22.9"> 36 Months Credit 22.9%</option>
+                                        <option value="ONIB48-22.9"> 48 Months Credit 22.9%</option>
                                     </select>
                                 </p>
                             </li>
@@ -89,13 +87,7 @@
                             </li>
                         </ul>
                         <p class="finance_options_provided">Finance options powered by <img src="{{ env('APP_IMAGE_URL').'/images/Deko_landscape_colour_whiteBG200px_wide.png' }}" style="height:25px;" class="nolazy" alt="DEKO"></p>
-
                         <input type="hidden" id="enableId" value="OCFDefault"> <br>
-                        <div>
-
-                        </div>
-
-
                     </div>
                     <div class="finance_options_not_available" style="display: none;">
                         <p>Finance options are not available for this product due to less amount.</p>
@@ -105,4 +97,3 @@
         </div>
     </div>
 </div>
-
