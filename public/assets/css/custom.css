@@ -21,7 +21,7 @@
 }
 
 /** GLobal Css **/
-body{font-size:14px;font-family:'Lato';color:#626262;line-height:1.5;padding:0;margin:0;}
+body{font-size:14px;font-family:'Lato';color:#626262;line-height:1.5;padding:0;margin:0; background: #fff !important;}
 img{max-width:100%}
 *,*:after,*:before{box-sizing:border-box;-webkit-box-sizing:border-box;}
 h1,h2,h3,h4,h5,h6,.heading-h-one,.heading-h-two,.heading-h-three,.heading-h-four{font-family:'Playfair Display';margin:0 0 15px;font-weight:400}
@@ -46,7 +46,8 @@ a.btn-bg-large,.btn-bg-small{color:#fff}
 .btn-bg-large{background-color:#8e2e65;color:#fff;font-size:15px;padding:14px 26px;text-transform:uppercase;text-decoration:none;font-weight:700;display:inline-block; border: 1px solid #8e2e65}
 
 .btn-bg-large:hover{box-shadow:5px 5px 0 rgba(0,0,0,0.8); color: #fff}
-.btn-bg-small{background-color:#8e2e65;color:#fff;font-size:12px;padding:11px 20px;text-transform:uppercase;text-decoration:none;display:inline-block;font-weight:700; border: 1px solid #8e2e65;}
+.btn-bg-small{background-color:#8e2e65;color:#fff;font-size:12px;padding:11px 20px;text-transform:uppercase;text-decoration:none;display:inline-block;font-weight:700; 
+    border: 1px solid #8e2e65; z-index: 9; position: relative;}
 .btn-bg-small:hover{box-shadow:5px 5px 0 rgba(0,0,0,0.8); color: #fff}
 .owl-carousel .owl-item img{width: auto;margin: 0 auto;}
 .white-text{color:#fff}
@@ -103,7 +104,7 @@ right: -149px;position: absolute;height: 100%;top: 44px;}*/
 .flex-flex-wrap{-webkit-flex-wrap:wrap;flex-wrap:wrap}
 
 /** header css start here **/
-.header-main {position: relative;z-index: 99; height:100%;}
+.header-main {position: relative;z-index: 99; height:100%; background: #fff}
 /** top bar css start **/
 .top-bar{background:#8e2e65;text-align:center;color:#fff}
 .top-bar p{margin:0;line-height:30px}
@@ -121,7 +122,8 @@ right: -149px;position: absolute;height: 100%;top: 44px;}*/
 .mobile-cart .fa-shopping-bag{font-size:23px;color:#000}
 .mobile-cart{position:relative}
 .navbar-toggler .togglebar-nav{cursor:pointer;color:#902f66;position:relative;height:30px;width:30px}
-.navbar-toggler .togglebar-nav span{cursor:pointer;color:#902f66;background:#902f66;width:33px;height:2px;display:block;position:relative;border-radius:4px;margin:7px 0}
+.navbar-toggler .togglebar-nav span{cursor:pointer;color:#902f66;background:#902f66;width:33px;height:2px;display:block;position:relative;border-radius:4px;margin:7px 0;
+transition: all 0.2s ease;}
 .mobile-wishlist{margin:0 9px 0 0}
 .mobile-wishlist a{color:#8e2e65;font-size:20px}
 .middle-topbar-left .whatsapp-top-h,.middle-topbar-left .location-top-h{display:inline-block;vertical-align:middle;margin:0 30px 0 0}
@@ -147,7 +149,7 @@ right: -149px;position: absolute;height: 100%;top: 44px;}*/
 /** middle top bar css end **/
 
 /** logo and menus css start **/
-.logo-menu-bar{padding:15px 0 10px; background: rgba(255, 255, 255, 0.8); width:100%}
+.logo-menu-bar{padding:15px 0 10px; background:#fff; width:100%}
 .mobile-cart-wishlist{display:none;align-items:center}
 .navbar-toggler{display:none}
 .sticky-header .middle-topbar {position: fixed;top: 0;left: 0;right: 0;z-index: 9;background: #fff;box-shadow: 0 2px 3px rgba(0,0,0,0.2);}
@@ -220,7 +222,7 @@ textarea.input-control{height:100px}
 .remve-mobile-serch-box{display:none}
 
 .mobile-serch-box form {width: 100%;position: relative;}
-.mobile-serch-box form .formgroup input.typeahead {width: 100%;border: none;background: none;padding: 0 0 0 32px;}
+.mobile-serch-box form .formgroup input.typeahead {width: 100%;border: none;background: none;padding: 0 0 0 13px;}
 .mobile-serch-box form button.seach-btn {top: 0px;}
 /** logo and menus css end **/
 
@@ -244,7 +246,7 @@ textarea.input-control{height:100px}
 .footer-social{margin:50px 0 0 0}
 .footer-social a{color:#fff;font-size:18px;margin:0 22px 0 0}
 .footer-social a:hover{opacity:.7}
-.footerlinks-col ul li a{color:#fff;text-decoration:none}
+.footerlinks-col ul li a{color:#fff;text-decoration:none; font-weight: normal !important; font-size: 14px !important;}
 .footerlinks-col ul li{display:block}
 .footer-content-wrap{margin:30px -15px 40px}
 .fcontent-column{width:100%;padding:0 15px}
@@ -299,7 +301,7 @@ textarea.input-control{height:100px}
 .head-para-three video#video{width: 80%; object-fit: inherit;}
 .whychoose-marlows{background:#fafbfd;padding:30px 0 50px 0; }
 .rating-img{text-align:center;margin:0 0 25px 0}
-.whychoose-wraper .rating-img i.diamond-icon.search-starviews {background-position: -424px -2px;width: 152px;height: 81px;}
+.whychoose-wraper .rating-img i.diamond-icon.search-starviews {background-position: -148px 4px;/*width: 152px;height: 81px;*/ width:249px;height: 70px;}
 .shopfrom-block .rating-img i.diamond-icon.search-starviews {background-position: -148px 4px;width: 249px;height: 70px;}
 .whychoose-col{padding:0 6px;flex:0 0 25%;-ms-flex:0 0 25%;max-width:25%;width:100%;text-align:center}
 .whychoose-col-inner{border:1px dashed #979797;padding:30px 30px 30px 30px;height:100%;     background: #fff}
@@ -682,6 +684,19 @@ label.label {display: block;margin: 0 0 5px 0;}
 .action-submit button:hover {background: #000;color: #fff;}
 .visit-map {margin: 0 0 10px 0;}
 .visit-form form .action-submit button:hover {box-shadow: 5px 5px 0 rgba(0,0,0,0.8);background: #fff;color: #000;}
+.visit-form form .form-controls .error {color: #ff9f95 !important;}
+
+#requestAppointment .modal-dialog {
+    top: 50%;
+    transform: translate(0, -50%);
+}
+#requestAppointment .modal-content {background: #8e2e65;}
+#requestAppointment .modal-content .modal-header {border-bottom: none;padding: 0 15px;}
+#requestAppointment .modal-content button.btn-close {color: #fff;background: url(../images/close-visit.svg) no-repeat;margin-top: 13px;}
+#requestAppointment .modal-content button.btn-close:hover{ opacity:1 }
+#requestAppointment .modal-content .modal-header h5 {color: #fff;text-align: center;width: 100%;text-transform: uppercase;padding: 20px 0 0;}
+#requestAppointment .modal-content .visit-form {padding: 0;}
+#requestAppointment .modal-content .visit-form form#contactForm {margin-top: 0;}
 
 /** Engagement ring page **/
 .journery-life-wraper {text-align: center;margin: 50px 0 60px 0;}
@@ -1061,8 +1076,10 @@ background-position: -216px -217px;width: 140px;height: 39px;float: right;}
 .buying-guide-listss:nth-child(2n) {background: #8E2E65;color: #fff;}
 .buying-guide-listss:nth-child(2n+1){background: #F9F9F9;}
 .buying-guide-listss:nth-child(2n) h3 {color: #fff;}
-.download-btn a {display: inline-block;text-decoration: none;border: 2px solid #903C6C;color: #903C6C;padding: 11px 20px;text-transform: uppercase;font-size: 12px;font-weight: bold;}
 .download-btn {margin: 20px 0 20px 0;}
+.download-btn a {display: inline-block;text-decoration: none;border: 2px solid #903C6C;color: #fff;padding: 11px 20px;text-transform: uppercase;font-size: 12px;
+font-weight: bold;background-color: #8e2e65;}
+.download-btn a:hover{box-shadow: 5px 5px 0 rgba(0,0,0,0.8);color: #fff;}
 .howtobuy-engage-ring {background: #f9f9f9;padding: 40px 0; text-align: center;}
 .howtobuy-engage-ring .container {max-width: 900px;}
 .whatdiamond-to{text-align: center; padding: 60px 0 60px 0;}
@@ -1110,7 +1127,7 @@ background-position: -216px -217px;width: 140px;height: 39px;float: right;}
 .defaultpages-wrap {padding: 40px 0; font-size: 16px; line-height: 30px;}
 .defaultpages-wrap p {font-size: 16px;line-height: 29px;}
 
-.defaultpages-cols a {text-decoration: none;color: #8E2E65;}
+.defaultpages-cols a {text-decoration: none;color: #8E2E65; font-weight: bold;}
 .defaultpages-cols .vc_custom_heading {text-align: left !important;}
 .cart-empty {background: #f7f6f7;padding: 14px 20px;position: relative;border-top: 2px solid #8e2e65;color: #303030; font-size: 16px;}
 .tinv-header h2 {font-size: 32px;}
@@ -1150,11 +1167,14 @@ a[type="button"] {-webkit-appearance: none !important;}
 .product-info-media ol.carousel-indicators li.list-inline-item {display: block;border: 1px solid #ccc;    margin: 0 7px 10px;}
 .product-info-media ol.carousel-indicators li.list-inline-item.active{ border: none;     border: 1px solid #8e2e65;}
 
-/*finance options modal css*/
+
+
+.modal-open .modal {z-index: 9999;}
 .finance-available-options li {list-style: none;display: table;width: 100%;}
 .finance-available-options li p {display: table-cell;margin: 0;padding: 5px;}
-.finance-available-options .payments p:first-child{width: 15%;}
-.finance-available-options ul li input, .finance-available-options ul li select {margin: 0;width: 100%;padding: 5px;}
+.finance-available-options .payments p:first-child{width: 15%; }
+.finance-available-options ul li input, .finance-available-options ul li select {margin: 0;width: 100%;padding: 10px 10px;background: none;border: 1px solid #ccc;
+height: auto;line-height: initial;border-radius: 7px; color: #000;}
 .finance-available-options .deko-calculate {width: 100%;text-align: center;padding-top: 15px;}
 .finance-available-options .deko-calculate button {font-size: 1.0rem;border-radius: 5px;line-height: 1;background-color: #902f66;color: #ffffff; padding: 13px 30px;}
 .finance-available-options .pay_details li p + p {text-align: right;}
@@ -1672,6 +1692,7 @@ height: 40px;display: inline-block;border-radius: 50px;}
 
 
 /*finance css*/
+.defaultpages-wrap.finance-panel {padding-bottom: 0;}
 .finance-sec {margin: 0 0 35px;}
 .finance-sec-weneed .row {align-items: center;}
 .finance-sec .finance-whatwe-content {padding: 0 40px 0 0px;}
@@ -1697,6 +1718,7 @@ text-transform: capitalize;}
 .desk-calculator .finance-calculator td {font-weight: bold;}
 .desk-calculator .finance-calculator td:last-child {text-align: right;width: 40%;}
 .desk-calculator .finance-calculator table tr:last-child td {border: none;}
+.finance-panel .faq-section.engagement-ring-faq {margin-bottom: 0;}
 /*finance css end*/
 
 @media(max-width:1400px){

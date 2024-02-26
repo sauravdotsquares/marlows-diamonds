@@ -21,6 +21,8 @@ class OrderDetail extends Model
         'total_price',
         'deposited_product_price',
         'final_product_price',
+        'coupon_code',
+        'discount_percentage',
         'status',
     ];
 

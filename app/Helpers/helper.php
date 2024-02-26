@@ -630,11 +630,10 @@ if (!function_exists('validate_breadcrumb')) {
                 "price_from" => "1",
                 "price_to" => "999999",
                 "page_number" => $pageNumber,
-                "page_number" => $data['PageSize'],
                 "sort_direction" => "ASC",
                 "sort_by" => "PRICE",
                 'search_type' => 'White',
-                'page_size' => '5',
+                'page_size' => $data['PageSize'],
             );
 
             $curl = curl_init();

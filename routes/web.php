@@ -414,6 +414,7 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	Route::post('product/add-to-cart', 'AddToCartController@addToCart')->name('add.to.cart');
 	Route::post('product/add-to-cart-diamond', 'AddToCartController@addToCartDiamond')->name('add.to.cart.diamond');
 	Route::patch('product/update-cart', 'AddToCartController@updateCart')->name('update.cart');
+	Route::patch('product/update-cart-coupon-code', 'AddToCartController@updateCartCouponCode')->name('update.cart.coupon');
 
 	Route::patch('product/get-filtered-data', 'AddToCartController@updateCart')->name('update.cart');
 

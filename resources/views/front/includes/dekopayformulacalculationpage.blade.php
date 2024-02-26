@@ -1,4 +1,4 @@
-<div ng-controller="DekopayController" ng-init="financeOptionsCheckout()">
+<div class="desk-calculator" ng-controller="DekopayController" ng-init="financeOptionsCheckout()">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

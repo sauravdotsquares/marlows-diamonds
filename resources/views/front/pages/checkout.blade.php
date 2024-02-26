@@ -263,7 +263,7 @@
                                     @php $total = 0; $totalPrice = 0; $depositedPrice = 0; @endphp
                                     @if(session('cart'))
                                         @foreach(session('cart') as $id => $details)
-                                            @php 
+                                           @php 
                                                 $total += $details['deposited_price'] * $details['quantity'];
                                                 $totalPrice += $details['price'] * $details['quantity']; 
                                                 $depositedPrice += $details['deposited_price'] * $details['quantity'];
@@ -332,58 +332,88 @@
                                                         <dt class="variation-FingerSize">Certificate: </dt>
                                                         <dd class="variation-FingerSize"><p >{{$details['customArray']['CERT_NO']}}</p></dd>
                                                     @endif
+                                                   
                                                 </dl>
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
                                             </td>
                                             <td>
                                             @if(isset($details['rrp_price']) && !empty($details['rrp_price']))
-                                                <p> 
+                                                <!-- <p> 
                                                     <span> RRP: </span> 
                                                     <del>{{MY_CURRENCY_SYMBOL}} {{$details['rrp_price']}}</del>
-                                                </p>
+                                                </p> -->
                                             @endif
                                             <!-- <p> <span> Save Price: </span> {{MY_CURRENCY_SYMBOL}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
                                             @if(isset($details['shop_price']) && !empty($details['shop_price']))
                                                 @if($details['price']!= $details['shop_price'])
-                                                    <p> 
+                                                    <!-- <p> 
                                                         <span> Our Price: </span> 
                                                         <del> {{MY_CURRENCY_SYMBOL}}{{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
-                                                    </p>
+                                                    </p> -->
                                                 @endif
                                             @endif
-                                                <span>
+                                                <span id="productPrice{{$id}}">
                                                     @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
+                                                        <span> Our Price: </span> 
                                                         <del>{{MY_CURRENCY_SYMBOL}}{{
                                                             $details['customArray']['final_price'] }}
                                                         </del>
                                                     @endif <br>
-                                                    {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                                                    @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
+                                                        {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                                                    @else
+                                                        {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                                                    @endif
                                                 </span>
                                             </td>
                                             <td class="check-product-total">
-                                                <span>
-                                                    {{MY_CURRENCY_SYMBOL}}{{ $details['deposited_price'] * $details['quantity'] }}</span>
+                                                <span id="subtotalPrice{{$id}}">{{MY_CURRENCY_SYMBOL}}{{ round($details['deposited_price'],2) }}</span>
                                             </td>
                                         </tr>
                                         @endforeach
                                     @endif
-                                </tbody>
+                                </tbody>         
                                 <tfoot>
                                     <tr class="checkout-cart-subtotal">
                                         <th>Subtotal</th>
-                                        <td>
-                                            <strong>{{MY_CURRENCY_SYMBOL}}{{ $total }}</strong>
+                                        <td id="subTotalPrices">
+                                            <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
                                         </td>
                                     </tr>
                                     <tr class="checkout-cart-total">
                                         <th>Total</th>
-                                        <td>
-                                            <strong>{{MY_CURRENCY_SYMBOL}}{{ $total }}</strong>
+                                        <td id="totalFinalPrices">
+                                            <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
                                         </td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
+                        @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
+
+                            <div class="checkout-coupan-code">
+                                <label for="coupon_code">Coupon Code</label>
+                                <input type="text" name="coupon_code" value="{{isset($details['couponCodeText'])?$details['couponCodeText']:''}}" id="coupon_code{{$id}}" class="form-control">
+                                @if(isset($details['couponCodeText']) && !empty($details['couponCodeText']))
+                                    <span id="couponCodeMessage{{$id}}"></span>
+                                    <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
+                                        Applied
+                                    </a>
+                                    <!-- <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
+                                        Cancel
+                                    </a> -->
+                                @else
+                                    <span id="couponCodeMessage{{$id}}"></span>
+                                    <a id="applyCouponCode{{$id}}" href="javascript:void(0)">
+                                        Apply
+                                    </a>
+                                    <!-- <a id="applyCouponCodeCancel{{$id}}" href="javascript:void(0)">
+                                        Cancel
+                                    </a> -->
+                                
+                                @endif
+                            </div>
+                        @endif
                         <input type="hidden" id="final_price" name="final_price" value="{{ $total }}">
                         <input type="hidden" id="total_price" name="total_price" value="{{ $totalPrice }}">
                         <input type="hidden" id="deposited_price" name="deposited_price" value="{{ $depositedPrice }}">
@@ -428,6 +458,101 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script>
     $(document).ready(function () {
+        $(document).on('click', "[id^=applyCouponCode]", function () {
+            var index = parseInt($(this).attr("id").replace("applyCouponCode", ''));
+            $.ajax({
+                url: "{{ route('update.cart.coupon') }}",
+                method: "patch",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    cartid: index,
+                    coupon_code: $('#coupon_code'+index).val(),
+                    coupon_status:1
+                },
+                success: function (response) {
+                    $.each(response.sessionCartValues, function( keyIndex, value ) {
+                        $('#subtotalPrice'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                        // console.log(keyIndex + ": " + value.deposited_price.toFixed(2));
+                        // console.log("checking again ");
+                        $('#applyCouponCode'+keyIndex).text(response.statustext);
+                        $('#couponCodeMessage'+keyIndex).html(response.errormsg);
+                        $('#coupon_code'+keyIndex).val(value.couponCodeText);
+                        // alert( index + ": " + value );
+                    });
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#deposited_price').val(response.finalPrice);
+                    
+                    // console.log(response);
+                    // return false;
+                    // // window.location.reload();
+                    // if(response.status == 200){
+                       
+                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#applyCouponCode'+index).text(response.statustext);
+                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#deposited_price').val(response.finalPrice);
+                    //     $('#couponCodeMessage'+index).html(response.errormsg);
+                    // }else if(response.status == 500){
+                    //     $('#applyCouponCode'+index).text(response.statustext);
+                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#couponCodeMessage'+index).html(response.errormsg);
+                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#deposited_price').val(response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    // }
+                }
+            });
+        });
+
+        $(document).on('click', "[id^=applyCouponCodeCancel]", function () {
+            var index = parseInt($(this).attr("id").replace("applyCouponCodeCancel", ''));
+            $.ajax({
+                url: "{{ route('update.cart.coupon') }}",
+                method: "patch",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    cartid: index,
+                    coupon_code: $('#coupon_code'+index).val(),
+                    coupon_status:2
+                },
+                success: function (response) {
+                    $.each(response.sessionCartValues, function( keyIndex, value ) {
+                        $('#subtotalPrice'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                        // console.log(keyIndex + ": " + value.deposited_price.toFixed(2));
+                        // console.log("checking again ");
+                        $('#applyCouponCode'+keyIndex).text(response.statustext);
+                        $('#couponCodeMessage'+keyIndex).html(response.errormsg);
+                        $('#coupon_code'+keyIndex).val(value.couponCodeText);
+                        // alert( index + ": " + value );
+                    });
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#deposited_price').val(response.finalPrice);
+                    // console.log(response);
+                    
+                    // $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    // window.location.reload();
+                    // if(response.status == 200){
+                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#applyCouponCode'+index).text(response.statustext);
+                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#deposited_price').val(response.finalPrice);
+                    //     $('#couponCodeMessage'+index).html(response.errormsg);
+                    // }else if(response.status == 500){
+                    //     $('#applyCouponCode'+index).text(response.statustext);
+                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#couponCodeMessage'+index).html(response.errormsg);
+                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#deposited_price').val(response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    // }
+                }
+            });
+        });
 
         $('#card_number').mask('0000 0000 0000 0000');
         $('#cvv_number').mask('000');
@@ -681,7 +806,7 @@
                 contentType:false,
                 processData: false,
                 data: form_data,
-                success: function (response) {    
+                success: function (response) {   
                     $('.cc_place_order_btn button').text('Place Order');
                     $('.cc_place_order_btn button').prop('disabled', false);
                     if(response.status == 500){ 

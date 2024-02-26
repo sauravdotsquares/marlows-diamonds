@@ -565,7 +565,6 @@
 							</div>
 						</div>
 						<div data-pagination=""
-							ng-if="isPagignationShow"
 							data-num-pages="totalPages"
 							data-current-page="currentPage"
 							data-max-size="maxSize"
