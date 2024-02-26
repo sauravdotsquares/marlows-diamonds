@@ -495,6 +495,23 @@ display: inline-block;right: 0;position: absolute;}
 	.location-container{ background:#f6f6f7  url() }
 
 .checkout-coupan-code {margin-top: 30px;margin-bottom: 30px;width: 100%;float: right;margin-left: 30px;}
+
+/*my acccount css*/
+.account-dashboard .account-sidebar ul li {display: inline-block;width: 55px;height: 55px;}
+.account-dashboard .account-sidebar ul li a{ font-size:0px; height: 55px; }
+.account-dashboard .account-sidebar ul li a#dashboard-tab { background: url(../images/diamond-submenu-icon.png) no-repeat;background-position: 0px -413px}
+.account-dashboard .account-sidebar ul li a#orders-tab { background: url(../images/diamond-submenu-icon.png) no-repeat;background-position:-113px -410px;}
+.account-dashboard .account-sidebar ul li a#address-tab { background: url(../images/diamond-submenu-icon.png) no-repeat;background-position: -210px -412px;}
+.account-dashboard .account-sidebar ul li a#accountd-tab { background: url(../images/diamond-submenu-icon.png) no-repeat;background-position: -308px -412px;}
+.account-dashboard .account-sidebar ul li a#logout { background: url(../images/diamond-submenu-icon.png) no-repeat;background-position:-421px -411px;}
+
+
+.account-dashboard .account-sidebar ul li a#dashboard-tab.active {background-position: -59px -413px;background-color: #8e2e65;}
+.account-dashboard .account-sidebar ul li a#orders-tab.active {background-position:-161px -410px;background-color: #8e2e65;}
+.account-dashboard .account-sidebar ul li a#address-tab.active {background-position:-258px -412px;background-color: #8e2e65;}
+.account-dashboard .account-sidebar ul li a#accountd-tab.active {background-position:-364px -413px;background-color: #8e2e65;}
+.account-dashboard .account-sidebar ul li a#logout.active {background-position:-470px -412px;background-color: #8e2e65;}
+/*my acccount css end*/
 	}
 	
 	@media(max-width:767px){
