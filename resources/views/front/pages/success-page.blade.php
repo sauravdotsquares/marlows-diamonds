@@ -4,9 +4,12 @@
         window.uetq = window.uetq || [];window.uetq.push('event', 'purchase', {"revenue_value":"{{isset($pay['final_price'])?$pay['final_price']:0.00}}","currency":"GBP"});
     </script>
 @endsection
+
+
 @section('google-ecommerce')
     <?php
         if(!empty($pay)){
+            
             $getCustomOrderData = array();
             $getCustomOrderData['transaction_id'] = $pay['custom_order_id'];
             $getCustomOrderData['affiliation'] = 'Marlows online store';
@@ -26,10 +29,10 @@
             }
         }
     ?>
-    
-<?php if(!empty($getCustomOrderData)){ ?>
-    <script> gtag('event', 'purchase', {!!  json_encode($getCustomOrderData) !!});</script>
-<?php } ?>
+    <?php if(isset($getCustomOrderData) && !empty($getCustomOrderData)){ ?>
+        <script> gtag('event', 'purchase', {!!  json_encode($getCustomOrderData) !!});</script>
+    <?php } ?>
+
 
 @endsection
 @section('content')
@@ -43,7 +46,7 @@
             </div>
         </div>
     </div>
-    <?php if(!empty($getCustomOrderData)){ ?>
+    <?php if(isset($getCustomOrderData) && !empty($getCustomOrderData)){ ?>
     <div class="orders-warp order-success-page">
         <div class="container">
             <div class="order-data">{{$response}}</div>
@@ -55,4 +58,18 @@
 @endsection
 
 @section('js')
+<?php if(isset($getCustomOrderData) && !empty($getCustomOrderData)){ ?>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        'event':'order_complete',
+        'order_id': '{{$pay['custom_order_id']}}',
+        'order_value': '{{$pay['deposited_price']}}',
+        'order_currency': 'GBP',
+        'enhanced_conversion_data': {
+          "email": "{{$pay['user_details']['email']}}",
+          }
+      });
+    </script>
+<?php } ?>
 @endsection

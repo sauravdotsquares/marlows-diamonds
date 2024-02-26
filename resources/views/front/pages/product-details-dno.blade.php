@@ -689,7 +689,7 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-					if(diamond_type == 'lab_grown'){
+                    if(diamond_type == 'lab_grown'){
 						$('.product-description-common_lab_grown').html(res.description);
 					}else if (diamond_type == 'mined_diamond'){
 						$('.product-description-common_mined').html(res.description);

@@ -707,7 +707,7 @@ class ProductController extends Controller
         return response()->json(['html' => $view]);
     }
 
-    public function getSelectedVariationsData(Request $request)
+    public function getSelectedVariationsData_Old(Request $request)
     {
 
         $productData = Products::where('slug', $request->slug)->first();
@@ -1043,7 +1043,353 @@ class ProductController extends Controller
         }
     }
 
+    public function getSelectedVariationsData(Request $request)
+    {
 
+        $productData = Products::where('slug', $request->slug)->first();
+
+         if($request->diamond_type == "lab_grown"){
+            $getArrayCategories = explode(',',$productData->categories);
+            if(in_array('18',$getArrayCategories)){
+                $productData->description = str_replace('G-H Clarity SI', 'D-E. VVS', $productData->description);
+                
+                $productData->description = $productData->lab_description.' <br> '.$productData->description;
+            }else{
+                // $productData->description = str_replace('D-E Clarity VVS', 'D-E. VVS', $productData->lab_description);
+                $productData->description = str_replace('D-E Clarity VVS', 'D-E. VVS', $productData->lab_description);
+            }
+        }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
+            $productData->description = strip_tags(str_replace('G/H VS', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('F, Clarity VS.', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('F-G diamond clarity VS-SI.', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('FVS', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('G-H SI', 'I-J. SI-I1', $productData->description));
+        } elseif ($request->diamond_type == "mined_diamond" && (in_array('18ct Yellow Gold',$request->variations) || in_array('18ct White Gold',$request->variations) || in_array('18ct Rose Gold',$request->variations) || in_array('Platinum',$request->variations))){
+            $productData->description = strip_tags(str_replace('G/H VS', 'G-H SI', $productData->description));
+            $productData->description = strip_tags(str_replace('G-H Clarity SI', 'G-H SI', $productData->description));
+            $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'G-H SI', $productData->description));
+            $productData->description = strip_tags(str_replace('F, Clarity VS.', 'G-H SI', $productData->description));
+            $productData->description = strip_tags(str_replace('F-G diamond clarity VS-SI.', 'G-H SI', $productData->description));
+            $productData->description = strip_tags(str_replace('FVS', 'G-H SI', $productData->description));
+            $productData->description = strip_tags(str_replace('G-H SI', 'G-H SI', $productData->description));
+        }
+
+        $runOldCode = true;
+
+        if (!empty($productData)) {
+            $prodCategoriesDJ = explode(',', $productData->categories);
+            if (!in_array('3', $prodCategoriesDJ)  &&  in_array('2', $prodCategoriesDJ)  ||  in_array('47', $prodCategoriesDJ)) {
+
+                $allCarats = Masters::where(['type' => 'carat', 'is_deleted' => 0, 'is_active' => 1])->pluck('name');
+                if ($allCarats->count()) {
+                    $allCarats = $allCarats->toArray();
+                } else {
+                    $allCarats = [];
+                }
+                $metalTypes = Masters::where(['type' => 'metal_types', 'is_deleted' => 0, 'is_active' => 1])->pluck('name');
+                if ($metalTypes->count()) {
+                    $metalTypes = $metalTypes->toArray();
+                } else {
+                    $metalTypes = [];
+                }
+
+                /** mined and lab_grown id exists in masters table */
+                /** get carat metal type and product type */
+                $productType = !empty($request['diamond_type']) && $request['diamond_type'] == 'mined' ? 1 : 2;
+                $selectedMetalType = "";
+                $selectedMetalTypeId = "";
+                $carat = "";
+
+                foreach ($request['variations'] as $variations_key => $variations_value) {
+                    if (in_array($variations_value, $metalTypes)) {
+                        $selectedMetalType = $variations_value;
+                        $metalData = Masters::where(['type' => 'metal_types', 'name' => $selectedMetalType])->first();
+                        $selectedMetalTypeId = $metalData->id;
+                    } else if (in_array($variations_value, $allCarats)) {
+                        $carat = $variations_value;
+                    }
+                }
+
+
+                $combinations = ProductVariationsMaster::with(['masterData'])
+                    ->whereHas('masterData', function ($q) use ($carat) {
+                        $q->where('name', $carat);
+                    })
+                    ->where(['product_id' => $productData->id, 'is_deleted' => 0, 'is_active' => 1])
+                    ->first();
+                // ->toArray();
+
+
+
+                if (!empty($combinations)) {
+                    $combinations = $combinations->toArray();
+
+                    $combinationsPriceFormula = GlobalCombinationsVariations::where(['is_deleted' => 0, 'is_active' => 1, 'global_combinations_id' => 1])
+                        ->where('variations_id->metal_types', $selectedMetalTypeId)
+                        ->where('variations_id->product_type', $productType)
+                        ->first();
+                    // ->toArray();
+
+                    if (!empty($combinationsPriceFormula)) {
+
+                        $combinationsPriceFormula = $combinationsPriceFormula->toArray();
+
+                        $totalPrice =   !empty($combinations['total_price']) ? (((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['total_price']) : 0;
+                        $price = (((float)$combinationsPriceFormula['price']) / 100) * ((float)$combinations['price']);
+                        $runOldCode = false;
+
+
+                        $image = getProductVariationImage($productData->id, $request);
+
+                        /** Apply discount */
+                        $getDiscountRange = DiscountRange::whereHas('discount_data', function ($q) {
+                            $q->whereDate('end_date', '>', now());
+                        })
+                            ->with(['discount_data'])
+                            ->whereIn('category_id', $prodCategoriesDJ)
+                            ->whereRaw('"' . $price . '" between `from_price` and `to_price`')
+                            ->first();
+
+                        if (!empty($getDiscountRange)) {
+                            $price_after_discount = ($getDiscountRange->discount / 100) * $price;
+                        } else {
+                            $price_after_discount = 0;
+                        }
+
+                        $newArray['vari_image'] = !empty($image['vari_image']) ? $image['vari_image'] : '';
+                        $newArray['multi_vari_img'] =  !empty($image['multi_vari_img']) ? $image['multi_vari_img'] : '';
+                        $newArray['multi_vari_video'] =  !empty($image['multi_vari_video']) ? $image['multi_vari_video'] : '';
+                        $newArray['formula'] = true;
+                        $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
+                        $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+
+                        $newArray['regular_price'] = round($price);
+                        $newArray['discount_data'] =  $getDiscountRange;
+                        // $newArray['now'] =  now();
+                        $newArray['regular_price_with_vat'] = round($price);
+                        // $newArray['regular_price_with_vat_discount'] = round($price);
+                        $newArray['regular_price_with_vat_discount'] = round($price) - round($price_after_discount);
+
+                        // $newArray['regular_price_with_vat'] = $totalPrice ? number_format((float)$totalPrice, 2, '.', '') : '0.00';
+                        // $newArray['regular_price_with_vat_discount'] = number_format((float)$price, 2, '.', '');
+
+                        return response()->json($newArray);
+                    }
+                }
+            }
+        }
+
+
+        $product_id = Products::where('slug', $request->slug)->value('id');
+        if ($product_id != '' && $runOldCode) {
+
+            // with(['getProductImages', 'getProductVariation'])
+            $getProduct = Products::where('slug', $request->slug)->first();
+
+            $prod_categories = explode(',', $getProduct->categories);
+
+            // prd($prod_categories);
+
+            if (in_array("18", $prod_categories)) {
+                $prod_categories = ['18'];
+                $checkPlanCatArray = Category::whereIn('id', $prod_categories)->first()->toArray();
+            } else {
+                $checkPlanCatArray = Category::whereIn('id', $prod_categories)->where('parent_id', 0)->first()->toArray();
+            }
+
+            // prd($checkPlanCatArray);
+
+            $disPercentage = Discount::select('category_id', 'discount', 'inc_percentage', 'end_date', 'is_login_users')
+                ->where('category_id', $checkPlanCatArray['id'])
+                ->where('status', 1)
+                ->first();
+
+            // echo 'asdf';
+            // prd($disPercentage);
+
+            $getProductVariationId = ProductVariations::where('product_id', $product_id)
+                ->pluck('id')
+                ->toArray();
+
+
+
+            if (!empty($getProductVariationId)) {
+
+                $getVariDetails = ProductVariationDetails::groupBy('value')
+                    ->whereIn('variation_id', $getProductVariationId)
+                    ->whereIn('value', $request->variations)
+                    ->get()
+                    ->toArray();
+
+
+                $attributeCount = count($request->variations);
+                // prd($getProductVariationId);
+
+                foreach ($getProductVariationId as $key1 => $productVariationId) {
+                    $variationDetails = array();
+
+                    foreach ($request->variations as $key2 => $variations) {
+                        $getVariDetails = ProductVariationDetails::where('variation_id', $productVariationId)
+                            ->where('value', $variations)
+                            ->get()
+                            ->toArray();
+
+                        if (!empty($getVariDetails))
+                            $variationDetails[] = $getVariDetails;
+                    }
+
+                    if ($attributeCount == count($variationDetails))
+                        break;
+                }
+            }
+
+            $vat = getVAT(); // Fixed 1.2
+
+            // echo 'vat:- '. $vat;die;
+            $newArray = [];
+            if (isset($getVariDetails) && !empty($getVariDetails)) {
+
+                // Get product variation price
+                $getSelectedVariationVideoImages = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])
+                    ->select(DB::raw('(regular_price) as regular_price_without_vat'), DB::raw('(sale_price) as sale_price_without_vat'), 'vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video', 'regular_price', 'sale_price', 'mined_diamond', 'lab_grown')
+                    ->first();
+
+                /** Price change for lab grown */
+                if ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat <= 3000) {
+                    $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.35));
+                } elseif ($request->diamond_type == 'lab_grown' && $getSelectedVariationVideoImages->regular_price_without_vat > 3000) {
+                    $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat - ($getSelectedVariationVideoImages->regular_price_without_vat * 0.5));
+                } else {
+                    $regular_p_final = ($getSelectedVariationVideoImages->regular_price_without_vat);
+                }
+
+                $increaseDiscount = 1;
+                $discountPercentage = 1;
+
+                $regular_p_final = (($regular_p_final) * $increaseDiscount);
+
+                // prd($disPercentage);
+                if (isset($disPercentage) && !empty($disPercentage)) {
+                    $disPercentage = $disPercentage->toArray();
+
+                    if ($disPercentage['is_login_users']) {
+                        $isDiscountApplicable = auth()->guard('customer')->check();
+                    } else {
+                        $isDiscountApplicable = true;
+                    }
+
+                    if ($isDiscountApplicable) {
+
+                        if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
+                            $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
+                        } else {
+                            $increaseDiscount = 1;
+                        }
+
+                        // echo $regular_p_final * $increaseDiscount;
+                        // echo (($regular_p_final) * $increaseDiscount);die;
+
+                        $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
+
+                        if ($disPercentage['end_date'] >= date('Y-m-d')) {
+
+                            $getDiscountRange = DiscountRange::select('category_id', 'from_price', 'to_price', 'discount')
+                                ->where('category_id', $checkPlanCatArray['id'])
+                                ->whereRaw('"' . $regular_p_final . '" between `from_price` and `to_price`')
+                                ->first();
+
+
+                            $discountPercentage = 1 + ($disPercentage['discount'] / 100);
+
+                            if (isset($getDiscountRange) && !empty($getDiscountRange->discount)) {
+                                if ($getDiscountRange->discount > 1) {
+                                    $discountPercentage = 1 + ($getDiscountRange->discount / 100);
+                                } else {
+                                    $discountPercentage = 1;
+                                }
+                            } else {
+                                $discountPercentage = 1;
+                            }
+                        } else {
+                            $discountPercentage = 1;
+                        }
+                    } else {
+                        if (isset($disPercentage['inc_percentage']) && $disPercentage['inc_percentage'] > 1) {
+                            $increaseDiscount = 1 + ($disPercentage['inc_percentage'] / 100);
+                        } else {
+                            $increaseDiscount = 1;
+                        }
+                        $regular_p_final = (($regular_p_final) * $increaseDiscount) * $vat;
+                    }
+                }
+
+
+                $categorySlugs = Category::whereIn('id', $prod_categories)->pluck('slug');
+                if ($categorySlugs->count()) {
+                    $categorySlugs = $categorySlugs->toArray();
+                }
+
+                // echo "asdfds<pre>";
+
+                // die;
+
+                /** Discount not applicable to exclusive to marlows */
+                if (in_array('exclusive-to-marlows', $categorySlugs)) {
+                    $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+                    $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
+                    $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
+                    $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                    $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
+                    $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+                    $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
+                    return response()->json($newArray);
+                } elseif (in_array('bracelets', $categorySlugs)) {
+                    $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+                    $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
+                    $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
+                    $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                    $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+
+                    if ($request->diamond_type == 'lab_grown') {
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->lab_grown;
+                        // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->lab;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->lab_grown;
+                    } elseif ($request->diamond_type == 'mined_diamond') {
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->mined_diamond;
+                        // $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->mined;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->mined_diamond;
+                    } else {
+                        $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                        $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
+                        $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
+                    }
+
+
+                    return response()->json($newArray);
+                }
+
+
+                $regular_p_discount_final = $regular_p_final / $discountPercentage;
+                $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+                $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+                $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
+                $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
+                $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
+                $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+                $newArray['regular_price_with_vat'] = round($regular_p_final);
+                $newArray['regular_price_with_vat_discount'] = round($regular_p_discount_final);
+
+
+                return response()->json($newArray);
+            } else {
+                return response()->json(['statusCode' => '500', 'msg' => 'No Variation Found']);
+            }
+        }
+    }
+    
     public function getRelatedProductList(Request $request)
     {
         $getCatIdArray = explode(',', $request->catid);

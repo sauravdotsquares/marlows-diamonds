@@ -1,3 +1,8 @@
+<style>
+    .modal-footer {
+        justify-content: flex-start;
+    }
+</style>
 <div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-controller="DekopayController">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -67,6 +72,12 @@
                   <p>Finance options are not available for this product due to less amount.</p>
               </div>
           </div>
+        </div>
+        <div class="modal-footer">
+            <h5>Disclosures:</h5>
+            <p>
+                JE Marlow and Sons Limited is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority (FRN 916478). We do not charge you for credit broking services. We will introduce you exclusively to Omni Capital Retail finance products provided by Omni Capital Retail Finance through the Deko platform.
+            </p>
         </div>
       </div>
     </div>

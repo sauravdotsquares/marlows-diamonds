@@ -50,8 +50,8 @@
                                 <!-- <li class="nav-item" role="presentation">
                                     <a href="javascript:void(0)" class="nav-link" id="auctions-tab" data-bs-toggle="tab" data-bs-target="#auctions" type="button" role="tab" aria-controls="auctions" aria-selected="false">Auctions settings</a>
                                 </li> -->
-                                <li class="nav-item">
-                                    <a href="{{route('logout-customer')}}">Logout</a>
+                                <li class="nav-item" >
+                                    <a id="logout" href="{{route('logout-customer')}}">Logout</a>
                                 </li>
 
                             </ul>

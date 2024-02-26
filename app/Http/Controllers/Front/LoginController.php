@@ -142,10 +142,10 @@ class LoginController extends Controller
             Mail::send('email.registereduser-welcomemail',array('data1' => $data), function($message) use ($request ){
                 $message->from('hello@marlows-diamonds.co.uk');
                 // $admin_email_london = "london@marlows-diamonds.co.uk";
-                $admin_email_london = "sharma.gajendra@dotsquares.com";
-                $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Welcome Mail');
+                // $admin_email_london = "sharma.gajendra@dotsquares.com";
+                $message->to($request->email, 'Customer')->subject('Marlows Diamonds: Welcome Mail');
                 
-                $message->cc($request->email, 'Customer')->subject('Marlows Diamonds: Welcome Mail');
+                // $message->cc($request->email, 'Customer')->subject('Marlows Diamonds: Welcome Mail');
             });
         } else if (env('APP_ENV') == 'local') {
             Mail::send('email.registereduser-welcomemail',array('data1' => $data), function($message) use ($request){

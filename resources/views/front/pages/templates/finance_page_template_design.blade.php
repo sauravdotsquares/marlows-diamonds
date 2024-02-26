@@ -1,4 +1,14 @@
 @extends('layouts.front.app')
+@section('css')
+<style>
+    .finance-sec img.deko-cart-img-represent {
+    margin: 30px 0;
+    width: 1000px;
+    margin: auto;
+    display: table;
+}
+</style>
+@endsection
 @section('content')
 
 <div class="category-banner" style="background-image:url(https://devstaging.marlows-diamonds.co.uk/assets/images/engagement-rings-banner.png)">
@@ -17,7 +27,7 @@
                 <div class="finance-sec-weneed">
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="finance-whatwe-content">
                                 <h3>What you need to know</h3>
                                 <p>Used responsibly, finance is a great way to spread the cost of your purchase. We've teamed up with Deko, whose secure technology lets you complete a loan application with one or more carefully selected lenders quickly and easily. Deko is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority. Find out more about how <b>Je Marlow & Sons Ltd</b> and Deko are regulated. under the “Legal Information” section of this page. You can find out more about Deko below</p>
@@ -30,14 +40,15 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="bank-whatwe"><img class="deko-cart-img" src="/assets/images/finance-whatwe.png" alt="deko cart image"></div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
-                <img class="deko-cart-img" src="/assets/images/deko-finance-img.png" alt="">
-
+                <img class="deko-cart-img" src="/assets/images/deko-finance-img_new.png" alt="">
+                
+                
                 <p>Please be aware that finance options are a form of credit. If you fail to maintain your payments, your lender could ask a debt collector to contact you or commence legal action to recover the money you owe. A poor repayment record will affect your credit file.</p>
             </div>
 
@@ -62,7 +73,7 @@
 
             <div class="finance-sec">
                 <h3>Available Finance options</h3>
-                <p>We offer a range of interest-free and interest-bearing finance options to help you spread the cost of your purchase over 6 to 60 months . The value of the loan needs to be over £250 and no more than £15,000 and you can choose a deposit of up to 50% of the value of the goods.</p>
+                <p>We offer a range of interest-free and interest-bearing finance options to help you spread the cost of your purchase over 12 to 48 months . The value of the loan needs to be over £250 and no more than £15,000 and you can choose a deposit of up to 50% of the value of the goods.</p>
             </div>
 
             <div class="finance-sec">
@@ -75,9 +86,16 @@
 
                 <p>Here is an example of what you might see at checkout, with some handy explanations to help you understand what it all means. Please note that this is just an example, the format, layout and content of checkout finance calculators may vary.</p>
             </div>
-            @include("front.includes.dekopayformulacalculationpage")
+            <div class="finance-sec">
+                <img class="deko-cart-img-represent" src="/assets/images/representative_example.png" alt="deko cart image">
+
+                <h3>Legal Information</h3>
+                <p>JE Marlow and Sons Limited is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority (FRN 916478). We do not charge you for credit broking services. We will introduce you exclusively to Omni Capital Retail finance products provided by Omni Capital Retail Finance through the Deko platform.</p>
+            </div>
+            <!-- @include("front.includes.dekopayformulacalculationpage") -->
             <div class="finance-sec ">
-                <p>
+                
+                <!-- <p>
                     Whichever finance option you choose to apply for, you need to be sure that you can afford to pay the deposit, and keep up with your monthly repayments. You should think about any changes to your situation that might occur during the term of the loan, which could impact on your finances - e.g. retirement, moving home, changing jobs, or any health issues which could affect your income or expenditure.
                 </p>
                 <p>
@@ -91,7 +109,7 @@
                 </p>
                 <p>
                     Whilst these numbers are there to help you understand what a loan will cost you, it's important that you understand any other potential costs in the terms and conditions of the finance option you select. For instance, you may be charged missed or late payment fees if you don't keep up with your payments.
-                </p>
+                </p> -->
             </div>
         </div>
     </div>
@@ -288,7 +306,7 @@
 
     <div class="container">
         <div class="defaultpages-cols">
-            <div class="finance-sec">
+            <!-- <div class="finance-sec">
                 <h3>Your Personal or Financial Circumstances</h3>
                 <p>It's a fact of life that things can change for any of us. If something changes in your personal, or financial circumstances, Deko and your lender will do all they can to help make it as easy as possible to submit your application and manage your loan repayments.</p>
 
@@ -304,15 +322,15 @@
             </div>
             <div class="finance-sec">
                 <h3>Still have questions?</h3>
-                <p>If you still have questions about your finance application or need some help completing it, check out Deko's FAQs <a target="_self" href="https://www.dekopay.com/customer-support">here</a>.</p>
+                <p>If you still have questions about your finance application or need some help completing it, check out Deko's FAQs <a target="_self" href="https://www.dekopay.com/customer-support"> <strong>here</strong></a>.</p>
 
-                <p>For any questions related to finance, please contact your lender. Their contact details will be provided throughout your application and on any communications you receive about your finance application.</p>
-            </div>
-            <div class="finance-sec">
+                <p>For any questions related to finance, please contact your lender. Their contact details will be provided throughout your application and on any communications you receive about your finance application.</p> 
+            </div> -->
+            <!-- <div class="finance-sec">
                 <h3>Legal Information (FCA Disclaimer)</h3>
                 <p>It is mandatory to display the Legal information on your Finance page and on the footer of your website.</p>
-            </div>
-            <div class="finance-sec">
+            </div> -->
+            <!-- <div class="finance-sec">
                 <h3>FCA Authorised</h3>
                 <p><strong> V1 FCA Authorised - Single Lender through Deko</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority (FRN [Merchant FCA ID] ). We do not charge you for credit broking services. We will introduce you exclusively to Omni Capital's finance products provided by Omni Capital's through the Deko platform.</p>
@@ -320,15 +338,15 @@
                 <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority (FRN [Merchant FCA ID] ). We do not charge you for credit broking services. We will introduce you to Finance available from a number of our partner lenders.</p>
                 <p><strong>V3 FCA Authorised - If you are offering finance through Deko with multiple Deko lenders</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender and is authorised and regulated by the Financial Conduct Authority (FRN [Merchant FCA ID] ). We do not charge you for credit broking services. Finance is introduced through the Deko platform from a carefully selected panel of lenders. Deko is a trading name of Pay4Later Ltd, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Whichever lender Deko introduces you to, Deko will typically receive a commission from them (either a fixed fee or a percentage of the amount you borrow). For your reassurance, all of the lenders Deko works with could pay commission at different rates, but the commission received does not influence the interest rate you will pay. You will be offered the best rate available from Deko's partner lenders, based on the lenders' decision policies.</p>
-            </div>
-            <div class="finance-sec">
+            </div> -->
+            <!-- <div class="finance-sec">
                 <h3>NON-FCA Authorised</h3>
                 <p><strong> V1 Non-FCA Authorised - If you introduce only exempt products from a single Deko lender</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender. We do not charge you for credit broking services. We will introduce you exclusively to Omni Capital's finance products provided by Omni Capital's through the Deko platform.</p>
                 <p><strong>V2 Non-FCA Authorised - If you introduce only exempt products from multiple lenders (Deko panel + non-Deko)</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is a credit broker, not a lender . We do not charge you for credit broking services. We will introduce you limited finance products available from a number of our partner lenders.</p>
-            </div>
-            <div class="finance-sec">
+            </div> -->
+            <!-- <div class="finance-sec">
                 <h3>IAR Merchant</h3>
                 <p><strong> V1 IAR - Single Lender through Deko</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is an Introducer Appointed Representative of Pay4Later Limited, trading as Deko, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Deko will introduce you exclusively to Omni Capital finance products provided by Omni Capital through the Deko platform.</p>
@@ -336,26 +354,26 @@
                 <p>Sailendra,Je Marlow & Sons Ltd is an Introducer Appointed Representative of Pay4Later Limited, trading as Deko, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Deko will introduce you exclusively to Omni Capital finance products provided by [Omni Capital and trading name where applicable] under this Introducer Appointed Representative arrangement. Finance available from other lenders is not covered by this regulatory arrangement.</p>
                 <p><strong>V3 IAR - If you are offering finance through Deko with multiple Deko lenders</strong></p>
                 <p>Sailendra,Je Marlow & Sons Ltd is an Introducer Appointed Representative of Pay4Later Limited, trading as Deko, which is authorised and regulated by the Financial Conduct Authority (FRN 728646). Deko is a credit broker, not a lender and does not charge you for credit broking services. Finance is introduced through the Deko platform from a carefully selected panel of lenders. Whichever lender Deko introduces you to, Deko will typically receive a commission from them (either a fixed fee or a fixed percentage of the amount you borrow). For your reassurance, all of the lenders Deko works with could pay commission at different rates, but the commission received does not influence the interest rate you will pay. You will be offered the best rate available from Deko's partner lenders, based on the lenders' decision policies.</p>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
 
-    @endif
+@endif
 
-    @endsection
+@endsection
 
-    @section('js')
-    <?php
-    $url = getDekoPayFormulaURL();
-    ?>
-    <script src="{{$url}}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#totalOrderText1').on('blur', function() {
-                $("#totalOrder").val($(this).val());
-                $("#totalOrderText").text($(this).val());
-            });
+@section('js')
+<?php
+$url = getDekoPayFormulaURL();
+?>
+<script src="{{$url}}"></script>
+<script>
+    $(document).ready(function() {
+        $('#totalOrderText1').on('blur', function() {
+            $("#totalOrder").val($(this).val());
+            $("#totalOrderText").text($(this).val());
         });
-    </script>
-    @endsection
+    });
+</script>
+@endsection
