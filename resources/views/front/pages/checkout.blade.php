@@ -415,7 +415,7 @@
 
                                 @include('front.pages.payments.paypal',['totalAmount'=>$total])
                                 @include('front.pages.payments.dekopay',['totalAmount'=>$total])
-                                @include('front.pages.payments.stripepay',['totalAmount'=>$total])
+                                <!-- @include('front.pages.payments.stripepay',['totalAmount'=>$total]) -->
                             </ul>
                         </div>
                         <div class="checkout-place-order">
