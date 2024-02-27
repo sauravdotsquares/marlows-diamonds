@@ -20,9 +20,9 @@ class DiamondFinderController
     {
     	$colorFrom = 'D'; $colorTo = 'K'; $colour=array();
     	if($request->colour!=''){
-         $colour = explode(',',$request->colour);
-			   $colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
-      }
+			$colour = explode(',',$request->colour);
+				$colorFrom = $colour[0]; $colorTo = $colour[count($colour)-1];
+		}
 
        	$clarityFrom = 'IF'; $clarityTo = 'SI2'; $clarity=array();
     	if($request->clarity!=''){
@@ -107,7 +107,12 @@ class DiamondFinderController
 	        }
     	  }
 
-        $hkData['data'] = Arr::collapse([$hkData['data'], $rapnetRecords]);
+        $hkData['data'] = Arr::collapse([$rapnetRecords,$hkData['data']]);
+
+		usort($hkData['data'], function ($a, $b) {
+			// return $b['Amount'] - $a['Amount']; // sort by descending
+			return $a['Amount'] - $b['Amount']; // sort by ascending
+		});
 
         $hkData['VAT'] = getVAT();
         $hkData['firstDiamondAmount'] = isset($hkData['data'][0])?$hkData['data'][0]['Amount']:'';
