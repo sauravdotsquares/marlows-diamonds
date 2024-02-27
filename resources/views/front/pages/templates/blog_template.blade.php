@@ -241,7 +241,7 @@
 
 				$(".search-icon").attr('src',searchIcon);
 	            if(data.html == ""){
-	                $('.ajax-load').html("No more records found");
+	                $('.ajax-load').html("0 records found");
 	                return;
 	            }else{
 					$('.ajax-load').html(`<p><img src="${loadingDataImg}">Loading More post</p>`)
