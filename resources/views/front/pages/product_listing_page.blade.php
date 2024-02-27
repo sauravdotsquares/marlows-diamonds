@@ -9,10 +9,75 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
-    .leftright-imt-col.leftright-text.postcontent100 {
+    .solitare_engagement .leftright-imt-col.leftright-text.postcontent100 {
         width: 100%;
         flex: 0 0 100%;
         max-width: 100%;
+    }
+
+    .solitare_engagement .owl-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex !important;
+        justify-content: space-between;
+        transform: translateY(-50%);
+    }
+
+    .solitare_engagement .owl-prev, .owl-next {
+        background-color: #3498db; /* Set your desired background color */
+        border: none;
+        color: #ffffff; /* Set your desired text color */
+        font-size: 16px; /* Set your desired font size */
+        padding: 10px 15px; /* Adjust padding as needed */
+        border-radius: 5px; /* Set your desired border radius */
+        cursor: pointer;
+        transition: background-color 0.3s ease; /* Optional: Add a smooth transition effect */
+    }
+
+    .solitare_engagement .owl-prev:hover, .owl-next:hover {
+        background-color: #2980b9; /* Set your desired hover background color */
+    }
+
+    .solitare_engagement button.owl-next{
+
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+        right: -12px;
+        border: 3px solid rgba(255,255,255,0.5) !important;
+        width: 50px;
+        height: 50px;
+        background: #8e2e65 !important;
+        color: #fff !important;
+        text-align: center;
+    }
+
+    .solitare_engagement button.owl-prev{
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+        left: -12px;
+        border: 3px solid rgba(255,255,255,0.5) !important;
+        width: 50px;
+        height: 50px;
+        background: #8e2e65 !important;
+        color: #fff !important;
+        text-align: center;
+    }
+
+    .solitare_engagement .owl-nav button span{
+        font-size: 37px;
+        line-height: 22px;
+
+    }
+
+    .ring-pr-title{
+        height: 36px !important;
+        position: relative;
+    }
+    .ring-pr-details{
+        display: ruby-text !important;
     }
 </style>
 
@@ -67,38 +132,74 @@
                         <h2 class="heading-h-three">{{$categoryData->pre_content[0]->title}}</h2>
                     </div>
                     <div class="rings-grid-wrap">
-                        <div class="row">
-                            @foreach($categoryData->pre_content as $keyData => $preContentData)
-                            <div class="{{$customCss}}">
-                                <div class="ring-pr-items">
-                                    <div class="ring-pr-image">
-                                    @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
-                                        <!-- <a href="/engagement-rings/solitaire"> -->
-                                            <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
-                                        <!-- </a> -->
-                                        @endif
-                                    </div>
-                                    <div class="ring-pr-details">
-                                        <h3 class="ring-pr-title">
-                                            {{$preContentData->heading}}
-                                        </h3>
-                                        @if(isset($preContentData->description) && !empty($preContentData->description))
-                                            <div class="ring-pr-desc">
-                                                {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                        @if($path == 'engagement-rings/solitaire' || $path == 'engagement-rings/shoulder-set' || $path == 'engagement-rings/halo' || $path == 'engagement-rings/multi-stone')
+                           
+                            <div class="owl-carousel owl-theme solitare_engagement">
+                                @foreach($categoryData->pre_content as $keyData => $preContentData)
+                                    <div class="item ">
+                                        <div class="ring-pr-items">
+                                            <div class="ring-pr-image">
+                                            @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
+                                                <!-- <a href="/engagement-rings/solitaire"> -->
+                                                    <img src="{{ env('APP_IMAGE_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
+                                                <!-- </a> -->
+                                                @endif
                                             </div>
-                                        @endif
-                                        <div class="ring-pr-shop-btn">
-                                            @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
-                                                <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:''}}">
-                                                    {{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}
-                                                </a>
-                                            @endif
+                                            <div class="ring-pr-details">
+                                                <h3 class="ring-pr-title">
+                                                    {{$preContentData->heading}}
+                                                </h3>
+                                                @if(isset($preContentData->description) && !empty($preContentData->description))
+                                                    <div class="ring-pr-desc">
+                                                        {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                                                    </div>
+                                                @endif
+                                                <div class="ring-pr-shop-btn">
+                                                    @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
+                                                        <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:''}}">
+                                                            {{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                        </div>
+                        @else
+                            <div class="row">
+                                @foreach($categoryData->pre_content as $keyData => $preContentData)
+                                    <div class="{{$customCss}}">
+                                        <div class="ring-pr-items">
+                                            <div class="ring-pr-image">
+                                            @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
+                                                <!-- <a href="/engagement-rings/solitaire"> -->
+                                                    <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
+                                                <!-- </a> -->
+                                                @endif
+                                            </div>
+                                            <div class="ring-pr-details">
+                                                <h3 class="ring-pr-title">
+                                                    {{$preContentData->heading}}
+                                                </h3>
+                                                @if(isset($preContentData->description) && !empty($preContentData->description))
+                                                    <div class="ring-pr-desc">
+                                                        {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                                                    </div>
+                                                @endif
+                                                <div class="ring-pr-shop-btn">
+                                                    @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
+                                                        <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:''}}">
+                                                            {{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -394,7 +495,7 @@
 				</div>
                 @if(isset($postContent->image_url) && !empty($postContent->image_url))
                 <div class="leftright-imt-col leftright-img">
-					<img src="{{env('APP_IMAGE_STAG_URL').'/storage/'.$postContent->image_url}}" alt="banner-hand">
+					<img src="{{env('APP_IMAGE_URL').'/storage/'.$postContent->image_url}}" alt="banner-hand">
 				</div>
                 @endif
 			</div>
@@ -1058,7 +1159,7 @@
             items: 7,
             margin: 2,
             loop: true,
-            nav: false,
+            nav: true,
             responsive: {
                 320: {
                     items: 2
