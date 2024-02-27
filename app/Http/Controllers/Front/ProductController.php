@@ -667,7 +667,12 @@ class ProductController extends Controller
                 }
             }
         }
-        $apiData['data'] = Arr::collapse([$hkData, $rapnetRecords]);
+        $apiData['data'] = Arr::collapse([$rapnetRecords, $hkData]);
+
+        usort($apiData['data'], function ($a, $b) {
+			// return $b['Amount'] - $a['Amount']; // sort by descending
+			return $a['Amount'] - $b['Amount']; // sort by ascending
+		});
 
         $apiData['VAT'] = getVAT();
         
