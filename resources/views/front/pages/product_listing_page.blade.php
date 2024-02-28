@@ -8,13 +8,6 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<style>
-    .leftright-imt-col.leftright-text.postcontent100 {
-        width: 100%;
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-</style>
 
 @endsection
 
@@ -47,69 +40,105 @@
 
             @if(isset($categoryData->pre_content) && $categoryData->pre_content->count())
 
-            <?php 
-                if($categoryData->pre_content->count() == 1){
-                    $customCss = 'col-lg-12 col-sm-12 col-md-12';
-                }elseif($categoryData->pre_content->count() == 2){
-                    $customCss = 'col-lg-6 col-sm-6 col-md-6';
-                }elseif($categoryData->pre_content->count() == 3){
-                    $customCss = 'col-lg-4 col-sm-6 col-md-4';
-                }elseif($categoryData->pre_content->count() == 4){
-                    $customCss = 'col-lg-3 col-sm-6 col-md-3';
-                }else{
-                    $customCss = 'col-lg-3 col-sm-6 col-md-3';
-                }
-            ?>
-            <!-- Choose a dreamy start here-->
-            <div class="choosedreamy-wrap">
-                <div class="container">
-                    <div class="head-para-three">
-                        <h2 class="heading-h-three">{{$categoryData->pre_content[0]->title}}</h2>
-                    </div>
-                    <div class="rings-grid-wrap">
-                        <div class="row">
-                            @foreach($categoryData->pre_content as $keyData => $preContentData)
-                            <div class="{{$customCss}}">
-                                <div class="ring-pr-items">
-                                    <div class="ring-pr-image">
-                                    @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
-                                        <!-- <a href="/engagement-rings/solitaire"> -->
-                                            <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
-                                        <!-- </a> -->
-                                        @endif
-                                    </div>
-                                    <div class="ring-pr-details">
-                                        <h3 class="ring-pr-title">
-                                            {{$preContentData->heading}}
-                                        </h3>
-                                        @if(isset($preContentData->description) && !empty($preContentData->description))
-                                            <div class="ring-pr-desc">
-                                                {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                <?php 
+                    if($categoryData->pre_content->count() == 1){
+                        $customCss = 'col-lg-12 col-sm-12 col-md-12';
+                    }elseif($categoryData->pre_content->count() == 2){
+                        $customCss = 'col-lg-6 col-sm-6 col-md-6';
+                    }elseif($categoryData->pre_content->count() == 3){
+                        $customCss = 'col-lg-4 col-sm-6 col-md-4';
+                    }elseif($categoryData->pre_content->count() == 4){
+                        $customCss = 'col-lg-3 col-sm-6 col-md-3';
+                    }else{
+                        $customCss = 'col-lg-3 col-sm-6 col-md-3';
+                    }
+                ?>
+                <!-- Choose a dreamy start here-->
+                <div class="choosedreamy-wrap">
+                    <div class="container">
+                        <div class="head-para-three">
+                            <h2 class="heading-h-three">{{$categoryData->pre_content[0]->title}}</h2>
+                        </div>
+                        <div class="rings-grid-wrap">
+                            @if($path == 'engagement-rings/solitaire' || $path == 'engagement-rings/shoulder-set' || $path == 'engagement-rings/halo' || $path == 'engagement-rings/multi-stone')
+                                <div class="product-item-slider">
+                                    <div class="owl-carousel owl-theme owlslidercategoryprecontent st-arrows">
+                                        @foreach($categoryData->pre_content as $keyData => $preContentData)
+                                        <div class="item">
+                                            <div class="product-info">
+                                                <div class="product-image">
+                                                    <a href="{{ asset('diamond-engagement-rings') }}">
+                                                        <img src="{{env('APP_IMAGE_URL').'/storage/'.$preContentData->image_url}}" alt="Engagement Ring">
+                                                    </a>
+                                                </div>
+                                                <div class="product-item-details">
+                                                    <div class="product-titles">
+                                                        {{$preContentData->heading}}
+                                                    </div>
+                                                    @if(isset($preContentData->description) && !empty($preContentData->description))
+                                                        <div class="product-description">
+                                                            {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                                                        </div>
+                                                    @endif
+                                                    <div class="product-action-btn">
+                                                        @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
+                                                            <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:''}}">
+                                                                {{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}
+                                                            </a>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
-                                        @endif
-                                        <div class="ring-pr-shop-btn">
-                                            @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
-                                                <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:''}}">
-                                                    {{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}
-                                                </a>
-                                            @endif
                                         </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                            </div>
-                            @endforeach
+                                
+                            @else
+                                <div class="row">
+                                    @foreach($categoryData->pre_content as $keyData => $preContentData)
+                                        <div class="{{$customCss}}">
+                                            <div class="ring-pr-items">
+                                                <div class="ring-pr-image">
+                                                @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
+                                                    <!-- <a href="/engagement-rings/solitaire"> -->
+                                                        <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
+                                                    <!-- </a> -->
+                                                    @endif
+                                                </div>
+                                                <div class="ring-pr-details">
+                                                    <h3 class="ring-pr-title">
+                                                        {{$preContentData->heading}}
+                                                    </h3>
+                                                    @if(isset($preContentData->description) && !empty($preContentData->description))
+                                                        <div class="ring-pr-desc">
+                                                            {!! Str::limit(strip_tags($preContentData->description), 250, ' ...') !!}
+                                                        </div>
+                                                    @endif
+                                                    <div class="ring-pr-shop-btn">
+                                                        @if(isset($preContentData->button_check) && $preContentData->button_check == 1)
+                                                            <a class="btn-bg-small" href="{{isset($preContentData->button_url)?$preContentData->button_url:''}}">
+                                                                {{isset($preContentData->button_title)?$preContentData->button_title:'Shop Now'}}
+                                                            </a>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="category-list-item-searchsort dropdown-content-desktop">
-                <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="Search for product" aria-label="Search">
-            </div>
+                <div class="category-list-item-searchsort dropdown-content-desktop">
+                    <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="Search for product" aria-label="Search">
+                </div>
 
-            <center>
-                <!-- <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3> -->
-            </center>
+                <center>
+                    <!-- <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3> -->
+                </center>
 
             @else
                 <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
@@ -394,7 +423,7 @@
 				</div>
                 @if(isset($postContent->image_url) && !empty($postContent->image_url))
                 <div class="leftright-imt-col leftright-img">
-					<img src="{{env('APP_IMAGE_STAG_URL').'/storage/'.$postContent->image_url}}" alt="banner-hand">
+					<img src="{{env('APP_IMAGE_URL').'/storage/'.$postContent->image_url}}" alt="banner-hand">
 				</div>
                 @endif
 			</div>
@@ -1058,7 +1087,7 @@
             items: 7,
             margin: 2,
             loop: true,
-            nav: false,
+            nav: true,
             responsive: {
                 320: {
                     items: 2

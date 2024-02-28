@@ -111,29 +111,15 @@ MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,
                 }else{
                     $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount * ($scope.temp_value_partial_deposit_payment / 100);
                 }
-                if($scope.data.length){
-                    $scope.currentPage = $scope.paging.current_page;
-                    $scope.numPerPage = $scope.paging.per_page;
-                    $scope.maxSize = 2;
-                    $scope.totalItems = $scope.paging.total;
-                    $scope.next_page_url = $scope.paging.next_page_url;
-                    $scope.prev_page_url = $scope.paging.prev_page_url;
-                    $scope.totalPages = $scope.paging.last_page;
-                    $scope.VAT = $scope.paging.VAT;
-                    $scope.firstDiamondAmount = $scope.paging.firstDiamondAmount;
-                    $scope.isPagignationShow = true;
-                }else{
-                    $scope.currentPage = $scope.paging.current_page;
-                    $scope.numPerPage = $scope.paging.per_page;
-                    $scope.maxSize = 1;
-                    $scope.totalItems = $scope.paging.total;
-                    $scope.next_page_url = $scope.paging.next_page_url;
-                    $scope.prev_page_url = $scope.paging.prev_page_url;
-                    $scope.totalPages = $scope.paging.last_page;
-                    $scope.VAT = $scope.paging.VAT;
-                    $scope.firstDiamondAmount = $scope.paging.firstDiamondAmount;
-                    $scope.isPagignationShow = false;
-                }
+                $scope.currentPage = $scope.paging.current_page;
+                $scope.numPerPage = $scope.paging.per_page;
+                $scope.maxSize = 10;
+                $scope.totalItems = $scope.paging.total;
+                $scope.next_page_url = $scope.paging.next_page_url;
+                $scope.prev_page_url = $scope.paging.prev_page_url;
+                $scope.totalPages = $scope.paging.last_page;
+                $scope.VAT = $scope.paging.VAT;
+                $scope.firstDiamondAmount = $scope.paging.firstDiamondAmount;
                 
                 // $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount/10;
                 $scope.loader=false;

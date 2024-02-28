@@ -410,7 +410,6 @@ class XMLController extends Controller
                         // No entry in data
                         if (in_array("18", $prod_categories)){
 
-
                             $arrayVariationValue = array_values(array_filter($dataArray->get_vari_details_id->pluck('value')->toArray()));
                             $priceVariationArrayBeforePrices = new Request([
                                 'variations' => [

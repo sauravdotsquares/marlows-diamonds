@@ -13,11 +13,11 @@
     <meta name="keywords" content="{!! isset($data->meta_keyword)?$data->meta_keyword:'' !!}">
     
     @if (env('APP_ENV')=='local')
-      <meta name="robots" content="noindex">
+      <meta name="robots" content="noindex,nofollow">
     @elseif(env('APP_ENV')=='production')
       <meta name="robots" content="index">
     @endif
-
+    
     @include('layouts.front.engagement_rings_sechma')
 
     @include('layouts.front.seo_header')
