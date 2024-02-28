@@ -421,6 +421,15 @@ p.burgarmenu span {color: #979797;}
 p.burgarmenu span a {font-weight: bold;color: #000;}
 p.burgarmenu a:hover {color: #8e2e65;}
 
+
+
+.owlslidercategoryprecontent .owl-item .item .product-info .product-image {width: 170px;margin: auto;}
+.owlslidercategoryprecontent .owl-item .item .product-info .product-item-details .product-titles {color: #8e2e65;font-weight: bold;font-size: 18px;text-decoration: none;
+min-height: 60px;line-height: 26px;font-family: 'Lato';}
+.owlslidercategoryprecontent .owl-item .item .product-info a.btn-bg-small {padding: 8px 15px;}
+.owlslidercategoryprecontent .owl-item .item .product-info .product-item-details p {min-height: 68px;}
+.owlslidercategoryprecontent .owl-nav {display: block !important;}
+
 .category-sidebar-wrap .sortmobile {display: none;}
 .listing-slider .owl-stage-outer .owl-item .item a {color: #8e2e65; font-weight: bold; font-size: 18px; text-decoration: none; }
 .category-sidebar-wrap {width: 23%;display: inline-block;vertical-align: top;  margin-top: 9px;}
@@ -1935,6 +1944,9 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 /*finance css*/
 .finance-eligibility ul li{ width:100%; height:auto; }
 /*finance css end*/
+
+.owlslidercategoryprecontent .owl-item .item .product-info .product-item-details .product-titles, .owlslidercategoryprecontent .owl-item .item .product-info .product-item-details p
+{ min-height:auto; margin: 0 0 15px;}
 }
 
 
