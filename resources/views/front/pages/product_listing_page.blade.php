@@ -8,6 +8,13 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<style>
+    .leftright-imt-col.leftright-text.postcontent100 {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+</style>
 
 @endsection
 
@@ -40,21 +47,21 @@
 
             @if(isset($categoryData->pre_content) && $categoryData->pre_content->count())
 
-                <?php 
-                    if($categoryData->pre_content->count() == 1){
-                        $customCss = 'col-lg-12 col-sm-12 col-md-12';
-                    }elseif($categoryData->pre_content->count() == 2){
-                        $customCss = 'col-lg-6 col-sm-6 col-md-6';
-                    }elseif($categoryData->pre_content->count() == 3){
-                        $customCss = 'col-lg-4 col-sm-6 col-md-4';
-                    }elseif($categoryData->pre_content->count() == 4){
-                        $customCss = 'col-lg-3 col-sm-6 col-md-3';
-                    }else{
-                        $customCss = 'col-lg-3 col-sm-6 col-md-3';
-                    }
-                ?>
-                <!-- Choose a dreamy start here-->
-                <div class="choosedreamy-wrap">
+            <?php 
+                if($categoryData->pre_content->count() == 1){
+                    $customCss = 'col-lg-12 col-sm-12 col-md-12';
+                }elseif($categoryData->pre_content->count() == 2){
+                    $customCss = 'col-lg-6 col-sm-6 col-md-6';
+                }elseif($categoryData->pre_content->count() == 3){
+                    $customCss = 'col-lg-4 col-sm-6 col-md-4';
+                }elseif($categoryData->pre_content->count() == 4){
+                    $customCss = 'col-lg-3 col-sm-6 col-md-3';
+                }else{
+                    $customCss = 'col-lg-3 col-sm-6 col-md-3';
+                }
+            ?>
+            <!-- Choose a dreamy start here-->
+            <div class="choosedreamy-wrap">
                     <div class="container">
                         <div class="head-para-three">
                             <h2 class="heading-h-three">{{$categoryData->pre_content[0]->title}}</h2>
@@ -132,13 +139,13 @@
                     </div>
                 </div>
 
-                <div class="category-list-item-searchsort dropdown-content-desktop">
-                    <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="Search for product" aria-label="Search">
-                </div>
+            <div class="category-list-item-searchsort dropdown-content-desktop">
+                <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="Search for product" aria-label="Search">
+            </div>
 
-                <center>
-                    <!-- <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3> -->
-                </center>
+            <center>
+                <!-- <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3> -->
+            </center>
 
             @else
                 <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
@@ -350,7 +357,7 @@
                 <input type="hidden" name="sectionHeight" id="sectionHeight" value="">
                 <input type="hidden" name="scrollFlag" id="scrollFlag" value="">
 
-                <div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>
+                <!--<div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>-->
                 <br>
                 <div class="search-result" style="margin-top: -15px;"> @include('front.includes.productCard')</div>
                 <div class="loading-data-element"></div>
@@ -365,7 +372,7 @@
                 </div>
                 <br>
                 <br>
-                <div class="text-center">{!!isset($filterItemTextData->bottom_text)?$filterItemTextData->bottom_text:''!!}</div>
+                <!--<div class="text-center">{!!isset($filterItemTextData->bottom_text)?$filterItemTextData->bottom_text:''!!}</div>-->
                 {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
             </div>
         </div>

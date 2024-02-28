@@ -218,9 +218,8 @@
         <div class="container">
             <div class="head-para-three">
                 <h2 class="heading-h-three">
-                    {{ isset($data->faq_title)?$data->faq_title:"Loan Agreement" }}
+                    {{ isset($data->faq_title)?$data->faq_title:"Payments and Order" }}
                 </h2>
-                <p>Before signing your credit agreement, you will be given some important documents that include key information about your loan. It is important that you read these documents and understand the information and key terms. If you have any questions about the information in your credit agreement before you sign it, Deko’s customer support team can help - you can contact them on <a target="_self" href="support@dekopay.com">support@dekopay.com </a> or by phone on 0800 294 5891.</p>
             </div>
             <div class="faq-list">
                 <div class="accordion" id="accordionExample">
@@ -306,7 +305,7 @@
 
     <div class="container">
         <div class="defaultpages-cols">
-            <!-- <div class="finance-sec">
+            <div class="finance-sec">
                 <h3>Your Personal or Financial Circumstances</h3>
                 <p>It's a fact of life that things can change for any of us. If something changes in your personal, or financial circumstances, Deko and your lender will do all they can to help make it as easy as possible to submit your application and manage your loan repayments.</p>
 
@@ -325,7 +324,8 @@
                 <p>If you still have questions about your finance application or need some help completing it, check out Deko's FAQs <a target="_self" href="https://www.dekopay.com/customer-support"> <strong>here</strong></a>.</p>
 
                 <p>For any questions related to finance, please contact your lender. Their contact details will be provided throughout your application and on any communications you receive about your finance application.</p> 
-            </div> -->
+            </div>
+            <!--  -->
             <!-- <div class="finance-sec">
                 <h3>Legal Information (FCA Disclaimer)</h3>
                 <p>It is mandatory to display the Legal information on your Finance page and on the footer of your website.</p>
