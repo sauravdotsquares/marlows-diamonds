@@ -71,19 +71,29 @@
                         <button id="calculatebutton" class="btn" ng-click="calculate()">Calculate</button>
                     </p>
                     <ul class="pay_details" id="OCFDefault">
-                        <li class="clearfix"> <p> Monthly Payment </p><p class="priced">  £   <span id="perMonths">83.66</span>  </p> </li>
-                        <li class="clearfix"> <p> Cash Price </p> <p class="priced">   £  <span id="cashPrices">1026.00</span> </p> </li>
-                        <li class="clearfix"> <p> Deposit to Pay</p><p class="priced">  £   <span id="Deposited">102.60</span>   </p> </li>
-                        <li class="clearfix"> <p> Loan Amount </p><p class="priced">  £    <span id="loanAmt">923.40</span></p> </li>
-                        <li class="clearfix"> <p> Loan Repayment </p><p class="priced">£  <span id="loanRepay">1003.90</span>  </p> </li>
-                        <li class="clearfix"> <p> Cost of Loan</p> <p class="priced">   £  <span id="costLoan">80.50</span>  </p> </li>
+                        <!-- <li class="clearfix"> <p> Cost of Loan</p> <p class="priced">   £  <span id="costLoan">80.50</span>  </p> </li> -->
+                        <li class="clearfix"> <p> Cash price </p> <p class="priced">   £  <span id="cashPrices">1026.00</span> </p> </li>
+                        <!-- <li class="clearfix"> <p> Total amount of credit </p><p class="priced">£  <span id="loanRepay">1003.90</span>  </p> </li> -->
+                        <li class="clearfix"> <p> Deposit</p><p class="priced">  £   <span id="Deposited">102.60</span>   </p> </li>
+                        <li class="clearfix"> <p> Total amount of credit </p><p class="priced">  £    <span id="loanAmt">923.40</span></p> </li>
+                        <li class="clearfix"> <p> Term </p> <p class="priced"> <span id="noTerm">12</span>  </p></li>
+                        <li class="clearfix"> <p> APR Representative </p> <p class="priced"> <span id="apr_represent">12</span>  </p></li>
+                        <li class="clearfix"> <p> Rate of Interest </p> <p class="priced"> <span id="rointerest">12</span>  </p></li>
+                        <li class="clearfix"> <p> Monthly Payments </p><p class="priced">  £   <span id="perMonths">83.66</span>  </p> </li>
                         <li class="clearfix"> <p> Total Amount Payable </p> <p class="priced"> £   <span id="totalAmt">1106.50</span>    </p> </li>
-                        <li class="clearfix"> <p> Number of Monthly Payments </p> <p class="priced"> <span id="noTerm">12</span>  </p></li>
+
                     </ul>
-                    
+                   
       
                     <input type="hidden" id="enableId" value="OCFDefault"> <br>
                     <div>
+                        <h5>Disclosures:</h5>
+                        <p>
+                            Deko is a credit broker, not a lender and does not charge you for credit broking services, Only available to UK residents over 18, subject to terms and conditions.
+                        </p>
+                        <p>
+                            Credit subject to status. Missed or late payments may result in additional fees or interest and will affect your credit file and yur ability to obtain credit in the future.
+                        </p>
                     </div>
       
       
@@ -98,7 +108,7 @@
             </div>
             <p class="finance_options_provided">Finance options powered by <img src="{{ env('APP_IMAGE_URL').'/images/Deko_landscape_colour_whiteBG200px_wide.png' }}" style="height:25px;" class="nolazy" alt="DEKO"></p>
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
             <h5>Disclosures:</h5>
             <p>
                 Deko is a credit broker, not a lender and does not charge you for credit broking services, Only available to UK residents over 18, subject to terms and conditions.
@@ -106,7 +116,7 @@
             <p>
                 Credit subject to status. Missed or late payments may result in additional fees or interest and will affect your credit file and yur ability to obtain credit in the future.
             </p>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
