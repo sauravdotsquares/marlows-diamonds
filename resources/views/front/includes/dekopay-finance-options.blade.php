@@ -92,7 +92,7 @@
                             Deko is a credit broker, not a lender and does not charge you for credit broking services, Only available to UK residents over 18, subject to terms and conditions.
                         </p>
                         <p>
-                            Credit subject to status. Missed or late payments may result in additional fees or interest and will affect your credit file and yur ability to obtain credit in the future.
+                            Credit subject to status. Missed or late payments may result in additional fees or interest and will affect your credit file and your ability to obtain credit in the future.
                         </p>
                     </div>
       
