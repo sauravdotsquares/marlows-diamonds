@@ -424,8 +424,8 @@ p.burgarmenu a:hover {color: #8e2e65;}
 
 
 .owlslidercategoryprecontent .owl-item .item .product-info .product-image {width: 170px;margin: auto;}
-.owlslidercategoryprecontent .owl-item .item .product-info .product-item-details .product-titles {color: #8e2e65;font-weight: bold;font-size: 18px;text-decoration: none;
-min-height: 60px;line-height: 26px;font-family: 'Lato';}
+.owlslidercategoryprecontent .owl-item .item .product-info .product-item-details .product-titles {color: #8e2e65;font-weight: bold;font-size: 15px;text-decoration: none;
+min-height: 48px;line-height: 26px;}
 .owlslidercategoryprecontent .owl-item .item .product-info a.btn-bg-small {padding: 8px 15px;}
 .owlslidercategoryprecontent .owl-item .item .product-info .product-item-details p {min-height: 68px;}
 .owlslidercategoryprecontent .owl-nav {display: block !important;}
