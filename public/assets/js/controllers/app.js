@@ -259,7 +259,7 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
        var my_fd = new FinanceDetails(code, parseFloat(price), deposit, amount);
        
        var preSetVal = parseFloat($('#preSetValue').val());
-       //console.log(price);
+       //console.log(my_fd);
        //console.log(preSetVal);
        if(price>preSetVal){
             $('.finance-available-options').css('display','block');
@@ -277,6 +277,8 @@ MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
        $('#costLoan').text(parseFloat(my_fd.l_cost).toFixed(2));
        $('#totalAmt').text(parseFloat(my_fd.total).toFixed(2));
        $('#noTerm').text(my_fd.term);
+       $('#rointerest').text(my_fd.rate_of_interest);
+       $('#apr_represent').text(my_fd.apr);
     }
    
 });
