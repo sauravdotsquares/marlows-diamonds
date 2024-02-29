@@ -1,8 +1,10 @@
 @inject('header_settings', 'App\Models\Settings')
-
+<?php 
+  $getURLWithParameter = str_replace(Request::root(), '', request()->fullUrl());
+?>
   <!-- for hreflang keywords for all suggested country Start -->
-  <link rel="alternate" href="https://marlowsdiamonds.com{{(Request::path() != '/')?'/'.Request::path():''}}" hreflang="x-default" />
-  <link rel="alternate" href="https://marlows-diamonds.co.uk{{(Request::path() != '/')?'/'.Request::path():''}}" hreflang="en-gb" />
+  <link rel="alternate" href="https://marlowsdiamonds.com{{($getURLWithParameter)?$getURLWithParameter:''}}" hreflang="x-default" />
+  <link rel="alternate" href="https://marlows-diamonds.co.uk{{$getURLWithParameter?$getURLWithParameter:''}}" hreflang="en-gb" />
 
 {{-- OG Canonical --}}
 <link rel="canonical" href="{{request()->fullUrl()}}" />
