@@ -75,7 +75,7 @@
                                             <div class="product-info">
                                                 <div class="product-image">
                                                     <a href="{{ asset('diamond-engagement-rings') }}">
-                                                        <img src="{{env('APP_IMAGE_URL').'/storage/'.$preContentData->image_url}}" alt="Engagement Ring">
+                                                        <img src="{{env('APP_IMAGE_URL').'/storage/'.$preContentData->image_url}}" alt="{{isset($preContentData->image_alt_title)?$preContentData->image_alt_title:''}}">
                                                     </a>
                                                 </div>
                                                 <div class="product-item-details">
@@ -109,7 +109,7 @@
                                                 <div class="ring-pr-image">
                                                 @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
                                                     <!-- <a href="/engagement-rings/solitaire"> -->
-                                                        <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="SOLITAIRE ENGAGEMENT RINGS">
+                                                        <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="{{isset($preContentData->image_alt_title)?$preContentData->image_alt_title:''}}">
                                                     <!-- </a> -->
                                                     @endif
                                                 </div>
@@ -430,7 +430,7 @@
 				</div>
                 @if(isset($postContent->image_url) && !empty($postContent->image_url))
                 <div class="leftright-imt-col leftright-img">
-					<img src="{{env('APP_IMAGE_URL').'/storage/'.$postContent->image_url}}" alt="banner-hand">
+					<img src="{{env('APP_IMAGE_URL').'/storage/'.$postContent->image_url}}" alt="{{isset($postContent->image_alt_title)?$postContent->image_alt_title:''}}">
 				</div>
                 @endif
 			</div>
