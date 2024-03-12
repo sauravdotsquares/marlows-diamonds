@@ -133,7 +133,7 @@
 	.shopfrom-block {padding: 30px 0 20px 0;}
 	.container {padding-left: 17px;padding-right: 17px;}
 	.mob-cart-number {right: -5px;}
-	.finance-available-options .payments p:first-child {width: 36%;}
+
 	.diamond-type label {margin: 0 12px 9px 0;display: block;}
 	.product-info-media .owl-carousel {padding: 0 50px;}
 	body{overflow-x: hidden;} 
@@ -356,6 +356,9 @@
 	/*ring size page css end*/
 
 	.location-container{ background-size:26%; }
+
+
+	 .financeoptionprocess.product-finance {max-width: 95%;}
 	}
 
 	/** media only for header responsive **/
@@ -395,7 +398,8 @@
 	
 	.main-navigaiton .nav-navbars .level-zero > span > a{display:block;color:#000;padding:10px 20px;text-transform:capitalize;font-size:14px}
 	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: 25px;top: 12px;color: #000;font-size: 20px;z-index: 11; cursor: pointer; width: 22px; text-align: center;}
-	
+	.main-navigaiton .nav-navbars .level-zero.show-menus i.fa.fa-angle-down {transform: rotate(180deg);}
+
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu{position:relative;top:0;width:100%;box-shadow:none;padding:8px 0 10px 30px}
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu .level-one .inner-submenu{right:0;top:0;padding-top:0;padding-left:17px}
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu li a{padding:9px 20px 9px 9px;text-transform:capitalize;color:#000;font-size:13px}
@@ -580,6 +584,10 @@ display: inline-block;right: 0;position: absolute;}
 	.post-bar .post-bar-left.header-post-bar-left, .post-bar .post-bar-right.header-post-bar-left{ text-align:center !important; }
 
 	.wishlist-items-list .wishlist-table {width: 900px;}
+
+	.financeoptionprocess.product-finance .col-md-6:nth-child(1) { order: 2;}
+.financeoptionprocess.product-finance .col-md-6:first-child {border-bottom: none; border-right:none;}
+.finance-available-options .payments p:first-child {width: 32%;}
 	}
 	
 	
@@ -623,6 +631,8 @@ display: inline-block;right: 0;position: absolute;}
 
 .product-info-media .owl-carousel .owl-nav [class*="owl-"] {width: 30px;height: 30px; border: 2px solid rgba(255,255,255,0.5);}
 .product-info-media .owl-nav [class*="owl-"] span {font-size: 28px;line-height: 16px;}
+
+.finance-available-options .payments p:first-child {font-size: 11px}
 	}
 	
 	@media(max-width:479px){
