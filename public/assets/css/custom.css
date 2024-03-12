@@ -157,6 +157,7 @@ transition: all 0.2s ease;}
 .logo-menu-bar-wrap{align-items:center;position:relative}
 .main-navigaiton .nav-navbars .level-zero{display:inline-block;vertical-align:top;position:relative; margin: 0px 0px 0 4px;}
 .main-navigaiton .nav-navbars .level-zero a{text-decoration:none;color:#444;font-weight:bold;text-transform:uppercase;font-size:13px}
+.main-navigaiton .nav-navbars .level-zero > span > a:hover, .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu li a:hover {color: #8e2e65;}
 .main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: -4px;top: 5px;}
 .main-navigaiton .nav-navbars .level-zero span {position: relative;display: block;}
 .site-logo-main{ max-width: 130px;}
@@ -246,8 +247,9 @@ textarea.input-control{height:100px}
 .footer-social{margin:50px 0 0 0}
 .footer-social a{color:#fff;font-size:18px;margin:0 22px 0 0}
 .footer-social a:hover{opacity:.7}
-.footerlinks-col ul li a{color:#fff;text-decoration:none; font-weight: normal !important; font-size: 14px !important;}
 .footerlinks-col ul li{display:block}
+.footerlinks-col ul li a{color:#fff;text-decoration:none; font-weight: normal !important; font-size: 14px !important; padding: 0 0 2px;}
+.footerlinks-col ul li a:hover {border-bottom: 1px solid #fff;}
 .footer-content-wrap{margin:30px -15px 40px}
 .fcontent-column{width:100%;padding:0 15px}
 .icon-payment{flex:0 0 20%;max-width:20%;-ms-flex:0 0 20%;text-align:center}
@@ -576,6 +578,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .diamond-type label {display: inline-block;vertical-align: middle;margin: 0 12px 0 0;}
 .product-decriptions p {color: #404040;font-size: 14px;margin: 0;}
 .product-decriptions {margin: 20px 0 20px 0;}
+.product-info-main .product-decriptions img {width: 25px;}
 .product-finder-price .price {font-size: 26px;color: #8e2e65;font-weight: bold;}
 .color-red{ color:#eb0000 !important; }
 .product-add-cart {display: flex;align-items: center;}
@@ -592,7 +595,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .finance-available a p {font-size: 15px;text-transform: uppercase;font-weight: bold;display: inline-block;vertical-align: middle;margin: 0 0 0 15px;}
 .finance-available a p span {display: block;text-transform: capitalize;font-weight: normal;font-size: 14px;}
 
-
+.faq-section.engagement-ring-faq {margin-bottom: 0;}
 
 
 .doko-img {position: absolute;right: 3px;width: 60px;top: 0;}
@@ -701,7 +704,10 @@ label.label {display: block;margin: 0 0 5px 0;}
 }
 #requestAppointment .modal-content {background: #8e2e65;}
 #requestAppointment .modal-content .modal-header {border-bottom: none;padding: 0 15px;}
-#requestAppointment .modal-content button.btn-close {color: #fff;background: url(../images/close-visit.svg) no-repeat;margin-top: 13px;}
+#requestAppointment .modal-content button.btn-close {color: #fff;
+/*    background: url(../images/close-visit.svg) no-repeat;*/
+    margin-top: 0;  
+background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat}
 #requestAppointment .modal-content button.btn-close:hover{ opacity:1 }
 #requestAppointment .modal-content .modal-header h5 {color: #fff;text-align: center;width: 100%;text-transform: uppercase;padding: 20px 0 0;}
 #requestAppointment .modal-content .visit-form {padding: 0;}
@@ -1179,13 +1185,26 @@ a[type="button"] {-webkit-appearance: none !important;}
 
 
 .modal-open .modal {z-index: 9999;}
+.financeoptionprocess.product-finance{max-width:1100px;}
+.financeoptionprocess.product-finance .modal-header {background: #902f66; padding: 10px 20px;}
+.financeoptionprocess.product-finance .modal-header h5#exampleModalLabel { color: #fff;font-size: 25px;font-family: "Lato";text-align: center;width: 100%;font-weight: bold;}
+.financeoptionprocess.product-finance .modal-header button.btn-close {
+background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+opacity: 1;border-radius: 50px;background-size: 10px;}
+.financeoptionprocess.product-finance .col-md-6:first-child {border-right: 1px solid #e4e4e4;}
+
+
+.financeoptionprocess.product-finance .modal-body h5#exampleModalLabel, .financeoptionprocess.product-finance .modal-body .finance-available-options h5 {margin: 0 0 18px;color: #902f66;font-weight: bold;}
+
 .finance-available-options li {list-style: none;display: table;width: 100%;}
 .finance-available-options li p {display: table-cell;margin: 0;padding: 5px;}
-.finance-available-options .payments p:first-child{width: 15%; }
-.finance-available-options ul li input, .finance-available-options ul li select {margin: 0;width: 100%;padding: 10px 10px;background: none;border: 1px solid #ccc;
+.finance-available-options .payments p:first-child{width: 21%; }
+.finance-available-options ul li input, .finance-available-options ul li select {margin: 0;width: 100%;padding: 10px 10px;border: 1px solid #ccc;
 height: auto;line-height: initial;border-radius: 7px; color: #000;}
 .finance-available-options .deko-calculate {width: 100%;text-align: center;padding-top: 15px;}
-.finance-available-options .deko-calculate button {font-size: 1.0rem;border-radius: 5px;line-height: 1;background-color: #902f66;color: #ffffff; padding: 13px 30px;}
+.finance-available-options .deko-calculate button {background-color: #8e2e65;color: #fff;font-size: 15px;padding: 14px 26px;text-transform: uppercase;text-decoration: none;
+font-weight: 700;display: inline-block;border: 1px solid #8e2e65; border-radius: 0}
+.finance-available-options .deko-calculate button:hover{    box-shadow: 5px 5px 0 rgba(0,0,0,0.8) !important;color: #fff;}
 .finance-available-options .pay_details li p + p {text-align: right;}
 .finance-available-options .pay_details li {border-bottom: 1px solid #EFEFEF;}
 .finance_options_provided {text-align: center;}
@@ -1197,7 +1216,8 @@ height: auto;line-height: initial;border-radius: 7px; color: #000;}
 .login-block-wrap {margin: 0 0 20px 0;}
 /** additional **/
 #financeAvailableModal .modal-header h5 {color: #000;font-size: 25px;font-family: "Lato";}
-#financeAvailableModal .modal-body select, #financeAvailableModal .modal-body input {height: 44px;background-color: transparent;border: 1px solid #D0D0D0;border-radius: 3px;}
+#financeAvailableModal .modal-body select, #financeAvailableModal .modal-body input {height: 44px;border: 1px solid #D0D0D0;border-radius: 3px;
+-webkit-appearance: auto;-moz-appearance: auto;appearance: auto;}
 .finance_options_provided {margin-top: 22px;}
 .modal-header h5 {font-family: "Lato";color: #000;}
 
@@ -1702,7 +1722,7 @@ height: 40px;display: inline-block;border-radius: 50px;}
 
 /*finance css*/
 .defaultpages-wrap.finance-panel {padding-bottom: 0;}
-.finance-sec {margin: 0 0 35px;}
+.finance-sec {margin:20px 0 35px;}
 .finance-sec-weneed .row {align-items: center;}
 .finance-sec .finance-whatwe-content {padding: 0 40px 0 0px;}
 .finance-sec img.deko-cart-img {margin: 30px 0;}

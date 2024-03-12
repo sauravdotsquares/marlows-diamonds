@@ -1705,11 +1705,11 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     function getRagularFilterPrices($getRequestData,$diamondType,$slug,$filterArray){
         
         $increasePercentage = 1;
-        if($diamondType == 'lab_grown'){
-            if ($getRequestData['metal_type'] == '9ct White Gold' || $getRequestData['metal_type'] == '9ct Yellow Gold' || $getRequestData['metal_type'] == '9ct Rose Gold') {
-                $increasePercentage = 1.3;
-            }
-        }
+        // if($diamondType == 'lab_grown'){
+        //     if ($getRequestData['metal_type'] == '9ct White Gold' || $getRequestData['metal_type'] == '9ct Yellow Gold' || $getRequestData['metal_type'] == '9ct Rose Gold') {
+        //         $increasePercentage = 1.3;
+        //     }
+        // }
         
         if(isset($diamondType) && !empty($diamondType)){
             $diamondType = $diamondType;
@@ -1719,6 +1719,11 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         $rrpPrice = $diamondType.'_rrp';
         $getProductDetails = Products::where('slug',$slug)->first();
         
+        if(in_array('2',explode(',',$getProductDetails->categories)) && $diamondType == 'lab_grown'){
+            if ($getRequestData['metal_type'] == '9ct White Gold' || $getRequestData['metal_type'] == '9ct Yellow Gold' || $getRequestData['metal_type'] == '9ct Rose Gold') {
+                $increasePercentage = 1.3;
+            }
+        }
         // $getVariationsArray = ProductVariations::where('product_id',$getProductDetails->id)->pluck('id')->toArray();
         $getProductVariationId = ProductVariations::where('product_id', $getProductDetails->id)->pluck('id')->toArray();
         if (!empty($getProductVariationId)) {

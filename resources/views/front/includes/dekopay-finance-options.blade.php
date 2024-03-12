@@ -2,22 +2,12 @@
     .modal-footer {
         justify-content: flex-start;
     }
-    .financeoptionprocess{
-        max-width:1000px;
-    }
-.financeoptionprocess .modal-body h5 {color: #000;margin: 0 0 10px;font-weight: bold;}
-.financeoptionprocess .col-md-6:first-child {border-right: 1px solid #e4e4e4;}
 
-    @media(max-width:1199px){
-    .financeoptionprocess {max-width: 95%;}
-    }
-    @media(max-width:767px){
-.financeoptionprocess .col-md-6:nth-child(1) { order: 2;}
-.financeoptionprocess .col-md-6:first-child {border-bottom: none; border-right:none;}
-    }
+
+
 </style>
 <div class="modal fade" id="financeAvailableModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-controller="DekopayController">
-    <div class="modal-dialog modal-lg financeoptionprocess">
+    <div class="modal-dialog modal-lg financeoptionprocess product-finance">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Finance Options</h5>

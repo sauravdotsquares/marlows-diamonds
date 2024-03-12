@@ -214,16 +214,21 @@ $(document).ready(function(){
 
 <!-- header dropdown menu level collapse -->
 <script>
-  if($(window).innerWidth() <= 1024) {
+if ($(window).innerWidth() <= 1024) {
     $(document).ready(function() {
-        $('.main-navigaiton .nav-navbars .level-zero .fa-angle-down').on('click',function() {
-            $(this).parents('.level-0').toggleClass('show-menus');
+        $('.main-navigaiton .nav-navbars .level-zero .fa-angle-down').on('click', function() {
+            var $parent = $(this).parents('.level-0');
+            $('.main-navigaiton .nav-navbars .level-0').not($parent).removeClass('show-menus');
+            $parent.toggleClass('show-menus');
         });
-        $('.main-navigaiton .nav-navbars .level-zero .fa-angle-right').on('click',function() {
-            $(this).parents('.level-1').toggleClass('show-menus');
+
+        $('.main-navigaiton .nav-navbars .level-zero .fa-angle-right').on('click', function() {
+            var $parent = $(this).parents('.level-1');
+            $('.main-navigaiton .nav-navbars .level-1').not($parent).removeClass('show-menus');
+            $parent.toggleClass('show-menus');
         });
     });
-  }
+}
 </script>
 
 
