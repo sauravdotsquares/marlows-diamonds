@@ -893,7 +893,7 @@
                         email: 'Valid email is required',
                     },
                     description: {
-                        required: 'Description is required',
+                        required: 'Message is required',
                     }
                 },
                 submitHandler: function (form) {
