@@ -1,6 +1,6 @@
 <div class="location-container">
     <div class="location-left-section">
-        <h1 class="location-header">We are here to help <br> call <strong> <a href="tel:02074051477"> 020 7405 1477</a></strong> or <strong> <a href="tel:01212364415">0121 236 4415</a></strong> </h1>
+        <h3 class="location-header">We are here to help <br> call <strong> <a href="tel:02074051477"> 020 7405 1477</a></strong> or <strong> <a href="tel:01212364415">0121 236 4415</a></strong> </h3>
         <p class="location-description">Visit us at
             <strong> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ </strong> and <strong> 46 Warstone Ln, Hockley, Birmingham B18 6JJ </strong> </p>
         <p class="location-button">

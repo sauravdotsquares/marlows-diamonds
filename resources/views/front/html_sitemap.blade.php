@@ -30,7 +30,7 @@
         </div>
 
         <div class="sitemap-part">
-            <h1>Blogs categories</h1>
+            <h2>Blogs categories</h2>
             <ul>
                 @foreach ($posts_categories as $posts_category)
                     <li><a href="{{ url('/blog/category/' . $posts_category->slug ) }}">{{ $posts_category->name }}</a></li>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="sitemap-part">
-            <h1>Blogs</h1>
+            <h2>Blogs</h2>
             <ul>
                 @foreach ($posts as $post)
                     <li><a href="{{ url('blog/' . $post->slug) }}">{{ $post->title }}</a></li>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="sitemap-part">
-            <h1>Pages</h1>
+            <h2>Pages</h2>
             <ul>
                 @foreach ($pages as $page)
                     <li><a href="{{ url( $page->slug ) }}">{{ $page->title }}</a></li>
@@ -60,7 +60,7 @@
         </div>
 
         <div class="sitemap-part">
-            <h1>Product categories</h1>
+            <h2>Product categories</h2>
             <ul>
                 @foreach ($categoryUrlsList as  $category)
                     <li><a href="{{ url($category['url']) }}">{!! strip_tags($category['name']) !!}</a></li>

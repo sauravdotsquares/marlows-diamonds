@@ -569,7 +569,11 @@
 		}, "Letters and spaces only please"); 
 
 		$(document).ready(function(){
-
+			$('[data-fancybox="gallery2"]').fancybox({ 
+				afterLoad : function(instance, current) {
+					current.$image.attr('alt', '{{$data->title}}' );
+				}
+			});
             $('form#contactForm').validate({
                 rules: {
 					title: {

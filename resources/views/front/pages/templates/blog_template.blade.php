@@ -231,7 +231,7 @@
 	                $('.ajax-load').show();
 	            }
 	        }).done(function(data){
-
+				
 				const nextPage = parseInt(pageTogetData) + 1;
 				$("#nextPage").val(nextPage);
 
@@ -241,7 +241,7 @@
 
 				$(".search-icon").attr('src',searchIcon);
 	            if(data.html == ""){
-	                $('.ajax-load').html("0 records found");
+	                $('.ajax-load').html("No more records found");
 	                return;
 	            }else{
 					$('.ajax-load').html(`<p><img src="${loadingDataImg}">Loading More post</p>`)
