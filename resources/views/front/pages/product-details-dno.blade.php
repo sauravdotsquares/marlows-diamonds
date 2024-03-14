@@ -61,8 +61,8 @@
 							@if($variationImages)
 								@foreach($variationImages as $images)
 									<div class="item product-items-carousel">
-										<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->vari_image)}}" data-caption="{{isset($data->title)?$data->title:''}}">
-											<img class="thumbnail-src" src="{{asset('/storage/'.$images->vari_image)}}" alt="{{isset($data->title)?$data->title:''}}">
+										<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" data-caption="{{isset($data->title)?$data->title:''}}">
+											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
 										</a>
 									</div>
 								@endforeach
@@ -80,7 +80,7 @@
 
 										@if(isset($images->is_featured) && $images->is_featured != 1)
 											<div class="item product-items-carousel">
-												<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">				
+												<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{isset($data->title)?$data->title:''}}">				
 													<?php if(in_array($ext,$video_extensions)){ ?>													
 														<video style="width: 100%;" loop autoplay muted="1" playsinline>
 															<source class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" type="video/mp4" type="video/mp4" />
@@ -108,7 +108,7 @@
 								@foreach($prodImages as $key => $images)
 									@if(isset($images->image_url) && !preg_match("/\.(mp4)$/", $images->image_url))
 										<div class="item product-items-carousel @if($key == 0) active @endif">
-											<a data-fancybox="gallery2" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{isset($data->title)?$data->title:''}}">
+											<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{isset($data->title)?$data->title:''}}">
 											</a>
 										</div>
 									@endif
