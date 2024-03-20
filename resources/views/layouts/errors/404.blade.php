@@ -75,7 +75,7 @@ if ($pageRedirect) {
                                 <?php
                                 $ringImageDiamondRingUrl = getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg', '340', '340');
                                 ?>
-                                <img src="{{$ringImageDiamondRingUrl}}" alt="Multi Stone Rings">
+                                <img src="https://devstaging.marlows-diamonds.co.uk/tempfolderpath/multi-stone.png" alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
