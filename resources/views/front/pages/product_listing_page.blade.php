@@ -392,7 +392,7 @@
                                             <?php if ($thumbnailGif->extension == "gif") { ?>
                                                 <img src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" class="product-hover-video" loading="lazy">
                                             <?php } else if ($thumbnailGif->extension == "mp4") { ?>
-                                                <img class="product-hover-video" src="{{ env('APP_IMAGE_URL').'/storage/Products/MTSS-707_00001_1652274814.jpg'}}" alt="{{$product->title}}">
+                                                <img class="product-hover-video" src="https://devstaging.marlows-diamonds.co.uk/storage/Products/MTSS-707_00006_1652274814.jpg" alt="{{$product->title}}">
                                                 <!-- <video class="product-hover-video" muted="muted" playsinline>
                                                     <source src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" type="video/mp4">
                                                 </video> -->
