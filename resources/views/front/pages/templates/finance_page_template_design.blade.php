@@ -309,7 +309,7 @@
                 <h3>Your Personal or Financial Circumstances</h3>
                 <p>It's a fact of life that things can change for any of us. If something changes in your personal, or financial circumstances, Deko and your lender will do all they can to help make it as easy as possible to submit your application and manage your loan repayments.</p>
 
-                <p>If you're struggling at any point with your application online, or you don't understand anything, please contact Deko's customer support team at <a target="_self" href="support@dekopay.com">support@dekopay.com </a> or 0800 294 5891.</p>
+                <p>If you're struggling at any point with your application online, or you don't understand anything, please contact Deko's customer support team at <a target="_self" href="mailto:support@dekopay.com">support@dekopay.com </a> or 0800 294 5891.</p>
                 <p>If you find yourself struggling due to a change in your circumstances, please contact your lender and ask for their help.</p>
             </div>
             <div class="finance-sec">
@@ -321,7 +321,7 @@
             </div>
             <div class="finance-sec">
                 <h3>Still have questions?</h3>
-                <p>If you still have questions about your finance application or need some help completing it, check out Deko's FAQs <a target="_self" href="https://www.dekopay.com/customer-support"> <strong>here</strong></a>.</p>
+                <p>If you still have questions about your finance application or need some help completing it, check out Deko's FAQs <a target="_blank" href="https://www.dekopay.com/customer-support"> <strong>here</strong></a>.</p>
 
                 <p>For any questions related to finance, please contact your lender. Their contact details will be provided throughout your application and on any communications you receive about your finance application.</p> 
             </div>
