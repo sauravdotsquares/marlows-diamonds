@@ -2092,7 +2092,6 @@ class ProductController extends Controller
         $dataArray['keyword'] = $request->keyword;
         $slugs = explode('/', $request->path);
         return $productListingData = getProductListing($slugs, $dataArray, $sorting);
-        return view('front.includes.productCard', $productListingData);
     }
 
     public function getProductVariationPrices(Request $request)

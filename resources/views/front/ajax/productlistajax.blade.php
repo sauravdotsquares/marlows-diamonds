@@ -9,7 +9,7 @@
 			<div class="product-onsale">
 				<!-- On Sale -->
 			</div>
-									@php
+						@php
 							$wishlist = session()->get('wishlist', []);
 							$wishListClass = "fa-heart-o";
 							if(array_key_exists($product->id,$wishlist)){
@@ -35,9 +35,9 @@
 						  	<?php if($thumbnailGif->extension == "gif"){ ?>
 								<img src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" class="product-hover-video" loading="lazy">
 						  	<?php }else if($thumbnailGif->extension == "mp4"){ ?>
-								<video class="product-hover-video" muted="muted" playsinline >
+								<!-- <video class="product-hover-video" muted="muted" playsinline >
 									<source src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" type="video/mp4">
-								</video>
+								</video> -->
 							<?php } ?>
 					<?php } ?>
 					
