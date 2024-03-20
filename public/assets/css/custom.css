@@ -1502,6 +1502,7 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 /*404 page css*/
 .head-para-three.pagenotfound {margin-top: 50px;}
 .head-para-three.pagenotfound .description {margin-top: 20px;}
+.head-para-three.pagenotfound .description a{font-size: 20px;}
 .head-para-three.pagenotfound p {font-size: 24px;}
 /*404 page css end*/
 
