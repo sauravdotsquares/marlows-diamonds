@@ -58,6 +58,7 @@ function isIOS() {
 $(document).ready(function () {
     $(".related-post").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 600: { items: 2 }, 900: { items: 3 }, 1e3: { items: 3 } } }),
     $(".owlsliderone").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 600: { items: 2 }, 992: { items: 3 } } }),
+    $(".owlslideronenotfound").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 600: { items: 2 }, 992: { items: 4 } } }),
     $(".owlslidercategoryprecontent").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 600: { items: 2 }, 767: { items: 2 }, 992: { items: 3 }, 1200: { items: 4 }, } }),
     $(".owlslidertwo").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 575: { items: 2 }, 991: { items: 4 }, 1400: { items: 4 } } }),
     $(".blog-carousel-engagement").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 575: { items: 2 }, 991: { items: 3 }, 1400: { items: 4 } } }),
