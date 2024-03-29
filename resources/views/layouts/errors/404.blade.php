@@ -13,48 +13,23 @@ if ($pageRedirect) {
 @section('content')
 @section('css')
 <style>
-    .error {
-        color: #e74c3c !important;
-    }
-
-    .head-para-three p.second-para {
-        padding-bottom: 25px;
-    }
-
-    .head-para-three video#video {
-        width: 80%;
-        object-fit: inherit;
-    }
-    .product-titles {
-        font-size: 20px;
-    }
+    .error {color: #e74c3c !important;}
+    .head-para-three p.second-para {padding-bottom: 25px;}
+    .head-para-three video#video {width: 80%;object-fit: inherit;}
+    .product-titles {font-size: 20px;}
 </style>
 <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
 @endsection
-
-<?php
-// SitemapUrls::deleteRecordByUrl(request()->path());
-// $pageRedirect = pageRedirects(request()->path());
-// if($pageRedirect){
-//     header("Location: $pageRedirect", true, 301);
-//     exit();
-// }
-?>
 <!-- Not found data -->
 <div class="home-main-banner">
     <div class="main-banner-wraper">
         <div class="container">
             <div class="main-banner-col">
-                {{-- <p  style="color: #8e2e65; font-size: 25px;padding: 20px 0px;" ><strong>Ooopsasfsd , we cannot find what you are looking for.</strong></p>
-                --}}
-
                 <div class="head-para-three pagenotfound">
                     <h1 class="page-title">Whoopsie Daisy</h1>
                     <p>We could not find what you are looking for.</p>
                     <div class="description"> <a class="btn-bg-small continueshopping" href="{{url('/')}}">Continue Shopping</a> </div>
                 </div>
-
-                <!-- <center><a href="{{url('/')}}"><img src="{{ asset('assets\images/404image.png') }}"></a></center> -->
             </div>
         </div>
     </div>
@@ -82,9 +57,6 @@ if ($pageRedirect) {
                             <div class="product-titles">
                                 <a href="{{ asset('/diamonds-rings') }}" style="color:#8e2e65;    text-decoration: none;">Diamond Rings</a>
                             </div>
-                            <!-- <div class="product-action-btn">
-                                Shop Now
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -118,12 +90,12 @@ if ($pageRedirect) {
                         <div class="product-item-details">
                             <div class="product-titles">
                                 <a href="{{ asset('/wedding-rings') }}" style="color:#8e2e65;    text-decoration: none;">Wedding Rings</a>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="item">
                     <div class="product-info">
                         <div class="product-image">

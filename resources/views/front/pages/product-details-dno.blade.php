@@ -135,7 +135,7 @@
 					@if(!in_array('exclusive-to-marlows', $all_categories_slug))
 					<div class="diamond-type">
 						<label>Choose Your Diamond</label>
-						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
+						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined_diamond')
 							<div class="d-type-input">
 								<input type="radio" name="attribute_choose-your-diamond" class="diamond_type"  checked value="mined_diamond">
 								<span>Mined Diamond</span>
