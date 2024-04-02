@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Enquiries;
 use App\Models\Settings;
-use App\Jobs\SendEmailJob;
+use App\Mail\WelcomeEmail;
 
 class MailListFormController extends Controller {
 
@@ -47,8 +47,13 @@ class MailListFormController extends Controller {
             ];
             
             $adminEmail = 'sharma.gajendra@dotsquares.com';
-            
-            SendEmailJob::dispatch($requestData, $adminEmail);
+            Mail::to($adminEmail)->cc('sanyukta.chauhan@dotsquares.com')->queue(new WelcomeEmail($requestData));
+
+            // echo "afdsaf<pre>";
+            // print_r("Mail Send");
+            // die;
+
+            // SendEmailJob::dispatch($requestData, $adminEmail);
             // Mail::send('email.mail', array(
             //     'title' => $request->get('title'),
             //     'email' => $request->get('email'),

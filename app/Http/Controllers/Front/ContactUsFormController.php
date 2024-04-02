@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointments;
 use App\Models\Settings;
 use Illuminate\Support\Facades\Mail;
-use App\Jobs\SendEmailJob;
+use App\Mail\WelcomeEmail;
 
 class ContactUsFormController extends Controller {
 
@@ -50,10 +50,21 @@ class ContactUsFormController extends Controller {
                 'custom_url' => $request->get('custom_url'),
                 'description' => $request->get('description'),
             ];
-            
+
             $adminEmail = 'sharma.gajendra@dotsquares.com';
+            Mail::to($adminEmail)->cc('sanyukta.chauhan@dotsquares.com')->queue(new WelcomeEmail($requestData));
+
+            // $requestData = [
+            //     'title' => $request->get('title'),
+            //     'email' => $request->get('email'),
+            //     'phone' => $request->get('phone'),
+            //     'custom_url' => $request->get('custom_url'),
+            //     'description' => $request->get('description'),
+            // ];
             
-            SendEmailJob::dispatch($requestData, $adminEmail);
+            // $adminEmail = 'sharma.gajendra@dotsquares.com';
+            
+            // SendEmailJob::dispatch($requestData, $adminEmail);
 
             // Mail::send('email.mail', array(
             //     'title' => $request->get('title'),
