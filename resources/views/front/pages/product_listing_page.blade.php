@@ -109,7 +109,7 @@
                                                 <div class="ring-pr-image">
                                                 @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
                                                     <!-- <a href="/engagement-rings/solitaire"> -->
-                                                        <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="{{isset($preContentData->image_alt_title)?$preContentData->image_alt_title:''}}">
+                                                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$preContentData->image_url }}" alt="{{isset($preContentData->image_alt_title)?$preContentData->image_alt_title:''}}">
                                                     <!-- </a> -->
                                                     @endif
                                                 </div>

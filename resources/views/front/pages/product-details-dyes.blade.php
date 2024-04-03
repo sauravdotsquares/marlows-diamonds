@@ -62,7 +62,7 @@
 									$explode1 = explode('.',$explode[1]);
 								@endphp
 								<div class="item @if($key==0) active @endif"  >
-									<a data-fancybox="gallery1" href="{{asset('/storage/'.$images->image_url)}}" data-caption="{{$explode1[0]}}"></a>
+									<a data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{$explode1[0]}}"></a>
 								</div>
 							@endforeach
 						@endif
@@ -93,7 +93,6 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
-
 				<div class="diamond-type">
 					<label>Diamond Type</label>
 					<div class="d-type-input">
