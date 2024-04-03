@@ -385,7 +385,8 @@
 
                                     <a href="{{asset('product/'.$product->slug)}}" class="{{ $thumbnailGif ? 'product-hov' : '' }}">
                                         @if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
-                                        <img src="{{ getImageOptimizeDetails('/storage/'.$product->getProductImages->image_url,'217','217')}}" alt="{{$product->title}}" loading="lazy">
+                                        <!-- <img src="{{ getImageOptimizeDetails('/storage/'.$product->getProductImages->image_url,'217','217')}}" alt="{{$product->title}}" loading="lazy"> -->
+                                        <img src="{{ asset('/storage/'.$product->getProductImages->image_url) }}" alt="{{$product->title}}" loading="lazy">
                                         @endif
 
                                         <?php if ($thumbnailGif) { ?>
@@ -396,6 +397,8 @@
                                                 <!-- <video class="product-hover-video" muted="muted" playsinline>
                                                     <source src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" type="video/mp4">
                                                 </video> -->
+                                            <?php }else{ ?>
+                                                <img class="product-hover-video" src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" alt="{{$product->title}}">
                                             <?php } ?>
                                         <?php } ?>
 
