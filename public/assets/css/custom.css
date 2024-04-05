@@ -514,6 +514,8 @@ z-index: 9; position: relative;}
 .product-items-item-name a {text-decoration: none;color: #8e2e65;font-size: 15px;font-weight: 400;line-height: 20px; display: block; min-height: 75px;
  text-align: left; margin: 0 0 10px;}
 .product-items-item-name p {text-align: left; position: absolute;bottom: 0;}
+.product-items-item-info .product-items-item-details .price-section {position: absolute;bottom: 0;text-align: left;}
+.product-items-item-name p.save_price {position: relative;}
 
 
 
