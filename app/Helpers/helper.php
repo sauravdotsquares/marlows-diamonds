@@ -1246,7 +1246,7 @@ if (!function_exists('validate_breadcrumb')) {
          $is404 = false;
          $categoryData = null;
          $getAjaxResponses = true;
-         $page = 12;
+         $page = 30;
  
          if (isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings', $requestData['category'])) {
              $requestData['category'] = [
