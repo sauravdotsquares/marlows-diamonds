@@ -499,7 +499,7 @@ text-decoration: none; font-weight: 700; display: inline-block; border: 1px soli
 
 .is-active .category-product-filter-icon img, .category-product-filter-icon:hover img { filter: brightness(0) saturate(100%) invert(19%) sepia(95%) saturate(1175%) hue-rotate(293deg) brightness(98%) contrast(87%) }
 
-.product-grid-items-item {flex: 0 0 25%;max-width: 25%;-ms-flex: 0 0 25%;width: 100%;padding: 10px 10px; text-align: center;}
+.product-grid-items-item {flex: 0 0 33%;max-width: 33%;-ms-flex: 0 0 25%;width: 100%;padding: 10px 10px; text-align: center;}
 .product-grid-row{ margin: 0 -10px; }
 .product-items-item-info {padding: 0;border-radius: 4px;position: relative;height: 100%;border: 1px solid #dedede;overflow: hidden;box-shadow: 0px 0px 15px 0px #e7e5e5;}
 .product-items-item-info:hover{	box-shadow: 0px 1px 7px rgba(53, 53, 53, 0.2); outline: none;}
