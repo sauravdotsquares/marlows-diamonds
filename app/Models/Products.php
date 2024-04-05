@@ -48,7 +48,7 @@ class Products extends Model
     }
 
     public function getProductVariationMinMaxPriceAttribute(){
-        return ProductVariations::select(\DB::raw('MIN(regular_price) AS MinPrice, MAX(regular_price) AS MaxPrice'))->where('product_id',$this->id)->first();
+        return ProductVariations::select(\DB::raw('MIN(lab_grown) AS MinPrice'))->where('product_id',$this->id)->first();
         // return $this->hasOne(ProductVariations::class,'product_id','id')->select(\DB::raw('MIN(regular_price) AS minPrice, MAX(regular_price) AS MaxPrice'));
     }
 

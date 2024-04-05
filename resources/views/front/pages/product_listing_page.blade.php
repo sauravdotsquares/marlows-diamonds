@@ -364,6 +364,8 @@
                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
                         @foreach($getProductListFinal as $product)
                         <?php $thumbnailGif = getThumbnailGif($product->id); ?>
+                        <?php $getProductListingPrices = getMinimumPriceFunction($product);
+                        ?>
                         <div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
 
                             <div class="product-items-item-info">
@@ -385,7 +387,7 @@
 
                                     <a href="{{asset('product/'.$product->slug)}}" class="{{ $thumbnailGif ? 'product-hov' : '' }}">
                                         @if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
-                                        <!-- <img src="{{ getImageOptimizeDetails('/storage/'.$product->getProductImages->image_url,'217','217')}}" alt="{{$product->title}}" loading="lazy"> -->
+                                        {{-- <img src="{{ getImageOptimizeDetails('/storage/'.$product->getProductImages->image_url,'217','217')}}" alt="{{$product->title}}" loading="lazy"> --}}
                                         <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}" loading="lazy">
                                         @endif
 
@@ -393,10 +395,10 @@
                                             <?php if ($thumbnailGif->extension == "gif") { ?>
                                                 <img src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" class="product-hover-video" loading="lazy">
                                             <?php } else if ($thumbnailGif->extension == "mp4") { ?>
-                                                <!-- <img class="product-hover-video" src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" alt="{{$product->title}}"> -->
-                                                <!-- <video class="product-hover-video" muted="muted" playsinline>
+                                                {{-- <img class="product-hover-video" src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" alt="{{$product->title}}"> --}}
+                                                {{-- <video class="product-hover-video" muted="muted" playsinline>
                                                     <source src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" type="video/mp4">
-                                                </video> -->
+                                                </video> --}}
                                             <?php }else{ ?>
                                                 <img class="product-hover-video" src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" alt="{{$product->title}}">
                                             <?php } ?>
@@ -422,6 +424,9 @@
                                         <a href="#">{{isset($titleSplits[0])?$titleSplits[0]:''}}</a>
                                         <a href="#">{{isset($titleSplits[1])?$titleSplits[1]:''}}</a>
                                         @endif
+                                        <?php if(!empty($getProductListingPrices['final_shop_price']) && $getProductListingPrices['final_shop_price'] != 0){ ?>
+                                            <p> <strong> From: </strong> <del>{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del><span>  <strong>{{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_shop_price']),2)}}</strong> </span> </p>
+                                        <?php } ?> 
                                     </div>
                                 </div>
                             </div>
