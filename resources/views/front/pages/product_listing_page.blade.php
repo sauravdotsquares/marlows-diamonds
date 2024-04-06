@@ -985,7 +985,7 @@
 
     $('#searchd').on('keyup', function() {
         let searchTextData = $(this).val();
-        if (searchTextData.length > 2) {
+        if (searchTextData != '' && searchTextData.length > 2) {
             $("#showProductList").html('');
             sendDataValues(1, 'html');
         } else if (searchTextData.length == 0) {
