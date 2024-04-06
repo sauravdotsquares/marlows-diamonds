@@ -985,14 +985,17 @@
 
     $('#searchd').on('keyup', function() {
         let searchTextData = $(this).val();
-        if (searchTextData != '' && searchTextData.length > 2) {
+        if (searchTextData.trim() != '' && searchTextData.length > 2) {
+            console.log("If checking");
             $("#showProductList").html('');
             sendDataValues(1, 'html');
         } else if (searchTextData.length == 0) {
+            console.log("Else If checking");
             location.reload();
             // var page = $('#pagescroll').val();
             // sendDataValues(page, 'append');
         }
+        console.log("else checking");
     });
 
     function sendDataValues(page, type = 'append',sorting='asc') {
