@@ -511,7 +511,8 @@ z-index: 9; position: relative;}
 .product-items-item-info .product-price {margin: 10px 0 8px 0px;}
 
 .product-items-item-details {text-align: center;padding:13px 14px 35px;}
-.product-items-item-name a {text-decoration: none;color: #8e2e65;font-size: 15px;font-weight: 400;line-height: 20px; display: block; min-height: 75px;
+.product-items-item-details .list_product_title {min-height: 110px;}
+.product-items-item-name a {text-decoration: none;color: #8e2e65;font-size: 15px;font-weight: 400;line-height: 20px; display: block; min-height: 65px;
  text-align: left; margin: 0 0 10px;}
 .product-items-item-name p {text-align: left; position: absolute;bottom: 0;}
 /* .product-items-item-info .product-items-item-details .price-section {position: absolute;bottom: 0;text-align: left;}
@@ -520,9 +521,10 @@ z-index: 9; position: relative;}
 
 
 
-.product-items-item-name a.title-list-heading {min-height: auto;margin: 0 0 6px;font-weight: bold;}
-.product-items-item-image img {width: 100%;transition: all ease 0.3s; padding: 20px;}
-.product-items-item-image:hover img {transform: scale(1.1);}
+.product-items-item-name a.title-list-heading {min-height:auto;margin: 0 0 6px;font-weight: bold;}
+.product-items-item-image {height: 230px;display: flex;display: -ms-flexbox;align-items: center; justify-content: center;}
+.product-items-item-image img {width: 100%;transition: all ease 0.3s; padding: 10px;}
+.product-items-item-image:hover img {transform: scale(1.1);    padding: 40px;}
 .product-items-item-image a {overflow: hidden;display: block;}
 .related-products-list .product-items-item-image a {overflow: hidden;display: block;max-height: 345px;}
 .category-listing-wrap {padding: 0 0 20px 0;}
@@ -1294,7 +1296,7 @@ font-size: 13px;
 
 .product-item-details .product-titles-small {min-height: 55px;}
 .ajax-loader img {margin: auto;}
-.product-items-item-image {height: 200px;display: flex;display: -ms-flexbox;align-items: center; justify-content: center;}
+
 .table-bottom-content.tabel-payment {position: relative; padding: 0 15px;}
 .table-bottom-content.tabel-payment input {display: inline-block;width: auto;height: auto;margin: 0px 2px 0 15px;position: relative; top: 2px;}
 .table-bottom-content.tabel-payment .diamond-total-subtotal {margin: 40px 0 0;}
@@ -1544,9 +1546,10 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 
 
 .product-grid-items-item.product-hover-affect .product-items-item-info .product-hover-video {display: none;}
-.product-grid-items-item.product-hover-affect .product-items-item-info:hover a.product-hov {-webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.2);-ms-transition: all 200ms ease-in;
--ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.2);}
-.product-grid-items-item.product-hover-affect .product-items-item-info:hover .product-hover-video {display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff;}
+.product-grid-items-item.product-hover-affect .product-items-item-info:hover a.product-hov {-webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.1);-ms-transition: all 200ms ease-in;
+-ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.1);}
+.product-grid-items-item.product-hover-affect .product-items-item-info:hover .product-hover-video {display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff; 
+    padding: 25px;}
 
 .blog-list-sidebar{
     padding: 20px ;
@@ -1958,6 +1961,8 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 /*404 page css*/
 .head-para-three.pagenotfound p {font-size: 18px;line-height: 24px;}
 /*404 page css end*/
+
+.product-items-item-details .list_product_title{    min-height:90;}
 }
 
 
@@ -1981,6 +1986,9 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 
 .owlslidercategoryprecontent .owl-item .item .product-info .product-item-details .product-titles, .owlslidercategoryprecontent .owl-item .item .product-info .product-item-details p
 { min-height:auto; margin: 0 0 15px;}
+
+.product-items-item-name a.title-list-heading{ min-height:auto; }
+.product-items-item-details .list_product_title{    min-height:auto;}
 }
 
 

@@ -681,7 +681,7 @@
 			});
             var multistone = '{{$plainbandMulti}}';
             var jewellery = '{{$plainbandJewellery}}';
-			var data_slug = '{{url("/")}}';
+			var data_slug = "{{env('APP_IMAGE_URL')}}";
 			$.ajax({
 				type: 'POST',
 				url: '{{route("get-variations-data")}}',
