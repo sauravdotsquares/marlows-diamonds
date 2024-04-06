@@ -733,7 +733,7 @@
 						.trigger('to.owl.carousel', [pendingItems.length, 0])
 						.trigger('refresh.owl.carousel')
 						.trigger('stop.owl.autoplay')
-						.trigger('play.owl.autoplay',[7000, 300])
+						.trigger('play.owl.autoplay',[15000, 300])
 					}else if(res.vari_image!='' && res.vari_image!=null && res.vari_video==null){
 						const items = $('#carousel').find('.owl-item');
 						items.each((index, element)=>{
@@ -1041,7 +1041,7 @@
 			  autoplay: true,
 			  rewind: true,
 			  responsiveClass: true,
-			  autoplayTimeout: 7000,
+			  autoplayTimeout: 15000,
 			  smartSpeed: 300,
 			  nav: true,
 			  items : 1,
@@ -1083,7 +1083,7 @@
 				$owl
 				.trigger('to.owl.carousel', [itemPosition, 0])
 				.trigger('stop.owl.autoplay')
-				.trigger('play.owl.autoplay',[7000, 300]);
+				.trigger('play.owl.autoplay',[15000, 300]);
 			});
 	    });
 	</script>

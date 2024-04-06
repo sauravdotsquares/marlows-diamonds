@@ -1016,9 +1016,11 @@
             },
             success: function(res) {
                 // filterShapechanged();
-                // console.log(res);
-                $('#pagescroll').val(res.nextPage);
+                // console.log(res);resetFilterButton
 
+                
+                $('#pagescroll').val(res.nextPage);
+                $('html, body').animate({scrollTop: '680px'}, 700);
                 if (res.status == 404 || res.productItems == "") {
                     $('.category-list-item-searchsort').css('display','none');
                     $('.ajax-load').html("0 Product Found");
