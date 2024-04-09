@@ -425,19 +425,21 @@
                                             <a href="#">{{isset($titleSplits[1])?$titleSplits[1]:''}}</a>
                                             @endif
                                         </div>
-                                        <?php if(!empty($getProductListingPrices['final_shop_price']) && $getProductListingPrices['final_shop_price'] != 0){ ?>
-                                            <div class="price-section">
-                                                <div style="display: flex;">
-                                                    <h4><del style="color:#000" id="shopPrice"></del> </h4>
-                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_shop_price']),2)}} </span></div>
-                                                </div>
-                                                @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_shop_price'])
-                                                    <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_shop_price']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del> </p>
-                                                @endif
-                                            </div>
-                                        <?php } ?> 
+                                       
                                     </div>
+                                    
                                 </div>
+                                <?php if(!empty($getProductListingPrices['final_shop_price']) && $getProductListingPrices['final_shop_price'] != 0){ ?>
+                                    <div class="price-section">
+                                        <div style="display: flex;">
+                                            <h4><del style="color:#000" id="shopPrice"></del> </h4>
+                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_shop_price']),2)}} </span></div>
+                                        </div>
+                                        @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_shop_price'])
+                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_shop_price']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del> </p>
+                                        @endif
+                                    </div>
+                                <?php } ?> 
                             </div>
                         </div>
                         @endforeach
@@ -1018,7 +1020,7 @@
                 // filterShapechanged();
                 // console.log(res);resetFilterButton
 
-                
+
                 $('#pagescroll').val(res.nextPage);
                 $('html, body').animate({scrollTop: '680px'}, 700);
                 if (res.status == 404 || res.productItems == "") {
