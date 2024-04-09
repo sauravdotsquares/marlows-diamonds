@@ -31,6 +31,6 @@ class OrderMailProcess extends Mailable implements ShouldQueue
     {
         return $this->view('email.orderstatusqueueprocess')->with([
             'data1' => $this->requestData,
-        ])->subject('Order History');
+        ])->subject('Complete your purchase at Marlows Diamonds');
     }
 }

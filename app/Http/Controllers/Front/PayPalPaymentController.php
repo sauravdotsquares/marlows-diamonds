@@ -22,7 +22,7 @@ use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 use Session, Redirect, Config;
 use Mail;
-use App\Mail\OrderMailProcess;
+
 use App\Models\Settings;
 
 class PayPalPaymentController extends Controller
