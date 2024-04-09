@@ -510,20 +510,23 @@ z-index: 9; position: relative;}
 
 .product-items-item-info .product-price {margin: 10px 0 8px 0px;}
 
-.product-items-item-details {text-align: center;padding:13px 14px 35px;}
-.product-items-item-details .list_product_title {min-height: 110px;}
-.product-items-item-name a {text-decoration: none;color: #8e2e65;font-size: 15px;font-weight: 400;line-height: 20px; display: block; min-height: 65px;
- text-align: left; margin: 0 0 10px;}
-.product-items-item-name p {text-align: left; position: absolute;bottom: 0;}
+.product-items-item-details {text-align: center;padding:13px 14px 35px; display: inline-block;width: 100%; position: relative; z-index: 1;}
+.product-items-item-details .list_product_title { min-height: auto;display: inline-block;width: 100%;padding: 0 0 58px;}
+
+.product-items-item-info .price-section {position: absolute;bottom: 0; left: 15px; z-index: 9;    padding: 0 15px 15px 0px; text-align: left;}
+.product-items-item-name a {text-decoration: none;color: #8e2e65;font-size: 15px;font-weight: 400;line-height: 20px; display: block; min-height: auto;
+ text-align: left; margin: 0 0 25px;}
+.product-items-item-name p {text-align: left; position: relative;bottom: 0; padding-bottom: 0;  margin-bottom: 0;}
+.product-items-item-info .price-section p{margin-bottom: 0;}
 /* .product-items-item-info .product-items-item-details .price-section {position: absolute;bottom: 0;text-align: left;}
 .product-items-item-name p.save_price {position: relative;} */
 
 
 
 
-.product-items-item-name a.title-list-heading {min-height:auto;margin: 0 0 6px;font-weight: bold;}
+.product-items-item-name a.title-list-heading {min-height:auto;margin: 0 0 15px;font-weight: bold;}
 .product-items-item-image {height: 230px;display: flex;display: -ms-flexbox;align-items: center; justify-content: center;}
-.product-items-item-image img {width: 100%;transition: all ease 0.3s; padding: 10px;}
+.product-items-item-image img {width: 100%;transition: all ease 0.3s; padding: 25px; height: 300px; object-fit: contain;}
 .product-items-item-image:hover img {transform: scale(1.1);    padding: 40px;}
 .product-items-item-image a {overflow: hidden;display: block;}
 .related-products-list .product-items-item-image a {overflow: hidden;display: block;max-height: 345px;}
@@ -566,6 +569,9 @@ z-index: 9; position: relative;}
 
 .related-products-section {padding: 10px 0 50px 0;}
 .related-products-section .head-para-three {margin: 0 0 40px 0;}
+
+.related-products-section .related-products-list .product-grid-items-item {flex: 0 0 25%;max-width: 25%;}
+
 .product-info-media{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%;    position: relative;}
 .product-info-main{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%; padding: 0 0 0 50px}
 .product-detail-wraper {padding: 46px 0 20px 0;}
@@ -710,8 +716,9 @@ label.label {display: block;margin: 0 0 5px 0;}
 #requestAppointment .modal-content .modal-header {border-bottom: none;padding: 0 15px;}
 #requestAppointment .modal-content button.btn-close {color: #fff;
 /*    background: url(../images/close-visit.svg) no-repeat;*/
-    margin-top: 0;  
-background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat}
+margin-top: 0;  
+background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+position: absolute;right: 15px;top: 10px;padding: 8px;border-radius: 50%;background-size: 10px;}
 #requestAppointment .modal-content button.btn-close:hover{ opacity:1 }
 #requestAppointment .modal-content .modal-header h5 {color: #fff;text-align: center;width: 100%;text-transform: uppercase;padding: 20px 0 0;}
 #requestAppointment .modal-content .visit-form {padding: 0;}
@@ -848,7 +855,10 @@ z-index: 11;}
 .alert_close .btn-close {padding: 0;font-size: 20px;width: 60px;bottom: 0;margin: auto;}
 .checkout-main-wrap {padding: 40px 0 40px 0;}
 .checkout-title-head {font-size: 26px;font-weight: bold;color: #8e2e65;margin: 0 0 22px 0;}
-.checkout-form-group {margin: 0 0 16px 0;}
+.checkout-form-group {margin: 0 0 16px 0; position: relative;}
+.checkout-form-group span.password-show {position: absolute;top: 40px;right: 15px;}
+.checkout-form-group span.password-show i.fa.fa-eye {color: #000;}
+.checkout-form-group span.password-show i.fa.fa-eye:hover {color: #8e2e65;}
 .input-label {display: block;font-size: 15px;color: #404040;margin: 0 0 7px 0;}
 .create-account-checkbox label {color: #606060;padding: 0 0 0 4px;}
 .create-account-checkbox {margin: 0 0 12px 0;}
@@ -1145,9 +1155,12 @@ font-weight: bold;background-color: #8e2e65;}
 /** Default pages **/
 .defaultpages-wrap {padding: 40px 0; font-size: 16px; line-height: 30px;}
 .defaultpages-wrap p {font-size: 16px;line-height: 29px;}
+.defaultpages-cols p strong {font-family: Lato;color: #000;font-weight: 900;margin: 0 0 5px;}
 
 .defaultpages-cols a {text-decoration: none;color: #8E2E65; font-weight: bold;}
-.defaultpages-cols .vc_custom_heading {text-align: left !important;}
+.defaultpages-cols h2.vc_custom_heading, .defaultpages-cols h2.vc_custom_heading {text-align: left !important;  font-size: 24px !important;color: #000 !important;font-weight: 900 !important;margin: 0 0 24px; line-height: 30px !important;}
+.defaultpages-cols b {font-family: Lato;color: #000;font-weight: 900;margin: 0 0 5px;}
+.defaultpages-cols .vc_custom_heading {text-align: left !important; }
 .cart-empty {background: #f7f6f7;padding: 14px 20px;position: relative;border-top: 2px solid #8e2e65;color: #303030; font-size: 16px;}
 .tinv-header h2 {font-size: 32px;}
 .tinv-header {margin: 0 0 20px 0;}
@@ -1346,7 +1359,7 @@ h6.policyheading a { color: #8e2e65;}
 
 
 /*cookies css*/
-.defaultpages-cols h2.cookies_heading {font-size: 24px !important;color: #000 !important;font-weight: 900 !important;margin: 0 0 24px;}
+.defaultpages-cols h2, .defaultpages-cols h2.cookies_heading, .defaultpages-cols h3.vc_custom_heading {font-size: 24px !important;color: #000 !important;font-weight: 900 !important;margin: 0 0 24px;}
 .defaultpages-cols h5 {font-size: 18px;font-family: Lato;color: #000;font-weight: 900;margin: 0 0 5px;} 
 /*cookies css end*/
 
@@ -1373,12 +1386,12 @@ margin-bottom: 60px; height:auto; background-size: cover; background-position: t
 .ring-guide-text h2 {font-size: 20px;font-family: 'Lato';line-height: 30px;}
 .ring-size-tabing {margin: 50px 0;}
 .ring-size-tabing h2 {font-weight: bold;}
-.ring-size-tabing h3 {font-weight: 600;font-family: 'Playfair Display';margin: 0 0 15px;}
-.ring-size-tabing h4 {text-align: left;font-weight: 600;font-family: 'Playfair Display';margin: 0 0 10px;color: #000; font-size: 20px;}
+.ring-size-tabing h3 {font-weight: 600;font-family: 'Lato';margin: 0 0 15px;}
+.ring-size-tabing h4 {text-align: left;font-weight: 600;font-family: 'Lato';margin: 0 0 10px;color: #000; font-size: 20px;}
 .ring-size-tabing .nav-tabs .nav-link {padding:10px 35px;margin: 0 10px -1px 0;font-size: 17px;font-weight: 600;color: #293241;text-transform: uppercase;
 border: 2px solid #e6e5e1;border-bottom: none;border-radius: 5px 5px 0 0;z-index: 1;position: relative;transition: all 0.3s ease 0s;}
 .ring-size-tabing .nav-tabs .nav-link.active {background: #8e2e65;color: #fff;}
-
+.ring-size-content .ring-size-tabing h2, .ring-size-content .ring-size-tabing h3 {font-family: 'Lato';text-align: left !important;  font-size: 24px !important;color: #000 !important;font-weight: 900 !important;margin: 0 0 24px; line-height: 30px !important;}
 
 .ring-size-tabing #nav-tabContent {padding: 0 !important;border: none !important;background: none !important;}
 .ring-size-tabing #nav-tabContent .tab-pane table.table thead tr th {background: #8e2e65;color: #fff;font-size: 16px; text-align: center;}
@@ -1543,13 +1556,33 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .product-grid-items-item.product-hover-affect .product-items-item-image:focus-visible, .product-grid-items-item.product-hover-affect .product-items-item-image:focus, 
 .product-grid-items-item.product-hover-affect .product-items-item-image a.product-hov img
 { outline:none !important; }
+.product-grid-items-item.product-hover-affect .product-items-item-image:hover img{     transform: inherit; }
 
 
 .product-grid-items-item.product-hover-affect .product-items-item-info .product-hover-video {display: none;}
-.product-grid-items-item.product-hover-affect .product-items-item-info:hover a.product-hov {-webkit-transition: all 200ms ease-in;-webkit-transform: scale(1.1);-ms-transition: all 200ms ease-in;
--ms-transform: scale(1.2);-moz-transition: all 200ms ease-in;-moz-transform: scale(1.2);transition: all 200ms ease-in;transform: scale(1.1);}
-.product-grid-items-item.product-hover-affect .product-items-item-info:hover .product-hover-video {display: block;position: absolute;top: 0;width: 100%;height: 100%;background: #fff; 
+.product-grid-items-item.product-hover-affect .product-items-item-info:hover a.product-hov {-webkit-transition: all 200ms ease-in; -ms-transition: all 200ms ease-in;
+-moz-transition: all 200ms ease-in; transition: all 200ms ease-in; -webkit-transform: scale(1.1);-ms-transform: scale(1.1);transform: scale(1.1);}
+.product-grid-items-item.product-hover-affect .product-items-item-info:hover .product-hover-video {display: block;position: absolute;top: 0;width: 100%;height: auto;background: #fff; 
     padding: 25px;}
+
+
+.product-grid-items-item.product-hover-affect .product-items-item-info a.product-hov img.product-hover-video{
+transform: scale(1.1);
+-webkit-transition: all 200ms ease-in;
+-ms-transition: all 200ms ease-in;
+-moz-transition: all 200ms ease-in;
+transition: all 200ms ease-in;
+
+}
+.product-grid-items-item.product-hover-affect .product-items-item-info:hover a.product-hov img.product-hover-video {
+transform: scale(1.1);
+-webkit-transition: all 200ms ease-in;
+-ms-transition: all 200ms ease-in;
+-moz-transition: all 200ms ease-in;
+transition: all 200ms ease-in;
+}
+
+
 
 .blog-list-sidebar{
     padding: 20px ;
