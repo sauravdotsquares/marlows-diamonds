@@ -1768,7 +1768,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     function getIncreaseDiscountedPrice($category,$price,$diamondType){
        
         $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
-                        $q->whereDate('end_date', '>', now());
+                        // $q->whereDate('end_date', '>', now());
                     })
                     ->with(['discount_data'])->where('category_id', $category)
                     ->whereRaw('"'.$price.'" between `from_price` and `to_price`')
@@ -2109,6 +2109,26 @@ function getFaqByCategorySlug($slugPath)
         return Faqs::where('categories',$productCategories->faq_category)->get();
     }else{
         return [];
+    }
+}
+
+if (!function_exists("getMonthwiseDiscountText")) {
+    function getMonthwiseDiscountText()
+    {
+        return [
+            '1' => 'Winter Sale',
+            '2' => 'Valentines Sale',
+            '3' => 'Spring Sale',
+            '4' => 'Spring Sale',
+            '5' => 'Mid Season Sale',
+            '6' => 'Summer Sale',
+            '7' => 'Summer Sale',
+            '8' => 'Summer Sale',
+            '9' => 'Autumn Sale',
+            '10' => 'Mid Season Sale',
+            '11' => 'Winter Sale',
+            '12' => 'Christmas Sale',
+        ];
     }
 }
     
