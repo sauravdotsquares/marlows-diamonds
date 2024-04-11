@@ -448,6 +448,9 @@ display: inline-block;right: 0;position: absolute;}
 	.main-banner-col.banner-left-col:after{background-size: 80%;}
 	}
 	
+@media(min-width:992px) and (max-width:1024px){
+.product-items-item-info .price-section p{ font-size:12px; }
+}
 	
 	@media(max-width:991px){
 	.diamond-field-labels {margin-bottom: 8px;}
@@ -568,6 +571,11 @@ display: inline-block;right: 0;position: absolute;}
 	.category-list-wrap .category-list-top .category-list-item-searchsort.dropdown-content-desktop {display: none;}
 	
 	.category-sidebar-wrap .reset-filer-container a#resetFilterButton{ width:100%; }
+
+	/*product list page css*/
+.owl-carousel.listing-slider .owl-nav button.owl-prev {left: 15px;}
+.owl-carousel.listing-slider .owl-nav button.owl-next {right: 15px;}
+/*product list page css end*/
 	
 	/*ring size page css*/
 	.inspiration-sec h2, .friendy-expert-sec .friendy-expert-desc h2, .guide-secret h2, .sizing-tip-sec .sizing-tip-desc h2, .ring-size-tabing h4 { font-size: 22px;}

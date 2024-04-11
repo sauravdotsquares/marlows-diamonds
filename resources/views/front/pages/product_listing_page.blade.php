@@ -603,6 +603,7 @@
 @endif
 
 @include('front.includes.instagram-section')
+</div>
 <div class="engagement-ring-img">
     <img src="{{getImageOptimizeDetails('/images/viewguide.webp','1349','537')}}" alt="Find the perfect engagement ring">
     <div class="engagement-ring-img-content">
@@ -613,7 +614,7 @@
 </div>
 </div>
 
-</div>
+
 @endsection
 @section('js')
 <script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
