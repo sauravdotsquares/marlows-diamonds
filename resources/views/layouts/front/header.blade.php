@@ -303,7 +303,6 @@
     <?php 
         $getMonthTextArray = getMonthwiseDiscountText();
         $getCurrentMonth = (int)date('m');
-        echo $getMonthTextArray[$getCurrentMonth];
     ?>
   <div class="post-bar">
         <div class="container">
