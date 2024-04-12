@@ -1538,7 +1538,10 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .blog-carousel-item-slider .owl-carousel .owl-nav button span {font-size: 37px;line-height: 22px;}
 /*engagement ring blog slider css end*/
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 98fc41cd68740ec76ff939be68f9d11191c3c4c3
 /*404 page css*/
 .head-para-three.pagenotfound {margin-top: 50px;}
 .head-para-three.pagenotfound .description {margin-top: 20px;}
@@ -2019,7 +2022,6 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .head-para-three.pagenotfound p {font-size: 18px;line-height: 24px;}
 /*404 page css end*/
 
-.product-items-item-details .list_product_title{    min-height:90;}
 }
 
 

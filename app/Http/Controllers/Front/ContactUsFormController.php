@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Appointments;
 use App\Models\Settings;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeEmail;
 
 class ContactUsFormController extends Controller {
@@ -31,7 +31,7 @@ class ContactUsFormController extends Controller {
         
         
         if (env('APP_ENV')=='production'){
-
+            
             $requestData = [
                 'title' => $request->get('title'),
                 'email' => $request->get('email'),
@@ -39,10 +39,11 @@ class ContactUsFormController extends Controller {
                 'custom_url' => $request->get('custom_url'),
                 'description' => $request->get('description'),
             ];
-
-            $adminEmail = 'sharma.gajendra@dotsquares.com';
+            
+            // $adminEmail = 'sharma.gajendra@dotsquares.com';
             Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
-
+            
+            
             // Mail::send('email.mail', array(
             //     'title' => $request->get('title'),
             //     'email' => $request->get('email'),

@@ -26,8 +26,8 @@ class MailListFormController extends Controller {
 		//  Send mail to admin
 
         if (env('APP_ENV')=='production'){
-
-            $requestData = [
+                
+             $requestData = [
                 'title' => $request->get('title'),
                 'email' => $request->get('email'),
                 'phone' => $request->get('phone'),
@@ -37,19 +37,20 @@ class MailListFormController extends Controller {
             
             // $adminEmail = 'sharma.gajendra@dotsquares.com';
             Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
+            // Mail::to('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
 
-
-            // Mail::send('email.mail', array(
-            //     'title' => $request->get('title'),
-            //     'email' => $request->get('email'),
-            //     'phone' => $request->get('phone'),
-            //     'url' => $request->get('custom_url'),
-            //     'user_query' => $request->get('description'),
-            // ), function($message) use ($request,$admin_email ){
-            //     $message->from('hello@marlows-diamonds.co.uk');
-    		// 	$message->to($admin_email, 'Admin')->subject('New Website Inquiry');
-    		// 	$message->bcc('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry');
-            // });
+            
+    //         Mail::send('email.mail', array(
+    //             'title' => $request->get('title'),
+    //             'email' => $request->get('email'),
+    //             'phone' => $request->get('phone'),
+    //             'url' => $request->get('custom_url'),
+    //             'user_query' => $request->get('description'),
+    //         ), function($message) use ($request,$admin_email ){
+    //             $message->from('hello@marlows-diamonds.co.uk');
+    // 			$message->to($admin_email, 'Admin')->subject('New Website Inquiry');
+    // 			$message->bcc('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry');
+    //         });
         }else{
             $requestData = [
                 'title' => $request->get('title'),
