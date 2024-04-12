@@ -2135,9 +2135,13 @@ if (!function_exists("getMinimumPriceFunction")) {
                 $final_shop_price = $getVariationIdPrice->lab_grown;
             }
         }
+
+        $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$final_shop_price), $productCategory,$diamondTypeStatus);
+
         return [
             'final_rrp_price'=> $final_rrp_price,
             'final_shop_price'=> $final_shop_price,
+            'final_discounted_price'=> isset($final_discounted_price['discounted_price'])?$final_discounted_price['discounted_price']:$final_shop_price,
         ];
     }
 }
