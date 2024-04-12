@@ -18,7 +18,9 @@
 
     <?php
         $now = new DateTime("now");
-        $dist_future = new DateTime($header_settings->get_options('discount-date'));
+        $lastDate = new DateTime('now');
+        $lastDate->modify('last day of this month');        
+        $dist_future = $lastDate->format('m/d/Y h:m:s');
     ?>
 
     <div class="top-bar-mob">
@@ -297,20 +299,24 @@
     <!-- Navbars and logo end here -->
 
     <!-- Post bar start -->
-
+                            
+    <?php 
+        $getMonthTextArray = getMonthwiseDiscountText();
+        $getCurrentMonth = (int)date('m');
+    ?>
   <div class="post-bar">
         <div class="container">
             <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
                 <div class="post-bar-left header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
                 </div>
-                @if($dist_future > $now)
+                @if($lastDate > $now)
                 <div class="post-bar-center" style="height: 40px;">
                     {{-- <a href="{{ route('products.exclusive') }}" >
                         <span> Exclusive to Marlows </span>
                     </a> --}}
                     {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
-                    <p id="offer-text"> {{$header_settings->get_options('discount-text-header')}} </p>
+                    <p id="offer-text"> {{$getMonthTextArray[$getCurrentMonth]}} </p>
                     <p>
                     {{-- <span class="header-heighlight-text">Up to 35% off</span> --}}
                          <span class="header-heighlight-text discount_timer"></span>
@@ -339,8 +345,8 @@
         //     $('.search-suggestion').css('display','none');
         // });
        
-        let discountText = "{{$header_settings->get_options('discount-text-header')}}";
-        let discountDate = "{{$header_settings->get_options('discount-date')}}";
+        let discountText = "{{$getMonthTextArray[$getCurrentMonth]}}";
+        let discountDate = "{{$dist_future}}";
         var countDownDate = new Date(discountDate).getTime();
         var myfunc = setInterval(function() {
 

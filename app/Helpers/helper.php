@@ -1703,14 +1703,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     }
 
     function getRagularFilterPrices($getRequestData,$diamondType,$slug,$filterArray){
-        
-        $increasePercentage = 1;
-        // if($diamondType == 'lab_grown'){
-        //     if ($getRequestData['metal_type'] == '9ct White Gold' || $getRequestData['metal_type'] == '9ct Yellow Gold' || $getRequestData['metal_type'] == '9ct Rose Gold') {
-        //         $increasePercentage = 1.3;
-        //     }
-        // }
-        
+                
         if(isset($diamondType) && !empty($diamondType)){
             $diamondType = $diamondType;
         }else{
@@ -1719,11 +1712,6 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         $rrpPrice = $diamondType.'_rrp';
         $getProductDetails = Products::where('slug',$slug)->first();
         
-        // if(in_array('2',explode(',',$getProductDetails->categories)) && $diamondType == 'lab_grown'){
-        //     if ($getRequestData['metal_type'] == '9ct White Gold' || $getRequestData['metal_type'] == '9ct Yellow Gold' || $getRequestData['metal_type'] == '9ct Rose Gold') {
-        //         $increasePercentage = 1.3;
-        //     }
-        // }
         // $getVariationsArray = ProductVariations::where('product_id',$getProductDetails->id)->pluck('id')->toArray();
         $getProductVariationId = ProductVariations::where('product_id', $getProductDetails->id)->pluck('id')->toArray();
         if (!empty($getProductVariationId)) {
@@ -1754,11 +1742,12 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
             return $e->getMessage();
         }
 
-        $getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice*$increasePercentage,$diamondType);
+        //$getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
+        $getDiscountedPrice = $getRegularPrices->shopPrice;
 
         $result = [
-            'rrp_price'=> $getRegularPrices->rrpPrice*$increasePercentage,
-            'shop_price'=> $getRegularPrices->shopPrice*$increasePercentage,
+            'rrp_price'=> $getRegularPrices->rrpPrice,
+            'shop_price'=> $getRegularPrices->shopPrice,
             'discounted_price'=> $getDiscountedPrice,
             'parent_category' => $categoryId,
         ];
@@ -1768,7 +1757,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     function getIncreaseDiscountedPrice($category,$price,$diamondType){
        
         $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
-                        $q->whereDate('end_date', '>', now());
+                        // $q->whereDate('end_date', '>', now());
                     })
                     ->with(['discount_data'])->where('category_id', $category)
                     ->whereRaw('"'.$price.'" between `from_price` and `to_price`')
@@ -1787,19 +1776,22 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     }
 
     function getFlatDiscountRanges($arrayPrices, $catId,$diamondType){
-        $disFlatPercentage = DiscountRange::whereHas('discount_data', function($q)  {
-                        $q->whereDate('end_date', '>', now());
+        $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
+                        // $q->whereDate('end_date', '>', now());
                     })
                     ->with(['discount_data'])->where('category_id', $catId)
                     ->whereRaw('"'.$arrayPrices['shop_price'].'" between `from_price` and `to_price`')
-                    ->where('diamond_type', $diamondType)
+                    // ->where('diamond_type', $diamondType)
+                    ->when($diamondType, function ($q) use ($diamondType) {
+                        return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
+                    })
                     ->where('discount', '!=', 1)
-                    ->where('discount_type', 'F')
+                    // ->where('discount_type', 'F')
                     ->where('status', 1)
                     ->first();
 
-        if(isset($disFlatPercentage) && !empty($disFlatPercentage)){
-            $arrayPrices['discounted_price'] = round($arrayPrices['shop_price'] * (1 - $disFlatPercentage->discount / 100));
+        if(isset($disPercentage) && !empty($disPercentage)){
+            $arrayPrices['discounted_price'] = round($arrayPrices['shop_price'] * (1 - $disPercentage->discount / 100));
             return $arrayPrices;
         }
         return $arrayPrices;
@@ -2109,6 +2101,26 @@ function getFaqByCategorySlug($slugPath)
         return Faqs::where('categories',$productCategories->faq_category)->get();
     }else{
         return [];
+    }
+}
+
+if (!function_exists("getMonthwiseDiscountText")) {
+    function getMonthwiseDiscountText()
+    {
+        return [
+            '1' => 'Winter Sale',
+            '2' => 'Valentines Sale',
+            '3' => 'Spring Sale',
+            '4' => 'Spring Sale',
+            '5' => 'Mid Season Sale',
+            '6' => 'Summer Sale',
+            '7' => 'Summer Sale',
+            '8' => 'Summer Sale',
+            '9' => 'Autumn Sale',
+            '10' => 'Mid Season Sale',
+            '11' => 'Winter Sale',
+            '12' => 'Christmas Sale',
+        ];
     }
 }
     
