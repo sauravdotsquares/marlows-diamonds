@@ -1,7 +1,5 @@
 <?php
-
 use App\Models\SitemapUrls;
-
 SitemapUrls::deleteRecordByUrl(request()->path());
 $pageRedirect = pageRedirects(request()->path());
 if ($pageRedirect) {
@@ -34,7 +32,6 @@ if ($pageRedirect) {
         </div>
     </div>
 </div>
-
 <!-- Shop from the Best start here -->
 <div class="shopfrom-best">
     <div class="container">
@@ -50,7 +47,7 @@ if ($pageRedirect) {
                                 <?php
                                 $ringImageDiamondRingUrl = getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg', '340', '340');
                                 ?>
-                                <img src="https://devstaging.marlows-diamonds.co.uk/tempfolderpath/multi-stone.png" alt="Multi Stone Rings">
+                                <img src="https://marlows-diamonds.co.uk/tempfolderpath/multi-stone.png" alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -90,12 +87,10 @@ if ($pageRedirect) {
                         <div class="product-item-details">
                             <div class="product-titles">
                                 <a href="{{ asset('/wedding-rings') }}" style="color:#8e2e65;    text-decoration: none;">Wedding Rings</a>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="item">
                     <div class="product-info">
                         <div class="product-image">
@@ -113,11 +108,9 @@ if ($pageRedirect) {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 <!-- Shop from the Best end here -->
-
 @endsection
