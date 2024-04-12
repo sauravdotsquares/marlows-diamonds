@@ -1498,6 +1498,13 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .blog-carousel-item-slider .owl-carousel .owl-nav button span {font-size: 37px;line-height: 22px;}
 /*engagement ring blog slider css end*/
 
+/*404 page css*/
+.head-para-three.pagenotfound {margin-top: 50px;}
+.head-para-three.pagenotfound .description {margin-top: 20px;}
+.head-para-three.pagenotfound .description a{font-size: 20px;}
+.head-para-three.pagenotfound p {font-size: 24px;}
+/*404 page css end*/
+
 /*footer css*/
 .location-header a {color: #000;text-decoration: none;}
 .disclaimer-content .footer-reg {color: #fff;text-decoration:none; margin: 10px 0 7px;display: inline-block;}
@@ -1944,6 +1951,11 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .finance-eligibility ul li{ width:45%; }
 .finance-sec .finance-whatwe-content {padding: 0 0px 0 0px;}
 /*finance css end*/
+
+/*404 page css*/
+.head-para-three.pagenotfound p {font-size: 18px;line-height: 24px;}
+/*404 page css end*/
+
 }
 
 
