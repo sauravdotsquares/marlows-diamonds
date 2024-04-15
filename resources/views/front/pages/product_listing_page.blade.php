@@ -990,19 +990,22 @@
     //     }
     // });
 
-    $('#searchd').on('keyup', function() {
+    $('#searchd').on('keyup', function(event) {
         let searchTextData = $(this).val();
         if (searchTextData.trim() != '' && searchTextData.length > 2) {
-            console.log("If checking");
             $("#showProductList").html('');
             sendDataValues(1, 'html');
         } else if (searchTextData.length == 0) {
-            console.log("Else If checking");
-            location.reload();
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+            // location.reload();
+            $("#showProductList").html('');
+            sendDataValues(1, 'html');
             // var page = $('#pagescroll').val();
             // sendDataValues(page, 'append');
         }
-        console.log("else checking");
     });
 
     function sendDataValues(page, type = 'append',sorting='asc') {
