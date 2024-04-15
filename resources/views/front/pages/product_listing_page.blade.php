@@ -1000,7 +1000,6 @@
                 event.preventDefault();
                 return false;
             }
-            // location.reload();
             $("#showProductList").html('');
             sendDataValues(1, 'html');
             // var page = $('#pagescroll').val();
@@ -1032,13 +1031,13 @@
                 $('#pagescroll').val(res.nextPage);
                 $('html, body').animate({scrollTop: '680px'}, 700);
                 if (res.status == 404 || res.productItems == "") {
-                    $('.category-list-item-searchsort').css('display','none');
+                    // $('.category-list-item-searchsort').css('display','none');
                     $('.ajax-load').html("0 Product Found");
                     $('#productCountData').text("");
                     return false;
                 }
                 $('.ajax-load').hide();
-                $('.category-list-item-searchsort').css('display','inherit');
+                // $('.category-list-item-searchsort').css('display','inherit');
                 if (type == 'append') {
                     $("#showProductList").html(res.productItems);
                 } else {
