@@ -533,7 +533,7 @@
 	<script src="{{ asset('assets/vendors/fancybox-master/dist/jquery.fancybox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
-		const imagesPath = "{{asset('/storage/')}}/";
+		const imagesPath = "{{env('APP_IMAGE_URL')}}/storage/";
 		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
 
         function blankForm(){
