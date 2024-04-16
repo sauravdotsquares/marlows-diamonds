@@ -1246,7 +1246,7 @@ if (!function_exists('validate_breadcrumb')) {
          $is404 = false;
          $categoryData = null;
          $getAjaxResponses = true;
-         $page = 12;
+         $page = 30;
  
          if (isset($requestData['category']) && count($requestData['category']) == 1 && in_array('diamonds-rings', $requestData['category'])) {
              $requestData['category'] = [
@@ -2101,6 +2101,48 @@ function getFaqByCategorySlug($slugPath)
         return Faqs::where('categories',$productCategories->faq_category)->get();
     }else{
         return [];
+    }
+}
+
+if (!function_exists("getMinimumPriceFunction")) {
+    function getMinimumPriceFunction($productDetails)
+    {
+        $productCategory = explode(',',$productDetails->categories);
+
+        $diamondTypeStatus = 'lab_grown';
+        if(in_array('50',$productCategory) || in_array('53',$productCategory) || in_array('54',$productCategory)){
+            $diamondTypeStatus = 'mined_diamond';
+        }
+
+        $getVariationIdPrice = ProductVariations::where('product_id',$productDetails->id)->select('mined_diamond','lab_grown','mined_diamond_rrp','lab_grown_rrp','product_id','id')->orderBy($diamondTypeStatus,'asc')->first();
+
+        if(isset($getVariationIdPrice) && !empty($getVariationIdPrice)){
+
+            if(in_array('8',$productCategory)){
+                if(in_array('18',$productCategory)){
+                    $newLabPrice = 0;
+                }else{
+                    $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->first();
+                    $newLabPrice = $newPrice->price;
+                }
+                $final_rrp_price = $getVariationIdPrice->lab_grown_rrp + $newLabPrice;
+                $final_shop_price = $getVariationIdPrice->lab_grown + $newLabPrice;
+            }elseif(in_array('50',$productCategory) || in_array('53',$productCategory) || in_array('54',$productCategory)){
+                $final_rrp_price = $getVariationIdPrice->mined_diamond_rrp;
+                $final_shop_price = $getVariationIdPrice->mined_diamond;
+            }else{
+                $final_rrp_price = $getVariationIdPrice->lab_grown_rrp;
+                $final_shop_price = $getVariationIdPrice->lab_grown;
+            }
+        }
+
+        $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$final_shop_price), $productCategory,$diamondTypeStatus);
+
+        return [
+            'final_rrp_price'=> $final_rrp_price,
+            'final_shop_price'=> $final_shop_price,
+            'final_discounted_price'=> isset($final_discounted_price['discounted_price'])?$final_discounted_price['discounted_price']:$final_shop_price,
+        ];
     }
 }
 

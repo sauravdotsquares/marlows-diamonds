@@ -109,7 +109,7 @@
                                                 <div class="ring-pr-image">
                                                 @if(isset($preContentData->image_url) && !empty($preContentData->image_url))
                                                     <!-- <a href="/engagement-rings/solitaire"> -->
-                                                        <img src="{{ env('APP_IMAGE_STAG_URL').'/storage/'.$preContentData->image_url }}" alt="{{isset($preContentData->image_alt_title)?$preContentData->image_alt_title:''}}">
+                                                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$preContentData->image_url }}" alt="{{isset($preContentData->image_alt_title)?$preContentData->image_alt_title:''}}">
                                                     <!-- </a> -->
                                                     @endif
                                                 </div>
@@ -359,7 +359,99 @@
 
                 <!--<div class="text-center">{!!isset($filterItemTextData->top_text)?$filterItemTextData->top_text:''!!}</div>-->
                 <br>
-                <div class="search-result" style="margin-top: -15px;"> @include('front.includes.productCard')</div>
+                <div class="search-result" style="margin-top: -15px;"> 
+                <div class="product-grid-wrap">
+                    <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
+                        @foreach($getProductListFinal as $product)
+                        <?php $thumbnailGif = getThumbnailGif($product->id); ?>
+                        <?php $getProductListingPrices = getMinimumPriceFunction($product);
+                        ?>
+                        <div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
+
+                            <div class="product-items-item-info">
+                                <div class="product-item-top">
+                                    <div class="product-onsale">
+                                        <!-- On Sale -->
+                                    </div>
+                                    @php
+                                    $wishlist = session()->get('wishlist', []);
+                                    $wishListClass = "fa-heart-o";
+                                    if(array_key_exists($product->id,$wishlist)){
+                                    $wishListClass = "fa-heart";
+                                    }
+                                    @endphp
+                                    <a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{$product->id}}" data-productslug="{{$product->slug}}"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
+                                </div>
+
+                                <div class="product-items-item-image">
+
+                                    <a href="{{asset('product/'.$product->slug)}}" class="{{ $thumbnailGif ? 'product-hov' : '' }}">
+                                        @if(isset($product->getProductImages) && !empty($product->getProductImages->image_url))
+                                        {{-- <img src="{{ getImageOptimizeDetails('/storage/'.$product->getProductImages->image_url,'217','217')}}" alt="{{$product->title}}" loading="lazy"> --}}
+                                        <img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages->image_url }}" alt="{{$product->title}}" loading="lazy">
+                                        @endif
+
+                                        <?php if ($thumbnailGif) { ?>
+                                            <?php if ($thumbnailGif->extension == "gif") { ?>
+                                                <img src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" class="product-hover-video" loading="lazy">
+                                            <?php } else if ($thumbnailGif->extension == "mp4") { ?>
+                                                {{-- <img class="product-hover-video" src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" alt="{{$product->title}}"> --}}
+                                                {{-- <video class="product-hover-video" muted="muted" playsinline>
+                                                    <source src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" type="video/mp4">
+                                                </video> --}}
+                                            <?php }else{ ?>
+                                                <img class="product-hover-video" src="{{ env('APP_IMAGE_URL').'/storage/'.$thumbnailGif->image_url }}" alt="{{$product->title}}">
+                                            <?php } ?>
+                                        <?php } ?>
+
+                                    </a>
+                                </div>
+                                <div class="product-items-item-details">
+                                    <div class="product-items-item-name">
+                                        <div class="list_product_title">
+                                            <?php
+                                            $titleSplits = [];
+                                            if (isset($product->title) && !empty($product->title)) {
+                                                $titleSplits = explode('|', $product->title);
+                                            }
+                                            ?>
+                                            @if(isset($product->slug) && !empty($product->slug))
+                                            <a href="{{asset('product/'.$product->slug)}}" class="title-list-heading">{{isset($titleSplits[0])?mb_convert_case($titleSplits[0], MB_CASE_TITLE, 'UTF-8'):''}}</a>
+                                            @if(isset($titleSplits[1]) && !empty($titleSplits[1]))
+                                            <a href="{{asset('product/'.$product->slug)}}">{{$titleSplits[1]}}</a>
+                                            @endif
+                                            @else
+                                            <a href="#">{{isset($titleSplits[0])?$titleSplits[0]:''}}</a>
+                                            <a href="#">{{isset($titleSplits[1])?$titleSplits[1]:''}}</a>
+                                            @endif
+                                        </div>
+                                       
+                                    </div>
+                                    
+                                </div>
+                                <?php if(!empty($getProductListingPrices['final_shop_price']) && $getProductListingPrices['final_shop_price'] != 0){ ?>
+                                    <div class="price-section">
+                                        <div style="display: flex;">
+                                            <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
+                                            @if($getProductListingPrices['final_discounted_price'] != $getProductListingPrices['final_shop_price'])
+                                            <h4><del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_shop_price']),2)}}</del> </h4>
+                                            @endif
+                                            
+                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_discounted_price']),2)}} </span></div>
+                                        </div>
+                                        @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_shop_price'])
+                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_shop_price']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del> </p>
+                                        @endif
+                                    </div>
+                                <?php } ?> 
+                            </div>
+                        </div>
+                        @endforeach
+                        {!! $getProductListFinal->render() !!}
+                    </div>
+                </div>
+
+                </div>
                 <div class="loading-data-element"></div>
                 <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                 <div class="ajax-load text-center" style="display:none;">
@@ -515,6 +607,7 @@
 @endif
 
 @include('front.includes.instagram-section')
+</div>
 <div class="engagement-ring-img">
     <img src="{{getImageOptimizeDetails('/images/viewguide.webp','1349','537')}}" alt="Find the perfect engagement ring">
     <div class="engagement-ring-img-content">
@@ -525,7 +618,7 @@
 </div>
 </div>
 
-</div>
+
 @endsection
 @section('js')
 <script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
@@ -897,13 +990,18 @@
     //     }
     // });
 
-    $('#searchd').on('keyup', function() {
+    $('#searchd').on('keyup', function(event) {
         let searchTextData = $(this).val();
-        if (searchTextData.length > 2) {
+        if (searchTextData.trim() != '' && searchTextData.length > 2) {
             $("#showProductList").html('');
             sendDataValues(1, 'html');
         } else if (searchTextData.length == 0) {
-            location.reload();
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+            $("#showProductList").html('');
+            sendDataValues(1, 'html');
             // var page = $('#pagescroll').val();
             // sendDataValues(page, 'append');
         }
@@ -923,19 +1021,23 @@
                 'keyword': $('#searchd').val(),
                 'path': '{{ $path }}',
                 'page': page,
-                'per_page_product': 12
+                'per_page_product': 30
             },
             success: function(res) {
                 // filterShapechanged();
-                // console.log(res);
-                $('#pagescroll').val(res.nextPage);
+                // console.log(res);resetFilterButton
 
+
+                $('#pagescroll').val(res.nextPage);
+                $('html, body').animate({scrollTop: '680px'}, 700);
                 if (res.status == 404 || res.productItems == "") {
+                    // $('.category-list-item-searchsort').css('display','none');
                     $('.ajax-load').html("0 Product Found");
                     $('#productCountData').text("");
                     return false;
                 }
                 $('.ajax-load').hide();
+                // $('.category-list-item-searchsort').css('display','inherit');
                 if (type == 'append') {
                     $("#showProductList").html(res.productItems);
                 } else {

@@ -7,19 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class contact extends Mailable implements ShouldQueue
+class OrderMailProcess extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $requestData;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($requestData)
     {
-        $this->user = $user;
+        $this->requestData = $requestData;
     }
 
     /**
@@ -29,6 +29,8 @@ class contact extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('email.orderstatusqueueprocess')->with([
+            'data1' => $this->requestData,
+        ])->subject('Complete your purchase at Marlows Diamonds');
     }
 }

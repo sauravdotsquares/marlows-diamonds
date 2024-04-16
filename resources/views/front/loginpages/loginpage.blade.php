@@ -35,6 +35,9 @@
                                     <div class="checkout-form-group">
                                         <label class="input-label">Password  <abbr class="required">*</abbr></label>
                                         <input type="password" required="required" name="password" id="password" class="form-control">
+                                        <span class="password-show hide"><a href="javascript:void(0);">
+                                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                            <i class="fa fa-eye" aria-hidden="true"></i></a></span>
                                     </div>
                                     <div class="action-login">
                                         <button class="btn-bg-small" type="submit">Login</button>
@@ -80,6 +83,10 @@
                                     <div class="checkout-form-group">
                                         <label class="input-label">Password <abbr class="required">*</abbr></label>
                                         <input type="password" name="password" id="password" required="required" class="form-control {{ $errors->has('password') ? 'error' : '' }}">
+                                        <span class="password-show hide"><a href="javascript:void(0);">
+                                            <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a></span>
                                         @if ($errors->has('password'))
                                             <div class="error">
                                                 {{ $errors->first('password') }}
@@ -107,4 +114,21 @@
 @endsection
 
 @section('js')
+
+    <script>
+        $('.password-show').on('click',function(e){
+            var target = e.currentTarget
+            $(target).hasClass('show')?hidePassword($(target)):showPassword($(target))
+        });
+
+        function hidePassword(e){
+            e.removeClass('show').addClass('hide')
+            e.prev('input').attr('type','password')
+        }
+        function showPassword(e){
+            e.removeClass('hide').addClass('show')
+            e.prev('input').attr('type','text')
+        }
+    </script>
+
 @endsection

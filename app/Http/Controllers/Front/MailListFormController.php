@@ -52,17 +52,38 @@ class MailListFormController extends Controller {
     // 			$message->bcc('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry');
     //         });
         }else{
-            Mail::send('email.mail', array(
+            $requestData = [
                 'title' => $request->get('title'),
                 'email' => $request->get('email'),
                 'phone' => $request->get('phone'),
-                'url' => $request->get('custom_url'),
-                'user_query' => $request->get('description'),
-            ), function($message) use ($request,$admin_email ){
-                $message->from('hello@marlows-diamonds.co.uk');
-    			$message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry local');
-    			$message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Inquiry local');
-            });
+                'custom_url' => $request->get('custom_url'),
+                'description' => $request->get('description'),
+            ];
+            
+            $adminEmail = 'sharma.gajendra@dotsquares.com';
+
+            // $when = now()->addMinutes(3);
+
+            // Mail::to($adminEmail)->later($when, new WelcomeEmail($requestData));
+
+            Mail::to($adminEmail)->cc('sanyukta.chauhan@dotsquares.com')->queue(new WelcomeEmail($requestData));
+
+            // echo "afdsaf<pre>";
+            // print_r("Mail Send");
+            // die;
+
+            // SendEmailJob::dispatch($requestData, $adminEmail);
+            // Mail::send('email.mail', array(
+            //     'title' => $request->get('title'),
+            //     'email' => $request->get('email'),
+            //     'phone' => $request->get('phone'),
+            //     'url' => $request->get('custom_url'),
+            //     'user_query' => $request->get('description'),
+            // ), function($message) use ($request,$admin_email ){
+            //     $message->from('hello@marlows-diamonds.co.uk');
+    		// 	$message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry local');
+    		// 	//$message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Inquiry local');
+            // });
         }
        
         return response()->json(['status'=> 200, 'success'=>'Thank you for subscribe us!!!']);

@@ -135,7 +135,7 @@
 					@if(!in_array('exclusive-to-marlows', $all_categories_slug))
 					<div class="diamond-type">
 						<label>Choose Your Diamond</label>
-						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined')
+						@if(isset($requestData["diamond_type"]) && $requestData["diamond_type"] == 'mined_diamond')
 							<div class="d-type-input">
 								<input type="radio" name="attribute_choose-your-diamond" class="diamond_type"  checked value="mined_diamond">
 								<span>Mined Diamond</span>
@@ -533,7 +533,7 @@
 	<script src="{{ asset('assets/vendors/fancybox-master/dist/jquery.fancybox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
-		const imagesPath = "{{asset('/storage/')}}/";
+		const imagesPath = "{{env('APP_IMAGE_URL')}}/storage/";
 		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
 
         function blankForm(){
@@ -681,7 +681,7 @@
 			});
             var multistone = '{{$plainbandMulti}}';
             var jewellery = '{{$plainbandJewellery}}';
-			var data_slug = '{{url("/")}}';
+			var data_slug = "{{env('APP_IMAGE_URL')}}";
 			$.ajax({
 				type: 'POST',
 				url: '{{route("get-variations-data")}}',
@@ -733,7 +733,7 @@
 						.trigger('to.owl.carousel', [pendingItems.length, 0])
 						.trigger('refresh.owl.carousel')
 						.trigger('stop.owl.autoplay')
-						.trigger('play.owl.autoplay',[7000, 300])
+						.trigger('play.owl.autoplay',[15000, 300])
 					}else if(res.vari_image!='' && res.vari_image!=null && res.vari_video==null){
 						const items = $('#carousel').find('.owl-item');
 						items.each((index, element)=>{
@@ -1041,7 +1041,7 @@
 			  autoplay: true,
 			  rewind: true,
 			  responsiveClass: true,
-			  autoplayTimeout: 7000,
+			  autoplayTimeout: 15000,
 			  smartSpeed: 300,
 			  nav: true,
 			  items : 1,
@@ -1083,7 +1083,7 @@
 				$owl
 				.trigger('to.owl.carousel', [itemPosition, 0])
 				.trigger('stop.owl.autoplay')
-				.trigger('play.owl.autoplay',[7000, 300]);
+				.trigger('play.owl.autoplay',[15000, 300]);
 			});
 	    });
 	</script>

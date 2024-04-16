@@ -4,7 +4,7 @@
         <p class="location-description">Visit us at
             <strong> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ </strong> and <strong> 46 Warstone Ln, Hockley, Birmingham B18 6JJ </strong> </p>
         <p class="location-button">
-            <a href="{{ route('contact') }}" class="btn btn-block">BOOK APPOINTMENT</a>
+            <a href="{{ route('contact') }}" class="btn-bg-small">BOOK APPOINTMENT</a>
         </p>
     </div>
     <div class="location-right-section">

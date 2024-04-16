@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\HKDiamondStock;
+use App\Models\Order;
+use App\Mail\OrderMailProcess;
+use Mail;
 use SoapClient,Log;
+use Carbon\Carbon;
 
 class ApiController extends Controller
 {
@@ -227,6 +231,67 @@ class ApiController extends Controller
             Log::info("-------------");
             die;
         }
+    }
+
+    function getOrderMailProcessingFunction() {
+
+        $start_date_time = date('Y-m-d H:i:s');
+        Log::info("Order Mail Processing API work start at:- ". $start_date_time);
+
+        $currentYear = date('Y');
+    
+        $query = Order::with('getOrderDetailsFunction')
+        ->where(function ($query) use ($currentYear) {
+            $query->whereYear('created_at', $currentYear)
+                ->where('email_status', 1);
+        })
+        ->where(function ($query) {
+            $query->where('status', 1)
+                ->orWhere('status', 0);
+        })->limit(1)->get();
+    
+        if ($query !== null) {
+            $processing_date_time = date('Y-m-d H:i:s');
+            Log::info("Order Mail Processing API work Processing at:- ". $processing_date_time);
+            foreach ($query as $key => $order) {
+                if (env('APP_ENV') == 'local') {
+                    $data = [
+                        'data' => $order->toArray()
+                    ];
+                    $adminEmail = 'sharma.gajendra@dotsquares.com'; // use it on production $order->user_details->email
+                    $when = Carbon::now()->addMinutes(250);
+                    // $when = Carbon::now()->addSeconds(10);
+                    Mail::to($adminEmail)->cc('jyoti21tp@gmail.com')->bcc('gajendra3036@gmail.com')->later($when, new OrderMailProcess($data));
+                    Order::where('id', $order->id)->update(['email_status' => 2]);
+                }
+            }
+            echo "Mail Send Completed";
+            $end_date_time = date('Y-m-d H:i:s');
+            Log::info("Order Mail API work Completed at:- ". $end_date_time);
+        }else{
+            $failed_date_time = date('Y-m-d H:i:s');
+            Log::info("Order Mail API work Failed at:- ". $failed_date_time);
+        }
+        $wrong_date_time = date('Y-m-d H:i:s');
+        Log::info("Order Mail Something Went Wrong:- ". $wrong_date_time);
+    }
+
+    public function getOrderMailProcessingPreviewFunction() {
+        $currentYear = date('Y');
+        $getOrderDetails = Order::with('getOrderDetailsFunction')
+        ->where(function ($query) use ($currentYear) {
+            $query->whereYear('created_at', $currentYear)
+                ->where('email_status', 1);
+        })->where(function ($query) {
+            $query->where('status', 1)
+                ->orWhere('status', 0);
+        })->first()->toArray();
+
+        $data1 = [
+            'data' => $getOrderDetails,
+        ];
+
+        return view('email.orderstatusqueueprocess',compact('data1'));
     }
 
 }

@@ -22,6 +22,7 @@ use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 use Session, Redirect, Config;
 use Mail;
+
 use App\Models\Settings;
 
 class PayPalPaymentController extends Controller
@@ -224,7 +225,24 @@ class PayPalPaymentController extends Controller
                     });
                 } else if (env('APP_ENV') == 'local') {
                     $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
-                        Mail::send('email.orderstatus', array(
+
+                    // $adminEmail = 'sharma.gajendra@dotsquares.com';
+
+                    // $when = now()->addMinutes(1);
+
+                    // Mail::to($adminEmail)->cc('jhandu.saini@dotsquares.com')->bcc('sanyukta.chauhan@dotsquares.com')->later($when, new OrderMailProcess($data));
+
+                    // Mail::to($adminEmail)->cc('jhandu.saini@dotsquares.com')->queue(new OrderMailProcess($data));
+
+                    // echo "adfadfsdfsdfdsffdfdsf checking again<pre>";
+                    // print_r($getOrderDetailsMail['user_details']['email']);
+                    // echo "<br>";
+                    // print_r($data);
+                    // die;
+
+                   
+                    
+                    Mail::send('email.orderstatus', array(
                         'data1' => $data,
                     ), function($message) use ($request,$admin_email, $transaction_emails ){
                         $message->from('hello@marlows-diamonds.co.uk');
@@ -236,12 +254,11 @@ class PayPalPaymentController extends Controller
                                 $message->cc('raubi.gaur@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
                             }
                         }
-
                         $message->cc('sanyukta.chauhan@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
                     });
                 }
 
-                Order::where('token',$request->token)->update(['email_status'=>2]);
+                // Order::where('token',$request->token)->update(['email_status'=>2]);
                 
                 $result = [
                     'pay' => $getOrderDetailsMail,
