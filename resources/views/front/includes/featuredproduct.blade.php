@@ -1,8 +1,12 @@
 <!-- Best Selling Marlow's Diamond Jewellery start here -->
 @php
     $product_data = getFeaturedProducts();
+
+   
+
 @endphp
 @if(count($product_data))
+
 <div class="best-selling-marlows">
     <div class="container">
         <div class="head-para-three">
@@ -12,7 +16,7 @@
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
                 @foreach($product_data as $key => $product)
-                    @if($product->ProductVariationMinMaxPrice->MaxPrice > 0)
+                    {{--@if($product->ProductVariationMinMaxPrice->MaxPrice > 0) --}}
                         <div class="item">
                             <div class="product-info">
                                 <div class="product-image">
@@ -40,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    {{-- @endif --}}
                 @endforeach
             </div>
         </div>
