@@ -718,6 +718,8 @@
 
         if (arrVars[0] == 'diamond-engagement-rings') {
             $("input[name=category][value='diamond-jewellery']").parent('li').css('display', 'none');
+            $("input[name=category][value='wedding-rings']").parent('li').css('display', 'none');
+            $("input[name=category][value='eternity-rings']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='mens']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='womens']").parent('li').css('display', 'none');
 
@@ -741,6 +743,8 @@
 
         if (arrVars[0] == 'eternity-rings') {
             $("input[name=category][value='diamond-jewellery']").parent('li').css('display', 'none');
+            $("input[name=category][value='engagement-rings']").parent('li').css('display', 'none');
+            $("input[name=category][value='wedding-rings']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='halo']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='multi-stone']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='shoulder-set']").parent('li').css('display', 'none');
@@ -768,6 +772,8 @@
 
         if (arrVars[0] == 'wedding-rings') {
             $("input[name=category][value='diamond-jewellery']").parent('li').css('display', 'none');
+            $("input[name=category][value='engagement-rings']").parent('li').css('display', 'none');
+            $("input[name=category][value='eternity-rings']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='halo']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='multi-stone']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='shoulder-set']").parent('li').css('display', 'none');
@@ -792,6 +798,8 @@
 
         if (arrVars[0] == 'engagement-rings') {
             $("input[name=category][value='diamond-jewellery']").parent('li').css('display', 'none');
+            $("input[name=category][value='wedding-rings']").parent('li').css('display', 'none');
+            $("input[name=category][value='eternity-rings']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='mens']").parent('li').css('display', 'none');
             $("input[name=style-categories][value='womens']").parent('li').css('display', 'none');
 
