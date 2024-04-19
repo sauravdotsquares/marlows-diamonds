@@ -439,8 +439,8 @@
                                             
                                             <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_discounted_price']),2)}} </span></div>
                                         </div>
-                                        @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_shop_price'])
-                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_shop_price']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del> </p>
+                                        @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_discounted_price'])
+                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_discounted_price']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del> </p>
                                         @endif
                                     </div>
                                 <?php } ?> 
