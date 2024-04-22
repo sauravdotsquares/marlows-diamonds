@@ -87,7 +87,7 @@ class XMLController extends Controller
                 foreach($diamondTypeArray as $diamondKey => $diamondType){
 
                     $prod_categories = explode(',',$productArrayNew->categories);
-                    if(in_array("54",$prod_categories) && $diamondType == 'lab_grown'){
+                    if((in_array("50",$prod_categories) || in_array("53",$prod_categories) || in_array("54",$prod_categories)) && $diamondType == 'lab_grown'){
                         
                     }else if(in_array("8", $prod_categories) && $diamondType == 'lab_grown'){
                         // No entry in data
