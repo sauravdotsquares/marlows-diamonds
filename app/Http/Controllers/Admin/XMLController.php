@@ -141,7 +141,7 @@ class XMLController extends Controller
                                 $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
                                 $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
                                 $productCondition  =  'new';
-                                $productAvailability  =  'in stock';
+                                $productAvailability  =  'in_stock';
                                 $productIdentifierExists  =  'no';
                                 $productType  =  $productArrayNew->cat_details;
                                 $product = $dom->createElement('item');
@@ -170,7 +170,7 @@ class XMLController extends Controller
                                 $price = $dom->createElement('g:canonical_link', $productLink);
                                 $product->appendChild($price);
                                 foreach($productArrayNew->getProductGallery as $key => $addImages){
-                                    $additional_image_link = $dom->createElement('g:additional_image_link', url('').'/storage/'.$addImages->image_url);
+                                    $additional_image_link = $dom->createElement('g:additional_image_link', env('APP_IMAGE_URL').'/storage/'.$addImages->image_url);
                                     $product->appendChild($additional_image_link);
                                 }
                                 $shipping_label = $dom->createElement('g:shipping_label', 0.00);
@@ -241,7 +241,7 @@ class XMLController extends Controller
                                     $productDiscountedPrice  =  round($getFinalPriceArray['allPrices']['discounted_price']);
                                 }
                                 $productCondition  =  'new';
-                                $productAvailability  =  'in stock';
+                                $productAvailability  =  'in_stock';
                                 $productIdentifierExists  =  'no';
                                 $productType  =  $productArrayNew->cat_details;
                                 $product = $dom->createElement('item');
@@ -270,7 +270,7 @@ class XMLController extends Controller
                                 $price = $dom->createElement('g:canonical_link', $productLink);
                                 $product->appendChild($price);
                                 foreach($productArrayNew->getProductGallery as $key => $addImages){
-                                    $additional_image_link = $dom->createElement('g:additional_image_link', url('').'/storage/'.$addImages->image_url);
+                                    $additional_image_link = $dom->createElement('g:additional_image_link', env('APP_IMAGE_URL').'/storage/'.$addImages->image_url);
                                     $product->appendChild($additional_image_link);
                                 }
                                 $shipping_label = $dom->createElement('g:shipping_label', 0.00);
