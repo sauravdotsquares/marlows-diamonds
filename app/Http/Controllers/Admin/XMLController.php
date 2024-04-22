@@ -138,7 +138,7 @@ class XMLController extends Controller
                                 $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
-                                $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
+                                $productImageLink      =  env('APP_IMAGE_URL').'/storage/'.$productArrayNew->getProductImages->image_url;
                                 $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
                                 $productCondition  =  'new';
                                 $productAvailability  =  'in_stock';
@@ -234,7 +234,7 @@ class XMLController extends Controller
                                 $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
-                                $productImageLink      =  url('').'/storage/'.$productArrayNew->getProductImages->image_url;
+                                $productImageLink      =  env('APP_IMAGE_URL').'/storage/'.$productArrayNew->getProductImages->image_url;
                                 $productRRPPrice  =  round($getFinalPriceArray['allPrices']['rrp_price']);
                                 $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
                                 if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
