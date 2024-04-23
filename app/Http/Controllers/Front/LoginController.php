@@ -343,7 +343,7 @@ class LoginController extends Controller
 
     public function getOrderDetailsPage(Request $request)
     {
-        $getOrderDetails = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first();
+        $getOrderDetails = Order::with('getOrderDetailsFunction')->where('custom_order_id',$request->token)->first();
 
         if($getOrderDetails){
             $view = view('front.ajax.user-order-details',compact('getOrderDetails'))->render();

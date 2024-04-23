@@ -258,7 +258,7 @@ class PayPalPaymentController extends Controller
                     });
                 }
 
-                // Order::where('token',$request->token)->update(['email_status'=>2]);
+                Order::where('token',$request->token)->update(['email_status'=>2]);
                 
                 $result = [
                     'pay' => $getOrderDetailsMail,

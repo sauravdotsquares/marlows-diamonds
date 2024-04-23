@@ -32,6 +32,10 @@
                                     <a class="order-pr-name" href="javascript:void(0);">
                                         <strong class="product-quantity">{{isset($getDataProduct['0'])?$getDataProduct['0']:'Custom Diamond'}}×{{$value->quantity}}</strong>
                                     </a>
+                                @elseif(isset($value->order_product_details) && !empty($value->order_product_details))
+                                    <a class="order-pr-name" href="{{asset('product/')}}/{{isset($value->product_details)?$value->product_details->slug:''}}">
+                                        <strong class="product-quantity">{{isset($value->product_details->title)?$value->product_details->title:'Custom Diamond'}}×{{$value->quantity}}</strong>
+                                    </a>
                                 @endif
                                 <ul class="wc-item-meta">
                                     @if(isset($detailsDecode['choose_diamond']) && !empty($detailsDecode['choose_diamond']))
