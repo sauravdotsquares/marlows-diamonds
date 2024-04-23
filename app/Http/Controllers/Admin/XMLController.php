@@ -105,9 +105,6 @@ class XMLController extends Controller
                             ]);
 
                             $getFinalPriceArray = $this->getProductVariationPrices($priceVariationArrayBeforePrices);
-                            // echo "if <pre>";
-                            // print_r($getFinalPriceArray);
-                            // die;
                             // $getFinalPriceArray = $this->getPriceCalculationFunction($productArrayNew,$diamondType,$dataArray->regular_price);
                             if(isset($getFinalPriceArray) && $getFinalPriceArray != 0){
                                 $title = '';
@@ -200,8 +197,6 @@ class XMLController extends Controller
                         }
                     }else{
                         if (in_array("8", $prod_categories)){ 
-                            // echo "checking in engagement rings";
-                            // die;
                             //not upload engagement rings products
                         }else{
                             $arrayVariationValue = array_values(array_filter($dataArray->get_vari_details_id->pluck('value')->toArray()));
@@ -213,16 +208,8 @@ class XMLController extends Controller
                                 'diamond_type' => $diamondType,
                                 'type' => 0
                             ]);
-    
-                            // echo "chekcing another way<pre>";
-                            // print_r($priceVariationArrayBeforePrices);
-                            // die;
-    
+        
                             $getFinalPriceArray = $this->getProductVariationPrices($priceVariationArrayBeforePrices);
-
-                            // echo "afasfd<pre>";
-                            // print_r($getFinalPriceArray);
-                            // die;
 
                             if(isset($getFinalPriceArray) && $getFinalPriceArray != 0){
                                 $title = '';
@@ -337,9 +324,6 @@ class XMLController extends Controller
                 if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
                     $getLabDiamondPricesNew = new ProductController;
                     $getLabDiamondPrices = $getLabDiamondPricesNew->getCustomApiFilterData($request);
-                    // echo "checking mined prices===>";
-                    // print_r($getLabDiamondPrices);
-                    // die;
                 }else{
                     $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
                 }
@@ -347,13 +331,6 @@ class XMLController extends Controller
         }else{
             $getLabDiamondPrices = $request->selectedDiamondPrice;
         }
-
-        // echo "getLabDiamondPrices===><pre>";
-        // print_r($getLabDiamondPrices);
-        // die;
-
-        dump($request->all());
-
 
         $resultedArray = array_map(function($num) use ($getLabDiamondPrices) {
             return round($num + $getLabDiamondPrices,2);
