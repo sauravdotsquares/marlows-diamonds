@@ -27,7 +27,7 @@
         <div class="container">
             <div class="owl-carousel owl-theme mobil-bar">
                 <div class="item">
-                    <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447535425059"><i class="fa fa-whatsapp" aria-hidden="true"></i>{{WHATSAPP_TITLE}}: {!!$header_settings->get_options('field1')!!}</a>
+                    <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447535425059"><i class="fa fa-whatsapp" aria-hidden="true"></i>Ask an Expert{{--WHATSAPP_TITLE--}} {{--$header_settings->get_options('field1')--}}</a>
                 </div>
                 <div class="item">
                     <div class="addr-number">
@@ -60,7 +60,7 @@
                 <div class="middle-topbar-left">
                     <div class="whatsapp-top-h">
                         <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447535425059">
-                            <i class="fa fa-whatsapp" aria-hidden="true"></i> {{WHATSAPP_TITLE}} {{$header_settings->get_options('whatsapp')}}
+                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Ask an Expert{{--WHATSAPP_TITLE--}} {{-- $header_settings->get_options('whatsapp') --}}
                         </a>
                     </div>
                     <div class="location-top-h">
