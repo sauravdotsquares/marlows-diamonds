@@ -170,8 +170,8 @@ class XMLController extends Controller
                                 $price = $dom->createElement('g:price', $productPrice.' GBP ');
                                 $product->appendChild($price);
                                 if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
-                                    $salePrice = $dom->createElement('g:sale_price', $productDiscountedPrice.' GBP ');
-                                    $product->appendChild($salePrice);
+                                    // $salePrice = $dom->createElement('g:sale_price', $productDiscountedPrice.' GBP ');
+                                    // $product->appendChild($salePrice);
                                 }
                                 $price = $dom->createElement('g:brand', 'Marlows Diamonds');
                                 $product->appendChild($price);
@@ -279,8 +279,8 @@ class XMLController extends Controller
                                     $price = $dom->createElement('g:price', $productPrice.' GBP ');
                                     $product->appendChild($price);
                                     if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
-                                        $salePrice = $dom->createElement('g:sale_price', $productDiscountedPrice.' GBP ');
-                                        $product->appendChild($salePrice);
+                                        // $salePrice = $dom->createElement('g:sale_price', $productDiscountedPrice.' GBP ');
+                                        // $product->appendChild($salePrice);
                                     }
                                     $price = $dom->createElement('g:brand', 'Marlows Diamonds');
                                     $product->appendChild($price);
