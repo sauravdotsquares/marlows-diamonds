@@ -361,6 +361,10 @@
 
 
 	 .financeoptionprocess.product-finance {max-width: 95%;}
+
+	/*product list css*/
+	.product-grid-items-item {flex: 0 0 50%;max-width: 50%;}
+	/*product list css end*/
 	}
 
 	/** media only for header responsive **/
@@ -524,6 +528,11 @@ display: inline-block;right: 0;position: absolute;}
 .account-dashboard .account-sidebar ul li a#accountd-tab.active {background-position:-364px -413px;background-color: #8e2e65;}
 .account-dashboard .account-sidebar ul li a#logout.active {background-position:-470px -412px;background-color: #8e2e65;}
 /*my acccount css end*/
+
+/*wedding rings css*/
+.choosedreamy-wrap .rings-grid-wrap .col-lg-3 {width: 50%;}
+/*wedding rings css end*/
+
 	}
 	
 	@media(max-width:767px){
@@ -545,10 +554,11 @@ display: inline-block;right: 0;position: absolute;}
 	.category-sidebar-wrap{margin-top: 0;}
 	.category-sidebar-wrap .filter-clear{ border: 1px solid #ccc;border-radius: 7px; height: 35px; background: #eff0f1; position: relative; width: 100%; top: 0;}
 	.category-sidebar-wrap .filter-clear button.nav-toggle{ width:50%; position: relative;}
+
 	.category-sidebar-wrap .filter-clear button.nav-toggle i.fa.fa-angle-down, .category-sidebar-wrap .filter-clear button.nav-toggle i.fa.fa-angle-up {font-size: 0; position: relative;}
 	.category-sidebar-wrap .filter-clear button.nav-toggle i.fa.fa-angle-down:before, 
 	.category-sidebar-wrap .filter-clear button.nav-toggle i.fa.fa-angle-up:before {position: absolute;background-image: url(../images/category-filter.png);
-	background-repeat: no-repeat;width: 26px;height: 24px;top: -11px;left: -15px;background-size: 15px;}
+	background-repeat: no-repeat;width: 26px;height: 24px;top: -11px;left: -20px;background-size: 15px;}
 	
 	
 	.product-panel-new .filter-item{ width:100% }
@@ -601,6 +611,7 @@ display: inline-block;right: 0;position: absolute;}
 	.financeoptionprocess.product-finance .col-md-6:nth-child(1) { order: 2;}
 .financeoptionprocess.product-finance .col-md-6:first-child {border-bottom: none; border-right:none;}
 .finance-available-options .payments p:first-child {width: 32%;}
+
 	}
 	
 	
@@ -651,6 +662,18 @@ display: inline-block;right: 0;position: absolute;}
 .finance-available-options .payments p:first-child {font-size: 11px}
 
 .defaultpages-cols h2, .defaultpages-cols h2.vc_custom_heading, .defaultpages-cols h2.vc_custom_heading, .defaultpages-cols h3.vc_custom_heading {font-size: 18px !important;}
+
+.fancybox-is-open .fancybox-stage .fancybox-slide .fancybox-content {background: #fff;padding: 0 23px;}
+.fancybox-is-open .fancybox-stage .fancybox-slide .fancybox-content img.fancybox-image {padding: 0 50px;object-fit: cover;}
+
+body .fancybox-navigation .fancybox-button--arrow_right {padding: 0;width: 30px;height: 30px;top: 50%;transform: translate(-10px, -50%);}
+body .fancybox-navigation .fancybox-button--arrow_left {padding: 0;width: 30px;height: 30px;top: 50%;transform: translate(10px, -50%);}
+
+
+/*wedding rings css*/
+.choosedreamy-wrap .rings-grid-wrap .col-lg-3 {width: 100%;}
+/*wedding rings css end*/
+
 	}
 	
 	@media(max-width:479px){

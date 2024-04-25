@@ -286,7 +286,7 @@ textarea.input-control{height:100px}
 .owl-theme.st-arrows .owl-nav .owl-prev{left:-60px}
 .owl-theme.st-arrows .owl-nav .owl-next{right:-60px}
 .product-item-slider{padding:20px 50px 0}
-.product-item-slider .owl-carousel.owlsliderone .owl-item .item .product-image {width: 260px;margin: auto;}
+.product-item-slider .owl-carousel.owlsliderone .owl-item .item .product-image {width: 180px;margin: auto;}
 .product-item-slider .owl-carousel.owlsliderone .owl-item .item .product-image img {width: 100%;}
 
 .best-selling-marlows .head-para-three, .best-selling-marlows .head-para-three h2.heading-h-three {margin-bottom: 0;}
@@ -391,6 +391,9 @@ input.input-control{height:38px}
 .instaphoto-info:hover .instaphoto-img img{transform:scale(1.1)}
 .instaphoto-img img{transition:all ease .6s}
 .insta-link a{color:#fff;font-size:18px}
+.insta-photo-list .photo-slider .item .instaphoto-info .insta-link a {background: rgb(98, 40, 215);
+background: linear-gradient(273deg, rgba(98, 40, 215, 1) 0%, rgba(238, 42, 123, 1) 50%, rgba(249, 206, 52, 1) 100%); width: 30px;height: 30px;display: flex;
+align-items: center;justify-content: center;border-radius: 50px;}
 
 /** product listing page start here **/
 .category-banner{ text-align: center; background-repeat: no-repeat; background-position: center; background-size: cover;padding: 40px 0; position: relative; margin:0 0 28px 0;}
@@ -399,6 +402,7 @@ input.input-control{height:38px}
 .category-banner-text {position: relative;}
 .category-banner:before{ content: ""; background: #000; position: absolute;top: 0; left: 0; width: 100%; height: 100%; opacity: 0.35;}
 .category-banner-text h1 {font-family: 'Lato';font-size: 24px;line-height: 30px;margin: 0 0 10px 0; color: #fff;}
+.category-banner-text h1 a {color: #fff;}
 .category-banner-text h2 {font-family: 'Lato';font-size: 18px;line-height: 34px;margin: 0; color: #fff; font-weight: 300;}
 .filter-tags-col {padding: 0 15px; text-align: center;width: 100%;max-width: 25%;flex: 0 0 25%;-ms-flex: 0 0 25%}
 .filter-tags-row {margin: 0 -15px; align-items: center; justify-content: center;}
@@ -406,13 +410,9 @@ input.input-control{height:38px}
 .category-product-filter-text a {color: #8e2e65;text-decoration: none;font-size: 13px;}
 .category-product-filter-icon {height: 55px;display: flex;align-items: center;justify-content: center;}
 .product-filter-col {width: 100%;max-width: 55%;flex: 0 0 55%;-ms-flex: 0 0 55%;padding: 0px 15px 10px; text-align: center;}
-.category-product-filter{
-	margin: 0 -15px 15px;
-}
+.category-product-filter{margin: 0 -15px 15px;}
 .display_first_filter .product-filter-col { margin: auto;}
-.display_first_filter .product-filter-col:first-child {
-    border: 0;
-}
+.display_first_filter .product-filter-col:first-child {border: 0;}
 .cols-ryt-tags:not(.wedding-rings, .diamond-jewellery) .filter-tags-col {max-width: 12%;flex: 0 0 12%;-ms-flex: 0 0 12%;}
 
 .product-filter-col:first-child {border-right: 2px solid #EFEFEF;max-width: 45%;flex: 0 0 45%;-ms-flex: 0 0 45%;}
@@ -735,12 +735,14 @@ position: absolute;right: 15px;top: 10px;padding: 8px;border-radius: 50%;backgro
 .findmatch-wrap .leftright-img-text-wraper {margin: 0;}
 .choosedreamy-wrap {padding: 40px 0 70px 0;}
 .ring-pr-items {text-align: center;}
+.rings-grid-wrap .ring-pr-items .ring-pr-image {width: 190px;margin: auto;}
+
 .ring-pr-items img, .ring-pr-items:hover img {transition: all 0.2s ease;}
 
-.owl-carousel.listing-slider {margin: 0 0 30px;}
+.owl-carousel.listing-slider {margin: 0 0 30px; padding: 0 30px}
 
 .owl-carousel.listing-slider .owl-nav {display: block;}
-.owl-carousel.listing-slider .owl-nav [class*="owl-"] {border: 3px solid rgba(255, 255, 255, 0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;}
+.owl-carousel.listing-slider .owl-nav [class*="owl-"] {border: 3px solid rgba(255, 255, 255, 0.5);width:42px;height: 42px;background: #8e2e65;color: #fff;text-align: center;}
 .owl-carousel.listing-slider .owl-nav button.owl-prev {top: 50%;transform: translateY(-50%);position: absolute;left: 0;}
 .owl-carousel.listing-slider .owl-nav button.owl-next {top: 50%;transform: translateY(-50%);position: absolute;right:0px;}
 .owl-carousel.listing-slider .owl-nav button span {font-size: 37px;line-height: 22px;}
@@ -1078,7 +1080,9 @@ background-position: -216px -217px;width: 140px;height: 39px;float: right;}
 /** order cancel and success page **/
 
 .orders-warp {text-align: center;padding: 30px 0 70px 0;}
-.orders-warp .grey-btn-large {margin-top: 40px;}
+.orders-warp .grey-btn-large {margin-top: 40px; background-color: #8e2e65;color: #fff;font-size: 15px;padding: 14px 26px;text-transform: uppercase;text-decoration: none;
+font-weight: 700;display: inline-block;border: 1px solid #8e2e65;}
+.orders-warp .grey-btn-large:hover {box-shadow: 5px 5px 0 rgba(0,0,0,0.8);color: #fff;}
 .order-cancel-page .order-data {color: #6F6F6F;}
 .order-success-page .order-data {color: #8e2e65;}
 .order-data {font-size: 30px;}
@@ -1737,9 +1741,9 @@ border: 1px solid #D0D0D0;overflow: hidden; position: relative; margin: 0 10px 3
 .search-result nav {width: 100%;}
 .search-result nav ul.pagination {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;width: 100%; 
 -ms-flex-wrap: wrap;flex-wrap: wrap;}
-.search-result nav ul.pagination li.page-item a.page-link {color: #000; height: 35px;}
-.search-result nav ul.pagination li.page-item a.page-link:focus {box-shadow: none !important;}
-.search-result nav ul.pagination li.page-item.active .page-link {background: #8e2e65;border-color: #8e2e65;}
+.search-result nav ul.pagination li.page-item a.page-link {color: #000 !important; height: 35px;}
+.search-result nav ul.pagination li.page-item a.page-link:focus {box-shadow: none !important; color:#000;}
+.search-result nav ul.pagination li.page-item.active .page-link {background: #8e2e65;border-color: #8e2e65; color: #fff !important;}
 .search-result nav ul.pagination li.page-item:first-child, .search-result nav ul.pagination li.page-item:last-child{font-size: 0; position: relative; cursor: pointer;}
 .search-result nav ul.pagination li.page-item:first-child span, .search-result nav ul.pagination li.page-item:last-child span {height: 35px;}
 .search-result nav ul.pagination li.page-item:first-child:before{ content: "\f104";font-family: 'FontAwesome';font-size: 15px;position: absolute;z-index: 99;top: 50%; line-height: 0;
