@@ -167,7 +167,7 @@ class XMLController extends Controller
                                 $product->appendChild($condition);
                                 $availability = $dom->createElement('g:availability', $productAvailability);
                                 $product->appendChild($availability);
-                                $price = $dom->createElement('g:price', $productPrice.' GBP ');
+                                $price = $dom->createElement('g:price', $getFinalPriceArray['allPrices']['discounted_price'].' GBP ');
                                 $product->appendChild($price);
                                 if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
                                     // $salePrice = $dom->createElement('g:sale_price', $productDiscountedPrice.' GBP ');
@@ -276,7 +276,7 @@ class XMLController extends Controller
                                     $product->appendChild($condition);
                                     $availability = $dom->createElement('g:availability', $productAvailability);
                                     $product->appendChild($availability);
-                                    $price = $dom->createElement('g:price', $productPrice.' GBP ');
+                                    $price = $dom->createElement('g:price', $getFinalPriceArray['allPrices']['discounted_price'].' GBP ');
                                     $product->appendChild($price);
                                     if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
                                         // $salePrice = $dom->createElement('g:sale_price', $productDiscountedPrice.' GBP ');
