@@ -139,7 +139,7 @@ class XMLController extends Controller
                                 $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
-                                $productImageLink      =  env('APP_IMAGE_URL').'/storage/'.$productArrayNew->getProductImages->image_url;
+                                $productImageLink      =  env('APP_IMAGE_STAG_URL').'/storage/'.$productArrayNew->getProductImages->image_url;
                                 $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
                                 if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
                                     $productDiscountedPrice  =  round($getFinalPriceArray['allPrices']['discounted_price']);
@@ -178,7 +178,7 @@ class XMLController extends Controller
                                 $price = $dom->createElement('g:canonical_link', $productLink);
                                 $product->appendChild($price);
                                 foreach($productArrayNew->getProductGallery as $key => $addImages){
-                                    $additional_image_link = $dom->createElement('g:additional_image_link', env('APP_IMAGE_URL').'/storage/'.$addImages->image_url);
+                                    $additional_image_link = $dom->createElement('g:additional_image_link', env('APP_IMAGE_STAG_URL').'/storage/'.$addImages->image_url);
                                     $product->appendChild($additional_image_link);
                                 }
                                 $shipping_label = $dom->createElement('g:shipping_label', 0.00);
@@ -247,7 +247,7 @@ class XMLController extends Controller
                                     $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
                                     $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                     $productLink     =  url('').'/product/'.$productArrayNew->slug;
-                                    $productImageLink      =  env('APP_IMAGE_URL').'/storage/'.$productArrayNew->getProductImages->image_url;
+                                    $productImageLink      =  env('APP_IMAGE_STAG_URL').'/storage/'.$productArrayNew->getProductImages->image_url;
                                     $productRRPPrice  =  round($getFinalPriceArray['allPrices']['rrp_price']);
                                     $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
                                     if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
@@ -287,7 +287,7 @@ class XMLController extends Controller
                                     $price = $dom->createElement('g:canonical_link', $productLink);
                                     $product->appendChild($price);
                                     foreach($productArrayNew->getProductGallery as $key => $addImages){
-                                        $additional_image_link = $dom->createElement('g:additional_image_link', env('APP_IMAGE_URL').'/storage/'.$addImages->image_url);
+                                        $additional_image_link = $dom->createElement('g:additional_image_link', env('APP_IMAGE_STAG_URL').'/storage/'.$addImages->image_url);
                                         $product->appendChild($additional_image_link);
                                     }
                                     $shipping_label = $dom->createElement('g:shipping_label', 0.00);

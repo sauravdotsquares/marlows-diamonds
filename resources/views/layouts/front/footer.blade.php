@@ -12,22 +12,22 @@
                         <p>{!!$footer_settings->get_options('about')!!}</p>
                         <div class="footer-social">
                             @if($footer_settings->get_options('facebook')!='')
-                                <a href="{{$footer_settings->get_options('facebook')}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="{{$footer_settings->get_options('facebook')}}" target="_blank" rel="nofollow"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                             @endif
                             @if($footer_settings->get_options('twitter')!='')
-                                <a href="{{$footer_settings->get_options('twitter')}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                <a href="{{$footer_settings->get_options('twitter')}}" target="_blank" rel="nofollow"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                             @endif
                             @if($footer_settings->get_options('instagram')!='')
-                                <a href="{{$footer_settings->get_options('instagram')}}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                <a href="{{$footer_settings->get_options('instagram')}}" target="_blank" rel="nofollow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                             @endif
                             @if($footer_settings->get_options('pinterest')!='')
-                                <a href="{{$footer_settings->get_options('pinterest')}}" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                <a href="{{$footer_settings->get_options('pinterest')}}" target="_blank" rel="nofollow"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
                             @endif
                             @if($footer_settings->get_options('youtube')!='')
-                                <a href="{{$footer_settings->get_options('youtube')}}" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                                <a href="{{$footer_settings->get_options('youtube')}}" target="_blank" rel="nofollow"><i class="fa fa-youtube" aria-hidden="true"></i></a>
                             @endif
                             @if($footer_settings->get_options('linkedin')!='')
-                                <a href="{{$footer_settings->get_options('linkedin')}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                                <a href="{{$footer_settings->get_options('linkedin')}}" target="_blank" rel="nofollow"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                             @endif
                         </div>
                     </div>
