@@ -120,7 +120,7 @@ class XMLController extends Controller
                                         $linkQuery .= $linkQuery ? '&diamond_type='.$diamondType.'&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
                                     }
                                     if(isset($var2->key) && $var2->key == 'metal-type'){
-                                        $metalType .= $var2->value;
+                                        $metalType .= str_replace(['9ct ','18ct '],['',''],$var2->value);
                                     }
                                     if(isset($var2->key) && $var2->key == 'carat'){
                                         $caratType .= $var2->value;
@@ -225,7 +225,7 @@ class XMLController extends Controller
                                         $linkQuery .= $linkQuery ? '&diamond_type='.$diamondType.'&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
                                     }
                                     if(isset($var2->key) && $var2->key == 'metal-type'){
-                                        $metalType .= $var2->value;
+                                        $metalType .= str_replace(['9ct ','18ct '],['',''],$var2->value);
                                     }
                                     if(isset($var2->key) && $var2->key == 'carat'){
                                         $caratType .= $var2->value;
