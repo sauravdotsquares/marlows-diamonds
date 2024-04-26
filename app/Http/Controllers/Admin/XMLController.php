@@ -187,7 +187,7 @@ class XMLController extends Controller
                                 $product->appendChild($gender);
                                 $age_group = $dom->createElement('g:age_group', 'Adult');
                                 $product->appendChild($age_group);
-                                $metal = $dom->createElement('g:metal', $metalType);
+                                $metal = $dom->createElement('g:color', $metalType);
                                 $product->appendChild($metal);
                                 $identifier_exists = $dom->createElement('g:identifier_exists', $productIdentifierExists);
                                 $product->appendChild($identifier_exists);
@@ -296,7 +296,7 @@ class XMLController extends Controller
                                     $product->appendChild($gender);
                                     $age_group = $dom->createElement('g:age_group', 'Adult');
                                     $product->appendChild($age_group);
-                                    $metal = $dom->createElement('g:metal', $metalType);
+                                    $metal = $dom->createElement('g:color', $metalType);
                                     $product->appendChild($metal);
                                     $identifier_exists = $dom->createElement('g:identifier_exists', $productIdentifierExists);
                                     $product->appendChild($identifier_exists);
