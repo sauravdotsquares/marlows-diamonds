@@ -676,6 +676,8 @@
 					$("#metal-type option[value=' Silver-925 ']").show();
 				}else if(getDiamondType == 'mined_diamond'){
 					$("#metal-type option[value=' Silver-925 ']").hide();
+					$("#metal-type option[value='Platinum ']").prop('selected', true);
+					getCustomPriceFinalFunction();
 				}
 			});
 		})
