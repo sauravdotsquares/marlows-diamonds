@@ -668,6 +668,16 @@
             $(document).on('change','#metal-type',function(){
 				getSelectedVariationsData();
 			});
+
+
+			$(document).on('change', '.diamond_type' , function(event) {
+				let getDiamondType = $(this).val();
+				if(getDiamondType == 'lab_grown'){
+					$("#metal-type option[value=' Silver-925 ']").show();
+				}else if(getDiamondType == 'mined_diamond'){
+					$("#metal-type option[value=' Silver-925 ']").hide();
+				}
+			});
 		})
 	
 		function getSelectedVariationsData(){

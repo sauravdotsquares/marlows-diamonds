@@ -61,7 +61,7 @@ label {color: #000;font-size: 14px;}
 .accordion-button:focus{ box-shadow: none; }
 .form-control:focus{box-shadow: none;}
 .btn-check:focus + .btn-info, .btn-info:focus{box-shadow: none;}
-.form-control {height: 44px; font-size:15px;padding: 0 14px;border: 1px solid #CDCDCD;-webkit-appearance: auto;-moz-appearance: auto;appearance: auto; box-shadow: inset 0 0 2px 2px rgba(0,0,0,0.02);}
+.form-control {height: 44px; font-size:12px;padding: 0 14px;border: 1px solid #CDCDCD;-webkit-appearance: auto;-moz-appearance: auto;appearance: auto; box-shadow: inset 0 0 2px 2px rgba(0,0,0,0.02);}
 textarea.form-control {height: 100px;padding: 6px 12px;font-size: 15px;}
 .optional {padding: 0 0 0 3px;}
 
@@ -122,7 +122,7 @@ right: -149px;position: absolute;height: 100%;top: 44px;}*/
 .mobile-cart .fa-shopping-bag{font-size:23px;color:#000}
 .mobile-cart{position:relative}
 .navbar-toggler .togglebar-nav{cursor:pointer;color:#902f66;position:relative;height:30px;width:30px}
-.navbar-toggler .togglebar-nav span{cursor:pointer;color:#902f66;background:#902f66;width:33px;height:2px;display:block;position:relative;border-radius:4px;margin:7px 0;
+.navbar-toggler .togglebar-nav span{cursor:pointer;color:#902f66;background:#902f66;width:33px; height:4px; display:block;position:relative;border-radius:4px;margin:7px 0;
 transition: all 0.2s ease;}
 .mobile-wishlist{margin:0 9px 0 0}
 .mobile-wishlist a{color:#8e2e65;font-size:20px}
@@ -130,7 +130,7 @@ transition: all 0.2s ease;}
 .middle-topbar-left a{color:#878787;text-decoration:none; display: inline-block;}
 .middle-topbar-left a:hover{color:#8e2e65}
 .middle-topbar-left a i{color:#8e2e65;font-size:18px;padding:0 11px 0 0;position:relative;top:1px}
-.middle-topbar{border-bottom:1px solid #efefef;padding:21px 0;position:relative; background: rgba(255, 255, 255, 0.8); display: inline-block; width: 100%;}
+.middle-topbar{border-bottom:1px solid #efefef;padding:15px 0;position:relative; background: rgba(255, 255, 255, 0.8); display: inline-block; width: 100%;}
 .middle-topbar-right li{display:inline-block;vertical-align:middle;margin:0 0 0 30px}
 .middle-topbar-right li.dropdown {float: none;}
 .location-drop{position:absolute;box-shadow:0 1px 10px rgba(0,0,0,.25);background:#fff;width:370px;z-index:9;padding:10px 15px;top:100%;left:0;display:none}
@@ -153,16 +153,16 @@ transition: all 0.2s ease;}
 .mobile-cart-wishlist{display:none;align-items:center}
 .navbar-toggler{display:none}
 .sticky-header .middle-topbar {position: fixed;top: 0;left: 0;right: 0;z-index: 9;background: #fff;box-shadow: 0 2px 3px rgba(0,0,0,0.2);}
-.sticky-header .logo-menu-bar{position:fixed;top:83px;left:0;right:0;z-index:8;box-shadow:0 2px 3px rgba(0,0,0,0.2);background: #fff;}
+.sticky-header .logo-menu-bar{position:fixed;top:66px;left:0;right:0;z-index:8;box-shadow:0 2px 3px rgba(0,0,0,0.2);background: #fff;}
+.sticky-header .post-bar {position: fixed;top: 187px;width: 100%;}
 .logo-menu-bar-wrap{align-items:center;position:relative}
 .main-navigaiton .nav-navbars .level-zero{display:inline-block;vertical-align:top;position:relative; margin: 0px 0px 0 4px;}
 .main-navigaiton .nav-navbars .level-zero a{text-decoration:none;color:#444;font-weight:bold;text-transform:uppercase;font-size:13px}
 .main-navigaiton .nav-navbars .level-zero > span > a:hover, .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu li a:hover {color: #8e2e65;}
 .main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: -4px;top: 5px;}
 .main-navigaiton .nav-navbars .level-zero span {position: relative;display: block;}
-.site-logo-main{ max-width: 130px;}
-
-
+.site-logo-main{ max-width: 170px;}
+.site-logo-main a {text-decoration: none;}
 .main-navigaiton .nav-navbars .level-zero > span > a{padding:15px 8px;}
 
 
@@ -259,6 +259,18 @@ textarea.input-control{height:100px}
 .disclaimer-content p{margin:0}
 .botto-to-top{border-top:1px solid rgba(255,255,255,.1);margin:0;text-align:center;padding:23px 0 0}
 .botto-to-top #scroll-to-top{color:#fff;font-size:32px;cursor:pointer}
+
+/*02-05-24 (kh)*/
+.whatspp-num-1 {position: fixed;bottom: 55px;right: 1px;z-index: 999;border: none;margin: 0;text-align: center;padding: 23px 0 0;display: block !important;}
+
+.whatspp-num-1 span#scroll-to-top {color: #fff;font-size: 32px;cursor: pointer;background: #742251;width: 40px;height: 40px;display: inline-block;border-radius: 50px;}
+
+.whatspp-num-1 span#scroll-to-top i.fa.fa-whatsapp {line-height: 40px;font-size: 26px;}
+
+/*03-05-24 (kh)*/
+
+.mobile-cart-wishlist .mobile_search {margin: 4px 12px 0 0;}
+.mobile-cart-wishlist .mobile_search a i.fa.fa-search {font-size: 20px; color: #8e2e65;}
 /** Footer Css end here  **/
 
 
@@ -302,7 +314,7 @@ textarea.input-control{height:100px}
 .head-para-three p{font-size:15px;color:#2b2b2b;line-height:1.6;margin:0;}
 .head-para-three p.second-para{padding-bottom: 25px}
 .head-para-three video#video{width: 80%; object-fit: inherit;}
-.whychoose-marlows{background:#fafbfd;padding:30px 0 50px 0; }
+.whychoose-marlows{/*background:#fafbfd;*/padding:30px 0 50px 0; }
 .rating-img{text-align:center;margin:0 0 25px 0}
 .whychoose-wraper .rating-img i.diamond-icon.search-starviews {background-position: -148px 4px;/*width: 152px;height: 81px;*/ width:249px;height: 70px;}
 .shopfrom-block .rating-img i.diamond-icon.search-starviews {background-position: -148px 4px;width: 249px;height: 70px;}
@@ -320,11 +332,13 @@ textarea.input-control{height:100px}
 .marlows-diamond{background-image:url(../images/marlowdiamond-bg.webp);background-repeat:no-repeat;background-position:center;background-size:cover;background-attachment:fixed;text-align:center;padding:200px 0}
 .marlows-diamond-title{color:#fff}
 /** Marlows Diamond End **/
-.best-selling-marlows{padding:40px 0 50px 0}
+.best-selling-marlows{padding:40px 0 50px 0; background: #fafbfd;}
+.best-selling-marlows .product-info {background: #fff;}
+
 .product-titles-small a{font-family:Playfair Display;color:#444;font-size:16px;white-space:wrap;text-overflow:ellipsis;display:block;text-decoration:none}
-.product-price{color:#444;font-size:17px;margin:9px 0 20px 0}
+.product-price{color:#444;font-size:17px;margin:9px 0 20px 0; }
 .explore-btn{margin:26px 0 0 0}
-.shopfrom-block{padding:60px 0 40px 0}
+.shopfrom-block{padding:60px 0 40px 0; background: #fafbfd; margin-bottom: 50px;}
 .reviewr-name{color:#5a5a5a;font-size:15px;line-height:24px;font-weight:700}
 .reviewr-star{margin:5px 0 2px -8px;}
 .reviewr-star img{max-width:85px}
@@ -572,6 +586,7 @@ z-index: 9; position: relative;}
 .related-products-section .head-para-three {margin: 0 0 40px 0;}
 
 .related-products-section .related-products-list .product-grid-items-item {flex: 0 0 25%;max-width: 25%;}
+.related-products-section .related-products-list .product-grid-items-item .product-items-item-info .product-items-item-details {padding: 13px 14px 15px;}
 
 .product-info-media{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%;    position: relative;}
 .product-info-main{width: 100%; flex: 0 0 50%; -ms-flex: 0 0 50%; max-width: 50%; padding: 0 0 0 50px}
@@ -894,7 +909,7 @@ z-index: 11;}
 .lostpassword {margin: 20px 0 0 0;}
 .lostpassword a{color:#8e2e65; text-decoration: none;}
 
-.checkout-order-review {margin: 30px 0 30px 0;}
+.checkout-order-review {margin: 0 0 30px 0px;}
 
 .checkout-order-table table tr th {box-shadow: inset 0px 4px 3px -2px rgba(0,0,0,.04);border-width: 0 1px 1px 0;padding: 16px 20px;font-size: 15px;color: #404040;font-weight: bold;}
 .checkout-order-table table tr th:not(:first-child) {text-align: center;}
@@ -1553,6 +1568,15 @@ border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e
 .location-header a {color: #000;text-decoration: none;}
 .disclaimer-content .footer-reg {color: #fff;text-decoration:none; margin: 10px 0 7px;display: inline-block;}
 /*footer css end*/
+/*01-05-2024 (kh)*/
+.checkout-main-wrap .checkout_billing_details {}
+.checkout-main-wrap .checkout-order-review{box-shadow: 1px 1px 21px -2px #f5eeff; border-radius: 15px; padding: 20px;}
+.checkout-main-wrap .checkout_billing_details .checkout-billing-fields{box-shadow: 1px 1px 21px -2px #f5eeff; border-radius: 15px; padding: 20px;}
+.checkout-main-wrap .checkout_billing_details .checkout-shipping-fields{margin-top: 12px;}
+.checkout-main-wrap .checkout-create-account {margin-top: 40px;}
+.checkout-main-wrap .checkout_billing_details .checkout-shipping-fields-1 {margin-top: 40px;}
+.checkout-main-wrap .checkout_billing_details .checkout-shipping-fields-1 label {padding: 0 0 0 4px; color: #606060;}
+.checkout-main-wrap .checkout-create-account .create-account-fields{box-shadow: 1px 1px 21px -2px #f5eeff; border-radius: 15px; padding: 20px;}
 
 
 
@@ -1786,7 +1810,7 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .modal.guide-mode .modal-dialog .modal-content .modal-footer {display: none;}
 .modal.guide-mode .modal-dialog .modal-content .modal-header button.btn-close:focus {box-shadow: none;}
 
-.botto-to-top {position: fixed;bottom: 64px;right: 41px;z-index: 999; border: none; padding: 0;}
+.botto-to-top {position: fixed;bottom: 110px;right: 41px;z-index: 999; border: none; padding: 0;}
 .botto-to-top #scroll-to-top {color: #fff;font-size: 32px;cursor: pointer;background: #742251;width: 40px;
 height: 40px;display: inline-block;border-radius: 50px;}
 .botto-to-top #scroll-to-top i.fa.fa-angle-up {line-height: 37px;}
@@ -2004,6 +2028,7 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 /** checkout **/
 
 .botto-to-top{right: 0;}
+.whatspp-num-1 {right: 0;}
 
 .post-bar .post-bar-center:before { display:none; }
 
@@ -2076,6 +2101,8 @@ right: 10px !important;
 
 .product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width:100%;}
 .product-panel-new .sortbtn {width: 122px !important;}
+.whatspp-num-1{bottom: 15px;}
+.botto-to-top{bottom: 70px;}
 }
 
 @media only screen and (max-width: 576px) and (min-width: 320px) {
@@ -2086,6 +2113,8 @@ right: 10px !important;
 .product-panel-new .search-item {width: 134px !important;}
 
 .product-panel-new .sortbtn {width: 71px !important;}
+.whatspp-num-1{bottom: 15px;}
+.botto-to-top{bottom: 70px;}
 }
 
 

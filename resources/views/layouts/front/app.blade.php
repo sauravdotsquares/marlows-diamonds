@@ -41,6 +41,20 @@
     <script src="{{ asset('assets/js/angular.js') }}"></script>
     <style>
       [ng-cloak] {  display: none !important; }
+      @media screen and (max-width: 720px) {
+        div#trustpilot-gtm-floating-wrapper {
+          display: none !important;
+        }
+        .zopim {
+          display: none !important;
+        }
+        .post-bar-left.header-post-bar-left {
+            display: none;
+        }
+        .post-bar-right.header-post-bar-left {
+            display: none;
+        }
+      }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1365164-1"></script>-->
@@ -122,6 +136,10 @@
 
 
   $(document).ready(function(){
+      
+      $(".mobile_search").on('click',function(){
+          $("#homeSearchForm").toggle();
+      });
 
       // for lazyload functions applied in instagram section images.
       $('.instaphoto-img img').lazyload();

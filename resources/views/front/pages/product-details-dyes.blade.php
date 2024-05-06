@@ -657,8 +657,10 @@
 			getSelectedDataVariation();
 			if(getDiamondType == 'lab_grown'){
 				getProdVideo('onChange',' 9ct White Gold ');
+				$("#metal-type option[value=' Silver-925 ']").show();
 			}else if(getDiamondType == 'mined_diamond'){
 				getProdVideo('onChange','Platinum');
+				$("#metal-type option[value=' Silver-925 ']").hide();
 			}
 		});
 

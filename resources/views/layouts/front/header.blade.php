@@ -27,7 +27,10 @@
         <div class="container">
             <div class="owl-carousel owl-theme mobil-bar">
                 <div class="item">
-                    <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447535425059"><i class="fa fa-whatsapp" aria-hidden="true"></i>Ask an Expert{{--WHATSAPP_TITLE--}} {{--$header_settings->get_options('field1')--}}</a>
+                    <a class="whatspp-num" href="javascript:void(0);">
+                        {!!$header_settings->get_options('header-right')!!}
+                        {{--WHATSAPP_TITLE--}} {{--$header_settings->get_options('field1')--}}
+                    </a>
                 </div>
                 <div class="item">
                     <div class="addr-number">
@@ -86,7 +89,7 @@
                         <div class="remve-mobile-serch-box">
                             <i class="fa fa-arrow-left" aria-hidden="true"></i>
                         </div>
-                        <form ng-controller="CommonController" >
+                        <form id="homeSearchForm" ng-controller="CommonController">
                             <div class="formgroup">
                                 <input type="text" name="search" class="typeahead search-selection-text" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
                                 <button class="seach-btn" type="button"><i class="diamond-icon search-top"></i></button>
@@ -197,6 +200,11 @@
                     </a>
                 </div>
                 <div class="mobile-cart-wishlist">
+                    <div class="mobile_search">
+                        <a>
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </a>
+                    </div>
                     <div class="mobile-wishlist mobile-acc">
                             <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
                     </div>
@@ -238,32 +246,32 @@
                             <span></span>
                         </div>
                     </div>
-                        <div class="mobile-serch-box">
-                            <form ng-controller="CommonController" >
-                                <div class="formgroup">
-                                    <input type="text" name="search" class="typeahead search-selection-text" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
-                                    <button class="seach-btn" type="button"><i class="diamond-icon search-top"></i></button>
-                                </div>
-                                <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
-                                    <div class="search-suggestion-list" ng-repeat="result in searchResults">
-                                        <a href="/product/<%result.slug%>">
-                                            <div class="search-suggestion-img">
-                                                <img ng-src="{{env('APP_IMAGE_URL').'/storage'}}/<% result.get_product_images.image_url || 'defult.png' %>" alt="Marlow's Diamond">
-                                            </div>
-                                            <div class="search-suggestion-text">
-                                                <div class="search-suggestion-title">
-                                                    <%result.title%>
-                                                </div>
+                        <!--<div class="mobile-serch-box">-->
+                        <!--    <form ng-controller="CommonController" >-->
+                        <!--        <div class="formgroup">-->
+                        <!--            <input type="text" name="search" class="typeahead search-selection-text" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">-->
+                        <!--            <button class="seach-btn" type="button"><i class="diamond-icon search-top"></i></button>-->
+                        <!--        </div>-->
+                        <!--        <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>-->
+                        <!--            <div class="search-suggestion-list" ng-repeat="result in searchResults">-->
+                        <!--                <a href="/product/<%result.slug%>">-->
+                        <!--                    <div class="search-suggestion-img">-->
+                        <!--                        <img ng-src="{{env('APP_IMAGE_URL').'/storage'}}/<% result.get_product_images.image_url || 'defult.png' %>" alt="Marlow's Diamond">-->
+                        <!--                    </div>-->
+                        <!--                    <div class="search-suggestion-text">-->
+                        <!--                        <div class="search-suggestion-title">-->
+                        <!--                            <%result.title%>-->
+                        <!--                        </div>-->
         
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="search-suggestion" ng-if="searchResults.length==0" ng-cloak>
-                                    <p>No Product Found.</p>
-                                </div>
-                            </form>
-                        </div>
+                        <!--                    </div>-->
+                        <!--                </a>-->
+                        <!--            </div>-->
+                        <!--        </div>-->
+                        <!--        <div class="search-suggestion" ng-if="searchResults.length==0" ng-cloak>-->
+                        <!--            <p>No Product Found.</p>-->
+                        <!--        </div>-->
+                        <!--    </form>-->
+                        <!--</div>-->
                     <nav class="nav-navbars">
 
                         <ul class="static-megamenu">
