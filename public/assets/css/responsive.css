@@ -16,7 +16,7 @@
 	.category-list-wrap{ width: 100%; padding: 0; order: 2; position: relative;}
 	.category-sidebar-wrap{ width: 100%; margin-bottom: 0px; margin-top: 45px;}
 	}
-	
+
 	@media(max-width:767px){
 	h1,.heading-h-one{font-size:25px}
 	.main-banner-col{flex:0 0 100%;-ms-flex:0 0 100%;max-width:100%}
@@ -141,7 +141,7 @@
 	.cart-table-wraper .cart-table{ width: 1000px;}
 	
 	.category-banner.engagement-banner { padding: 65px 0; }
-	
+
 	
 	}
 	
@@ -168,7 +168,7 @@
 }
 .navbars-show .togglebar-nav span:last-child {
     transform: rotate(45deg);
-    top: -8px;
+    top: -11px;
     transition: all 0.2s ease;
 }
 
@@ -273,11 +273,6 @@
 	
 	@media(min-width: 1200px) and (max-width: 1420px){
 	
-	
-	.site-logo-main {
-		max-width: 93px;
-	}
-	
 	.head-mini-search .formgroup {
 		/*max-width: 160px;*/
 	}
@@ -291,13 +286,13 @@
 		.chepaest-lab-left {max-width: 640px;padding: 18px 38px;}
 		.chepaest-lab-left p {font-size: 14px;line-height: 23px;margin: 0 0 15px 0;}
 		.chepaest-lab-left h2 {font-size: 23px;margin: 0 0 19px 0;}
-		.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 10px;font-size: 12px;}
+		.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 10px;font-size: 11px;}
 		.main-navigaiton .nav-navbars .level-zero .fa-angle-down {right: -4px;}
 	}
 	
 
 	@media(max-width:1300px){	
-.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 5px;font-size: 12px;}
+.main-navigaiton .nav-navbars .level-zero > span > a {padding:15px 5px;font-size: 11px;}
 }
 
 	
@@ -311,8 +306,8 @@
 	
 	
 	.main-navigaiton .nav-navbars .level-zero > span > a {
-		padding: 15px 4px;
-		font-size: 10px;
+		padding: 15px 3px;
+		font-size: 9px;
 	}
 	
 	.main-navigaiton .nav-navbars .level-zero .fa-angle-down {
@@ -334,12 +329,7 @@
 		top: 7px;
 	}
 	
-	
-	
-	.site-logo-main {
-		max-width: 74px;
-	}
-	
+
 	
 	.head-mini-search .formgroup {
 		max-width: 115px;
@@ -361,6 +351,10 @@
 
 
 	 .financeoptionprocess.product-finance {max-width: 95%;}
+
+	/*product list css*/
+	.product-grid-items-item {flex: 0 0 50%;max-width: 50%;}
+	/*product list css end*/
 	}
 
 	/** media only for header responsive **/
@@ -368,6 +362,9 @@
 	
 	
 	@media(max-width:1024px){
+.sticky-header .post-bar {top:108px;margin: 0;}
+.sticky-header .middle-topbar .middle-topbar-right form button.seach-btn i.diamond-icon.search-top {background-position: -100px -33px;width: 34px;height: 34px;}
+
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu ul:last-child {margin: 0 0 25px;}
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu ul {float: left;padding:15px 0 0 36px;}
 .main-navigaiton .nav-navbars .level-zero:nth-child(2) ul.inner-submenu li.level-one h4 {padding: 0 4px;}
@@ -382,14 +379,43 @@
 	.top-bar-mob{display:block}
 	.middle-topbar{padding:0;border:0; display: none;}
 	.middle-topbar-left,.middle-topbar-right{display:none}
-	.menus-wraper{position:fixed;top:0;left:0;background:#fff;height:100%;max-width:440px;z-index:99;transition:.5s;overflow-x:hidden;width:0;padding:30px 0 30px 0}
+	.menus-wraper{position:fixed;top:0;left:0;background:#fff;height:100%;max-width:440px;z-index:999;transition:.5s;overflow-x:hidden;width:0;padding:30px 0 30px 0}
 	.navbars-show .menus-wraper{width:100%}
 	.show-search-box{overflow:hidden}
 	.head-mini-search .formgroup{max-width:100%}
 	.head-mini-search{position:fixed;top:0;left:0;background:#fff;width:100%;z-index:991;height:100%;display:none}
+header.header-main.sticky-header .middle-topbar .head-mini-search {top: 0px;height: auto;left: 0;right: 0;transform: none;width: 100%;position: relative;}
+
+header.header-main.sticky-header .middle-topbar {display: block;top:108px;background: #ffffff;}
+
+header.header-main.sticky-header .middle-topbar .middle-topbar-wrap {display: block;}
+
+
+header.header-main.sticky-header .middle-topbar .formgroup {padding: 10px 0;}
+
+
+.middle-topbar .middle-topbar-right {    display: block;}
+.head-mini-search{display: block !important; left: 50%; width: 96%; transform: translate(-50%, 0);}
+.head-mini-search{background: none; top: 145px;}
+.post-bar{margin-top: 58px;}
+.head-mini-search .remve-mobile-serch-box {display: none;}
+.head-mini-search .formgroup input {background-color: #f1f1f1; border: none;}
+.seach-btn{width: 16px; right: 17px; top: 11px; left: inherit;}
+.head-mini-search .formgroup input{padding: 0 6px 0 15px;}
+.middle-topbar {display: block;}
+.middle-topbar .middle-topbar-right {display: block;}
+.middle-topbar .middle-topbar-right li.my-account-blk {display: none;}
+.middle-topbar .middle-topbar-right li.my-whishlist-blk {display: none;}
+.middle-topbar .middle-topbar-right li.dropdown {display: none;}
+.middle-topbar .middle-topbar-right ul li:first-child {display: block;} 
+
+
+
+
+
 	.show-search-box .head-mini-search{display:flex}
-	.site-logo-main img{max-width:100px}
-	.site-logo-main{order:2;max-width:120px}
+	.site-logo-main img{max-width:130px}
+	.site-logo-main{order:2;max-width:125px}
 	.main-navigaiton{order:1}
 	.head-mini-search form{width:100%}
 	.logo-menu-bar-wrap{flex-wrap:wrap}
@@ -474,6 +500,9 @@ display: inline-block;right: 0;position: absolute;}
 	.engagement-ring-img .engagement-ring-img-content h2 {font-size: 36px;line-height: 42px;}
 	
 	.category-sidebar-wrap a#resetFilterButton { display: none;}
+/*product list css*/
+.related-products-list .product-grid-items-item .product-items-item-image {height: 160px;}
+/*product list css end*/
 	/*.category-sidebar-wrap a#resetFilterButton:before {content: '';font-family: 'FontAwesome';margin: 0 6px 0 0px; display: none;}*/
 	.category-sidebar-wrap .reset-filer-container a#resetFilterButton{ display:inline-block; width:auto; }
 	
@@ -524,9 +553,22 @@ display: inline-block;right: 0;position: absolute;}
 .account-dashboard .account-sidebar ul li a#accountd-tab.active {background-position:-364px -413px;background-color: #8e2e65;}
 .account-dashboard .account-sidebar ul li a#logout.active {background-position:-470px -412px;background-color: #8e2e65;}
 /*my acccount css end*/
+/*wedding rings css*/
+.choosedreamy-wrap .rings-grid-wrap .col-lg-3 {width: 50%;}
+/*wedding rings css end*/
+
+/*checkout css*/
+/* .checkout-order-review {margin: 0 0 30px 0px;} */
+/*checkout css end*/
 	}
 	
 	@media(max-width:767px){
+
+.site-logo-main img{max-width:115px}
+.head-mini-search{ top: 80px;}
+
+header.header-main.sticky-header .middle-topbar{top: 98px;}
+ .sticky-header .post-bar {top: 98px;}
 		.home-main-banner{background: #fff;}
 	.main-banner-col.banner-left-col:after{ display:none; }
 
@@ -548,7 +590,7 @@ display: inline-block;right: 0;position: absolute;}
 	.category-sidebar-wrap .filter-clear button.nav-toggle i.fa.fa-angle-down, .category-sidebar-wrap .filter-clear button.nav-toggle i.fa.fa-angle-up {font-size: 0; position: relative;}
 	.category-sidebar-wrap .filter-clear button.nav-toggle i.fa.fa-angle-down:before, 
 	.category-sidebar-wrap .filter-clear button.nav-toggle i.fa.fa-angle-up:before {position: absolute;background-image: url(../images/category-filter.png);
-	background-repeat: no-repeat;width: 26px;height: 24px;top: -11px;left: -15px;background-size: 15px;}
+	background-repeat: no-repeat;width: 26px;height: 24px;top: -11px;left: -20px;background-size: 15px;}
 	
 	
 	.product-panel-new .filter-item{ width:100% }
@@ -601,6 +643,14 @@ display: inline-block;right: 0;position: absolute;}
 	.financeoptionprocess.product-finance .col-md-6:nth-child(1) { order: 2;}
 .financeoptionprocess.product-finance .col-md-6:first-child {border-bottom: none; border-right:none;}
 .finance-available-options .payments p:first-child {width: 32%;}
+
+
+
+div#trustpilot-gtm-floating-wrapper {display: none !important;}
+.zopim {display: none !important;}
+.post-bar-left.header-post-bar-left {display: none;}
+.post-bar-right.header-post-bar-left {display: none;}
+.whatspp-num-1 {right: 0; bottom: 15px; display:block !important;}
 	}
 	
 	
@@ -651,6 +701,27 @@ display: inline-block;right: 0;position: absolute;}
 .finance-available-options .payments p:first-child {font-size: 11px}
 
 .defaultpages-cols h2, .defaultpages-cols h2.vc_custom_heading, .defaultpages-cols h2.vc_custom_heading, .defaultpages-cols h3.vc_custom_heading {font-size: 18px !important;}
+
+.fancybox-is-open .fancybox-stage .fancybox-slide .fancybox-content {background: #fff;padding: 0 23px;}
+.fancybox-is-open .fancybox-stage .fancybox-slide .fancybox-content img.fancybox-image {padding: 0 50px;object-fit: cover;}
+
+body .fancybox-navigation .fancybox-button--arrow_right {padding: 0;width: 30px;height: 30px;top: 50%;transform: translate(-10px, -50%);}
+body .fancybox-navigation .fancybox-button--arrow_left {padding: 0;width: 30px;height: 30px;top: 50%;transform: translate(10px, -50%);}
+
+
+/*wedding rings css*/
+.choosedreamy-wrap .rings-grid-wrap .col-lg-3 {width: 100%;}
+/*wedding rings css end*/
+
+.middle-topbar .middle-topbar-right{display: block;}
+.middle-topbar-right ul li.my-account-blk {
+    display: none !important;
+}
+.middle-topbar-right ul li.my-whishlist-blk {display: none !important;
+}
+.middle-topbar-right ul li.dropdown {
+    display: none;
+}
 	}
 	
 	@media(max-width:479px){
@@ -664,5 +735,7 @@ display: inline-block;right: 0;position: absolute;}
 .desk-calculator .modal-dialog ul.payments li p {font-size: 13px;}
 .finance-available-options ul li input, .finance-available-options ul li select{ font-size:10px; }
 /*finance options modal css end*/
+
+/* .checkout-payment-options ul li.cc_payment_methods.paypalpaymentgateway_wrap i.diamond-icon.paypent-checkout {    width: 133px;} */
 }
 	
