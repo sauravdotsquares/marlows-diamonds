@@ -120,7 +120,7 @@ class XMLController extends Controller
                                         $linkQuery .= $linkQuery ? '&diamond_type='.$diamondType.'&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
                                     }
                                     if(isset($var2->key) && $var2->key == 'metal-type'){
-                                        $metalType .= $var2->value;
+                                        $metalType .= str_replace(['9ct ','18ct '],['',''],$var2->value);
                                     }
                                     if(isset($var2->key) && $var2->key == 'carat'){
                                         $caratType .= $var2->value;
@@ -187,7 +187,7 @@ class XMLController extends Controller
                                 $product->appendChild($gender);
                                 $age_group = $dom->createElement('g:age_group', 'Adult');
                                 $product->appendChild($age_group);
-                                $metal = $dom->createElement('g:metal', $metalType);
+                                $metal = $dom->createElement('g:color', $metalType);
                                 $product->appendChild($metal);
                                 $identifier_exists = $dom->createElement('g:identifier_exists', $productIdentifierExists);
                                 $product->appendChild($identifier_exists);
@@ -225,7 +225,7 @@ class XMLController extends Controller
                                         $linkQuery .= $linkQuery ? '&diamond_type='.$diamondType.'&'.$var2->key.'='.$var2->value : $var2->key.'='.$var2->value;
                                     }
                                     if(isset($var2->key) && $var2->key == 'metal-type'){
-                                        $metalType .= $var2->value;
+                                        $metalType .= str_replace(['9ct ','18ct '],['',''],$var2->value);
                                     }
                                     if(isset($var2->key) && $var2->key == 'carat'){
                                         $caratType .= $var2->value;
@@ -296,7 +296,7 @@ class XMLController extends Controller
                                     $product->appendChild($gender);
                                     $age_group = $dom->createElement('g:age_group', 'Adult');
                                     $product->appendChild($age_group);
-                                    $metal = $dom->createElement('g:metal', $metalType);
+                                    $metal = $dom->createElement('g:color', $metalType);
                                     $product->appendChild($metal);
                                     $identifier_exists = $dom->createElement('g:identifier_exists', $productIdentifierExists);
                                     $product->appendChild($identifier_exists);

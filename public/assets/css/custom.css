@@ -153,15 +153,15 @@ transition: all 0.2s ease;}
 .mobile-cart-wishlist{display:none;align-items:center}
 .navbar-toggler{display:none}
 .sticky-header .middle-topbar {position: fixed;top: 0;left: 0;right: 0;z-index: 9;background: #fff;box-shadow: 0 2px 3px rgba(0,0,0,0.2);}
-.sticky-header .logo-menu-bar{position:fixed;top:55px;left:0;right:0;z-index:8;box-shadow:0 2px 3px rgba(0,0,0,0.2);background: #fff;}
-.sticky-header .post-bar {position: fixed;top: 175px;width: 100%;}
+.sticky-header .logo-menu-bar{position:fixed;top:65px;left:0;right:0;z-index:8;box-shadow:0 2px 3px rgba(0,0,0,0.2);background: #fff;}
+.sticky-header .post-bar {position: fixed;top: 175px;width: 100%;display: none;}
 .logo-menu-bar-wrap{align-items:center;position:relative}
 .main-navigaiton .nav-navbars .level-zero{display:inline-block;vertical-align:top;position:relative; margin: 0px 0px 0 4px;}
 .main-navigaiton .nav-navbars .level-zero a{text-decoration:none;color:#444;font-weight:bold;text-transform:uppercase;font-size:13px}
 .main-navigaiton .nav-navbars .level-zero > span > a:hover, .main-navigaiton .nav-navbars .level-zero:hover>.inner-submenu li a:hover {color: #8e2e65;}
 .main-navigaiton .nav-navbars .level-zero .fa-angle-down {position: absolute;right: -4px;top: 5px;}
 .main-navigaiton .nav-navbars .level-zero span {position: relative;display: block;}
-.site-logo-main{ max-width: 170px;}
+.site-logo-main{ max-width: 130px;}
 .site-logo-main a {text-decoration: none;}
 .main-navigaiton .nav-navbars .level-zero > span > a{padding:15px 8px;}
 

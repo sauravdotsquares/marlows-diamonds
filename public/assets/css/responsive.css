@@ -565,7 +565,7 @@ display: inline-block;right: 0;position: absolute;}
 	@media(max-width:767px){
 
 .site-logo-main img{max-width:115px}
-.head-mini-search{ top:143px;}
+.head-mini-search{ top: 140px;}
 
 header.header-main.sticky-header .middle-topbar{top: 98px;}
  .sticky-header .post-bar {top: 98px;}
