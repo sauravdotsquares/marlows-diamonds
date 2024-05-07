@@ -311,7 +311,10 @@
     </div>
     <!-- Shop from the Best end here -->
 
-
+    <!-- Best Selling Marlow's Diamond Jewellery start here -->
+    @include('front.includes.featuredproduct')
+    <!-- Best Selling Marlow's Diamond Jewellery end here -->
+    
     <!-- whay choose marlows start here -->
     <div class="whychoose-marlows">
         <div class="container">
@@ -392,11 +395,6 @@
 
 
     <!-- Marlow's End here -->
-
-
-    <!-- Best Selling Marlow's Diamond Jewellery start here -->
-    @include('front.includes.featuredproduct')
-    <!-- Best Selling Marlow's Diamond Jewellery end here -->
 
 
     <!--Shop from Marlow’s GIA Certified Diamond Rings start -->
