@@ -447,7 +447,18 @@
                                                         <dt class="variation-FingerSize">Certificate: </dt>
                                                         <dd class="variation-FingerSize"><p >{{$details['customArray']['CERT_NO']}}</p></dd>
                                                     @endif
-                                                   
+
+                                                    @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver-925')
+                                                        @php
+                                                            $checkStatus = ''
+                                                        @endphp
+                                                        @if(isset($details['priceStatus']) && $details['priceStatus'] == 1)
+                                                            @php
+                                                                $checkStatus = 'checked'
+                                                            @endphp
+                                                        @endif
+                                                        <input type="checkbox" id="yearlySupport{{$id}}" name="yearlySupport" {{$checkStatus}} value="99"> Please check if you want yearly support
+                                                    @endif
                                                 </dl>
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
                                             </td>
@@ -567,6 +578,39 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script>
     $(document).ready(function () {
+        $(document).on('click', "[id^=yearlySupport]", function () {
+
+            if($(this).is(':checked')){
+                // alert('uncheckd ' + $(this).val());
+                $checkPrice = $(this).val();
+                $priceStatus = 1;
+            }else{
+                $checkPrice = 0;
+                $priceStatus = 0;
+            }
+
+            var index = parseInt($(this).attr("id").replace("yearlySupport", ''));
+            $.ajax({
+                url: "{{ route('update.cart.coupon') }}",
+                method: "patch",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    cartid: index,
+                    price: $(this).val(),
+                    priceStatus: $priceStatus,
+                },
+                success: function (response) {
+                    $.each(response.sessionCartValues, function( keyIndex, value ) {
+                        $('#subtotalPrice'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                        
+                    });
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#deposited_price').val(response.finalPrice);
+                }
+            });
+        });
         $(document).on('click', "[id^=applyCouponCode]", function () {
             var index = parseInt($(this).attr("id").replace("applyCouponCode", ''));
             $.ajax({

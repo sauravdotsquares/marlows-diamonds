@@ -657,10 +657,8 @@
 			getSelectedDataVariation();
 			if(getDiamondType == 'lab_grown'){
 				getProdVideo('onChange',' 9ct White Gold ');
-				$("#metal-type option[value=' Silver-925 ']").show();
 			}else if(getDiamondType == 'mined_diamond'){
 				getProdVideo('onChange','Platinum');
-				$("#metal-type option[value=' Silver-925 ']").hide();
 			}
 		});
 
@@ -825,11 +823,12 @@
 					$('#filterDataDesign .type-variations-row').html(res);
 					getCustomPriceFinalFunction();
 					getSelectedDataVariation();
-				// 	if($('.diamond_type:checked').val() == 'lab_grown'){
-				// 	getDescribeSelectedOptions();
-				// }else if($('.diamond_type:checked').val() == 'mined_diamond'){
-				// 	getDescribeSelectedOptionsMined();
-				// }
+					if($('.diamond_type:checked').val() == 'lab_grown'){
+						// getDescribeSelectedOptions();
+					}else if($('.diamond_type:checked').val() == 'mined_diamond'){
+						// getDescribeSelectedOptionsMined();
+						$("#metal-type option[value=' Silver-925 ']").hide();
+					}
                 }
             });
 		}
