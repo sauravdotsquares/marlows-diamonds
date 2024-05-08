@@ -457,7 +457,7 @@
                                                                 $checkStatus = 'checked'
                                                             @endphp
                                                         @endif
-                                                        <input type="checkbox" id="yearlySupport{{$id}}" name="yearlySupport" {{$checkStatus}} value="99"> Please check if you want yearly support
+                                                        <input type="checkbox" id="yearlySupport{{$id}}" name="yearlySupport" {{$checkStatus}} value="99"> Annual aftercare {{MY_CURRENCY_SYMBOL}} 99
                                                     @endif
                                                 </dl>
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
