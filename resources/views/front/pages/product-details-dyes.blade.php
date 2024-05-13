@@ -262,6 +262,9 @@
 				<div class="product-decriptions product-description-common product-description-common_lab_item">
 					{!! $data->lab_description ? $data->description.'<br>'.$data->lab_description :  $data->description  !!}
 				</div>
+				<p class="delieveryDescription">
+					{{$getVariationDescription->description}}
+				</p>
 				<div class="price-section">
 					<div style="display: flex;">
 						<h4><del style="color:#000" id="shopPrice"> </del> </h4>
@@ -827,7 +830,7 @@
 						// getDescribeSelectedOptions();
 					}else if($('.diamond_type:checked').val() == 'mined_diamond'){
 						// getDescribeSelectedOptionsMined();
-						$("#metal-type option[value=' Silver-925 ']").hide();
+						$("#metal-type option[value=' Silver ']").hide();
 					}
                 }
             });
@@ -847,11 +850,19 @@
 					'slug' : '{{$data->slug}}',
 					'metal_color' : metal_type,
 				},
-				success: function (res) {
-					if(res.vari_video){
-						var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
+				success: function (res) {					
+					if(res.getSelectedVariationVideoImages.vari_video){
+						var videoUrl = "{{ asset('storage/')}}/"+res.getSelectedVariationVideoImages.vari_video;
 						$('#variationVideo').attr('src', videoUrl);
 						$("#variationVideo")[0].play();
+					}
+					
+					if(res.getVariationDescription.description){
+						if($('.diamond_type:checked').val() == 'lab_grown'){
+							$('.delieveryDescription').html(res.getVariationDescription.description);
+						}else if($('.diamond_type:checked').val() == 'mined_diamond'){
+							$('.delieveryDescription').html('');
+						}
 					}
 				}
 			});
@@ -918,6 +929,11 @@
                 },
                 success: function (res) {
 					if(res.status == 200){
+						if($('.diamond_type:checked').val() == 'lab_grown'){
+							$('.delieveryDescription').html(res.delivery_description);
+						}else if ($('.diamond_type:checked').val() == 'mined_diamond'){
+							$('.delieveryDescription').html(res.delivery_description);
+						}
 						$('#rrpPrice').html('RRP: {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
 						if(res.allPrices.shop_price == res.allPrices.discounted_price){
 						    $('#shopPrice').html('');

@@ -355,7 +355,7 @@ class AddToCartController extends Controller
     {
         if(isset($request->priceStatus) && $request->priceStatus == 1){
             $cart = session()->get('cart');
-            $cart[$request->cartid]["deposited_price"] = $cart[$request->cartid]["deposited_price"] + $request->price;
+            $cart[$request->cartid]["deposited_price"] = $cart[$request->cartid]["price"] + $request->price;
             $cart[$request->cartid]["couponCodeText"] = '';
             $cart[$request->cartid]["cartId"] = '';
             $cart[$request->cartid]["priceStatus"] = 1;
@@ -373,7 +373,7 @@ class AddToCartController extends Controller
             ];
         }elseif(isset($request->priceStatus) && $request->priceStatus == 0){
             $cart = session()->get('cart');
-            $cart[$request->cartid]["deposited_price"] = $cart[$request->cartid]["deposited_price"] - $request->price;
+            $cart[$request->cartid]["deposited_price"] = $cart[$request->cartid]["price"] - $request->price;
             $cart[$request->cartid]["couponCodeText"] = '';
             $cart[$request->cartid]["cartId"] = '';
             $cart[$request->cartid]["priceStatus"] = 0;

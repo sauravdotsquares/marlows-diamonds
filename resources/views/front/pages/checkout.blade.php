@@ -457,7 +457,15 @@
                                                                 $checkStatus = 'checked'
                                                             @endphp
                                                         @endif
-                                                        <input type="checkbox" id="yearlySupport{{$id}}" name="yearlySupport" {{$checkStatus}} value="99"> <strong>Annual aftercare {{MY_CURRENCY_SYMBOL}} 99</strong>
+                                                        <!-- <input type="checkbox" id="" name="yearlySupport" {{$checkStatus}} value="99"> <strong>Annual aftercare {{MY_CURRENCY_SYMBOL}} 99</strong> -->                                                      <h5>Jewellery Care Plan</h5>
+                                                        <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
+                                                            <option value="0">No applied</option>
+                                                            <option value="89">1 year {{MY_CURRENCY_SYMBOL}}89</option>
+                                                            <option value="170">2 years {{MY_CURRENCY_SYMBOL}}170</option>
+                                                            <option value="220">3 years {{MY_CURRENCY_SYMBOL}}220</option>
+                                                            <option value="300">4 years {{MY_CURRENCY_SYMBOL}}300</option>
+                                                            <option value="400">5 years {{MY_CURRENCY_SYMBOL}}400</option>
+                                                        </select>
                                                     @endif
                                                 </dl>
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
@@ -578,16 +586,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script>
     $(document).ready(function () {
-        $(document).on('click', "[id^=yearlySupport]", function () {
-
-            if($(this).is(':checked')){
-                // alert('uncheckd ' + $(this).val());
-                $checkPrice = $(this).val();
-                $priceStatus = 1;
-            }else{
-                $checkPrice = 0;
-                $priceStatus = 0;
-            }
+        $(document).on('change', "[id^=yearlySupport]", function () {
 
             var index = parseInt($(this).attr("id").replace("yearlySupport", ''));
             $.ajax({
@@ -597,7 +596,7 @@
                     _token: '{{ csrf_token() }}',
                     cartid: index,
                     price: $(this).val(),
-                    priceStatus: $priceStatus,
+                    priceStatus: 1,
                 },
                 success: function (response) {
                     $.each(response.sessionCartValues, function( keyIndex, value ) {
