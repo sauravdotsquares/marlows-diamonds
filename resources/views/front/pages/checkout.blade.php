@@ -448,7 +448,7 @@
                                                         <dd class="variation-FingerSize"><p >{{$details['customArray']['CERT_NO']}}</p></dd>
                                                     @endif
 
-                                                    @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver-925')
+                                                    @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver')
                                                         @php
                                                             $checkStatus = ''
                                                         @endphp
