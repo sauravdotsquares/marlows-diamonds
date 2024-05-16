@@ -86,6 +86,15 @@
 
             <!-- login form end-->
             <div class="checkout-main-wrap">
+<!--<div class="checkout-table">
+    
+    <ul>
+        <li><span class="active">1</span>Shipping</li>
+        <li><span>2</span>Payment</li>
+    </ul>
+
+</div> -->
+
                 <form id="finalPlaceOrderPage">
                     @csrf
                     <div class="customer-details-check">
@@ -113,15 +122,39 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">Company Name <span
-                                                                class="optional">(Optional)</span></label>
-                                                        <input type="text" id="company_shipping_name" value="{{isset($getUserDetails->getCustomerShippingAddressFunction->company_name)?$getUserDetails->getCustomerShippingAddressFunction->company_name:''}}" name="company_shipping_name" class="form-control">
+                                                        <label class="input-label">Street address <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" id="street_address_shipping_l1" name="street_address_shipping_l1" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->street_address_l1)?$getUsersDetails->getCustomerShippingAddressFunction->street_address_l1:''}}" required="required" class="form-control"
+                                                            placeholder="House number and street name">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Town / City <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->town_city)?$getUsersDetails->getCustomerShippingAddressFunction->town_city:''}}" id="town_shipping_city" name="town_shipping_city" required="required" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">State/Region<abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->state)?$getUsersDetails->getCustomerShippingAddressFunction->state:''}}" id="shipping_state" name="shipping_state" required="required" class="form-control">
+                                                        <!-- <select id="state" name="state" required="required" class="form-control">
+                                                            <option>Select Option</option>
+                                                            <option>Rajasthan</option>
+                                                        </select> -->
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Country/Region <abbr
                                                                 class="required">*</abbr></label>
@@ -137,40 +170,8 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Street address <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="street_address_shipping_l1" name="street_address_shipping_l1" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->street_address_l1)?$getUsersDetails->getCustomerShippingAddressFunction->street_address_l1:''}}" required="required" class="form-control"
-                                                            placeholder="House number and street name">
-                                                    </div>
-                                                    <div class="checkout-form-group">
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->street_address_l2)?$getUsersDetails->getCustomerShippingAddressFunction->street_address_l2:''}}" id="street_address_shipping_l2" name="street_address_shipping_l2" class="form-control"
-                                                            placeholder="Apartment, suite, unit, etc. (optional)">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Town / City <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->town_city)?$getUsersDetails->getCustomerShippingAddressFunction->town_city:''}}" id="town_shipping_city" name="town_shipping_city" required="required" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">State/Region<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->state)?$getUsersDetails->getCustomerShippingAddressFunction->state:''}}" id="shipping_state" name="shipping_state" required="required" class="form-control">
-                                                        <!-- <select id="state" name="state" required="required" class="form-control">
-                                                            <option>Select Option</option>
-                                                            <option>Rajasthan</option>
-                                                        </select> -->
-                                                    </div>
-                                                </div>
+
+
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -220,29 +221,17 @@
                                     </div> -->
                                     @endguest
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="checkout-right-fields">
-                                    <div class="checkout-addition-fields">
-                                        <div class="checkout-title-head">
-                                            Additional information
-                                        </div>
-                                        <div class="additional-fields-wrap">
-                                            <div class="checkout-form-group">
-                                                <label class="input-label">Order notes<span
-                                                        class="optional">(Optional)</span></label>
-                                                <textarea id="order_shipping_notes" name="order_shipping_notes" required="required" class="form-control" placeholder="Notes about your order, e.g. special notes for delivery."> {{isset($getUsersDetails->getCustomerShippingAddressFunction->order_notes)?$getUsersDetails->getCustomerShippingAddressFunction->order_notes:''}}
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="customer-details-check">
+
+
+
+ <div class="billing-check">
+ <input type="checkbox" checked class="coupon_question" id="custom-checkBox2" onchange="valueChanged()"/>
+<h4>Use as billing address</h4>
+</div>
+
+                    <div class="customer-details-check billing-detail-show">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="checkout-left-fields">
                                     <div class="checkout-billing-fields">
                                         <div class="checkout-title-head">
@@ -266,14 +255,39 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">Company Name <span
-                                                                class="optional">(Optional)</span></label>
-                                                        <input type="text" id="company_name" value="{{isset($getUserDetails->getCustomerAddressFunction->company_name)?$getUserDetails->getCustomerAddressFunction->company_name:''}}" name="company_name" class="form-control">
+                                                        <label class="input-label">Street address <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" id="street_address_l1" name="street_address_l1" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l1)?$getUsersDetails->getCustomerAddressFunction->street_address_l1:''}}" required="required" class="form-control"
+                                                            placeholder="House number and street name">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Town / City <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->town_city)?$getUsersDetails->getCustomerAddressFunction->town_city:''}}" id="town_city" name="town_city" required="required" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">State/Region<abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->state)?$getUsersDetails->getCustomerAddressFunction->state:''}}" id="state" name="state" required="required" class="form-control">
+                                                        <!-- <select id="state" name="state" required="required" class="form-control">
+                                                            <option>Select Option</option>
+                                                            <option>Rajasthan</option>
+                                                        </select> -->
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Country/Region <abbr
                                                                 class="required">*</abbr></label>
@@ -289,40 +303,8 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Street address <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="street_address_l1" name="street_address_l1" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l1)?$getUsersDetails->getCustomerAddressFunction->street_address_l1:''}}" required="required" class="form-control"
-                                                            placeholder="House number and street name">
-                                                    </div>
-                                                    <div class="checkout-form-group">
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l2)?$getUsersDetails->getCustomerAddressFunction->street_address_l2:''}}" id="street_address_l2" name="street_address_l2" class="form-control"
-                                                            placeholder="Apartment, suite, unit, etc. (optional)">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Town / City <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->town_city)?$getUsersDetails->getCustomerAddressFunction->town_city:''}}" id="town_city" name="town_city" required="required" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">State/Region<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->state)?$getUsersDetails->getCustomerAddressFunction->state:''}}" id="state" name="state" required="required" class="form-control">
-                                                        <!-- <select id="state" name="state" required="required" class="form-control">
-                                                            <option>Select Option</option>
-                                                            <option>Rajasthan</option>
-                                                        </select> -->
-                                                    </div>
-                                                </div>
+
+
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -373,26 +355,15 @@
                                     @endguest
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="checkout-right-fields">
-                                    <div class="checkout-addition-fields">
-                                        <div class="checkout-title-head">
-                                            Additional information
-                                        </div>
-                                        <div class="additional-fields-wrap">
-                                            <div class="checkout-form-group">
-                                                <label class="input-label">Order notes<span
-                                                        class="optional">(Optional)</span></label>
-                                                <textarea id="order_notes" name="order_notes" required="required" class="form-control" placeholder="Notes about your order, e.g. special notes for delivery."> {{isset($getUsersDetails->getCustomerAddressFunction->order_notes)?$getUsersDetails->getCustomerAddressFunction->order_notes:''}}
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <!-- Checkout order section START -->
+
+
+                            </div>
+
+
+                            <div class="col-lg-6">
+<!-- Checkout order section START -->
                     <div class="checkout-order-review">
                         <div class="checkout-title-head">
                             Your Order
@@ -480,15 +451,17 @@
                                                         <dd class="variation-FingerSize"><p >{{$details['customArray']['CERT_NO']}}</p></dd>
                                                     @endif
                                                     @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver')
+                                                    <div class="plancare-section">
                                                         <h5>Jewellery Care Plan</h5>
                                                         <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
-                                                            <option value="0" @if($details['yearlySupport'] == 0) selected @endif>No applied</option>
-                                                            <option value="89" @if($details['yearlySupport'] == 89) selected @endif>1 year {{MY_CURRENCY_SYMBOL}}89</option>
-                                                            <option value="170" @if($details['yearlySupport'] == 170) selected @endif>2 years {{MY_CURRENCY_SYMBOL}}170</option>
-                                                            <option value="220" @if($details['yearlySupport'] == 220) selected @endif>3 years {{MY_CURRENCY_SYMBOL}}220</option>
-                                                            <option value="300" @if($details['yearlySupport'] == 300) selected @endif>4 years {{MY_CURRENCY_SYMBOL}}300</option>
-                                                            <option value="400" @if($details['yearlySupport'] == 400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
+                                                            <option value="0" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 0) selected @endif>No applied</option>
+                                                            <option value="89" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 89) selected @endif>1 year {{MY_CURRENCY_SYMBOL}}89</option>
+                                                            <option value="170" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 170) selected @endif>2 years {{MY_CURRENCY_SYMBOL}}170</option>
+                                                            <option value="220" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 220) selected @endif>3 years {{MY_CURRENCY_SYMBOL}}220</option>
+                                                            <option value="300" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 300) selected @endif>4 years {{MY_CURRENCY_SYMBOL}}300</option>
+                                                            <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
                                                         </select>
+                                                        </div>
                                                     @endif
                                                 </dl>
                                                 <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
@@ -567,7 +540,9 @@
                         <input type="hidden" id="total_price" name="total_price" value="{{ $totalPrice }}">
                         <input type="hidden" id="deposited_price" name="deposited_price" value="{{ $depositedPrice }}">
                         <input type="hidden" id="selected_payment_type" name="selected_payment_type" value="paypal">
-                        <div class="checkout-payment-options">
+
+
+<div class="checkout-payment-options">
                             <ul class="cc_payment_methods_options">
 
                                 @include('front.pages.payments.paypal',['totalAmount'=>$total])
@@ -575,6 +550,7 @@
                                 <!-- @include('front.pages.payments.stripepay',['totalAmount'=>$total]) -->
                             </ul>
                         </div>
+
                         <div class="checkout-place-order">
                             <div class="cc-terms-and-conditions-wrapper">
                                 Your personal data will be used to process your order, support your experience
@@ -591,9 +567,45 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Checkout order section END -->
+                    <!-- Checkout order section END -->  
+
+                            </div>
+
+
+                            <!--<div class="col-lg-6">
+                                <div class="checkout-right-fields">
+                                    <div class="checkout-addition-fields">
+                                        <div class="checkout-title-head">
+                                            Additional information
+                                        </div>
+                                        <div class="additional-fields-wrap">
+                                            <div class="checkout-form-group">
+                                                <label class="input-label">Order notes<span
+                                                        class="optional">(Optional)</span></label>
+                                                <textarea id="order_shipping_notes" name="order_shipping_notes" required="required" class="form-control" placeholder="Notes about your order, e.g. special notes for delivery."> {{isset($getUsersDetails->getCustomerShippingAddressFunction->order_notes)?$getUsersDetails->getCustomerShippingAddressFunction->order_notes:''}}
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+
+               
+                    
                 </form>
+
+
+
+
+
             </div>
+
+                        
+
+
+            
         </div>
     </div>
 </div>
@@ -1094,6 +1106,14 @@
         });
 
     });
+
+function valueChanged() {
+  if($('.coupon_question').is(":checked"))   
+$(".billing-detail-show").hide();  
+  else
+$(".billing-detail-show").show();
+};
+
 </script>
 
 @endsection

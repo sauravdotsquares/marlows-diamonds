@@ -885,9 +885,20 @@ z-index: 11;}
 .cart-table-wraper {margin-bottom: 20px;}
 
 /** checkout **/
-.not-logedin-block {background: #f8f8f8;padding: 20px 70px 20px 74px;position: relative; margin: 0; border: none;}
+.checkout-table ul {display: flex;justify-content: center;margin: 0 0 40px;}
+.checkout-table ul li {list-style: none;text-align: center;margin: 0 20px 0;position: relative;}
+.checkout-table ul li:after {position: absolute;content: '';width: 100%;height: 1px;background: #ccc;top: 30%;left: 47px;}
+.checkout-table ul li:last-child:after {display: none;}
+.checkout-table ul li span {width: 30px;height: 30px;display: block;background: #fff;border-radius: 50%;margin: auto;border: 1px solid #ccc;color: #000;
+display: flex;align-items: center;justify-content: center;}
+.checkout-table ul li span.active {background: #8e2e65;color: #fff;}
+
+
+.not-logedin-block {background: #fff;padding: 20px 70px 20px 74px;position: relative; margin: 0; border: none;}
 .alert_icon {position: absolute;left: 0;border-right: 1px solid rgba(0,0,0,.05);top: 0;bottom: 0;margin: auto;width: 62px;text-align: center;font-size: 38px;color: #000;}
-.checkout-wraper {padding: 30px 0;}
+.checkout-wraper {padding: 30px 0; background: #f3f3f3;}
+.customer-details-check .checkout-left-fields {background: #ffff;padding: 15px 16px;border-radius: 15px;}
+
 .alert_wraper {font-size: 15px;}
 .alert_wraper a {text-decoration: none;color: #8e2e65;}
 .alert_close .btn-close {padding: 0;font-size: 20px;width: 60px;bottom: 0;margin: auto;}
@@ -904,6 +915,31 @@ z-index: 11;}
 
 .checkout-form-group span.password-show i.fa {color: #000;}
 .checkout-form-group span.password-show i.fa:hover {color: #8e2e65;}
+
+.billing-check {display: flex;align-items: center;margin: 18px 0 16px; background: #8e2e65;padding: 15px 15px;}
+.billing-check h4 {font-size: 15px;color: #fff;margin: 0 0 0 7px;font-family: 'Lato';font-weight: bold;}
+.billing-check input[type="checkbox"] {margin-left: 0;transform: translateY(0px);width: 20px;height: 20px;border: 1px solid #fff;padding: 2px; -webkit-appearance: none; 
+  appearance: none; }
+
+.billing-check input[type="checkbox"]:before {
+    display: block;
+    content: "";
+    width: 14px;
+    height: 14px;
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 14px 14px #333;
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+}
+.billing-check input#custom-checkBox2:checked::before {
+    transform: scale(1);
+    box-shadow:inset 14px 14px #8e2e65;
+}
+
+.billing-check input:checked {background-color: #fff;}
+.customer-details-check.billing-detail-show {display: none;}
+
 .input-label {display: block;font-size: 15px;color: #404040;margin: 0 0 7px 0;}
 .create-account-checkbox label {color: #606060;padding: 0 0 0 4px;}
 .create-account-checkbox {margin: 0 0 12px 0;}
@@ -914,14 +950,18 @@ z-index: 11;}
 .lostpassword {margin: 20px 0 0 0;}
 .lostpassword a{color:#8e2e65; text-decoration: none;}
 
-.checkout-order-review {margin: 0 0 30px 0px;}
+.checkout-order-review {margin: 0 0 30px 0px;background: #ffff;padding: 15px 16px;border-radius: 15px;}
 
+.checkout-order-table table {border: 1px solid rgba(0,0,0,.1);border-radius: 5px;width: 100%;}
 .checkout-order-table table tr th {box-shadow: inset 0px 4px 3px -2px rgba(0,0,0,.04);border-width: 0 1px 1px 0;padding: 16px 20px;font-size: 15px;color: #404040;font-weight: bold;}
 .checkout-order-table table tr th:not(:first-child) {text-align: center;}
 .checkout-order-table table tr td {border-width: 0 1px 1px 0;padding: 13px 20px;font-size: 14px;color: #404040;}
 
 .checkout-order-table table tr td:not(:first-child) {text-align: center;}
-.checkout-order-table table {border: 1px solid rgba(0,0,0,.1);border-radius: 5px;width: 100%;}
+
+.checkout-order-table table tr td .plancare-section {background: #fff4fa;padding:15px 15px 20px;}
+.checkout-order-table table tr td .plancare-section h5 {font-size: 15px;font-weight: bold;font-family: 'Lato'; margin: 0 0 5px;}
+.checkout-order-table table tr td .form-control {font-size: 15px; border: 1px solid #e5e5e5;}
 
 .checkcart-item dl dd p {color: #707070;margin: 0 0 3px 0;}
 .checkcart-item dl dt, .checkcart-item dl dd {font-weight: normal;font-size: 14px;margin: 0;}
@@ -939,7 +979,7 @@ text-transform: uppercase;text-decoration: none;display: inline-block;font-weigh
 .name-pr-cart strong {margin: 0 0 0 4px;}
 
 .name-pr-cart {font-size: 15px;margin: 0 0 4px 0;}
-.checkout-payment-options {margin: 30px 0 0px 0;border: 1px solid #e5e5e5;padding: 0;border-radius: 15px; overflow: hidden;}
+.checkout-payment-options {margin: 0 0 0px 0;border: 1px solid #e5e5e5;padding: 0;border-radius: 15px; overflow: hidden; background: #fff;}
 .checkout-payment-options ul li {display: inline-block; width: 100%; margin: 0 0 20px 0;border-bottom: 1px solid #e5e5e5;}
 .checkout-payment-options ul li.cc_payment_methods.paypal_payment {padding:20px 15px 20px; margin-bottom: 0;}
 .checkout-payment-options ul li.cc_payment_methods.paypalpaymentgateway_wrap{ background: #fff4fa;}
