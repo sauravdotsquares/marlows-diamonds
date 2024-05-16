@@ -23,6 +23,8 @@ class OrderDetail extends Model
         'final_product_price',
         'coupon_code',
         'discount_percentage',
+        'yearly_support_status',
+        'yearly_support_price',
         'status',
     ];
 

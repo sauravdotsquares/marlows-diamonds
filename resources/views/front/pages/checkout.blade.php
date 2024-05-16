@@ -83,11 +83,6 @@
                 </div>
             @endif
 
-            <?php
-                // echo "<pre>";
-                // print_r($getUsersDetails->getCustomerAddressFunction->country_id);
-                // die;
-            ?>
 
             <!-- login form end-->
             <div class="checkout-main-wrap">
@@ -95,7 +90,159 @@
                     @csrf
                     <div class="customer-details-check">
                         <div class="row">
-                            <div class="checkout_billing_details col-lg-8">
+                            <div class="col-lg-6">
+                                <div class="checkout-left-fields">
+                                    <div class="checkout-billing-fields">
+                                        <div class="checkout-title-head">
+                                            Shipping Details
+                                        </div>
+                                        <div class="billin-fields-wrap">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">First Name <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" id="first_shipping_name" name="first_shipping_name" required="required" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->first_name)?$getUsersDetails->getCustomerShippingAddressFunction->first_name:''}}" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Last Name <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" id="last_shipping_name" name="last_shipping_name" required="required" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->last_name)?$getUsersDetails->getCustomerShippingAddressFunction->last_name:''}}" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Company Name <span
+                                                                class="optional">(Optional)</span></label>
+                                                        <input type="text" id="company_shipping_name" value="{{isset($getUserDetails->getCustomerShippingAddressFunction->company_name)?$getUserDetails->getCustomerShippingAddressFunction->company_name:''}}" name="company_shipping_name" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Country/Region <abbr
+                                                                class="required">*</abbr></label>
+                                                        <select id="country_shipping_id" name="country_shipping_id" required="required" class="form-control">
+                                                            <option value="">Select Option</option>
+                                                            @foreach($getCountries as $key => $country)
+                                                                @if(isset($getUsersDetails->getCustomerShippingAddressFunction->country_id) && $getUsersDetails->getCustomerShippingAddressFunction->country_id == $country->shortname)
+                                                                    <option value="{{$country->shortname}}" selected>{{$country->name}}</option>
+                                                                @else
+                                                                    <option value="{{$country->shortname}}">{{$country->name}}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Street address <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" id="street_address_shipping_l1" name="street_address_shipping_l1" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->street_address_l1)?$getUsersDetails->getCustomerShippingAddressFunction->street_address_l1:''}}" required="required" class="form-control"
+                                                            placeholder="House number and street name">
+                                                    </div>
+                                                    <div class="checkout-form-group">
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->street_address_l2)?$getUsersDetails->getCustomerShippingAddressFunction->street_address_l2:''}}" id="street_address_shipping_l2" name="street_address_shipping_l2" class="form-control"
+                                                            placeholder="Apartment, suite, unit, etc. (optional)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Town / City <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->town_city)?$getUsersDetails->getCustomerShippingAddressFunction->town_city:''}}" id="town_shipping_city" name="town_shipping_city" required="required" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">State/Region<abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->state)?$getUsersDetails->getCustomerShippingAddressFunction->state:''}}" id="shipping_state" name="shipping_state" required="required" class="form-control">
+                                                        <!-- <select id="state" name="state" required="required" class="form-control">
+                                                            <option>Select Option</option>
+                                                            <option>Rajasthan</option>
+                                                        </select> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Postcode <abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->pin_code)?$getUsersDetails->getCustomerShippingAddressFunction->pin_code:''}}" id="pin_shipping_code" name="pin_shipping_code" required="required" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="checkout-form-group">
+                                                        <label class="input-label">Phone<abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->mobile)?$getUsersDetails->getCustomerShippingAddressFunction->mobile:''}}" id="shipping_mobile" name="shipping_mobile" required="required" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="emailCheck" class="checkout-form-group">
+                                                        <label class="input-label">Email address<abbr
+                                                                class="required">*</abbr></label>
+                                                        <input type="text" id="cust_shipping_email" name="cust_shipping_email" required="required" value="{{isset(auth()->user()->email)?auth()->user()->email:''}}" @if(isset(auth()->user()->email)) readonly disable @endif class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @guest
+                                    <!-- <div class="checkout-create-account">
+                                        <div class="create-account-checkbox">
+                                            <input type="checkbox" id="showRegisterDiv" name="showregistercheck">
+                                            <label>Create an Account?</label>
+                                        </div>
+                                        <div class="create-account-fields showregisterform" style="display: none;">
+                                            <div class="checkout-form-group">
+                                                <label class="input-label">Account username<abbr
+                                                        class="required">*</abbr></label>
+                                                <input type="text" id="cust_username" name="cust_username" required="required" class="form-control">
+                                            </div>
+                                            <div class="checkout-form-group">
+                                                <label class="input-label">Create account password<abbr
+                                                        class="required">*</abbr></label>
+                                                <input type="password" id="cust_password" name="cust_password" required="required" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    @endguest
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout-right-fields">
+                                    <div class="checkout-addition-fields">
+                                        <div class="checkout-title-head">
+                                            Additional information
+                                        </div>
+                                        <div class="additional-fields-wrap">
+                                            <div class="checkout-form-group">
+                                                <label class="input-label">Order notes<span
+                                                        class="optional">(Optional)</span></label>
+                                                <textarea id="order_shipping_notes" name="order_shipping_notes" required="required" class="form-control" placeholder="Notes about your order, e.g. special notes for delivery."> {{isset($getUsersDetails->getCustomerShippingAddressFunction->order_notes)?$getUsersDetails->getCustomerShippingAddressFunction->order_notes:''}}
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="customer-details-check">
+                        <div class="row">
+                            <div class="col-lg-6">
                                 <div class="checkout-left-fields">
                                     <div class="checkout-billing-fields">
                                         <div class="checkout-title-head">
@@ -119,14 +266,14 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <!--<div class="col-md-6">
+                                                <div class="col-md-6">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Company Name <span
                                                                 class="optional">(Optional)</span></label>
                                                         <input type="text" id="company_name" value="{{isset($getUserDetails->getCustomerAddressFunction->company_name)?$getUserDetails->getCustomerAddressFunction->company_name:''}}" name="company_name" class="form-control">
                                                     </div>
-                                                </div>-->
-                                                <div class="col-md-12">
+                                                </div>
+                                                <div class="col-md-6">
                                                     <div class="checkout-form-group">
                                                         <label class="input-label">Country/Region <abbr
                                                                 class="required">*</abbr></label>
@@ -151,127 +298,10 @@
                                                         <input type="text" id="street_address_l1" name="street_address_l1" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l1)?$getUsersDetails->getCustomerAddressFunction->street_address_l1:''}}" required="required" class="form-control"
                                                             placeholder="House number and street name">
                                                     </div>
-                                                    <!--<div class="checkout-form-group">
+                                                    <div class="checkout-form-group">
                                                         <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l2)?$getUsersDetails->getCustomerAddressFunction->street_address_l2:''}}" id="street_address_l2" name="street_address_l2" class="form-control"
                                                             placeholder="Apartment, suite, unit, etc. (optional)">
-                                                    </div>-->
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Town / City <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->town_city)?$getUsersDetails->getCustomerAddressFunction->town_city:''}}" id="town_city" name="town_city" required="required" class="form-control">
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">State/Region<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->state)?$getUsersDetails->getCustomerAddressFunction->state:''}}" id="state" name="state" required="required" class="form-control">
-                                                        <!-- <select id="state" name="state" required="required" class="form-control">
-                                                            <option>Select Option</option>
-                                                            <option>Rajasthan</option>
-                                                        </select> -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Postcode <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->pin_code)?$getUsersDetails->getCustomerAddressFunction->pin_code:''}}" id="pin_code" name="pin_code" required="required" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Phone<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->mobile)?$getUsersDetails->getCustomerAddressFunction->mobile:''}}" id="mobile" name="mobile" required="required" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div id="emailCheck" class="checkout-form-group">
-                                                        <label class="input-label">Email address<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="cust_email" name="cust_email" required="required" value="{{isset(auth()->user()->email)?auth()->user()->email:''}}" @if(isset(auth()->user()->email)) readonly disable @endif class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="checkout-shipping-fields-1">
-                                            <input type="checkbox" id="" name="">
-                                            <label>Checkout shipping fields</label>
-                                        </div>
-
-
-
-                                    <div class="checkout-billing-fields checkout-shipping-fields">
-                                        <div class="checkout-title-head">
-                                            Shipping Details
-                                        </div>
-                                        <div class="billin-fields-wrap">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">First Name <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="first_name" name="first_name" required="required" value="{{isset($getUsersDetails->getCustomerAddressFunction->first_name)?$getUsersDetails->getCustomerAddressFunction->first_name:''}}" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Last Name <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="last_name" name="last_name" required="required" value="{{isset($getUsersDetails->getCustomerAddressFunction->last_name)?$getUsersDetails->getCustomerAddressFunction->last_name:''}}" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <!--<div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Company Name <span
-                                                                class="optional">(Optional)</span></label>
-                                                        <input type="text" id="company_name" value="{{isset($getUserDetails->getCustomerAddressFunction->company_name)?$getUserDetails->getCustomerAddressFunction->company_name:''}}" name="company_name" class="form-control">
-                                                    </div>
-                                                </div>-->
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Country/Region <abbr
-                                                                class="required">*</abbr></label>
-                                                        <select id="country_id" name="country_id" required="required" class="form-control">
-                                                            <option value="">Select Option</option>
-                                                            @foreach($getCountries as $key => $country)
-                                                                @if(isset($getUsersDetails->getCustomerAddressFunction->country_id) && $getUsersDetails->getCustomerAddressFunction->country_id == $country->shortname)
-                                                                    <option value="{{$country->shortname}}" selected>{{$country->name}}</option>
-                                                                @else
-                                                                    <option value="{{$country->shortname}}">{{$country->name}}</option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Street address <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="street_address_l1" name="street_address_l1" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l1)?$getUsersDetails->getCustomerAddressFunction->street_address_l1:''}}" required="required" class="form-control"
-                                                            placeholder="House number and street name">
-                                                    </div>
-                                                    <!--<div class="checkout-form-group">
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l2)?$getUsersDetails->getCustomerAddressFunction->street_address_l2:''}}" id="street_address_l2" name="street_address_l2" class="form-control"
-                                                            placeholder="Apartment, suite, unit, etc. (optional)">
-                                                    </div>-->
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -343,7 +373,7 @@
                                     @endguest
                                 </div>
                             </div>
-                            <!--<div class="col-lg-6">
+                            <div class="col-lg-6">
                                 <div class="checkout-right-fields">
                                     <div class="checkout-addition-fields">
                                         <div class="checkout-title-head">
@@ -359,9 +389,11 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>-->
-                              <!-- Checkout order section START -->
-                    <div class="col-lg-4 checkout-order-review">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Checkout order section START -->
+                    <div class="checkout-order-review">
                         <div class="checkout-title-head">
                             Your Order
                         </div>
@@ -447,24 +479,15 @@
                                                         <dt class="variation-FingerSize">Certificate: </dt>
                                                         <dd class="variation-FingerSize"><p >{{$details['customArray']['CERT_NO']}}</p></dd>
                                                     @endif
-
                                                     @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver')
-                                                        @php
-                                                            $checkStatus = ''
-                                                        @endphp
-                                                        @if(isset($details['priceStatus']) && $details['priceStatus'] == 1)
-                                                            @php
-                                                                $checkStatus = 'checked'
-                                                            @endphp
-                                                        @endif
-                                                        <!-- <input type="checkbox" id="" name="yearlySupport" {{$checkStatus}} value="99"> <strong>Annual aftercare {{MY_CURRENCY_SYMBOL}} 99</strong> -->                                                      <h5>Jewellery Care Plan</h5>
+                                                        <h5>Jewellery Care Plan</h5>
                                                         <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
-                                                            <option value="0">No applied</option>
-                                                            <option value="89">1 year {{MY_CURRENCY_SYMBOL}}89</option>
-                                                            <option value="170">2 years {{MY_CURRENCY_SYMBOL}}170</option>
-                                                            <option value="220">3 years {{MY_CURRENCY_SYMBOL}}220</option>
-                                                            <option value="300">4 years {{MY_CURRENCY_SYMBOL}}300</option>
-                                                            <option value="400">5 years {{MY_CURRENCY_SYMBOL}}400</option>
+                                                            <option value="0" @if($details['yearlySupport'] == 0) selected @endif>No applied</option>
+                                                            <option value="89" @if($details['yearlySupport'] == 89) selected @endif>1 year {{MY_CURRENCY_SYMBOL}}89</option>
+                                                            <option value="170" @if($details['yearlySupport'] == 170) selected @endif>2 years {{MY_CURRENCY_SYMBOL}}170</option>
+                                                            <option value="220" @if($details['yearlySupport'] == 220) selected @endif>3 years {{MY_CURRENCY_SYMBOL}}220</option>
+                                                            <option value="300" @if($details['yearlySupport'] == 300) selected @endif>4 years {{MY_CURRENCY_SYMBOL}}300</option>
+                                                            <option value="400" @if($details['yearlySupport'] == 400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
                                                         </select>
                                                     @endif
                                                 </dl>
@@ -569,8 +592,6 @@
                         </div>
                     </div>
                     <!-- Checkout order section END -->
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>

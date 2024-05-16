@@ -359,6 +359,8 @@ class AddToCartController extends Controller
             $cart[$request->cartid]["couponCodeText"] = '';
             $cart[$request->cartid]["cartId"] = '';
             $cart[$request->cartid]["priceStatus"] = 1;
+            $cart[$request->cartid]["yearlySupportStatus"] = ($request->price>1)?1:0;
+            $cart[$request->cartid]["yearlySupport"] = $request->price;
             $cart[$request->cartid]["couponCodePercentage"] = '';
             session()->put('cart', $cart);
 
@@ -496,7 +498,7 @@ class AddToCartController extends Controller
             $getCountries = Country::get();
             $getUsersDetails = [];
             if (Auth::guard('customer')->check() && isset(Auth::guard('customer')->user()->id)) {
-                $getUsersDetails = User::with('getCustomerAddressFunction')->where('id', Auth::guard('customer')->user()->id)->first();
+                $getUsersDetails = User::with('getCustomerAddressFunction','getCustomerShippingAddressFunction')->where('id', Auth::guard('customer')->user()->id)->first();
             }
             return view('front.pages.checkout', compact('getCountries', 'getUsersDetails', 'url'));
         }
