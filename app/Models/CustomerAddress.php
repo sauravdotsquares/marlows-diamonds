@@ -26,6 +26,7 @@ class CustomerAddress extends Model
         'mobile',
         'email',
         'order_notes',
+        'shipping_status',
     ];
 
     protected $appends = ['country_name'];

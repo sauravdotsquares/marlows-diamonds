@@ -21,72 +21,74 @@
 
 
 @if (\Session::has('error'))
-    <div class="alert alert-danger">
-        <ul>
-            <li>{!! \Session::get('error') !!}</li>
-        </ul>
-    </div>
+<div class="alert alert-danger">
+    <ul>
+        <li>{!! \Session::get('error') !!}</li>
+    </ul>
+</div>
 @endif
 @if (\Session::has('fail-message'))
-    <div class="alert alert-danger">
-        {!! \Session::get('fail-message') !!}
-    </div>
+<div class="alert alert-danger">
+    {!! \Session::get('fail-message') !!}
+</div>
 @endif
 
 <div class="checkout-wraper">
     <div class="container">
         <div class="checkout-container">
             @if(!Auth::guard('customer')->check())
-                <?php // echo "check"; die; ?>
-                <div class="not-logedin-block alert alert-dismissible fade show" role="alert">
-                    <div class="alert_icon">
-                        <i class="fa fa-question" aria-hidden="true"></i>
-                    </div>
-                    <div class="alert_wraper">
-                        Returning customer?
-                        <a class="showlogin" href="javascript:void(0);">Click here to login</a>
-                    </div>
-                    <div class="alert_close">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+            <div class="not-logedin-block alert alert-dismissible fade show" role="alert">
+                <div class="alert_icon">
+                    <i class="fa fa-question" aria-hidden="true"></i>
                 </div>
-                <!-- login form start-->
-                <div class="checkout-login-form">
-                    <form id="loginRegisterForm">
-                        <p>If you have shopped with us before, please enter your details below. If you are a new customer,
-                            please proceed to the Billing section.</p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="checkout-form-group">
-                                    <label class="input-label">Email <abbr class="required">*</abbr></label>
-                                    <input type="text" name="email" id="email" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="checkout-form-group">
-                                    <label class="input-label">Password <abbr class="required">*</abbr></label>
-                                    <input type="password" name="password" id="password" class="form-control">
-                                </div>
+                <div class="alert_wraper">
+                    Returning customer?
+                    <a class="showlogin" href="javascript:void(0);">Click here to login</a>
+                </div>
+                <div class="alert_close">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            <!-- login form start-->
+            <div class="checkout-login-form">
+                <form id="loginRegisterForm">
+                    <p>If you have shopped with us before, please enter your details below. If you are a new customer,
+                        please proceed to the Billing section.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkout-form-group">
+                                <label class="input-label">Email <abbr class="required">*</abbr></label>
+                                <input type="text" name="email" id="email" class="form-control">
                             </div>
                         </div>
-                        <div class="action-login">
-                            <button class="btn-bg-small" type="submit">Login</button>
-                            <label class="rememberme">
-                                <input type="checkbox">
-                                <span>Remember me</span>
-                            </label>
+                        <div class="col-md-6">
+                            <div class="checkout-form-group">
+                                <label class="input-label">Password <abbr class="required">*</abbr></label>
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
                         </div>
-                        <div class="lostpassword">
-                            <a href="javascript:void(0)">Lost your password</a>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="action-login">
+                        <button class="btn-bg-small" type="submit">Login</button>
+                        <a class="btn-bg-small" href="{{asset('my-account')}}">
+                            Signup
+                        </a>
+                        <!-- <label class="rememberme">
+                            <input type="checkbox">
+                            <span>Remember me</span>
+                        </label> -->
+                    </div>
+                    <!-- <div class="lostpassword">
+                        <a href="javascript:void(0)">Lost your password</a>
+                    </div> -->
+                </form>
+            </div>
             @endif
 
 
             <!-- login form end-->
             <div class="checkout-main-wrap">
-<!--<div class="checkout-table">
+                <!--<div class="checkout-table">
     
     <ul>
         <li><span class="active">1</span>Shipping</li>
@@ -103,50 +105,42 @@
                                 <div class="checkout-left-fields">
                                     <div class="checkout-billing-fields">
                                         <div class="checkout-title-head">
-                                            Shipping Details
+                                            Billing Address
                                         </div>
                                         <div class="billin-fields-wrap">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">First Name <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="first_shipping_name" name="first_shipping_name" required="required" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->first_name)?$getUsersDetails->getCustomerShippingAddressFunction->first_name:''}}" class="form-control">
+                                                        <label class="input-label">First Name <abbr class="required">*</abbr></label>
+                                                        <input type="text" id="first_name" name="first_name" required="required" value="{{isset($getUsersDetails->getCustomerAddressFunction->first_name)?$getUsersDetails->getCustomerAddressFunction->first_name:''}}" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">Last Name <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="last_shipping_name" name="last_shipping_name" required="required" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->last_name)?$getUsersDetails->getCustomerShippingAddressFunction->last_name:''}}" class="form-control">
+                                                        <label class="input-label">Last Name <abbr class="required">*</abbr></label>
+                                                        <input type="text" id="last_name" name="last_name" required="required" value="{{isset($getUsersDetails->getCustomerAddressFunction->last_name)?$getUsersDetails->getCustomerAddressFunction->last_name:''}}" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">Street address <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="street_address_shipping_l1" name="street_address_shipping_l1" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->street_address_l1)?$getUsersDetails->getCustomerShippingAddressFunction->street_address_l1:''}}" required="required" class="form-control"
-                                                            placeholder="House number and street name">
+                                                        <label class="input-label">Street address <abbr class="required">*</abbr></label>
+                                                        <input type="text" id="street_address_l1" name="street_address_l1" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l1)?$getUsersDetails->getCustomerAddressFunction->street_address_l1:''}}" required="required" class="form-control" placeholder="House number and street name">
                                                     </div>
-
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">Town / City <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->town_city)?$getUsersDetails->getCustomerShippingAddressFunction->town_city:''}}" id="town_shipping_city" name="town_shipping_city" required="required" class="form-control">
+                                                        <label class="input-label">Town / City <abbr class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->town_city)?$getUsersDetails->getCustomerAddressFunction->town_city:''}}" id="town_city" name="town_city" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">State/Region<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->state)?$getUsersDetails->getCustomerShippingAddressFunction->state:''}}" id="shipping_state" name="shipping_state" required="required" class="form-control">
+                                                        <label class="input-label">State/Region<abbr class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->state)?$getUsersDetails->getCustomerAddressFunction->state:''}}" id="state" name="state" required="required" class="form-control">
                                                         <!-- <select id="state" name="state" required="required" class="form-control">
                                                             <option>Select Option</option>
                                                             <option>Rajasthan</option>
@@ -156,49 +150,44 @@
 
                                                 <div class="col-md-4">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">Country/Region <abbr
-                                                                class="required">*</abbr></label>
-                                                        <select id="country_shipping_id" name="country_shipping_id" required="required" class="form-control">
+                                                        <label class="input-label">Country/Region <abbr class="required">*</abbr></label>
+                                                        <select id="country_id" name="country_id" required="required" class="form-control">
                                                             <option value="">Select Option</option>
                                                             @foreach($getCountries as $key => $country)
-                                                                @if(isset($getUsersDetails->getCustomerShippingAddressFunction->country_id) && $getUsersDetails->getCustomerShippingAddressFunction->country_id == $country->shortname)
-                                                                    <option value="{{$country->shortname}}" selected>{{$country->name}}</option>
-                                                                @else
-                                                                    <option value="{{$country->shortname}}">{{$country->name}}</option>
-                                                                @endif
+                                                            @if(isset($getUsersDetails->getCustomerAddressFunction->country_id) && $getUsersDetails->getCustomerAddressFunction->country_id == $country->shortname)
+                                                            <option value="{{$country->shortname}}" selected>{{$country->name}}</option>
+                                                            @else
+                                                            <option value="{{$country->shortname}}">{{$country->name}}</option>
+                                                            @endif
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">Postcode <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->pin_code)?$getUsersDetails->getCustomerShippingAddressFunction->pin_code:''}}" id="pin_shipping_code" name="pin_shipping_code" required="required" class="form-control">
+                                                        <label class="input-label">Postcode <abbr class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->pin_code)?$getUsersDetails->getCustomerAddressFunction->pin_code:''}}" id="pin_code" name="pin_code" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="checkout-form-group">
-                                                        <label class="input-label">Phone<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->mobile)?$getUsersDetails->getCustomerShippingAddressFunction->mobile:''}}" id="shipping_mobile" name="shipping_mobile" required="required" class="form-control">
+                                                        <label class="input-label">Phone<abbr class="required">*</abbr></label>
+                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->mobile)?$getUsersDetails->getCustomerAddressFunction->mobile:''}}" id="mobile" name="mobile" required="required" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div id="emailCheck" class="checkout-form-group">
-                                                        <label class="input-label">Email address<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="cust_shipping_email" name="cust_shipping_email" required="required" value="{{isset(auth()->user()->email)?auth()->user()->email:''}}" @if(isset(auth()->user()->email)) readonly disable @endif class="form-control">
+                                                        <label class="input-label">Email address<abbr class="required">*</abbr></label>
+                                                        <input type="text" id="cust_email" name="cust_email" required="required" value="{{isset(auth()->user()->email)?auth()->user()->email:''}}" @if(isset(auth()->user()->email)) readonly disable @endif class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                     </div>
                                     @guest
                                     <!-- <div class="checkout-create-account">
@@ -224,303 +213,315 @@
 
 
 
- <div class="billing-check">
- <input type="checkbox" checked class="coupon_question" id="custom-checkBox2" onchange="valueChanged()"/>
-<h4>Use as billing address</h4>
-</div>
-
-                    <div class="customer-details-check billing-detail-show">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="checkout-left-fields">
-                                    <div class="checkout-billing-fields">
-                                        <div class="checkout-title-head">
-                                            Billing details
-                                        </div>
-                                        <div class="billin-fields-wrap">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">First Name <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="first_name" name="first_name" required="required" value="{{isset($getUsersDetails->getCustomerAddressFunction->first_name)?$getUsersDetails->getCustomerAddressFunction->first_name:''}}" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Last Name <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="last_name" name="last_name" required="required" value="{{isset($getUsersDetails->getCustomerAddressFunction->last_name)?$getUsersDetails->getCustomerAddressFunction->last_name:''}}" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Street address <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="street_address_l1" name="street_address_l1" value="{{isset($getUsersDetails->getCustomerAddressFunction->street_address_l1)?$getUsersDetails->getCustomerAddressFunction->street_address_l1:''}}" required="required" class="form-control"
-                                                            placeholder="House number and street name">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Town / City <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->town_city)?$getUsersDetails->getCustomerAddressFunction->town_city:''}}" id="town_city" name="town_city" required="required" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">State/Region<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->state)?$getUsersDetails->getCustomerAddressFunction->state:''}}" id="state" name="state" required="required" class="form-control">
-                                                        <!-- <select id="state" name="state" required="required" class="form-control">
-                                                            <option>Select Option</option>
-                                                            <option>Rajasthan</option>
-                                                        </select> -->
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Country/Region <abbr
-                                                                class="required">*</abbr></label>
-                                                        <select id="country_id" name="country_id" required="required" class="form-control">
-                                                            <option value="">Select Option</option>
-                                                            @foreach($getCountries as $key => $country)
-                                                                @if(isset($getUsersDetails->getCustomerAddressFunction->country_id) && $getUsersDetails->getCustomerAddressFunction->country_id == $country->shortname)
-                                                                    <option value="{{$country->shortname}}" selected>{{$country->name}}</option>
-                                                                @else
-                                                                    <option value="{{$country->shortname}}">{{$country->name}}</option>
-                                                                @endif
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Postcode <abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->pin_code)?$getUsersDetails->getCustomerAddressFunction->pin_code:''}}" id="pin_code" name="pin_code" required="required" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="checkout-form-group">
-                                                        <label class="input-label">Phone<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" value="{{isset($getUsersDetails->getCustomerAddressFunction->mobile)?$getUsersDetails->getCustomerAddressFunction->mobile:''}}" id="mobile" name="mobile" required="required" class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div id="emailCheck" class="checkout-form-group">
-                                                        <label class="input-label">Email address<abbr
-                                                                class="required">*</abbr></label>
-                                                        <input type="text" id="cust_email" name="cust_email" required="required" value="{{isset(auth()->user()->email)?auth()->user()->email:''}}" @if(isset(auth()->user()->email)) readonly disable @endif class="form-control">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @guest
-                                    <div class="checkout-create-account">
-                                        <div class="create-account-checkbox">
-                                            <input type="checkbox" id="showRegisterDiv" name="showregistercheck">
-                                            <label>Create an Account?</label>
-                                        </div>
-                                        <div class="create-account-fields showregisterform" style="display: none;">
-                                            <div class="checkout-form-group">
-                                                <label class="input-label">Account username<abbr
-                                                        class="required">*</abbr></label>
-                                                <input type="text" id="cust_username" name="cust_username" required="required" class="form-control">
-                                            </div>
-                                            <div class="checkout-form-group">
-                                                <label class="input-label">Create account password<abbr
-                                                        class="required">*</abbr></label>
-                                                <input type="password" id="cust_password" name="cust_password" required="required" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @endguest
+                                <div class="billing-check">
+                                    <input type="checkbox" checked class="checkshippingaddress" id="custom-checkBox2" name="checkshippingaddress" onchange="valueChanged()" />
+                                    <h4>Shipping address same as billing </h4>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+
+                                <div class="customer-details-check billing-detail-show">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="checkout-left-fields">
+                                                <div class="checkout-billing-fields">
+                                                    <div class="checkout-title-head">
+                                                        Shipping Address
+                                                    </div>
+                                                    <div class="billin-fields-wrap">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="checkout-form-group">
+                                                                    <label class="input-label">First Name <abbr class="required">*</abbr></label>
+                                                                    <input type="text" id="first_shipping_name" name="first_shipping_name" required="required" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->first_name)?$getUsersDetails->getCustomerShippingAddressFunction->first_name:''}}" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="checkout-form-group">
+                                                                    <label class="input-label">Last Name <abbr class="required">*</abbr></label>
+                                                                    <input type="text" id="last_shipping_name" name="last_shipping_name" required="required" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->last_name)?$getUsersDetails->getCustomerShippingAddressFunction->last_name:''}}" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="checkout-form-group">
+                                                                    <label class="input-label">Street address <abbr class="required">*</abbr></label>
+                                                                    <input type="text" id="street_address_shipping_l1" name="street_address_shipping_l1" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->street_address_l1)?$getUsersDetails->getCustomerShippingAddressFunction->street_address_l1:''}}" required="required" class="form-control" placeholder="House number and street name">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="checkout-form-group">
+                                                                    <label class="input-label">Town / City <abbr class="required">*</abbr></label>
+                                                                    <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->town_city)?$getUsersDetails->getCustomerShippingAddressFunction->town_city:''}}" id="town_shipping_city" name="town_shipping_city" required="required" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="checkout-form-group">
+                                                                    <label class="input-label">State/Region<abbr class="required">*</abbr></label>
+                                                                    <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->state)?$getUsersDetails->getCustomerShippingAddressFunction->state:''}}" id="shipping_state" name="shipping_state" required="required" class="form-control">
+                                                                    <!-- <select id="state" name="state" required="required" class="form-control">
+                                                                        <option>Select Option</option>
+                                                                        <option>Rajasthan</option>
+                                                                    </select> -->
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-4">
+                                                                <div class="checkout-form-group">
+                                                                    <label class="input-label">Country/Region <abbr class="required">*</abbr></label>
+                                                                    <select id="country_shipping_id" name="country_shipping_id" required="required" class="form-control">
+                                                                        <option value="">Select Option</option>
+                                                                        @foreach($getCountries as $key => $country)
+                                                                        @if(isset($getUsersDetails->getCustomerShippingAddressFunction->country_id) && $getUsersDetails->getCustomerShippingAddressFunction->country_id == $country->shortname)
+                                                                        <option value="{{$country->shortname}}" selected>{{$country->name}}</option>
+                                                                        @else
+                                                                        <option value="{{$country->shortname}}">{{$country->name}}</option>
+                                                                        @endif
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="checkout-form-group">
+                                                                    <label class="input-label">Postcode <abbr class="required">*</abbr></label>
+                                                                    <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->pin_code)?$getUsersDetails->getCustomerShippingAddressFunction->pin_code:''}}" id="pin_shipping_code" name="pin_shipping_code" required="required" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="checkout-form-group">
+                                                                    <label class="input-label">Phone<abbr class="required">*</abbr></label>
+                                                                    <input type="text" value="{{isset($getUsersDetails->getCustomerShippingAddressFunction->mobile)?$getUsersDetails->getCustomerShippingAddressFunction->mobile:''}}" id="shipping_mobile" name="shipping_mobile" required="required" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div id="emailCheck" class="checkout-form-group">
+                                                                    <label class="input-label">Email address<abbr class="required">*</abbr></label>
+                                                                    <input type="text" id="cust_shipping_email" name="cust_shipping_email" required="required" value="{{isset(auth()->user()->email)?auth()->user()->email:''}}" @if(isset(auth()->user()->email)) readonly disable @endif class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @guest
+                                                <!-- <div class="checkout-create-account">
+                                                    <div class="create-account-checkbox">
+                                                        <input type="checkbox" id="showRegisterDiv" name="showregistercheck">
+                                                        <label>Create an Account?</label>
+                                                    </div>
+                                                    <div class="create-account-fields showregisterform" style="display: none;">
+                                                        <div class="checkout-form-group">
+                                                            <label class="input-label">Account username<abbr class="required">*</abbr></label>
+                                                            <input type="text" id="cust_username" name="cust_username" required="required" class="form-control">
+                                                        </div>
+                                                        <div class="checkout-form-group">
+                                                            <label class="input-label">Create account password<abbr class="required">*</abbr></label>
+                                                            <input type="password" id="cust_password" name="cust_password" required="required" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                                @endguest
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
                             </div>
 
 
                             <div class="col-lg-6">
-<!-- Checkout order section START -->
-                    <div class="checkout-order-review">
-                        <div class="checkout-title-head">
-                            Your Order
-                        </div>
-                        <div class="checkout-order-table">
-                            <table style="width:100%" border-collapse="collapse">
-                                <thead>
-                                    <tr>
-                                        <th class="checkproduct-name">Product</th>
-                                        <th class="checkproduct-price">Price</th>
-                                        <th class="checkproduct-total">Subtotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php $total = 0; $totalPrice = 0; $depositedPrice = 0; @endphp
-                                    @if(session('cart'))
-                                        @foreach(session('cart') as $id => $details)
-                                           @php 
+                                <!-- Checkout order section START -->
+                                <div class="checkout-order-review">
+                                    <div class="checkout-title-head">
+                                        Your Order
+                                    </div>
+                                    <div class="checkout-order-table">
+                                        <table style="width:100%" border-collapse="collapse">
+                                            <thead>
+                                                <tr>
+                                                    <th class="checkproduct-name">Product</th>
+                                                    <th class="checkproduct-price">Price</th>
+                                                    <th class="checkproduct-total">Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php $total = 0; $totalPrice = 0; $depositedPrice = 0; @endphp
+                                                @if(session('cart'))
+                                                @foreach(session('cart') as $id => $details)
+                                                @php
                                                 $total += $details['deposited_price'] * $details['quantity'];
-                                                $totalPrice += $details['price'] * $details['quantity']; 
+                                                $totalPrice += $details['price'] * $details['quantity'];
                                                 $depositedPrice += $details['deposited_price'] * $details['quantity'];
-                                            @endphp
-                                        <tr class="checkcart-item">
-                                            <td class="checkpr-name">
-                                                @if(isset($details['customArray']['slug']) && !empty($details['customArray']['slug']))
-                                                    <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div>
-                                                @else
-                                                    <div class="cartproduct-title"><a href="javascript:void(0);"> {{ $details['name'] }}</a></div>
-                                                @endif
-                                                {{-- <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div> --}}
-                                                <dl class="variation">
-                                                    @if(isset($details['customArray']['choose_diamond']) && !empty($details['customArray']['choose_diamond']))
-                                                        <dt class="variation-Colour">Choose Your Diamond: </dt>
-                                                        <dd class="variation-Colour"><p> {{ ($details['customArray']['choose_diamond'] == 'lab_grown')?'Lab Grown':'Mined'}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['metal_type']) && !empty($details['customArray']['metal_type']))
-                                                        <dt class="variation-Colour">Metal: </dt>
-                                                        <dd class="variation-Colour"><p> {{$details['customArray']['metal_type']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['fingersize']) && !empty($details['customArray']['fingersize']))
-                                                        <dt class="variation-FingerSize">Finger Size: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['fingersize']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['width-mm']) && !empty($details['customArray']['width-mm']))
-                                                        <dt class="variation-FingerSize">Width MM: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['width-mm']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['total-diamond-weight']) && !empty($details['customArray']['total-diamond-weight']))
-                                                        <dt class="variation-FingerSize">Diamond Weight: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['total-diamond-weight']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['Shape']) && !empty($details['customArray']['Shape']))
-                                                        <dt class="variation-FingerSize">Diamond Shape: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Shape']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['Carat']) && !empty($details['customArray']['Carat']))
-                                                        <dt class="variation-FingerSize">Diamond Carat: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Carat']}}</p></dd>
-                                                    @elseif(isset($details['customArray']['carat']) && !empty($details['customArray']['carat']))
-                                                        <dt class="variation-FingerSize">Diamond Carat: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['carat']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['Color']) && !empty($details['customArray']['Color']))
-                                                        <dt class="variation-FingerSize">Diamond Color: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Color']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['Clarity']) && !empty($details['customArray']['Clarity']))
-                                                        <dt class="variation-FingerSize">Diamond Cut Grade: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Clarity']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['Lab']) && !empty($details['customArray']['Lab']))
-                                                        <dt class="variation-FingerSize">Certificate: </dt>
-                                                        <dd class="variation-FingerSize"><p>{{$details['customArray']['Lab']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['CertificateLink']) && !empty($details['customArray']['CertificateLink']))
-                                                        <dt class="variation-FingerSize">Certificate Link: </dt>
-                                                        <dd class="variation-FingerSize"><a target="_blank" href="{{$details['customArray']['CertificateLink']}}">View Certificate</a></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['ImageLink']) && !empty($details['customArray']['ImageLink']))
-                                                        <dt class="variation-FingerSize">Image: </dt>
-                                                        <dd class="variation-FingerSize"><a target="_blank" href="{{$details['customArray']['ImageLink']}}">View Diamond</a></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['CERT_NO']) && !empty($details['customArray']['CERT_NO']))
-                                                        <dt class="variation-FingerSize">Certificate: </dt>
-                                                        <dd class="variation-FingerSize"><p >{{$details['customArray']['CERT_NO']}}</p></dd>
-                                                    @endif
-                                                    @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver')
-                                                    <div class="plancare-section">
-                                                        <h5>Jewellery Care Plan</h5>
-                                                        <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
-                                                            <option value="0" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 0) selected @endif>No applied</option>
-                                                            <option value="89" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 89) selected @endif>1 year {{MY_CURRENCY_SYMBOL}}89</option>
-                                                            <option value="170" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 170) selected @endif>2 years {{MY_CURRENCY_SYMBOL}}170</option>
-                                                            <option value="220" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 220) selected @endif>3 years {{MY_CURRENCY_SYMBOL}}220</option>
-                                                            <option value="300" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 300) selected @endif>4 years {{MY_CURRENCY_SYMBOL}}300</option>
-                                                            <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport'] == 400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
-                                                        </select>
-                                                        </div>
-                                                    @endif
-                                                </dl>
-                                                <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
-                                            </td>
-                                            <td>
-                                            @if(isset($details['rrp_price']) && !empty($details['rrp_price']))
-                                                <!-- <p> 
+                                                @endphp
+                                                <tr class="checkcart-item">
+                                                    <td class="checkpr-name">
+                                                        @if(isset($details['customArray']['slug']) && !empty($details['customArray']['slug']))
+                                                        <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a></div>
+                                                        @else
+                                                        <div class="cartproduct-title"><a href="javascript:void(0);"> {{ $details['name'] }}</a></div>
+                                                        @endif
+                                                        {{-- <div class="cartproduct-title"><a href="{{asset('product/'.$details['customArray']['slug'])}}"> {{ $details['name'] }}</a>
+                                    </div> --}}
+                                    <dl class="variation">
+                                        @if(isset($details['customArray']['choose_diamond']) && !empty($details['customArray']['choose_diamond']))
+                                        <dt class="variation-Colour">Choose Your Diamond: </dt>
+                                        <dd class="variation-Colour">
+                                            <p> {{ ($details['customArray']['choose_diamond'] == 'lab_grown')?'Lab Grown':'Mined'}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['metal_type']) && !empty($details['customArray']['metal_type']))
+                                        <dt class="variation-Colour">Metal: </dt>
+                                        <dd class="variation-Colour">
+                                            <p> {{$details['customArray']['metal_type']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['fingersize']) && !empty($details['customArray']['fingersize']))
+                                        <dt class="variation-FingerSize">Finger Size: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['fingersize']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['width-mm']) && !empty($details['customArray']['width-mm']))
+                                        <dt class="variation-FingerSize">Width MM: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['width-mm']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['total-diamond-weight']) && !empty($details['customArray']['total-diamond-weight']))
+                                        <dt class="variation-FingerSize">Diamond Weight: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['total-diamond-weight']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['Shape']) && !empty($details['customArray']['Shape']))
+                                        <dt class="variation-FingerSize">Diamond Shape: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['Shape']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['Carat']) && !empty($details['customArray']['Carat']))
+                                        <dt class="variation-FingerSize">Diamond Carat: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['Carat']}}</p>
+                                        </dd>
+                                        @elseif(isset($details['customArray']['carat']) && !empty($details['customArray']['carat']))
+                                        <dt class="variation-FingerSize">Diamond Carat: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['carat']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['Color']) && !empty($details['customArray']['Color']))
+                                        <dt class="variation-FingerSize">Diamond Color: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['Color']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['Clarity']) && !empty($details['customArray']['Clarity']))
+                                        <dt class="variation-FingerSize">Diamond Cut Grade: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['Clarity']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['Lab']) && !empty($details['customArray']['Lab']))
+                                        <dt class="variation-FingerSize">Certificate: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['Lab']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['CertificateLink']) && !empty($details['customArray']['CertificateLink']))
+                                        <dt class="variation-FingerSize">Certificate Link: </dt>
+                                        <dd class="variation-FingerSize"><a target="_blank" href="{{$details['customArray']['CertificateLink']}}">View Certificate</a></dd>
+                                        @endif
+                                        @if(isset($details['customArray']['ImageLink']) && !empty($details['customArray']['ImageLink']))
+                                        <dt class="variation-FingerSize">Image: </dt>
+                                        <dd class="variation-FingerSize"><a target="_blank" href="{{$details['customArray']['ImageLink']}}">View Diamond</a></dd>
+                                        @endif
+                                        @if(isset($details['customArray']['CERT_NO']) && !empty($details['customArray']['CERT_NO']))
+                                        <dt class="variation-FingerSize">Certificate: </dt>
+                                        <dd class="variation-FingerSize">
+                                            <p>{{$details['customArray']['CERT_NO']}}</p>
+                                        </dd>
+                                        @endif
+                                        @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver')
+                                        <div class="plancare-section">
+                                            <h5>Jewellery Care Plan</h5>
+                                            <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
+                                                <option value="0" @if(isset($details['yearlySupport']) && $details['yearlySupport']==0) selected @endif>No applied</option>
+                                                <option value="89" @if(isset($details['yearlySupport']) && $details['yearlySupport']==89) selected @endif>1 year {{MY_CURRENCY_SYMBOL}}89</option>
+                                                <option value="170" @if(isset($details['yearlySupport']) && $details['yearlySupport']==170) selected @endif>2 years {{MY_CURRENCY_SYMBOL}}170</option>
+                                                <option value="220" @if(isset($details['yearlySupport']) && $details['yearlySupport']==220) selected @endif>3 years {{MY_CURRENCY_SYMBOL}}220</option>
+                                                <option value="300" @if(isset($details['yearlySupport']) && $details['yearlySupport']==300) selected @endif>4 years {{MY_CURRENCY_SYMBOL}}300</option>
+                                                <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport']==400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
+                                            </select>
+                                        </div>
+                                        @endif
+                                    </dl>
+                                    <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
+                                    </td>
+                                    <td>
+                                        @if(isset($details['rrp_price']) && !empty($details['rrp_price']))
+                                        <!-- <p> 
                                                     <span> RRP: </span> 
                                                     <del>{{MY_CURRENCY_SYMBOL}} {{$details['rrp_price']}}</del>
                                                 </p> -->
-                                            @endif
-                                            <!-- <p> <span> Save Price: </span> {{MY_CURRENCY_SYMBOL}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
-                                            @if(isset($details['shop_price']) && !empty($details['shop_price']))
-                                                @if($details['price']!= $details['shop_price'])
-                                                    <!-- <p> 
+                                        @endif
+                                        <!-- <p> <span> Save Price: </span> {{MY_CURRENCY_SYMBOL}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
+                                        @if(isset($details['shop_price']) && !empty($details['shop_price']))
+                                        @if($details['price']!= $details['shop_price'])
+                                        <!-- <p> 
                                                         <span> Our Price: </span> 
                                                         <del> {{MY_CURRENCY_SYMBOL}}{{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
                                                     </p> -->
-                                                @endif
-                                            @endif
-                                                <span id="productPrice{{$id}}">
-                                                    @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
-                                                        <span> Our Price: </span> 
-                                                        <del>{{MY_CURRENCY_SYMBOL}}{{
+                                        @endif
+                                        @endif
+                                        <span id="productPrice{{$id}}">
+                                            @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
+                                            <span> Our Price: </span>
+                                            <del>{{MY_CURRENCY_SYMBOL}}{{
                                                             $details['customArray']['final_price'] }}
-                                                        </del>
-                                                    @endif <br>
-                                                    @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
-                                                        {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
-                                                    @else
-                                                        {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
-                                                    @endif
-                                                </span>
-                                            </td>
-                                            <td class="check-product-total">
-                                                <span id="subtotalPrice{{$id}}">{{MY_CURRENCY_SYMBOL}}{{ round($details['deposited_price'],2) }}</span>
+                                            </del>
+                                            @endif <br>
+                                            @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
+                                            {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                                            @else
+                                            {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td class="check-product-total">
+                                        <span id="subtotalPrice{{$id}}">{{MY_CURRENCY_SYMBOL}}{{ round($details['deposited_price'],2) }}</span>
+                                    </td>
+                                    </tr>
+                                    @endforeach
+                                    @endif
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="checkout-cart-subtotal">
+                                            <th>Subtotal</th>
+                                            <td id="subTotalPrices">
+                                                <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
                                             </td>
                                         </tr>
-                                        @endforeach
-                                    @endif
-                                </tbody>         
-                                <tfoot>
-                                    <tr class="checkout-cart-subtotal">
-                                        <th>Subtotal</th>
-                                        <td id="subTotalPrices">
-                                            <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
-                                        </td>
-                                    </tr>
-                                    <tr class="checkout-cart-total">
-                                        <th>Total</th>
-                                        <td id="totalFinalPrices">
-                                            <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
-                            <!-- <div class="checkout-coupan-code">
+                                        <tr class="checkout-cart-total">
+                                            <th>Total</th>
+                                            <td id="totalFinalPrices">
+                                                <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                    </table>
+                                </div>
+                                @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
+                                <!-- <div class="checkout-coupan-code">
                                 <label for="coupon_code">Coupon Code</label>
                                 <input type="text" name="coupon_code" value="{{isset($details['couponCodeText'])?$details['couponCodeText']:''}}" id="coupon_code{{$id}}" class="form-control">
                                 @if(isset($details['couponCodeText']) && !empty($details['couponCodeText']))
@@ -535,44 +536,44 @@
                                     </a>
                                 @endif
                             </div> -->
-                        @endif
-                        <input type="hidden" id="final_price" name="final_price" value="{{ $total }}">
-                        <input type="hidden" id="total_price" name="total_price" value="{{ $totalPrice }}">
-                        <input type="hidden" id="deposited_price" name="deposited_price" value="{{ $depositedPrice }}">
-                        <input type="hidden" id="selected_payment_type" name="selected_payment_type" value="paypal">
+                                @endif
+                                <input type="hidden" id="final_price" name="final_price" value="{{ $total }}">
+                                <input type="hidden" id="total_price" name="total_price" value="{{ $totalPrice }}">
+                                <input type="hidden" id="deposited_price" name="deposited_price" value="{{ $depositedPrice }}">
+                                <input type="hidden" id="selected_payment_type" name="selected_payment_type" value="paypal">
 
 
-<div class="checkout-payment-options">
-                            <ul class="cc_payment_methods_options">
+                                <div class="checkout-payment-options">
+                                    <ul class="cc_payment_methods_options">
 
-                                @include('front.pages.payments.paypal',['totalAmount'=>$total])
-                                @include('front.pages.payments.dekopay',['totalAmount'=>$total])
-                                <!-- @include('front.pages.payments.stripepay',['totalAmount'=>$total]) -->
-                            </ul>
+                                        @include('front.pages.payments.paypal',['totalAmount'=>$total])
+                                        @include('front.pages.payments.dekopay',['totalAmount'=>$total])
+                                        @include('front.pages.payments.stripepay',['totalAmount'=>$total])
+                                    </ul>
+                                </div>
+
+                                <div class="checkout-place-order">
+                                    <div class="cc-terms-and-conditions-wrapper">
+                                        Your personal data will be used to process your order, support your experience
+                                        throughout this website, and for other purposes described in our
+                                        <a href="{{asset('privacy-policy')}}" target="_blank">Privacy Policy</a>
+                                    </div>
+                                    <div class="cc_place_order_btn">
+                                        @guest
+                                        <!-- <a id="placeOrderDetails" href="javascript:void(0);" class="btn-bg-large">Place Order </a> -->
+                                        @endguest
+                                        @auth
+                                        @endauth
+                                        <button class="btn-bg-large" type="submit">Place Order</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Checkout order section END -->
+
                         </div>
 
-                        <div class="checkout-place-order">
-                            <div class="cc-terms-and-conditions-wrapper">
-                                Your personal data will be used to process your order, support your experience
-                                throughout this website, and for other purposes described in our
-                                <a href="{{asset('privacy-policy')}}" target="_blank">Privacy Policy</a>
-                            </div>
-                            <div class="cc_place_order_btn">
-                                @guest
-                                    <!-- <a id="placeOrderDetails" href="javascript:void(0);" class="btn-bg-large">Place Order </a> -->
-                                @endguest
-                                @auth
-                                @endauth
-                                <button class="btn-bg-large" type="submit">Place Order</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Checkout order section END -->  
 
-                            </div>
-
-
-                            <!--<div class="col-lg-6">
+                        <!--<div class="col-lg-6">
                                 <div class="checkout-right-fields">
                                     <div class="checkout-addition-fields">
                                         <div class="checkout-title-head">
@@ -589,25 +590,25 @@
                                     </div>
                                 </div>
                             </div>-->
-                        </div>
                     </div>
-
-               
-                    
-                </form>
-
-
-
-
-
             </div>
 
-                        
 
 
-            
+            </form>
+
+
+
+
+
         </div>
+
+
+
+
+
     </div>
+</div>
 </div>
 @include('front.pages.stripeform',['totalAmount'=>$total])
 @endsection
@@ -618,8 +619,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script>
-    $(document).ready(function () {
-        $(document).on('change', "[id^=yearlySupport]", function () {
+    $(document).ready(function() {
+        $(document).on('change', "[id^=yearlySupport]", function() {
 
             var index = parseInt($(this).attr("id").replace("yearlySupport", ''));
             $.ajax({
@@ -631,19 +632,19 @@
                     price: $(this).val(),
                     priceStatus: 1,
                 },
-                success: function (response) {
-                    $.each(response.sessionCartValues, function( keyIndex, value ) {
-                        $('#subtotalPrice'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+value.deposited_price.toFixed(2));
-                        $('#totalFinalPrices'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                        
+                success: function(response) {
+                    $.each(response.sessionCartValues, function(keyIndex, value) {
+                        $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
+
                     });
-                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
-                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
                     $('#deposited_price').val(response.finalPrice);
                 }
             });
         });
-        $(document).on('click', "[id^=applyCouponCode]", function () {
+        $(document).on('click', "[id^=applyCouponCode]", function() {
             var index = parseInt($(this).attr("id").replace("applyCouponCode", ''));
             $.ajax({
                 url: "{{ route('update.cart.coupon') }}",
@@ -651,29 +652,29 @@
                 data: {
                     _token: '{{ csrf_token() }}',
                     cartid: index,
-                    coupon_code: $('#coupon_code'+index).val(),
-                    coupon_status:1
+                    coupon_code: $('#coupon_code' + index).val(),
+                    coupon_status: 1
                 },
-                success: function (response) {
-                    $.each(response.sessionCartValues, function( keyIndex, value ) {
-                        $('#subtotalPrice'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+value.deposited_price.toFixed(2));
-                        $('#totalFinalPrices'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                success: function(response) {
+                    $.each(response.sessionCartValues, function(keyIndex, value) {
+                        $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
                         // console.log(keyIndex + ": " + value.deposited_price.toFixed(2));
                         // console.log("checking again ");
-                        $('#applyCouponCode'+keyIndex).text(response.statustext);
-                        $('#couponCodeMessage'+keyIndex).html(response.errormsg);
-                        $('#coupon_code'+keyIndex).val(value.couponCodeText);
+                        $('#applyCouponCode' + keyIndex).text(response.statustext);
+                        $('#couponCodeMessage' + keyIndex).html(response.errormsg);
+                        $('#coupon_code' + keyIndex).val(value.couponCodeText);
                         // alert( index + ": " + value );
                     });
-                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
-                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
                     $('#deposited_price').val(response.finalPrice);
-                    
+
                     // console.log(response);
                     // return false;
                     // // window.location.reload();
                     // if(response.status == 200){
-                       
+
                     //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
                     //     $('#applyCouponCode'+index).text(response.statustext);
                     //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
@@ -691,7 +692,7 @@
             });
         });
 
-        $(document).on('click', "[id^=applyCouponCodeCancel]", function () {
+        $(document).on('click', "[id^=applyCouponCodeCancel]", function() {
             var index = parseInt($(this).attr("id").replace("applyCouponCodeCancel", ''));
             $.ajax({
                 url: "{{ route('update.cart.coupon') }}",
@@ -699,25 +700,25 @@
                 data: {
                     _token: '{{ csrf_token() }}',
                     cartid: index,
-                    coupon_code: $('#coupon_code'+index).val(),
-                    coupon_status:2
+                    coupon_code: $('#coupon_code' + index).val(),
+                    coupon_status: 2
                 },
-                success: function (response) {
-                    $.each(response.sessionCartValues, function( keyIndex, value ) {
-                        $('#subtotalPrice'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+value.deposited_price.toFixed(2));
-                        $('#totalFinalPrices'+keyIndex).text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                success: function(response) {
+                    $.each(response.sessionCartValues, function(keyIndex, value) {
+                        $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
                         // console.log(keyIndex + ": " + value.deposited_price.toFixed(2));
                         // console.log("checking again ");
-                        $('#applyCouponCode'+keyIndex).text(response.statustext);
-                        $('#couponCodeMessage'+keyIndex).html(response.errormsg);
-                        $('#coupon_code'+keyIndex).val(value.couponCodeText);
+                        $('#applyCouponCode' + keyIndex).text(response.statustext);
+                        $('#couponCodeMessage' + keyIndex).html(response.errormsg);
+                        $('#coupon_code' + keyIndex).val(value.couponCodeText);
                         // alert( index + ": " + value );
                     });
-                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
-                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} '+response.finalPrice +'</strong>');
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
                     $('#deposited_price').val(response.finalPrice);
                     // console.log(response);
-                    
+
                     // $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
                     // window.location.reload();
                     // if(response.status == 200){
@@ -744,15 +745,15 @@
         $('#expiry_month').mask('00');
         $('#expiry_year').mask('0000');
 
-        $('#stripePayModal').on('click', 'button.close', function (eventObject) {
+        $('#stripePayModal').on('click', 'button.close', function(eventObject) {
             $('#stripePayModal').modal('hide');
         });
 
-        $('.showlogin').on('click', function () {
+        $('.showlogin').on('click', function() {
             $(".checkout-login-form").toggle(200);
         });
 
-        $('#showRegisterDiv').on('change',function(){
+        $('#showRegisterDiv').on('change', function() {
             $('.showregisterform').toggle();
         });
 
@@ -790,7 +791,7 @@
 
     jQuery.validator.addMethod("lettersonly", function(value, element) {
         return this.optional(element) || /^[a-zA-Z\s]+$/i.test(value);
-    }, "Letters only please"); 
+    }, "Letters only please");
 
     $('form#payment-form').validate({
         rules: {
@@ -821,14 +822,14 @@
             cvv_number: "CVV/CVC is required",
             expiry_month: {
                 required: "Please Enter valid month",
-                number:"Please Enter valid min month",
+                number: "Please Enter valid min month",
             },
             expiry_year: {
                 required: "Please Enter valid year",
-                number:"Please Enter valid min year",
+                number: "Please Enter valid min year",
             },
         },
-        submitHandler: function () {
+        submitHandler: function() {
             return true;
         }
     });
@@ -847,7 +848,7 @@
             email: "Please Enter valid email address",
             password: "Please enter password"
         },
-        submitHandler: function () {
+        submitHandler: function() {
             $.ajax({
                 // url: "{{ route('login-customers') }}",
                 url: "{{ route('login.customer.account') }}",
@@ -859,11 +860,11 @@
                     email: $('#email').val(),
                     password: $('#password').val(),
                 },
-                success: function (response) {
-                    if(response.status == 200){
+                success: function(response) {
+                    if (response.status == 200) {
                         toastr.success(response.success);
                         window.location.reload();
-                    }else{
+                    } else {
                         toastr.info(response.error);
                     }
                 }
@@ -880,7 +881,7 @@
                 required: true,
             },
             // company_name: {
-                // required: true,
+            // required: true,
             // },
             country_id: {
                 required: true,
@@ -905,7 +906,7 @@
             },
             cust_email: {
                 required: true,
-                email:true,
+                email: true,
             },
             cust_username: {
                 required: true,
@@ -930,82 +931,82 @@
             first_name: {
                 required: "First name is required",
             },
-            last_name:{
+            last_name: {
                 required: "Last name is required",
             },
             company_name: {
                 required: "Company name is required",
             },
-            country_id:{
+            country_id: {
                 required: "Country is required",
             },
             street_address_l1: {
                 required: "Street Address is required",
             },
-            street_address_l2:{
+            street_address_l2: {
                 required: "Street Address 2 is required",
             },
             town_city: {
                 required: "Town/City is required",
             },
-            state:{
+            state: {
                 required: "State is required",
             },
             pin_code: {
                 required: "Pin Code is required",
             },
-            mobile:{
+            mobile: {
                 required: "Mobile Number is required",
             },
             cust_email: {
                 required: "Email is required",
-                email:"Email id is valid format",
+                email: "Email id is valid format",
             },
-            cust_username:{
+            cust_username: {
                 required: "Username is required",
             },
             cust_password: {
                 required: "Password is required",
             },
-            order_notes:{
+            order_notes: {
                 required: "Order Notes is required",
             },
             payment_type: {
                 required: "Payment type is required",
             },
-            paymentccdetails:{
+            paymentccdetails: {
                 required: "Payment details is required",
             },
             depositepercentage: {
                 required: "Deposit percentage is required",
             },
         },
-        submitHandler: function (form) {
+        submitHandler: function(form) {
             $('.cc_place_order_btn button').text('Please Wait ...');
             $('.cc_place_order_btn button').prop('disabled', true);
             var form_data = new FormData(form);
             $.ajax({
                 url: "{{ route('place.order') }}",
                 method: "POST",
-                cache:false,
-                contentType:false,
+                cache: false,
+                contentType: false,
                 processData: false,
                 data: form_data,
-                success: function (response) {   
+                success: function(response) {
                     $('.cc_place_order_btn button').text('Place Order');
                     $('.cc_place_order_btn button').prop('disabled', false);
-                    if(response.status == 500){ 
+                    if (response.status == 500) {
                         $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
                         toastr.info(response.msg);
                     }
-                    if(response.status == 200){
-                        if($('#selected_payment_type').val() == 'paypal'){
-                            window.location.href = "{{route('make.payment')}}/"+response.order_dt;
-                        }else if($('#selected_payment_type').val() == 'stripe'){
+                    if (response.status == 200) {
+                        if ($('#selected_payment_type').val() == 'paypal') {
+                            window.location.href = "{{route('make.payment')}}/" + response.order_dt;
+                        } else if ($('#selected_payment_type').val() == 'stripe') {
                             $('#tokenOrdId').val(btoa(response.order_dt));
                             $('#stripePayModal').modal('show');
-                        }else{
-                            window.location.href = "{{route('make.dekopay')}}/"+response.order_dt;
+                        } else {
+                            window.location.href = "{{route('make.dekopay')}}/" + response.order_dt;
                         }
 
                     }
@@ -1013,67 +1014,64 @@
             });
         }
     });
-
-
-
-
 </script>
 
 <script>
     var api = $("#myapi").val();
 
     var dekoFilters = null;
-    if(undefined !== window.dekofilters){
+    if (undefined !== window.dekofilters) {
         dekoFilters = window.dekofilters;
     }
-        function alterMinOption(){
+
+    function alterMinOption() {
         var payedVal = $('select[name="percentage"]').val();
         var update = false;
-        $('select[name="percentage"] option').each(function(){
-            if($(this).val() == payedVal){
-                if($(this).prop('disabled')){
+        $('select[name="percentage"] option').each(function() {
+            if ($(this).val() == payedVal) {
+                if ($(this).prop('disabled')) {
                     update = true;
                 }
             }
         });
-        if(update || payedVal == null){
+        if (update || payedVal == null) {
             $('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first'));
-            $('select[name="percentage"] option:not([disabled]):first').prop('selected','selected');
+            $('select[name="percentage"] option:not([disabled]):first').prop('selected', 'selected');
         }
     }
 
 
-    function alterFilters(){
-        if(null != dekoFilters){
+    function alterFilters() {
+        if (null != dekoFilters) {
             var term = $('select[name="term"]').val();
-            if(dekoFilters.hasOwnProperty(term)){
+            if (dekoFilters.hasOwnProperty(term)) {
                 termProp = parseInt(dekoFilters[term]);
                 $('select[name="percentage"] option').attr('disabled', 'disabled');
-                $('select[name="percentage"] option').each(function(){
+                $('select[name="percentage"] option').each(function() {
                     var valInt = parseInt($(this).val());
-                    if(valInt >= termProp){
+                    if (valInt >= termProp) {
                         $(this).removeAttr('disabled');
                     }
                 });
 
-            }else{
+            } else {
                 $('select[name="percentage"] option').removeAttr('disabled');
             }
         }
     }
 
-    var url="https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=b884fefd2e03ec4c921c184fcc4273f0";
-    
-    function get_deko_data(){
-        $.getScript( url, function() {
+    var url = "https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=b884fefd2e03ec4c921c184fcc4273f0";
+
+    function get_deko_data() {
+        $.getScript(url, function() {
             alterFilters();
             alterMinOption();
             var values = $("#final_price").val();
-            var code =$("#terms").val();
+            var code = $("#terms").val();
             var percentage = parseInt($("#payed").val());
-            var deposit = parseFloat((percentage/100)*values);
-            var my_fd_obj = new FinanceDetails(code,values,percentage,deposit);
-            $("#perMonth").html(my_fd_obj.m_inst.toFixed(2)+" per month");
+            var deposit = parseFloat((percentage / 100) * values);
+            var my_fd_obj = new FinanceDetails(code, values, percentage, deposit);
+            $("#perMonth").html(my_fd_obj.m_inst.toFixed(2) + " per month");
             $("#perMonths").html(my_fd_obj.m_inst.toFixed(2));
             $("#cashPrices").html(my_fd_obj.goods_val);
             $("#Deposited").html(my_fd_obj.d_amount);
@@ -1090,16 +1088,16 @@
     }
     get_deko_data();
 
-    $(document).ready(function(){
-        $("#terms").on("change", function(){
+    $(document).ready(function() {
+        $("#terms").on("change", function() {
             alterFilters();
             alterMinOption();
             $('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first'));
-            $('select[name="percentage"] option:not([disabled]):first').prop('selected','selected');
+            $('select[name="percentage"] option:not([disabled]):first').prop('selected', 'selected');
 
             get_deko_data();
         });
-        $("#payed").on("change", function(){
+        $("#payed").on("change", function() {
             alterFilters();
             alterMinOption();
             get_deko_data();
@@ -1107,13 +1105,36 @@
 
     });
 
-function valueChanged() {
-  if($('.coupon_question').is(":checked"))   
-$(".billing-detail-show").hide();  
-  else
-$(".billing-detail-show").show();
-};
+    function shippingBillingAddress(){
+        if ($('.checkshippingaddress').is(":checked")){
+            $('first_name').val($('#first_shipping_name').val());
+            $('last_name').val($('#last_shipping_name').val());
+            $('street_address_l1').val($('#street_address_shipping_l1').val());
+            $('town_city').val($('#town_shipping_city').val());
+            $('state').val($('#shipping_state').val());
+            $('country_id').val($('#country_shipping_id').val());
+            $('pin_code').val($('#pin_shipping_code').val());
+            $('mobile').val($('#shipping_mobile').val());
+            $('email').val($('#cust_shipping_email').val());
+        }else{
+            $('first_name').val("");
+            $('last_name').val("");
+            $('street_address_l1').val("");
+            $('town_city').val("");
+            $('state').val("");
+            $('country_id').val("");
+            $('pin_code').val("");
+            $('mobile').val("");
+            $('email').val("");
+        }
+    }
 
+    function valueChanged() {
+        if ($('.checkshippingaddress').is(":checked"))
+            $(".billing-detail-show").hide();
+        else
+            $(".billing-detail-show").show();
+    };
 </script>
 
 @endsection

@@ -223,6 +223,26 @@
                                                     @endif
 
 
+													@if(isset($orderDetails['yearly_support_status']) && $orderDetails['yearly_support_status'] == 1)
+														<p style="margin: 0;font-family:Arial; font-size: 14px; color: #505050; line-height: 25px;">
+															<strong style=" font-size: 14px;">
+																Jewellery Care Plan:
+															</strong>
+															@if($orderDetails['yearly_support_price'] == 0)
+																No applied
+															@elseif($orderDetails['yearly_support_price'] == 89)
+																1 year £89
+															@elseif($orderDetails['yearly_support_price'] == 170)
+																2 years £170
+															@elseif($orderDetails['yearly_support_price'] == 220)
+																3 years £220
+															@elseif($orderDetails['yearly_support_price'] == 300)
+																4 years £300
+															@elseif($orderDetails['yearly_support_price'] == 400)
+																5 years £400
+															@endif
+														</p>
+													@endif
                                                     {{-- @foreach($detailsDecode as $key1 => $jsonData)
                                                         @if($key1 == 'certificatelink')
 
@@ -260,10 +280,7 @@
                                                         {{MY_CURRENCY_SYMBOL}}{{$orderDetails['deposited_product_price']}}
                                                 </td>
                                             </tr>
-                                            <?php // die; ?>
 										@endforeach
-
-
 										<tr>
 											<td width="270px" align="left" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px;">
@@ -281,7 +298,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
+												{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
 											</td>
 										</tr>
 
@@ -302,7 +319,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{$data1['data']['payment_type']}}
+												{{$data1['data']['payment_type']}}
 											</td>
 										</tr>
 										<tr>
@@ -322,9 +339,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
-
-                                                  
+												{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
 											</td>
 										</tr>
 										<tr>
@@ -344,9 +359,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
-
-                                                   
+												{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
 											</td>
 										</tr>
 									</tbody>
@@ -359,8 +372,13 @@
 									<thead>
 										<tr>
 											<th align="center" style="font-size: 26px;font-family:Arial;padding: 40px 0 20px 0; ">
-											Billing address
-										</th>
+												Billing address
+											</th>
+											@if(isset($data1['data']['order_address']['shipping_status']) && $data1['data']['order_address']['shipping_status'] == 0)
+											<th align="center" style="font-size: 26px;font-family:Arial;padding: 40px 0 20px 0; ">
+												Shipping address
+											</th>
+											@endif
 										</tr>
 									</thead>
 									<tbody>
@@ -375,9 +393,25 @@
 												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="tel:{{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}"> {{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}</a><br>
 												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="mailto:{{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}"> {{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}</a>
 											</td>
+
+											@if(isset($data1['data']['order_address']['shipping_status']) && $data1['data']['order_address']['shipping_status'] == 0)
+											<?php 
+												$colSpanMerge = 'colspan=2';
+											?>
+											<td align="center" style="border: 1px dashed #808080;font-family:Arial; font-size: 15px; color: #808080; padding: 30px 20px; line-height: 24px;">
+												{{isset($data1['data']['order_shipping_address']['first_name'])?$data1['data']['order_shipping_address']['first_name']:''}} {!!isset($data1['data']['order_shipping_address']['last_name'])?$data1['data']['order_shipping_address']['last_name'].'<br>':''!!}
+												{!!isset($data1['data']['order_shipping_address']['company_name'])?$data1['data']['order_shipping_address']['company_name'].'<br>':''!!}
+												{!!isset($data1['data']['order_shipping_address']['street_address_l1'])?$data1['data']['order_shipping_address']['street_address_l1']:''!!} {!!isset($data1['data']['order_shipping_address']['street_address_l2'])?$data1['data']['order_shipping_address']['street_address_l2'].'<br>':''!!}
+												{!!isset($data1['data']['order_shipping_address']['town_city'])?$data1['data']['order_shipping_address']['town_city'].'<br>':''!!}
+												{!!isset($data1['data']['order_shipping_address']['state'])?$data1['data']['order_shipping_address']['state']:''!!} {!!isset($data1['data']['order_shipping_address']['pin_code'])?$data1['data']['order_shipping_address']['pin_code'].'<br>':''!!}
+												{!!isset($data1['data']['order_shipping_address']['country_name'])?$data1['data']['order_shipping_address']['country_name'].'<br>':''!!}
+												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="tel:{{isset($data1['data']['order_shipping_address']['mobile'])?$data1['data']['order_shipping_address']['mobile']:''}}"> {{isset($data1['data']['order_shipping_address']['mobile'])?$data1['data']['order_shipping_address']['mobile']:''}}</a><br>
+												 <a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="mailto:{{isset($data1['data']['order_shipping_address']['email'])?$data1['data']['order_shipping_address']['email']:''}}"> {{isset($data1['data']['order_shipping_address']['email'])?$data1['data']['order_shipping_address']['email']:''}}</a>
+											</td>
+											@endif
 										</tr>
 										<tr>
-											<td align="center" style="border: 1px dashed #808080;font-family:Arial; font-size: 15px; color: #000; padding: 30px 20px; line-height: 24px;">
+											<td align="center" style="border: 1px dashed #808080;font-family:Arial; font-size: 15px; color: #000; padding: 30px 20px; line-height: 24px;" {{isset($colSpanMerge)?$colSpanMerge:""}}>
 												Thanks for using marlows-diamonds.co.uk!
 											</td>
 										</tr>

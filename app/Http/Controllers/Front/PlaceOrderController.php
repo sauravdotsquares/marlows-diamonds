@@ -47,9 +47,11 @@ class PlaceOrderController extends Controller
         }else if(Auth::check()){
             $getEmailExists = User::where('email',$request->cust_email)->first();
         }
-        // echo "<pre>";
-        // print_r($getEmailExists);
-        // die;
+        if(isset($request->checkshippingaddress)){
+            $checkShippingAddress = 1;
+        }else{
+            $checkShippingAddress = 0;
+        }
 
         if(isset($getEmailExists) && !empty($getEmailExists)){
             $getCustomerAddress = CustomerAddress::where('user_id',$getEmailExists->id)->first();
@@ -69,24 +71,28 @@ class PlaceOrderController extends Controller
                 $getCustomerAddress->mobile = $request->mobile;
                 $getCustomerAddress->email = $request->cust_email;
                 $getCustomerAddress->order_notes = $request->order_notes;
+                $getCustomerAddress->shipping_status = $checkShippingAddress;
                 $getCustomerAddress->save();
 
-                // $getCustomerShippingAddress = new CustomerShippingAddress;
-                $getCustomerShippingAddress->user_id = $getEmailExists->id;
-                $getCustomerShippingAddress->order_id = 1;
-                $getCustomerShippingAddress->first_name = $request->first_shipping_name;
-                $getCustomerShippingAddress->last_name = $request->last_shipping_name;
-                $getCustomerShippingAddress->company_name = $request->company_shipping_name;
-                $getCustomerShippingAddress->country_id = $request->country_shipping_id;
-                $getCustomerShippingAddress->street_address_l1 = $request->street_address_shipping_l1;
-                $getCustomerShippingAddress->street_address_l2 = $request->street_address_shipping_l2;
-                $getCustomerShippingAddress->town_city = $request->town_shipping_city;
-                $getCustomerShippingAddress->state = $request->shipping_state;
-                $getCustomerShippingAddress->pin_code = $request->pin_shipping_code;
-                $getCustomerShippingAddress->mobile = $request->shipping_mobile;
-                $getCustomerShippingAddress->email = $request->cust_shipping_email;
-                $getCustomerShippingAddress->order_notes = $request->order_shipping_notes;
-                $getCustomerShippingAddress->save();
+
+                if($request->checkshippingaddress == 0){  // 0 for insert shipping address
+                    // $getCustomerShippingAddress = new CustomerShippingAddress;
+                    $getCustomerShippingAddress->user_id = $getEmailExists->id;
+                    $getCustomerShippingAddress->order_id = 1;
+                    $getCustomerShippingAddress->first_name = $request->first_shipping_name;
+                    $getCustomerShippingAddress->last_name = $request->last_shipping_name;
+                    $getCustomerShippingAddress->company_name = $request->company_shipping_name;
+                    $getCustomerShippingAddress->country_id = $request->country_shipping_id;
+                    $getCustomerShippingAddress->street_address_l1 = $request->street_address_shipping_l1;
+                    $getCustomerShippingAddress->street_address_l2 = $request->street_address_shipping_l2;
+                    $getCustomerShippingAddress->town_city = $request->town_shipping_city;
+                    $getCustomerShippingAddress->state = $request->shipping_state;
+                    $getCustomerShippingAddress->pin_code = $request->pin_shipping_code;
+                    $getCustomerShippingAddress->mobile = $request->shipping_mobile;
+                    $getCustomerShippingAddress->email = $request->cust_shipping_email;
+                    $getCustomerShippingAddress->order_notes = $request->order_shipping_notes;
+                    $getCustomerShippingAddress->save();
+                }
             }else{
                 $getCustomerAddress = new CustomerAddress;
                 $getCustomerAddress->user_id = $getEmailExists->id;
@@ -103,24 +109,27 @@ class PlaceOrderController extends Controller
                 $getCustomerAddress->mobile = $request->mobile;
                 $getCustomerAddress->email = $request->cust_email;
                 $getCustomerAddress->order_notes = $request->order_notes;
+                $getCustomerAddress->shipping_status = $checkShippingAddress;
                 $getCustomerAddress->save();
 
-                $getCustomerShippingAddress = new CustomerShippingAddress;
-                $getCustomerShippingAddress->user_id = $getEmailExists->id;
-                $getCustomerShippingAddress->order_id = 1;
-                $getCustomerShippingAddress->first_name = $request->first_shipping_name;
-                $getCustomerShippingAddress->last_name = $request->last_shipping_name;
-                $getCustomerShippingAddress->company_name = $request->company_shipping_name;
-                $getCustomerShippingAddress->country_id = $request->country_shipping_id;
-                $getCustomerShippingAddress->street_address_l1 = $request->street_address_shipping_l1;
-                $getCustomerShippingAddress->street_address_l2 = $request->street_address_shipping_l2;
-                $getCustomerShippingAddress->town_city = $request->town_shipping_city;
-                $getCustomerShippingAddress->state = $request->shipping_state;
-                $getCustomerShippingAddress->pin_code = $request->pin_shipping_code;
-                $getCustomerShippingAddress->mobile = $request->shipping_mobile;
-                $getCustomerShippingAddress->email = $request->cust_shipping_email;
-                $getCustomerShippingAddress->order_notes = $request->order_shipping_notes;
-                $getCustomerShippingAddress->save();
+                if($request->checkshippingaddress == 0){
+                    $getCustomerShippingAddress = new CustomerShippingAddress;
+                    $getCustomerShippingAddress->user_id = $getEmailExists->id;
+                    $getCustomerShippingAddress->order_id = 1;
+                    $getCustomerShippingAddress->first_name = $request->first_shipping_name;
+                    $getCustomerShippingAddress->last_name = $request->last_shipping_name;
+                    $getCustomerShippingAddress->company_name = $request->company_shipping_name;
+                    $getCustomerShippingAddress->country_id = $request->country_shipping_id;
+                    $getCustomerShippingAddress->street_address_l1 = $request->street_address_shipping_l1;
+                    $getCustomerShippingAddress->street_address_l2 = $request->street_address_shipping_l2;
+                    $getCustomerShippingAddress->town_city = $request->town_shipping_city;
+                    $getCustomerShippingAddress->state = $request->shipping_state;
+                    $getCustomerShippingAddress->pin_code = $request->pin_shipping_code;
+                    $getCustomerShippingAddress->mobile = $request->shipping_mobile;
+                    $getCustomerShippingAddress->email = $request->cust_shipping_email;
+                    $getCustomerShippingAddress->order_notes = $request->order_shipping_notes;
+                    $getCustomerShippingAddress->save();
+                }
             }
             
             if($getCustomerAddress){
@@ -151,8 +160,8 @@ class PlaceOrderController extends Controller
                             $getOrderDetails->total_price = $getProduct['price'];
                             $getOrderDetails->deposited_product_price = $getProduct['deposited_price'];
                             $getOrderDetails->final_product_price = $getProduct['price'];
-                            $getOrderDetails->yearly_support_status = $getProduct['yearlySupportStatus'];
-                            $getOrderDetails->yearly_support_price = $getProduct['yearlySupport'];
+                            $getOrderDetails->yearly_support_status = isset($getProduct['yearlySupportStatus'])?$getProduct['yearlySupportStatus']:0;
+                            $getOrderDetails->yearly_support_price = isset($getProduct['yearlySupport'])?$getProduct['yearlySupport']:0;
                             $getOrderDetails->save();
                         }
 

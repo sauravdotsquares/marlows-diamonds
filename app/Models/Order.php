@@ -33,7 +33,7 @@ class Order extends Model
         'status',
     ];
 
-    protected $appends = ['user_details','order_address','status_details','total_quantity','status_details_designs'];
+    protected $appends = ['user_details','order_address','order_shipping_address','status_details','total_quantity','status_details_designs'];
 
     public function getOrderDetailsFunction()
     {
@@ -47,6 +47,10 @@ class Order extends Model
     public function getOrderAddressAttribute()
     {
         return CustomerAddress::where('user_id',$this->user_id)->first();
+    }
+    public function getOrderShippingAddressAttribute()
+    {
+        return CustomerShippingAddress::where('user_id',$this->user_id)->first();
     }
     public function getTotalQuantityAttribute()
     {
