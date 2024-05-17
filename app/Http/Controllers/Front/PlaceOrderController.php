@@ -75,8 +75,8 @@ class PlaceOrderController extends Controller
                 $getCustomerAddress->save();
 
 
-                if($request->checkshippingaddress == 0){  // 0 for insert shipping address
-                    // $getCustomerShippingAddress = new CustomerShippingAddress;
+                if($checkShippingAddress == 0){  // 0 for insert shipping address
+                    $getCustomerShippingAddress = new CustomerShippingAddress;
                     $getCustomerShippingAddress->user_id = $getEmailExists->id;
                     $getCustomerShippingAddress->order_id = 1;
                     $getCustomerShippingAddress->first_name = $request->first_shipping_name;
@@ -112,7 +112,7 @@ class PlaceOrderController extends Controller
                 $getCustomerAddress->shipping_status = $checkShippingAddress;
                 $getCustomerAddress->save();
 
-                if($request->checkshippingaddress == 0){
+                if($checkShippingAddress == 0){
                     $getCustomerShippingAddress = new CustomerShippingAddress;
                     $getCustomerShippingAddress->user_id = $getEmailExists->id;
                     $getCustomerShippingAddress->order_id = 1;
