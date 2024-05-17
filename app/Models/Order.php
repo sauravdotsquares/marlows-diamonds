@@ -50,7 +50,7 @@ class Order extends Model
     }
     public function getOrderShippingAddressAttribute()
     {
-        return CustomerShippingAddress::where('user_id',$this->user_id)->first();
+        return CustomerShippingAddress::where('user_id',$this->user_id)->latest()->first();
     }
     public function getTotalQuantityAttribute()
     {

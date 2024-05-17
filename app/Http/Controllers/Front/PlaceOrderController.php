@@ -55,7 +55,6 @@ class PlaceOrderController extends Controller
 
         if(isset($getEmailExists) && !empty($getEmailExists)){
             $getCustomerAddress = CustomerAddress::where('user_id',$getEmailExists->id)->first();
-            $getCustomerShippingAddress = CustomerShippingAddress::where('user_id',$getEmailExists->id)->first();
             if($getCustomerAddress){          
                 $getCustomerAddress->user_id = $getEmailExists->id;
                 $getCustomerAddress->order_id = 1;

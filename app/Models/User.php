@@ -54,6 +54,6 @@ class User extends Authenticatable
     }
     public function getCustomerShippingAddressFunction()
     {
-        return $this->hasOne(CustomerShippingAddress::class);
+        return $this->hasOne(CustomerShippingAddress::class)->latest();
     }
 }
