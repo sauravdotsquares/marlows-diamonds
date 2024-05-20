@@ -1071,7 +1071,7 @@ class ProductController extends Controller
         }else{
             $metalType = '9ct White Gold';
         }
-        $getVariationDescription = ProductVariationDescription::where('diamond_types',$request->diamond_type)->where('variation',$metalType)->first();
+        $getVariationDescription = ProductVariationDescription::where('variation',$metalType)->first();
 
         $productData = Products::where('slug', $request->slug)->first();
 
@@ -1372,6 +1372,7 @@ class ProductController extends Controller
                     $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                     $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
                     $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+                    $newArray['delivery_description'] = !empty($getVariationDescription->description) ? $getVariationDescription->description : '';
                     $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
                     return response()->json($newArray);
                 } elseif (in_array('bracelets', $categorySlugs)) {
@@ -1380,6 +1381,7 @@ class ProductController extends Controller
                     $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                     $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
                     $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+                    $newArray['delivery_description'] = !empty($getVariationDescription->description) ? $getVariationDescription->description : '';
 
                     if ($request->diamond_type == 'lab_grown') {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->lab_grown;

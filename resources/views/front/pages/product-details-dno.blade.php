@@ -668,7 +668,7 @@
 			});
 
             $(document).on('change','#metal-type',function(){
-				getSelectedVariationsData($(this).val());
+				// getSelectedVariationsData($(this).val());
 			});
 
 
@@ -956,7 +956,7 @@
 			$('#myDivChanges').html(designTable);
 		}
 		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
-			getSelectedVariationsData();
+			getSelectedVariationsData($('#metal-type').val());
 			let diamondCaratWeight;
 			let diamondColour;
 			var diamondShape;
