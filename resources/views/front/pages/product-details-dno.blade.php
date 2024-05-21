@@ -708,11 +708,7 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-                    if(diamond_type == 'lab_grown'){
-						$('.delieveryDescription').html(res.delivery_description);
-					}else if (diamond_type == 'mined_diamond'){
-						$('.delieveryDescription').html(res.delivery_description);
-					}
+					$('.delieveryDescription').html(res.delivery_description);
 					
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
 						const multipleImages = res.multi_vari_img.split(',');
