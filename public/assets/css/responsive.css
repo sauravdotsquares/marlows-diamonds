@@ -383,7 +383,7 @@
 	.navbars-show .menus-wraper{width:100%}
 	.show-search-box{overflow:hidden}
 	.head-mini-search .formgroup{max-width:100%}
-	.head-mini-search{position:fixed;top:145;left:50%;background:none;width:96%;z-index:991;height:auto;display:block;transform: translate(-50%, 0);}
+	.head-mini-search{position:fixed;top:145px;left:50%;background:none;width:96%;z-index:991;height:auto;display:block;transform: translate(-50%, 0);}
 header.header-main.sticky-header .middle-topbar .head-mini-search {top: 0px;height: auto;left: 0;right: 0;transform: none;width: 100%;position: relative;}
 
 header.header-main.sticky-header .middle-topbar {display: block;top:108px;background: #ffffff;}
