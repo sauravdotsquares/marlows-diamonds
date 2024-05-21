@@ -130,7 +130,7 @@
                           
                                 <td class="product-price-col" data-th="Price">
                                 
-                                @if(isset($details['rrp_price']) && !empty($details['rrp_price']))
+                                @if(isset($details['rrp_price']) && !empty($details['rrp_price']) && ($details['shop_price'] != $details['rrp_price']))
                                     <p> 
                                         <span> RRP: </span> 
                                         <del>{{MY_CURRENCY_SYMBOL}} {{$details['rrp_price']}}</del>
