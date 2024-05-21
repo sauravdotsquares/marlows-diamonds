@@ -383,7 +383,7 @@
 	.navbars-show .menus-wraper{width:100%}
 	.show-search-box{overflow:hidden}
 	.head-mini-search .formgroup{max-width:100%}
-	.head-mini-search{position:fixed;top:145;left:50%;background:none;width:96%;z-index:991;height:auto;display:block;transform: translate(-50%, 0);}
+	.head-mini-search{position:fixed;top:145px;left:50%;background:none;width:96%;z-index:991;height:auto;display:block;transform: translate(-50%, 0);}
 header.header-main.sticky-header .middle-topbar .head-mini-search {top: 0px;height: auto;left: 0;right: 0;transform: none;width: 100%;position: relative;}
 
 header.header-main.sticky-header .middle-topbar {display: block;top:108px;background: #ffffff;}
@@ -649,6 +649,10 @@ div#trustpilot-gtm-floating-wrapper {display: none !important;}
 .post-bar-left.header-post-bar-left {display: none;}
 .post-bar-right.header-post-bar-left {display: none;}
 .whatspp-num-1 {right: 0; bottom: 15px; display:block !important;}
+
+
+.checkout-order-table table tr td { padding: 13px 10px;}
+.checkout-order-table table tr td .plancare-section {padding: 10px 8px 15px;}
 	}
 	
 	
@@ -720,6 +724,9 @@ body .fancybox-navigation .fancybox-button--arrow_left {padding: 0;width: 30px;h
 .middle-topbar-right ul li.dropdown {
     display: none;
 }
+
+.checkout-order-table table tr td .plancare-section h5 { font-size: 13px;}
+.checkout-order-table table tr td .form-control {font-size: 12px;border: 1px solid #e5e5e5;padding: 0 8px; margin: 0;}
 	}
 	
 	@media(max-width:479px){

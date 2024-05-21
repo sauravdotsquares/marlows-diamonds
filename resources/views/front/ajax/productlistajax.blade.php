@@ -68,7 +68,7 @@
 							<a href="#">{{isset($titleSplits[1])?$titleSplits[1]:''}}</a>
 						@endif
 					</div>
-					<?php if(!empty($getProductListingPrices) && $getProductListingPrices != 0){ ?>
+					<?php if(!empty($getProductListingPrices['final_shop_price']) && $getProductListingPrices['final_shop_price'] != 0.0){ ?>
 						<div class="price-section">
 							<div style="display: flex;">
 								<!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->

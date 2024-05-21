@@ -186,7 +186,9 @@
 					</div>
 				@endif
 
-			
+				<p class="delieveryDescription">
+					{{$getVariationDescription->description}}
+				</p>
 
 				<div style="display: flex;">
 					<h4><del style="color:#000" class="shopPriceval"id="shopPrice"> </del> </h4>
@@ -666,13 +668,25 @@
 			});
 
             $(document).on('change','#metal-type',function(){
-				getSelectedVariationsData();
+				// getSelectedVariationsData($(this).val());
+			});
+
+
+			$(document).on('change', '.diamond_type' , function(event) {
+				let getDiamondType = $(this).val();
+				if(getDiamondType == 'lab_grown'){
+					$("#metal-type option[value=' Silver ']").show();
+				}else if(getDiamondType == 'mined_diamond'){
+					$("#metal-type option[value=' Silver ']").hide();
+					$("#metal-type option[value=' 9ct White Gold ']").prop('selected', true);
+					getCustomPriceFinalFunction();
+				}
 			});
 		})
 	
-		function getSelectedVariationsData(){
+		function getSelectedVariationsData(metalType = null){
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
-
+			
 			var variations = [];
 			$('.type-variations-row select').each(function(i, sel){
 
@@ -690,13 +704,14 @@
 					'_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
 					'diamond_type' : diamond_type,
+					'metal_type' : metalType,
 					'variations' : variations,
 				},
 				success: function (res) {
                     if(diamond_type == 'lab_grown'){
-						$('.product-description-common_lab_grown').html(res.description);
+						$('.delieveryDescription').html(res.delivery_description);
 					}else if (diamond_type == 'mined_diamond'){
-						$('.product-description-common_mined').html(res.description);
+						$('.delieveryDescription').html(res.delivery_description);
 					}
 					
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
@@ -941,7 +956,7 @@
 			$('#myDivChanges').html(designTable);
 		}
 		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
-			getSelectedVariationsData();
+			getSelectedVariationsData($('#metal-type').val());
 			let diamondCaratWeight;
 			let diamondColour;
 			var diamondShape;

@@ -26,6 +26,7 @@ use App\Models\PostCategory;
 use App\Models\Pages;
 use App\Models\ProductFilter;
 use App\Models\ProductFilterItems;
+use App\Models\ProductVariationDescription;
 use Illuminate\Support\Facades\Redirect;
 use SoapClient;
 use Rapnet;
@@ -109,6 +110,7 @@ class ProductController extends Controller
     public function productDetails(Request $request, $productSlug = null)
     {
 
+        $getVariationDescription = ProductVariationDescription::where('variation','9ct White Gold')->first();
 
 
         $dekoEnabled = true;
@@ -200,6 +202,7 @@ class ProductController extends Controller
                             'plainbandJewellery' => $plainbandJewellery,
                             'variationDetails' => $variationDetails,
                             'prodImages' => $prodImages,
+                            'getVariationDescription' => $getVariationDescription,
                             'url' => $url,
                             'requestData' => $requestData
                         ]
@@ -233,6 +236,7 @@ class ProductController extends Controller
                             'prodImages' => $prodImages,
                             'plainbandMulti' => $plainbandMulti,
                             'plainbandJewellery' => $plainbandJewellery,
+                            'getVariationDescription' => $getVariationDescription,
                             'url' => $url,
                             'plainband' => $plainband,
                             'variationImages' => $variationDetails,
@@ -549,6 +553,12 @@ class ProductController extends Controller
 
     public function getProductVideo(Request $request)
     {
+        if(isset($request->metal_color) && !empty($request->metal_color)){
+            $metalType = $request->metal_color;
+        }else{
+            $metalType = '9ct White Gold';
+        }
+        $getVariationDescription = ProductVariationDescription::where('variation',$metalType)->first();
         $getProduct = Products::where('slug', $request->slug)->select('id','description','lab_description','short_description')->first();
 
         if (isset($getProduct) && !empty($getProduct->id)) {
@@ -561,7 +571,12 @@ class ProductController extends Controller
             if (isset($getVariDetails) && !empty($getVariDetails)) {
                 $getSelectedVariationVideoImages = ProductVariations::where('id', $getVariDetails->variation_id)->select('vari_image', 'multi_vari_video', 'multi_vari_img', 'vari_video', 'regular_price', 'sale_price')->first();
 
-                return response()->json($getSelectedVariationVideoImages);
+                $result = [
+                    'getSelectedVariationVideoImages' => $getSelectedVariationVideoImages,
+                    'getVariationDescription' => $getVariationDescription,
+                ];
+
+                return response()->json($result);
             }
         }
         return response()->json($getProductVariationId);
@@ -1051,6 +1066,13 @@ class ProductController extends Controller
     public function getSelectedVariationsData(Request $request)
     {
 
+        if(isset($request->metal_type) && !empty($request->metal_type)){
+            $metalType = $request->metal_type;
+        }else{
+            $metalType = '9ct White Gold';
+        }
+        $getVariationDescription = ProductVariationDescription::where('variation',$metalType)->first();
+
         $productData = Products::where('slug', $request->slug)->first();
 
          if($request->diamond_type == "lab_grown"){
@@ -1169,6 +1191,7 @@ class ProductController extends Controller
                         $newArray['formula'] = true;
                         $newArray['vari_video'] = !empty($image['vari_video']) ? $image['vari_video'] : '';
                         $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+                        $newArray['delivery_description'] = !empty($getVariationDescription->description) ? $getVariationDescription->description : '';
 
                         $newArray['regular_price'] = round($price);
                         $newArray['discount_data'] =  $getDiscountRange;
@@ -1349,6 +1372,7 @@ class ProductController extends Controller
                     $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                     $newArray['regular_price_with_vat'] = $getSelectedVariationVideoImages->regular_price;
                     $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+                    $newArray['delivery_description'] = !empty($getVariationDescription->description) ? $getVariationDescription->description : '';
                     $newArray['regular_price_with_vat_discount'] = $getSelectedVariationVideoImages->regular_price;
                     return response()->json($newArray);
                 } elseif (in_array('bracelets', $categorySlugs)) {
@@ -1357,6 +1381,7 @@ class ProductController extends Controller
                     $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                     $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
                     $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+                    $newArray['delivery_description'] = !empty($getVariationDescription->description) ? $getVariationDescription->description : '';
 
                     if ($request->diamond_type == 'lab_grown') {
                         $newArray['regular_price'] = $getSelectedVariationVideoImages->lab_grown;
@@ -1384,6 +1409,7 @@ class ProductController extends Controller
                 $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
                 $newArray['regular_price'] = $getSelectedVariationVideoImages->regular_price;
                 $newArray['description'] = !empty($productData->description) ? $productData->description : '';
+                $newArray['delivery_description'] = !empty($getVariationDescription->description) ? $getVariationDescription->description : '';
                 $newArray['regular_price_with_vat'] = round($regular_p_final);
                 $newArray['regular_price_with_vat_discount'] = round($regular_p_discount_final);
 

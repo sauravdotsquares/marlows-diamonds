@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerAddress extends Model
+class CustomerShippingAddress extends Model
 {
     use HasFactory;
 
-    protected $table = "customer_addresses";
+    protected $table = "customer_shipping_addresses";
 
     protected $fillable = [
         'user_id',
@@ -26,7 +26,6 @@ class CustomerAddress extends Model
         'mobile',
         'email',
         'order_notes',
-        'shipping_status',
     ];
 
     protected $appends = ['country_name'];
