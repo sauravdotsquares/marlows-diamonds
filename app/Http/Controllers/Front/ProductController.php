@@ -558,7 +558,7 @@ class ProductController extends Controller
         }else{
             $metalType = '9ct White Gold';
         }
-        $getVariationDescription = ProductVariationDescription::where('diamond_types','lab_grown')->where('variation',$metalType)->first();
+        $getVariationDescription = ProductVariationDescription::where('variation',$metalType)->first();
         $getProduct = Products::where('slug', $request->slug)->select('id','description','lab_description','short_description')->first();
 
         if (isset($getProduct) && !empty($getProduct->id)) {

@@ -858,11 +858,11 @@
 					}
 					
 					if(res.getVariationDescription.description){
-						if($('.diamond_type:checked').val() == 'lab_grown'){
-							$('.delieveryDescription').html(res.getVariationDescription.description);
-						}else if($('.diamond_type:checked').val() == 'mined_diamond'){
-							$('.delieveryDescription').html('');
-						}
+						$('.delieveryDescription').html(res.getVariationDescription.description);
+						// if($('.diamond_type:checked').val() == 'lab_grown'){
+						// }else if($('.diamond_type:checked').val() == 'mined_diamond'){
+						// 	$('.delieveryDescription').html('');
+						// }
 					}
 				}
 			});
