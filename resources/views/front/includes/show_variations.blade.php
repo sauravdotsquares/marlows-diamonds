@@ -17,7 +17,7 @@
                 }
 
                 if(!isset($selected) && empty($selected)){
-                    if( $attriSelected == '' && $attr == ' 9ct White Gold '){
+                    if( $attriSelected == '' && $attr == ' Silver '){
                         $attriSelected = 'selected';
                     }
                 }
