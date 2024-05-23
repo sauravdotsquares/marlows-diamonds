@@ -22,7 +22,11 @@
                     }
                 }
             ?>
-            <option value="{{$attr}}" {{$attriSelected}}>{{$attr.$attriConditionContent}}</option>
+            @if(isset($diamondType) && $diamondType == 'mined_diamond' && $attr == ' Silver ')
+                // Not Selected Silver
+            @else
+                <option value="{{$attr}}" {{$attriSelected}}>{{$attr.$attriConditionContent}}</option>
+            @endif
         @endforeach
 
     </select>
