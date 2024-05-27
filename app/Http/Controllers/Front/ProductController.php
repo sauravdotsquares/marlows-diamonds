@@ -542,7 +542,7 @@ class ProductController extends Controller
                             $final_attr['attri_' . $attribute['slug']] = $found;
                         }
 
-                        $variationArray[] = View::make('front.includes.show_variations', ['final_attr' => $final_attr, 'type' => $request->type, 'selected' => $selected, 'diamondType'=>$request->diamond_type])->render();
+                        $variationArray[] = View::make('front.includes.show_variations', ['final_attr' => $final_attr, 'type' => $request->type, 'selected' => $selected])->render();
                     }
                 }
                 return $variationArray;

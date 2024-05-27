@@ -17,16 +17,12 @@
                 }
 
                 if(!isset($selected) && empty($selected)){
-                    if( $attriSelected == '' && $attr == ' Silver '){
+                    if( $attriSelected == '' && $attr == ' 9ct White Gold '){
                         $attriSelected = 'selected';
                     }
                 }
             ?>
-            @if(isset($diamondType) && $diamondType == 'mined_diamond' && $attr == ' Silver ')
-                // Not Selected Silver
-            @else
-                <option value="{{$attr}}" {{$attriSelected}}>{{$attr.$attriConditionContent}}</option>
-            @endif
+            <option value="{{$attr}}" {{$attriSelected}}>{{$attr.$attriConditionContent}}</option>
         @endforeach
 
     </select>
