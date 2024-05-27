@@ -451,7 +451,7 @@
                                             <p>{{$details['customArray']['CERT_NO']}}</p>
                                         </dd>
                                         @endif
-                                        @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver')
+                                        {{-- @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver') --}}
                                         <div class="plancare-section">
                                             <h5>Jewellery Care Plan</h5>
                                             <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
@@ -463,7 +463,7 @@
                                                 <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport']==400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
                                             </select>
                                         </div>
-                                        @endif
+                                       {{-- @endif --}}
                                     </dl>
                                     <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
                                     </td>

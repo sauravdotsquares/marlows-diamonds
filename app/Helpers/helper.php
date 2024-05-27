@@ -2114,7 +2114,21 @@ if (!function_exists("getMinimumPriceFunction")) {
             $diamondTypeStatus = 'mined_diamond';
         }
 
-        $getVariationIdPrice = ProductVariations::where('product_id',$productDetails->id)->select('mined_diamond','lab_grown','mined_diamond_rrp','lab_grown_rrp','product_id','id')->orderBy($diamondTypeStatus,'asc')->first();
+        // $getVariationIdPrice = ProductVariations::where('product_id',$productDetails->id)->select('mined_diamond','lab_grown','mined_diamond_rrp','lab_grown_rrp','product_id','id')->orderBy($diamondTypeStatus,'asc')->first();
+        // $getVariationIdPrice = ProductVariations::where('product_id', $productDetails->id)
+        //     ->select('mined_diamond1', 'lab_grown', 'mined_diamond_rrp', 'lab_grown_rrp', 'product_id', 'id')
+        //     ->orderBy($diamondTypeStatus, 'desc') // Assuming you want the second highest price
+        //     ->offset(1) // Skip the first (highest) result
+        //     ->limit(1) // Get the second result
+        //     ->first();
+
+        $getVariationIdPrice = ProductVariations::select($diamondTypeStatus.'_rrp', $diamondTypeStatus)
+            ->where('product_id',$productDetails->id)
+            ->groupBy($diamondTypeStatus)
+            ->orderBy($diamondTypeStatus, 'asc')
+            ->offset(1)
+            ->limit(1)
+            ->first();
 
         if(isset($getVariationIdPrice) && !empty($getVariationIdPrice)){
 
@@ -2134,6 +2148,15 @@ if (!function_exists("getMinimumPriceFunction")) {
                 $final_rrp_price = $getVariationIdPrice->lab_grown_rrp;
                 $final_shop_price = $getVariationIdPrice->lab_grown;
             }
+        }else{
+            $getVariationIdPrice = ProductVariations::select($diamondTypeStatus.'_rrp', $diamondTypeStatus)
+            ->where('product_id',$productDetails->id)
+            ->groupBy($diamondTypeStatus)
+            ->orderBy($diamondTypeStatus, 'asc')
+            ->first();
+
+            $final_rrp_price = $getVariationIdPrice->mined_diamond_rrp;
+            $final_shop_price = $getVariationIdPrice->mined_diamond;
         }
 
         $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$final_shop_price), $productCategory,$diamondTypeStatus);
