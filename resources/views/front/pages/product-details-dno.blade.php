@@ -708,7 +708,9 @@
 					'variations' : variations,
 				},
 				success: function (res) {
+					console.log(res);
 					$('.delieveryDescription').html(res.delivery_description);
+					$('.product-description-common_mined').html(res.description);
 					
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
 						const multipleImages = res.multi_vari_img.split(',');
