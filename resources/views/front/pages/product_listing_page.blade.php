@@ -934,7 +934,6 @@
             $(this).find('video')[0].play()
         }
     }).on('mouseleave', '.top-level', function() {
-        console.log('mouse leave')
         if ($(this).find('video').length) {
             $(this).find('video')[0].pause()
         }
@@ -1033,7 +1032,7 @@
             },
             success: function(res) {
                 // filterShapechanged();
-                // console.log(res);resetFilterButton
+                // resetFilterButton
 
 
                 $('#pagescroll').val(res.nextPage);

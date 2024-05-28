@@ -708,7 +708,6 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-					console.log(res);
 					$('.delieveryDescription').html(res.delivery_description);
 					$('.product-description-common_mined').html(res.description);
 					
@@ -922,7 +921,6 @@
                     catid: '{{$data->categories}}',
                 },
                 success: function (response) {
-                    // console.log(response.html);
                     $('#relatedProductData').html(" ");
                     if(response.html){
                         $('#relatedProductData').append(response.html);
@@ -978,7 +976,6 @@
 				diamondCertificate = $('#diamond-certificate').val();
 				$('.product-description-common_lab_grown').css('display','none');
 				$('.product-description-common_mined').css('display','block');
-				console.log("mined_diamond");
 			}else if($('.diamond_type:checked').val() == 'lab_grown'){
 				diamondCaratWeight = $('#lab_grown_carat').val();
 				diamondColour = $('#lab_grown_colour').val();
@@ -987,7 +984,6 @@
 				diamondCertificate = '';
 				$('.product-description-common_lab_grown').css('display','block');
 				$('.product-description-common_mined').css('display','none');
-				console.log("Lab grown ");
 			}
 
 			$.ajax({
