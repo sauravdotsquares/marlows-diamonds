@@ -1434,7 +1434,7 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->where('status',1)->take(4)->get();
+        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->inRandomOrder()->where('status',1)->take(4)->get();
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $view = view('front.ajax.related-productajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
