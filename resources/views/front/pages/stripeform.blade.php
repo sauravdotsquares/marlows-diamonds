@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                
+
                 <!-- <div class="payment-box-main-drop stripe-pay-box" style="display: none;"> -->
                     <!-- Pay via stripe; you can pay with your credit card if you don’t have a stripe account. -->
 
@@ -70,6 +70,12 @@
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
+    $(document).ready(function() {
+      $('#card_number').mask('0000 0000 0000 0000');
+      $('#cvv_number').mask('000');
+      $('#expiry_month').mask('00');
+      $('#expiry_year').mask('0000');
+    });
 $(function() {
   var $form = $(".require-validation");
   $('form.require-validation').bind('submit', function(e) {

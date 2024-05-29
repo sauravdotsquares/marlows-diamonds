@@ -460,9 +460,14 @@ class AddToCartController extends Controller
             }
         }
 
-        return $result;
+        $view = view('front.ajax.checkoutorderdetailsscripts')->render();
 
-        
+        $resultArray = [
+            'orderview' => $view,
+            'result' => $result,
+        ];
+
+        return $resultArray;
     }
     
     /**
