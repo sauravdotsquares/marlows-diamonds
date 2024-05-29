@@ -633,14 +633,14 @@
                     priceStatus: 1,
                 },
                 success: function(response) {
-                    $.each(response.sessionCartValues, function(keyIndex, value) {
+                    $.each(response.result.sessionCartValues, function(keyIndex, value) {
                         $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
                         $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
 
                     });
-                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
-                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
-                    $('#deposited_price').val(response.finalPrice);
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.result.finalPrice + '</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.result.finalPrice + '</strong>');
+                    $('#deposited_price').val(response.result.finalPrice);
                 }
             });
         });
