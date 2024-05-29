@@ -636,11 +636,17 @@
                     $.each(response.result.sessionCartValues, function(keyIndex, value) {
                         $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
                         $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
-
                     });
                     $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.result.finalPrice + '</strong>');
                     $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.result.finalPrice + '</strong>');
                     $('#deposited_price').val(response.result.finalPrice);
+                    $('#final_price').val(response.result.finalPrice);
+                    /** For dekopay */
+                    $("#totalOrder").val(response.result.finalPrice);
+                    $(".totalP-dekopay").text(response.result.finalPrice);
+                    get_deko_data();
+                    /** End of dekopay */
+                    $('#totalP').val(response.result.finalPrice);
                 }
             });
         });
