@@ -71,6 +71,7 @@ class XMLController extends Controller
                 $getResult9ctValues = $this->getWordsMatchFunctions($getVariationMetalType,'9ct');
                 $getResult18ctValues = $this->getWordsMatchFunctions($getVariationMetalType,'18ct');
                 $getResultPlatValues = $this->getWordsMatchFunctions($getVariationMetalType,'plat');
+                $getResultSilverValues = $this->getWordsMatchFunctions($getVariationMetalType,'Silver');
 
                 if(!empty($getResult9ctValues)){
                     $getResultValue = $getResult9ctValues[1];
@@ -78,6 +79,8 @@ class XMLController extends Controller
                     $getResultValue = $getResult18ctValues[1];
                 }else if(!empty($getResultPlatValues)){
                     $getResultValue = $getResultPlatValues[1];
+                }else if(!empty($getResultSilverValues)){
+                    $getResultValue = $getResultSilverValues[1];
                 }
 
                 if(isset($productArrayNew->title_xml) && !empty($productArrayNew->title_xml)){
@@ -195,6 +198,8 @@ class XMLController extends Controller
                                 $root->appendChild($channelNew);
                             }
                         }
+                    }else if($getResultValue == 'Silver' && $diamondType == 'mined_diamond'){
+                        // No silver with mined diamond variation shown in the xml files.
                     }else{
                         if (in_array("8", $prod_categories)){ 
                             //not upload engagement rings products

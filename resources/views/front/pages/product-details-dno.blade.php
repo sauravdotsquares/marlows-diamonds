@@ -48,6 +48,7 @@
 	if(in_array('wedding-rings',$all_categories_slug)){
 		$categorySlug = 'wedding-rings';
 	}
+	$diamondtype = isset($requestData["diamond_type"])?$requestData["diamond_type"]:'';
 @endphp
 <div class="product-detail-wraper">
 	<div class="container">
@@ -537,6 +538,7 @@
 	<script>
 		const imagesPath = "{{env('APP_IMAGE_URL')}}/storage/";
 		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
+		var diamondSelectedType = "{{$diamondtype}}";
 
         function blankForm(){
             $('input[name="title"]').val('');
@@ -814,6 +816,12 @@
                 },
                 success: function (res) {
 					$('#filterDataDesign .type-variations-row').html(res);
+					if(diamondSelectedType == "mined_diamond"){
+						$("#metal-type option[value=' Silver ']").hide();
+						$("#metal-type option[value=' 9ct White Gold ']").prop('selected', true);
+					}else{
+						$("#metal-type option[value=' Silver ']").show();
+					}
 					getCustomPriceFinalFunction();
 					getSelectedDataVariation();
                     return false;
