@@ -739,7 +739,7 @@ class ProductController extends Controller
             }else{
                 $productData->description = $productData->lab_description;
             }
-        }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
+        }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations) || in_array('Silver',$request->variations))){
             $productData->description = strip_tags(str_replace('G/H VS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'I-J. SI-I1', $productData->description));

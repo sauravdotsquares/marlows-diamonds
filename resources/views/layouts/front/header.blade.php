@@ -20,7 +20,7 @@
         $now = new DateTime("now");
         $lastDate = new DateTime('now');
         $lastDate->modify('last day of this month');        
-        $dist_future = $lastDate->format('m/d/Y h:m:s');
+        $dist_future = $lastDate->format('m/d/Y');
     ?>
 
     <div class="top-bar-mob">
@@ -370,9 +370,10 @@
         // $(".search-selection-text").focusout(function(){
         //     $('.search-suggestion').css('display','none');
         // });
-       
+        
+        // let discountDate = "05/31/2024 23:59:32"; //{{$dist_future}}";
         let discountText = "{{$getMonthTextArray[$getCurrentMonth]}}";
-        let discountDate = "{{$dist_future}}";
+        let discountDate = "{{$dist_future}}"+" "+"23:59:32";
         var countDownDate = new Date(discountDate).getTime();
         var myfunc = setInterval(function() {
 
