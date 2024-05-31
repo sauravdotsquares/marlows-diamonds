@@ -61,14 +61,16 @@
 						<div id="carousel" class="owl-carousel"> 
 							@if($variationImages)
 								@foreach($variationImages as $images)
-									<div class="item product-items-carousel">
-										<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" data-caption="{{isset($data->title)?$data->title:''}}">
-											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
-										</a>
-									</div>
+									@if(isset($images->vari_image) && !empty($images->vari_image))
+										<div class="item product-items-carousel">
+											<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" data-caption="{{isset($data->title)?$data->title:''}}">
+												<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
+											</a>
+										</div>
+									@endif
 								@endforeach
 							@endif
-
+							
 							@if(isset($prodImages) && $prodImages)
 								@foreach($prodImages as $images)
 									@if(isset($images->image_url) && !empty($images->image_url))
