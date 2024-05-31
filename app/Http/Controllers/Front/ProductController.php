@@ -170,7 +170,7 @@ class ProductController extends Controller
                 // store in session for recent viewd products End
 
                 // Product Images
-                $prodImages = ProductImages::where('product_id', $getProduct->id)->get();
+                $prodImages = ProductImages::where('product_id', $getProduct->id)->where('status',0)->get();
 
                 if ($getProduct->dfinder_status == 1) {
                     $productVariationId = ProductVariations::where('product_id', $getProduct->id)->pluck('id')->toArray();
