@@ -2122,11 +2122,17 @@ if (!function_exists("getMinimumPriceFunction")) {
         //     ->limit(1) // Get the second result
         //     ->first();
 
-        $getVariationIdPrice = ProductVariations::select($diamondTypeStatus.'_rrp', $diamondTypeStatus)
+        if($productDetails->id == 37){
+            $offset = 2;
+        }else{
+            $offset = 1;
+        }
+
+        $getVariationIdPrice = ProductVariations::select($diamondTypeStatus.'_rrp', $diamondTypeStatus,'product_id','id')
             ->where('product_id',$productDetails->id)
             ->groupBy($diamondTypeStatus)
             ->orderBy($diamondTypeStatus, 'asc')
-            ->offset(1)
+            ->offset($offset)
             ->limit(1)
             ->first();
 
