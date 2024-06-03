@@ -38,7 +38,7 @@ class SendOrderMailJob implements ShouldQueue
         ], function ($message) {
             $message->from('hello@marlows-diamonds.co.uk');
             $message->to('sharma.gajendra@dotsquares.com', 'Customer')->bcc('sharma.gajendra@dotsquares.com','Admin')->subject('Order History');
-            // $message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Inquiry local');
+            // $message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Enquiry local');
         });
     }
 }

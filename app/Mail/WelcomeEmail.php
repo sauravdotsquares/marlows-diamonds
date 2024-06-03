@@ -35,6 +35,6 @@ class WelcomeEmail extends Mailable implements ShouldQueue
             'phone' => $this->requestData['phone'],
             'url' => $this->requestData['custom_url'],
             'user_query' => $this->requestData['description'],
-        ])->subject('New Website Inquiry');
+        ])->subject('New Website Enquiry');
     }
 }

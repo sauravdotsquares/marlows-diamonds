@@ -48,8 +48,8 @@ class MailListFormController extends Controller {
     //             'user_query' => $request->get('description'),
     //         ), function($message) use ($request,$admin_email ){
     //             $message->from('hello@marlows-diamonds.co.uk');
-    // 			$message->to($admin_email, 'Admin')->subject('New Website Inquiry');
-    // 			$message->bcc('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry');
+    // 			$message->to($admin_email, 'Admin')->subject('New Website Enquiry');
+    // 			$message->bcc('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry');
     //         });
         }else{
             $requestData = [
@@ -81,8 +81,8 @@ class MailListFormController extends Controller {
             //     'user_query' => $request->get('description'),
             // ), function($message) use ($request,$admin_email ){
             //     $message->from('hello@marlows-diamonds.co.uk');
-    		// 	$message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry local');
-    		// 	//$message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Inquiry local');
+    		// 	$message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry local');
+    		// 	//$message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Enquiry local');
             // });
         }
        
