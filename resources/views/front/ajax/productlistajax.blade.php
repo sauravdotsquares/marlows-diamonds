@@ -1,8 +1,8 @@
-@foreach($getProductListFinal as $product)
+@foreach($sortedArray as $product)
 
 	<?php $thumbnailGif = getThumbnailGif($product->id); ?>
 	<?php 
-		$getProductListingPrices = getMinimumPriceFunction($product);
+		// $getProductListingPrices = getMinimumPriceFunction($product);
 	?>
 	<div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
 
@@ -68,20 +68,19 @@
 							<a href="#">{{isset($titleSplits[1])?$titleSplits[1]:''}}</a>
 						@endif
 					</div>
-					<?php if(!empty($getProductListingPrices['final_shop_price']) && $getProductListingPrices['final_shop_price'] != 0.0){ ?>
-						<div class="price-section">
-							<div style="display: flex;">
-								<!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
-								@if($getProductListingPrices['final_discounted_price'] != $getProductListingPrices['final_shop_price'])
-								<h4><del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_shop_price']),2)}}</del> </h4>
-								@endif
-								
-								<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_discounted_price']),2)}} </span></div>
-							</div>
-							@if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_discounted_price'])
-								<p><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_discounted_price']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del> </p>
-							@endif
-						</div>
+					<?php if(!empty($product->lab_grown_rrp) && $product->lab_grown_rrp != 0.0){ ?>
+								<div class="price-section">
+                                        <div style="display: flex;">
+                                            <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
+                                            
+                                            <h4>
+                                     <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown_rrp),2)}}</del> 
+                                            </h4>
+                                            
+                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}} </span></div>
+                                        </div>
+                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->lab_grown_rrp - $product->lab_grown}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->lab_grown_rrp}}</del> </p>
+                                    </div>
 					<?php } ?> 
 				</div>
 			</div>

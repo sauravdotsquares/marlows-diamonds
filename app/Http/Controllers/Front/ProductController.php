@@ -2029,6 +2029,7 @@ class ProductController extends Controller
             if (!empty($productListingData)) {
                 
                 $productItems = $productListingData['productItems'];
+                $sortedArray = $productListingData['sortedArray'];
                 $getProductListFinal = $productListingData['getProductListFinal'];
                 $product_count = $productListingData['product_count'];
                 
@@ -2071,6 +2072,7 @@ class ProductController extends Controller
                 return view('front.pages.product_listing_page', compact([
                     'filterItemTextData',
                     'productItems',
+                    'sortedArray',
                     "getProductListFinal",
                     'product_count',
                     'productListingData',

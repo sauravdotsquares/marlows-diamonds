@@ -31,6 +31,7 @@ use App\Models\ProductVariationDetails;
 use App\Models\ProductThumbVideos;
 use App\Models\UrlRedirects;
 use App\Models\LabPricesList;
+use Illuminate\Support\Collection;
 
 
 //use SoapClient;
@@ -1240,7 +1241,7 @@ if (!function_exists('validate_breadcrumb')) {
 
      function getProductListing($queryString = null, $requestData = [])
      {  
- 
+
          /** generate custom query for categories */
          $category_custom_query = "";
          $is404 = false;
@@ -1436,7 +1437,7 @@ if (!function_exists('validate_breadcrumb')) {
         if(isset($requestData['per_page_product']) && !empty($requestData['per_page_product'])){
             $page = $requestData['per_page_product'];
         }
-        $query = Products::where('status', 1)->whereRaw(DB::raw($category_custom_query));
+        $query = Products::with('getProductVariation:id,product_id,mined_diamond_rrp,mined_diamond,lab_grown_rrp,lab_grown')->select('id','title','slug','categories')->where('status', 1)->whereRaw(DB::raw($category_custom_query));
 
         /** Search filter */
         if (!empty($requestData['keyword'])) {
@@ -1464,7 +1465,7 @@ if (!function_exists('validate_breadcrumb')) {
             $query = $query->whereIn('diamond_shape', $shape);
         }
 
-        if (!empty($requestData['sorting'])) {
+        if (isset($requestData['sorting']) && ($requestData['sorting'] == "asc" || $requestData['sorting'] == "desc")) {
             $sort = $requestData['sorting'];
             $query = $query->orderBy('title', $sort);
          }else{
@@ -1473,6 +1474,49 @@ if (!function_exists('validate_breadcrumb')) {
 
         // echo "checked ".$query->toSql();die;
         $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
+        $getActualProductArray = $getProductListFinal->toArray();
+        $productSingleArray = [];
+        foreach($getActualProductArray['data'] as $keyi => $product){
+            $productSingleArray[$keyi]['id'] =  $product['id'];
+            $productSingleArray[$keyi]['title'] =  $product['title'];
+            $productSingleArray[$keyi]['slug'] =  $product['slug'];
+            $productSingleArray[$keyi]['categories'] =  $product['categories'];
+            $productSingleArray[$keyi]['parent_cat'] =  $product['product_parent_category'];
+            
+            foreach($product['get_product_variation'] as $keyData => $productVariations){
+                foreach($productVariations['get_vari_details_id'] as $keyVariData => $productMetalData){
+                    if(isset($productMetalData['key']) && $productMetalData['key'] == 'attri_metal-type'){
+                        if(isset($productMetalData['value']) && $productMetalData['value'] == '9ct White Gold'){
+                            $productSingleArray[$keyi]['mined_diamond_rrp'] =  $productVariations['mined_diamond_rrp'];
+                            $productSingleArray[$keyi]['mined_diamond'] =  $productVariations['mined_diamond'];
+                            $productSingleArray[$keyi]['lab_grown_rrp'] =  $productVariations['lab_grown_rrp'];
+                            $productSingleArray[$keyi]['lab_grown'] =  $productVariations['lab_grown'];
+                            $productSingleArray[$keyi]['discounted_lab_grown'] =  getFlatDiscountRanges(["shop_price"=>$productVariations['lab_grown']],$product['product_parent_category'],'lab_grown');
+                            $productSingleArray[$keyi][$productMetalData['key']] =  $productMetalData['value'];
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
+       // Convert the array to a Laravel Collection
+        $collection = collect($productSingleArray);
+
+        // Sort the collection by lab_grown_rrp price
+
+        if(isset($requestData['sorting']) && $requestData['sorting'] == 'price-min'){
+            $sortedCollection = $collection->sortBy('lab_grown_rrp');
+        }elseif(isset($requestData['sorting']) && $requestData['sorting'] == 'price-max'){
+            $sortedCollection = $collection->sortByDesc('lab_grown_rrp');
+        }else{
+            $sortedCollection = $collection->sortBy('lab_grown_rrp');
+        }
+        $sortedArray = $sortedCollection->map(function ($item) {
+            return (object) $item;
+        });
+        
 
         if($getProductListFinal->currentPage() > $getProductListFinal->lastPage()){
             return [
@@ -1485,7 +1529,7 @@ if (!function_exists('validate_breadcrumb')) {
 
         $productItems = "";
         if ($getProductListFinal->count()) {
-            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
+            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses','sortedArray'))->render();
         } else {
             return [
                 'status' => 404,
@@ -1500,6 +1544,7 @@ if (!function_exists('validate_breadcrumb')) {
             'status' => 200,
             'productItems' => $productItems,
             'getProductListFinal' => $getProductListFinal,
+            'sortedArray' => $sortedArray,
             'isNextPage' => $isNextPage,
             'nextPage' => $nextPage,
             'product_count'=> $getProductListFinal->count(),
