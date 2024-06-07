@@ -20,7 +20,7 @@
         $now = new DateTime("now");
         $lastDate = new DateTime('now');
         $lastDate->modify('last day of this month');        
-        $dist_future = $lastDate->format('m/d/Y h:m:s');
+        $dist_future = $lastDate->format('m/d/Y');
     ?>
 
     <div class="top-bar-mob">
@@ -346,15 +346,34 @@
 
 
 <script>
+
+        $(document).ready(function(){
+            // Attach click event to body
+            $('body').click(function(){
+                // Clear search input value
+                var removedDiv = $('.search-suggestion-list.ng-scope').remove();
+                if(removedDiv){
+                    $('.search-suggestion.hide_1').css('border','none');
+                }else{
+                    $('.search-suggestion.hide_1').css('border','1px solid #D0D0D0');
+                }
+            });
+
+            // Prevent search input click event propagation
+            $('.head-mini-search').click(function(event){
+                event.stopPropagation();
+            });
+        });
         // $(".search-selection-text").focusin(function(){
         //     $('.search-suggestion').css('display','block');
         // });
         // $(".search-selection-text").focusout(function(){
         //     $('.search-suggestion').css('display','none');
         // });
-       
+        
+        // let discountDate = "05/31/2024 23:59:32"; //{{$dist_future}}";
         let discountText = "{{$getMonthTextArray[$getCurrentMonth]}}";
-        let discountDate = "{{$dist_future}}";
+        let discountDate = "{{$dist_future}}"+" "+"23:59:32";
         var countDownDate = new Date(discountDate).getTime();
         var myfunc = setInterval(function() {
 

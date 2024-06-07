@@ -52,8 +52,8 @@ class ContactUsFormController extends Controller {
             //     'user_query' => $request->get('description'),
             // ), function($message) use ($request,$admin_email ){
             //     $message->from('hello@marlows-diamonds.co.uk');
-            //     $message->to($admin_email, 'Admin')->subject('New Website Inquiry');
-            //     $message->bcc('sharma.gajendra@dotsquares.com', 'Dev bcc')->subject('New Website Inquiry');
+            //     $message->to($admin_email, 'Admin')->subject('New Website Enquiry');
+            //     $message->bcc('sharma.gajendra@dotsquares.com', 'Dev bcc')->subject('New Website Enquiry');
             // });
         }else{
             $requestData = [
@@ -87,7 +87,7 @@ class ContactUsFormController extends Controller {
             //     'user_query' => $request->get('description'),
             // ), function($message) use ($request,$admin_email ){
             //     $message->from('hello@marlows-diamonds.co.uk');
-            //     $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Inquiry');
+            //     $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry');
             // });
         }
 
@@ -99,7 +99,7 @@ class ContactUsFormController extends Controller {
         //     'user_query' => $request->get('description'),
         // ), function($message) use ($request,$admin_email ){
         //     $message->from('hello@marlows-diamonds.co.uk');
-        //     $message->to($admin_email, 'Admin')->subject('New Website Inquiry');
+        //     $message->to($admin_email, 'Admin')->subject('New Website Enquiry');
         // });
 
         return response()->json(['status'=> 200, 'success'=>'We have received your message and would like to thank you for writing to us.']);

@@ -451,7 +451,7 @@
                                             <p>{{$details['customArray']['CERT_NO']}}</p>
                                         </dd>
                                         @endif
-                                        @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver')
+                                        {{-- @if(isset($details['customArray']['metal_type']) && $details['customArray']['metal_type'] == 'Silver') --}}
                                         <div class="plancare-section">
                                             <h5>Jewellery Care Plan</h5>
                                             <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
@@ -463,7 +463,7 @@
                                                 <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport']==400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
                                             </select>
                                         </div>
-                                        @endif
+                                       {{-- @endif --}}
                                     </dl>
                                     <strong class="checkpr-quantity">x {{$details['quantity']}}</strong>
                                     </td>
@@ -633,14 +633,20 @@
                     priceStatus: 1,
                 },
                 success: function(response) {
-                    $.each(response.sessionCartValues, function(keyIndex, value) {
+                    $.each(response.result.sessionCartValues, function(keyIndex, value) {
                         $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
                         $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
-
                     });
-                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
-                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
-                    $('#deposited_price').val(response.finalPrice);
+                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.result.finalPrice + '</strong>');
+                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.result.finalPrice + '</strong>');
+                    $('#deposited_price').val(response.result.finalPrice);
+                    $('#final_price').val(response.result.finalPrice);
+                    /** For dekopay */
+                    $("#totalOrder").val(response.result.finalPrice);
+                    $(".totalP-dekopay").text(response.result.finalPrice);
+                    get_deko_data();
+                    /** End of dekopay */
+                    $('#totalP').val(response.result.finalPrice);
                 }
             });
         });

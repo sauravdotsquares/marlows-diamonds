@@ -48,6 +48,7 @@
 	if(in_array('wedding-rings',$all_categories_slug)){
 		$categorySlug = 'wedding-rings';
 	}
+	$diamondtype = isset($requestData["diamond_type"])?$requestData["diamond_type"]:'';
 @endphp
 <div class="product-detail-wraper">
 	<div class="container">
@@ -60,14 +61,16 @@
 						<div id="carousel" class="owl-carousel"> 
 							@if($variationImages)
 								@foreach($variationImages as $images)
-									<div class="item product-items-carousel">
-										<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" data-caption="{{isset($data->title)?$data->title:''}}">
-											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
-										</a>
-									</div>
+									@if(isset($images->vari_image) && !empty($images->vari_image))
+										<div class="item product-items-carousel">
+											<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" data-caption="{{isset($data->title)?$data->title:''}}">
+												<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
+											</a>
+										</div>
+									@endif
 								@endforeach
 							@endif
-
+							
 							@if(isset($prodImages) && $prodImages)
 								@foreach($prodImages as $images)
 									@if(isset($images->image_url) && !empty($images->image_url))
@@ -537,6 +540,7 @@
 	<script>
 		const imagesPath = "{{env('APP_IMAGE_URL')}}/storage/";
 		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
+		var diamondSelectedType = "{{$diamondtype}}";
 
         function blankForm(){
             $('input[name="title"]').val('');
@@ -708,11 +712,8 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-                    if(diamond_type == 'lab_grown'){
-						$('.delieveryDescription').html(res.delivery_description);
-					}else if (diamond_type == 'mined_diamond'){
-						$('.delieveryDescription').html(res.delivery_description);
-					}
+					$('.delieveryDescription').html(res.delivery_description);
+					$('.product-description-common_mined').html(res.description);
 					
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
 						const multipleImages = res.multi_vari_img.split(',');
@@ -765,6 +766,16 @@
 							var videoUrl = "{{ asset('storage/')}}/"+res.vari_video;
 							$('#variationVideo').attr('src', videoUrl);
 							$("#variationVideo")[0].play();
+						}else{
+							const items = $('#carousel').find('.owl-item');
+							items.each((index, element)=>{
+								$(element).find('.product-items-carousel').attr('data-position', index);
+							});
+							if(res.vari_image!='' && res.vari_image!=null){
+								variation_image = data_slug+'/storage/'+res.vari_image;
+								var $speed = 0;
+								$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
+							}
 						}
 					}else{
 						const items = $('#carousel').find('.owl-item');
@@ -807,6 +818,12 @@
                 },
                 success: function (res) {
 					$('#filterDataDesign .type-variations-row').html(res);
+					if(diamondSelectedType == "mined_diamond"){
+						$("#metal-type option[value=' Silver ']").hide();
+						$("#metal-type option[value=' 9ct White Gold ']").prop('selected', true);
+					}else{
+						$("#metal-type option[value=' Silver ']").show();
+					}
 					getCustomPriceFinalFunction();
 					getSelectedDataVariation();
                     return false;
@@ -924,7 +941,6 @@
                     catid: '{{$data->categories}}',
                 },
                 success: function (response) {
-                    // console.log(response.html);
                     $('#relatedProductData').html(" ");
                     if(response.html){
                         $('#relatedProductData').append(response.html);
@@ -980,7 +996,6 @@
 				diamondCertificate = $('#diamond-certificate').val();
 				$('.product-description-common_lab_grown').css('display','none');
 				$('.product-description-common_mined').css('display','block');
-				console.log("mined_diamond");
 			}else if($('.diamond_type:checked').val() == 'lab_grown'){
 				diamondCaratWeight = $('#lab_grown_carat').val();
 				diamondColour = $('#lab_grown_colour').val();
@@ -989,7 +1004,6 @@
 				diamondCertificate = '';
 				$('.product-description-common_lab_grown').css('display','block');
 				$('.product-description-common_mined').css('display','none');
-				console.log("Lab grown ");
 			}
 
 			$.ajax({

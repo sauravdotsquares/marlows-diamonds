@@ -170,7 +170,7 @@ class ProductController extends Controller
                 // store in session for recent viewd products End
 
                 // Product Images
-                $prodImages = ProductImages::where('product_id', $getProduct->id)->get();
+                $prodImages = ProductImages::where('product_id', $getProduct->id)->where('status',0)->get();
 
                 if ($getProduct->dfinder_status == 1) {
                     $productVariationId = ProductVariations::where('product_id', $getProduct->id)->pluck('id')->toArray();
@@ -739,7 +739,7 @@ class ProductController extends Controller
             }else{
                 $productData->description = $productData->lab_description;
             }
-        }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
+        }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations) || in_array('Silver',$request->variations))){
             $productData->description = strip_tags(str_replace('G/H VS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'I-J. SI-I1', $productData->description));
@@ -1434,7 +1434,7 @@ class ProductController extends Controller
 
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
 
-        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->where('status',1)->take(4)->get();
+        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->inRandomOrder()->where('status',1)->take(4)->get();
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $view = view('front.ajax.related-productajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {
@@ -2029,6 +2029,7 @@ class ProductController extends Controller
             if (!empty($productListingData)) {
                 
                 $productItems = $productListingData['productItems'];
+                $sortedArray = $productListingData['sortedArray'];
                 $getProductListFinal = $productListingData['getProductListFinal'];
                 $product_count = $productListingData['product_count'];
                 
@@ -2071,6 +2072,7 @@ class ProductController extends Controller
                 return view('front.pages.product_listing_page', compact([
                     'filterItemTextData',
                     'productItems',
+                    'sortedArray',
                     "getProductListFinal",
                     'product_count',
                     'productListingData',
