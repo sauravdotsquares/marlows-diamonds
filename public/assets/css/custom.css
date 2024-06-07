@@ -1371,7 +1371,7 @@ font-size: 13px;
 .instaphoto-img img {
 	width: 100% !important;
 	height: 370px !important;
-	object-fit: cover;
+	/*object-fit: cover;*/
 }
 
 .blog-search-field .formgroup {position: relative;}
