@@ -1437,7 +1437,7 @@ if (!function_exists('validate_breadcrumb')) {
         if(isset($requestData['per_page_product']) && !empty($requestData['per_page_product'])){
             $page = $requestData['per_page_product'];
         }
-        $query = Products::with('getProductVariation:id,product_id,mined_diamond_rrp,mined_diamond,lab_grown_rrp,lab_grown')->select('id','title','slug','categories')->where('status', 1)->whereRaw(DB::raw($category_custom_query));
+        $query = Products::with('getProductVariation:id,product_id,mined_diamond_rrp,mined_diamond,lab_grown_rrp,lab_grown')->with('getProductImages')->select('id','title','slug','categories')->where('status', 1)->whereRaw(DB::raw($category_custom_query));
 
         /** Search filter */
         if (!empty($requestData['keyword'])) {
@@ -1482,6 +1482,7 @@ if (!function_exists('validate_breadcrumb')) {
             $productSingleArray[$keyi]['slug'] =  $product['slug'];
             $productSingleArray[$keyi]['categories'] =  $product['categories'];
             $productSingleArray[$keyi]['parent_cat'] =  $product['product_parent_category'];
+            $productSingleArray[$keyi]['getProductImages'] =  $product['get_product_images'];
             
             foreach($product['get_product_variation'] as $keyData => $productVariations){
                 foreach($productVariations['get_vari_details_id'] as $keyVariData => $productMetalData){
