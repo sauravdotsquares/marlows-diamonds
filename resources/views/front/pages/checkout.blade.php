@@ -547,7 +547,6 @@
                                     <ul class="cc_payment_methods_options">
 
                                         @include('front.pages.payments.paypal',['totalAmount'=>$total])
-                                        @include('front.pages.payments.dekopay',['totalAmount'=>$total])
                                         @include('front.pages.payments.stripepay',['totalAmount'=>$total])
                                     </ul>
                                 </div>

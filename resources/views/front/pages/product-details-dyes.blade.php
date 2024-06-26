@@ -318,7 +318,7 @@
 					<a class="store-locator store-locator-border-right" href="{{asset('visit-us')}}">Store Locator</a>
 					<!-- <a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a> -->
 				</div>
-				<div class="finance-available" ng-controller="DekopayController">
+				<!-- <div class="finance-available" ng-controller="DekopayController">
 					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
@@ -330,7 +330,7 @@
 					</div>
 					
 					
-				</div>
+				</div> -->
 				<div class="policysection">
 					<div class="policy0icon">
 					    <i class="diamond-icon search-lifetimewarranty"></i>
@@ -608,7 +608,7 @@
 
 
 <!-- Modal -->
-@include('front.includes.dekopay-finance-options')
+<!-- @include('front.includes.dekopay-finance-options') -->
 
 
 
