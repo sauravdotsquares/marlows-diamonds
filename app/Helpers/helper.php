@@ -2240,4 +2240,25 @@ if (!function_exists("getMonthwiseDiscountText")) {
         ];
     }
 }
+
+if (!function_exists("getAllCategoryProducts")) {
+    function getAllCategoryProducts()
+    {
+        $getParentCategory = Category::where('parent_id', 0)->pluck('id');
+        $getAllCategoryProducts = [];
+        foreach ($getParentCategory as $key => $value) {
+            $product =
+            Products::with(['getProductImages'])->select(['slug','id','title','description','lab_description','categories'])->where('status',1)
+            ->whereRaw('FIND_IN_SET('.$value.', categories)')->inRandomOrder()->limit(3)
+            ->get();
+            if ($product) {
+                $productsArray = $product;
+                foreach ($productsArray as $key => $products) {
+                    array_push($getAllCategoryProducts, $products);
+                }
+            }
+        }
+        return collect($getAllCategoryProducts);
+    }
+}
     

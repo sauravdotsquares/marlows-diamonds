@@ -50,13 +50,15 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Engagement Ring
-                                </div>
-                                <div class="product-description">
-                                    Choose from an exotic range of diamond Rings or have your very own bespoke design made
-                                    for your special day.
-                                </div>
+                                <a href="{{ asset('diamond-engagement-rings') }}">
+                                    <div class="product-titles">
+                                        Engagement Ring
+                                    </div>
+                                    <div class="product-description">
+                                        Choose from an exotic range of diamond Rings or have your very own bespoke design made
+                                        for your special day.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small" href="{{ asset('diamond-engagement-rings') }}">Shop Now</a>
                                 </div>
@@ -74,12 +76,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Diamond Rings
-                                </div>
-                                <div class="product-description">
-                                    Choose from our diverse range of diamond bands available in solitaire, multi-stone, shoulder set and halo ring styles for all purposes.
-                                </div>
+                                <a href="{{ asset('/diamonds-rings') }}">
+                                    <div class="product-titles">
+                                        Diamond Rings
+                                    </div>
+                                    <div class="product-description">
+                                        Choose from our diverse range of diamond bands available in solitaire, multi-stone, shoulder set and halo ring styles for all purposes.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
                                         href="{{ asset('/diamonds-rings') }}">Shop Now</a>
@@ -98,12 +102,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Eternity Rings
-                                </div>
-                                <div class="product-description">
-                                    Select eternity rings for your love and elevate your love's beauty with an eternal sparkle. Find your perfect ring in the UK from our collection.
-                                </div>
+                                <a href="{{ asset('/eternity-rings') }}">
+                                    <div class="product-titles">
+                                        Eternity Rings
+                                    </div>
+                                    <div class="product-description">
+                                        Select eternity rings for your love and elevate your love's beauty with an eternal sparkle. Find your perfect ring in the UK from our collection.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
                                         href="{{ asset('/eternity-rings') }}">Shop Now</a>
@@ -122,12 +128,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Wedding Rings
-                                </div>
-                                <div class="product-description">
-                                    Something everlasting and as special as the marriage itself. Shop bespoke wedding rings from our collection.
-                                </div>
+                                <a href="{{ asset('/wedding-rings') }}">
+                                    <div class="product-titles">
+                                        Wedding Rings
+                                    </div>
+                                    <div class="product-description">
+                                        Something everlasting and as special as the marriage itself. Shop bespoke wedding rings from our collection.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small" href="{{ asset('/wedding-rings') }}">Shop
                                         Now</a>
@@ -146,12 +154,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Diamond Jewellery
-                                </div>
-                                <div class="product-description">
-                                    Select your favourite diamond jewellery from a range of GIA certified diamonds for your most special moments.
-                                </div>
+                                <a href="{{ asset('/diamond-jewellery') }}">
+                                    <div class="product-titles">
+                                        Diamond Jewellery
+                                    </div>
+                                    <div class="product-description">
+                                        Select your favourite diamond jewellery from a range of GIA certified diamonds for your most special moments.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small" href="{{ asset('/diamond-jewellery') }}">Shop
                                         Now</a>
@@ -170,12 +180,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Halo Ring
-                                </div>
-                                <div class="product-description">
-                                    A stunning GIA certified diamond - Halo Engagement rings - discovered from our collection. Our collection surely makes your day.
-                                </div>
+                                <a href="{{ asset('/engagement-rings/halo') }}">
+                                    <div class="product-titles">
+                                        Halo Ring
+                                    </div>
+                                    <div class="product-description">
+                                        A stunning GIA certified diamond - Halo Engagement rings - discovered from our collection. Our collection surely makes your day.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
                                         href="{{ asset('/engagement-rings/halo') }}">Shop Now</a>
@@ -194,13 +206,15 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Multi Stone Rings
-                                </div>
-                                <div class="product-description">
-                                    Why stick to classic solitaires when you can have a stunning multi-stone ring in a
-                                    unique arrangement?
-                                </div>
+                                <a href="{{ asset('/engagement-rings/multi-stone') }}">
+                                    <div class="product-titles">
+                                        Multi Stone Rings
+                                    </div>
+                                    <div class="product-description">
+                                        Why stick to classic solitaires when you can have a stunning multi-stone ring in a
+                                        unique arrangement?
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
                                         href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
@@ -219,12 +233,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Shoulder Set Ring
-                                </div>
-                                <div class="product-description">
-                                    Looking for a classic ring for your lover, our shoulder set diamond engagement rings are right ones for you.
-                                </div>
+                                <a href="{{ asset('/engagement-rings/shoulder-set') }}">
+                                    <div class="product-titles">
+                                        Shoulder Set Ring
+                                    </div>
+                                    <div class="product-description">
+                                        Looking for a classic ring for your lover, our shoulder set diamond engagement rings are right ones for you.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
                                         href="{{ asset('/engagement-rings/shoulder-set') }}">Shop Now</a>
@@ -243,12 +259,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Solitaire Ring
-                                </div>
-                                <div class="product-description">
-                                    Find the perfect symbol of everlasting love and sophistication with our stunning assortment of solitaire engagement rings UK.
-                                </div>
+                                <a href="{{ asset('/engagement-rings/solitaire') }}">
+                                    <div class="product-titles">
+                                        Solitaire Ring
+                                    </div>
+                                    <div class="product-description">
+                                        Find the perfect symbol of everlasting love and sophistication with our stunning assortment of solitaire engagement rings UK.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
                                         href="{{ asset('/engagement-rings/solitaire') }}">Shop Now</a>
@@ -267,12 +285,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Men's Wedding ring
-                                </div>
-                                <div class="product-description">
-                                    Check our collection of diamond & plain wedding bands for men and show your love & commitment. Shop our certified mens wedding rings online.
-                                </div>
+                                <a href="{{ asset('/wedding-rings/mens') }}">   
+                                    <div class="product-titles">
+                                        Men's Wedding ring
+                                    </div>
+                                    <div class="product-description">
+                                        Check our collection of diamond & plain wedding bands for men and show your love & commitment. Shop our certified mens wedding rings online.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
                                         href="{{ asset('/wedding-rings/mens') }}">Shop Now</a>
@@ -291,12 +311,14 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <div class="product-titles">
-                                    Women's Wedding Ring
-                                </div>
-                                <div class="product-description">
-                                    Looking for a beautiful diamond wedding ring for your special one, shop a ring from our collection of diamond & plain wedding bands.
-                                </div>
+                                <a href="{{ asset('/wedding-rings/womens') }}">
+                                    <div class="product-titles">
+                                        Women's Wedding Ring
+                                    </div>
+                                    <div class="product-description">
+                                        Looking for a beautiful diamond wedding ring for your special one, shop a ring from our collection of diamond & plain wedding bands.
+                                    </div>
+                                </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
                                         href="{{ asset('/wedding-rings/womens') }}">Shop Now</a>

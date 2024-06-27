@@ -1,9 +1,6 @@
 <!-- Choose Your Diamond Engagement ring from Marlow's  -->
 @php
     $product_data = getFeaturedProducts();
-
-   
-
 @endphp
 @if(count($product_data))
 
@@ -16,6 +13,9 @@
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
                 @foreach($product_data as $key => $product)
+                    <?php 
+                        $getProductListingPrices = getMinimumPriceFunction($product);
+                    ?>
                     {{--@if($product->ProductVariationMinMaxPrice->MaxPrice > 0) --}}
                         <div class="item">
                             <div class="product-info">
@@ -35,14 +35,19 @@
                                         </a>
                                     </div>
                                     <div class="price-section">
-                                        <!-- {{MY_CURRENCY_SYMBOL}}
-                                        {{isset($product->ProductVariationMinMaxPrice->MaxPrice)?$product->ProductVariationMinMaxPrice->MaxPrice:0.00}} -->
-                                            <div style="display: flex;">
-                                                <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
-                                                  <h4><del style="color:#000" class="shopPriceval" id="shopPrice"> £ 1030</del> </h4>
-                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">£ 927 </span></div>
-                                            </div> 
-                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">£ 466</span></span> |  <del id="rrpPrice">RRP: £ 1393</del> </p>
+                                        <?php if(!empty($getProductListingPrices['final_shop_price']) && $getProductListingPrices['final_shop_price'] != 0.0){ ?>
+                                                <div style="display: flex;">
+                                                    <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
+                                                    @if($getProductListingPrices['final_discounted_price'] != $getProductListingPrices['final_shop_price'])
+                                                    <h4><del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_shop_price']),2)}}</del> </h4>
+                                                    @endif
+                                                    
+                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_discounted_price']),2)}} </span></div>
+                                                </div>
+                                                @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_discounted_price'])
+                                                    <p><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_discounted_price']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del> </p>
+                                                @endif
+                                        <?php } ?> 
                                     </div>
                                    <!--  <div class="product-action-btn">
                                         <a class="btn-bg-small" href="{{asset('product/'.$product->slug)}}">Select Options</a>
