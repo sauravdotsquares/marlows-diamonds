@@ -232,7 +232,7 @@
 					</div>
 				</div>
 
-				<div class="finance-available" ng-controller="DekopayController">
+				{{-- <div class="finance-available" ng-controller="DekopayController">
 					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
 						<p>Finance Available
@@ -242,7 +242,7 @@
 					<div class="doko-img">
 						<i class="diamond-icon search-dekopayicon"></i>
 					</div>
-				</div>
+				</div> --}}
 				<div class="policysection">
 					<div class="policy0icon"><i class="diamond-icon search-lifetimewarranty"></i><h6 class="policyheading"><a href="/terms">Lifetime <br> Warranty (T&C)</a> </h6></div>
 					<div class="policy0icon"><i class="diamond-icon search-freedelivery"></i><h6 class="policyheading"><a href="/terms">Free Delivery & <br> Collection </a> </h6></div>

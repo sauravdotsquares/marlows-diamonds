@@ -35,7 +35,7 @@
     <div class="shopfrom-best">
         <div class="container">
             <div class="head-para-three">
-                <h2 class="heading-h-three">Shop from the Best</h2>
+                <h2 class="heading-h-three">Shop from the Best - Search by Category</h2>
             </div>
             <div class="product-item-slider">
                 <div class="owl-carousel owl-theme owlsliderone st-arrows">
@@ -311,9 +311,9 @@
     </div>
     <!-- Shop from the Best end here -->
 
-    <!-- Best Selling Marlow's Diamond Jewellery start here -->
-    @include('front.includes.featuredproduct')
-    <!-- Best Selling Marlow's Diamond Jewellery end here -->
+    <!-- Choose Your Diamond Engagement ring from Marlow's  start here -->
+    @include('front.includes.choosediamond')
+    <!-- Choose Your Diamond Engagement ring from Marlow's end here -->
     
     <!-- whay choose marlows start here -->
     <div class="whychoose-marlows">
@@ -382,6 +382,12 @@
     </div>
     <!-- whay choose marlows end here -->
 
+    <!-- Best Selling Marlow's Diamond Jewellery start here -->
+    @include('front.includes.featuredproduct')
+    <!-- Best Selling Marlow's Diamond Jewellery end here -->
+    <!-- Best Selling Marlow's Diamond Jewellery start here -->
+    @include('front.includes.visit-our-showrooms')
+    <!-- Best Selling Marlow's Diamond Jewellery end here -->
 
     <!-- Marlow's start here -->
     <!-- <div class="marlows-diamond">
@@ -402,18 +408,26 @@
         <div class="container">
             <div class="head-para-three">
                 <h3 class="heading-h-three">
-                    Shop from Marlow’s GIA Certified Diamond Rings
+                    Review By Our Real Customer
                 </h3>
-                <p>Diamond rings are more than just jewellery. We understand the symbolism that they represent. So that they
+                <!--<p>Diamond rings are more than just jewellery. We understand the symbolism that they represent. So that they
                     can withstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality
-                    and longevity.</p>
-                <div class="explore-btn">
+                    and longevity.</p>-->
+                <!--<div class="explore-btn">
                     <a class="btn-bg-small" href="/diamonds-rings">Explore Diamond Rings</a>
-                </div>
+                </div>-->
             </div>
-            <div class="rating-img">
+           <!-- <div class="rating-img">
                <i class="diamond-icon search-starviews"></i>
-            </div>
+            </div>-->
+
+            <div class="product-rating">
+<div class="rating-review"><h5>1000+</h5><span><img src="/assets/images/one-star.png" alt=""> </span></div>
+    <div class="start-standing">
+        <div class="start-position"><span><img src="/assets/images/five-star.png" alt=""> </span></div>
+        <h4>Outstanding  <span>(5 out of 5)</span></h4>
+    </div>
+</div>
 
             <div class="rating-review-block">
                 <div class="owl-carousel owl-theme slider-review">

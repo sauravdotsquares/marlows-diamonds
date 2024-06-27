@@ -3,7 +3,7 @@ $getInstaData = getInstagramDataDetails();
 ?>
 @if(count($getInstaData) > 0)
 <div class="share-moment">
-    <div class="share-moment-heading"><div class="heading-h-two">Share your special moments with us<br> #marlowsengagements</div></div>
+    <div class="share-moment-heading"><div class="heading-h-two">Share your special moments with us<br><span> #marlowsengagements</span></div></div>
     <div class="insta-photo-list">
         <div class="owl-carousel owl-theme photo-slider">
             @foreach($getInstaData as $key => $insta)

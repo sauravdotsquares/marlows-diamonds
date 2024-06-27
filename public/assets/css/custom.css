@@ -27,7 +27,7 @@ img{max-width:100%}
 h1,h2,h3,h4,h5,h6,.heading-h-one,.heading-h-two,.heading-h-three,.heading-h-four{font-family:'Playfair Display';margin:0 0 15px;font-weight:400}
 h1,.heading-h-one{font-size:50px;line-height:1.2;color:#2b2b2b;font-weight:400;letter-spacing:2px}
 h2,.heading-h-two{font-size:40px;line-height:1.2;color:#2b2b2b}
-h3,.heading-h-three{font-size:30px;line-height:1.2;color:#2b2b2b}
+h3,.heading-h-three{font-size:30px;line-height:1.2;color:#2b2b2b; font-weight: 500;}
 button,input,textarea,select{font-family:"Lato"}
 ul{padding:0;margin:0}
 button:focus,input:focus, button, button:focus-within, a:focus, a:focus-within{box-shadow:none;outline:none !important}
@@ -284,7 +284,7 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 .banner-ryt-col{flex:0 0 54%;-ms-flex:0 0 54%;max-width:54%;text-align:center;background:#fdfdfd}
 .main-banner-col{width:100%;padding:0 15px}
 .main-banner-left-text{max-width:560px;margin:auto;padding:20px 20px}
-.main-banner-left-text p{font-size:20px;color:#2b2b2b;line-height:1.9;margin:0 0 15px 0}
+.main-banner-left-text p{font-size:20px;color:#2b2b2b;line-height:26px;margin:0 0 15px 0}
 .main-banner-ryt-img img{max-width:340px;margin:auto}
 .main-banner-ryt-img{padding:16px 20px}
 /** Home banner  end here**/
@@ -316,7 +316,7 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 
 
 /** Why choose Start **/
-.head-para-three p{font-size:15px;color:#2b2b2b;line-height:1.6;margin:0;}
+.head-para-three p{font-size:15px;color:#2b2b2b;line-height:1.6;margin:0; font-weight: 500 !important}
 .head-para-three p.second-para{padding-bottom: 25px}
 .head-para-three video#video{width: 80%; object-fit: inherit;}
 .whychoose-marlows{/*background:#fafbfd;*/padding:30px 0 50px 0; }
@@ -324,23 +324,36 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 .whychoose-wraper .rating-img i.diamond-icon.search-starviews {background-position: -148px 4px;/*width: 152px;height: 81px;*/ width:249px;height: 70px;}
 .shopfrom-block .rating-img i.diamond-icon.search-starviews {background-position: -148px 4px;width: 249px;height: 70px;}
 .whychoose-col{padding:0 6px;flex:0 0 25%;-ms-flex:0 0 25%;max-width:25%;width:100%;text-align:center}
-.whychoose-col-inner{border:1px dashed #979797;padding:30px 30px 30px 30px;height:100%;     background: #fff}
+.whychoose-col-inner{border:1px dashed #979797;padding:20px 30px 20px 30px;height:100%;     background: #fff}
 .whychoose-col-inner:hover .whychoose-col-img{transform:translateY(-8px)}
 .whychoose-col-inner .whychoose-col-img i.diamond-icon.search-lifetime {background-position: -505px -116px;width: 69px;height: 69px;}
 .whychoose-col-inner .whychoose-col-img i.diamond-icon.search-giacertified {background-position: -505px -189px;width: 69px;height: 69px;}
 .whychoose-col-inner .whychoose-col-img i.diamond-icon.search-experienced {background-position:-505px -267px;width: 69px;height: 69px;}
 .whychoose-col-inner .whychoose-col-img i.diamond-icon.search-terms-conditions {background-position: -421px -116px;width: 69px;height: 69px;}
-.whychoose-rows{margin:0 -6px}
+.whychoose-rows{margin:40px -6px 0}
 .whychoose-col-text{font-size:18px;font-family:"Playfair Display";color:#2b2b2b;line-height:1.2;margin:5px 0 0 0}
+.whychoose-wraper .rating-img {display: none;}
+.product-rating {width: auto;margin: auto;display: flex;justify-content: center;align-items: center;}
+.product-rating .rating-review {width: 104px;height: 104px;background: #fff;border-radius: 50%;display: flex;align-items: center;justify-content: center;}
+.product-rating .rating-review h5 {margin: 6px 4px 0 0px;font-family: 'Lato';font-weight: 900;font-size: 18px;color: #000;}
+.product-rating .start-standing {margin: 0 0 0 20px;}
+.product-rating .start-standing h4 {margin: 10px 0 0;font-size: 16px;color: #8E2E65;font-weight: bold;font-family: 'Lato';}
+.product-rating .start-standing h4 span{ font-weight:normal; }
 
 /** Marlows Diamond Start **/
 .marlows-diamond{background-image:url(../images/marlowdiamond-bg.webp);background-repeat:no-repeat;background-position:center;background-size:cover;background-attachment:fixed;text-align:center;padding:200px 0}
 .marlows-diamond-title{color:#fff}
 /** Marlows Diamond End **/
 .best-selling-marlows{padding:40px 0 50px 0; background: #fafbfd;}
+.best-selling-marlows .head-para-three p {font-weight: 500;margin: 10px 0;}
 .best-selling-marlows .product-info {background: #fff;}
-
-.product-titles-small a{font-family:Playfair Display;color:#444;font-size:16px;white-space:wrap;text-overflow:ellipsis;display:block;text-decoration:none}
+.best-selling-marlows .product-info .price-section div {justify-content: center;display: flex; margin: 3px 0;}
+.best-selling-marlows .product-info .price-section div h4 {font-size: 18px; font-family: 'Lato'; font-weight: bold; margin: 0 8px 0 0px; color: #C5C5C5;}
+.best-selling-marlows .product-info .price-section div .product-finder-price span.price {font-size:18px; font-family: 'Lato';font-weight: bold; margin-top: -7px;}
+.best-selling-marlows .product-info .price-section p.save_price {font-weight: bold;}
+.best-selling-marlows .product-info .price-section p.save_price span {font-size: 16px;}
+.best-selling-marlows .product-info .price-section p.save_price del#rrpPrice {color: #000;font-size: 16px;}
+.product-titles-small a{font-family:Playfair Display;color:#444;font-size:16px;white-space:wrap;text-overflow:ellipsis;display:block;text-decoration:none; font-weight: bold;}
 .product-price{color:#444;font-size:17px;margin:9px 0 20px 0; }
 .explore-btn{margin:26px 0 0 0}
 .shopfrom-block{padding:60px 0 40px 0; background: #fafbfd; margin-bottom: 50px;}
@@ -362,6 +375,7 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 .rating-review-block .owl-theme .owl-nav .owl-prev:hover{margin-left:-5px}
 .rating-review-block .owl-theme .owl-nav .owl-next:hover{margin-right:-5px}
 .rating-review-block .owl-theme .owl-nav .owl-next{background-image:url(../images/next-ar.png);right:-55px}
+.rating-review-block .owl-dots {display: none;}
 
 .reviews-cont .reviewr-star i.diamond-icon.search-reviewssection {background-position: 0px -322px;width:115px;height: 22PX;}
 
@@ -375,6 +389,8 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 .leftright-img-text-wraper:nth-child(2) {margin-bottom: 80px;}
 .leftright-img img{width:100%}
 .leftright-heading.heading-h-three{font-size:35px}
+.leftright-img-text .leftright-img-text-wraper .leftright-imt-col {overflow: hidden;}
+.leftright-img-text .leftright-img-text-wraper .leftright-imt-col {overflow: hidden;}
 .perfect-ring-guidepartner span a {color: #8e2e65;text-decoration: none;font-weight: bold;}
 .perfect-ring-guidepartner .leftright-imt-col.leftright-img {height: 420px;overflow: hidden;}
 .perfect-ring-guidepartner .leftright-imt-col.leftright-img img {height: 100%;object-fit: cover;}
@@ -728,6 +744,20 @@ label.label {display: block;margin: 0 0 5px 0;}
 .visit-map {margin: 0 0 10px 0;}
 .visit-form form .action-submit button:hover {box-shadow: 5px 5px 0 rgba(0,0,0,0.8);background: #fff;color: #000;}
 .visit-form form .form-controls .error {color: #ff9f95 !important;}
+
+.visit-showrooms-content {margin-bottom: 60px;}
+.visit-showrooms-image {margin: 30px 0 40px;}
+.visit-our-showrooms .heading-h-three {text-align: center;}
+.visit-our-showrooms ul.nav-tabs {justify-content: center;border: none;}
+.visit-our-showrooms ul.nav-tabs li.nav-item .nav-link {border: 1px solid #8e2e65;border-radius: 0;color: #000;margin: 0 7px;}
+.visit-our-showrooms ul.nav-tabs li.nav-item .nav-link.active {background: #8e2e65;color: #fff;border-radius: 0;}
+.visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail {background:#fbfcfd;box-shadow:1px 0px 8px 2px #efefef;height:100%;border-radius: 8px;padding: 46px 15px;text-align: center;}
+.visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail .visit-icon {width: 67px;height: 67px;background: #fff;margin: auto;border-radius: 50px;
+display: flex;align-items: center;justify-content: center;box-shadow: 0px 3px 4px 0px #dfdede;}
+.visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail h3 {font-size: 22px;color: #8E2E65;font-weight: 700;margin:15px 0 15px;}
+.visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail p {font-size: 16px;font-weight: 700;color: #000;}
+.visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail a {color: #000;font-size: 16px;font-weight: 700;}
+.visit-showrooms-content .explore-btn {text-align: center;}
 
 #requestAppointment .modal-dialog {
     top: 50%;
@@ -1731,23 +1761,6 @@ transition: all 200ms ease-in;
     padding: 10px 24px;
 }
 
-@media(max-width:767px){
-.location-container {
-    display: block;
-}
-.location-left-section {
-    width: 100%;
-    padding: 20px;
-}
-.location-right-section {
-    width: 100%;
-}
-.location-header {
-    font-size: 22px;
-}
-
-}
-
 .post-bar .post-bar-center a {
     padding: 13px;
     color: #fff;
@@ -2035,6 +2048,8 @@ left:81px;background-size: 26px;bottom: -7px;} */
 
 span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 
+
+
 /*popup css*/
 .modal-open .modal.stripe-modal-class .modal-dialog{ max-width:90%; }
 .modal-open .modal.stripe-modal-class .modal-dialog form#payment-form .form-row.row {margin-bottom: 0;}
@@ -2121,6 +2136,9 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .product-items-item-name a.title-list-heading{ min-height:auto; }
 .product-items-item-details .list_product_title{    min-height:auto;}
 .ring-pr-desc{display:inherit; -webkit-box-orient: inherit;}
+/*rating sec css*/
+.product-rating .start-standing h4{ font-size:15px }
+/*rating sec css end*/
 }
 
 
