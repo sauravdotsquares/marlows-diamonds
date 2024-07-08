@@ -344,7 +344,7 @@
                 <div class="head-para-three">
                     <div class="heading-h-three">
                         Why Choose Marlow’s Diamonds?
-                        <p style="font-weight: 800;line-height: 2;">Because we are specialists in affordable luxury-the one stop jewellery superstore</p>
+                        <p style="line-height: 2;">Because we are specialists in affordable luxury-the one stop jewellery superstore</p>
                     </div>
                     <p>For over three generations, we’ve been helping countless happy couples express love and commitment and we believe in quality and commitment as much as you do..</p>
                     <p class="second-para">Our diamonds and gemstones are better valued than any like-for-like comparison with any other UK jeweller. Our fancy shape diamonds like ovals, marquises, emeralds cuts, and cushion shapes are polished to the highest standards. We guarantee most of our diamonds visually appear larger than their carat weight. Our polishers create each diamond to maximize its proportions and not its carat weight, hence our 1ct will look like anyone else's 1.25ct. Come into any of our stores to learn more about the way we choose our rough diamonds so that the polished end product gets the best yield to maximise visual sparkle and appearance. This ensures you get the best visual appearance and sparkle for your budget. As we cannot be beaten on price, if you have seen something elsewhere, just send us a link and we will beat the price if cost is your deciding factor.</p>
