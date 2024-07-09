@@ -447,12 +447,12 @@
                                     <div class="price-section">
                                         <div style="display: flex;">
                                             <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
-                                            <h4>
+                                            <!-- <h4>
                                             <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->mined_diamond_rrp),2)}}</del> 
-                                            </h4>
+                                            </h4> -->
                                             <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->mined_diamond),2)}} </span></div>
                                         </div>
-                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp - $product->mined_diamond}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp}}</del> </p>
+                                            <!-- <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp - $product->mined_diamond}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp}}</del> </p> -->
                                     </div>
                                 <?php } ?>
                             </div>
