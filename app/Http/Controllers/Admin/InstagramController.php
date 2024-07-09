@@ -138,7 +138,7 @@ class InstagramController extends Controller
         
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://graph.instagram.com/me/media?fields=id%2Ccaption%2Cmedia_type%2Cmedia_url%2Cpermalink%2Cthumbnail_url%2Ctimestamp%2Cusername&access_token=IGQWRQNDg3UHdIYjAydWlmZAkpQZAE1xSzZAiYWtHSnZAfV2hPczNaMUltZAVJKdUh1T3dyVGdDNTdKd0dDY011eWJVNUFWbjVwSlZASQUx3Ymx2VmRXaE9WdVFxMjBxSWRmbjNuaEZAkeVBMRlJWZAwZDZD&limit=50',
+            CURLOPT_URL => 'https://graph.instagram.com/me/media?fields=id%2Ccaption%2Cmedia_type%2Cmedia_url%2Cpermalink%2Cthumbnail_url%2Ctimestamp%2Cusername&access_token=IGQWRNMkJ2dXEzWlVFWmtVbEpBWGFGRk43Nml3TVJlMVJlZA2ZAIVkJIQ1E0aldtVUJyWjhqbkZAxUS1sdjhYVlBBdTFUSnVLaDEzaUkyZAUd1THcwQV9hNkZAtenVGUXFsYXEtYk93NDgxMEVtUQZDZD&limit=50',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
