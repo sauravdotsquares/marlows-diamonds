@@ -749,7 +749,7 @@ label.label {display: block;margin: 0 0 5px 0;}
 .visit-showrooms-image {margin: 30px 0 40px;}
 .visit-our-showrooms .heading-h-three {text-align: center;}
 .visit-our-showrooms ul.nav-tabs {justify-content: center;border: none;}
-.visit-our-showrooms ul.nav-tabs li.nav-item .nav-link {border: 1px solid #8e2e65;border-radius: 0;color: #000;margin: 0 7px;}
+.visit-our-showrooms ul.nav-tabs li.nav-item .nav-link {border: 1px solid #8e2e65;border-radius: 0;color: #8E2E65;margin: 0 7px;font-size: 20px;font-weight: 700;line-height: 24px;}
 .visit-our-showrooms ul.nav-tabs li.nav-item .nav-link.active {background: #8e2e65;color: #fff;border-radius: 0;}
 .visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail {background:#fbfcfd;box-shadow:1px 0px 8px 2px #efefef;height:100%;border-radius: 8px;padding: 46px 15px;text-align: center;}
 .visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail .visit-icon {width: 67px;height: 67px;background: #fff;margin: auto;border-radius: 50px;
