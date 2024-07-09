@@ -481,6 +481,10 @@ display: inline-block;right: 0;position: absolute;}
 	.engagement-ring-img .engagement-ring-img-content h2 {font-size: 36px;line-height: 42px;}
 	
 	.category-sidebar-wrap a#resetFilterButton { display: none;}
+
+
+.visit-showrooms-image img.img-fluid{ height: 280px;}
+
 /*product list css*/
 .related-products-list .product-grid-items-item .product-items-item-image {height: 160px;}
 /*product list css end*/
@@ -560,8 +564,8 @@ display: block; border: 1px solid #ccc;}
 
 .owl-theme.st-arrows .owl-nav .owl-prev:after {content: '';background-image: url(../images/left-arrow.png);background-size: 47%;width: 20px;height: 20px;position: absolute;left: 32%;
 top: 46%;transform: translate(-50%, -50%) rotate(180deg);background-repeat: no-repeat;}
-.owl-theme.st-arrows .owl-nav .owl-next:after{content: '';background-image: url(../images/left-arrow.png);background-size: 47%;width: 20px;height: 20px;position: absolute;left: 72%;top: 56%;
-transform: translate(-50%, -50%);background-repeat: no-repeat;}
+/*.owl-theme.st-arrows .owl-nav .owl-next:after{content: '';background-image: url(../images/left-arrow.png);background-size: 47%;width: 20px;height: 20px;position: absolute;left: 72%;top: 56%;
+transform: translate(-50%, -50%);background-repeat: no-repeat;}*/
 .owl-theme.st-arrows .owl-nav [class*="owl-"] span{ font-size:0 }
 
 
@@ -591,6 +595,7 @@ transform: translate(-50%, -50%);background-repeat: no-repeat;}
 .shopfrom-best .product-item-slider .owl-nav button.owl-next {left: 0; right: 0; position: relative; transform: none;}
 .shopfrom-best .product-item-slider .owl-nav button span {font-size: 0 !important;}
 
+.product-item-slider .owl-carousel.owlsliderone .owl-item .item .product-image{ width:100%; }
 .product-titles{font-size:18px; font-weight: bold;}
 .product-description {color: #2b2b2b;font-size: 13px;line-height: 17px; margin: 15px 0 15px 0;}
 .product-item-slider .owl-carousel .owl-item .item .product-info .product-action-btn {position: absolute;bottom: 14px; display: none;}
@@ -636,15 +641,15 @@ a.btn-bg-small.expdia{ font-size:13px }
 /*morley best selling css end*/
 
 /*shop diamond css*/
+.rating-review-block .owl-carousel {padding: 0 10px;}
 .shopfrom-block {padding: 45px 0 0px 0;background: #fbfaff;margin-bottom: 50px;}
 .shopfrom-block .reviews-cont {padding: 15px 15px;border: 1px solid #f0f0f0;height: 100%;position: relative; background: #fff;}
-.shopfrom-block .rating-review-block .owl-carousel .owl-nav button {border: 2px solid rgba(255, 255, 255, 0.5);width: 33px;height: 33px;background: #8e2e65;color: #fff;opacity: 1;text-align: center;}
+.shopfrom-block .rating-review-block .owl-carousel .owl-nav button {border: 2px solid rgba(255, 255, 255, 0.5);width: 33px;height: 33px;background: #8e2e65;color: #fff;opacity: 1;text-align: center;
+transform: none;}
 .shopfrom-block .rating-review-block .owl-carousel .owl-nav button:after {content: '';background-image: url(../images/left-arrow.png);background-size: 47%;width: 20px;
 height: 20px;position: absolute;left: 32%;top: 46%;transform: translate(-50%, -50%) rotate(180deg);background-repeat: no-repeat;}
 .shopfrom-block .rating-review-block .owl-carousel .owl-nav button.owl-next:after {transform: rotate(0deg);left: 40%;top: 23%;}
-.shopfrom-block .reviews-cont .reviewr-name {color: #8e2e65;font-family: 'Playfair Display';font-size: 16px;}
-.shopfrom-block .reviews-cont .reviewr-review-text .less-contents {color: #000;}
-.rating-review-block .reviews-cont .reviewr-review-text a.show-more{color: #8e2e65; margin: 8px 0;}
+.shopfrom-block .reviews-cont .reviewr-name {font-size: 16px;}
 /*shop diamond css end*/
 
 
@@ -672,10 +677,11 @@ height: 20px;position: absolute;left: 32%;top: 46%;transform: translate(-50%, -5
 /*location css end*/
 
 /** visit us page**/
-.visit-our-showrooms ul.nav-tabs li.nav-item .nav-link{margin: 0 3px;}
+.visit-our-showrooms ul.nav-tabs li.nav-item .nav-link{margin: 0 3px; width: 42vw; padding: 14px 7px; font-size: 13px; }
 .visit-showrooms-image {margin: 30px 0 25px;}
 .visit-showrooms-image img {height: 290px;object-fit: cover;}
 .visit-showrooms-content {margin-bottom: 60px;background: #fafbfd;padding-bottom: 30px;}
+.visit-showrooms-content .visit-showrooms-contact .col-md-4{width: 100%;}
 .visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail{ background:none; box-shadow:none; height:auto; margin-bottom:30px; padding:0 15px; }
 .visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail .visit-icon {width: 55px;height: 55px;}
 .visit-showrooms-content .visit-showrooms-contact .visit-showrooms-detail .visit-icon img {width: 23px;}
@@ -767,6 +773,7 @@ div#trustpilot-gtm-floating-wrapper {display: none !important;}
 
 .checkout-order-table table tr td { padding: 13px 10px;}
 .checkout-order-table table tr td .plancare-section {padding: 10px 8px 15px;}
+.visit-showrooms-image img.img-fluid {height: auto;margin: 0 0 30px;}
 	}
 	
 	

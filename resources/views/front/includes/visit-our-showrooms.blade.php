@@ -16,8 +16,11 @@
 	    <div class="tab-pane fade show active" id="birmingham" role="tabpanel" aria-labelledby="birmingham-tab">
 	    	<div class="visit-showrooms-image">
 	      <div class="row">
-	        <div class="col-md-12">
-	          <img src="/assets/images/visit-store-img.png" class="img-fluid" alt="Birmingham Store Image">
+	        <div class="col-md-6">
+	          <img src="/assets/images/visit-store-birmingham.jpg" class="img-fluid" alt="Birmingham Store Image">
+	        </div>
+	        <div class="col-md-6">
+	          <img src="/assets/images/visit-store-birmingham-store.jpg" class="img-fluid" alt="Birmingham Store Image">
 	        </div>
 	      </div>
 	    </div>
@@ -57,8 +60,11 @@
 	    <div class="tab-pane fade" id="london" role="tabpanel" aria-labelledby="london-tab">
 	    	<div class="visit-showrooms-image">
 	      <div class="row mt-4">
-	        <div class="col-md-12">
-	          <img src="/assets/images/visit-store-img.png" class="img-fluid" alt="London Store Image">
+	        <div class="col-md-6">
+	          <img src="/assets/images/visit-store-img.png" class="img-fluid" alt="Birmingham Store Image">
+	        </div>
+	        <div class="col-md-6">
+	          <img src="/assets/images/visit-store-img-inner.jpg" class="img-fluid" alt="Birmingham Store Image">
 	        </div>
 	      </div>
 	    </div>
