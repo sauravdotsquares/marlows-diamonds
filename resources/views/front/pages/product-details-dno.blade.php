@@ -1119,4 +1119,51 @@
 	    });
 	</script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
+
+
+	<!-- Product Schema code start -->
+
+<?php 
+$schemaProImages = []; // Initialize an empty array
+foreach ($prodImages as $key => $images) {
+    $proimgURL = env('APP_IMAGE_URL') . '/storage/' . $images->image_url;
+    $schemaProImages[] = ['proimgURL' => $proimgURL];
+}
+// Extract proimgURL values into a simple array
+$ImgurlArray = array_column($schemaProImages, 'proimgURL');
+$ImagesURLS =  implode(', ', $ImgurlArray);
+$getFinalPrice = getMinimumPriceFunction($data);
+
+?>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/", 
+  "@type": "Product", 
+  "name": "{{isset($data->title)?$data->title:''}}",
+  "image": "{{ $ImagesURLS }}",
+  "url": "{{url()->full()}}",
+  "description":  "{{ isset($data->description) ? strip_tags($data->description) : '' }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "Marlow's Diamonds"
+  },
+  "sku": "{{ base64_encode($data->id) }}",
+  "offers": {
+    "@type": "Offer",
+    "url": "{{url()->full()}}",
+    "priceCurrency": "GBP",
+    "price": "{{isset($getFinalPrice['final_discounted_price'])?$getFinalPrice['final_discounted_price']:''}}",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "2626"
+  }
+}
+</script>
+	<!-- Product Schema code end -->
 @endsection

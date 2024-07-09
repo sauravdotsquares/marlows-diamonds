@@ -195,7 +195,7 @@
 </script>
 <script>
     $(window).scroll(function(){
-        if ($(this).scrollTop() >= 50) {
+        if ($(this).scrollTop() >= 10) {
            $('.header-main').addClass('sticky-header');
             $('.botto-to-top').fadeIn(200);    // Fade in the arrow
             if ($(window).width() < 767){
