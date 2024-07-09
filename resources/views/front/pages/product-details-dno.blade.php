@@ -681,8 +681,9 @@
 				if(getDiamondType == 'lab_grown'){
 					$("#metal-type option[value=' Silver ']").show();
 				}else if(getDiamondType == 'mined_diamond'){
+				    $selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}';
 					$("#metal-type option[value=' Silver ']").hide();
-					$("#metal-type option[value=' 9ct White Gold ']").prop('selected', true);
+					$("#metal-type option[value=' "+$selectedMetalTypes+" ']").prop('selected', true);
 					getCustomPriceFinalFunction();
 				}
 			});
@@ -819,8 +820,9 @@
                 success: function (res) {
 					$('#filterDataDesign .type-variations-row').html(res);
 					if(diamondSelectedType == "mined_diamond"){
+					    $selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}';
 						$("#metal-type option[value=' Silver ']").hide();
-						$("#metal-type option[value=' 9ct White Gold ']").prop('selected', true);
+						$("#metal-type option[value=' "+$selectedMetalTypes+" ']").prop('selected', true);
 					}else{
 						$("#metal-type option[value=' Silver ']").show();
 					}
