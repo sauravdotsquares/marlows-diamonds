@@ -1494,6 +1494,13 @@ if (!function_exists('validate_breadcrumb')) {
                             $productSingleArray[$keyi]['lab_grown'] =  $productVariations['lab_grown'];
                             $productSingleArray[$keyi]['discounted_lab_grown'] =  getFlatDiscountRanges(["shop_price"=>$productVariations['lab_grown']],$product['product_parent_category'],'lab_grown');
                             $productSingleArray[$keyi][$productMetalData['key']] =  $productMetalData['value'];
+                        }else{
+                            $productSingleArray[$keyi]['mined_diamond_rrp'] =  $productVariations['mined_diamond_rrp'];
+                            $productSingleArray[$keyi]['mined_diamond'] =  $productVariations['mined_diamond'];
+                            $productSingleArray[$keyi]['lab_grown_rrp'] =  $productVariations['lab_grown_rrp'];
+                            $productSingleArray[$keyi]['lab_grown'] =  $productVariations['lab_grown'];
+                            $productSingleArray[$keyi]['discounted_lab_grown'] =  getFlatDiscountRanges(["shop_price"=>$productVariations['lab_grown']],$product['product_parent_category'],'lab_grown');
+                            $productSingleArray[$keyi][$productMetalData['key']] =  $productMetalData['value'];
                         }
                     }
                 }
