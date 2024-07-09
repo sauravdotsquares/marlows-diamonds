@@ -2044,12 +2044,13 @@ if (!function_exists("getImageOptimizeDetails")) {
             $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
         } else {
             // Image manipulation
-            $img = Image::make(env('APP_IMAGE_URL').$imageUrl)->resize($width, $height);
-            $tempPath = public_path('tempfolderpath');
-            $tempFile = $tempPath . '/' . $path_parts['basename'];
-            $img->save($tempFile);
+            // $img = Image::make(env('APP_IMAGE_URL').$imageUrl)->resize($width, $height);
+            // $tempPath = public_path('tempfolderpath');
+            // $tempFile = $tempPath . '/' . $path_parts['basename'];
+            // $img->save($tempFile);
             // Pass the image URL to the view
-            $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
+            // $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
+            $imageUrl = env('APP_IMAGE_URL').$imageUrl;
         }
         return $imageUrl;
     }
