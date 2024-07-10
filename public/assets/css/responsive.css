@@ -592,11 +592,12 @@ transform: translate(-50%, -50%);background-repeat: no-repeat;}*/
 .product-item-slider .owl-carousel .owl-item .item .product-info {background: #fafbfd;padding: 15px 15px; border: 1px solid #f0f0f0; height: 100%; position: relative;}
 .shopfrom-best .product-item-slider .owl-nav {position: absolute;top: -42px;right:0px;}
 .shopfrom-best .product-item-slider .owl-nav button.owl-prev {right: 0; left: -8px; position: relative; transform: none;}
-.shopfrom-best .product-item-slider .owl-nav button.owl-next {left: 0; right: 0; position: relative; transform: none;}
+.shopfrom-best .product-item-slider .owl-nav button.owl-next {left: 0; right: 0; position: relative;}
 .shopfrom-best .product-item-slider .owl-nav button span {font-size: 0 !important;}
 
 .product-item-slider .owl-carousel.owlsliderone .owl-item .item .product-image{ width:100%; }
 .product-titles{font-size:18px; font-weight: bold;}
+.product-item-slider .owl-carousel.owlsliderone .owl-item .item .product-image img{height:auto;}
 .product-description {color: #2b2b2b;font-size: 13px;line-height: 17px; margin: 15px 0 15px 0;}
 .product-item-slider .owl-carousel .owl-item .item .product-info .product-action-btn {position: absolute;bottom: 14px; display: none;}
 a.btn-bg-small.expdia{ font-size:13px }
@@ -644,8 +645,7 @@ a.btn-bg-small.expdia{ font-size:13px }
 .rating-review-block .owl-carousel {padding: 0 10px;}
 .shopfrom-block {padding: 45px 0 0px 0;background: #fbfaff;margin-bottom: 50px;}
 .shopfrom-block .reviews-cont {padding: 15px 15px;border: 1px solid #f0f0f0;height: 100%;position: relative; background: #fff;}
-.shopfrom-block .rating-review-block .owl-carousel .owl-nav button {border: 2px solid rgba(255, 255, 255, 0.5);width: 33px;height: 33px;background: #8e2e65;color: #fff;opacity: 1;text-align: center;
-transform: none;}
+.shopfrom-block .rating-review-block .owl-carousel .owl-nav button {border: 2px solid rgba(255, 255, 255, 0.5);width: 33px;height: 33px;color: #fff;opacity: 1;text-align: center;}
 .shopfrom-block .rating-review-block .owl-carousel .owl-nav button:after {content: '';background-image: url(../images/left-arrow.png);background-size: 47%;width: 20px;
 height: 20px;position: absolute;left: 32%;top: 46%;transform: translate(-50%, -50%) rotate(180deg);background-repeat: no-repeat;}
 .shopfrom-block .rating-review-block .owl-carousel .owl-nav button.owl-next:after {transform: rotate(0deg);left: 40%;top: 23%;}
