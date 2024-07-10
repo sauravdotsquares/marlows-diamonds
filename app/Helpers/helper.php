@@ -2269,4 +2269,17 @@ if (!function_exists("getAllCategoryProducts")) {
         return collect($getAllCategoryProducts);
     }
 }
-    
+
+if (!function_exists("getEngagmentRingsLabPriceAdded")) {
+    function getEngagmentRingsLabPriceAdded($productDetails)
+    {
+        $productCategory = explode(',',$productDetails->categories);
+        $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->first();
+        $newLabPrice = $newPrice->price;
+        $productDetails->lab_grown_rrp = $productDetails->lab_grown_rrp + $newLabPrice;
+        $productDetails->lab_grown = $productDetails->lab_grown + $newLabPrice;
+        $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->lab_grown), $productCategory,'lab_grown');
+        $productDetails->discounted_lab_grown = $final_discounted_price;
+        return $productDetails;
+    }
+}
