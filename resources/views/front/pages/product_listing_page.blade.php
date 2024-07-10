@@ -191,8 +191,8 @@
                                 <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
                                 <option value="asc">A to Z</option>
                                 <option value="desc">Z to A</option>
-                                <option value="price-min">Low to High</option>
-                                <option value="price-max">High to Low</option>
+                                <option value="price-min">Price: Low to High</option>
+                                <option value="price-max">Price: High to Low</option>
                               </select>
 
                             </div>
@@ -344,8 +344,8 @@
                                 <option value="" selected>Sort by <i class="fa fa-filter"></i></option>
                                 <option value="asc">A to Z</option>
                                 <option value="desc">Z to A</option>
-                                <option value="price-min">Low to High</option>
-                                <option value="price-max">High to Low</option>
+                                <option value="price-min">Price: Low to High</option>
+                                <option value="price-max">Price: High to Low</option>
                               </select>
 
                             </div>

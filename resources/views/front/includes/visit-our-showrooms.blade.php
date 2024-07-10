@@ -102,7 +102,7 @@
 	    </div>
 	    </div>
 <div class="explore-btn">
-                    <a class="btn-bg-small" href="/diamonds-rings">BOOK APPOINTMENT</a>
+                    <a class="btn-bg-small" href="{{ route('contact') }}">BOOK APPOINTMENT</a>
                 </div>
 
 
