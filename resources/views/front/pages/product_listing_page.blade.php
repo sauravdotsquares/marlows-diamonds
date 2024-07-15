@@ -18,8 +18,11 @@
 
 @endsection
 
-
-<div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
+@if(isset($categoryData->image_url) && !empty($categoryData->image_url))
+    <div class="category-banner" style="background-image:url('{{env('APP_IMAGE_URL').'/storage/'.$categoryData->image_url}}')">
+@else
+    <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
+@endif 
     <div class="container">
         <div class="category-banner-text">
             <h1>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h1>
