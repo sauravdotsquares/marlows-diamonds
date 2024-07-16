@@ -125,6 +125,7 @@
 								<option value="1.00-1.19" selected>1.00-1.19</option>
 								<option value="1.50-1.69">1.50-1.69</option>
 								<option value="2.00-2.49">2.00-2.49</option>
+								<option value="2.50-2.99">2.50-2.99</option>
 								<option value="3.00-3.99">3.00-3.99</option>
 							</select>
 						</div>
