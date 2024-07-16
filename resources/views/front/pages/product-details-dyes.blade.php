@@ -608,7 +608,7 @@
 
 
 <!-- Modal -->
-@include('front.includes.dekopay-finance-options')
+{{-- @include('front.includes.dekopay-finance-options') --}}
 
 
 
@@ -1150,8 +1150,10 @@
 <?php 
 $schemaProImages = []; // Initialize an empty array
 foreach ($prodImages as $key => $images) {
-    $proimgURL = env('APP_IMAGE_URL') . '/storage/' . $images->image_url;
-    $schemaProImages[] = ['proimgURL' => $proimgURL];
+	if($key == 0){
+		$proimgURL = env('APP_IMAGE_URL') . '/storage/' . $images->image_url;
+		$schemaProImages[] = ['proimgURL' => $proimgURL];
+	}
 }
 // Extract proimgURL values into a simple array
 $ImgurlArray = array_column($schemaProImages, 'proimgURL');

@@ -4,6 +4,12 @@
 	<?php 
 		// $getProductListingPrices = getMinimumPriceFunction($product);
 	?>
+	<?php 
+		$productCategory = explode(",",$product->categories);
+		if(in_array(8,$productCategory) && !in_array(18,$productCategory) ){
+			$product = getEngagmentRingsLabPriceAdded($product);
+		}
+	?>
 	<div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
 
 		<div class="product-items-item-info">
@@ -73,15 +79,25 @@
                                         <div style="display: flex;">
                                             <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
                                             
-                                            <h4>
-                                     <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown_rrp),2)}}</del> 
-                                            </h4>
-                                            
-                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}} </span></div>
+											@if(isset($product->discounted_lab_grown['discounted_price']) && !empty($product->discounted_lab_grown['discounted_price']))
+                                                <h4>
+                                                    <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}}</del> 
+                                                </h4>
+
+                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->discounted_lab_grown['discounted_price']),2)}} </span></div>
+                                            @else
+                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}} </span></div>
+                                            @endif
                                         </div>
                                             <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->lab_grown_rrp - $product->lab_grown}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->lab_grown_rrp}}</del> </p>
                                     </div>
-					<?php } ?> 
+					<?php }else if(!empty($product->mined_diamond_rrp) && $product->mined_diamond_rrp != 0.0){ ?>
+							<div class="price-section">
+								<div style="display: flex;">
+									<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->mined_diamond),2)}} </span></div>
+								</div>
+							</div>
+					<?php } ?>
 				</div>
 			</div>
 		</div>

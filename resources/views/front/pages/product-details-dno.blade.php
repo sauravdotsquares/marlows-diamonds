@@ -521,7 +521,7 @@
 </div>
 
 <!-- Modal -->
-@include('front.includes.dekopay-finance-options')
+{{-- @include('front.includes.dekopay-finance-options') --}}
 <?php
     if($plainbandMulti){
         $plainbandMulti = 1;
@@ -681,7 +681,7 @@
 				if(getDiamondType == 'lab_grown'){
 					$("#metal-type option[value=' Silver ']").show();
 				}else if(getDiamondType == 'mined_diamond'){
-					$selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}';
+				    $selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}';
 					$("#metal-type option[value=' Silver ']").hide();
 					$("#metal-type option[value=' "+$selectedMetalTypes+" ']").prop('selected', true);
 					getCustomPriceFinalFunction();
@@ -820,7 +820,7 @@
                 success: function (res) {
 					$('#filterDataDesign .type-variations-row').html(res);
 					if(diamondSelectedType == "mined_diamond"){
-						$selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}';
+					    $selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}';
 						$("#metal-type option[value=' Silver ']").hide();
 						$("#metal-type option[value=' "+$selectedMetalTypes+" ']").prop('selected', true);
 					}else{
@@ -1126,8 +1126,10 @@
 <?php 
 $schemaProImages = []; // Initialize an empty array
 foreach ($prodImages as $key => $images) {
-    $proimgURL = env('APP_IMAGE_URL') . '/storage/' . $images->image_url;
-    $schemaProImages[] = ['proimgURL' => $proimgURL];
+    if($key == 0){
+		$proimgURL = env('APP_IMAGE_URL') . '/storage/' . $images->image_url;
+		$schemaProImages[] = ['proimgURL' => $proimgURL];
+	}
 }
 // Extract proimgURL values into a simple array
 $ImgurlArray = array_column($schemaProImages, 'proimgURL');

@@ -2051,13 +2051,13 @@ if (!function_exists("getImageOptimizeDetails")) {
             $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
         } else {
             // Image manipulation
-            // $img = Image::make(env('APP_IMAGE_URL').$imageUrl)->resize($width, $height);
-            // $tempPath = public_path('tempfolderpath');
-            // $tempFile = $tempPath . '/' . $path_parts['basename'];
-            // $img->save($tempFile);
+            $img = Image::make(env('APP_IMAGE_URL').$imageUrl)->resize($width, $height);
+            $tempPath = public_path('tempfolderpath');
+            $tempFile = $tempPath . '/' . $path_parts['basename'];
+            $img->save($tempFile);
             // Pass the image URL to the view
-            // $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
-            $imageUrl = env('APP_IMAGE_URL').$imageUrl;
+            $imageUrl = asset('tempfolderpath/'.$path_parts['basename']);
+            // $imageUrl = env('APP_IMAGE_URL').$imageUrl;
         }
         return $imageUrl;
     }
@@ -2269,4 +2269,17 @@ if (!function_exists("getAllCategoryProducts")) {
         return collect($getAllCategoryProducts);
     }
 }
-    
+
+if (!function_exists("getEngagmentRingsLabPriceAdded")) {
+    function getEngagmentRingsLabPriceAdded($productDetails)
+    {
+        $productCategory = explode(',',$productDetails->categories);
+        $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->first();
+        $newLabPrice = $newPrice->price;
+        $productDetails->lab_grown_rrp = $productDetails->lab_grown_rrp + $newLabPrice;
+        $productDetails->lab_grown = $productDetails->lab_grown + $newLabPrice;
+        $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->lab_grown), $productCategory,'lab_grown');
+        $productDetails->discounted_lab_grown = $final_discounted_price;
+        return $productDetails;
+    }
+}
