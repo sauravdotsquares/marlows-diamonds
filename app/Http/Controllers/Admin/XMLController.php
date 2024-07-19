@@ -143,10 +143,6 @@ class XMLController extends Controller
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
                                 $productImageLink      =  env('APP_IMAGE_STAG_URL').'/storage/'.$productArrayNew->getProductImages->image_url;
-                                $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
-                                if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
-                                    $productDiscountedPrice  =  round($getFinalPriceArray['allPrices']['discounted_price']);
-                                }
                                 $productCondition  =  'new';
                                 $productAvailability  =  'in_stock';
                                 $productIdentifierExists  =  'no';
@@ -170,12 +166,8 @@ class XMLController extends Controller
                                 $product->appendChild($condition);
                                 $availability = $dom->createElement('g:availability', $productAvailability);
                                 $product->appendChild($availability);
-                                $price = $dom->createElement('g:price', $getFinalPriceArray['allPrices']['discounted_price'].' GBP ');
+                                $price = $dom->createElement('g:price', $getFinalPriceArray['allPrices']['shop_price'].' GBP ');
                                 $product->appendChild($price);
-                                if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
-                                    // $salePrice = $dom->createElement('g:sale_price', $productDiscountedPrice.' GBP ');
-                                    // $product->appendChild($salePrice);
-                                }
                                 $price = $dom->createElement('g:brand', 'Marlows Diamonds');
                                 $product->appendChild($price);
                                 $price = $dom->createElement('g:canonical_link', $productLink);
@@ -253,11 +245,6 @@ class XMLController extends Controller
                                     $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                     $productLink     =  url('').'/product/'.$productArrayNew->slug;
                                     $productImageLink      =  env('APP_IMAGE_STAG_URL').'/storage/'.$productArrayNew->getProductImages->image_url;
-                                    $productRRPPrice  =  round($getFinalPriceArray['allPrices']['rrp_price']);
-                                    $productPrice  =  round($getFinalPriceArray['allPrices']['shop_price'],2);
-                                    if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
-                                        $productDiscountedPrice  =  round($getFinalPriceArray['allPrices']['discounted_price']);
-                                    }
                                     $productCondition  =  'new';
                                     $productAvailability  =  'in_stock';
                                     $productIdentifierExists  =  'no';
@@ -281,12 +268,8 @@ class XMLController extends Controller
                                     $product->appendChild($condition);
                                     $availability = $dom->createElement('g:availability', $productAvailability);
                                     $product->appendChild($availability);
-                                    $price = $dom->createElement('g:price', $getFinalPriceArray['allPrices']['discounted_price'].' GBP ');
+                                    $price = $dom->createElement('g:price', $getFinalPriceArray['allPrices']['shop_price'].' GBP ');
                                     $product->appendChild($price);
-                                    if($getFinalPriceArray['allPrices']['shop_price'] != $getFinalPriceArray['allPrices']['discounted_price']){
-                                        // $salePrice = $dom->createElement('g:sale_price', $productDiscountedPrice.' GBP ');
-                                        // $product->appendChild($salePrice);
-                                    }
                                     $price = $dom->createElement('g:brand', 'Marlows Diamonds');
                                     $product->appendChild($price);
                                     $price = $dom->createElement('g:canonical_link', $productLink);
