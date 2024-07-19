@@ -1,15 +1,6 @@
 @foreach($sortedArray as $product)
 
 	<?php $thumbnailGif = getThumbnailGif($product->id); ?>
-	<?php 
-		// $getProductListingPrices = getMinimumPriceFunction($product);
-	?>
-	<?php 
-		$productCategory = explode(",",$product->categories);
-		if(in_array(8,$productCategory) && !in_array(18,$productCategory) ){
-			$product = getEngagmentRingsLabPriceAdded($product);
-		}
-	?>
 	<div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
 
 		<div class="product-items-item-info">

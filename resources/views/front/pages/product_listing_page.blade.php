@@ -367,13 +367,7 @@
                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
                         @foreach($sortedArray as $product)
                         <?php $thumbnailGif = getThumbnailGif($product->id); ?>
-                        <?php 
-                            $productCategory = explode(",",$product->categories);
-                            if(in_array(8,$productCategory) && !in_array(18,$productCategory) ){
-                                $product = getEngagmentRingsLabPriceAdded($product);
-                            }
-                        ?>
-
+                        
                         <?php //$getProductListingPrices = getMinimumPriceFunction($product);
                         ?>
                         <div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
