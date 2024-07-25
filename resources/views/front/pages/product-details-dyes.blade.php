@@ -1207,7 +1207,6 @@ $getFinalPrice = getMinimumPriceFunction($data);
     "@type": "Offer",
     "url": "{{url()->full()}}",
     "priceCurrency": "GBP",
-    "price": "{{isset($getFinalPrice['final_discounted_price'])?$getFinalPrice['final_discounted_price']:''}}",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition"
   },

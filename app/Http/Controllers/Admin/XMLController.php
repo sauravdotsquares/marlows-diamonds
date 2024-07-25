@@ -63,7 +63,7 @@ class XMLController extends Controller
         foreach($productArray as $key => $productArrayNew){
 
             
-
+            
             $diamondTypeArray = ["lab_grown","mined_diamond"];
 
             foreach($productArrayNew->getProductVariation as $var => $dataArray){
@@ -166,7 +166,7 @@ class XMLController extends Controller
                                 $product->appendChild($condition);
                                 $availability = $dom->createElement('g:availability', $productAvailability);
                                 $product->appendChild($availability);
-                                $price = $dom->createElement('g:price', $getFinalPriceArray['allPrices']['shop_price'].' GBP ');
+                                $price = $dom->createElement('g:price', isset($getFinalPriceArray['allPrices']['discounted_price'])?$getFinalPriceArray['allPrices']['discounted_price']:$getFinalPriceArray['allPrices']['shop_price'].' GBP ');
                                 $product->appendChild($price);
                                 $price = $dom->createElement('g:brand', 'Marlows Diamonds');
                                 $product->appendChild($price);
@@ -268,7 +268,7 @@ class XMLController extends Controller
                                     $product->appendChild($condition);
                                     $availability = $dom->createElement('g:availability', $productAvailability);
                                     $product->appendChild($availability);
-                                    $price = $dom->createElement('g:price', $getFinalPriceArray['allPrices']['shop_price'].' GBP ');
+                                    $price = $dom->createElement('g:price', isset($getFinalPriceArray['allPrices']['discounted_price'])?$getFinalPriceArray['allPrices']['discounted_price']:$getFinalPriceArray['allPrices']['shop_price'].' GBP ');
                                     $product->appendChild($price);
                                     $price = $dom->createElement('g:brand', 'Marlows Diamonds');
                                     $product->appendChild($price);
