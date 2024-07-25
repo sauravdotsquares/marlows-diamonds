@@ -54,13 +54,19 @@
 				<div id="carousel" class="owl-carousel">
 					@if(!empty($data->getProductVariation[0]->vari_video))
 						<div class="item product-items-carousel">
-							<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
-								@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
-									<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
-								@else
-									<source src="" type="video/mp4" type="video/mp4" />
-								@endif
-							</video>
+							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
+								<a id="variationAnchorVideo" data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" data-caption="">
+									<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+											<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
+									</video>
+								</a>
+							@else
+								<a id="variationAnchorVideo" data-fancybox="gallery1" href="" data-caption="">
+									<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+										<source src="" type="video/mp4" type="video/mp4" />
+									</video>
+								</a>
+							@endif
 						</div>
 					@endif
 					@if($prodImages)
@@ -867,6 +873,7 @@
 
 						// Also update the source element if necessary
 						$('#variationVideo source').attr('src', videoUrl);
+						$('#variationAnchorVideo').attr('href', videoUrl);
 
 						// $("#variationVideo")[0].play();
 						// Load the new video
