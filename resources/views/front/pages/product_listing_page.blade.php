@@ -18,8 +18,8 @@
 
 @endsection
 
-@if(isset($categoryData->image_url) && !empty($categoryData->image_url))
-    <div class="category-banner" style="background-image:url('{{env('APP_IMAGE_URL').'/storage/'.$categoryData->image_url}}')">
+@if(isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
+    <div class="category-banner" style="background-image:url('{{env('APP_IMAGE_URL').'/storage/'.$categoryData->banner_image_url}}')">
 @else
     <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
 @endif 
