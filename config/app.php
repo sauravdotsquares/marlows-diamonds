@@ -176,6 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         'Seansch\Rapnet\RapnetServiceProvider',
+        App\Providers\BladeServiceProvider::class,
 
     ],
 
