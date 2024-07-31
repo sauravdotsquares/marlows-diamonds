@@ -1016,6 +1016,7 @@
                     '_token': "{{csrf_token()}}",
 					'productMetalType' : $('#metal-type').val(),
 					'metal_type' : $('#metal-type').val(),
+					'fingersize' : $('#finger-size').val(),
 					'variations' : variations,
 					'productCarat' : $('#Carat').val(),
 					'productWidthMM' : $('#width-mm').val(),

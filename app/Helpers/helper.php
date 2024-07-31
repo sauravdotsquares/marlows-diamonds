@@ -1797,11 +1797,15 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
 
         //$getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
         $getDiscountedPrice = $getRegularPrices->shopPrice;
+        $getFingerSizePrice = 0;
+        if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
+            $getFingerSizePrice = getFingerSizeHalfPrice();
+        }
 
         $result = [
-            'rrp_price'=> $getRegularPrices->rrpPrice,
-            'shop_price'=> $getRegularPrices->shopPrice,
-            'discounted_price'=> $getDiscountedPrice,
+            'rrp_price'=> $getRegularPrices->rrpPrice+$getFingerSizePrice,
+            'shop_price'=> $getRegularPrices->shopPrice+$getFingerSizePrice,
+            'discounted_price'=> $getDiscountedPrice+$getFingerSizePrice,
             'parent_category' => $categoryId,
         ];
         return $result;
@@ -2281,5 +2285,11 @@ if (!function_exists("getEngagmentRingsLabPriceAdded")) {
         $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->lab_grown), $productCategory,'lab_grown');
         $productDetails->discounted_lab_grown = $final_discounted_price;
         return $productDetails;
+    }
+}
+if (!function_exists("getFingerSizeHalfPrice")) {
+    function getFingerSizeHalfPrice()
+    {
+        return 35;
     }
 }
