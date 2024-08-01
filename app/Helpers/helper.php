@@ -1834,23 +1834,25 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     }
 
     function getFlatDiscountRanges($arrayPrices, $catId,$diamondType){
-        $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
-                        // $q->whereDate('end_date', '>', now());
-                    })
-                    ->with(['discount_data'])->where('category_id', $catId)
-                    ->whereRaw('"'.$arrayPrices['shop_price'].'" between `from_price` and `to_price`')
-                    // ->where('diamond_type', $diamondType)
-                    ->when($diamondType, function ($q) use ($diamondType) {
-                        return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
-                    })
-                    ->where('discount', '!=', 1)
-                    // ->where('discount_type', 'F')
-                    ->where('status', 1)
-                    ->first();
+        if(getDiscountFunctionalityapplied() == 'yes'){
+            $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
+                            // $q->whereDate('end_date', '>', now());
+                        })
+                        ->with(['discount_data'])->where('category_id', $catId)
+                        ->whereRaw('"'.$arrayPrices['shop_price'].'" between `from_price` and `to_price`')
+                        // ->where('diamond_type', $diamondType)
+                        ->when($diamondType, function ($q) use ($diamondType) {
+                            return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
+                        })
+                        ->where('discount', '!=', 1)
+                        // ->where('discount_type', 'F')
+                        ->where('status', 1)
+                        ->first();
 
-        if(isset($disPercentage) && !empty($disPercentage)){
-            $arrayPrices['discounted_price'] = round($arrayPrices['shop_price'] * (1 - $disPercentage->discount / 100));
-            return $arrayPrices;
+            if(isset($disPercentage) && !empty($disPercentage)){
+                $arrayPrices['discounted_price'] = round($arrayPrices['shop_price'] * (1 - $disPercentage->discount / 100));
+                return $arrayPrices;
+            }
         }
         return $arrayPrices;
     }
@@ -2296,5 +2298,11 @@ if (!function_exists("getFingerSizeHalfPrice")) {
         }else{
             return 50;
         }
+    }
+}
+if (!function_exists("getDiscountFunctionalityapplied")) {
+    function getDiscountFunctionalityapplied()
+    {
+        return 'no';  // yes for discount applied and no for discount not applied
     }
 }

@@ -438,10 +438,10 @@
                                         <div style="display: flex;">
                                             <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
                                             @if(isset($product->discounted_lab_grown['discounted_price']) && !empty($product->discounted_lab_grown['discounted_price']))
-                                                <h4>
+                                                <!-- <h4>
                                                     <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}}</del> 
-                                                </h4>
-                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->discounted_lab_grown['discounted_price']),2)}} </span></div>
+                                                </h4> -->
+                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}} </span></div>
                                             @else
                                                 <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}} </span></div>
                                             @endif

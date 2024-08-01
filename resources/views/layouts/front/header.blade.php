@@ -319,7 +319,7 @@
                     <p>{!!$header_settings->get_options('header-left')!!}</p>
                 </div>
                 @if($lastDate > $now)
-                <div class="post-bar-center" style="height: 40px;">
+                <!-- <div class="post-bar-center" style="height: 40px;">
                     {{-- <a href="{{ route('products.exclusive') }}" >
                         <span> Exclusive to Marlows </span>
                     </a> --}}
@@ -331,7 +331,7 @@
                         <br>
 
                     </p>
-                </div>
+                </div> -->
                 @endif
                 <div class="post-bar-right header-post-bar-left">
                     <p>{!!$header_settings->get_options('header-right')!!}</p>
