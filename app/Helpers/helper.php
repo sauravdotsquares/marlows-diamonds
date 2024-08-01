@@ -2288,6 +2288,6 @@ if (!function_exists("getEngagmentRingsLabPriceAdded")) {
 if (!function_exists("getDiscountFunctionalityapplied")) {
     function getDiscountFunctionalityapplied()
     {
-        return 'yes';  // yes for discount applied and no for discount not applied
+        return 'no';  // yes for discount applied and no for discount not applied
     }
 }
