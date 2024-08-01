@@ -32,6 +32,7 @@ use App\Models\ProductThumbVideos;
 use App\Models\UrlRedirects;
 use App\Models\LabPricesList;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 
 //use SoapClient;
@@ -1799,7 +1800,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         $getDiscountedPrice = $getRegularPrices->shopPrice;
         $getFingerSizePrice = 0;
         if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
-            $getFingerSizePrice = getFingerSizeHalfPrice();
+            $getFingerSizePrice = getFingerSizeHalfPrice($getRequestData['metal_type']);
         }
 
         $result = [
@@ -2288,8 +2289,12 @@ if (!function_exists("getEngagmentRingsLabPriceAdded")) {
     }
 }
 if (!function_exists("getFingerSizeHalfPrice")) {
-    function getFingerSizeHalfPrice()
+    function getFingerSizeHalfPrice($metalTypeVariation)
     {
-        return 35;
+        if(Str::contains($metalTypeVariation, '9ct') || Str::contains($metalTypeVariation, 'Silver')){
+            return 30;
+        }else{
+            return 50;
+        }
     }
 }
