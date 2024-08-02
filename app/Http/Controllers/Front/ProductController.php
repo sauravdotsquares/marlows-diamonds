@@ -469,7 +469,7 @@ class ProductController extends Controller
                     // remove after update product start gk.
 
                     if (isset($request->categorySlug) && !empty($request->categorySlug)) {
-                        if($request->categorySlug == 'wedding-rings'){
+                        if(trim($request->categorySlug) == 'wedding-rings'){
                             $insert[] =  [
                                 "id" => 2,
                                 "name" => "Finger Size",
@@ -492,6 +492,15 @@ class ProductController extends Controller
                                 $insert,
                                 array_slice($attributes, 1)
                             );
+                        }else{
+                            if(trim($request->categorySlug) == 'wedding-rings'){
+                                $attributes = $this->replaceArrayById($attributes,2,[
+                                    "id" => 2,
+                                    "name" => "Finger Size",
+                                    "slug" => "finger-size",
+                                    "values" => "G | G-1/2 | H | H-1/2 | I | I-1/2 | J | J-1/2 | K | K-1/2 | L | L-1/2 | M | M-1/2 | N | N-1/2 "
+                                ]);
+                            }
                         }
                     }
                     // remove after update product end gk.
@@ -558,6 +567,17 @@ class ProductController extends Controller
             }
         }
         return response()->json(['status' => 'Not attribute selected']);
+    }
+
+    public function replaceArrayById($array, $id, $newData) {
+        foreach ($array as &$item) {
+            
+            if ($item['id'] == $id) {
+                $item = $newData;
+                break;
+            }
+        }
+        return $array;
     }
 
     public function getProductVideo(Request $request)

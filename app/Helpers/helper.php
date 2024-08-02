@@ -1799,7 +1799,7 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         //$getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
         $getDiscountedPrice = $getRegularPrices->shopPrice;
         $getFingerSizePrice = 0;
-        if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
+        if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47 || $getProductDetails->product_parent_category == 45) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
             $getFingerSizePrice = getFingerSizeHalfPrice($getRequestData['metal_type']);
         }
 
