@@ -142,11 +142,7 @@
           $(this).remove();
         }
       });
-      $("div").each(function(){
-        if ($.trim($(this).text()) == ""){
-          $(this).remove();
-        }
-      });
+      
       // this code is remove empty p tag and empty div tag End
       
       $(".mobile_search").on('click',function(){
