@@ -63,7 +63,7 @@
                 <div class="middle-topbar-left">
                     <div class="whatsapp-top-h">
                         <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
-                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Ask an Expert{{--WHATSAPP_TITLE--}} {{-- $header_settings->get_options('whatsapp') --}}
+                            <i class="fa fa-whatsapp" aria-hidden="true"></i> WhatsApp{{--WHATSAPP_TITLE--}} {{-- $header_settings->get_options('whatsapp') --}}
                         </a>
                     </div>
                     <div class="location-top-h">
