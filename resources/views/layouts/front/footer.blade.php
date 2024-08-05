@@ -90,13 +90,13 @@
         </div>
     </div>
     <div class="whatspp-num-1" style="display:none;">
-        <div class="container">
+        <!-- <div class="container">
             <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
             <span id="scroll-to-top">
-                Ask an Expert
+                WhatsApp
             </span>
             </a>
-        </div>
+        </div> -->
     </div>
 </footer>
 <!-- Footer end here -->

@@ -63,7 +63,7 @@
                 <div class="middle-topbar-left">
                     <div class="whatsapp-top-h">
                         <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
-                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Ask an Expert{{--WHATSAPP_TITLE--}} {{-- $header_settings->get_options('whatsapp') --}}
+                            <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp">
                         </a>
                     </div>
                     <div class="location-top-h">
@@ -200,10 +200,15 @@
                     </a>
                 </div>
                 <div class="mobile-cart-wishlist">
-                      <div class="mobile_search">
+                      <!-- <div class="mobile_search">
                           <a>
                               <i class="fa fa-search" aria-hidden="true"></i>
                           </a>
+                      </div> -->
+                      <div class="whats_app">
+                            <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
+                                <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp">
+                            </a>
                       </div>
                     <div class="mobile-wishlist mobile-acc">
                             <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
