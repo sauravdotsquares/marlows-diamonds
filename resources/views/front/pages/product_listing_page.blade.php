@@ -983,15 +983,16 @@
         sendDataValues(1,'append');
     });
 
-    $(document).on('change', "#sortingDSelect", function() {
+    $(document).on('change', "#sortingDSelect,#sortingMSelect", function() {
+       
         $("#showProductList").html('');
-        sendDataValues(1,'append',$(this).val());
+        sendDataValues(1, 'append', $(this).val());
     });
 
-    $(document).on('change', "#sortingMSelect", function() {
-       $("#showProductList").html('');
-        sendDataValues(1,'append',$(this).val());
-   });
+//     $(document).on('change', "#sortingMSelect", function() {
+//        $("#showProductList").html('');
+//         sendDataValues(1,'append',$(this).val());
+//    });
 
    $(window).on('hashchange', function() {
         if (window.location.hash) {
@@ -1040,7 +1041,7 @@
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
-                'sorting': $('#sortingDSelect').val(),
+                'sorting': $('#sortingDSelect,#sortingMSelect').val(),
                 'keyword': $('#searchd').val(),
                 'path': '{{ $path }}',
                 'page': page,
