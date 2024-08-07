@@ -983,10 +983,17 @@
         sendDataValues(1,'append');
     });
 
-    $(document).on('change', "#sortingDSelect,#sortingMSelect", function() {
+    $(document).on('change', "#sortingDSelect", function() {
+        if($('#sortingDSelect').val() == ''){
+            var sortingData = $('#sortingMSelect').val();
+        }else if($('#sortingMSelect').val() == ''){
+            var sortingData = $('#sortingDSelect').val();
+        }else{
+            var sortingData = '';
+        }
        
         $("#showProductList").html('');
-        sendDataValues(1, 'append', $(this).val());
+        sendDataValues(1, 'append', sortingData);
     });
 
 //     $(document).on('change', "#sortingMSelect", function() {
@@ -1041,7 +1048,7 @@
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
-                'sorting': $('#sortingDSelect,#sortingMSelect').val(),
+                'sorting': sorting,
                 'keyword': $('#searchd').val(),
                 'path': '{{ $path }}',
                 'page': page,

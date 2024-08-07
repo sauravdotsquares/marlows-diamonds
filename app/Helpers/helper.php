@@ -1520,12 +1520,12 @@ if (!function_exists('validate_breadcrumb')) {
         }elseif(isset($requestData['sorting']) && $requestData['sorting'] == 'price-max'){
             $sortedCollection = $collection->sortByDesc('lab_grown_rrp');
         }else{
-            $sortedCollection = $collection->sortBy('lab_grown_rrp');
+            $sortedCollection = $collection;
         }
         $sortedArray = $sortedCollection->map(function ($item) {
             return (object) $item;
         });
-        
+
 
         if($getProductListFinal->currentPage() > $getProductListFinal->lastPage()){
             return [
