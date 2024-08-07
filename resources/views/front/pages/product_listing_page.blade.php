@@ -983,7 +983,8 @@
         sendDataValues(1,'append');
     });
 
-    $(document).on('change', "#sortingDSelect", function() {
+    $(document).on('change', "#sortingDSelect,#sortingMSelect", function() {
+        
         if($('#sortingDSelect').val() == ''){
             var sortingData = $('#sortingMSelect').val();
         }else if($('#sortingMSelect').val() == ''){
