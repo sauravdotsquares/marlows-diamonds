@@ -680,10 +680,16 @@
 				let getDiamondType = $(this).val();
 				if(getDiamondType == 'lab_grown'){
 					$("#metal-type option[value=' Silver ']").show();
+					getCustomFilter();
 				}else if(getDiamondType == 'mined_diamond'){
-				    $selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}';
-					$("#metal-type option[value=' Silver ']").hide();
-					$("#metal-type option[value=' "+$selectedMetalTypes+" ']").prop('selected', true);
+					getCustomFilter();
+				    // var selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "Platinum" }}';
+					// console.log(selectedMetalTypes);
+					
+					// $("#metal-type option[value=' "+selectedMetalTypes+" ']").prop('selected', true);
+					// $("#metal-type").val(selectedMetalTypes);
+					// $("#metal-type").attr('value', 'Platinum ').attr('selected', 'selected');
+					// $("#metal-type option[value=' Silver ']").hide();
 					getCustomPriceFinalFunction();
 				}
 			});
@@ -803,6 +809,7 @@
 
 		function getCustomFilter(){
 			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 			$.ajax({
                 type: 'POST',
                 url: '{{route("custom-filter")}}',
@@ -810,6 +817,7 @@
                     '_token': "{{csrf_token()}}",
 					'slug' : '{{$data->slug}}',
 					'categorySlug': '{{$categorySlug}}',
+					'diamondType': diamond_type,
                     'type' : '{{$plainbandMulti}}',
                     'typeName' : '{{$plainband}}',
                     'metal-type' : '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "" }}',
