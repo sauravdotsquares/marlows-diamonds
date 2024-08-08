@@ -51,31 +51,45 @@
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
-
-					<div id="carousel" class="owl-carousel">
-
-						@if($prodImages)
-
-							@foreach($prodImages as $key=>$images)
-								@php
-									$explode = explode('/',$images->image_url);
-									$explode1 = explode('.',$explode[1]);
-								@endphp
-								<div class="item @if($key==0) active @endif"  >
-									<a data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{$explode1[0]}}"></a>
-								</div>
-							@endforeach
-						@endif
-
-					</div>
-
-				<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+				<div id="carousel" class="owl-carousel">
+					@if(!empty($data->getProductVariation[0]->vari_video))
+						<div class="item product-items-carousel">
+							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
+								<a id="variationAnchorVideo" data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" data-caption="">
+									<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+											<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
+									</video>
+								</a>
+							@else
+								<a id="variationAnchorVideo" data-fancybox="gallery1" href="" data-caption="">
+									<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+										<source src="" type="video/mp4" type="video/mp4" />
+									</video>
+								</a>
+							@endif
+						</div>
+					@endif
+					@if($prodImages)
+						@foreach($prodImages as $key=>$images)
+							@php
+								$explode = explode('/',$images->image_url);
+								$explode1 = explode('.',$explode[1]);
+							@endphp
+							<div class="item product-items-carousel  @if($key==0) active @endif">		
+								<a data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{$explode1[0]}}">
+									<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{$explode1[0]}}">
+								</a>
+							</div>
+						@endforeach
+					@endif
+				</div>
+				<!-- <video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 					@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 						<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
 					@else
 						<source src="" type="video/mp4" type="video/mp4" />
 					@endif
-				</video>
+				</video> -->
 				<div id="myDivChanges"></div>
 			</div>
 			<?php 
@@ -125,6 +139,7 @@
 								<option value="1.00-1.19" selected>1.00-1.19</option>
 								<option value="1.50-1.69">1.50-1.69</option>
 								<option value="2.00-2.49">2.00-2.49</option>
+								<option value="2.50-2.99">2.50-2.99</option>
 								<option value="3.00-3.99">3.00-3.99</option>
 							</select>
 						</div>
@@ -617,7 +632,7 @@
 @section('js')
 
 	<script src="{{$url}}"></script>
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
@@ -850,11 +865,22 @@
 					'slug' : '{{$data->slug}}',
 					'metal_color' : metal_type,
 				},
-				success: function (res) {					
+				success: function (res) {
 					if(res.getSelectedVariationVideoImages.vari_video){
 						var videoUrl = "{{ asset('storage/')}}/"+res.getSelectedVariationVideoImages.vari_video;
+						// Update the video element's src attribute
 						$('#variationVideo').attr('src', videoUrl);
-						$("#variationVideo")[0].play();
+
+						// Also update the source element if necessary
+						$('#variationVideo source').attr('src', videoUrl);
+						$('#variationAnchorVideo').attr('href', videoUrl);
+
+						// $("#variationVideo")[0].play();
+						// Load the new video
+    					$('#variationVideo')[0].load();
+
+						// Call the function to activate the carousel item with the video
+    					activateCarouselItem();
 					}
 					
 					if(res.getVariationDescription.description){
@@ -867,6 +893,16 @@
 				}
 			});
 		}
+
+		// Function to activate a specific carousel item
+		function activateCarouselItem() {
+			// Remove 'active' class from all carousel items
+			$('#carousel .owl-item').removeClass('active');
+			
+			// Add 'active' class to the specific item containing the video
+			$('#variationVideo').closest('.owl-item').addClass('active');
+		}
+
 		function getNumberFromCurrency(currency) {
 			return Number(currency.replace(/[$,]/g,''))
 		}
@@ -1191,5 +1227,62 @@ $getFinalPrice = getMinimumPriceFunction($data);
 }
 </script>
 <!-- Product Schema code end -->
+
+<script>
+	$(document).ready(function() {
+	      	var $owl = $('#carousel');
+			$owl.children().each( function( index ) {
+			  $(this).attr( 'data-position', index ); // NB: .attr() instead of .data()
+			});
+	        $owl.owlCarousel({
+			  autoplay: false,
+			  rewind: true,
+			  responsiveClass: true,
+			  autoplayTimeout: 15000,
+			  smartSpeed: 300,
+			  nav: true,
+			  items : 1,
+			  	onInitialized: function() {
+					$owl.find('.owl-item').each((index, element)=>{
+						const src = $(element).find('.thumbnail-src').attr('src');
+						const video_extensions = ['mp4'];
+						const extension = src.split(/[#?]/)[0].split('.').pop().trim();
+						let thumbnailItem = `<li class="list-inline-item ${ index ? '' : 'active' }">`;
+						thumbnailItem += `<a href="javascript:;" id="carousel-selector-${index}" class="carousel-thumbnail-item ${ index ? '' : 'selected' }" data-slide-to="${index}" data-target="#carousel">`;
+
+						if(video_extensions.includes(extension)){
+							thumbnailItem += `<video muted class="img-fluid" style="height:100px; width:100px;">`;
+							thumbnailItem += `<source src="${src}" type="video/mp4" type="video/mp4" />`;
+							thumbnailItem += `</video>`;
+						}else{
+							thumbnailItem += `<img src="${src}" class="img-fluid" style="height:100px; width:100px;">`;
+						}
+						thumbnailItem += `</li>`;
+
+						$(".carousel-thumbnails").append(thumbnailItem);
+
+					})
+    			},
+			}).on("changed.owl.carousel", function(el) {
+				var index = el.item.index;
+				$('.carousel-thumbnail-item').closest('li').removeClass('active');
+				$('#carousel-selector-'+index).closest('li').addClass('active');
+			});
+			
+            $(document).on('click','.product-gallery__trigger',function(e){
+				e.preventDefault();
+				$('#carousel .owl-item.active a').click();
+				$('#carousel1 .product-items-carousel.active a').click();
+            });
+
+			$(document).on('click','.carousel-thumbnail-item', function(){
+				const itemPosition = $(this).data('slide-to');
+				$owl
+				.trigger('to.owl.carousel', [itemPosition, 0])
+				.trigger('stop.owl.autoplay')
+				.trigger('play.owl.autoplay',[15000, 300]);
+			});
+	    });
+	</script>
 
 @endsection

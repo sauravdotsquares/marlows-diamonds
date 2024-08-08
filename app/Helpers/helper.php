@@ -32,6 +32,7 @@ use App\Models\ProductThumbVideos;
 use App\Models\UrlRedirects;
 use App\Models\LabPricesList;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 
 //use SoapClient;
@@ -1519,12 +1520,12 @@ if (!function_exists('validate_breadcrumb')) {
         }elseif(isset($requestData['sorting']) && $requestData['sorting'] == 'price-max'){
             $sortedCollection = $collection->sortByDesc('lab_grown_rrp');
         }else{
-            $sortedCollection = $collection->sortBy('lab_grown_rrp');
+            $sortedCollection = $collection;
         }
         $sortedArray = $sortedCollection->map(function ($item) {
             return (object) $item;
         });
-        
+
 
         if($getProductListFinal->currentPage() > $getProductListFinal->lastPage()){
             return [
@@ -1797,11 +1798,15 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
 
         //$getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
         $getDiscountedPrice = $getRegularPrices->shopPrice;
+        $getFingerSizePrice = 0;
+        if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47 || $getProductDetails->product_parent_category == 45) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
+            $getFingerSizePrice = getFingerSizeHalfPrice($getRequestData['metal_type']);
+        }
 
         $result = [
-            'rrp_price'=> $getRegularPrices->rrpPrice,
-            'shop_price'=> $getRegularPrices->shopPrice,
-            'discounted_price'=> $getDiscountedPrice,
+            'rrp_price'=> $getRegularPrices->rrpPrice+$getFingerSizePrice,
+            'shop_price'=> $getRegularPrices->shopPrice+$getFingerSizePrice,
+            'discounted_price'=> $getDiscountedPrice+$getFingerSizePrice,
             'parent_category' => $categoryId,
         ];
         return $result;
@@ -2283,6 +2288,16 @@ if (!function_exists("getEngagmentRingsLabPriceAdded")) {
         $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->lab_grown), $productCategory,'lab_grown');
         $productDetails->discounted_lab_grown = $final_discounted_price;
         return $productDetails;
+    }
+}
+if (!function_exists("getFingerSizeHalfPrice")) {
+    function getFingerSizeHalfPrice($metalTypeVariation)
+    {
+        if(Str::contains($metalTypeVariation, '9ct') || Str::contains($metalTypeVariation, 'Silver')){
+            return 30;
+        }else{
+            return 50;
+        }
     }
 }
 if (!function_exists("getDiscountFunctionalityapplied")) {

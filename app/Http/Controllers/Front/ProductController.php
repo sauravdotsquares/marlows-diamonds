@@ -448,7 +448,7 @@ class ProductController extends Controller
 
     public function getCustomFilter(Request $request)
     {
-
+        
         $product_id = Products::where('slug', $request->slug)->value('id');
         if ($product_id != '') {
             $productSelectedAttribute = ProductVariationAttributes::where('product_id', $product_id)->value('attr_values');
@@ -469,12 +469,21 @@ class ProductController extends Controller
                     // remove after update product start gk.
 
                     if (isset($request->categorySlug) && !empty($request->categorySlug)) {
-                        $insert[] =  [
-                            "id" => 2,
-                            "name" => "Finger Size",
-                            "slug" => "finger-size",
-                            "values" => "G | G-1/2 | H | H-1/2 | I | I-1/2 | J | J-1/2 | K | K-1/2 | L | L-1/2 | M | M-1/2 | N | N-1/2 | O | O-1/2 | P | P-1/2 | Q | Q-1/2 | R | R-1/2 | S | S-1/2 | T | T-1/2 | U | U-1/2 | V | V-1/2 | W | W-1/2 | X | X-1/2 | Y | Y-1/2 | Z | Z-1/2 "
-                        ];
+                        if(trim($request->categorySlug) == 'wedding-rings'){
+                            $insert[] =  [
+                                "id" => 2,
+                                "name" => "Finger Size",
+                                "slug" => "finger-size",
+                                "values" => "G | G-1/2 | H | H-1/2 | I | I-1/2 | J | J-1/2 | K | K-1/2 | L | L-1/2 | M | M-1/2 | N | N-1/2 "
+                            ];
+                        }else{
+                            $insert[] =  [
+                                "id" => 2,
+                                "name" => "Finger Size",
+                                "slug" => "finger-size",
+                                "values" => "G | G-1/2 | H | H-1/2 | I | I-1/2 | J | J-1/2 | K | K-1/2 | L | L-1/2 | M | M-1/2 | N | N-1/2 | O | O-1/2 | P | P-1/2 | Q | Q-1/2 | R | R-1/2 | S | S-1/2 | T | T-1/2 | U | U-1/2 | V | V-1/2 | W | W-1/2 | X | X-1/2 | Y | Y-1/2 | Z | Z-1/2 "
+                            ];
+                        }
 
                         $temp_array = array_column($attributes, 'slug');
                         if (!in_array('finger-size', $temp_array)) {
@@ -483,6 +492,15 @@ class ProductController extends Controller
                                 $insert,
                                 array_slice($attributes, 1)
                             );
+                        }else{
+                            if(trim($request->categorySlug) == 'wedding-rings'){
+                                $attributes = $this->replaceArrayById($attributes,2,[
+                                    "id" => 2,
+                                    "name" => "Finger Size",
+                                    "slug" => "finger-size",
+                                    "values" => "G | G-1/2 | H | H-1/2 | I | I-1/2 | J | J-1/2 | K | K-1/2 | L | L-1/2 | M | M-1/2 | N | N-1/2 "
+                                ]);
+                            }
                         }
                     }
                     // remove after update product end gk.
@@ -524,7 +542,7 @@ class ProductController extends Controller
                             $final_attr['attri_' . $attribute['slug']] = $explode_attr;
 
                             if ($request->typeName && $attribute['slug'] == 'finger-size') {
-                                $alphaRange = range('I', 'M');
+                                $alphaRange = range('I', 'N');
                                 $result = preg_replace("/[^A-Z]+/", "", $final_attr['attri_' . $attribute['slug']]);
                                 $finalAlphaData = [];
                                 foreach ($result as $keyName => $valueData) {
@@ -549,6 +567,17 @@ class ProductController extends Controller
             }
         }
         return response()->json(['status' => 'Not attribute selected']);
+    }
+
+    public function replaceArrayById($array, $id, $newData) {
+        foreach ($array as &$item) {
+            
+            if ($item['id'] == $id) {
+                $item = $newData;
+                break;
+            }
+        }
+        return $array;
     }
 
     public function getProductVideo(Request $request)

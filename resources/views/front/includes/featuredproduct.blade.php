@@ -39,13 +39,13 @@
                                                 <div style="display: flex;">
                                                     <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
                                                     @if($getProductListingPrices['final_discounted_price'] != $getProductListingPrices['final_shop_price'])
-                                                    <h4><del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_shop_price']),2)}}</del> </h4>
+                                                    <h4><del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_shop_price'])}}</del> </h4>
                                                     @endif
                                                     
-                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($getProductListingPrices['final_discounted_price']),2)}} </span></div>
+                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_discounted_price'])}} </span></div>
                                                 </div>
                                                 @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_discounted_price'])
-                                                    <p><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_discounted_price']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$getProductListingPrices['final_rrp_price']}}</del> </p>
+                                                    <p><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_discounted_price']) }}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_rrp_price'])}}</del> </p>
                                                 @endif
                                         <?php } ?> 
                                     </div>

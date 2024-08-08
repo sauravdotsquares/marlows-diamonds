@@ -18,8 +18,11 @@
 
 @endsection
 
-
-<div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
+@if(isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
+    <div class="category-banner" style="background-image:url('{{env('APP_IMAGE_URL').'/storage/'.$categoryData->banner_image_url}}')">
+@else
+    <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
+@endif 
     <div class="container">
         <div class="category-banner-text">
             <h1>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h1>
@@ -347,7 +350,6 @@
                                 <option value="price-min">Price: Low to High</option>
                                 <option value="price-max">Price: High to Low</option>
                               </select>
-
                             </div>
                     </div>
 </div>
@@ -364,13 +366,7 @@
                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
                         @foreach($sortedArray as $product)
                         <?php $thumbnailGif = getThumbnailGif($product->id); ?>
-                        <?php 
-                            $productCategory = explode(",",$product->categories);
-                            if(in_array(8,$productCategory) && !in_array(18,$productCategory) ){
-                                $product = getEngagmentRingsLabPriceAdded($product);
-                            }
-                        ?>
-
+                        
                         <?php //$getProductListingPrices = getMinimumPriceFunction($product);
                         ?>
                         <div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
@@ -444,12 +440,12 @@
                                                 <!-- <h4>
                                                     <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}}</del> 
                                                 </h4> -->
-                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}} </span></div>
+                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $product->lab_grown) }} </span></div>
                                             @else
-                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}} </span></div>
+                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown) }} </span></div>
                                             @endif
                                         </div>
-                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->lab_grown_rrp - $product->lab_grown}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->lab_grown_rrp}}</del> </p>
+                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp - $product->lab_grown)}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp) }}</del> </p>
                                     </div>
                                 <?php }else if(!empty($product->mined_diamond_rrp) && $product->mined_diamond_rrp != 0.0){ ?> 
                                     <div class="price-section">
@@ -458,7 +454,7 @@
                                             <!-- <h4>
                                             <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->mined_diamond_rrp),2)}}</del> 
                                             </h4> -->
-                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{round(($product->mined_diamond),2)}} </span></div>
+                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
                                         </div>
                                             <!-- <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp - $product->mined_diamond}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp}}</del> </p> -->
                                     </div>
@@ -986,15 +982,24 @@
         sendDataValues(1,'append');
     });
 
-    $(document).on('change', "#sortingDSelect", function() {
+    $(document).on('change', "#sortingDSelect,#sortingMSelect", function() {
+        
+        if($('#sortingDSelect').val() == ''){
+            var sortingData = $('#sortingMSelect').val();
+        }else if($('#sortingMSelect').val() == ''){
+            var sortingData = $('#sortingDSelect').val();
+        }else{
+            var sortingData = '';
+        }
+       
         $("#showProductList").html('');
-        sendDataValues(1,'append',$(this).val());
+        sendDataValues(1, 'append', sortingData);
     });
 
-    $(document).on('change', "#sortingMSelect", function() {
-       $("#showProductList").html('');
-        sendDataValues(1,'append',$(this).val());
-   });
+//     $(document).on('change', "#sortingMSelect", function() {
+//        $("#showProductList").html('');
+//         sendDataValues(1,'append',$(this).val());
+//    });
 
    $(window).on('hashchange', function() {
         if (window.location.hash) {
@@ -1043,7 +1048,7 @@
             data: {
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
-                'sorting': $('#sortingDSelect').val(),
+                'sorting': sorting,
                 'keyword': $('#searchd').val(),
                 'path': '{{ $path }}',
                 'page': page,
