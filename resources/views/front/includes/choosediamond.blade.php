@@ -44,12 +44,6 @@
                                                     
                                                     <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $getProductListingPrices['final_discounted_price'])}} </span></div>
                                                 </div>
-                                                <?php 
-                                                    // echo "sdfdsfds<pre>";
-                                                    // print_r(sprintf('%0.2f', $getProductListingPrices['final_rrp_price']));
-                                                    // die;
-                                                
-                                                ?>
                                                 @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_discounted_price'])
                                                     <p><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_discounted_price']) }}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_rrp_price']) }}</del> </p>
                                                 @endif
