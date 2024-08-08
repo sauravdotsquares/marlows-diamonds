@@ -229,7 +229,7 @@ class AddToCartController extends Controller
                         return response()->json(['error' => 'Something went wrong...']);
                     }
                 }else if($key == 'Cut'){
-                    $getDiamondCutGradeStatus = checkDiamondCutGradeValue($finalVal);
+                    $getDiamondCutGradeStatus = true;
                     if($getDiamondCutGradeStatus === false){
                         return response()->json(['error' => 'Something went wrong...']);
                     }
