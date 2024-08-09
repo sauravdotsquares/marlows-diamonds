@@ -331,10 +331,8 @@
                     {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
                     <p id="offer-text"> {{$getMonthTextArray[$getCurrentMonth]}} </p>
                     <p>
-                    {{-- <span class="header-heighlight-text">Up to 35% off</span> --}}
-                         <span class="header-heighlight-text discount_timer"></span>
+                        <span class="header-heighlight-text discount_timer"></span>
                         <br>
-
                     </p>
                 </div>
                 @endif
@@ -400,6 +398,8 @@
         const timerToShow = daysToShow+' '+ hoursToShow+' '+ minutesToShow+' '+ secondsToShow;
         $(".discount_timer").css('display','inline-block');
         $(".discount_timer").text(timerToShow);
+        console.log(timerToShow);
+        
         // $("#offer-text").text('Wedding Rings Sale - Up to 35% off');
         $("#offer-text").text(discountText);
         // console.log('first', hoursToShow);
