@@ -2303,6 +2303,6 @@ if (!function_exists("getFingerSizeHalfPrice")) {
 if (!function_exists("getDiscountFunctionalityapplied")) {
     function getDiscountFunctionalityapplied()
     {
-        return 'no';  // yes for discount applied and no for discount not applied
+        return 'yes';  // yes for discount applied and no for discount not applied
     }
 }
