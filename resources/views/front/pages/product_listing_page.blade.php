@@ -433,7 +433,7 @@
                                     
                                 </div>
                                 <?php if(!empty($product->lab_grown_rrp) && $product->lab_grown_rrp != 0.0){ ?>
-                                    <div class="price-section">
+                                    {{-- <div class="price-section">
                                         <div style="display: flex;">
                                             <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
                                             @if(isset($product->discounted_lab_grown['discounted_price']) && !empty($product->discounted_lab_grown['discounted_price']))
@@ -446,9 +446,9 @@
                                             @endif
                                         </div>
                                             <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp - $product->lab_grown)}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp) }}</del> </p>
-                                    </div>
+                                    </div> --}}
                                 <?php }else if(!empty($product->mined_diamond_rrp) && $product->mined_diamond_rrp != 0.0){ ?> 
-                                    <div class="price-section">
+                                    {{-- <div class="price-section">
                                         <div style="display: flex;">
                                             <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
                                             <!-- <h4>
@@ -457,7 +457,7 @@
                                             <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
                                         </div>
                                             <!-- <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp - $product->mined_diamond}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp}}</del> </p> -->
-                                    </div>
+                                    </div> --}}
                                 <?php } ?>
                             </div>
                         </div>
