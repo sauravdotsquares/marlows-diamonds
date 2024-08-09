@@ -2247,7 +2247,7 @@ if (!function_exists("getMonthwiseDiscountText")) {
             '5' => 'Mid Season Sale',
             '6' => 'Summer Sale',
             '7' => 'Summer Sale',
-            '8' => 'Summer Sale',
+            '8' => 'Summer Sale Up to 40% off',
             '9' => 'Autumn Sale',
             '10' => 'Mid Season Sale',
             '11' => 'Winter Sale',
