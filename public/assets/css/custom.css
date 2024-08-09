@@ -127,6 +127,7 @@ transition: all 0.2s ease;}
 .mobile-wishlist{margin:0 9px 0 0}
 .mobile-wishlist a{color:#8e2e65;font-size:20px}
 .middle-topbar-left .whatsapp-top-h,.middle-topbar-left .location-top-h{display:inline-block;vertical-align:middle;margin:0 30px 0 0}
+.middle-topbar-left .location-top-h{margin: 0 15px 0 0;}
 .middle-topbar-left a{color:#878787;text-decoration:none; display: inline-block;}
 .middle-topbar-left a:hover{color:#8e2e65}
 .middle-topbar-left a i{color:#8e2e65;font-size:18px;padding:0 11px 0 0;position:relative;top:1px}
@@ -229,7 +230,7 @@ textarea.input-control{height:100px}
 
 
 /** header post bar css start **/
-.post-bar{background:#8e2e65;padding:7px 0;color:#fff}
+.post-bar{background:#8e2e65;padding:4px 0;color:#fff}
 .post-bar-wraper p{text-transform:uppercase; margin: 0;}
 .post-bar-center img{max-width:225px;height:44px}
 .post-bar-left,.post-bar-center,.post-bar-right{width:33.33%}
@@ -247,6 +248,8 @@ textarea.input-control{height:100px}
 .footer-social{margin:50px 0 0 0}
 .footer-social a{color:#fff;font-size:18px;margin:0 22px 0 0}
 .footer-social a:hover{opacity:.7}
+.footer-social a i.fa.fa-twitter {font-size: 0; vertical-align: top;}
+.footer-social a i.fa.fa-twitter:before{background: url(../images/twitter-white.png) no-repeat; width: 18px; height: 18px;display: inline-block;margin: 4px 0 0; background-size: 15px;}
 .footerlinks-col ul li{display:block}
 .footerlinks-col ul li a{color:#fff;text-decoration:none; font-weight: normal !important; font-size: 14px !important; padding: 0 0 2px;}
 .footerlinks-col ul li a:hover {border-bottom: 1px solid #fff;}
@@ -293,7 +296,7 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 .zopim {z-index: 9999 !important;}
 .head-para-three{text-align:center;margin:0 0 26px 0}
 .shopfrom-best{padding:63px 0 50px;}
-.product-info{text-align:center;padding:0 25px 20px}
+.product-info{text-align:center;padding:0 20px 20px}
 .product-info .product-item-details a {text-decoration: none;}
 .product-item-details{padding-top:10px}
 .product-titles{font-family:'Playfair Display';font-size:25px;color:#2b2b2b;line-height:1.2}
@@ -370,6 +373,7 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 .reviewr-review-text a{color:#9a9b9b;text-decoration:none; display: block;}
 .reviewr-review-text a:hover{color:#000}
 
+.container.review-section {padding: 0 2px;}
 .rating-review-block .owl-carousel {padding: 0 30px;}
 .rating-review-block{padding:30px 60px 40px}
 .rating-review-block .owl-dots .owl-dot span{width:5px;height:5px;margin:4px;background:#a0a0a0}
@@ -425,6 +429,16 @@ input.input-control{height:38px}
 /** share moment section css start here  **/
 .share-moment-heading{text-align:center}
 .share-moment{padding:50px 15px 50px 15px}
+.share-moment .owl-carousel {position: relative;}
+.share-moment .owl-carousel .owl-nav {    display: inline-block !important;}
+.share-moment .owl-carousel .owl-nav button {margin: 0;border: 3px solid rgba(255, 255, 255, 0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;
+background-position: center;background-image: url(../images/arrow-slide.png);background-repeat: no-repeat;}
+.share-moment .owl-carousel .owl-nav button.owl-prev {transform: translate(0, -50%);margin: 0 0 0 0;position: absolute;top: 50%;left: 15px;}
+.share-moment .owl-carousel .owl-nav button.owl-next {transform: translate(0, -50%) rotate(180deg);margin: 0 0 0 15px;position: absolute;top: 50%;right: 15px;}
+
+.share-moment .owl-carousel .owl-nav button span{ font-size:0px; }
+
+
 .insta-btn{text-align:center;margin:15px 0 0 0}
 .insta-btn .btn-bg-small{text-transform:none;font-size:14px;padding:10px 24px;font-weight:normal}
 .insta-btn .btn-bg-small i{padding:0 7px 0 0;font-size:15px}
@@ -440,7 +454,7 @@ background: linear-gradient(273deg, rgba(98, 40, 215, 1) 0%, rgba(238, 42, 123, 
 align-items: center;justify-content: center;border-radius: 50px;}
 
 /** product listing page start here **/
-.category-banner{ text-align: center; background-repeat: no-repeat; background-position: center; background-size: cover;padding: 40px 0; position: relative; margin:0 0 28px 0;}
+.category-banner{ text-align: center; background-repeat: no-repeat; background-position: center; background-size: cover;padding: 100px 0; position: relative; margin:0 0 28px 0;}
 .category-banner.engagement-banner {   padding: 178px 0;text-align: left;  }
 .category-banner.engagement-banner:before{background: transparent;}
 .category-banner-text {position: relative;}
@@ -543,6 +557,7 @@ z-index: 1;height: 30px;text-align: left;font-weight: 500;border: 1px solid #d6d
 .engagement-ring-img .engagement-ring-img-content h2 {max-width: 400px; width: 100%; color: #fff; font-size: 50px; line-height: 56px; }
 .engagement-ring-img .engagement-ring-img-content button {width: auto; background-color: #8e2e65; color: #fff; font-size: 15px; padding: 14px 26px; text-transform: uppercase;
 text-decoration: none; font-weight: 700; display: inline-block; border: 1px solid #8e2e65; margin:15px 0 15px;}
+.engagement-ring-img .engagement-ring-img-content button:hover {box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.8);color: #fff;}
 .engagement-ring-img .engagement-ring-img-content button a {color: #fff;text-decoration: none;}
 
 
@@ -1646,10 +1661,12 @@ display: inline-block; color: #000; font-size: 15px; text-decoration: none;paddi
 .blog-carousel-item-slider .owl-carousel .item .blog-carousel-info .blog-carousel-image a img {height: 100%;object-fit: cover; width: 100%;}
 
 .blog-carousel-item-slider .owl-carousel .owl-nav button.owl-prev {top: 50%;transform: translateY(-50%);position: absolute;left: -12px;
-border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;}
-.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {top: 50%;transform: translateY(-50%);position: absolute;right: -12px;
-border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;}
-.blog-carousel-item-slider .owl-carousel .owl-nav button span {font-size: 37px;line-height: 22px;}
+border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;background-image: url(../images/arrow-slide.png);
+background-repeat: no-repeat; background-position: center;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button.owl-next {top: 50%;transform: translateY(-50%) rotate(-180deg);position: absolute;right: -12px;
+border: 3px solid rgba(255,255,255,0.5);width: 50px;height: 50px;background: #8e2e65;color: #fff;text-align: center;background-image: url(../images/arrow-slide.png);
+background-repeat: no-repeat;background-position: center;}
+.blog-carousel-item-slider .owl-carousel .owl-nav button span {font-size: 37px;line-height: 22px; font-size: 0}
 /*engagement ring blog slider css end*/
 
 /*404 page css*/

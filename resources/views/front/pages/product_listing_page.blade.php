@@ -566,7 +566,7 @@
 <!-- FAQ Section start here -->
 
 <!-- Section Reviews -->
-<div class="container">
+<div class="container review-section">
     <div class="rating-review-block">
         <div class="owl-carousel owl-theme slider-review">
             @include('front.pages.reviews')
@@ -1223,22 +1223,25 @@
 
     $(function() {
         var owl = $(".owl-carousel");
-        owl.owlCarousel({
+         owl.owlCarousel({
             items: 7,
             margin: 2,
             loop: true,
             nav: true,
             responsive: {
                 320: {
-                    items: 2
+                    items: 1
                 },
                 480: {
-                    items: 3
+                    items: 2
                 },
                 769: {
-                    items: 4
+                    items: 3
                 },
                 991: {
+                    items: 5
+                },
+                1100: {
                     items: 6
                 }
             }

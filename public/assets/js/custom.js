@@ -62,8 +62,8 @@ $(document).ready(function () {
     $(".owlslidercategoryprecontent").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 600: { items: 2 }, 767: { items: 2 }, 992: { items: 3 }, 1200: { items: 4 }, } }),
     $(".owlslidertwo").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 575: { items: 2 }, 991: { items: 4 }, 1400: { items: 4 } } }),
     $(".blog-carousel-engagement").owlCarousel({ loop: !0, margin: 20, nav: !0, dots: !1, responsive: { 0: { items: 1 }, 575: { items: 2 }, 991: { items: 3 }, 1400: { items: 4 } } }),
-    $(".slider-review").owlCarousel({ loop: !0, margin: 30, nav: !0, responsive: { 0: { items: 1 }, 600: { items: 3 }, 1e3: { items: 4 } } }),
-    $(".photo-slider").owlCarousel({ loop: !0, margin: 10, nav: !1, responsive: { 0: { items: 1 }, 600: { items: 3 }, 1e3: { items: 5 } } }),
+    $(".slider-review").owlCarousel({ loop: !0, margin: 30, nav: !0, responsive: { 320: { items: 1 }, 480: { items: 2 }, 769: { items: 3 }, 1e3: { items: 4 } } }),
+    $(".photo-slider").owlCarousel({ loop: !0, margin: 10, nav: !1, responsive: { 320: { items: 1 },480: { items: 2 },769: { items: 3 },1300: { items: 4 },1500: { items: 5 } } }),
     $(".mobil-bar").owlCarousel({ loop: !0, margin: 10, nav: !1, dots: !1, responsive: { 0: { items: 1 }, 600: { items: 1 }, 1e3: { items: 1 } } }),
     $("#scroll-to-top").on("click", function () {
         $("html, body").animate({ scrollTop: $("html, body").offset().top });
