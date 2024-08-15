@@ -367,7 +367,9 @@
                         @foreach($sortedArray as $product)
                         <?php $thumbnailGif = getThumbnailGif($product->id); ?>
                         
-                        <?php //$getProductListingPrices = getMinimumPriceFunction($product);
+                        <?php $getCategory = explode(",",$product->categories);
+                           
+                            $product = getEngagmentRingsLabPriceAdded($product);
                         ?>
                         <div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
 
@@ -432,33 +434,42 @@
                                     </div>
                                     
                                 </div>
-                                <?php if(!empty($product->lab_grown_rrp) && $product->lab_grown_rrp != 0.0){ ?>
-                                    {{-- <div class="price-section">
-                                        <div style="display: flex;">
-                                            <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
-                                            @if(isset($product->discounted_lab_grown['discounted_price']) && !empty($product->discounted_lab_grown['discounted_price']))
-                                                <h4>
-                                                    <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}}</del> 
-                                                </h4>
-                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $product->discounted_lab_grown['discounted_price']) }} </span></div>
-                                            @else
-                                                <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown) }} </span></div>
-                                            @endif
+                                <?php
+                                if(!in_array(50,$getCategory) && !in_array(53,$getCategory) && !in_array(54,$getCategory)){ ?>
+                                    <?php 
+                                    if(isset($product->get_product_variation) && $product->get_product_variation['lab_grown_rrp'] != 0.0){  ?>
+                                        <div class="price-section">
+                                            <div style="display: flex;">
+                                                @if(isset($product->get_product_variation['discounted_lab_grown']) && !empty($product->get_product_variation['discounted_lab_grown']))
+
+                                                    @if($product->get_product_variation['discounted_lab_grown'] !== $product->get_product_variation['lab_grown'])
+                                                        <h4>
+                                                            <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->get_product_variation['lab_grown']),2)}}</del> 
+                                                        </h4>
+                                                    @endif
+                                                
+                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $product->get_product_variation['discounted_lab_grown']) }} </span></div>
+                                                @else
+                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['lab_grown']) }} </span></div>
+                                                @endif
+                                            </div>
+                                                <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['lab_grown_rrp'] - $product->get_product_variation['discounted_lab_grown'])}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['lab_grown_rrp']) }}</del> </p>
                                         </div>
-                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp - $product->lab_grown)}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp) }}</del> </p>
-                                    </div> --}}
-                                <?php }else if(!empty($product->mined_diamond_rrp) && $product->mined_diamond_rrp != 0.0){ ?> 
-                                    {{-- <div class="price-section">
+                                    <?php } ?>
+                                <?php }else if(in_array(54,$getCategory)){  ?> 
+                                    <div class="price-section">
                                         <div style="display: flex;">
-                                            <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
-                                            <!-- <h4>
-                                            <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->mined_diamond_rrp),2)}}</del> 
-                                            </h4> -->
-                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
+                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['mined_diamond'])}} </span></div>
                                         </div>
-                                            <!-- <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp - $product->mined_diamond}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp}}</del> </p> -->
-                                    </div> --}}
-                                <?php } ?>
+                                    </div>
+                                <?php } elseif (in_array(53,$getCategory) || in_array(50,$getCategory)){ ?>
+                                    <div class="price-section">
+                                        <div style="display: flex;">
+                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['mined_diamond'])}} </span></div>
+                                        </div>
+                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->get_product_variation['mined_diamond_rrp'] - $product->get_product_variation['mined_diamond']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->get_product_variation['mined_diamond_rrp']}}</del> </p>
+                                    </div>
+                               <?php } ?>
                             </div>
                         </div>
                         @endforeach

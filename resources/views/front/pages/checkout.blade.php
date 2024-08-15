@@ -1021,7 +1021,37 @@
         }
     });
 </script>
+{{--
+<script>
+    // var url = "https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=b884fefd2e03ec4c921c184fcc4273f0";
 
+    // function get_deko_data() {
+    //     $.getScript(url, function() {
+    //         alterFilters();
+    //         alterMinOption();
+    //         var values = $("#final_price").val();
+    //         var code = $("#terms").val();
+    //         var percentage = parseInt($("#payed").val());
+    //         var deposit = parseFloat((percentage / 100) * values);
+    //         var my_fd_obj = new FinanceDetails(code, values, percentage, deposit);
+    //         $("#perMonth").html(my_fd_obj.m_inst.toFixed(2) + " per month");
+    //         $("#perMonths").html(my_fd_obj.m_inst.toFixed(2));
+    //         $("#cashPrices").html(my_fd_obj.goods_val);
+    //         $("#Deposited").html(my_fd_obj.d_amount);
+    //         $("#loanAmt").html(my_fd_obj.l_amount);
+    //         $("#loanRepay").html(my_fd_obj.l_repay);
+    //         $("#costLoan").html(my_fd_obj.l_cost);
+    //         $("#totalAmt").html(my_fd_obj.total);
+    //         $("#noTerm").html(my_fd_obj.term);
+    //         $("#totalP").html(my_fd_obj.goods_val);
+
+    //         $("#payPro").val(code);
+    //         $("#payPer").val(percentage);
+    //     });
+    // }
+    // get_deko_data();
+</script>
+--}}
 <script>
     var api = $("#myapi").val();
 
@@ -1066,33 +1096,6 @@
         }
     }
 
-    var url = "https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=b884fefd2e03ec4c921c184fcc4273f0";
-
-    function get_deko_data() {
-        $.getScript(url, function() {
-            alterFilters();
-            alterMinOption();
-            var values = $("#final_price").val();
-            var code = $("#terms").val();
-            var percentage = parseInt($("#payed").val());
-            var deposit = parseFloat((percentage / 100) * values);
-            var my_fd_obj = new FinanceDetails(code, values, percentage, deposit);
-            $("#perMonth").html(my_fd_obj.m_inst.toFixed(2) + " per month");
-            $("#perMonths").html(my_fd_obj.m_inst.toFixed(2));
-            $("#cashPrices").html(my_fd_obj.goods_val);
-            $("#Deposited").html(my_fd_obj.d_amount);
-            $("#loanAmt").html(my_fd_obj.l_amount);
-            $("#loanRepay").html(my_fd_obj.l_repay);
-            $("#costLoan").html(my_fd_obj.l_cost);
-            $("#totalAmt").html(my_fd_obj.total);
-            $("#noTerm").html(my_fd_obj.term);
-            $("#totalP").html(my_fd_obj.goods_val);
-
-            $("#payPro").val(code);
-            $("#payPer").val(percentage);
-        });
-    }
-    get_deko_data();
 
     $(document).ready(function() {
         $("#terms").on("change", function() {

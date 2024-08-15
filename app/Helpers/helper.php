@@ -1484,28 +1484,26 @@ if (!function_exists('validate_breadcrumb')) {
             $productSingleArray[$keyi]['categories'] =  $product['categories'];
             $productSingleArray[$keyi]['parent_cat'] =  $product['product_parent_category'];
             $productSingleArray[$keyi]['getProductImages'] =  $product['get_product_images'];
-            
-            foreach($product['get_product_variation'] as $keyData => $productVariations){
-                foreach($productVariations['get_vari_details_id'] as $keyVariData => $productMetalData){
-                    if(isset($productMetalData['key']) && $productMetalData['key'] == 'attri_metal-type'){
-                        if(isset($productMetalData['value']) && $productMetalData['value'] == '9ct White Gold'){
-                            $productSingleArray[$keyi]['mined_diamond_rrp'] =  $productVariations['mined_diamond_rrp'];
-                            $productSingleArray[$keyi]['mined_diamond'] =  $productVariations['mined_diamond'];
-                            $productSingleArray[$keyi]['lab_grown_rrp'] =  $productVariations['lab_grown_rrp'];
-                            $productSingleArray[$keyi]['lab_grown'] =  $productVariations['lab_grown'];
-                            $productSingleArray[$keyi]['discounted_lab_grown'] =  getFlatDiscountRanges(["shop_price"=>$productVariations['lab_grown']],$product['product_parent_category'],'lab_grown');
-                            $productSingleArray[$keyi][$productMetalData['key']] =  $productMetalData['value'];
-                        }else{
-                            $productSingleArray[$keyi]['mined_diamond_rrp'] =  $productVariations['mined_diamond_rrp'];
-                            $productSingleArray[$keyi]['mined_diamond'] =  $productVariations['mined_diamond'];
-                            $productSingleArray[$keyi]['lab_grown_rrp'] =  $productVariations['lab_grown_rrp'];
-                            $productSingleArray[$keyi]['lab_grown'] =  $productVariations['lab_grown'];
-                            $productSingleArray[$keyi]['discounted_lab_grown'] =  getFlatDiscountRanges(["shop_price"=>$productVariations['lab_grown']],$product['product_parent_category'],'lab_grown');
-                            $productSingleArray[$keyi][$productMetalData['key']] =  $productMetalData['value'];
-                        }
+
+            usort($product['get_product_variation'], function($a, $b) {
+                return $a['lab_grown_rrp'] <=> $b['lab_grown_rrp'];
+            });
+
+            $filtered = array_filter($product['get_product_variation'], function($item)  use ($product) {
+                foreach ($item['get_vari_details_id'] as $detail) {
+                    
+                    if ($detail['value'] === '9ct White Gold') {
+                        return true;
+                    }else if (in_array(54,explode(',',$product['categories']))){
+                        return true;
                     }
                 }
-            }
+                return false;
+            });
+            
+            $record = array_shift($filtered); // Get the first matching record
+            
+            $productSingleArray[$keyi]['get_product_variation'] =  $record;
         }
 
 
@@ -1836,23 +1834,27 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
     function getFlatDiscountRanges($arrayPrices, $catId,$diamondType){
         if(getDiscountFunctionalityapplied() == 'yes'){
             $disPercentage = DiscountRange::whereHas('discount_data', function($q)  {
-                            // $q->whereDate('end_date', '>', now());
-                        })
-                        ->with(['discount_data'])->where('category_id', $catId)
-                        ->whereRaw('"'.$arrayPrices['shop_price'].'" between `from_price` and `to_price`')
-                        // ->where('diamond_type', $diamondType)
-                        ->when($diamondType, function ($q) use ($diamondType) {
-                            return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
-                        })
-                        ->where('discount', '!=', 1)
-                        // ->where('discount_type', 'F')
-                        ->where('status', 1)
-                        ->first();
+                        // $q->whereDate('end_date', '>', now());
+                    })
+                    ->with(['discount_data'])->where('category_id', $catId)
+                    ->whereRaw('"'.$arrayPrices['shop_price'].'" between `from_price` and `to_price`')
+                    // ->where('diamond_type', $diamondType)
+                    ->when($diamondType, function ($q) use ($diamondType) {
+                        return $q->whereRaw("FIND_IN_SET(?, diamond_type) > 0", [$diamondType]);
+                    })
+                    ->where('discount', '!=', 1)
+                    // ->where('discount_type', 'F')
+                    ->where('status', 1)
+                    ->first();
 
             if(isset($disPercentage) && !empty($disPercentage)){
                 $arrayPrices['discounted_price'] = round($arrayPrices['shop_price'] * (1 - $disPercentage->discount / 100));
                 return $arrayPrices;
+            }else{
+                $arrayPrices['discounted_price'] = $arrayPrices['shop_price'];
             }
+        }else{
+            $arrayPrices['discounted_price'] = $arrayPrices['shop_price'];
         }
         return $arrayPrices;
     }
@@ -2280,13 +2282,20 @@ if (!function_exists("getAllCategoryProducts")) {
 if (!function_exists("getEngagmentRingsLabPriceAdded")) {
     function getEngagmentRingsLabPriceAdded($productDetails)
     {
-        $productCategory = explode(',',$productDetails->categories);
-        $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->first();
-        $newLabPrice = $newPrice->price;
-        $productDetails->lab_grown_rrp = $productDetails->lab_grown_rrp + $newLabPrice;
-        $productDetails->lab_grown = $productDetails->lab_grown + $newLabPrice;
-        $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->lab_grown), $productCategory,'lab_grown');
-        $productDetails->discounted_lab_grown = $final_discounted_price;
+        $getCategory = explode(",",$productDetails->categories);
+        if(in_array(8,$getCategory) && !in_array(18,$getCategory)){
+            $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->value('price');
+            // $newLabPrice = $newPrice->price;
+            $productDetails->get_product_variation['lab_grown_rrp'] = $productDetails->get_product_variation['lab_grown_rrp'] + $newPrice;
+            $productDetails->get_product_variation['lab_grown'] = $productDetails->get_product_variation['lab_grown'] + $newPrice;
+            $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->get_product_variation['lab_grown']), $getCategory,'lab_grown')['discounted_price'];
+            $productDetails->get_product_variation['discounted_lab_grown'] = $final_discounted_price;
+        }else{
+            if(isset($productDetails->get_product_variation) && !empty($productDetails->get_product_variation)){
+                $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->get_product_variation['lab_grown']), $getCategory,'lab_grown')['discounted_price'];
+                $productDetails->get_product_variation['discounted_lab_grown'] = $final_discounted_price;
+            }
+        }
         return $productDetails;
     }
 }

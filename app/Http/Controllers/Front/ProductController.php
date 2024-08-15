@@ -113,13 +113,13 @@ class ProductController extends Controller
         $getVariationDescription = ProductVariationDescription::where('variation','9ct White Gold')->first();
 
 
-        $dekoEnabled = true;
-        $client = new DekoPayApiClient('', '', env('DEKOPAY_API_KEY'));
-        $pay_url =  env('DEKOPAY_MODE');
+        // $dekoEnabled = true;
+        // $client = new DekoPayApiClient('', '', env('DEKOPAY_API_KEY'));
+        // $pay_url =  env('DEKOPAY_MODE');
 
-        if ($dekoEnabled) {
-            $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=' . env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key=' . env('DEKOPAY_API_KEY');
-        }
+        // if ($dekoEnabled) {
+        //     // $url = $pay_url == 'live' ? 'https://secure.dekopay.com/js_api/FinanceDetails.js.php?api_key=' . env('DEKOPAY_API_KEY')  : 'https://test.dekopay.com/js_api/FinanceDetails.js.php?api_key=' . env('DEKOPAY_API_KEY');
+        // }
 
         $requestData = $request->query() ? $request->query() : [];
 
@@ -203,7 +203,7 @@ class ProductController extends Controller
                             'variationDetails' => $variationDetails,
                             'prodImages' => $prodImages,
                             'getVariationDescription' => $getVariationDescription,
-                            'url' => $url,
+                            // 'url' => $url,
                             'requestData' => $requestData
                         ]
                     );
@@ -237,7 +237,7 @@ class ProductController extends Controller
                             'plainbandMulti' => $plainbandMulti,
                             'plainbandJewellery' => $plainbandJewellery,
                             'getVariationDescription' => $getVariationDescription,
-                            'url' => $url,
+                            // 'url' => $url,
                             'plainband' => $plainband,
                             'variationImages' => $variationDetails,
                             'requestData' => $requestData,
