@@ -1500,7 +1500,7 @@ if (!function_exists('validate_breadcrumb')) {
                 }
                 return false;
             });
-            
+
             $record = array_shift($filtered); // Get the first matching record
             
             $productSingleArray[$keyi]['get_product_variation'] =  $record;
@@ -1532,11 +1532,11 @@ if (!function_exists('validate_breadcrumb')) {
                 'redirect_url'=> $getProductListFinal->path()
             ];
         }
-        $getAjaxResponses = true;
+        // $getAjaxResponses = true;
 
         $productItems = "";
         if ($getProductListFinal->count()) {
-            $productItems = view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses','sortedArray'))->render();
+            $productItems = $getAjaxResponses ? null : view('front.ajax.productlistajax', compact('getProductListFinal', 'getAjaxResponses', 'sortedArray'))->render();
         } else {
             return [
                 'status' => 404,
@@ -1546,7 +1546,7 @@ if (!function_exists('validate_breadcrumb')) {
         }
         $isNextPage = $getProductListFinal->hasMorePages();
         $nextPage = $getProductListFinal->currentPage() + 1;
-        
+      
         return [
             'status' => 200,
             'productItems' => $productItems,
