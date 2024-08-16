@@ -1,1 +1,306 @@
-var MarlowsAPP=angular.module("MarlowsAPP",["ui.bootstrap","ngRoute","ngSanitize"],function(e){e.startSymbol("<%"),e.endSymbol("%>")}),base_url=systemBaseUrl+"api/v1/";MarlowsAPP.controller("CommonController",function(e,t,a){e.searchProducts=function(){t({method:"POST",url:base_url+"searchProducts",data:{name:e.search}}).success(function(t){e.searchResults=t})}}),MarlowsAPP.controller("DiamondSearchController",function(e,t,a,n,i,o,r){e.getDiamondResults=function(){function t(){e.fromService=r.diamondSearch(e.limit,e.currentPage,e.next_page_url,e.shape,e.carat_min,e.carat_max,e.colour,e.clarity,e.grade,e.polish,e.symmetry,e.fluorescence,e.certificate,e.partial_deposit_payment).then(function(t){e.data=t.data.data,e.paging=t.data,e.temp_value_type?e.partial_deposit_payment=e.paging.firstDiamondAmount:e.partial_deposit_payment=e.paging.firstDiamondAmount*(e.temp_value_partial_deposit_payment/100),e.currentPage=e.paging.current_page,e.numPerPage=e.paging.per_page,e.maxSize=10,e.totalItems=e.paging.total,e.next_page_url=e.paging.next_page_url,e.prev_page_url=e.paging.prev_page_url,e.totalPages=e.paging.last_page,e.VAT=e.paging.VAT,e.firstDiamondAmount=e.paging.firstDiamondAmount,e.loader=!1})}e.loader=!0,e.limit=10,e.totalPages=0,e.currentPage=1,e.range=[],e.shape=$("input[name='shape']:checked").val(),e.payment_mode=$("input[name='payment_mode']:checked").val(),e.temp_value_type=$("input[name=payment_mode]").prop("checked"),e.temp_value_partial_deposit_payment=parseInt($("#partial_deposit_payment").val()),setTimeout(function(){e.carat_min=$("#input-carat-min").val(),e.carat_max=$("#input-carat-max").val(),t()},0),e.colour=[],$("input[name='colour[]']:checked").each(function(){e.colour.push($(this).val())}),e.clarity=[],$("input[name='clarity[]']:checked").each(function(){e.clarity.push($(this).val())}),e.grade=[],$("input[name='grade[]']:checked").each(function(){e.grade.push($(this).val())}),e.polish=[],$("input[name='polish[]']:checked").each(function(){e.polish.push($(this).val())}),e.symmetry=[],$("input[name='symmetry[]']:checked").each(function(){e.symmetry.push($(this).val())}),e.fluorescence=[],$("input[name='fluorescence[]']:checked").each(function(){e.fluorescence.push($(this).val())}),e.certificate=[],$("input[name='certificate[]']:checked").each(function(){e.certificate.push($(this).val())}),e.partial_deposit_payment=[],$("input[name='payment_mode']:checked",function(){var t=0;t=$("input[name=payment_mode]").prop("checked")?$("#full_payment").val():$("#partial_deposit_payment").val(),e.partial_deposit_payment.push(t)}),e.pageChanged=function(){e.loader=!0,t()}},e.updateDiamondPrice=function(t){e.firstDiamondAmount=t,e.temp_value_type?e.partial_deposit_payment=e.firstDiamondAmount:e.partial_deposit_payment=e.firstDiamondAmount*(e.temp_value_partial_deposit_payment/100)}}),MarlowsAPP.controller("ProductController",function(e,t,a){e.productCatFilters=function(a,n,i){e.display_filter=!1,t({method:"POST",url:base_url+"getProductCatFilter",data:{cat1:a,cat2:n,cat3:i}}).success(function(t){e.display_filter=!0,e.parent_cat=t.parent_cat,e.subCats=t.subCats,e.subSubCats=t.subSubCats,0==t.subSubCats.length?e.showsubCatOnly="display_first_filter":e.showsubCatOnly=""})}}),MarlowsAPP.controller("DekopayController",function(e,t,a){var n=null;function i(){if(null!=n){var e=$('select[name="term"]').val();n.hasOwnProperty(e)?(termProp=parseInt(n[e]),$('select[name="percentage"] option').attr("disabled","disabled"),$('select[name="percentage"] option').each(function(){parseInt($(this).val())>=termProp&&$(this).removeAttr("disabled")})):$('select[name="percentage"] option').removeAttr("disabled")}}void 0!==window.dekofilters&&(n=window.dekofilters),e.financeOptions=function(){e.term="ONIB12-22.9",e.percentage="10",e.productPrice=$("#finaldiamondprice .price").text().replace("\xc2\xa3",""),$("#totalOrder").val(e.productPrice),$("#totalOrderText").text(e.productPrice),$("#totalOrderText").attr("data-val",e.productPrice),$("#financeAvailableModal").modal("show"),void 0!==$("#totalOrderText")&&null!=$("#totalOrderText")&&(i(),e.dekoInit())},e.financeOptionsCheckout=function(){e.term="ONIB12-22.9",e.percentage="10",i(),e.dekoInit()},e.calculate=function(){e.dekoInit()},e.dekoInit=function(){e=$('select[name="percentage"]').val(),t=!1,$('select[name="percentage"] option').each(function(){$(this).val()==e&&$(this).prop("disabled")&&(t=!0)}),(t||null==e)&&($('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first')),$('select[name="percentage"] option:not([disabled]):first').prop("selected","selected"));var e,t,a=$("#totalOrder").val(),n=$("#payed").val(),i=parseFloat($("#payed").val()),o=$("#terms").val();$("#payPro").val(o),$("#payPer").val(n);var r=parseFloat(a)/100*i,l=new FinanceDetails(o,parseFloat(a),i,r),c=parseFloat($("#preSetValue").val());a>c?($(".finance-available-options").css("display","block"),$(".finance_options_not_available").css("display","none")):($(".finance-available-options").css("display","none"),$(".finance_options_not_available").css("display","block")),$("#perMonths").text(parseFloat(l.m_inst).toFixed(2)),$("#cashPrices").text(parseFloat(l.goods_val).toFixed(2)),$("#Deposited").text(parseFloat(l.d_amount).toFixed(2)),$("#loanAmt").text(parseFloat(l.l_amount).toFixed(2)),$("#loanRepay").text(parseFloat(l.l_repay).toFixed(2)),$("#costLoan").text(parseFloat(l.l_cost).toFixed(2)),$("#totalAmt").text(parseFloat(l.total).toFixed(2)),$("#noTerm").text(l.term),$("#rointerest").text(l.rate_of_interest),$("#apr_represent").text(l.apr)}}),MarlowsAPP.service("diamondSearchService",function(e,t){var a=base_url;this.diamondSearch=function(t,n,i,o,r,l,c,p,s,u,d,m,h){var f="";return e({method:"GET",url:f=""==i?a+"getDiamondDataFromAPI?page=1&shape="+o+"&carat_min="+r+"&carat_max="+l+"&colour="+c+"&clarity="+p+"&grade="+s+"&polish="+u+"&symmetry="+d+"&fluorescence="+m+"&certificate="+h:a+"getDiamondDataFromAPI?page="+n+"&shape="+o+"&carat_min="+r+"&carat_max="+l+"&colour="+c+"&clarity="+p+"&grade="+s+"&polish="+u+"&symmetry="+d+"&fluorescence="+m+"&certificate="+h})}});
+var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSanitize'], function($interpolateProvider) {
+    $interpolateProvider.startSymbol('<%');
+    $interpolateProvider.endSymbol('%>');
+    
+    });
+    
+    // var base_url = "/api/v1/";
+    var base_url = systemBaseUrl + 'api/v1/';
+    
+    /******** Define the Common controller  ***************/
+    
+    MarlowsAPP.controller("CommonController",function($scope, $http,$compile) {
+        
+        $scope.searchProducts = function(){
+            //console.log($scope.search);
+            var url  = base_url+"searchProducts";
+            $http({
+                method  : 'POST',
+                url     : url,
+                data    : {name:$scope.search}
+    
+            }).success(function(data) {
+               // console.log(data);
+                $scope.searchResults = data;
+                
+            });
+        }
+    
+       
+    });
+    /******** Define the diamond search controller  ***************/
+    
+    MarlowsAPP.controller("DiamondSearchController",function($scope, $http,$compile,$window,$sce, $timeout,diamondSearchService) {
+        
+        $scope.getDiamondResults=function(){
+            $scope.loader=true;
+            $scope.limit= 10;
+            $scope.totalPages = 0;
+            $scope.currentPage = 1;
+            $scope.range = [];
+    
+            $scope.shape = $("input[name='shape']:checked").val(); // Shape
+            $scope.payment_mode = $("input[name='payment_mode']:checked").val(); // Shape
+    
+            $scope.temp_value_type = $("input[name=payment_mode]").prop('checked');
+            $scope.temp_value_partial_deposit_payment = parseInt($("#partial_deposit_payment").val());
+           
+    
+            setTimeout(function() { // Carat
+                $scope.carat_min = $("#input-carat-min").val();
+                $scope.carat_max = $("#input-carat-max").val();
+                getData();
+            }, 0);
+            
+            $scope.colour = [];
+            $("input[name='colour[]']:checked").each(function () { // Colour
+                $scope.colour.push($(this).val());
+            });
+            $scope.clarity = [];
+            $("input[name='clarity[]']:checked").each(function () { // Clarity
+                $scope.clarity.push($(this).val());
+            });
+            $scope.grade = [];
+            $("input[name='grade[]']:checked").each(function () { // Cut grade
+                $scope.grade.push($(this).val());
+            });
+    
+            $scope.polish = [];
+            $("input[name='polish[]']:checked").each(function () { // Polish
+                $scope.polish.push($(this).val());
+            });
+            $scope.symmetry = [];
+            $("input[name='symmetry[]']:checked").each(function () { // Symmetry
+                $scope.symmetry.push($(this).val());
+            });
+            $scope.fluorescence = [];
+            $("input[name='fluorescence[]']:checked").each(function () { // Fluorescence
+                $scope.fluorescence.push($(this).val());
+            });
+    
+            $scope.certificate = [];
+            $("input[name='certificate[]']:checked").each(function () { // Certificate
+                $scope.certificate.push($(this).val());
+            });
+    
+            $scope.partial_deposit_payment = [];
+            $("input[name='payment_mode']:checked", function () { // Flu
+                var temp_value = 0;
+                if($("input[name=payment_mode]").prop('checked')){
+                    temp_value = $("#full_payment").val();
+                }else{
+                    temp_value = $("#partial_deposit_payment").val();
+                }
+                $scope.partial_deposit_payment.push(temp_value);
+            });
+    
+            
+            
+            function getData(){
+                
+                $scope.fromService = diamondSearchService.diamondSearch($scope.limit,$scope.currentPage,$scope.next_page_url,$scope.shape,$scope.carat_min,$scope.carat_max,$scope.colour,$scope.clarity,$scope.grade,$scope.polish,$scope.symmetry,$scope.fluorescence,$scope.certificate,$scope.partial_deposit_payment).then(function(result) {
+    
+                    
+                   
+                   
+                    $scope.data = result.data.data;
+                    
+                    $scope.paging = result.data;
+                    if($scope.temp_value_type){
+                        $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount;
+                    }else{
+                        $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount * ($scope.temp_value_partial_deposit_payment / 100);
+                    }
+                    $scope.currentPage = $scope.paging.current_page;
+                    $scope.numPerPage = $scope.paging.per_page;
+                    $scope.maxSize = 10;
+                    $scope.totalItems = $scope.paging.total;
+                    $scope.next_page_url = $scope.paging.next_page_url;
+                    $scope.prev_page_url = $scope.paging.prev_page_url;
+                    $scope.totalPages = $scope.paging.last_page;
+                    $scope.VAT = $scope.paging.VAT;
+                    $scope.firstDiamondAmount = $scope.paging.firstDiamondAmount;
+                    
+                    // $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount/10;
+                    $scope.loader=false;
+                    // console.log('Sumit', $scope);
+                });
+    
+    
+            }
+            $scope.pageChanged = function() {
+                $scope.loader=true;
+                getData();
+            };
+        };
+    
+        $scope.updateDiamondPrice = function(price){
+            $scope.firstDiamondAmount = price;
+            if($scope.temp_value_type){
+                $scope.partial_deposit_payment = $scope.firstDiamondAmount;
+            }else{
+                $scope.partial_deposit_payment = $scope.firstDiamondAmount * ($scope.temp_value_partial_deposit_payment / 100);
+            }
+            // console.log("Sumit", $scope);
+        }
+    
+    });
+    
+    /******** Define the Product controller  ***************/
+    
+    MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
+        
+        $scope.productCatFilters = function(cat1,cat2,cat3){
+            $scope.display_filter = false;
+            var url  = base_url+"getProductCatFilter";
+            $http({
+                method  : 'POST',
+                url     : url,
+                data    : {cat1:cat1,cat2:cat2,cat3:cat3}
+    
+            }).success(function(data) {
+                $scope.display_filter = true;
+                $scope.parent_cat = data.parent_cat;
+                $scope.subCats = data.subCats;
+    
+                $scope.subSubCats = data.subSubCats;
+                if(data.subSubCats.length==0){
+                    $scope.showsubCatOnly = 'display_first_filter';
+                }else{
+                    $scope.showsubCatOnly = '';
+                }
+            });
+        }
+    
+       
+    });
+    /******** Define the Dekopay controller  ***************/
+    
+    MarlowsAPP.controller("DekopayController",function($scope, $http,$compile) {
+        var dekoFilters = null;
+        if(undefined !== window.dekofilters){
+            dekoFilters = window.dekofilters;
+        }
+        $scope.financeOptions = function(){
+            $scope.term='ONIB12-22.9';
+            $scope.percentage='10';
+            $scope.productPrice = $("#finaldiamondprice .price").text().replace("£", "");
+            $('#totalOrder').val($scope.productPrice);
+            $('#totalOrderText').text($scope.productPrice);
+            $('#totalOrderText').attr('data-val',$scope.productPrice);
+            $('#financeAvailableModal').modal('show');
+            if(undefined !== $('#totalOrderText') && null != $('#totalOrderText')){
+                
+                alterFilters(); 
+    
+                $scope.dekoInit(); 
+            }
+        }
+        $scope.financeOptionsCheckout = function(){
+            $scope.term='ONIB12-22.9';
+            $scope.percentage='10';
+           
+            alterFilters(); 
+    
+            $scope.dekoInit(); 
+            
+        }
+        $scope.calculate = function(){
+           $scope.dekoInit(); 
+        }
+        function alterFilters(){
+                    if(null != dekoFilters){
+                    var term = $('select[name="term"]').val(); 
+                    if(dekoFilters.hasOwnProperty(term)){
+                        termProp = parseInt(dekoFilters[term]);
+                        $('select[name="percentage"] option').attr('disabled', 'disabled'); 
+                        $('select[name="percentage"] option').each(function(){
+                            var valInt = parseInt($(this).val());
+                            if(valInt >= termProp){
+                                $(this).removeAttr('disabled'); 
+                            }
+                        });
+                        
+                    }else{
+                        $('select[name="percentage"] option').removeAttr('disabled'); 
+                    }
+            }
+         }
+        function alterMinOption(){
+           var payedVal = $('select[name="percentage"]').val();
+           var update = false;
+           $('select[name="percentage"] option').each(function(){   
+               if($(this).val() == payedVal){
+                    if($(this).prop('disabled')){
+                        update = true;  
+                    }
+               }
+           });     
+            if(update || payedVal == null){
+                $('select[name="percentage"]').val($('select[name="percentage"] option:not([disabled]):first'));
+                $('select[name="percentage"] option:not([disabled]):first').prop('selected', 'selected');
+            }
+        }
+        $scope.dekoInit = function(){
+            
+            alterMinOption(); 
+           //Call the api 
+           var price = $('#totalOrder').val();
+           var payedVal = $('#payed').val();
+    
+           var deposit  = parseFloat($('#payed').val()); 
+    
+           var code = $('#terms').val();
+          
+           $('#payPro').val(code); 
+           $('#payPer').val(payedVal); 
+            
+           var amount = (parseFloat(price)/100)* deposit;
+           var my_fd = new FinanceDetails(code, parseFloat(price), deposit, amount);
+           
+           var preSetVal = parseFloat($('#preSetValue').val());
+           //console.log(my_fd);
+           //console.log(preSetVal);
+           if(price>preSetVal){
+                $('.finance-available-options').css('display','block');
+                $('.finance_options_not_available').css('display','none');
+            }else{
+                $('.finance-available-options').css('display','none');
+                $('.finance_options_not_available').css('display','block');
+           }
+    
+           $('#perMonths').text(parseFloat(my_fd.m_inst).toFixed(2)); 
+           $('#cashPrices').text(parseFloat(my_fd.goods_val).toFixed(2));
+           $('#Deposited').text(parseFloat(my_fd.d_amount).toFixed(2));
+           $('#loanAmt').text(parseFloat(my_fd.l_amount).toFixed(2));
+           $('#loanRepay').text(parseFloat(my_fd.l_repay).toFixed(2));
+           $('#costLoan').text(parseFloat(my_fd.l_cost).toFixed(2));
+           $('#totalAmt').text(parseFloat(my_fd.total).toFixed(2));
+           $('#noTerm').text(my_fd.term);
+           $('#rointerest').text(my_fd.rate_of_interest);
+           $('#apr_represent').text(my_fd.apr);
+        }
+       
+    });
+    /*
+    *** Angular JS Services
+    */
+    
+    MarlowsAPP.service('diamondSearchService', function($http, $location){
+        var apiUrl = base_url;
+        this.diamondSearch= function(limit,currentPage, nextpage,shape,carat_min,carat_max,colour,clarity,grade,polish,symmetry,fluorescence,certificate){
+            
+            var apiUrls = '';
+            if(nextpage == ''){
+                apiUrls = apiUrl+'getDiamondDataFromAPI?page='+1+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
+            } else {
+                apiUrls = apiUrl+'getDiamondDataFromAPI?page='+currentPage+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
+            }
+            return $http({
+                method: 'GET',
+                url: apiUrls
+            });
+        };
+    });
+    
+    
