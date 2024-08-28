@@ -70,6 +70,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 					<a href="#">{{isset($titleSplits[1])?$titleSplits[1]:''}}</a>
 					@endif
 				</div>
+				{{-- 
 				<?php
 				if (!in_array(50, $getCategory) && !in_array(53, $getCategory) && !in_array(54, $getCategory)) { ?>
 					<?php
@@ -106,6 +107,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 						<p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->get_product_variation['mined_diamond_rrp'] - $product->get_product_variation['mined_diamond']}}</span></span> | <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->get_product_variation['mined_diamond_rrp']}}</del> </p>
 					</div>
 				<?php } ?>
+				--}}
 			</div>
 		</div>
 	</div>
