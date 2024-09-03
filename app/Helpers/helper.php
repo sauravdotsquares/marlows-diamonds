@@ -1514,9 +1514,13 @@ if (!function_exists('validate_breadcrumb')) {
         // Sort the collection by lab_grown_rrp price
 
         if(isset($requestData['sorting']) && $requestData['sorting'] == 'price-min'){
-            $sortedCollection = $collection->sortBy('lab_grown_rrp');
+            $sortedCollection = $collection->sortBy(function ($item) {
+                return $item['get_product_variation']['lab_grown_rrp'];
+            });
         }elseif(isset($requestData['sorting']) && $requestData['sorting'] == 'price-max'){
-            $sortedCollection = $collection->sortByDesc('lab_grown_rrp');
+            $sortedCollection = $collection->sortByDesc(function ($item) {
+                return $item['get_product_variation']['lab_grown_rrp'];
+            });
         }else{
             $sortedCollection = $collection;
         }
@@ -1532,7 +1536,6 @@ if (!function_exists('validate_breadcrumb')) {
                 'redirect_url'=> $getProductListFinal->path()
             ];
         }
-        // $getAjaxResponses = true;
 
         $productItems = "";
         if ($getProductListFinal->count()) {
