@@ -44,6 +44,7 @@
 
 @section('content')
 
+@section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$prodImages[0]->image_url}}" />@endsection
 <!-- product info and media -->
 
 <div class="product-detail-wraper">

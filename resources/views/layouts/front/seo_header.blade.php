@@ -22,7 +22,8 @@
 <meta property="og:description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
 <meta property="og:url" content="{{url()->current()}}" />
 <meta property="og:site_name" content="{!! config('app.name') !!}" />
-<meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" />
+@yield('dynamic_og_image')
+{{-- <meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" />--}}
 <meta property="og:image:width" content="120" />
 <meta property="og:image:height" content="120" />
 <meta property="og:image:type" content="image/jpeg" />

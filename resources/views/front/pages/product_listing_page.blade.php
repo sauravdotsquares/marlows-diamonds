@@ -19,8 +19,10 @@
 @endsection
 
 @if(isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
+    @section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$categoryData->banner_image_url}}" />@endsection
     <div class="category-banner" style="background-image:url('{{env('APP_IMAGE_URL').'/storage/'.$categoryData->banner_image_url}}')">
 @else
+    @section('dynamic_og_image')<meta property="og:image" content="{{asset('assets/images/engagement-rings-banner.png')}}" />@endsection
     <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
 @endif 
     <div class="container">
