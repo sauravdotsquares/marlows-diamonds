@@ -22,7 +22,7 @@
 <meta property="og:description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
 <meta property="og:url" content="{{url()->current()}}" />
 <meta property="og:site_name" content="{!! config('app.name') !!}" />
-<meta property="og:image" content="{{asset('images/'.$header_settings->get_options('logo'))}}" />
+<meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" />
 <meta property="og:image:width" content="120" />
 <meta property="og:image:height" content="120" />
 <meta property="og:image:type" content="image/jpeg" />
@@ -40,7 +40,7 @@
       "@type": "Organization",
       "name": "Marlows Diamonds",
       "url": "https://marlows-diamonds.co.uk",
-      "logo": "https://marlows-diamonds.co.uk/logo.png",
+      "logo": "{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}",
       "description": "Marlows Diamonds offers a wide range of exquisite diamond jewelry, engagement rings, and luxury watches.",
       "address": {
         "@type": "PostalAddress",
