@@ -1,3 +1,4 @@
+@inject('header_settings', 'App\Models\Settings')
 @extends('layouts.front.app')
 @section('content')
 @section('css')
@@ -6,6 +7,7 @@
     </style>
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
 @endsection
+@section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" />@endsection
     <!-- home main-banner start -->
     <div class="home-main-banner">
         <div class="main-banner-wraper flex-flex-wrap flexed">
