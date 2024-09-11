@@ -1468,6 +1468,7 @@ span#deposited_message {color: #8e2e65;display: inline-block !important;font-wei
 animation: blinker 1.5s linear infinite;}
 /* @keyframes blinker {50% {opacity: 0;}} */
 a.btn-bg-small.expdia { font-size: 15px; margin: 40px 0 0; }
+a.btn-bg-small.expdia { font-size: 15px; margin: 10px 0 0; }
 del#shopPrice {margin-right: 5px;}
 
 /* For GIA Images updation */
