@@ -200,11 +200,11 @@
                     </a>
                 </div>
                 <div class="mobile-cart-wishlist">
-                      <!-- <div class="mobile_search">
+                      <div class="mobile_search">
                           <a>
                               <i class="fa fa-search" aria-hidden="true"></i>
                           </a>
-                      </div> -->
+                      </div>
                       <div class="whats_app">
                             <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
                                 <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp">

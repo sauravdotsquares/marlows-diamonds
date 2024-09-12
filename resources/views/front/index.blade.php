@@ -352,58 +352,14 @@
                     <p class="second-para">Our diamonds and gemstones are better valued than any like-for-like comparison with any other UK jeweller. Our fancy shape diamonds like ovals, marquises, emeralds cuts, and cushion shapes are polished to the highest standards. We guarantee most of our diamonds visually appear larger than their carat weight. Our polishers create each diamond to maximize its proportions and not its carat weight, hence our 1ct will look like anyone else's 1.25ct. Come into any of our stores to learn more about the way we choose our rough diamonds so that the polished end product gets the best yield to maximise visual sparkle and appearance. This ensures you get the best visual appearance and sparkle for your budget. As we cannot be beaten on price, if you have seen something elsewhere, just send us a link and we will beat the price if cost is your deciding factor.</p>
                     <video src="{{env('APP_IMAGE_URL').'/storage/HomePageVideos/homeopagevideo.mp4'}}" controls id="video" poster="/storage/HomePageVideos/homeopagevideo.png"></video>
                 </div>
-                <div class="text-center">
-                    <a class="btn-bg-small getdirection" href="#getdirection">Get Direction</a>
+                <div class="text-center" id="getDirectionDetails">
+                    <a class="btn-bg-small getdirection" target="_blank" href="https://maps.app.goo.gl/1XkDadPTxSN46Wdc6">Get Direction</a>
                 </div>
                 
 
                 <div class="rating-img">
                     <i class="diamond-icon search-starviews"></i>
                 </div>
-                <div class="whychoose-rows flex-flex-wrap flexed">
-                    <a href="/terms" class="whychoose-col whychoose-link">
-                        <div class="whychoose-col-inner">
-                            <div class="whychoose-col-img">
-                                <i class="diamond-icon search-lifetime"></i>
-                            </div>
-                            <div class="whychoose-col-text">
-                                Lifetime Warranty T&c Apply
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
-                        <div class="whychoose-col-inner">
-                            <div class="whychoose-col-img">
-                               <i class="diamond-icon search-giacertified"></i>
-                            </div>
-                            <div class="whychoose-col-text">
-                                GIA Certified Diamonds
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/diamond-certificates/" class="whychoose-col whychoose-link">
-                        <div class="whychoose-col-inner">
-                            <div class="whychoose-col-img">
-                                <i class="diamond-icon search-experienced"></i>
-                            </div>
-                            <div class="whychoose-col-text">
-                                70 Years Experience
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/delivery-and-returns-policy" class="whychoose-col whychoose-link">
-                        <div class="whychoose-col-inner">
-                            <div class="whychoose-col-img">
-                                <i class="diamond-icon search-terms-conditions"></i>
-                            </div>
-                            <div class="whychoose-col-text">
-                                30 Day Returns. T&c Apply
-                            </div>
-                        </div>
-                    </a>
-
-                </div>
-
             </div>
         </div>
     </div>
@@ -428,7 +384,48 @@
 
 
     <!-- Marlow's End here -->
-
+    <div class="whychoose-rows flex-flex-wrap flexed">
+        <a href="/terms" class="whychoose-col whychoose-link">
+            <div class="whychoose-col-inner">
+                <div class="whychoose-col-img">
+                    <i class="diamond-icon search-lifetime"></i>
+                </div>
+                <div class="whychoose-col-text">
+                    Lifetime Warranty T&c Apply
+                </div>
+            </div>
+        </a>
+        <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
+            <div class="whychoose-col-inner">
+                <div class="whychoose-col-img">
+                    <i class="diamond-icon search-giacertified"></i>
+                </div>
+                <div class="whychoose-col-text">
+                    GIA Certified Diamonds
+                </div>
+            </div>
+        </a>
+        <a href="/diamond-certificates/" class="whychoose-col whychoose-link">
+            <div class="whychoose-col-inner">
+                <div class="whychoose-col-img">
+                    <i class="diamond-icon search-experienced"></i>
+                </div>
+                <div class="whychoose-col-text">
+                    70 Years Experience
+                </div>
+            </div>
+        </a>
+        <a href="/delivery-and-returns-policy" class="whychoose-col whychoose-link">
+            <div class="whychoose-col-inner">
+                <div class="whychoose-col-img">
+                    <i class="diamond-icon search-terms-conditions"></i>
+                </div>
+                <div class="whychoose-col-text">
+                    30 Day Returns. T&c Apply
+                </div>
+            </div>
+        </a>
+    </div>
 
     <!--Shop from Marlow’s GIA Certified Diamond Rings start -->
     <div class="shopfrom-block">
@@ -582,7 +579,15 @@
 
     $(document).ready(function(){
         $('#showPromotionPopup').modal('show');
+        moveDiv();
     });
+    function moveDiv() {
+        if ($(window).width() < 767) {
+            $('#getDirectionDetails').css('display','block');
+        } else {
+            $('#getDirectionDetails').css('display','none');
+        }
+    }
 
 
     function blankForm() {

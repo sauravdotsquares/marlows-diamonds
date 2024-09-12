@@ -42,7 +42,6 @@
 	       </div>
 	          <h3>Find Us</h3>
 	          <p>46 Warstone Ln, Hockley, Birmingham B18 6JJ</p>
-	          <a target="_blank" href="https://maps.app.goo.gl/1XkDadPTxSN46Wdc6">Get Direction</a>
 	        </div>
 	      </div>
 	        <div class="col-md-4">
