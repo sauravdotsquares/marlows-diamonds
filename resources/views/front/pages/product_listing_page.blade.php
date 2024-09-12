@@ -19,7 +19,7 @@
 @endsection
 <?php
 $pathData = explode('/',$path);
-if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings',$pathData)) { ?>
+if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings',$pathData) || in_array('diamonds-rings',$pathData)) { ?>
     <style>
         @media (min-width: 320px) and (max-width: 376px) {
             .banner {
