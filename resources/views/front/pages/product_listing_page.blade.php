@@ -17,12 +17,116 @@
 </style>
 
 @endsection
+<?php
+$pathData = explode('/',$path);
+if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings',$pathData)) { ?>
+    <style>
+        @media (min-width: 320px) and (max-width: 376px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/320_3.jpg") }}');
+            }
+        }
+        @media (min-width: 377px) and (max-width: 575px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/575_3.jpg")}}');
+            }
+        }
+        @media (min-width: 576px) and (max-width: 768px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/767_3.jpg")}}');
+            }
+        }
+        @media (min-width: 769px) and (max-width: 991px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/991_3.jpg")}}');
+            }
+        }
+        @media (min-width: 992px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/1199_3.jpg")}}');
+            }
+        }
+        @media (min-width: 1399px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/1900_3.jpg")}}');
+            }
+        }
+    </style>
+<?php } elseif(in_array('wedding-rings',$pathData)) { ?>
+        <style>
+            @media (min-width: 320px) and (max-width: 376px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/320_1.jpg") }}');
+                }
+            }
+            @media (min-width: 377px) and (max-width: 575px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/575_1.jpg")}}');
+                }
+            }
+            @media (min-width: 576px) and (max-width: 768px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/768_1.jpg")}}');
+                }
+            }
+            @media (min-width: 769px) and (max-width: 991px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/991_1.jpg")}}');
+                }
+            }
+            @media (min-width: 992px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/1199_1.jpg")}}');
+                }
+            }
+            @media (min-width: 1399px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/1900_1.jpg")}}');
+                }
+            }
+        </style>
+<?php } elseif(in_array('diamond-jewellery',$pathData)) { ?>
+        <style>
+            @media (min-width: 320px) and (max-width: 376px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/320_2.jpg") }}');
+                }
+            }
+            @media (min-width: 377px) and (max-width: 575px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/575_2.jpg")}}');
+                }
+            }
+            @media (min-width: 576px) and (max-width: 768px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/767_2.jpg")}}');
+                }
+            }
+            @media (min-width: 769px) and (max-width: 991px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/991_2.jpg")}}');
+                }
+            }
+            @media (min-width: 992px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/1199_2.jpg")}}');
+                }
+            }
+            @media (min-width: 1399px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/1900_2.jpg")}}');
+                }
+            }
+        </style>
+<?php } ?>
 
 @if(isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
     @section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$categoryData->banner_image_url}}" />@endsection
-    <div class="category-banner" style="background-image:url('{{env('APP_IMAGE_URL').'/storage/'.$categoryData->banner_image_url}}')">
+    <div class="category-banner banner">
 @else
-    @section('dynamic_og_image')<meta property="og:image" content="{{asset('assets/images/engagement-rings-banner.png')}}" />@endsection
+    @section('dynamic_og_image')
+        <meta property="og:image" content="{{asset('assets/images/engagement-rings-banner.png')}}" />
+    @endsection
     <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
 @endif 
     <div class="container">

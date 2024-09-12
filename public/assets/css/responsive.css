@@ -111,6 +111,7 @@
     margin: 0 0 7px;
 }
 .category-banner-text p {text-align: left !important;}
+.category-banner .category-banner-text p{text-align: center !important;}
 .accounts-heading h2, .category-banner-text h2 {
     font-size: 15px;
 }
@@ -1720,18 +1721,15 @@ body .fancybox-navigation .fancybox-button--arrow_left {
     margin: 0;
 }
 
-.category-banner{background-position: right;background-size: cover;padding: 30px 0;min-height: 200px;
-     height: 100%;}
-.category-banner-text h1 {
-    font-size: 24px;
-    line-height: 26px;
-}
+.category-banner{background-position: center;background-size: cover;padding: 30px 0;min-height: 200px; height: 100%;}
+.category-banner-text h1 {font-size: 24px; line-height: 26px;}
+.category-banner.left {background-position: left;}
+
 
 
 }
 
 @media(max-width:479px) {
-
     .site-logo-main img {
         max-width: 85px;
     }
@@ -1757,6 +1755,7 @@ body .fancybox-navigation .fancybox-button--arrow_left {
 .container.review-section {
     padding: 0 23px;
 }
+.category-banner{padding: 10px 0;}
 }@media(max-width:350px) {
     .product-titles {
     font-size: 16px;
