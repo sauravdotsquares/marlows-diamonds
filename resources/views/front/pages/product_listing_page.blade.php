@@ -19,7 +19,7 @@
 @endsection
 <?php
 $pathData = explode('/',$path);
-if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings',$pathData) || in_array('diamonds-rings',$pathData)) { ?>
+if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings',$pathData)) { ?>
     <style>
         @media (min-width: 320px) and (max-width: 376px) {
             .banner {
@@ -44,11 +44,13 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
         @media (min-width: 992px) {
             .banner {
                 background-image: url('{{ asset("storage/BannerCategory/1199_3.jpg")}}');
+                background-position: bottom center;
             }
         }
         @media (min-width: 1399px) {
             .banner {
                 background-image: url('{{ asset("storage/BannerCategory/1900_3.jpg")}}');
+                background-position: bottom center;
             }
         }
     </style>
@@ -90,34 +92,73 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             @media (min-width: 320px) and (max-width: 376px) {
                 .banner {
                     background-image: url('{{ asset("storage/BannerCategory/320_2.jpg") }}');
+                    background-position: bottom center;
                 }
             }
             @media (min-width: 377px) and (max-width: 575px) {
                 .banner {
                     background-image: url('{{ asset("storage/BannerCategory/575_2.jpg")}}');
+                    background-position: bottom center;
                 }
             }
             @media (min-width: 576px) and (max-width: 768px) {
                 .banner {
                     background-image: url('{{ asset("storage/BannerCategory/767_2.jpg")}}');
+                    background-position: bottom center;
                 }
             }
             @media (min-width: 769px) and (max-width: 991px) {
                 .banner {
                     background-image: url('{{ asset("storage/BannerCategory/991_2.jpg")}}');
+                    background-position: bottom center;
                 }
             }
             @media (min-width: 992px) {
                 .banner {
                     background-image: url('{{ asset("storage/BannerCategory/1199_2.jpg")}}');
+                    background-position: bottom center;
                 }
             }
             @media (min-width: 1399px) {
                 .banner {
                     background-image: url('{{ asset("storage/BannerCategory/1900_2.jpg")}}');
+                    background-position: bottom center;
                 }
             }
         </style>
+<?php } elseif(in_array('diamonds-rings',$pathData)){ ?>
+        <style>
+        @media (min-width: 320px) and (max-width: 376px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/320_3.jpg") }}');
+            }
+        }
+        @media (min-width: 377px) and (max-width: 575px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/575_3.jpg")}}');
+            }
+        }
+        @media (min-width: 576px) and (max-width: 768px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/767_3.jpg")}}');
+            }
+        }
+        @media (min-width: 769px) and (max-width: 991px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/991_3.jpg")}}');
+            }
+        }
+        @media (min-width: 992px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/1199_3.jpg")}}');
+            }
+        }
+        @media (min-width: 1399px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/1900_3.jpg")}}');
+            }
+        }
+    </style>
 <?php } ?>
 
 @if(isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
