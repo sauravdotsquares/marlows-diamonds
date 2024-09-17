@@ -806,7 +806,14 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             event.preventDefault();
             var myurl = $(this).attr('href');
             var page=$(this).attr('href').split('page=')[1];
-            sendDataValues(page);
+            if($('#sortingDSelect').val() == ''){
+                var sortingData = $('#sortingMSelect').val();
+            }else if($('#sortingMSelect').val() == ''){
+                var sortingData = $('#sortingDSelect').val();
+            }else{
+                var sortingData = '';
+            }
+            sendDataValues(page,'append',sortingData);
         });
 
         $("#slider").slider({
