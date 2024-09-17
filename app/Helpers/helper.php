@@ -1757,10 +1757,10 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         ];
     }
 
-    function getRagularFilterPrices($getRequestData,$diamondType,$slug,$filterArray){
+    function getRagularFilterPrices($getRequestData,$diamondType,$slug){
                 
         if(isset($diamondType) && !empty($diamondType)){
-            $diamondType = $diamondType;
+            // no action needed
         }else{
             $diamondType = 'mined_diamond';
         }
@@ -1771,19 +1771,21 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         $getProductVariationId = ProductVariations::where('product_id', $getProductDetails->id)->pluck('id')->toArray();
         if (!empty($getProductVariationId)) {
             $attributeCount = count($getRequestData['variations']);
-            foreach ($getProductVariationId as $key1 => $productVariationId) {
+            foreach ($getProductVariationId as $productVariationId) {
                 $variationDetails = array();
-                foreach ($getRequestData['variations'] as $key2 => $variations) {
+                foreach ($getRequestData['variations'] as $variations) {
                     $getVariDetails = ProductVariationDetails::where('variation_id', $productVariationId)
                         ->where('value', $variations)
                         ->get()
                         ->toArray();
 
-                    if (!empty($getVariDetails))
+                    if (!empty($getVariDetails)){
                         $variationDetails[] = $getVariDetails;
+                    }
                 }
-                if ($attributeCount == count($variationDetails))
+                if ($attributeCount == count($variationDetails)){
                     break;
+                }
             }
         }
 
@@ -1804,13 +1806,12 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
             $getFingerSizePrice = getFingerSizeHalfPrice($getRequestData['metal_type']);
         }
 
-        $result = [
+        return [
             'rrp_price'=> $getRegularPrices->rrpPrice+$getFingerSizePrice,
             'shop_price'=> $getRegularPrices->shopPrice+$getFingerSizePrice,
             'discounted_price'=> $getDiscountedPrice+$getFingerSizePrice,
             'parent_category' => $categoryId,
         ];
-        return $result;
     }
 
     function getIncreaseDiscountedPrice($category,$price,$diamondType){
