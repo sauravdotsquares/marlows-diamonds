@@ -1469,14 +1469,14 @@ if (!function_exists('validate_breadcrumb')) {
         if (isset($requestData['sorting']) && ($requestData['sorting'] == "asc" || $requestData['sorting'] == "desc")) {
             $sort = $requestData['sorting'];
             $query = $query->orderBy('title', $sort);
-         }else{
+        }else{
             $query = $query->orderBy('title', 'asc');
-         }
+        }
 
-        // echo "checked ".$query->toSql();die;
         $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
         $getActualProductArray = $getProductListFinal->toArray();
         $productSingleArray = [];
+        $getMinedLabStatus = '';
         foreach($getActualProductArray['data'] as $keyi => $product){
             $productSingleArray[$keyi]['id'] =  $product['id'];
             $productSingleArray[$keyi]['title'] =  $product['title'];
@@ -1491,43 +1491,106 @@ if (!function_exists('validate_breadcrumb')) {
 
             $filtered = array_filter($product['get_product_variation'], function($item)  use ($product) {
                 foreach ($item['get_vari_details_id'] as $detail) {
-                    
-                    if ($detail['value'] === '9ct White Gold') {
-                        return true;
-                    }else if (in_array(54,explode(',',$product['categories']))){
+                    if ($detail['value'] === '9ct White Gold' || in_array(54,explode(',',$product['categories']))) {
                         return true;
                     }
                 }
                 return false;
             });
-
             $record = array_shift($filtered); // Get the first matching record
-            
+            $getCategoryArray = explode(',',$product['categories']);
+            if(in_array(50,$getCategoryArray) || in_array(53,$getCategoryArray) || in_array(54,$getCategoryArray) ){
+                $getMinedLabStatus = 'mined_diamond'; // Can be 'mined_diamond' or 'lab_grown'
+            } else {
+                $getMinedLabStatus = 'lab_grown'; // Can be 'mined_diamond' or 'lab_grown'
+            }
+            // Sorting logic
+            $productSingleArray[$keyi]['diamond_type'] =  $getMinedLabStatus;
             $productSingleArray[$keyi]['get_product_variation'] =  $record;
         }
-
-
-        
-       // Convert the array to a Laravel Collection
+ 
+        // Convert the array to a Laravel Collection
         $collection = collect($productSingleArray);
 
-        // Sort the collection by lab_grown_rrp price
+        $modifiedCollection = $collection->map(function ($item) {
+            $explodeCategory = explode(',', $item['categories']);
+            if(in_array('8',$explodeCategory) && !in_array('18',$explodeCategory)){
+                return [
+                    'id' => $item['id'],
+                    'title' => $item['title'],
+                    'slug' => $item['slug'],
+                    'categories' => $item['categories'],
+                    'parent_cat' => $item['parent_cat'],
+                    'getProductImages' => [
+                        'id' => $item['getProductImages']['id'],
+                        'product_id' => $item['getProductImages']['product_id'],
+                        'image_url' => $item['getProductImages']['image_url'],
+                        'is_featured' => $item['getProductImages']['is_featured'],
+                        'status' => $item['getProductImages']['status'],
+                        'created_at' => $item['getProductImages']['created_at'],
+                        'updated_at' => $item['getProductImages']['updated_at'],
+                    ],
+                    'mined_diamond_rrp' => $item['get_product_variation']['mined_diamond_rrp'],
+                    'mined_diamond' => $item['get_product_variation']['mined_diamond'],
+                    'lab_grown_rrp' => $item['get_product_variation']['lab_grown_rrp']+getLabPriceDefaultVariations(),
+                    'lab_grown' => $item['get_product_variation']['lab_grown']+getLabPriceDefaultVariations(),
+                    'discounted_lab_grown' => getFlatDiscountRanges(array('shop_price'=>$item['get_product_variation']['lab_grown']+getLabPriceDefaultVariations()), $item['categories'],'lab_grown')['discounted_price'],
+                ];
+            }else{
+                return [
+                    'id' => $item['id'],
+                    'title' => $item['title'],
+                    'slug' => $item['slug'],
+                    'categories' => $item['categories'],
+                    'parent_cat' => $item['parent_cat'],
+                    'getProductImages' => [
+                        'id' => $item['getProductImages']['id'],
+                        'product_id' => $item['getProductImages']['product_id'],
+                        'image_url' => $item['getProductImages']['image_url'],
+                        'is_featured' => $item['getProductImages']['is_featured'],
+                        'status' => $item['getProductImages']['status'],
+                        'created_at' => $item['getProductImages']['created_at'],
+                        'updated_at' => $item['getProductImages']['updated_at'],
+                    ],
+                    'mined_diamond_rrp' => $item['get_product_variation']['mined_diamond_rrp'],
+                    'mined_diamond' => $item['get_product_variation']['mined_diamond'],
+                    'lab_grown_rrp' => $item['get_product_variation']['lab_grown_rrp'],
+                    'lab_grown' => $item['get_product_variation']['lab_grown'],
+                    'discounted_lab_grown' => getFlatDiscountRanges(array('shop_price'=>$item['get_product_variation']['lab_grown']), $item['categories'],'lab_grown')['discounted_price'],
+                ];
+            }
+        });
+        // Function to apply sorting based on category and order
+        function sortProducts($collection, $order = 'asc')
+        {
+            return $collection->sort(function ($a, $b) use ($order) {
+                // Check if categories contain '54'
+                $categoriesA = explode(',', $a['categories']);
+                $categoriesB = explode(',', $b['categories']);
+                
+                $sortFieldA = (in_array(54, $categoriesA) || in_array(53, $categoriesA) || in_array(50, $categoriesA)) ? $a['mined_diamond'] : $a['lab_grown'];
+                $sortFieldB = (in_array(54, $categoriesB) || in_array(53, $categoriesB) || in_array(50, $categoriesB)) ? $b['mined_diamond'] : $b['lab_grown'];
+                
+                // Sorting logic: Ascending or Descending
+                if ($order === 'asc') {
+                    return $sortFieldA <=> $sortFieldB;
+                } else {
+                    return $sortFieldB <=> $sortFieldA;
+                }
+            })->values(); // Reindex the collection after sorting
+        }
 
         if(isset($requestData['sorting']) && $requestData['sorting'] == 'price-min'){
-            $sortedCollection = $collection->sortBy(function ($item) {
-                return $item['get_product_variation']['lab_grown_rrp'];
-            });
+            $sortedCollection = sortProducts($modifiedCollection, 'asc'); // Ascending
         }elseif(isset($requestData['sorting']) && $requestData['sorting'] == 'price-max'){
-            $sortedCollection = $collection->sortByDesc(function ($item) {
-                return $item['get_product_variation']['lab_grown_rrp'];
-            });
+            $sortedCollection = sortProducts($modifiedCollection, 'desc'); // Descending
         }else{
-            $sortedCollection = $collection;
+            $sortedCollection = $modifiedCollection;
         }
+        // Usage: Pass the collection and specify 'asc' or 'desc' for sorting
         $sortedArray = $sortedCollection->map(function ($item) {
             return (object) $item;
         });
-
 
         if($getProductListFinal->currentPage() > $getProductListFinal->lastPage()){
             return [
@@ -2290,15 +2353,13 @@ if (!function_exists("getEngagmentRingsLabPriceAdded")) {
         if(in_array(8,$getCategory) && !in_array(18,$getCategory)){
             $newPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->value('price');
             // $newLabPrice = $newPrice->price;
-            $productDetails->get_product_variation['lab_grown_rrp'] = $productDetails->get_product_variation['lab_grown_rrp'] + $newPrice;
-            $productDetails->get_product_variation['lab_grown'] = $productDetails->get_product_variation['lab_grown'] + $newPrice;
-            $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->get_product_variation['lab_grown']), $getCategory,'lab_grown')['discounted_price'];
-            $productDetails->get_product_variation['discounted_lab_grown'] = $final_discounted_price;
+            $productDetails->lab_grown_rrp = $productDetails->lab_grown_rrp + $newPrice;
+            $productDetails->lab_grown = $productDetails->lab_grown + $newPrice;
+            $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->lab_grown), $getCategory,'lab_grown')['discounted_price'];
+            $productDetails->discounted_lab_grown = $final_discounted_price;
         }else{
-            if(isset($productDetails->get_product_variation) && !empty($productDetails->get_product_variation)){
-                $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->get_product_variation['lab_grown']), $getCategory,'lab_grown')['discounted_price'];
-                $productDetails->get_product_variation['discounted_lab_grown'] = $final_discounted_price;
-            }
+            $final_discounted_price = getFlatDiscountRanges(array('shop_price'=>$productDetails->lab_grown), $getCategory,'lab_grown')['discounted_price'];
+            $productDetails->discounted_lab_grown = $final_discounted_price;
         }
         return $productDetails;
     }
@@ -2317,5 +2378,12 @@ if (!function_exists("getDiscountFunctionalityapplied")) {
     function getDiscountFunctionalityapplied()
     {
         return 'yes';  // yes for discount applied and no for discount not applied
+    }
+}
+
+if (!function_exists("getLabPriceDefaultVariations")) {
+    function getLabPriceDefaultVariations()
+    {
+        return LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color'=> 'D', 'clarity'=>'VS2','is_active'=>1, 'is_deleted'=>0])->value('price');
     }
 }

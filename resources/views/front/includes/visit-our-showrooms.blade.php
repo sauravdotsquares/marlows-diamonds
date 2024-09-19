@@ -85,7 +85,6 @@
 	       </div>
 	          <h3>Find Us</h3>
 	          <p>20 Beauchamp Pl, Knightsbridge, London SW3 1NQ</p>
-	          <a target="_blank" href="https://maps.app.goo.gl/1XkDadPTxSN46Wdc6">Get Direction</a>
 	        </div>
 	      </div>
 	        <div class="col-md-4">
