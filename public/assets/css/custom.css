@@ -454,7 +454,7 @@ background: linear-gradient(273deg, rgba(98, 40, 215, 1) 0%, rgba(238, 42, 123, 
 align-items: center;justify-content: center;border-radius: 50px;}
 
 /** product listing page start here **/
-.category-banner{ text-align: center; background-repeat: no-repeat; background-position: center; background-size: cover;padding: 100px 0; position: relative; margin:0 0 28px 0;}
+.category-banner { text-align: center; background-repeat: no-repeat; background-position: center; background-size: cover;padding: 100px 0; position: relative; margin:0 0 28px 0; height: 400px; display: flex; flex-wrap: wrap; align-items: center;}
 .category-banner.left {background-position: left;}
 .category-banner.engagement-banner {   padding: 178px 0;text-align: left;  }
 .category-banner.engagement-banner:before{background: transparent;}
@@ -1457,7 +1457,7 @@ font-size: 13px;
 
 
 
-.product-item-details .product-titles-small {min-height: 55px;}
+.product-item-details .product-titles-small {min-height: 65px;}
 .ajax-loader img {margin: auto;}
 
 .table-bottom-content.tabel-payment {position: relative; padding: 0 15px;}
