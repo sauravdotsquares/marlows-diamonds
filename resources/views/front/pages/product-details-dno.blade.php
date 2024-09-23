@@ -42,7 +42,13 @@
 @endsection
 
 @section('content')
-@section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$prodImages[0]->image_url}}" />@endsection
+@section('dynamic_og_image')
+	@if(isset($prodImages))
+		<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$prodImages[0]->image_url}}" />
+	@else
+		<!-- <meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$prodImages[0]->image_url}}" /> -->
+	@endif
+@endsection
 
 @php
 	$categorySlug = '';
