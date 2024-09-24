@@ -230,6 +230,7 @@ $(document).ready(function(){
   $(".remve-mobile-serch-box").click(function(){
     $("body").removeClass("show-search-box");
   });
+  moveDiv();
 });
 </script>
 
@@ -240,7 +241,18 @@ $(document).ready(function(){
         $('.accordian-toggle').click(function() {
           $(this).parents('.column-one-fifth').toggleClass('show-collapse');
         });
-      });
+    });
+  }
+
+
+  function moveDiv() {
+      if ($(window).width() < 767) {
+          $('#getDirectionDetails').css('display','block');
+          $('.location_view_desktop').hide();
+      } else {
+          $('#getDirectionDetails').css('display','none');
+          $('.location_view_desktop').show();
+      }
   }
 </script>
 

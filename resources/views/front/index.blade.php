@@ -579,15 +579,7 @@
 
     $(document).ready(function(){
         $('#showPromotionPopup').modal('show');
-        moveDiv();
     });
-    function moveDiv() {
-        if ($(window).width() < 767) {
-            $('#getDirectionDetails').css('display','block');
-        } else {
-            $('#getDirectionDetails').css('display','none');
-        }
-    }
 
 
     function blankForm() {
