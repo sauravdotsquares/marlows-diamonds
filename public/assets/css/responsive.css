@@ -779,7 +779,7 @@ header.header-main.sticky-header .middle-topbar .head-mini-search {
 }
 header.header-main.sticky-header .middle-topbar {
     display: block;
-    top: 108px;
+    top: 107px;
     background: #fff;
 }
 header.header-main.sticky-header .middle-topbar .formgroup {
@@ -1113,9 +1113,10 @@ p#offer-text {
 .head-mini-search {
     top: 140px;
 }
-.sticky-header .post-bar, header.header-main.sticky-header .middle-topbar {
+.sticky-header .post-bar {
     top: 98px;
 }
+header.header-main.sticky-header .middle-topbar{top: 79px;}
 .best-selling-marlows .product-item-slider .owl-item .item .product-info, .home-main-banner {
     background: #fff;
 }
@@ -1522,7 +1523,7 @@ a.btn-bg-small.expdia {
     height: 35px;
     width: auto;
     margin: auto;
-    font-size: 1rem; 
+    font-size: 1rem;
     font-weight: normal;
 }
 .category-sidebar-wrap .sortmobile i.fa.fa-angle-down {
