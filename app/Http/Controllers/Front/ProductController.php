@@ -2037,12 +2037,11 @@ class ProductController extends Controller
 
 
     /**
-     * Get Product Listing page direct hitting url
+     * Undocumented function
      *
-     * @param [type] $all
      * @return void
      */
-    public function productListPage($all)
+    public function productListPage()
     {
         $request = request();
         $path =  $request->path();
@@ -2052,10 +2051,7 @@ class ProductController extends Controller
         if(isset($getActiveURLs) && !empty($getActiveURLs)){
             $slugs = explode('/', $path);
             $productListingData = getProductListing($slugs, request()->all());
-            if($productListingData['status'] == 404){
-                return view('layouts.errors.404');
-            }
-            if (!empty($productListingData)) {
+            if (!empty($productListingData) && $productListingData['status'] != 404) {
                 
                 $productItems = $productListingData['productItems'];
                 $sortedArray = $productListingData['sortedArray'];

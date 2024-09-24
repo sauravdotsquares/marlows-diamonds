@@ -17,18 +17,186 @@
 </style>
 
 @endsection
+<?php
+$pathData = explode('/',$path);
+if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings',$pathData)) { ?>
+    <style>
+        .diamondribgbanner{
+                display:none;
+            }
+        @media (min-width: 320px) and (max-width: 376px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/320_3.jpg") }}');
+            }
+        }
+        @media (min-width: 377px) and (max-width: 575px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/575_3.jpg")}}');
+            }
+        }
+        @media (min-width: 576px) and (max-width: 768px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/767_3.jpg")}}');
+            }
+        }
+        @media (min-width: 769px) and (max-width: 991px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/991_3.jpg")}}');
+            }
+        }
+        @media (min-width: 992px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/1199_3.jpg")}}');
+                background-position: bottom center;
+                background-position: center;padding: 130px 0;
+            }
+        }
+        @media (min-width: 1399px) {
+            .banner {
+                background-image: url('{{ asset("storage/BannerCategory/1900_3.jpg")}}');background-position: center;padding: 130px 0;
+            }
+        }
+    </style>
+<?php } elseif(in_array('wedding-rings',$pathData) || in_array('eternity-rings',$pathData)) { ?>
+        <style>
+            .diamondribgbanner{
+                display:none;
+            }
+            @media (min-width: 320px) and (max-width: 376px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/320_1.jpg") }}');
+                }
+            }
+            @media (min-width: 377px) and (max-width: 575px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/575_1.jpg")}}');
+                }
+            }
+            @media (min-width: 576px) and (max-width: 768px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/768_1.jpg")}}');
+                }
+            }
+            @media (min-width: 769px) and (max-width: 991px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/991_1.jpg")}}');
+                }
+            }
+            @media (min-width: 992px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/1199_1.jpg")}}');
+                }
+            }
+            @media (min-width: 1399px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/1900_1.jpg")}}');
+                }
+            }
+        </style>
+<?php } elseif(in_array('diamond-jewellery',$pathData)) { ?>
+        <style>
+            .diamondribgbanner{
+                display:none;
+            }
+            @media (min-width: 320px) and (max-width: 376px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/320_2.jpg") }}');
+                    background-position: bottom center;
+                }
+            }
+            @media (min-width: 377px) and (max-width: 575px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/575_2.jpg")}}');
+                    background-position: bottom center;
+                }
+            }
+            @media (min-width: 576px) and (max-width: 768px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/767_2.jpg")}}');
+                    background-position: bottom center;
+                }
+            }
+            @media (min-width: 769px) and (max-width: 991px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/991_2.jpg")}}');
+                    background-position: bottom center;
+                }
+            }
+            @media (min-width: 992px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/1199_2.jpg")}}');
+                    background-position: bottom center;
+                }
+            }
+            @media (min-width: 1399px) {
+                .banner {
+                    background-image: url('{{ asset("storage/BannerCategory/1900_2.jpg")}}');
+                    background-position: bottom center;
+                }
+            }
+        </style>
+<?php } elseif(in_array('diamonds-rings',$pathData)){ ?>
+        <style>
+            .diamondribgbanner{
+                display:block;
+            }
+.banner {height: 510px;background-size: cover;background-position: center; padding:0; display:flex; position: relative;flex-wrap: wrap; height: 100%;}
+.banner:before {display: none;}
+.banner img.diamondribgbanner-dektop{ width: 100%; height:100%;}
+.banner img.diamondribgbanner-mobile{ display:none;}
+.banner .category-banner-text {max-width: 550px;margin: auto; height:100%; background-size: cover;
+display: flex;align-items: center;padding: 0 40px;position: absolute;top: 0;left: 0;right: 0; background:url(https://devstaging.marlows-diamonds.co.uk/storage/BannerCategory/1199_41.png) no-repeat;
+background-size: cover;}
+
+.banner .category-banner-text h1 {font-family: 'Playfair Display'; margin: 0 0 25px;}
+.banner .category-banner-text p {font-size: 18px; margin: 0 0 18px;}
+.banner .category-banner-text p a {font-weight: bold;text-decoration: none;color: #ffcc00;transition: all 0.9s ease;}
+.banner .category-banner-text p a:hover {color: #d764b7; transition: all 0.9s ease;}
+
+@media (max-width: 1399px) {
+.banner .category-banner-text p{ font-size:16px;}
+}
+
+@media (max-width: 1199px) {
+.banner .category-banner-text {width: 400px;}
+.banner .category-banner-text h1 {margin: 0 0 10px;font-size: 24px;line-height: 24px;}
+.banner .category-banner-text p {font-size: 14px;line-height: 18px;}
+} 
+
+@media (max-width: 991px) {
+.banner{ height:260px;}
+.banner img.diamondribgbanner-dektop {height: 100%;}
+.banner .category-banner-text{ height:100%;}
+}
+
+@media (max-width: 575px){
+.banner .category-banner-text{ width: 100%; background:none;}
+.banner .category-banner-text:before{ background:rgb(142 46 101 / 76%);content: '';top: 0;position: absolute;left: 0;right: 0;bottom: 0;}
+.banner .category-banner-text .category-banner-textcontent {z-index: 1;}
+.banner .category-banner-text{ padding:0 15px;}
+.banner img.diamondribgbanner-mobile{ display:block;width: 100%;height: 100%;object-fit: cover;}
+.banner img.diamondribgbanner-dektop{ display: none;}
+}
+</style>
+<?php } ?>
 
 @if(isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
     @section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$categoryData->banner_image_url}}" />@endsection
-    <div class="category-banner" style="background-image:url('{{env('APP_IMAGE_URL').'/storage/'.$categoryData->banner_image_url}}')">
+    <div class="category-banner banner">
+    <img src="https://devstaging.marlows-diamonds.co.uk/storage/BannerCategory/1199_4.png" alt="" class="diamondribgbanner diamondribgbanner-dektop">
+    <img src="https://devstaging.marlows-diamonds.co.uk/storage/BannerCategory/526_4.png" alt="" class="diamondribgbanner diamondribgbanner-mobile">
 @else
-    @section('dynamic_og_image')<meta property="og:image" content="{{asset('assets/images/engagement-rings-banner.png')}}" />@endsection
+    @section('dynamic_og_image')
+        <meta property="og:image" content="{{asset('assets/images/engagement-rings-banner.png')}}" />
+    @endsection
     <div class="category-banner" style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
 @endif 
     <div class="container">
         <div class="category-banner-text">
-            <h1>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h1>
-            <p>{!! !empty($categoryData->short_description) ? $categoryData->short_description : '' !!}</p>
+            <div class="category-banner-textcontent">
+                <h1>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h1>
+                <p>{!! !empty($categoryData->short_description) ? $categoryData->short_description : '' !!}</p>
+            </div>
         </div>
     </div>
 </div>
@@ -367,11 +535,10 @@
                 <div class="product-grid-wrap">
                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
                         @foreach($sortedArray as $product)
-                        <?php $thumbnailGif = getThumbnailGif($product->id); ?>
-                        
-                        <?php $getCategory = explode(",",$product->categories);
-                           
-                            $product = getEngagmentRingsLabPriceAdded($product);
+                        <?php
+                            $thumbnailGif = getThumbnailGif($product->id);
+                            $getCategory = explode(",",$product->categories);
+                            // $product = getEngagmentRingsLabPriceAdded($product);
                         ?>
                         <div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
 
@@ -437,39 +604,40 @@
                                     
                                 </div>
                                 <?php
-                                if(!in_array(50,$getCategory) && !in_array(53,$getCategory) && !in_array(54,$getCategory)){ ?>
-                                    <?php 
-                                    if(isset($product->get_product_variation) && $product->get_product_variation['lab_grown_rrp'] != 0.0){  ?>
+                                if(!in_array(50,$getCategory) && !in_array(53,$getCategory) && !in_array(54,$getCategory)){ 
+                                    ?>
+                                    <?php
+                                    if(isset($product->lab_grown) && $product->lab_grown != 0.0){  ?>
                                         <div class="price-section">
                                             <div style="display: flex;">
-                                                @if(isset($product->get_product_variation['discounted_lab_grown']) && !empty($product->get_product_variation['discounted_lab_grown']))
+                                                @if(isset($product->discounted_lab_grown) && !empty($product->discounted_lab_grown))
 
-                                                    @if($product->get_product_variation['discounted_lab_grown'] !== $product->get_product_variation['lab_grown'])
+                                                    @if($product->discounted_lab_grown !== $product->lab_grown)
                                                         <h4>
-                                                            <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->get_product_variation['lab_grown']),2)}}</del> 
+                                                            <del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}}</del>
                                                         </h4>
                                                     @endif
                                                 
-                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $product->get_product_variation['discounted_lab_grown']) }} </span></div>
+                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $product->discounted_lab_grown) }} </span></div>
                                                 @else
-                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['lab_grown']) }} </span></div>
+                                                    <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown) }} </span></div>
                                                 @endif
                                             </div>
-                                                <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['lab_grown_rrp'] - $product->get_product_variation['discounted_lab_grown'])}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['lab_grown_rrp']) }}</del> </p>
+                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp - $product->discounted_lab_grown)}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp) }}</del> </p>
                                         </div>
                                     <?php } ?>
-                                <?php }else if(in_array(54,$getCategory)){  ?> 
+                                <?php }elseif(in_array(54,$getCategory)){  ?>
                                     <div class="price-section">
                                         <div style="display: flex;">
-                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['mined_diamond'])}} </span></div>
+                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
                                         </div>
                                     </div>
                                 <?php } elseif (in_array(53,$getCategory) || in_array(50,$getCategory)){ ?>
                                     <div class="price-section">
                                         <div style="display: flex;">
-                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->get_product_variation['mined_diamond'])}} </span></div>
+                                            <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
                                         </div>
-                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->get_product_variation['mined_diamond_rrp'] - $product->get_product_variation['mined_diamond']}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->get_product_variation['mined_diamond_rrp']}}</del> </p>
+                                            <p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp - $product->mined_diamond}}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp}}</del> </p>
                                     </div>
                                <?php } ?>
                             </div>
@@ -661,7 +829,14 @@
             event.preventDefault();
             var myurl = $(this).attr('href');
             var page=$(this).attr('href').split('page=')[1];
-            sendDataValues(page);
+            if($('#sortingDSelect').val() == ''){
+                var sortingData = $('#sortingMSelect').val();
+            }else if($('#sortingMSelect').val() == ''){
+                var sortingData = $('#sortingDSelect').val();
+            }else{
+                var sortingData = '';
+            }
+            sendDataValues(page,'append',sortingData);
         });
 
         $("#slider").slider({

@@ -2,7 +2,11 @@
     .product-item-details p del#rrpPrice {
     display: block;
 }
-}@media(max-width:1400px) {
+/** product listing page start here **/
+.category-banner{ height: 320px;}
+/** product listing page start here  end**/
+}
+@media(max-width:1400px) {
     .friendy-expert-sec .friendy-expert-desc h2, .friendy-expert-sec .friendy-expert-desc h3 {
     font-size: 24px;
 }
@@ -15,7 +19,11 @@
 .product-info-media .owl-carousel .product-items-carousel img.thumbnail-src {
     max-width: 300px;
 }
-}@media(max-width:991px) {
+
+.product-item-details .product-titles-small {min-height: 90px;}
+}
+
+@media(max-width:991px) {
     .category-listing-row {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -111,6 +119,7 @@
     margin: 0 0 7px;
 }
 .category-banner-text p {text-align: left !important;}
+.category-banner .category-banner-text p{text-align: center !important;}
 .accounts-heading h2, .category-banner-text h2 {
     font-size: 15px;
 }
@@ -686,7 +695,8 @@ body {
 .product-grid-items-item {
     flex: 0 0 50%;
     max-width: 50%}
-}@media(max-width:1024px) {
+}
+@media(max-width:1024px) {
     .sticky-header .post-bar {
     top: 108px;
     margin: 0;
@@ -769,14 +779,14 @@ header.header-main.sticky-header .middle-topbar .head-mini-search {
 }
 header.header-main.sticky-header .middle-topbar {
     display: block;
-    top: 108px;
+    top: 107px;
     background: #fff;
 }
 header.header-main.sticky-header .middle-topbar .formgroup {
     padding: 10px 0;
 }
 .post-bar {
-    margin-top: 58px;
+    margin-top: 80px;
 }
 .head-mini-search .formgroup input {
     background-color: #f1f1f1;
@@ -1098,14 +1108,15 @@ p#offer-text {
     font-weight: 700;
 }
 .site-logo-main img {
-    max-width: 115px;
+    max-width: 105px;
 }
 .head-mini-search {
     top: 140px;
 }
-.sticky-header .post-bar, header.header-main.sticky-header .middle-topbar {
+.sticky-header .post-bar {
     top: 98px;
 }
+header.header-main.sticky-header .middle-topbar{top: 79px;}
 .best-selling-marlows .product-item-slider .owl-item .item .product-info, .home-main-banner {
     background: #fff;
 }
@@ -1275,7 +1286,8 @@ a.btn-bg-small.expdia {
     margin: 0 0 0 4px;
     line-height: normal;
 }
-.best-selling-marlows .product-item-slider .owl-item .item .product-info .product-item-details .price-section .product-finder-price span.price, .sizing-tip-sec .sizing-tip-sec-inner .sizing-tip-box h3 {
+.best-selling-marlows .product-item-slider .owl-item .item .product-info .product-item-details .price-section .product-finder-price span.price{font-size: 18px; margin-top: 0;}
+.sizing-tip-sec .sizing-tip-sec-inner .sizing-tip-box h3 {
     font-size: 18px;
 }
 .best-selling-marlows .product-item-slider .owl-item .item .product-info .product-item-details .price-section p.save_price, .category-sidebar-wrap .filter-container ul {
@@ -1336,7 +1348,7 @@ a.btn-bg-small.expdia {
 }
 .shopfrom-block .rating-review-block .owl-carousel .owl-nav button.owl-next:after {
     transform: rotate(0);
-    left: 40%;
+    left: 40%; background: none;
     top: 23%}
 .shopfrom-block .reviews-cont .reviewr-name {
     font-size: 16px;
@@ -1395,6 +1407,7 @@ a.btn-bg-small.expdia {
 }
 .visit-showrooms-image {
     margin: 30px 0 25px;
+    padding: 15px;
 }
 .visit-showrooms-image img {
     height: 290px;
@@ -1507,10 +1520,11 @@ a.btn-bg-small.expdia {
     -moz-appearance: none;
     appearance: none;
     position: relative;
-    font-weight: 700;
     height: 35px;
     width: auto;
     margin: auto;
+    font-size: 1rem;
+    font-weight: normal;
 }
 .category-sidebar-wrap .sortmobile i.fa.fa-angle-down {
     position: absolute;
@@ -1585,8 +1599,8 @@ a.btn-bg-small.expdia {
     padding: 10px 8px 15px;
 }
 .visit-showrooms-image img.img-fluid {
-    height: auto;
-    margin: 0 0 30px;
+    height: 200px;
+    margin: 0 0 30px; width: 100%;
 }
 }@media(min-width:992px) and (max-width:1199px) {
     .diamond-search-table {
@@ -1620,7 +1634,13 @@ a.btn-bg-small.expdia {
 .diamond-shapes {
     align-items: start!important;
 }
-}@media(max-width:575px) {
+.best-selling-marlows .product-info .price-section div .product-finder-price span.price{line-height: 24px;}
+.best-selling-marlows .product-info .price-section div h4{ line-height: 21px;}
+}
+@media(max-width:575px) {
+    .site-logo-main img {
+        max-width: 100px;
+    }
     .product-grid-items-item, .related-products-section .related-products-list .product-grid-items-item {
     flex: 0 0 100%;
     max-width: 100%;
@@ -1717,17 +1737,18 @@ body .fancybox-navigation .fancybox-button--arrow_left {
     margin: 0;
 }
 
-.category-banner{background-position: right;background-size: cover;padding: 30px 0;min-height: 200px;
-     height: 100%;}
-.category-banner-text h1 {
-    font-size: 24px;
-    line-height: 26px;
-}
+.category-banner{background-position: center;background-size: cover;padding: 30px 0;min-height: 200px; height: 100%;}
+.category-banner-text h1 {font-size: 24px; line-height: 26px;}
+.category-banner.left {background-position: left;}
 
+.not-logedin-block .alert_icon {display: flex;align-items: center;justify-content: center;}
 
 }
 
 @media(max-width:479px) {
+    .site-logo-main img {
+        max-width: 85px;
+    }
     .category-list-item-searchsort.dropdown-content-desktop {
     position: relative;
     padding: 0 16px;
@@ -1750,8 +1771,12 @@ body .fancybox-navigation .fancybox-button--arrow_left {
 .container.review-section {
     padding: 0 23px;
 }
+.category-banner{padding: 10px 0;}
 }@media(max-width:350px) {
     .product-titles {
     font-size: 16px;
+}
+.site-logo-main img {
+    max-width: 75px;
 }
 }

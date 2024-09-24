@@ -42,7 +42,13 @@
 @endsection
 
 @section('content')
-@section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$prodImages[0]->image_url}}" />@endsection
+@section('dynamic_og_image')
+	@if(isset($prodImages))
+		<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$prodImages[0]->image_url}}" />
+	@else
+		<!-- <meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$prodImages[0]->image_url}}" /> -->
+	@endif
+@endsection
 
 @php
 	$categorySlug = '';
@@ -921,8 +927,15 @@
 								$('#productWishListRelated'+index).children('i').addClass('fa-heart');
 								$('#productWishListRelated'+index).children('i').removeClass('fa-heart-o');
 							}else{
-								$('#productWishList'+index).children('i').removeClass('fa-heart-o');
-								$('#productWishList'+index).children('i').addClass('fa-heart');
+								$('#productWishList').children('i').removeClass('fa-heart-o');
+								$('#productWishList').children('i').addClass('fa-heart');
+							}
+							if(res.wishcount > 0){
+								$('.my-whishlist-blk .wishcount').removeClass('fa-heart-o');
+								$('.my-whishlist-blk .wishcount').addClass('fa-heart');
+							}else{
+								$('.my-whishlist-blk .wishcount').removeClass('fa-heart');
+								$('.my-whishlist-blk .wishcount').addClass('fa-heart-o');
 							}
 						}
 						toastr.success(res.success);
@@ -932,8 +945,15 @@
 								$('#productWishListRelated'+index).children('i').removeClass('fa-heart');
 								$('#productWishListRelated'+index).children('i').addClass('fa-heart-o');
 							}else{
-								$('#productWishList'+index).children('i').removeClass('fa-heart');
-								$('#productWishList'+index).children('i').addClass('fa-heart-o');
+								$('#productWishList').children('i').removeClass('fa-heart');
+								$('#productWishList').children('i').addClass('fa-heart-o');
+							}
+							if(res.wishcount > 0){
+								$('.my-whishlist-blk .wishcount').removeClass('fa-heart-o');
+								$('.my-whishlist-blk .wishcount').addClass('fa-heart');
+							}else{
+								$('.my-whishlist-blk .wishcount').removeClass('fa-heart');
+								$('.my-whishlist-blk .wishcount').addClass('fa-heart-o');
 							}
 						}
 						toastr.error(res.error);

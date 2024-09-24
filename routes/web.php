@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\UrlRedirects;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Front\StripeController;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/clear-cache', function() {
 	Artisan::call('optimize:clear');
