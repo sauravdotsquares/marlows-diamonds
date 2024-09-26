@@ -334,6 +334,27 @@
 					<a class="store-locator store-locator-border-right" href="{{asset('visit-us')}}">Store Locator</a>
 					<!-- <a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a> -->
 				</div>
+				<div id="social-links" class="social-share-buttons">
+					<!-- Facebook -->
+					<a href="{{ Share::page(URL::current())->facebook()->getRawLinks() }}" target="_blank" class="btn btn-facebook">
+						<i class="fa fa-facebook"></i>
+					</a>
+
+					<!-- Twitter -->
+					<a href="{{ Share::page(URL::current())->twitter()->getRawLinks()['twitter'] }}" target="_blank" class="btn btn-twitter">
+						<i class="fa fa-twitter"></i> 
+					</a>
+
+					<!-- LinkedIn -->
+					<a href="{{ Share::page(URL::current())->linkedin()->getRawLinks()['linkedin'] }}" target="_blank" class="btn btn-linkedin">
+						<i class="fa fa-pinterest"></i>
+					</a>
+
+					<!-- WhatsApp -->
+					<a href="{{ Share::page(URL::current())->whatsapp()->getRawLinks()['whatsapp'] }}" target="_blank" class="btn btn-whatsapp">
+						<i class="fa fa-whatsapp"></i>
+					</a>
+				</div>
 				{{-- <div class="finance-available" ng-controller="DekopayController">
 					<a href="javascript:void(0)" ng-click="financeOptions()">
 						<i class="fa fa-credit-card" aria-hidden="true"></i>
