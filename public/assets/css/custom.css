@@ -1694,7 +1694,13 @@ background-repeat: no-repeat;background-position: center;}
 
 .whatspp-num img {height: 30px;margin: 0 9px 0 0px;}
 
-
+#social-links {margin: 15px 0 0;display: flex;}
+#social-links a {width: 30px;height: 30px;background: #000;border-radius: 50px;margin: 0 6px 0 0px;display: flex;align-items: center;justify-content: center;}
+#social-links a.btn.btn-facebook {background: #1877F2;}
+#social-links a.btn.btn-twitter {background: #1DA1F2;}
+#social-links a.btn.btn-linkedin {background: #E60023;}
+#social-links a.btn.btn-whatsapp {background: #25D366;}
+#social-links a i.fa {color: #fff;font-size: 15px;}
 
 @media(max-width:1300px){
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu {
