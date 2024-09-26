@@ -346,7 +346,7 @@
 					</a>
 
 					<!-- LinkedIn -->
-					<a href="{{ Share::page(URL::current())->linkedin()->getRawLinks()['linkedin'] }}" target="_blank" class="btn btn-linkedin">
+					<a href="{{ Share::page(URL::current())->pinterest()->getRawLinks()['pinterest'] }}" target="_blank" class="btn btn-linkedin">
 						<i class="fa fa-pinterest"></i>
 					</a>
 
