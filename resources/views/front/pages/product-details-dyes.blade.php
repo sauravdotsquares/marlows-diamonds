@@ -342,7 +342,7 @@
 
 					<!-- Twitter -->
 					<a href="{{ Share::page(URL::current())->twitter()->getRawLinks()['twitter'] }}" target="_blank" class="btn btn-twitter">
-						<i class="fa fa-twitter"></i> 
+						<i class="fa fa-twitter" aria-hidden="true"></i>
 					</a>
 
 					<!-- LinkedIn -->
