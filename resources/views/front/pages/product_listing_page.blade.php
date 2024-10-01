@@ -137,47 +137,47 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
         </style>
 <?php } elseif(in_array('diamonds-rings',$pathData)){ ?>
         <style>
-            .diamondribgbanner{
-                display:block;
+            .diamondribgbanner{display:block;}
+            .banner {background-size: cover;background-position: center; padding:0; display:flex; position: relative;flex-wrap: wrap;}
+            .banner:before {display: none;}
+            .banner img.diamondribgbanner-dektop{ width: 100%; height:100%;}
+            .banner img.diamondribgbanner-mobile{ display:none;}
+            .banner .category-banner-text {max-width: 550px;margin: auto; height:100%; background-size: cover;
+            display: flex;align-items: center;padding: 0 40px;position: absolute;top: 0;left: 0;right: 0; background:url(https://devstaging.marlows-diamonds.co.uk/storage/BannerCategory/1199_41.png) no-repeat;
+            background-size: cover;}
+            
+            .banner .category-banner-text h1 {font-family: 'Playfair Display'; margin: 0 0 25px;}
+            .banner .category-banner-text p {font-size: 18px; margin: 0 0 18px;}
+            .banner .category-banner-text p a {font-weight: bold;text-decoration: none;color: #ffcc00;transition: all 0.9s ease;}
+            .banner .category-banner-text p a:hover {color: #d764b7; transition: all 0.9s ease;}
+            
+            @media (max-width: 1399px) {
+                .banner .category-banner-text p{ font-size:16px;}
             }
-.banner {height: 510px;background-size: cover;background-position: center; padding:0; display:flex; position: relative;flex-wrap: wrap; height: 100%;}
-.banner:before {display: none;}
-.banner img.diamondribgbanner-dektop{ width: 100%; height:100%;}
-.banner img.diamondribgbanner-mobile{ display:none;}
-.banner .category-banner-text {max-width: 550px;margin: auto; height:100%; background-size: cover;
-display: flex;align-items: center;padding: 0 40px;position: absolute;top: 0;left: 0;right: 0; background:url(https://devstaging.marlows-diamonds.co.uk/storage/BannerCategory/1199_41.png) no-repeat;
-background-size: cover;}
-
-.banner .category-banner-text h1 {font-family: 'Playfair Display'; margin: 0 0 25px;}
-.banner .category-banner-text p {font-size: 18px; margin: 0 0 18px;}
-.banner .category-banner-text p a {font-weight: bold;text-decoration: none;color: #ffcc00;transition: all 0.9s ease;}
-.banner .category-banner-text p a:hover {color: #d764b7; transition: all 0.9s ease;}
-
-@media (max-width: 1399px) {
-.banner .category-banner-text p{ font-size:16px;}
-}
-
-@media (max-width: 1199px) {
-.banner .category-banner-text {width: 400px;}
-.banner .category-banner-text h1 {margin: 0 0 10px;font-size: 24px;line-height: 24px;}
-.banner .category-banner-text p {font-size: 14px;line-height: 18px;}
-} 
-
-@media (max-width: 991px) {
-.banner{ height:260px;}
-.banner img.diamondribgbanner-dektop {height: 100%;}
-.banner .category-banner-text{ height:100%;}
-}
-
-@media (max-width: 575px){
-.banner .category-banner-text{ width: 100%; background:none;}
-.banner .category-banner-text:before{ background:rgb(142 46 101 / 76%);content: '';top: 0;position: absolute;left: 0;right: 0;bottom: 0;}
-.banner .category-banner-text .category-banner-textcontent {z-index: 1;}
-.banner .category-banner-text{ padding:0 15px;}
-.banner img.diamondribgbanner-mobile{ display:block;width: 100%;height: 100%;object-fit: cover;}
-.banner img.diamondribgbanner-dektop{ display: none;}
-}
-</style>
+            
+            @media (max-width: 1199px) {
+                .banner .category-banner-text {width: 400px;}
+                .banner .category-banner-text h1 {margin: 0 0 10px;font-size: 24px;line-height: 24px;}
+                .banner .category-banner-text p {font-size: 14px;line-height: 18px;}
+            } 
+            
+            @media (max-width: 991px) {
+                .banner{ height:260px;}
+                .banner img.diamondribgbanner-dektop {height: 100%;}
+                .banner .category-banner-text{ height:100%;}
+            }
+            
+            @media (max-width: 575px){
+                .banner .category-banner-text{ width: 100%; background:none;padding: 0 15px;align-items: end;}
+                .banner .category-banner-text:before{ background:rgb(142 46 101 / 76%);content: '';top: 0;position: absolute;left: 0;right: 0;bottom: 0;}
+                .banner .category-banner-text .category-banner-textcontent {z-index: 1;}
+                .banner .category-banner-text{ padding:0 15px;}
+                .banner img.diamondribgbanner-mobile{ display:block;width: 100%;height: 100%;object-fit: cover;}
+                .banner img.diamondribgbanner-dektop{ display: none;}
+                .banner .category-banner-text:before {display: none;}
+                .banner .category-banner-text p {font-size: 14px;line-height: 18px;margin-bottom: 7px;}
+            }
+        </style>
 <?php } ?>
 
 @if(isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
