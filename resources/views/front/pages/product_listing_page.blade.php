@@ -138,7 +138,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 <?php } elseif(in_array('diamonds-rings',$pathData)){ ?>
         <style>
             .diamondribgbanner{display:block;}
-            .banner {height: 510px;background-size: cover;background-position: center; padding:0; display:flex; position: relative;flex-wrap: wrap; height: 100%;}
+            .banner {background-size: cover;background-position: center; padding:0; display:flex; position: relative;flex-wrap: wrap;}
             .banner:before {display: none;}
             .banner img.diamondribgbanner-dektop{ width: 100%; height:100%;}
             .banner img.diamondribgbanner-mobile{ display:none;}
@@ -150,7 +150,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             .banner .category-banner-text p {font-size: 18px; margin: 0 0 18px;}
             .banner .category-banner-text p a {font-weight: bold;text-decoration: none;color: #ffcc00;transition: all 0.9s ease;}
             .banner .category-banner-text p a:hover {color: #d764b7; transition: all 0.9s ease;}
-            
+            .banner img.diamondribgbanner-dektop {object-fit: cover;}
             @media (max-width: 1399px) {
                 .banner .category-banner-text p{ font-size:16px;}
             }

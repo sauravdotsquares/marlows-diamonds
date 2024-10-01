@@ -1694,7 +1694,15 @@ background-repeat: no-repeat;background-position: center;}
 
 .whatspp-num img {height: 30px;margin: 0 9px 0 0px;}
 
-
+#social-links {margin: 15px 0 0;display: flex;}
+#social-links a {width: 30px;height: 30px;background: #000;border-radius: 50px;margin: 0 6px 0 0px;display: flex;align-items: center;justify-content: center;}
+/* #social-links a.btn.btn-facebook {background: #1877F2;}
+#social-links a.btn.btn-twitter {background: #1DA1F2;}
+#social-links a.btn.btn-linkedin {background: #E60023;}
+#social-links a.btn.btn-whatsapp {background: #25D366;} */
+#social-links a i.fa.fa-twitter {line-height: 8px;}
+#social-links a i.fa.fa-twitter:before {content: "\f099";background: url(../images/twitter-white.png) no-repeat;font-size: 0;width: 12px;height: 16px;display: inline-block;background-size: 12px;}
+#social-links a i.fa {color: #fff;font-size: 15px;}
 
 @media(max-width:1300px){
 	.main-navigaiton .nav-navbars .level-zero .inner-submenu {
