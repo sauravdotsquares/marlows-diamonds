@@ -37,7 +37,7 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<link href="{{ asset('assets/vendors/fancybox-master/dist/jquery.fancybox.min.css') }}" rel="stylesheet" />
-
+	
 
 @endsection
 
@@ -134,7 +134,7 @@
 						</video>
 					@endif
                   <div id="myDivChanges"></div>
-			
+				  
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -237,6 +237,27 @@
 							Request an Appointment
 						</a>
 					</div>
+				</div>
+				<div id="social-links" class="social-share-buttons">
+					<!-- Facebook -->
+					<a href="{{ Share::page(URL::current())->facebook()->getRawLinks() }}" target="_blank" class="btn btn-facebook">
+						<i class="fa fa-facebook"></i>
+					</a>
+
+					<!-- Twitter -->
+					<a href="{{ Share::page(URL::current())->twitter()->getRawLinks()['twitter'] }}" target="_blank" class="btn btn-twitter">
+						<i class="fa fa-twitter"></i> 
+					</a>
+
+					<!-- LinkedIn -->
+					<a href="{{ Share::page(URL::current())->pinterest()->getRawLinks()['pinterest'] }}" target="_blank" class="btn btn-linkedin">
+						<i class="fa fa-pinterest"></i>
+					</a>
+
+					<!-- WhatsApp -->
+					<a href="{{ Share::page(URL::current())->whatsapp()->getRawLinks()['whatsapp'] }}" target="_blank" class="btn btn-whatsapp">
+						<i class="fa fa-whatsapp"></i>
+					</a>
 				</div>
 
 				{{-- <div class="finance-available" ng-controller="DekopayController">

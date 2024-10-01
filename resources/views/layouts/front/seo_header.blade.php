@@ -35,6 +35,25 @@
 <meta name="twitter:title" content="{!! isset($data->meta_title)?$data->meta_title:'' !!}" />
 <meta name="twitter:description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
 
+@if(env('APP_ENV')=='production')
+    <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1238805530482186');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1238805530482186&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Meta Pixel Code -->
+@endif
 <script type="application/ld+json">
     {
       "@context": "http://schema.org",

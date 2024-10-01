@@ -151,6 +151,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             .banner .category-banner-text p a {font-weight: bold;text-decoration: none;color: #ffcc00;transition: all 0.9s ease;}
             .banner .category-banner-text p a:hover {color: #d764b7; transition: all 0.9s ease;}
             
+            .banner img.diamondribgbanner-dektop {object-fit: cover;}
             @media (max-width: 1399px) {
                 .banner .category-banner-text p{ font-size:16px;}
             }
