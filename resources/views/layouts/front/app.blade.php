@@ -247,11 +247,11 @@ $(document).ready(function(){
 
   function moveDiv() {
       if ($(window).width() < 767) {
-          $('#getDirectionDetails').css('display','block');
-          $('.location_view_desktop').hide();
+          // $('#getDirectionDetails').css('display','block');
+          // $('.location_view_desktop').hide();
       } else {
-          $('#getDirectionDetails').css('display','none');
-          $('.location_view_desktop').show();
+          // $('#getDirectionDetails').css('display','none');
+          // $('.location_view_desktop').show();
       }
   }
 </script>
