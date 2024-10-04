@@ -501,9 +501,9 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 */
 Route::group(['prefix' => 'api/v1'], function() {
 	Route::namespace('Api')->group(function () {
-		Route::get('getDiamondDataFromAPI' , 'DiamondFinderController@diamondSearch');
-		Route::post('getProductCatFilter' , 'ProductController@filters');
-		Route::post('searchProducts','ProductController@searchProducts');
+		Route::get('getdiamonddatafromapi' , 'DiamondFinderController@diamondSearch');
+		Route::post('getproductcatfilter' , 'ProductController@filters');
+		Route::post('searchproducts','ProductController@searchProducts');
 	});
 });
 
