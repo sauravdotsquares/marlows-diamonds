@@ -43,7 +43,7 @@
 							@csrf
 							<div class="form-rows flexed flex-flex-wrap">
 								<div class="form-col width-50">
-									<label>Yor Name<sup>*</sup></label>
+									<label>Your Name<sup>*</sup></label>
 									<input required class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text" name="title" placeholder="Your Name">
 									<!-- Error -->
 									@if ($errors->has('title'))
@@ -856,11 +856,11 @@
 
 @section('js')
 
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.4/jquery.fancybox.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-	<script>		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script>
         function blankForm(){
             $('input[name="title"]').val('');
             $('input[name="email"]').val('');
@@ -881,7 +881,7 @@
                         email: true
                     },
                     description: {
-                        required: true,
+                        required: false,
                     }
                 },
                 messages: {
@@ -908,18 +908,14 @@
                             processData: false,
                             data: form_data,
                             success: function (response) {
-								console.log("For Checking ====> ");
-								console.log(response);
-								console.log(response.status);
-								console.log(response.success);
                                 $("button[type='submit']").text("Subscribe");
+								blankForm();
                                 if(response.status == 200){
-
                                     toastr.success(response.success);
                                 }else{
                                     toastr.info(response.error);
                                 }
-                                blankForm();
+                               
                             }
                         });
                 }
