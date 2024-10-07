@@ -43,7 +43,7 @@ class ProductController extends Controller
     public function productCategory($cat1 = null, $cat2 = null, $cat3 = null)
     {
         $request = request();
-        $path =  $request->path();
+        $path =  strtolower($request->path());
         $slugs = explode('/', $path);
 
         if (count($slugs) < 3 && $slugs[1] == 'engagement-rings') {
@@ -2044,7 +2044,7 @@ class ProductController extends Controller
     public function productListPage()
     {
         $request = request();
-        $path =  $request->path();
+        $path =  strtolower($request->path());
 
         $getActiveURLs = ActiveCategoryUrl::where('url',$path)->first();
 

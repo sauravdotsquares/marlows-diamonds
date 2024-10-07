@@ -352,8 +352,8 @@
                     <p class="second-para">Our diamonds and gemstones are better valued than any like-for-like comparison with any other UK jeweller. Our fancy shape diamonds like ovals, marquises, emeralds cuts, and cushion shapes are polished to the highest standards. We guarantee most of our diamonds visually appear larger than their carat weight. Our polishers create each diamond to maximize its proportions and not its carat weight, hence our 1ct will look like anyone else's 1.25ct. Come into any of our stores to learn more about the way we choose our rough diamonds so that the polished end product gets the best yield to maximise visual sparkle and appearance. This ensures you get the best visual appearance and sparkle for your budget. As we cannot be beaten on price, if you have seen something elsewhere, just send us a link and we will beat the price if cost is your deciding factor.</p>
                     <video src="{{env('APP_IMAGE_URL').'/storage/HomePageVideos/homeopagevideo.mp4'}}" controls id="video" poster="/storage/HomePageVideos/homeopagevideo.png"></video>
                 </div>
-                <div class="text-center" id="getDirectionDetails">
-                    <a class="btn-bg-small getdirection" target="_blank" href="https://maps.app.goo.gl/1XkDadPTxSN46Wdc6">Get Direction</a>
+                <div class="text-center" id="getDirectionDetails1">
+                    <a class="btn-bg-small getdirection" href="#location_data_section">Get Direction</a>
                 </div>
                 
 

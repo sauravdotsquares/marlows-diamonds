@@ -13,7 +13,7 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
         
         $scope.searchProducts = function(){
             //console.log($scope.search);
-            var url  = base_url+"searchProducts";
+            var url  = base_url+"searchproducts";
             $http({
                 method  : 'POST',
                 url     : url,
@@ -152,7 +152,7 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
         
         $scope.productCatFilters = function(cat1,cat2,cat3){
             $scope.display_filter = false;
-            var url  = base_url+"getProductCatFilter";
+            var url  = base_url+"getproductcatfilter";
             $http({
                 method  : 'POST',
                 url     : url,
@@ -292,9 +292,9 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
             
             var apiUrls = '';
             if(nextpage == ''){
-                apiUrls = apiUrl+'getDiamondDataFromAPI?page='+1+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
+                apiUrls = apiUrl+'getdiamonddatafromapi?page='+1+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
             } else {
-                apiUrls = apiUrl+'getDiamondDataFromAPI?page='+currentPage+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
+                apiUrls = apiUrl+'getdiamonddatafromapi?page='+currentPage+'&shape='+shape+'&carat_min='+carat_min+'&carat_max='+carat_max+'&colour='+colour+'&clarity='+clarity+'&grade='+grade+'&polish='+polish+'&symmetry='+symmetry+'&fluorescence='+fluorescence+'&certificate='+certificate;
             }
             return $http({
                 method: 'GET',
