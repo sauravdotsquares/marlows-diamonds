@@ -568,8 +568,9 @@
 							data-num-pages="totalPages"
 							data-current-page="currentPage"
 							data-max-size="maxSize"
-							data-boundary-links="false" 
-							ng-click="pageChanged()">
+							data-boundary-links="false"
+							ng-click="pageChanged()"
+							ng-show="data.length > 0">
 						</div>
 					</div>
 					<input type="hidden" id="addtobasketselectedrowid" value="0">

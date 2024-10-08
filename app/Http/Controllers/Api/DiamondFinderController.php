@@ -71,6 +71,11 @@ class DiamondFinderController
         	$hkData['last_page']=10;
         	$hkData['total']=100;
         }
+		// if (!empty($hkData['data']) && $hkData['total'] < 50) {
+		// 	$hkData['to'] = 5;
+		// 	$hkData['last_page'] = 10;
+		// 	$hkData['total'] = 100;
+		// }
 
         $rapnetData = getRapnetApiRecordsDiamondSearch($data,$hkData['current_page']);
 				

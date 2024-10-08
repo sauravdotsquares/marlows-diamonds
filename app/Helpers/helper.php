@@ -540,57 +540,69 @@ if (!function_exists('validate_breadcrumb')) {
             $client->__setSoapHeaders($header);
 
             if (isset($data['gradeFrom'])) {
-                if ($data['gradeFrom'] == 'EX') {
+                if (strtoupper($data['gradeFrom']) == 'EX') {
                     $gradeFrom = 'EXCELLENT';
-                } elseif ($data['gradeFrom'] == 'VG') {
+                } elseif (strtoupper($data['gradeFrom']) == 'VG') {
                     $gradeFrom = 'VERY_GOOD';
-                } elseif ($data['gradeFrom'] == 'GD') {
+                } elseif (strtoupper($data['gradeFrom']) == 'GD') {
                     $gradeFrom = 'GOOD';
+                } else {
+                    $gradeFrom = '';
                 }
             }
             if (isset($data['gradeTo'])) {
-                if ($data['gradeTo'] == 'EX') {
+                if (strtoupper($data['gradeTo']) == 'EX') {
                     $gradeTo = 'EXCELLENT';
-                } elseif ($data['gradeTo'] == 'VG') {
+                } elseif (strtoupper($data['gradeTo']) == 'VG') {
                     $gradeTo = 'VERY_GOOD';
-                } elseif ($data['gradeTo'] == 'GD') {
+                } elseif (strtoupper($data['gradeTo']) == 'GD') {
                     $gradeTo = 'GOOD';
+                } else {
+                    $gradeTo = '';
                 }
             }
             if (isset($data['symmetryFrom'])) {
-                if ($data['symmetryFrom'] == 'EX') {
+                if (strtoupper($data['symmetryFrom']) == 'EX') {
                     $symmetryFrom = 'Excellent';
-                } elseif ($data['symmetryFrom'] == 'VG') {
+                } elseif (strtoupper($data['symmetryFrom']) == 'VG') {
                     $symmetryFrom = 'Very_Good';
-                } elseif ($data['symmetryFrom'] == 'GD') {
+                } elseif (strtoupper($data['symmetryFrom']) == 'GD') {
                     $symmetryFrom = 'Good';
+                } else {
+                    $symmetryFrom = '';
                 }
             }
             if (isset($data['symmetryTo'])) {
-                if ($data['symmetryTo'] == 'EX') {
+                if (strtoupper($data['symmetryTo']) == 'EX') {
                     $symmetryTo = 'Excellent';
-                } elseif ($data['symmetryTo'] == 'VG') {
+                } elseif (strtoupper($data['symmetryTo']) == 'VG') {
                     $symmetryTo = 'Very_Good';
-                } elseif ($data['symmetryTo'] == 'GD') {
+                } elseif (strtoupper($data['symmetryTo']) == 'GD') {
                     $symmetryTo = 'Good';
+                } else {
+                    $symmetryTo = '';
                 }
             }
             if (isset($data['polishFrom'])) {
-                if ($data['polishFrom'] == 'EX') {
+                if (strtoupper($data['polishFrom']) == 'EX') {
                     $polishFrom = 'Excellent';
-                } elseif ($data['polishFrom'] == 'VG') {
+                } elseif (strtoupper($data['polishFrom']) == 'VG') {
                     $polishFrom = 'Very_Good';
-                } elseif ($data['polishFrom'] == 'GD') {
+                } elseif (strtoupper($data['polishFrom']) == 'GD') {
                     $polishFrom = 'Good';
+                } else {
+                    $polishFrom = '';
                 }
             }
             if (isset($data['polishTo'])) {
-                if ($data['polishTo'] == 'EX') {
+                if (strtoupper($data['polishTo']) == 'EX') {
                     $polishTo = 'Excellent';
-                } elseif ($data['polishTo'] == 'VG') {
+                } elseif (strtoupper($data['polishTo']) == 'VG') {
                     $polishTo = 'Very_Good';
-                } elseif ($data['polishTo'] == 'GD') {
+                } elseif (strtoupper($data['polishTo']) == 'GD') {
                     $polishTo = 'Good';
+                } else {
+                    $polishTo = '';
                 }
             }
 
@@ -607,10 +619,25 @@ if (!function_exists('validate_breadcrumb')) {
                 "N" => "None"
             ];
 
+            $fluroscenceArraySmall = [
+                "f" => "Faint",
+                "m" => "Medium",
+                "st" => "Strong",
+                "vs" => "Very Strong",
+                "n" => "None"
+            ];
+
             $fluroscenceNewArray = [];
-            foreach ($data['fluorescence'] as $newKey => $valuePass) {
-                $getFluValue = $fluroscenceArray[$valuePass];
-                $fluroscenceNewArray[] = $getFluValue;
+            if (count($data['fluorescence']) > 0) {
+                foreach ($data['fluorescence'] as $newKey => $valuePass) {
+                    if (preg_match('/[a-z]/', $valuePass)) {
+                        $getFluValue = $fluroscenceArraySmall[$valuePass];
+                        $fluroscenceNewArray[] = $getFluValue;
+                    } else {
+                        $getFluValue = $fluroscenceArray[$valuePass];
+                        $fluroscenceNewArray[] = $getFluValue;
+                    }
+                }
             }
 
             $dataNew['request']['body'] = array(
