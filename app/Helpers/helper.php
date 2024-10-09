@@ -2480,7 +2480,10 @@ if (!function_exists("getFingerSizewithPrices")) {
         // Check if the provided finger size exists in the array keys
         if (array_key_exists($getFingerSize, $fingerSize)) {
             // Return the value (price) associated with the finger size
-            return $fingerSize[$getFingerSize]+$metalTypePrices;
+            if($fingerSize[$getFingerSize] > 0){
+                return $fingerSize[$getFingerSize]+$metalTypePrices;
+            }
+            return 0;
         }
 
         // Return null or an appropriate message if the size is not found
