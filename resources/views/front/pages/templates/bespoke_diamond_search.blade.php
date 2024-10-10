@@ -938,7 +938,7 @@
 		});
 
 
-		function setPartialPaymentAmount() {
+		function setPartialPaymentAmount(index) {
 
 			$('#total-diamond-price').html("<strong>Partial Diamond Price:</strong> £ " + $('#partial_amount').val());
 			$('#addtobasketselectedrowid').val(index);

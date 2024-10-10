@@ -2108,7 +2108,8 @@ if (!function_exists("checkDiamondTypeValue")) {
             'RADIANT',
             'EMERALD',
             'OVAL',
-            'CUSHION'
+            'CUSHION',
+            'CUSHION MODIFIED'
         ];
         if (in_array(strtoupper($getDiamondType), $diamondTypeArray)) {
             return true;
