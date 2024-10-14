@@ -55,6 +55,9 @@
             display: none;
         }
       }
+      .cc-revoke {
+        display: none !important;
+      }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1365164-1"></script>-->
@@ -128,7 +131,12 @@
 <script src="{{asset('/assets/js/jquery.lazyload.min.js?').env('VERSION')}}"></script>
 {{-- .env('VERSION') --}}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 
+<!-- Cookie Consent JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
 
 @yield('js')
 <script>
@@ -200,6 +208,39 @@
     // Zopim zendesk Chat JS function apply End
 
 
+</script>
+<script>
+window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+        "type": "opt-in",  // Enables both Accept and Decline buttons
+        "palette": {
+            "popup": {
+                "background": "#000000",
+                "text": "#ffffff"
+            },
+            "button": {
+                "background": "#f1d600",
+                "text": "#000000"
+            }
+        },
+        "theme": "classic",
+        "position": "bottom",
+        "content": {
+            "message": "This website uses cookies to ensure you get the best experience on our website.",
+            "allow": "Accept",
+            "deny": "Decline",
+            "link": "",
+          "showLink": false,
+        },
+        onStatusChange: function(status) {
+            if (status === 'allow') {
+                // console.log("Cookies accepted");
+            } else if (status === 'deny') {
+                // console.log("Cookies declined");
+            }
+        }
+    });
+});
 </script>
 <script>
     $(window).scroll(function(){
