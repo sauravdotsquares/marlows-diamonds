@@ -34,16 +34,11 @@ class PostCategoryController extends Controller
 		
         if(isset($request->id)){
             $getPostCategoryArray = Posts::find($request->id);
-			// echo "<pre>";
-			// print_r($getPostCategoryafdsd);
-			// die;
-            $getCatId = $getPostCategoryArray->categories;
             $getCatId_arr = explode(",",$getPostCategoryArray->categories);
         }
-        // dd($getCatId_arr);
 
         $getParentData = PostCategory::where('status',1)->where('parent_id',0)->get()->toArray();
-        $dataArray = $child1 = array();
+        $dataArray = array();
         if(count($getParentData)>0){
             foreach ($getParentData as $key => $parent) {
                 $dataArray[$key]['id'] = $parent['id']; 
@@ -60,8 +55,6 @@ class PostCategoryController extends Controller
             }
         }
         die;
-        //echo '<pre>'; print_r($dataArray);die;
-        //return response()->json($dataArray);
     }
 
     public function getChildData($parent_id, $level,$getCatId_arr){

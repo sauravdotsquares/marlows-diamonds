@@ -9,8 +9,6 @@ Disallow: /products/wishlist
 Disallow: /products/cart
 Disallow: /products/checkout
 
-Disallow: /blog/engagement-ring-styles
-Disallow: /blog/how-to-ensure-youre-purchasing-conflict-free-diamonds
 Disallow: /blog/is-3d-printing-technology-the-future-of-the-jewellery-industry
 Disallow: /blog/loves-crown
 Disallow: /blog/pendant-earrings-make-the-best-of-spectacular-diamonds
@@ -43,7 +41,6 @@ Disallow: /blog/the-setting-is-a-personal-choice
 Disallow: /blog/5-engagement-ring-trends-to-look-out-for-in-2022
 Disallow: /blog/a-diamond-for-the-right-hand
 Disallow: /blog/a-few-simple-tips-for-buying-a-diamond-engagement-ring
-Disallow: /blog/how-a-custom-engagement-ring-could-really-impress-your-bride-to-be
 Disallow: /blog/make-a-diamond-your-right-hand-ring
 Disallow: /blog/buying-certified-diamonds-online
 Disallow: /blog/choosing-the-perfect-eternity-ring
@@ -236,14 +233,13 @@ Disallow: /blog/take-it-to-the-next-level
 Disallow: /blog/the-importance-of-engagements-rings
 Disallow: /blog/wedding-rings-that-perfectly-symbolise-your-love
 Disallow: /blog/why-not-sparkle-at-your-festive-parties
-Disallow: /blog/black-diamonds-what-are-they-and-where-are-they-from
+
 Disallow: /blog/choosing-the-perfect-diamond-jewellery-for-the-festive-season
 Disallow: /blog/where-do-extraterrestrial-diamonds-come-from
 Disallow: /blog/diamonds-the-most-concentrated-form-of-wealth
 Disallow: /blog/loose-diamonds-and-vintage-chic
 Disallow: /blog/extra-bling-with-multi-stone-diamond-rings
 Disallow: /blog/princess-cut-rings-for-him-and-her
-Disallow: /blog/insure-your-wedding-day
 Disallow: /blog/show-your-mum-how-much-she-means-to-you-with-diamond-jewellery
 Disallow: /blog/times-when-its-best-to-remove-your-engagement-ring
 Disallow: /blog/the-diamond-challenge

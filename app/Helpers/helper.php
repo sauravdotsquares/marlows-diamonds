@@ -546,8 +546,6 @@ if (!function_exists('validate_breadcrumb')) {
                     $gradeFrom = 'VERY_GOOD';
                 } elseif (strtoupper($data['gradeFrom']) == 'GD') {
                     $gradeFrom = 'GOOD';
-                } else {
-                    $gradeFrom = '';
                 }
             }
             if (isset($data['gradeTo'])) {
@@ -557,8 +555,6 @@ if (!function_exists('validate_breadcrumb')) {
                     $gradeTo = 'VERY_GOOD';
                 } elseif (strtoupper($data['gradeTo']) == 'GD') {
                     $gradeTo = 'GOOD';
-                } else {
-                    $gradeTo = '';
                 }
             }
             if (isset($data['symmetryFrom'])) {
@@ -568,8 +564,6 @@ if (!function_exists('validate_breadcrumb')) {
                     $symmetryFrom = 'Very_Good';
                 } elseif (strtoupper($data['symmetryFrom']) == 'GD') {
                     $symmetryFrom = 'Good';
-                } else {
-                    $symmetryFrom = '';
                 }
             }
             if (isset($data['symmetryTo'])) {
@@ -579,8 +573,6 @@ if (!function_exists('validate_breadcrumb')) {
                     $symmetryTo = 'Very_Good';
                 } elseif (strtoupper($data['symmetryTo']) == 'GD') {
                     $symmetryTo = 'Good';
-                } else {
-                    $symmetryTo = '';
                 }
             }
             if (isset($data['polishFrom'])) {
@@ -590,8 +582,6 @@ if (!function_exists('validate_breadcrumb')) {
                     $polishFrom = 'Very_Good';
                 } elseif (strtoupper($data['polishFrom']) == 'GD') {
                     $polishFrom = 'Good';
-                } else {
-                    $polishFrom = '';
                 }
             }
             if (isset($data['polishTo'])) {
@@ -601,8 +591,6 @@ if (!function_exists('validate_breadcrumb')) {
                     $polishTo = 'Very_Good';
                 } elseif (strtoupper($data['polishTo']) == 'GD') {
                     $polishTo = 'Good';
-                } else {
-                    $polishTo = '';
                 }
             }
 
@@ -1906,7 +1894,7 @@ function getVariationDiamondPrices($requestData)
         $getDiscountedPrice = $getRegularPrices->shopPrice;
         $getFingerSizePrice = 0;
         if (isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47 || $getProductDetails->product_parent_category == 45) {
-            $getFingerSizePrice = getFingerSizewithPrices($getRequestData['metal_type'],$getRequestData['fingersize']);
+            // $getFingerSizePrice = getFingerSizewithPrices($getRequestData['metal_type'],$getRequestData['fingersize']);
         }
 
         return [
