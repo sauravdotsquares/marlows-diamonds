@@ -2427,11 +2427,12 @@ if (!function_exists("getEngagmentRingsLabPriceAdded")) {
 if (!function_exists("getFingerSizeHalfPrice")) {
     function getFingerSizeHalfPrice($metalTypeVariation)
     {
-        if (Str::contains($metalTypeVariation, '9ct') || Str::contains($metalTypeVariation, 'Silver')) {
-            return 30;
-        } else {
-            return 50;
-        }
+        return 0;
+        // if (Str::contains($metalTypeVariation, '9ct') || Str::contains($metalTypeVariation, 'Silver')) {
+        //     return 0; // return 30;
+        // } else {
+        //     return 0; // return 50;
+        // }
     }
 }
 
