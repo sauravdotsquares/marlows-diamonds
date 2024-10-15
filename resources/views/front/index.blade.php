@@ -432,7 +432,7 @@
         <div class="container">
             <div class="head-para-three">
                 <h3 class="heading-h-three">
-                    Over 3000 genuine customer reviews
+                    Over 3000 Genuine Customer Reviews
                 </h3>
                 <!--<p>Diamond rings are more than just jewellery. We understand the symbolism that they represent. So that they
                     can withstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality
