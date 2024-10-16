@@ -55,6 +55,7 @@ class Products extends Model
     public function getAdditionalPriceMetalTypeAttribute(){
         $finalAdditionalPrices = 0;
         $getVariationId = ProductVariations::where('product_id',$this->id)->pluck('id');
+        $getVariationImages = ProductImages::where('product_id',$this->id)->where('is_featured',1)->first();
         $get18CaratRecord = ProductVariationDetails::whereIn('variation_id',$getVariationId)->where('value','Platinum')->first();
         if(isset($get18CaratRecord) && !empty($get18CaratRecord)){
             $getVariationIdArray = ProductVariations::where('id',$get18CaratRecord->variation_id)->first();
@@ -63,6 +64,8 @@ class Products extends Model
 
             $finalAdditionalPrices = [
                 'regular_price' => $getVariationIdArray->regular_price,
+                'image_url' => $getVariationImages->image_url,
+                'variation_id' => $get18CaratRecord->variation_id,
                 'lab_price' => $newPrice->price
             ];
         }
