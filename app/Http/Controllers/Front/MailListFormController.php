@@ -18,7 +18,7 @@ class MailListFormController extends Controller {
         $this->validate($request, [
             'title' => 'required',
             'email' => 'required|email',
-            'description' => 'required',
+            // 'description' => 'required',
         ]);
         //  Store data in database
         Enquiries::create($request->all());

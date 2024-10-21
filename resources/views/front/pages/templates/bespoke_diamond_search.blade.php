@@ -605,7 +605,7 @@
 							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount | number : 2 %></p>
 							<div ng-switch="payment_mode">
 								<div ng-switch-when="10"><strong style="color: #8e2e65;">Partial Diamond Price:</strong> £ <%partial_deposit_payment | number : 2 %></div>
-								<div ng-switch-default><strong style="color: #8e2e65;">Partial Diamond Price:</strong> £ <%firstDiamondAmount | number : 2 %></div>
+								<!-- <div ng-switch-default><strong style="color: #8e2e65;">Partial Diamond Price:</strong> £ <%firstDiamondAmount | number : 2 %></div> -->
 							</div>
 						</div>
 						<div class="addbasket-req-btns">
@@ -721,22 +721,21 @@
 		grecaptcha.reset();
 	}
 
-	function touchHandler(event) {
-		var touch = event.changedTouches[0];
+	$('.ma-info-icon').click(function() {
+		var quotePop = $(this).next('.m-quote-pop'); // Find the next sibling with class .m-quote-pop
 
-		var simulatedEvent = document.createEvent("MouseEvent");
-		simulatedEvent.initMouseEvent({
-				touchstart: "mousedown",
-				touchmove: "mousemove",
-				touchend: "mouseup"
-			} [event.type], true, true, window, 1,
-			touch.screenX, touch.screenY,
-			touch.clientX, touch.clientY, false,
-			false, false, false, 0, null);
-
-		touch.target.dispatchEvent(simulatedEvent);
-		event.preventDefault();
-	}
+		// If the clicked element's .m-quote-pop is currently visible, hide it
+		if (quotePop.css('display') === 'block') {
+			quotePop.css('display', 'none'); // Hide the element
+			quotePop.addClass('m-custom-toggle');
+		} else {
+			// Hide all other .m-quote-pop elements before showing the clicked one
+			$('.m-quote-pop').css('display', 'none').addClass('m-custom-toggle');
+			
+			// Show the clicked element's .m-quote-pop
+			quotePop.css('display', 'block').removeClass('m-custom-toggle');
+		}
+	});
 
 	$.validator.addMethod("phoneno", function(phone_number, element) {
 		phone_number = phone_number.replace(/\s+/g, "");
@@ -829,27 +828,27 @@
 		}
 
 
-		var popElement = document.getElementsByClassName("helping-text-container");
-		document.addEventListener('click', function(event) {
-			for (i = 0; i < popElement.length; i++) {
-				popEl = popElement[i];
-				var isClickInside = popEl.contains(event.target);
+		// var popElement = document.getElementsByClassName("helping-text-container");
+		// document.addEventListener('click', function(event) {
+		// 	for (i = 0; i < popElement.length; i++) {
+		// 		popEl = popElement[i];
+		// 		var isClickInside = popEl.contains(event.target);
 
-				$('.m-quote-pop').css('display', 'none');
+		// 		$('.m-quote-pop').css('display', 'none');
 
-				if (!isClickInside) {
-					$(popEl).find(".m-quote-pop").css('display', 'none');
-				} else {
-					if ($(popEl).find('.m-quote-pop').is(':visible')) {
-						$(popEl).find('.m-quote-pop').css('display', 'none');
-					} else {
-						$(popEl).find(".m-quote-pop").css('display', 'block');
-					}
+		// 		if (!isClickInside) {
+		// 			$(popEl).find(".m-quote-pop").css('display', 'none');
+		// 		} else {
+		// 			if ($(popEl).find('.m-quote-pop').is(':visible')) {
+		// 				$(popEl).find('.m-quote-pop').css('display', 'none');
+		// 			} else {
+		// 				$(popEl).find(".m-quote-pop").css('display', 'block');
+		// 			}
 
-					break;
-				}
-			}
-		});
+		// 			break;
+		// 		}
+		// 	}
+		// });
 
 
 		$("#slider").slider({

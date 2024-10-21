@@ -154,7 +154,7 @@
       // this code is remove empty p tag and empty div tag End
       
       $(".mobile_search").on('click',function(){
-          $("#homeSearchForm").show();
+          $("#homeSearchForm").toggle();
       });
 
       // for lazyload functions applied in instagram section images.
