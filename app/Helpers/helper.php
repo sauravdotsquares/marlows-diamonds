@@ -540,56 +540,56 @@ if (!function_exists('validate_breadcrumb')) {
             $client->__setSoapHeaders($header);
 
             if (isset($data['gradeFrom'])) {
-                if ($data['gradeFrom'] == 'EX') {
+                if (strtoupper($data['gradeFrom']) == 'EX') {
                     $gradeFrom = 'EXCELLENT';
-                } elseif ($data['gradeFrom'] == 'VG') {
+                } elseif (strtoupper($data['gradeFrom']) == 'VG') {
                     $gradeFrom = 'VERY_GOOD';
-                } elseif ($data['gradeFrom'] == 'GD') {
+                } elseif (strtoupper($data['gradeFrom']) == 'GD') {
                     $gradeFrom = 'GOOD';
                 }
             }
             if (isset($data['gradeTo'])) {
-                if ($data['gradeTo'] == 'EX') {
+                if (strtoupper($data['gradeTo']) == 'EX') {
                     $gradeTo = 'EXCELLENT';
-                } elseif ($data['gradeTo'] == 'VG') {
+                } elseif (strtoupper($data['gradeTo']) == 'VG') {
                     $gradeTo = 'VERY_GOOD';
-                } elseif ($data['gradeTo'] == 'GD') {
+                } elseif (strtoupper($data['gradeTo']) == 'GD') {
                     $gradeTo = 'GOOD';
                 }
             }
             if (isset($data['symmetryFrom'])) {
-                if ($data['symmetryFrom'] == 'EX') {
+                if (strtoupper($data['symmetryFrom']) == 'EX') {
                     $symmetryFrom = 'Excellent';
-                } elseif ($data['symmetryFrom'] == 'VG') {
+                } elseif (strtoupper($data['symmetryFrom']) == 'VG') {
                     $symmetryFrom = 'Very_Good';
-                } elseif ($data['symmetryFrom'] == 'GD') {
+                } elseif (strtoupper($data['symmetryFrom']) == 'GD') {
                     $symmetryFrom = 'Good';
                 }
             }
             if (isset($data['symmetryTo'])) {
-                if ($data['symmetryTo'] == 'EX') {
+                if (strtoupper($data['symmetryTo']) == 'EX') {
                     $symmetryTo = 'Excellent';
-                } elseif ($data['symmetryTo'] == 'VG') {
+                } elseif (strtoupper($data['symmetryTo']) == 'VG') {
                     $symmetryTo = 'Very_Good';
-                } elseif ($data['symmetryTo'] == 'GD') {
+                } elseif (strtoupper($data['symmetryTo']) == 'GD') {
                     $symmetryTo = 'Good';
                 }
             }
             if (isset($data['polishFrom'])) {
-                if ($data['polishFrom'] == 'EX') {
+                if (strtoupper($data['polishFrom']) == 'EX') {
                     $polishFrom = 'Excellent';
-                } elseif ($data['polishFrom'] == 'VG') {
+                } elseif (strtoupper($data['polishFrom']) == 'VG') {
                     $polishFrom = 'Very_Good';
-                } elseif ($data['polishFrom'] == 'GD') {
+                } elseif (strtoupper($data['polishFrom']) == 'GD') {
                     $polishFrom = 'Good';
                 }
             }
             if (isset($data['polishTo'])) {
-                if ($data['polishTo'] == 'EX') {
+                if (strtoupper($data['polishTo']) == 'EX') {
                     $polishTo = 'Excellent';
-                } elseif ($data['polishTo'] == 'VG') {
+                } elseif (strtoupper($data['polishTo']) == 'VG') {
                     $polishTo = 'Very_Good';
-                } elseif ($data['polishTo'] == 'GD') {
+                } elseif (strtoupper($data['polishTo']) == 'GD') {
                     $polishTo = 'Good';
                 }
             }
@@ -608,8 +608,8 @@ if (!function_exists('validate_breadcrumb')) {
             ];
 
             $fluroscenceNewArray = [];
-            foreach ($data['fluorescence'] as $newKey => $valuePass) {
-                $getFluValue = $fluroscenceArray[$valuePass];
+            foreach ($data['fluorescence'] as $valuePass) {
+                $getFluValue = $fluroscenceArray[strtoupper($valuePass)];
                 $fluroscenceNewArray[] = $getFluValue;
             }
 
@@ -1865,9 +1865,9 @@ function getIpInfo($ip = NULL, $purpose = "location", $deep_detect = TRUE)
         //$getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
         $getDiscountedPrice = $getRegularPrices->shopPrice;
         $getFingerSizePrice = 0;
-        if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47 || $getProductDetails->product_parent_category == 45) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
-            $getFingerSizePrice = getFingerSizeHalfPrice($getRequestData['metal_type']);
-        }
+        // if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47 || $getProductDetails->product_parent_category == 45) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
+        //     $getFingerSizePrice = getFingerSizeHalfPrice($getRequestData['metal_type']);
+        // }
 
         return [
             'rrp_price'=> $getRegularPrices->rrpPrice+$getFingerSizePrice,
