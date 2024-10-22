@@ -134,7 +134,7 @@
 						<div class="type-variations-col">
 							<label for="lab_grown_carat" class="label"> Central Diamond Weight </label>
 							<select class="form-control lab_price_update_items " name="carat" id="lab_grown_carat">
-								<option value="0.30-0.39" selected="selected">0.30-0.39</option>
+								<!--<option value="0.30-0.39" selected="selected">0.30-0.39</option>-->
 								<option value="0.50-0.59">0.50-0.59</option>
 								<option value="0.70-0.79">0.70-0.79</option>
 								<option value="1.00-1.19" selected>1.00-1.19</option>

@@ -1902,6 +1902,7 @@ class ProductController extends Controller
 
         $otherPages = [
             'homepage'=>'/',
+            // 'product/wishlist',
             'my-account',
             'products/cart',
             'products/wishlist',
@@ -2000,6 +2001,7 @@ class ProductController extends Controller
         $pages = Pages::select('slug', 'updated_at', 'title')->groupBy('slug')->where(['status' => 1, 'is_deleted' => 0])->get();
 
         $otherPages = [
+            // 'Wishlist' => 'product/wishlist',
             'Homepage' => '/',
             'My Account' => 'my-account',
             'Cart' => 'products/cart',
