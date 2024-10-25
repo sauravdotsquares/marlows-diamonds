@@ -185,16 +185,16 @@ class PayPalPaymentController extends Controller
     {
         session()->forget('cart');
         $requestData = $request->all();
-        if(isset($request->paymentId) && isset($request->PayerID) && isset($request->token)){
-            $payment = Payment::get($requestData['paymentId'], $this->_api_context);
+        if(isset($requestData['paymentid']) && isset($requestData['payerid']) && isset($requestData['token'])){
+            $payment = Payment::get($requestData['paymentid'], $this->_api_context);
             $execution = new PaymentExecution();
-            $execution->setPayerId($requestData['PayerID']);
+            $execution->setPayerId($requestData['payerid']);
             $result = $payment->execute($execution, $this->_api_context);
 
             if ($result->getState() == 'approved') {
-                $getOrderDetails = Order::where('token',$request->token)->update(['status'=>2]);
+                $getOrderDetails = Order::where('token',$requestData['token'])->update(['status'=>2]);
 
-                $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$request->token)->first()->toArray();
+                $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('token',$requestData['token'])->first()->toArray();
 
                 if (isset($getOrderDetailsMail['email_status']) && $getOrderDetailsMail['email_status'] == 2) {
                     return Redirect::route('home');
@@ -217,11 +217,12 @@ class PayPalPaymentController extends Controller
                         if(!empty($transaction_emails)){
                             $emails_to_cc = explode(',', $transaction_emails);
                             foreach ($emails_to_cc as $email_to_cc) {
-                                $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                                $message->cc($email_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');
                             }
                         }
 
                         $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
+                        $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received pro!');
                     });
                 } else if (env('APP_ENV') == 'local') {
                     $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
@@ -251,14 +252,15 @@ class PayPalPaymentController extends Controller
                         if(!empty($transaction_emails)){
                             $emails_to_cc = explode(',', $transaction_emails);
                             foreach ($emails_to_cc as $email_to_cc) {
-                                $message->cc('kumar.ashish@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                                $message->cc('anamika.verma@dotssquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
                             }
                         }
                         $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
+                        $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your staging Marlows Diamonds order has been received!');
                     });
                 }
 
-                Order::where('token',$request->token)->update(['email_status'=>2]);
+                Order::where('token',$requestData['token'])->update(['email_status'=>2]);
                 
                 $result = [
                     'pay' => $getOrderDetailsMail,
