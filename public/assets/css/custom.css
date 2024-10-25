@@ -1513,7 +1513,7 @@ del#shopPrice {margin-right: 5px;}
 .product-panel-new .dropdown-content a {color: black;padding: 12px 16px;text-decoration: none;display: block;}
 .product-panel-new .dropdown:hover .dropdown-content {display: block;}
 .product-panel-new .search-item {width: 320px;height: 29px;border: none;background: #efefef;padding: 6px;}
-.product-panel-new input.empty {font-family: FontAwesome;font-style: normal;font-weight: normal;text-decoration: inherit;}
+.product-panel-new input.empty {font-family: 'Red Hat Display'; font-style: normal;font-weight: normal;text-decoration: inherit;}
 .product-panel-new .sortbtn {width: 138px !important;background: #fff;border-radius: 6px;border: 2px solid #efefef;height: 30px;margin-left: 2px;}
 .product-panel-new .ui-slider-handle {width: 35px !important;font-size: small !important;color: #FF0000 !important;text-align: center !important;}
 .product-panel-new .ui-slider .ui-slider-handle {height: 1.5em;color: #8e2e65 !important;}
