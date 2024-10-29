@@ -325,7 +325,7 @@ Auth::routes();
 *** Frontend Routes
 */
 
-Route::group(['middleware' => ['customer','CaseInsensitiveRoutes']], function () {
+Route::group(['middleware' => ['customer']], function () {
 	Route::namespace('Front')->group(function() {
 		Route::get('/my-accounts', 'LoginController@dashboardPage')->name('my_accounts');
 		Route::get('/logout-customer', 'LoginController@logout')->name('logout-customer');
@@ -336,7 +336,7 @@ Route::group(['middleware' => ['customer','CaseInsensitiveRoutes']], function ()
 });
 
 
-Route::namespace('Front')->middleware(['WebCommonHandler','CaseInsensitiveRoutes'])->group(function () {
+Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 
     Route::get('/', 'PageController@page')->name('home');
 
