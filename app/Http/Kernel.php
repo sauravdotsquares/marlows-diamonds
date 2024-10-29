@@ -37,7 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\CaseInsensitiveRoutes::class,
+            // \App\Http\Middleware\CaseInsensitiveRoutes::class,
         ],
 
         'api' => [
@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'WebCommonHandler' => \App\Http\Middleware\WebCommonHandler::class,
         'customer' => \App\Http\Middleware\RedirectIfNotCustomerUsers::class,
         'checkout' => \App\Http\Middleware\RedirectIfNotCustomer::class,
-        'role' => \App\Http\Middleware\RoleChecker::class
+        'CaseInsensitiveRoutes' => \App\Http\Middleware\CaseInsensitiveRoutes::class,
+        'role' => \App\Http\Middleware\Role::class
     ];
 }

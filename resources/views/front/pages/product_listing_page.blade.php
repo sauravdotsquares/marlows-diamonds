@@ -146,7 +146,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             display: flex;align-items: center;padding: 0 40px;position: absolute;top: 0;left: 0;right: 0; background:url(https://devstaging.marlows-diamonds.co.uk/storage/BannerCategory/1199_41.png) no-repeat;
             background-size: cover;}
             
-            .banner .category-banner-text h1 {font-family: 'Playfair Display'; margin: 0 0 25px;}
+            .banner .category-banner-text h1 {margin: 0 0 25px;}
             .banner .category-banner-text p {font-size: 18px; margin: 0 0 18px;}
             .banner .category-banner-text p a {font-weight: bold;text-decoration: none;color: #ffcc00;transition: all 0.9s ease;}
             .banner .category-banner-text p a:hover {color: #d764b7; transition: all 0.9s ease;}
