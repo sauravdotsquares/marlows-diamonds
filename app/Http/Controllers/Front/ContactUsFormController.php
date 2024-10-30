@@ -51,7 +51,7 @@ class ContactUsFormController extends Controller {
             //     'url' => $request->get('custom_url'),
             //     'user_query' => $request->get('description'),
             // ), function($message) use ($request,$admin_email ){
-            //     $message->from('hello@marlows-diamonds.co.uk');
+            //     $message->from('dssmtp@marlows-diamonds.co.uk');
             //     $message->to($admin_email, 'Admin')->subject('New Website Enquiry');
             //     $message->bcc('sharma.gajendra@dotsquares.com', 'Dev bcc')->subject('New Website Enquiry');
             // });
@@ -86,7 +86,7 @@ class ContactUsFormController extends Controller {
             //     'url' => $request->get('custom_url'),
             //     'user_query' => $request->get('description'),
             // ), function($message) use ($request,$admin_email ){
-            //     $message->from('hello@marlows-diamonds.co.uk');
+            //     $message->from('dssmtp@marlows-diamonds.co.uk');
             //     $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry');
             // });
         }
@@ -98,7 +98,7 @@ class ContactUsFormController extends Controller {
         //     'url' => $request->get('custom_url'),
         //     'user_query' => $request->get('description'),
         // ), function($message) use ($request,$admin_email ){
-        //     $message->from('hello@marlows-diamonds.co.uk');
+        //     $message->from('dssmtp@marlows-diamonds.co.uk');
         //     $message->to($admin_email, 'Admin')->subject('New Website Enquiry');
         // });
 

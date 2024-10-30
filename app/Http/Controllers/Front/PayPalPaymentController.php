@@ -136,7 +136,7 @@ class PayPalPaymentController extends Controller
         if (env('APP_ENV') == 'production') {
             $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
                 Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request,$admin_email, $transaction_emails ){
-                $message->from('hello@marlows-diamonds.co.uk');
+                $message->from('dssmtp@marlows-diamonds.co.uk');
 
                 $admin_email_london = "london@marlows-diamonds.co.uk";
                 $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
@@ -154,7 +154,7 @@ class PayPalPaymentController extends Controller
         } else if (env('APP_ENV') == 'local') {
             $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
             Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request, $transaction_emails ){
-                $message->from('hello@marlows-diamonds.co.uk');
+                $message->from('dssmtp@marlows-diamonds.co.uk');
 
                 $admin_email_london = 'sharma.gajendra@dotsquares.com';
                 $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
@@ -211,7 +211,7 @@ class PayPalPaymentController extends Controller
                         Mail::send('email.orderstatus', array(
                         'data1' => $data,
                     ), function($message) use ($request,$admin_email, $transaction_emails ){
-                        $message->from('hello@marlows-diamonds.co.uk');
+                        $message->from('dssmtp@marlows-diamonds.co.uk');
                         $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
 
                         if(!empty($transaction_emails)){
@@ -245,7 +245,7 @@ class PayPalPaymentController extends Controller
                     Mail::send('email.orderstatus', array(
                         'data1' => $data,
                     ), function($message) use ($request,$admin_email, $transaction_emails ){
-                        $message->from('hello@marlows-diamonds.co.uk');
+                        $message->from('dssmtp@marlows-diamonds.co.uk');
                         $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('Your Marlows Diamonds order has been received!');
 
                         if(!empty($transaction_emails)){

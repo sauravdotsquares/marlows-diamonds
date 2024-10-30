@@ -43,7 +43,7 @@ class HomeController
                 'name' => $request->get('name'),
                 'email' => $request->get('email'),
             ), function($message) use ($request,$admin_email ){
-                $message->from('hello@marlows-diamonds.co.uk');
+                $message->from('dssmtp@marlows-diamonds.co.uk');
                 $message->to($admin_email, 'Admin')->subject('NEED ASSISTANCE?');
             });
 

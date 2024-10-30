@@ -42,7 +42,7 @@ class SendEmailJob implements ShouldQueue
             'url' => $this->requestData['custom_url'],
             'user_query' => $this->requestData['description'],
         ], function ($message) {
-            $message->from('hello@marlows-diamonds.co.uk');
+            $message->from('dssmtp@marlows-diamonds.co.uk');
             $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry local');
             // $message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Enquiry local');
         });
