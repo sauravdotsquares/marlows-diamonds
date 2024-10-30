@@ -7,41 +7,26 @@
 <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
 
 <style>
-	.ui-slider-handle {
+	.ui-slider-handle{
 		width: 35px !important;
 		font-size: small !important;
 		color: #FF0000 !important;
 		text-align: center !important;
 	}
 
-	.ui-slider .ui-slider-handle {
-		height: 1.5em;
-		color: #8e2e65 !important;
-	}
-
-	.ui-widget-header {
-		background: #8e2e65 !important;
-	}
-
-	.ui-state-hover,
-	.ui-widget-content .ui-state-hover,
-	.ui-widget-header .ui-state-hover,
-	.ui-state-focus,
-	.ui-widget-content .ui-state-focus,
-	.ui-widget-header .ui-state-focus {
-		border-color: #8e2e65 !important;
-		outline: none;
-		box-shadow: none;
-		background: #fff !important;
-	}
-
+	.ui-slider .ui-slider-handle{
+        height: 1.5em; color: #8e2e65 !important;}
+.ui-widget-header{background: #8e2e65 !important;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus{
+    border-color: #8e2e65 !important; outline: none; box-shadow: none; background: #fff !important;
+    }
 	.error {
 		color: #e74c3c !important;
 	}
 </style>
 
 @endsection
-<div class="perfect-certified-wrap" id="diamondMainController" ng-controller="DiamondSearchController" ng-init="getDiamondResults()" ng-cloak>
+<div class="perfect-certified-wrap" id="diamondMainController" ng-controller="DiamondSearchController"  ng-init="getDiamondResults()"  ng-cloak>
 	<div class="container">
 		<div class="perfect-certified-head">
 			<h1>{!!$data->subtitle!!}</h1>
@@ -75,70 +60,70 @@
 												<button type="button" class="btn active-diamond  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/round-1.png'}}" alt="">
 													<span>Round</span>
-													<input checked="checked" value="ROUND" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input checked="checked" value="ROUND" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/pear-1.png'}}" alt="pearl">
 													<span>Pear</span>
-													<input value="PEAR" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="PEAR" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/marquee-1.png'}}" alt="marquise">
 													<span>Marquise </span>
-													<input value="MARQUISE" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="MARQUISE" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/heart-1.png'}}" alt="heart">
 													<span>Heart</span>
-													<input value="HEART" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="HEART" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/asscher.png'}}" alt="Asscher">
 													<span>Asscher</span>
-													<input value="ASSCHER" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="ASSCHER" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/priceless-1.png'}}" alt="priceless">
 													<span>Princess</span>
-													<input value="PRINCESS" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="PRINCESS" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/radiant.png'}}" alt="radiant">
 													<span>Radiant</span>
-													<input value="RADIANT" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="RADIANT" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/emerald-1.png'}}" alt="Emerald">
 													<span>Emerald</span>
-													<input value="EMERALD" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="EMERALD" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/oval-1.png'}}" alt="Oval">
 													<span>Oval</span>
-													<input value="OVAL" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="OVAL" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 											<li>
 												<button type="button" class="btn  shape_btn">
 													<img src="{{env('APP_IMAGE_URL').'/assets/images/cushion.png'}}" alt="cushion">
 													<span>Cushion</span>
-													<input value="CUSHION" class="" type="radio" name="shape" ng-model="shape" ng-change="getDiamondResults()">
+													<input value="CUSHION" class="" type="radio" name="shape" ng-model="shape"  ng-change="getDiamondResults()">
 												</button>
 											</li>
 										</ul>
@@ -157,11 +142,11 @@
 											<div class="srchniput-fil">
 												<div class="minrange">
 													<span>Min Carat</span>
-													<input id="sliderRangeSetMin" disabled data-index="0" class="sliderValue" value="0.5" />
+													<input id="sliderRangeSetMin" disabled data-index="0" class="sliderValue" value="0.5"/>
 												</div>
 												<div class="maxrange">
 													<span>Max Carat</span>
-													<input id="sliderRangeSetMax" disabled data-index="1" class="sliderValue" value="2.5" />
+													<input id="sliderRangeSetMax" disabled data-index="1" class="sliderValue" value="2.5"/>
 												</div>
 											</div>
 
@@ -211,8 +196,8 @@
 										<div class="diamond-filter-quote">
 											<div class="quote-icon-pop helping-text-container ">
 												<a class="ma-info-icon" href="javascript:void(0)">
-													<i class="diamond-icon info-icon"></i>
-												</a>
+												    <i class="diamond-icon info-icon"></i>
+												    </a>
 												<div class="m-quote-pop">
 													{{COLOUR_TOOLTIP}}
 												</div>
@@ -573,20 +558,18 @@
 							<div class="timeline-wrapper" ng-if="loader">
 								<div class="timeline-item">
 									@for($i=1;$i<=5;$i++)
-										<div class="animated-background">
+									<div class="animated-background">
 										<div class="background-masker content-first-end"></div>
-								</div>
-								@endfor
+									</div>
+									@endfor
 							</div>
 						</div>
-
 						<div data-pagination=""
 							data-num-pages="totalPages"
 							data-current-page="currentPage"
 							data-max-size="maxSize"
-							data-boundary-links="false"
-							ng-click="pageChanged()"
-							ng-show="data.length > 0">
+							data-boundary-links="false" 
+							ng-click="pageChanged()">
 						</div>
 					</div>
 					<input type="hidden" id="addtobasketselectedrowid" value="0">
@@ -598,14 +581,14 @@
 						<input type="radio" class="form-control" id="full_payment" name="payment_mode" checked="true" value="100" ng-model="payment_mode" ng-change="getDiamondResults()"> <span>Full Payment</span>
 						<input type="radio" class="form-control" id="partial_deposit_payment" name="payment_mode" value="{{$checkDepositPercentage}}" ng-model="payment_mode" ng-change="getDiamondResults()">
 						<span>{{$checkDepositPercentage}}% Payment </span>
-						<div class="pay-amtrest" style="display: none !important;"><span id="deposited_message">
-								Reserve diamond for {{$checkDepositPercentage}}%. Balance in store after viewing.
-							</span></div>
+						<div class="pay-amtrest" style="display: none !important;"><span id="deposited_message"> 
+						Reserve diamond for {{$checkDepositPercentage}}%. Balance in store after viewing.	
+						</span></div>
 						<div class="diamond-total-subtotal">
 							<p ng-if="firstDiamondAmount"> <strong>Diamond Price:</strong> £ <%firstDiamondAmount | number : 2 %></p>
 							<div ng-switch="payment_mode">
 								<div ng-switch-when="10"><strong style="color: #8e2e65;">Partial Diamond Price:</strong> £ <%partial_deposit_payment | number : 2 %></div>
-								<!-- <div ng-switch-default><strong style="color: #8e2e65;">Partial Diamond Price:</strong> £ <%firstDiamondAmount | number : 2 %></div> -->
+								<div ng-switch-default><strong style="color: #8e2e65;">Partial Diamond Price:</strong> £ <%firstDiamondAmount | number : 2 %></div>
 							</div>
 						</div>
 						<div class="addbasket-req-btns">
@@ -671,7 +654,7 @@
 								@endif
 							</div>
 							<div class="form-controls">
-								<textarea name="description" id="description" class="{{ $errors->has('description') ? 'error' : '' }}" placeholder="Your Message"></textarea>
+								<textarea name="description" id="description" class="{{ $errors->has('description') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
 								@if ($errors->has('description'))
 								<div class="error">
 									{{ $errors->first('description') }}
@@ -711,42 +694,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
 <script>
-	function blankForm() {
+
+	function blankForm(){
 		$('input[name="title"]').val('');
 		$('input[name="email"]').val('');
 		$('input[name="phone"]').val('');
 		$('textarea[name="description"]').val('');
-		$("button[type='submit']").prop('disabled', false);
+		$("button[type='submit']").prop('disabled',false);
 		$('#requestAppointment').modal('hide');
 		grecaptcha.reset();
 	}
 
-	$('.ma-info-icon').click(function() {
-		var quotePop = $(this).next('.m-quote-pop'); // Find the next sibling with class .m-quote-pop
+	function touchHandler(event) {
+		var touch = event.changedTouches[0];
 
-		// If the clicked element's .m-quote-pop is currently visible, hide it
-		if (quotePop.css('display') === 'block') {
-			quotePop.css('display', 'none'); // Hide the element
-			quotePop.addClass('m-custom-toggle');
-		} else {
-			// Hide all other .m-quote-pop elements before showing the clicked one
-			$('.m-quote-pop').css('display', 'none').addClass('m-custom-toggle');
-			
-			// Show the clicked element's .m-quote-pop
-			quotePop.css('display', 'block').removeClass('m-custom-toggle');
-		}
-	});
+		var simulatedEvent = document.createEvent("MouseEvent");
+		simulatedEvent.initMouseEvent({
+				touchstart: "mousedown",
+				touchmove: "mousemove",
+				touchend: "mouseup"
+			}[event.type], true, true, window, 1,
+			touch.screenX, touch.screenY,
+			touch.clientX, touch.clientY, false,
+			false, false, false, 0, null);
+
+		touch.target.dispatchEvent(simulatedEvent);
+		event.preventDefault();
+	}
 
 	$.validator.addMethod("phoneno", function(phone_number, element) {
 		phone_number = phone_number.replace(/\s+/g, "");
-		return phone_number.length > 9;
+		return phone_number.length > 9 ;
 	}, "Please specify a valid phone number");
 
 	jQuery.validator.addMethod("lettersonly", function(value, element) {
 		return this.optional(element) || /^[a-z," "]+$/i.test(value);
-	}, "Letters and spaces only please");
+	}, "Letters and spaces only please"); 
 
-	jQuery(document).ready(function($) {
+	jQuery(document).ready(function($){
 
 		$('form#contactForm').validate({
 			rules: {
@@ -760,7 +745,7 @@
 				},
 				phone: {
 					digits: true,
-					phoneno: true
+					phoneno:true
 				},
 				description: {
 					required: true,
@@ -782,39 +767,39 @@
 					required: 'Description is required',
 				}
 			},
-			submitHandler: function(form) {
+			submitHandler: function (form) {
 				// if (grecaptcha.getResponse()) {
-				var form_data = new FormData(form);
-				$(form).find("button[type='submit']").prop('disabled', true);
-				$("button[type='submit']").text("Please Wait...");
-				$.ajax({
-					url: "{{ route('contact') }}",
-					method: "POST",
-					cache: false,
-					contentType: false,
-					processData: false,
-					data: form_data,
-					success: function(response) {
-						blankForm();
-						$("button[type='submit']").text("Send Message");
-						if (response.status == 200) {
-							toastr.success(response.success);
-						} else {
-							toastr.info(response.error);
+					var form_data = new FormData(form);
+					$(form).find("button[type='submit']").prop('disabled',true);
+					$("button[type='submit']").text("Please Wait...");
+					$.ajax({
+						url: "{{ route('contact') }}",
+						method: "POST",
+						cache:false,
+						contentType:false,
+						processData: false,
+						data: form_data,
+						success: function (response) {
+							blankForm();
+							$("button[type='submit']").text("Send Message");
+							if(response.status == 200){
+								toastr.success(response.success);
+							}else{
+								toastr.info(response.error);
+							}
 						}
-					}
-				});
+					});
 				// } else {
 				// 	alert('Please confirm captcha to proceed')
 				// }
 			}
 		});
 
-		$(function() {
-			$('input[name="shape"]:radio').change(function() {
-				if ($(this).val() == 'ROUND') {
+		$(function () {
+			$('input[name="shape"]:radio').change(function () {
+				if($(this).val() == 'ROUND'){
 					$('.diamond-cut-grade').show();
-				} else {
+				}else{
 					$('.diamond-cut-grade').hide();
 				}
 			});
@@ -828,27 +813,27 @@
 		}
 
 
-		// var popElement = document.getElementsByClassName("helping-text-container");
-		// document.addEventListener('click', function(event) {
-		// 	for (i = 0; i < popElement.length; i++) {
-		// 		popEl = popElement[i];
-		// 		var isClickInside = popEl.contains(event.target);
+		var popElement = document.getElementsByClassName("helping-text-container");
+		document.addEventListener('click', function(event) {
+			for(i=0; i < popElement.length; i++){
+				popEl = popElement[i];
+				var isClickInside = popEl.contains(event.target);
 
-		// 		$('.m-quote-pop').css('display', 'none');
+				$('.m-quote-pop').css('display','none');
 
-		// 		if (!isClickInside) {
-		// 			$(popEl).find(".m-quote-pop").css('display', 'none');
-		// 		} else {
-		// 			if ($(popEl).find('.m-quote-pop').is(':visible')) {
-		// 				$(popEl).find('.m-quote-pop').css('display', 'none');
-		// 			} else {
-		// 				$(popEl).find(".m-quote-pop").css('display', 'block');
-		// 			}
+				if (!isClickInside) {
+					$(popEl).find(".m-quote-pop").css('display','none');
+				} else {
+					if($(popEl).find('.m-quote-pop').is(':visible')){
+						$(popEl).find('.m-quote-pop').css('display','none');
+					}else{
+						$(popEl).find(".m-quote-pop").css('display','block');
+					}
 
-		// 			break;
-		// 		}
-		// 	}
-		// });
+					break;
+				}
+			}
+		});
 
 
 		$("#slider").slider({
@@ -869,7 +854,7 @@
 				}
 
 			},
-			change: function() {
+			change: function(){
 
 				var value1 = $("#slider").slider("values", 0);
 				var value2 = $("#slider").slider("values", 1);
@@ -878,22 +863,16 @@
 			},
 		});
 
-		$("#sliderRangeSetMin").change(function(event) {
+		$("#sliderRangeSetMin").change(function (event) {
 			var value1 = parseFloat($("#sliderRangeSetMin").val());
 			var highVal = value1 * 2;
-			$("#slider").slider("option", {
-				"max": highVal,
-				"value": value1
-			});
+			$("#slider").slider("option", {"max": highVal, "value": value1});
 		});
 
-		$("#sliderRangeSetMax").change(function(event) {
+		$("#sliderRangeSetMax").change(function (event) {
 			var value1 = parseFloat($("#sliderRangeSetMax").val());
 			var highVal = value1 * 2;
-			$("#slider").slider("option", {
-				"max": highVal,
-				"value": value1
-			});
+			$("#slider").slider("option", {"max": highVal, "value": value1});
 		});
 
 		var stepsSlider = document.getElementById('range-slider');
@@ -902,44 +881,44 @@
 		var inputs = [input0, input1];
 
 
-		$(document).on('click', 'input[type="checkbox"]', function() {
-			if ($(this).is(":checked") == true) {
+		$(document).on('click','input[type="checkbox"]',function(){
+			if($(this).is(":checked")==true){
 				$(this).parent().parent().addClass('active-diamond');
-			} else {
+			}else{
 				$(this).parent().parent().removeClass('active-diamond');
 			}
 		});
-		$(document).on('click', 'input[name="shape"]', function() {
+		$(document).on('click','input[name="shape"]',function(){
 			$('.shape-list li').removeClass('active-diamond')
 			$(this).parent().parent().addClass('active-diamond');
 		});
 
 		$(document).on('change', "[id^=selectedDiamondCheckBox]", function() {
-			var index = parseInt($(this).attr("id").replace("selectedDiamondCheckBox", ''));
+			var index = parseInt($(this).attr("id").replace("selectedDiamondCheckBox",''));
 			$('#addtobasketselectedrowid').val(index);
 			setPartialPaymentAmount(index);
 		});
 
-		$('#addtobasket').on('click', function() {
+		$('#addtobasket').on('click',function(){
 			addtobasketFunction($('#addtobasketselectedrowid').val());
 		});
 
 
-		$("input[name='payment_mode']").on('change', function() {
+		$("input[name='payment_mode']").on('change',function(){
 			var mode_value = $(this).val();
 			var mode_check_value = '{{$checkDepositPercentage}}';
 			$('.pay-amtrest').attr("style", "display: none !important");
-			if ($(this).val() == '{{$checkDepositPercentage}}') {
+			if($(this).val() == '{{$checkDepositPercentage}}'){
 				$(".pay-amtrest").removeAttr("style");
 			}
 
-
+			
 		});
+		
 
+		function setPartialPaymentAmount() {
 
-		function setPartialPaymentAmount(index) {
-
-			$('#total-diamond-price').html("<strong>Partial Diamond Price:</strong> £ " + $('#partial_amount').val());
+			$('#total-diamond-price').html("<strong>Partial Diamond Price:</strong> £ "+$('#partial_amount').val());
 			$('#addtobasketselectedrowid').val(index);
 		}
 
@@ -948,7 +927,7 @@
 	});
 
 	function getNumberFromCurrency(currency) {
-		return Number(currency.replace(/,/g, ''))
+		return Number(currency.replace(/,/g , ''))
 	}
 
 	function getParameterByName(name, url) {
@@ -965,39 +944,39 @@
 		return (variable !== null && variable !== undefined);
 	}
 
-	function addtobasketFunction(index) {
-		var cert_number = $('#tdCertiLink' + index).find('a').attr('href');
+	function addtobasketFunction(index){
+		var cert_number = $('#tdCertiLink'+index).find('a').attr('href');
 
-		var reportno = getParameterByName('reportno', cert_number);
+		var reportno = getParameterByName('reportno',cert_number);
 		var certNumber;
-		if (reportno !== null && reportno !== undefined) {
+		if(reportno !== null && reportno !== undefined){
 			certNumber = reportno;
 
-		} else {
-			var reportno = getParameterByName('r', cert_number);
-			if (reportno !== null && reportno !== undefined) {
+		}else{
+			var reportno = getParameterByName('r',cert_number);
+			if(reportno !== null && reportno !== undefined){
 				certNumber = reportno;
-			} else {
+			}else{
 				var tarr = cert_number.replace(/^.*\/\/[^\/]+/, '').split('/');
 				certNumber = tarr[2].replace(/\.[^/.]+$/, "");
 			}
 		}
 
 
-		var certificatenumber = $('#selectedDiamondCheckBox' + index).data('certno');
-		var stockno = $('#selectedDiamondCheckBox' + index).data('stockno');
+		var certificatenumber = $('#selectedDiamondCheckBox'+index).data('certno');
+		var stockno = $('#selectedDiamondCheckBox'+index).data('stockno');
 
 
-		if (certificatenumber != '' && certificatenumber !== null && certificatenumber !== undefined) {
+		if(certificatenumber != '' && certificatenumber !== null && certificatenumber !== undefined){
 
 			certNumber = certificatenumber;
-		} else {
+		}else{
 			certNumber = '';
 		}
 
-		if (stockno != '' && stockno !== null && stockno !== undefined) {
+		if(stockno != '' && stockno !== null && stockno !== undefined){
 			stockno = stockno;
-		} else {
+		}else{
 			stockno = stockno;
 		}
 
@@ -1006,38 +985,40 @@
 			url: '{{route("add.to.cart.diamond")}}',
 			data: {
 				'_token': "{{csrf_token()}}",
-				'Carat': $('#tdCarat' + index).text(),
-				'Color': $('#tdColor' + index).text(),
-				'Clarity': $('#tdClarity' + index).text(),
-				'Cut': $('#tdCut' + index).text(),
-				'Lab': $('#tdLab' + index).text(),
-				'CERT_NO': certNumber,
-				'Stock_NO': stockno,
-				'deposit': $("input[name=payment_mode]").val(),
-				'total_amount': $("#total_amount").val(),
-				'partial_amount': $("#partial_amount").val(),
-				'price': getNumberFromCurrency($('#tdAmount' + index).text()) || 0,
-				'setting_price': getNumberFromCurrency($('#tdAmount' + index).text()) || 0,
-				'CertificateLink': $('#tdCertiLink' + index).find('a').attr('href') || '',
-				'Shape': $('#tdShape' + index).text() || '',
-				'ImageLink': $('#tdImgLink' + index).find('a').attr('href') || '',
+				'Carat' : $('#tdCarat'+index).text(),
+				'Color' : $('#tdColor'+index).text(),
+				'Clarity' : $('#tdClarity'+index).text(),
+				'Cut' : $('#tdCut'+index).text(),
+				'Lab' : $('#tdLab'+index).text(),
+				'CERT_NO' : certNumber,
+				'Stock_NO' : stockno,
+				'deposit' : $("input[name=payment_mode]").val(),
+				'total_amount' : $("#total_amount").val(),
+				'partial_amount' : $("#partial_amount").val(),
+				'price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0,
+				'setting_price': getNumberFromCurrency($('#tdAmount'+index).text()) || 0,
+				'CertificateLink': $('#tdCertiLink'+index).find('a').attr('href') || '',
+				'Shape': $('#tdShape'+index).text() || '',
+				'ImageLink': $('#tdImgLink'+index).find('a').attr('href') || '',
 			},
-			success: function(res) {
-				if (res.success != '' && typeof res.success !== "undefined") {
-					if (res.cartcount) {
+			success: function (res) {
+				if(res.success != '' && typeof res.success !== "undefined"){
+					if(res.cartcount){
 						$(".cartcount").text(res.cartcount);
 					}
-					if (res.wishcount) {
+					if(res.wishcount){
 						$(".wishcount").removeClass('fa-heart-o');
 						$(".wishcount").addClass('fa-heart');
 					}
 					toastr.success(res.success);
-				} else {
+				}else{
 					toastr.info(res.error);
 				}
 			}
 		});
 	}
+
+
 </script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 @endsection

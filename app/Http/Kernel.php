@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'WebCommonHandler' => \App\Http\Middleware\WebCommonHandler::class,
         'customer' => \App\Http\Middleware\RedirectIfNotCustomerUsers::class,
         'checkout' => \App\Http\Middleware\RedirectIfNotCustomer::class,
-        'CaseInsensitiveRoutes' => \App\Http\Middleware\CaseInsensitiveRoutes::class
+        'CaseInsensitiveRoutes' => \App\Http\Middleware\CaseInsensitiveRoutes::class,
+        'role' => \App\Http\Middleware\Role::class
     ];
 }

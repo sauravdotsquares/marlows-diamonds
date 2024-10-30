@@ -39,17 +39,17 @@ class MailListFormController extends Controller {
             // Mail::to('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
 
             
-            //         Mail::send('email.mail', array(
-            //             'title' => $request->get('title'),
-            //             'email' => $request->get('email'),
-            //             'phone' => $request->get('phone'),
-            //             'url' => $request->get('custom_url'),
-            //             'user_query' => $request->get('description'),
-            //         ), function($message) use ($request,$admin_email ){
-            //             $message->from('hello@marlows-diamonds.co.uk');
-            // 			$message->to($admin_email, 'Admin')->subject('New Website Enquiry');
-            // 			$message->bcc('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry');
-            //         });
+    //         Mail::send('email.mail', array(
+    //             'title' => $request->get('title'),
+    //             'email' => $request->get('email'),
+    //             'phone' => $request->get('phone'),
+    //             'url' => $request->get('custom_url'),
+    //             'user_query' => $request->get('description'),
+    //         ), function($message) use ($request,$admin_email ){
+    //             $message->from('hello@marlows-diamonds.co.uk');
+    // 			$message->to($admin_email, 'Admin')->subject('New Website Enquiry');
+    // 			$message->bcc('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry');
+    //         });
         }else{
             $requestData = [
                 'title' => $request->get('title'),

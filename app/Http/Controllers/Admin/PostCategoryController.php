@@ -34,6 +34,7 @@ class PostCategoryController extends Controller
 		
         if(isset($request->id)){
             $getPostCategoryArray = Posts::find($request->id);
+			$getCatId = $getPostCategoryArray->categories;
             $getCatId_arr = explode(",",$getPostCategoryArray->categories);
         }
 

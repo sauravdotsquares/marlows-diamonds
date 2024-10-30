@@ -283,8 +283,8 @@ class ApiController extends Controller
             $query->whereYear('created_at', $currentYear)
                 ->where('email_status', 1);
         })->where(function ($query) {
-            // $query->where('status', 1)
-            //     ->orWhere('status', 0);
+            $query->where('status', 1)
+                ->orWhere('status', 0);
         })->first()->toArray();
 
         $data1 = [

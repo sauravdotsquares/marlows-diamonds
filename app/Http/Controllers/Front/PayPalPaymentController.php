@@ -217,7 +217,7 @@ class PayPalPaymentController extends Controller
                         if(!empty($transaction_emails)){
                             $emails_to_cc = explode(',', $transaction_emails);
                             foreach ($emails_to_cc as $email_to_cc) {
-                                $message->cc($email_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');
+                                $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
                             }
                         }
 
@@ -252,7 +252,7 @@ class PayPalPaymentController extends Controller
                         if(!empty($transaction_emails)){
                             $emails_to_cc = explode(',', $transaction_emails);
                             foreach ($emails_to_cc as $email_to_cc) {
-                                $message->cc('anamika.verma@dotssquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');
+                                $message->cc('anamika.verma@dotssquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
                             }
                         }
                         $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
