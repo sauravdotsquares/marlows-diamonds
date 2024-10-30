@@ -59,13 +59,8 @@ class MailListFormController extends Controller {
                 'description' => $request->get('description'),
             ];
             
-            $adminEmail = 'sharma.gajendra@dotsquares.com';
-
-            // $when = now()->addMinutes(3);
-
-            // Mail::to($adminEmail)->later($when, new WelcomeEmail($requestData));
-
-            Mail::to($adminEmail)->cc('sanyukta.chauhan@dotsquares.com')->queue(new WelcomeEmail($requestData));
+            // $adminEmail = 'sharma.gajendra@dotsquares.com';
+            Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
             // SendEmailJob::dispatch($requestData, $adminEmail);
             // Mail::send('email.mail', array(
             //     'title' => $request->get('title'),
