@@ -36,7 +36,7 @@ class SendOrderMailJob implements ShouldQueue
         Mail::send('email.orderstatusqueueprocess', [
             'data1' => $this->requestData,
         ], function ($message) {
-            $message->from('hello@marlows-diamonds.co.uk');
+            $message->from('dssmtp@marlows-diamonds.co.uk');
             $message->to('sharma.gajendra@dotsquares.com', 'Customer')->bcc('sharma.gajendra@dotsquares.com','Admin')->subject('Order History');
             // $message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Enquiry local');
         });

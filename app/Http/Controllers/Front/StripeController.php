@@ -91,7 +91,7 @@ class StripeController extends Controller
             Mail::send('email.orderstatus', array(
                 'data1' => $data,
             ), function ($message) use ($request, $admin_email, $transaction_emails) {
-                $message->from('hello@marlows-diamonds.co.uk');
+                $message->from('dssmtp@marlows-diamonds.co.uk');
                 $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
 
                 if (!empty($transaction_emails)) {
