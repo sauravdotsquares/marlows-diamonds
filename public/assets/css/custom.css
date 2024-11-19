@@ -296,7 +296,7 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 
 .whatspp-num-1 span#scroll-to-top i.fa.fa-whatsapp {line-height: 40px;font-size: 26px;}
 /* kh changes start */
-.bottom-eye-icon {position: fixed;bottom: 144px;right: 7px;z-index: 999;}
+.bottom-eye-icon {position: fixed;bottom: 144px;right: 50px;z-index: 999;}
 .bottom-eye-icon img.eye-num {width: 21px;height: auto;}
 /* kh changes end */
 

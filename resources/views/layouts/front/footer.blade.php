@@ -87,7 +87,8 @@
      <div class="bottom-eye-icon">
         {{-- <a href="#"> --}}
            <img class="eye-num" src="{{asset('assets/images/wp-tooltip.png')}}" alt="whatsApp" class="position-realtive">
-           <span class="tooltiptext">10% Price Beat Guarantee on WhatsApp. Share a link to a competitor's product, and we’ll offer at least 10% off on any lab-grown product, exclusively through WhatsApp.</span>
+           <span class="tooltiptext">10% Price beat service through Whatsapp. Send us a link of what you have seen elsewhere to get a minimum of 10% off competitors' price 
+            Only through whatsapp contact on any lab grown product</span>
        {{-- </a> --}}
     </div>
    {{-- eye icon --}}
@@ -95,7 +96,7 @@
        <div class="bottom-whatsapp-icon">
         <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447535425059">
             <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp" class="position-realtive">
-            <span class="tooltiptext">10% Price Beat Guarantee on WhatsApp. Share a link to a competitor's product, and we’ll offer at least 10% off on any lab-grown product, exclusively through WhatsApp.</span>
+            <span class="tooltiptext">10% Price beat service through Whatsapp. Send us a link of what you have seen elsewhere to get a minimum of 10% off competitors' price Only through whatsapp contact on any lab grown product</span>
         </a>
     </div>
     {{-- whatsapp icon --}}
