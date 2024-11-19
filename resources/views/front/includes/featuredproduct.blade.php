@@ -7,8 +7,8 @@
 <div class="best-selling-marlows marlow-best-selling">
     <div class="container">
         <div class="head-para-three">
-            <h2 class="heading-h-three">Best Selling Marlow's Diamond Jewellery</h2>
-            <p>Diamond are more than just jewellery. We understand the symbolism that they represent. So that they can withstand the test of time our diamond jewellery is certified by the GIA, so they provide quality and longevity.</p>
+            <h2 class="heading-h-three">Our Bestselling Diamond Jewellery</h2>
+            <p>Our diamond jewellery is certified by the GIA, to ensure quality and a lifetime guarantee.</p>
         </div>
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">

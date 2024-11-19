@@ -18,11 +18,10 @@ class MailListFormController extends Controller {
         $this->validate($request, [
             'title' => 'required',
             'email' => 'required|email',
-            'description' => 'required',
+            // 'description' => 'required',
         ]);
         //  Store data in database
         Enquiries::create($request->all());
-        //
 		//  Send mail to admin
 
         if (env('APP_ENV')=='production'){
@@ -60,18 +59,8 @@ class MailListFormController extends Controller {
                 'description' => $request->get('description'),
             ];
             
-            $adminEmail = 'sharma.gajendra@dotsquares.com';
-
-            // $when = now()->addMinutes(3);
-
-            // Mail::to($adminEmail)->later($when, new WelcomeEmail($requestData));
-
-            Mail::to($adminEmail)->cc('sanyukta.chauhan@dotsquares.com')->queue(new WelcomeEmail($requestData));
-
-            // echo "afdsaf<pre>";
-            // print_r("Mail Send");
-            // die;
-
+            // $adminEmail = 'sharma.gajendra@dotsquares.com';
+            Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
             // SendEmailJob::dispatch($requestData, $adminEmail);
             // Mail::send('email.mail', array(
             //     'title' => $request->get('title'),

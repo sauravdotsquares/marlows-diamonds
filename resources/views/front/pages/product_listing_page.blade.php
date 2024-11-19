@@ -1185,6 +1185,10 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
         sendDataValues(1, 'append', sortingData);
     });
 
+         // Ensure first option is selected on page load
+         window.addEventListener('load', function() {
+        document.getElementById('sortingDSelect').value = '';
+    });
 //     $(document).on('change', "#sortingMSelect", function() {
 //        $("#showProductList").html('');
 //         sendDataValues(1,'append',$(this).val());

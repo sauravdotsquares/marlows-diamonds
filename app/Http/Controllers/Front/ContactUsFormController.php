@@ -63,9 +63,9 @@ class ContactUsFormController extends Controller {
                 'custom_url' => $request->get('custom_url'),
                 'description' => $request->get('description'),
             ];
-
-            $adminEmail = 'sharma.gajendra@dotsquares.com';
-            Mail::to($adminEmail)->cc('sanyukta.chauhan@dotsquares.com')->queue(new WelcomeEmail($requestData));
+            
+            // $adminEmail = 'sharma.gajendra@dotsquares.com';
+            Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
 
             // $requestData = [
             //     'title' => $request->get('title'),

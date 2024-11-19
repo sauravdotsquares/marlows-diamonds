@@ -141,22 +141,22 @@
                                     @if($details['price']!= $details['shop_price'])
                                     <p> 
                                         <span> Our Price: </span> 
-                                        <del> {{MY_CURRENCY_SYMBOL}}{{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
+                                        <del> {{MY_CURRENCY_SYMBOL}} {{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
                                     </p>
                                     @endif
                                 @endif
                                     @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['shopPricedata'])
-                                        <del>{{MY_CURRENCY_SYMBOL}}{{
+                                        <del>{{MY_CURRENCY_SYMBOL}} {{
                                             number_format($details['customArray']['final_price'],2) }}
                                         </del>
                                     @endif
-                                    &nbsp; {{MY_CURRENCY_SYMBOL}}{{
+                                    &nbsp; {{MY_CURRENCY_SYMBOL}} {{
                                     number_format($details['price'],2) }}</td>
                                 <td class="product-quantity-col" data-th="Quantity">
                                     <input type="text" disabled="disabled" value="{{ $details['quantity'] }}"
                                         class="form-control quantity update-cart" />
                                 </td>
-                                <td class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}}{{
+                                <td class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}} {{
                                     number_format($details['deposited_price'] * $details['quantity'],2) }}</td>
                                 <td class="product-action-col" class="actions" data-th="">
                                     <button class="btn btn-danger btn-sm remove-from-cart"><i
@@ -178,7 +178,7 @@
 
                                 <tr class="box-cart-total">
                                     <th>Total</th>
-                                    <td> {{MY_CURRENCY_SYMBOL}}{{ number_format($total,2) }}</td>
+                                    <td> {{MY_CURRENCY_SYMBOL}} {{ number_format($total,2) }}</td>
                                 </tr>
                             </tbody>
                         </table>

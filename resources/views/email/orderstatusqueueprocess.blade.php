@@ -70,6 +70,7 @@
                                                 line-height: 20px;border: 1px solid #808080;">
 													<p style="margin: 0;font-family:Arial; font-size: 14px;  line-height: 25px;">
 														<a href="{{asset('/product/'.$orderDetails['product_details']['slug'])}}">
+															@if(isset($orderDetails['product_details']['AdditionalPriceMetalType']) && !empty($orderDetails['product_details']['AdditionalPriceMetalType']['image_url']))														<img src="{{ env('APP_IMAGE_URL').'/storage/'.$orderDetails['product_details']['AdditionalPriceMetalType']['image_url'] }}" alt="{{$orderDetails['product_details']['title']}}" style="height: 100px;">														@endif														<br>
 															{{isset($orderDetails['product_details']['title'])?$orderDetails['product_details']['title']:''}}
 														</a>
 													</p>
@@ -220,6 +221,22 @@
 											<tr>
 												<td width="270px" style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 10px; line-height: 20px;border: 1px solid #808080;">
 													<p style="margin: 0;font-family:Arial; font-size: 14px;  line-height: 25px;">
+														<strong style="font-size: 14px;">Status:</strong>
+													</p>
+												</td>
+												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0; line-height: 20px; font-size: 14px;border: 1px solid #808080;">
+
+												</td>
+												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0; line-height: 20px; font-size: 14px;border: 1px solid #808080;">
+
+												</td>
+												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0; line-height: 20px; font-size: 20px;border: 1px solid #808080;text-align:center;font-weight: bold;">
+													{{$data1['data']['status_details']}}
+												</td>
+											</tr>
+											<tr>
+												<td width="270px" style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 10px; line-height: 20px;border: 1px solid #808080;">
+													<p style="margin: 0;font-family:Arial; font-size: 14px;  line-height: 25px;">
 														<strong style=" font-size: 14px;">Total:</strong>
 													</p>
 												</td>
@@ -252,13 +269,33 @@
 									</table>
 								</td>
 							</tr>
-							<tr>
-								<td width="270px" style="font-family:Arial; padding: 15px 10px;line-height: 20px;border: 1px solid #808080;border-top:none;text-align:center;font-weight: bold;font-size: 26px;">
+							<!-- order details part end-->
+						</tbody>
+
+						<table align="center" width="600px" cellspacing="0" cellpadding="0" bgcolor="#fff" style="border-collapse: collapse; max-width: 600px;">
+
+<tbody>
+
+<tr>
+								<td style="width: 48.7%; font-family:Arial; padding: 15px 10px;line-height: 20px;border: 1px solid #808080;border-top:none;text-align:center;font-weight: bold;font-size: 26px;">
 									Billing Address
+								</td>
+								<td style="font-family:Arial; padding: 15px 10px;line-height: 20px;border: 1px solid #808080;border-top:none;text-align:center;font-weight: bold;font-size: 26px;">
+									Shipping Address
 								</td>
 							</tr>
 							<tr>
-								<td width="270px" style="font-family:Arial; padding: 15px 10px; line-height: 20px;border: 1px solid #808080;text-align:center">
+								<td  style="font-family:Arial; padding: 15px 10px; line-height: 20px;border: 1px solid #808080;text-align:center">
+									{{isset($data1['data']['order_address']['first_name'])?$data1['data']['order_address']['first_name']:''}} {!!isset($data1['data']['order_address']['last_name'])?$data1['data']['order_address']['last_name'].'<br>':''!!}
+									{!!isset($data1['data']['order_address']['company_name'])?$data1['data']['order_address']['company_name'].'<br>':''!!}
+									{!!isset($data1['data']['order_address']['street_address_l1'])?$data1['data']['order_address']['street_address_l1']:''!!} {!!isset($data1['data']['order_address']['street_address_l2'])?$data1['data']['order_address']['street_address_l2'].'<br>':''!!}
+									{!!isset($data1['data']['order_address']['town_city'])?$data1['data']['order_address']['town_city'].'<br>':''!!}
+									{!!isset($data1['data']['order_address']['state'])?$data1['data']['order_address']['state']:''!!} {!!isset($data1['data']['order_address']['pin_code'])?$data1['data']['order_address']['pin_code'].'<br>':''!!}
+									{!!isset($data1['data']['order_address']['country_name'])?$data1['data']['order_address']['country_name'].'<br>':''!!}
+									<a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="tel:{{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}"> {{isset($data1['data']['order_address']['mobile'])?$data1['data']['order_address']['mobile']:''}}</a><br>
+									<a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="mailto:{{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}"> {{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}</a>
+								</td>
+								<td style="font-family:Arial; padding: 15px 10px; line-height: 20px;border: 1px solid #808080;text-align:center">
 									{{isset($data1['data']['order_address']['first_name'])?$data1['data']['order_address']['first_name']:''}} {!!isset($data1['data']['order_address']['last_name'])?$data1['data']['order_address']['last_name'].'<br>':''!!}
 									{!!isset($data1['data']['order_address']['company_name'])?$data1['data']['order_address']['company_name'].'<br>':''!!}
 									{!!isset($data1['data']['order_address']['street_address_l1'])?$data1['data']['order_address']['street_address_l1']:''!!} {!!isset($data1['data']['order_address']['street_address_l2'])?$data1['data']['order_address']['street_address_l2'].'<br>':''!!}
@@ -269,8 +306,8 @@
 									<a style="color: #8e2e65; font-style: 14px;font-family:Arial;" href="mailto:{{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}"> {{isset($data1['data']['order_address']['email'])?$data1['data']['order_address']['email']:''}}</a>
 								</td>
 							</tr>
-							<!-- order details part end-->
-						</tbody>
+</tbody>
+</table>
 					</table>
 				</td>
 			</tr>
@@ -281,19 +318,62 @@
 						<p style="text-align: center;">To complete your order right now, just click on the button below:</p>
 						<div class="clearfix" style="clear: both;"></div>
 						<p style="text-align: center;"><a href="{{asset('product').'/'.$firstProductOrderURL}}" target="_blank" style="font-size: 14px;text-decoration: none;background: #8e2e65;color: #fff;display: inline-block;padding: 11px 25px;font-family: arial;text-transform: capitalize;">Complete order </a></p>
+						<p style="text-align: center;"><i>  "Loved this product! Highly recommend." - Happy Customer</i></p>
 					</td>
 				</tr>
 			</table>
 		</tbody>
 	</table>
 
-	<table style="width: 975px;margin: 0 auto;">
+<table style="width: 975px;margin: 0 auto; text-align:center;">
+<tbody>
+<tr>
+				<td>
+					<p>
+						If you have any questions, please <a href="https://marlows-diamonds.co.uk/visit-us"> contact us</a> or visit our store
+					</p>
+				</td>
+			</tr>
+
+</tbody>
+</table>
+	<table style="width: 598px;margin: 0 auto;">
 		<tbody>
 			<tr>
-				<td>
-					<p>We are here to help. If you have any questions or worries, please do not hesitate to contact us on <a href="tel:0121-2364415" style="color:#8e2e65"> 0121-2364415</a> / <a href="tel:02074051477" style="color:#8e2e65">02074051477</a> or via email at <a href="mailto:hello@marlows-diamonds.co.uk" style="color:#8e2e65"> hello@marlows-diamonds.co.uk</a> / <a href="mailto:london@marlows-diamonds.co.uk" style="color:#8e2e65">london@marlows-diamonds.co.uk</a> or visit our store in London or Birmingham.</p>
-					<p style="padding:20px 0;">If you wish to create your own design, we can quote you to manufacture a bespoke piece at a competitive price. </p>
-					<h3>Best Wishes, Marlow's Diamonds</h3>
+				<h2 style="text-align:center;">Contact Details </h2>
+			</tr>
+			<tr>
+				<td style="padding: 0 10px;">
+					<div>
+						<h4>Birmingham Store:</h4>
+						<address>
+							46-47 Warstone Lane Hockley, Birmingham B18 6JJ.
+						</address>
+						<p> <strong>Email:</strong> hello@marlows-diamonds.co.uk </p>
+						<p> <strong>Phone no:</strong> 0121 236 4415</p>
+					</div>
+				</td>
+				<td style="border-left: solid #8e2e65 1px;padding: 0 10px;">
+					<div>
+						<h4>London Store:</h4>
+						<address>
+							20 Beauchamp Pl, Knightsbridge, London SW3 1NQ.
+						</address>
+						<p> <strong>Email:</strong> london@marlows-diamonds.co.uk </p>
+						<p> <strong>Phone no:</strong> 020 7405 1477</p>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table style="width: 598px;margin: 0 auto;">
+		<tbody>
+			<tr>
+				<td style="text-align:center;">
+					
+					<p style="padding:20px 0; text-align:center;"><strong>Note -</strong>If you wish to create your own design, we can quote you to manufacture a bespoke piece at a competitive price. </p>
+					<h3>Happy To Help You!</h3>
 				</td>
 			</tr>
 		</tbody>

@@ -28,7 +28,8 @@
             <div class="owl-carousel owl-theme mobil-bar">
                 <div class="item">
                     <a class="whatspp-num" href="javascript:void(0);">
-                        {!!$header_settings->get_options('header-right')!!}
+                        TRUSTED BY THOUSANDS. FOREVER LOW PRICES.
+                        {{-- {!!$header_settings->get_options('header-right')!!} --}}
                         {{--WHATSAPP_TITLE--}} {{--$header_settings->get_options('field1')--}}
                     </a>
                 </div>
@@ -50,9 +51,46 @@
 
     <!--Top bar start -->
     <div class="top-bar">
+
+    <?php
+        $getMonthTextArray = getMonthwiseDiscountText();
+        $getCurrentMonth = (int)date('m');
+    ?>
+  <div class="post-bar">
         <div class="container">
-            <p>{{$header_settings->get_options('top-bar-desktop')}}</p>
+            <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
+                {{-- <div class="post-bar-left header-post-bar-left">
+                    <p>{!!$header_settings->get_options('header-left')!!}</p>
+                </div> --}}
+                @if($lastDate > $now)
+                <div class="post-bar-center" style="height: 40px;">
+                    {{-- <a href="{{ route('products.exclusive') }}" >
+                        <span> Exclusive to Marlows </span>
+                    </a> --}}
+                    {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
+                    {{-- <p id="offer-text">  --}}
+                        {!! $getMonthTextArray[$getCurrentMonth] !!}
+                     {{-- </p> --}}
+                    
+                    {{-- <p>
+                <span class="header-heighlight-text">Up to 35% off</span> 
+                         <span class="header-heighlight-text discount_timer"></span>
+                        <br>
+
+                    </p> --}}
+                </div>
+                @endif
+                {{-- <div class="post-bar-right header-post-bar-left">
+                    <p>{!!$header_settings->get_options('header-right')!!}</p>
+                </div> --}}
+            </div>
         </div>
+    </div>
+
+
+        {{-- <div class="container">
+            <p>{{$header_settings->get_options('top-bar-desktop')}}</p>
+        </div> --}}
     </div>
     <!--Top bar end -->
 
@@ -61,11 +99,13 @@
         <div class="container">
             <div class="middle-topbar-wrap flexed flex-justify-between">
                 <div class="middle-topbar-left">
-                    <div class="whatsapp-top-h">
-                        <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
+                    {{-- <div class="whatsapp-top-h">
+                        <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928" >
                             <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp">
+                            <span class="tooltiptext">10% Price Beat Guarantee on WhatsApp. Share a link to a competitor's product, and we’ll offer at least 10% off on any lab-grown product, exclusively through WhatsApp.</span>
                         </a>
-                    </div>
+                    </div> --}}
+                    <i class="diamond-icon info-icon"></i>
                     <div class="location-top-h">
                         <a href="{{asset('visit-us')}}">
                             <i class="fa fa-map-marker" aria-hidden="true"></i>{{LOCATION_TITLE}}
@@ -205,11 +245,12 @@
                               <i class="fa fa-search" aria-hidden="true"></i>
                           </a>
                       </div>
-                      <div class="whats_app">
+                      {{-- <div class="whats_app">
                             <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
                                 <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp">
+                                 <span class="tooltiptext">10% Price Beat Guarantee on WhatsApp. Share a link to a competitor's product, and we’ll offer at least 10% off on any lab-grown product, exclusively through WhatsApp.</span>
                             </a>
-                      </div>
+                      </div> --}}
                     <div class="mobile-wishlist mobile-acc">
                             <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
                     </div>
@@ -317,7 +358,7 @@
         $getMonthTextArray = getMonthwiseDiscountText();
         $getCurrentMonth = (int)date('m');
     ?>
-  <div class="post-bar">
+  <!--<div class="post-bar">
         <div class="container">
             <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
                 <div class="post-bar-left header-post-bar-left">
@@ -343,7 +384,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Post bar end -->
 
 </header>
