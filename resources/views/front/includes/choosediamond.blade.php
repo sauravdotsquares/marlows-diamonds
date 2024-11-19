@@ -7,8 +7,8 @@
 <div class="best-selling-marlows">
     <div class="container">
         <div class="head-para-three">
-            <h2 class="heading-h-three">Choose Your Diamond Engagement Ring from Marlow's </h2>
-            <p>Explore our collection of engagement rings for women in a variety of shapes and styles.</p>
+            <h2 class="heading-h-three">Diamond Engagement Rings by Marlow's</h2>
+            <p>Explore a variety of designs and settings from a classic solitaire to trilogy</p>
         </div>
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">

@@ -33,7 +33,8 @@ use App\Models\UrlRedirects;
 use App\Models\LabPricesList;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-
+use App\Models\Order;
+use App\Models\OrderDetail;
 
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
@@ -2369,42 +2370,47 @@ if (!function_exists("getMonthwiseDiscountText")) {
     function getMonthwiseDiscountText()
     {
         return [
-            '1' => 'Winter Sale',
-            '2' => 'Valentines Sale',
-            '3' => 'Spring Sale',
-            '4' => 'Spring Sale',
-            '5' => 'Mid Season Sale',
-            '6' => 'Summer Sale',
-            '7' => 'Summer Sale',
-            '8' => 'Summer Sale Up to 40% off',
-            '9' => 'Autumn Sale',
-            '10' => 'Mid Season Sale',
-            '11' => 'Winter Sale',
-            '12' => 'Christmas Sale',
+            '1' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '2' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '3' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '4' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '5' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '6' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '7' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '8' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '9' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '10' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '11' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '12' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
         ];
     }
 }
 
+//start from here
 if (!function_exists("getAllCategoryProducts")) {
     function getAllCategoryProducts()
     {
         $getParentCategory = Category::where('parent_id', 0)->pluck('id');
         $getAllCategoryProducts = [];
-        foreach ($getParentCategory as $key => $value) {
+        foreach ($getParentCategory as $value) {
             $product =
                 Products::with(['getProductImages'])->select(['slug', 'id', 'title', 'description', 'lab_description', 'categories'])->where('status', 1)
                 ->whereRaw('FIND_IN_SET(' . $value . ', categories)')->inRandomOrder()->limit(3)
             ->get();
             if ($product) {
                 $productsArray = $product;
-                foreach ($productsArray as $key => $products) {
-                    array_push($getAllCategoryProducts, $products);
+                foreach ($productsArray as $products) {
+                    $getCategoryArray = explode(',',$products->categories);
+                    if (!in_array('54', $getCategoryArray) && !in_array('8', $getCategoryArray) && ($products->id != 1)) {
+                        $getAllCategoryProducts[] = $products;
+                    }
                 }
             }
         }
         return collect($getAllCategoryProducts);
     }
 }
+//ends here
 
 if (!function_exists("getEngagmentRingsLabPriceAdded")) {
     function getEngagmentRingsLabPriceAdded($productDetails)

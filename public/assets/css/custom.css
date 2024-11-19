@@ -254,11 +254,18 @@ textarea.input-control{height:100px}
 /** Footer Css Start here  **/
 .footer-main{background:#8e2e65; padding:45px 0 30px;color:#fff;line-height:25px;}
 .column-one-fifth{flex:0 0 20%;-ms-flex:0 0 20%;max-width:20%;width:100%;padding:0 16px}
-.footer-links-row{margin:0 -16px}
+.footer-links-row .column-one-fifth:nth-child(2) {padding-left: 60px;}
+.footer-links-row .column-one-fifth:nth-child(4) {padding-right: 50px;}
+.footer-links-row{margin:0 0}
+.footer-content-wrap{margin:0px 16px 40px; justify-content: space-between;}
+.footer-content-wrap .fcontent-column {max-width: 50%;flex: 0 0 100%;text-align: left; padding: 0;}
+.footer-content-wrap .fcontent-column .fcontent-column.disclaimer-content {max-width: 100%;}
+
 .footer-content-wrap .paymentgate-logo i.diamond-icon.search-payment-icons {background-position: -156px -77px;width: 100%;height: 41px;}
 .footer-title h4{margin:0 0 15px 0;font-size:18px;font-weight:600;font-family:"Nunito";line-height:25px}
+.footer-links-row .footerabout-col.footer-inn-text {margin: 0 0 15px;}
 .footerabout-col p{margin:0}
-.footer-social{margin:50px 0 0 0}
+.footer-social{margin:8px 0 30px 0;}
 .footer-social a{color:#fff;font-size:18px;margin:0 22px 0 0}
 .footer-social a:hover{opacity:.7}
 .footer-social a i.fa.fa-twitter {font-size: 0; vertical-align: top;}
@@ -266,7 +273,7 @@ textarea.input-control{height:100px}
 .footerlinks-col ul li{display:block}
 .footerlinks-col ul li a{color:#fff;text-decoration:none; font-weight: normal !important; font-size: 14px !important; padding: 0 0 2px;}
 .footerlinks-col ul li a:hover {border-bottom: 1px solid #fff;}
-.footer-content-wrap{margin:30px -15px 40px}
+
 .fcontent-column{width:100%;padding:0 15px}
 .icon-payment{flex:0 0 20%;max-width:20%;-ms-flex:0 0 20%;text-align:center}
 .icon-payment img {float: left;}
@@ -275,6 +282,7 @@ textarea.input-control{height:100px}
 .disclaimer-content p{margin:0}
 .botto-to-top{border-top:1px solid rgba(255,255,255,.1);margin:0;text-align:center;padding:23px 0 0}
 .botto-to-top #scroll-to-top{color:#fff;font-size:32px;cursor:pointer}
+.paymentgate-logo {display: flex;align-items: center; margin-top: 38px;}
 
 /*02-05-24 (kh)*/
 .whatspp-num-1 {position: fixed;bottom: 55px;right: 1px;z-index: 999;border: none;margin: 0;text-align: center;padding: 23px 0 0;}
@@ -287,8 +295,11 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 -webkit-clip-path: polygon(34% 0, 89% 0, 33% 61%);clip-path: polygon(34% 0, 89% 0, 33% 61%);}
 
 .whatspp-num-1 span#scroll-to-top i.fa.fa-whatsapp {line-height: 40px;font-size: 26px;}
+/* kh changes start */
+.bottom-eye-icon {position: fixed;bottom: 144px;right: 7px;z-index: 999;}
+.bottom-eye-icon img.eye-num {width: 21px;height: auto;}
+/* kh changes end */
 
-/*03-05-24 (kh)*/
 
 .mobile-cart-wishlist .mobile_search {margin: 4px 12px 0 0;}
 .mobile-cart-wishlist .mobile_search a i.fa.fa-search {font-size: 20px; color: #8e2e65;}
@@ -301,8 +312,8 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 .main-banner-col{width:100%;padding:0 15px}
 .main-banner-left-text{max-width:560px;margin:auto;padding:20px 20px}
 .main-banner-left-text p{font-size:20px;color:#2b2b2b;line-height:26px;margin:0 0 15px 0; font-family: 'Branch';}
-.main-banner-ryt-img img{max-width:340px;margin:auto}
-.main-banner-ryt-img{padding:16px 20px}
+.main-banner-ryt-img img{max-width:290px;margin:auto}
+.main-banner-ryt-img{padding:46px 20px}
 /** Home banner  end here**/
 
 /** Shop from best section start **/
@@ -355,9 +366,11 @@ font-size: 14px;padding: 7px 16px;font-weight: bold;}
 .whychoose-wraper .rating-img {display: none;}
 .product-rating {width: auto;margin: auto;display: flex;justify-content: center;align-items: center;}
 .product-rating .rating-review {width: 104px;height: 104px;background: #fff;border-radius: 50%;display: flex;align-items: center;justify-content: center;}
+.product-rating .rating-review span {width: 24px;}
 .product-rating .rating-review h5 {margin: 6px 4px 0 0px;font-family: 'Nunito';font-weight: 900;font-size: 18px;color: #000;}
 .product-rating .start-standing {margin: 0 0 0 20px;}
-.product-rating .start-standing h4 {margin: 10px 0 0;font-size: 16px;color: #8E2E65;font-weight: bold;font-family: 'Nunito';}
+.product-rating .start-standing .start-position img {width: 130px;}
+.product-rating .start-standing h4 {margin: 10px 0 0;font-size: 16px;color:#1f2936;font-weight: bold;font-family: 'Nunito';}
 .product-rating .start-standing h4 span{ font-weight:normal; }
 
 /** Marlows Diamond Start **/
@@ -382,8 +395,10 @@ del#shopPrice{font-family: 'Branch';}
 .explore-btn{margin:26px 0 0 0}
 .shopfrom-block{padding:60px 0 40px 0; background: #fafbfd; margin-bottom: 50px;}
 .reviewr-name{color:#5a5a5a;font-size:15px;line-height:24px;font-weight:700}
-.reviewr-star{margin:5px 0 2px -8px;}
+.reviewr-star{margin:5px 0;}
 .reviewr-star img{max-width:85px}
+.reviewr-star > div {display: flex;}
+.reviewr-star > div img.trustpiolot-star-icon {margin: 0;background: #21a56e;margin-right: 3px;padding: 3px 3px 5px;width: 25px;}
 .reviewr-review-text{font-size:15px;line-height:25px}
 .reviewr-review-text a{color:#9a9b9b;text-decoration:none; display: block;}
 .reviewr-review-text a:hover{color:#000}
@@ -401,11 +416,15 @@ border: 3px solid rgba(255, 255, 255, 0.5);width: 50px;height: 50px;background: 
 
 .rating-review-block .owl-theme .owl-nav .owl-next{background-image:url(../images/arrow-slide.png);right:-55px; background-repeat: no-repeat; transform: rotate(180deg);}
 .rating-review-block .owl-dots {display: none;}
-.reviews-cont .reviewr-star i.diamond-icon.search-reviewssection {background-position: -421px -59px;width:158px;height: 22PX;}
+.reviews-cont .reviewr-star i.diamond-icon.search-reviewssection {background-position: -421px -59px;width:158px;height: 22PX; margin-left: -8px;}
 
-.shopfrom-block .reviews-cont .reviewr-name {color: #8e2e65;font-family: 'Red Hat Display';font-size: 18px; font-weight: 900;}
+.shopfrom-block .reviews-cont {background-color: #f6f5f5;border-radius: 2px;box-shadow: 0 1px 0 0 rgba(182, 196, 210, .4);display: -ms-inline-flexbox;display: inline-flex;-ms-flex-direction: column;
+flex-direction: column;height: auto;line-height: 16px;padding: 15px;position: relative;vertical-align: middle;white-space: normal;}
+
+.shopfrom-block .reviews-cont .reviewr-name {color: #1f2936;font-size: 14px;font-family: 'Red Hat Display';font-weight: 900;}
+.shopfrom-block .reviews-cont .reviewr-review-text .less-contents {display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis; font-family: 'Nunito';color: #191919; line-height: 20px;}
 /* .shopfrom-block .reviews-cont .reviewr-review-text .less-contents {color: #000;} */
-.rating-review-block .reviews-cont .reviewr-review-text a.show-more{color: #8e2e65; margin: 8px 0; font-weight: 900; font-size: 16px;}
+.rating-review-block .reviews-cont .reviewr-review-text a.show-more{color: #1f2936;margin: 5px 0;font-weight: 900;font-size: 15px;}
 
 /** left right img text**/
 .leftright-text p{font-size:15px;color:#2b2b2b;line-height:1.6}
@@ -427,9 +446,9 @@ border: 3px solid rgba(255, 255, 255, 0.5);width: 50px;height: 50px;background: 
 /** Join our mailing section **/
 .joinour-heading{color:#fff;text-align:center;margin:0 0 15px 0}
 .joinour-heading p{font-size:15px;line-height:1.6;margin:0}
-.joinour-mailing{background:#8e2e65;padding:50px 0}
+.joinour-mailing{background:#8e2e65;padding:30px 30px; max-width: 90%;margin: auto;}
 .joinour-mailing-form .form-col label{color:#fff;display:block;font-weight:700;font-size:13px;line-height:1.3;margin:0 0 4px 0}
-.joinour-mailing-form form#contactForm input {width: 100%;height: 42px;border: none;padding: 0 11px;background: #fff;border-radius: 2px; font-size: 14px;}
+.joinour-mailing-form form#contactForm input {width: 100%;height: 34px;border: none;padding: 0 11px;background: #fff;border-radius: 2px; font-size: 14px;}
 .joinour-mailing-form form#contactForm textarea {width: 100%;height: 100px;border: none;padding:7px 11px;background: #fff;border-radius: 2px; font-size: 14px;}
 .joinour-mailing-form form#contactForm .action-btn .white-bg-btn {border: none;padding: 9px 20px;background-color: #fff;}
 .joinour-mailing-form form#contactForm .action-btn .white-bg-btn:hover {color: #000; background: #fff; box-shadow: 5px 5px 0 rgb(0, 0, 0 / 80%);}
@@ -949,7 +968,7 @@ z-index: 11;}
 .cart-table-wraper .cart-table {border: 1px solid rgba(0,0,0,.1);border-radius: 5px; width: 100%;}
 .cart-table-wraper .cart-table tr th {box-shadow: inset 0px 4px 3px -2px rgba(0,0,0,.04);border-width: 0 1px 1px 0;padding: 16px 20px;font-size: 15px;color: #404040;font-weight: bold;font-family: 'Red Hat Display';}
 .cart-table-wraper .cart-table tr td {border-width: 0 1px 1px 0;padding: 13px 20px;font-size: 14px;color: #404040;}
-.cart-table-wraper .cart-table tr td p span {font-family: 'Branch';font-weight: 600;}
+.cart-table-wraper .cart-table tr td p span {font-weight: 600;}
 .cartproduct-title a {font-size: 16px;text-decoration: none;color: #902f66;font-weight: bold; font-family: 'Red Hat Display';}
 .cartproduct-title {margin: 0 0 4px 0;}
 .cart-nameitem dl {margin: 0;}
@@ -1186,7 +1205,8 @@ background-position: -216px -217px;width: 140px;height: 39px;float: right;}
 .blogdetail-desc h6 {font-family: "Nunito";font-size: 15px;line-height: 26px;color: #8e2e65;}
 .blogdetail-desc h6 a {color: #8e2e65;}
 .reviewr-review-text *{ transition: none;}
-.reviewr-review-text.show-text-col .show-more-content {display: block !important;}
+.reviewr-review-text.show-text-col .show-more-content {display: block !important;  -webkit-line-clamp: 5;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;font-family: 'Nunito';
+color: #191919;line-height: 20px;}
 .reviewr-review-text .less-contents {display: -webkit-box;-webkit-line-clamp: 5;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;}
 
 /**#variationVideo {width: 100%;position: absolute;top: -50px;}**/
@@ -1261,7 +1281,6 @@ font-weight: 700;display: inline-block;border: 1px solid #8e2e65;}
 .buying-engagementguide-page h2 {font-family: "Nunito";color: #8e2e65;font-size: 30px;font-weight: bold;}
 .buying-engagementguide-page h3 {font-family: "Nunito";color: #8e2e65;font-size: 25px;font-weight: bold; letter-spacing: 1px;}
 .buying-engagementguide-page p {font-size: 17px;line-height: 29px;}
-.joinour-mailing {max-width: 90%;margin: auto; padding-left: 30px; padding-right: 30px;}
 .buying-guuides-newsletter {margin: -105px 0 0 0;}
 .buying-guuides-newsletter .joinour-mailing{ max-width:100%; }
 .should-buy-wraper {padding: 50px 0 40px 0;}
@@ -1719,7 +1738,7 @@ background-repeat: no-repeat;background-position: center;}
 .checkout-main-wrap .checkout_billing_details .checkout-shipping-fields-1 label {padding: 0 0 0 4px; color: #606060;}
 .checkout-main-wrap .checkout-create-account .create-account-fields{box-shadow: 1px 1px 21px -2px #f5eeff; border-radius: 15px; padding: 20px;} */
 
-.whatspp-num img {height: 30px;margin: 0 9px 0 0px;}
+.whatspp-num img {height: 58px; margin: 0 2px 0 0px;}
 
 #social-links {margin: 15px 0 0;display: flex;}
 #social-links a {width: 30px;height: 30px;background: #000;border-radius: 50px;margin: 0 6px 0 0px;display: flex;align-items: center;justify-content: center;}
@@ -1812,10 +1831,13 @@ transition: all 200ms ease-in;
     align-items: center;
         background: #f6f6f7;
 }
-.location-left-section {
-    width: 50%;
-    text-align: center;
-}
+.location-left-section {width: 50%;text-align: center;}
+.location-container .location-left-section h3 {text-transform: uppercase;font-size: 32px;font-family: 'Red Hat Display'; margin-bottom: 30px;}
+.location-left-section h4.location-header {font-size: 14px;margin: 0;font-family: 'Nunito';}
+.location-left-section p.location-description {font-size: 14px;margin: 0;font-family: 'Nunito';color: #000;}
+.location-left-section .location-address-two {margin: 1rem 0;}
+.location-left-section .location-address-two strong {font-size: 14px;margin: 0;font-family: 'Nunito';color: #000;}
+.location-left-section .location-address-two p.location-button {margin-top: 1rem;}
 .location-right-section {
     width: 50%;
 }
@@ -1833,21 +1855,14 @@ transition: all 200ms ease-in;
 }
 
 .post-bar .post-bar-center a {
-    padding: 13px;
     color: #fff;
     text-decoration: none;
     margin-top: 40px;
-    border: 2px solid #fff;
     text-transform: uppercase;
-    padding: 11px 20px;
 }
 .post-bar .post-bar-center {
     height: auto !important;
     position: relative;
-}
-.post-bar .post-bar-center a:hover {
-    color: #903C6C;
-    background: #fff;
 }
 .post-bar .post-bar-center a span {
     transition: initial;
@@ -1942,7 +1957,7 @@ width: 310px;transform: translateX(100%);transition: 0.66s ease-in-out;display: 
 .modal.guide-mode .modal-dialog .modal-content .modal-footer {display: none;}
 .modal.guide-mode .modal-dialog .modal-content .modal-header button.btn-close:focus {box-shadow: none;}
 
-.botto-to-top {position: fixed;bottom: 70px;right: 41px;z-index: 999; border: none; padding: 0;}
+.botto-to-top {position: fixed;bottom: 40px;right: 41px;z-index: 999; border: none; padding: 0;}
 .botto-to-top #scroll-to-top {color: #fff;font-size: 32px;cursor: pointer;background: #742251;width: 40px;
 height: 40px;display: inline-block;border-radius: 50px;}
 .botto-to-top #scroll-to-top i.fa.fa-angle-up {line-height: 37px;}
@@ -1977,6 +1992,12 @@ text-transform: capitalize;}
 .desk-calculator .finance-calculator table tr:last-child td {border: none;}
 .finance-panel .faq-section.engagement-ring-faq {margin-bottom: 0;}
 /*finance css end*/
+.bottom-whatsapp-icon{position: fixed; bottom: 90px; right: 53px; z-index: 999;}
+.bottom-whatsapp-icon .whatspp-num img{width: 55px; height: auto;}
+.tooltiptext { position: absolute; bottom: 24px; right: -150px; transform: translateX(-50%); background-color: #ffffff; color: #858c8e; padding: 11px 12px 11px 12px;
+    border-radius: px; font-size: 13px; width: 300px; text-align: left; white-space: normal; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; z-index: 10;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .25);}
+.bottom-eye-icon:hover .tooltiptext {opacity: 1; visibility: visible;}
 
 @media(max-width:1400px){
 	.post-bar .post-bar-center p {
@@ -2115,7 +2136,14 @@ left:81px;background-size: 26px;bottom: -7px;} */
 
 @media(max-width:767px){
 
+.bottom-eye-icon{right: 7px;}
+.bottom-whatsapp-icon{right: 13px;}    
+.home-main-banner{margin-top: 50px;}
+.main-banner-left-text h1{text-align: center !important;}
+.main-banner-left-text p{text-align: center !important;}
+.main-banner-left-text .shop-engage-btn a.btn-bg-large {margin: auto !important; display: flex !important; max-width: max-content !important; float: none !important;}
 .category-banner-text-1 .sitemap-part h1, .category-banner-text-1 .sitemap-part h2 { font-size: 26px;}
+.main-banner-ryt-img img{float: none !important;}
 
 span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 
@@ -2168,7 +2196,8 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 .post-bar .post-bar-center:after {display:none;}
 
 /*footer css*/
-.footer-content-wrap {margin: 30px -15px 86px;}
+.footer-content-wrap {margin:30px 15px 40px; display: block;}
+.footer-content-wrap .fcontent-column{ margin-bottom: 30px; max-width: 100%;}
 /*footer css end*/
 
 /*finance css*/
@@ -2179,7 +2208,6 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 /*404 page css*/
 .head-para-three.pagenotfound p {font-size: 18px;line-height: 24px;}
 /*404 page css end*/
-
 }
 
 
@@ -2238,7 +2266,6 @@ right: 10px !important;
 
 .product-panel-new .filter-item {display: inline-block;vertical-align: top;margin-right: 60px;width:100%;}
 .product-panel-new .sortbtn {width: 122px !important;}
-.botto-to-top{bottom: 70px;}
 }
 
 @media only screen and (max-width: 576px) and (min-width: 320px) {
@@ -2250,6 +2277,10 @@ right: 10px !important;
 
 .product-panel-new .sortbtn {width: 71px !important;}
 .whatspp-num-1{bottom: 15px;}
+.bottom-whatsapp-icon .whatspp-num img{width: 42px;}
+.tooltiptext{right: -141px; width: 288px;}
+.bottom-eye-icon img.eye-num{width: 16px;}
+.bottom-eye-icon{bottom: 131px;}
 }
 
 

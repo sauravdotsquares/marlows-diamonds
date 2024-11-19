@@ -1,11 +1,24 @@
 <div class="location-container">
     <div class="location-left-section">
-        <h3 class="location-header">We are here to help <br> call <strong> <a href="tel:02074051477"> 020 7405 1477</a></strong> or <strong> <a href="tel:01212364415">0121 236 4415</a></strong> </h3>
-        <p class="location-description">Visit us at
-            <strong> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ </strong> and <strong> 46 Warstone Ln, Hockley, Birmingham B18 6JJ </strong> </p>
+<h3>Diamond Jewellery EXPERTS</h3>
+    <div class="location-address-one">
+        <h4 class="location-header"> <strong> <a href="tel:02074051477"> 020 7405 1477</a></strong></h4>
+         {{-- <h3 class="location-header"> <strong> <a href="tel:02074051477"> 020 7405 1477</a></strong> or <strong> <a href="tel:01212364415">0121 236 4415</a></strong> </h3>  --}}
+        <p class="location-description">
+            <strong> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ </strong>
+             {{-- and <strong> 46 Warstone Ln, Hockley, Birmingham B18 6JJ </strong> --}}
+             </p>
+</div>
+
+<div class="location-address-two">
+             <h4 class="location-header"> <strong> <a href="tel:01212364415">0121 236 4415</a> (Birmingham)</strong></h4>
+
+            <strong >  46 Warstone Ln, Hockley, Birmingham B18 6JJ </strong>
+
         <p class="location-button">
-            <a href="{{ route('contact') }}" class="btn-bg-small">BOOK APPOINTMENT</a>
+            <a href="{{ route('contact') }}" class="btn-bg-small">Come See Us</a>
         </p>
+</div>
     </div>
     <div class="location-right-section">
         <div id="location_map" style="height: 500px; width:100%;"></div>
