@@ -69,7 +69,7 @@
                     </a> --}}
                     {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
                     {{-- <p id="offer-text">  --}}
-                        {!! $getMonthTextArray[$getCurrentMonth] !!}
+                        {!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}
                      {{-- </p> --}}
                     
                     {{-- <p>
