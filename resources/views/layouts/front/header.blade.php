@@ -7,7 +7,7 @@
         /* display: none; */
     }
     .post-bar-center{
-        width: 38.33%;
+        width: 39.33%;
         font-weight: 800;
     }
     .search-suggestion.hide_254 {display: none;}
