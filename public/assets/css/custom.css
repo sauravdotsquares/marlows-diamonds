@@ -1738,7 +1738,7 @@ background-repeat: no-repeat;background-position: center;}
 .checkout-main-wrap .checkout_billing_details .checkout-shipping-fields-1 label {padding: 0 0 0 4px; color: #606060;}
 .checkout-main-wrap .checkout-create-account .create-account-fields{box-shadow: 1px 1px 21px -2px #f5eeff; border-radius: 15px; padding: 20px;} */
 
-.whatspp-num img {height: 58px; margin: 0 2px 0 0px;}
+.whatspp-num img {height: 30px; margin: 0 2px 0 0px;}
 
 #social-links {margin: 15px 0 0;display: flex;}
 #social-links a {width: 30px;height: 30px;background: #000;border-radius: 50px;margin: 0 6px 0 0px;display: flex;align-items: center;justify-content: center;}
