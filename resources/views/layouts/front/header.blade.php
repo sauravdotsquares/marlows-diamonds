@@ -101,7 +101,8 @@
                 <div class="middle-topbar-left">
                     <div class="whatsapp-top-h">
                         <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447535425059" >
-                            <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp"> WHATSAPP HELP: +447535425059
+                            <!-- <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp"> -->
+                            WHATSAPP HELP: +447535425059
                             <!-- <span class="tooltiptext">10% Price Beat Guarantee on WhatsApp. Share a link to a competitor's product, and we’ll offer at least 10% off on any lab-grown product, exclusively through WhatsApp.</span> -->
                         </a>
                     </div>
