@@ -222,7 +222,7 @@ class PayPalPaymentController extends Controller
                         }
 
                         $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
-                        $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received pro!');
+                        $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
                     });
                 } else if (env('APP_ENV') == 'local') {
                     $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
