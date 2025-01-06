@@ -146,7 +146,7 @@
       // this code is remove empty p tag and empty div tag End
       
       $(".mobile_search").on('click',function(){
-          $("#homeSearchForm").show();
+          $("#homeSearchForm").toggle();
       });
 
       // for lazyload functions applied in instagram section images.
@@ -202,25 +202,58 @@
 
 </script>
 <script>
-    $(window).scroll(function(){
-        if ($(this).scrollTop() >= 10) {
-           $('.header-main').addClass('sticky-header');
-            $('.botto-to-top').fadeIn(200);    // Fade in the arrow
-            if ($(window).width() < 767){
-              $('#homeSearchForm').hide();
-            }
-        } else {
-           $('.header-main').removeClass('sticky-header');
-           $('.botto-to-top').fadeOut(200);   // Else fade out the arrow
-           if ($(window).width() < 767){
-              $('#homeSearchForm').show();
-            }
-        }
-    });
+    // $(window).scroll(function(){
+    //     if ($(this).scrollTop() >= 10) {
+    //       $('.header-main').addClass('sticky-header');
+    //         $('.botto-to-top').fadeIn(200);    // Fade in the arrow
+    //         if ($(window).width() < 767){
+    //           $('#homeSearchForm').hide();
+    //         }
+    //     } else {
+    //       $('.header-main').removeClass('sticky-header');
+    //       $('.botto-to-top').fadeOut(200);   // Else fade out the arrow
+    //       if ($(window).width() < 767){
+    //           $('#homeSearchForm').show();
+    //         }
+    //     }
+    // });
 </script>
 <!-- Menu toggle -->
 <script>
 $(document).ready(function(){
+    
+    let isSearchBarClicked = false;
+
+    // Prevent hiding when the search bar is clicked
+    $('#homeSearchForm').on('focus click', function () {
+        isSearchBarClicked = true;
+    });
+
+    // Detect scroll events
+    $(window).on('scroll touchmove', function () {
+        const scrollTop = $(window).scrollTop();
+        const isMobile = $(window).width() < 767;
+
+        if (isSearchBarClicked) {
+            isSearchBarClicked = false; // Reset flag after preventing the hide
+            return; // Do not hide the search bar
+        }
+
+        if (scrollTop >= 30) {
+            $('.header-main').addClass('sticky-header');
+            $('.botto-to-top').fadeIn(200); // Fade in the arrow
+            if (isMobile) {
+                $('#homeSearchForm').hide(); // Hide the form for smaller screens
+            }
+        } else {
+            $('.header-main').removeClass('sticky-header');
+            $('.botto-to-top').fadeOut(200); // Fade out the arrow
+            if (isMobile) {
+                $('#homeSearchForm').show(); // Show the form for smaller screens
+            }
+        }
+    });
+    
   $(".togglebar-nav").click(function(){
     $("body").toggleClass("navbars-show");
   });

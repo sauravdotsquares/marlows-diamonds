@@ -471,7 +471,7 @@ Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 	
 
 	// {slug2?}/{slug3?}
-	Route::get('{page}', 'PageController@page')->name('page');
+	Route::get('{page}', 'PageController@page')->name('page')->middleware('CaseInsensitiveRoutes');
 	Route::group(['as' => 'app_products.', 'prefix' => 'p' ], function () {
 
 		Route::any('/detail/{product_slug}', 'AppProductsController@productDetails')->name('details');

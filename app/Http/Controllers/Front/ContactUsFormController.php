@@ -24,6 +24,10 @@ class ContactUsFormController extends Controller {
             'custom_url' => 'required',
             // 'g-recaptcha-response' => 'required'
         ]);
+        
+        if(isset($request->email) && $request->email == 'sample@email.tst'){
+            return response()->json(['status'=> 200, 'success'=>'We have received your message and would like to thank you for writing to us.']);
+        }
         //  Store data in database
         Appointments::create($request->all());
         //

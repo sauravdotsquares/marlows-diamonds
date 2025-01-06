@@ -20,6 +20,10 @@ class MailListFormController extends Controller {
             'email' => 'required|email',
             // 'description' => 'required',
         ]);
+        
+        if(isset($request->email) && $request->email == 'sample@email.tst'){
+            return response()->json(['status'=> 200, 'success'=>'We have received your message and would like to thank you for writing to us.']);
+        }
         //  Store data in database
         Enquiries::create($request->all());
 		//  Send mail to admin
