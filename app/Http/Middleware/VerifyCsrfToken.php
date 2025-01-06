@@ -13,6 +13,11 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        'https://192.168.3.151/gitProjects/marlows-diamond/public/p/diamond-jeweller'
+        'https://192.168.3.151/gitProjects/marlows-diamond/public/p/diamond-jeweller',
+        '/process-apple-pay',
+        '/api/orders',
+        '/api/validate-merchant',
+        'applepay_sdk/api/orders',
+        '/api/orders/*/capture'
     ];
 }

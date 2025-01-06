@@ -2500,3 +2500,65 @@ if (!function_exists("getLabPriceDefaultVariations")) {
         return LabPricesList::whereBetween('carat', [1.00, 1.19])->where(['color' => 'D', 'clarity' => 'VS2', 'is_active' => 1, 'is_deleted' => 0])->value('price');
     }
 }
+if (!function_exists("generateClientToken")) {
+    function generateClientToken()
+    {
+
+        if (env('APP_ENV') == 'production') {
+            // $base = "https://api-m.paypal.com";
+            $base = "https://api.paypal.com";
+        }elseif (env('APP_ENV') == 'local') {
+            $base = "https://api-m.sandbox.paypal.com";
+        }
+        $accessToken = generateAccessToken();
+        $ch = curl_init("$base/v1/identity/generate-token");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Authorization: Bearer $accessToken",
+            "Accept-Language: en_US",
+            "Content-Type: application/json"
+        ]);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+        $response = curl_exec($ch);
+        if (curl_errno($ch)) {
+            throw new Exception(curl_error($ch));
+        }
+        curl_close($ch);
+    
+        $json = json_decode($response, true);
+        return $json['client_token'];
+    }
+}
+
+if (!function_exists("generateAccessToken")) {
+    function generateAccessToken()
+    {
+        if (env('APP_ENV') == 'production') {
+            $clientId = "AXc2YDyTWs6VKh-EdMFo1MV1zQ7vzYzLcPTvpmYg5rHMZxSgySqtLpT-5v13dRIxG6vxvrjb1X9QvBJR";
+            $appSecret = "EITsZpoj19pYPdScdV6rIaJpFzND_qJDLFlhQBqHkYNhfYv__7fHwS2ESOSj7D_40_CSfJaf1rV7FD1V";
+            // $base = "https://api-m.paypal.com";
+            $base = "https://api.paypal.com";
+        }elseif (env('APP_ENV') == 'local') {
+            $clientId = "AfLQcRuY8C2VcpdsSImup4E10vYi5Yi3w4gJ6d1WhqubKbHttdwpUe8RIW1pVkW0OsrXW4uNBl44RIqp";
+            $appSecret = "EBzp7ErM5_MA5YOzBJxKpA4aZqtfchk5nFE8auNXEyp6UrxsCmWX-e6SlUbZOcOURs4_iuC_RSqNP3eO";
+            $base = "https://api-m.sandbox.paypal.com";
+        }
+       
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "$base/v1/oauth2/token");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Basic " . base64_encode("$clientId:$appSecret")]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+        $response = curl_exec($ch);
+        if (curl_errno($ch)) {
+            throw new Exception(curl_error($ch));
+        }
+        curl_close($ch);
+    
+        $json = json_decode($response, true);
+        return $json['access_token'];
+    }
+}

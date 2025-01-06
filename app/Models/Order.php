@@ -30,6 +30,7 @@ class Order extends Model
         'payment_type',
         'paymentccdetails',
         'depositpercentage',
+        'billingAddress',
         'status',
     ];
 

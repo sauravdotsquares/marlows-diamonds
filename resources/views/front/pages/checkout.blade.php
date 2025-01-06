@@ -15,6 +15,41 @@
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" >
+<script  src="https://code.jquery.com/jquery-2.2.4.min.js"  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="  crossorigin="anonymous"></script>
+<?php
+    // Request client token from the server-side PHP
+    $clientToken = generateClientToken();
+
+    if (env('APP_ENV') == 'production') {
+        $clientId = "AXc2YDyTWs6VKh-EdMFo1MV1zQ7vzYzLcPTvpmYg5rHMZxSgySqtLpT-5v13dRIxG6vxvrjb1X9QvBJR";// Hardcode or set these manually
+        $merchantId = env("PAYPAL_MERCHANTID_LIVE");
+    }elseif (env('APP_ENV') == 'local') {
+        $clientId = "AfLQcRuY8C2VcpdsSImup4E10vYi5Yi3w4gJ6d1WhqubKbHttdwpUe8RIW1pVkW0OsrXW4uNBl44RIqp"; // Hardcode or set these manually
+        $merchantId = env("PAYPAL_MERCHANTID_STAG");
+    }
+
+  
+?>
+
+<script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+
+
+  <script src="{{ asset('javascript.js') }}"></script>
+<script>
+    function onPayPalScriptLoaded() {
+      if (window.paypal && paypal.Googlepay) {
+        onGooglePayLoaded();
+      } else {
+        console.error('Google Pay not found in PayPal SDK');
+      }
+    }
+</script>
+<script src="https://pay.google.com/gp/p/js/pay.js"></script>
+
+<script src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id=<?= $clientId ?>&merchant-id=<?= urlencode($merchantId) ?>&currency=GBP&buyer-country=GB"
+        data-client-token="<?= $clientToken ?>" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
+</script>
+
 @endsection
 
 @section('content')
@@ -546,7 +581,64 @@
                                 <div class="checkout-payment-options">
                                     <ul class="cc_payment_methods_options">
 
-                                        @include('front.pages.payments.paypal',['totalAmount'=>$total])
+                                        {{-- previous paypal --}}
+                                        @include('front.pages.payments.paypal',['totalAmount'=>$total])  
+
+                                        {{-- new payapl integration --}}
+                                        {{-- <div id="paypal-button-container"></div>
+                                        <div id="paypal-marks-container"></div> --}}
+                                        {{-- <div id="container"></div> --}}
+
+
+
+
+                                        {{-- google checkbox --}}
+
+               
+                                        <li class="cc_payment_methods googlepay_payment googlepaygateway_wrap">
+                                          
+                                            <div class="google_pay_button">
+                                            <input type="radio" name="payment_type" id="googlepay_radio" value="googlepay" autocomplete="off">
+                                            <label class="googlepay_label" for="googlepay_radio">
+                                                Google Pay
+                                                <a class="what-googlepay" href="https://pay.google.com/about/" target="_blank">
+                                                    What is Google Pay?
+                                                </a>
+                                            </label>
+                                        </div>
+
+                                            <i class="diamond-icon paypent-checkout"></i>
+                                            <div class="payment-box-main-drop googlepay-box">
+                                                Pay via Google Pay; a fast and secure way to pay using your saved cards.
+                                            </div>
+                                            <div id="googlepay-button-container" class="googlepay-button-container"></div>
+                                        </li>
+
+
+                                        {{-- <div class="container">
+                                            <h3>Apple Pay with PayPal Integration</h3>
+                                            <h6>Test Transaction (Live)</h6>
+                                            <div id="applepay-container"></div>
+                                            <div><i>Use Apple Pay test cards for the sandbox environment.</i></div>
+                                        </div> --}}
+                                        
+                                        <ul>
+                                        <li class="cc_payment_methods applepay_payment applepaygateway_wrap" style="display: none;">
+                                            <input type="radio" name="payment_type" id="applepay_radio" value="applepay" autocomplete="off">
+                                            <label class="applepay_label" for="applepay_radio">
+                                                Apple Pay
+                                                <a class="what-applepay" href="https://www.apple.com/apple-pay/" target="_blank">
+                                                    What is Apple Pay?
+                                                </a>
+                                            </label>
+                                            <i class="diamond-icon payment-checkout"></i>
+                                            <div class="payment-box-main-drop applepay-box">
+                                                Pay securely via Apple Pay using your iPhone, iPad, or Mac.
+                                            </div>
+                                            <div id="applepay-button-container" class="applepay-button-container" style="display:none"></div>
+                                        </li>
+                                    </ul>
+                                        {{-- <div id="container"></div> --}}
                                         {{-- @include('front.pages.payments.dekopay',['totalAmount'=>$total]) 
                                         @include('front.pages.payments.stripepay',['totalAmount'=>$total])--}}
                                     </ul>
@@ -564,7 +656,7 @@
                                         @endguest
                                         @auth
                                         @endauth
-                                        <button class="btn-bg-large" type="submit">Place Order</button>
+                                        <button id="place-order" class="btn-bg-large" type="submit">Place Order</button>
                                     </div>
                                 </div>
                             </div>
@@ -614,6 +706,8 @@
 @endsection
 
 @section('js')
+
+<script src="{{asset('/applepay_sdk/app.js')}}"></script>
 <script src="{{$url}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -999,19 +1093,54 @@
                 processData: false,
                 data: form_data,
                 success: function(response) {
+                    
                     $('.cc_place_order_btn button').text('Place Order');
                     $('.cc_place_order_btn button').prop('disabled', false);
                     if (response.status == 500) {
                         $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
                         toastr.info(response.msg);
                     }
+
+                const totalFinalPricesElement = document.getElementById("totalFinalPrices");
+
+                if (!totalFinalPricesElement) {
+                    console.error("Error: #totalFinalPrices element not found in the DOM.");
+                    return 0; 
+                }
+
+                const strongTag = totalFinalPricesElement.querySelector("strong");
+
+                if (!strongTag) {
+                    console.error("Error: <strong> tag not found inside #totalFinalPrices.");
+                    return 0; // Default price if <strong> is missing
+                }
+
+                const strongValue = strongTag.textContent.trim();
+
+                // Remove currency symbols or extra characters, if any
+                const numericValue = strongValue.replace(/[^0-9.]/g, "");
+
+                const price = parseFloat(numericValue);
+
+
                     if (response.status == 200) {
-                        if ($('#selected_payment_type').val() == 'paypal') {
+                        const selectedPaymentType = $('#selected_payment_type').val();
+
+                         $('#tokenOrdId').val(response.order_dt);
+
+                        if (selectedPaymentType == 'paypal') {
                             window.location.href = "{{route('make.payment')}}/" + response.order_dt;
-                        } else if ($('#selected_payment_type').val() == 'stripe') {
-                            $('#tokenOrdId').val(btoa(response.order_dt));
+                        } else if (selectedPaymentType == 'stripe') {
+                            // $('#tokenOrdId').val(btoa(response.order_dt));
                             $('#stripePayModal').modal('show');
-                        } else {
+                        } else if (selectedPaymentType == 'googlepay') {
+                            onGooglePaymentButtonClicked(price,response.order_dt);
+                            }
+                        else if (selectedPaymentType == 'applepay') {
+                            $('.applepay-button-container').show();
+                            $('#place-order').hide();
+                        }
+                        else {
                             window.location.href = "{{route('make.dekopay')}}/" + response.order_dt;
                         }
 
@@ -1144,6 +1273,48 @@
         else
             $(".billing-detail-show").show();
     };
+    document.addEventListener("DOMContentLoaded", () => {
+    // Get the Apple Pay payment method element
+    const applePayElement = document.querySelector('.applepay_payment');
+
+    // Check if the user is on an Apple device
+    const isAppleDevice = /iPhone|iPad|Macintosh/i.test(navigator.userAgent) || 
+                          (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    if (isAppleDevice) {
+        // Show the Apple Pay payment method
+        applePayElement.style.display = "block";
+    } else {
+        // Hide the Apple Pay payment method
+        applePayElement.style.display = "none";
+    }
+});
+
+// Function to handle radio button selection and toggle the Place Order button
+function togglePlaceOrderButton() {
+    
+    const placeOrderButton = document.getElementById("place-order");
+    const applepaybuttoncontainer = document.getElementById("applepay-button-container");
+    const applePayRadio = document.getElementById("applepay_radio"); // ID of the Apple Pay radio button
+
+    // Check if the Apple Pay radio button is selected
+    if (applePayRadio && applePayRadio.checked) {
+        // placeOrderButton.style.display = "none"; // Hide the Place Order button
+        applepaybuttoncontainer.style.dispnone= "block"; // Show the Place Order button
+    } else {
+        placeOrderButton.style.display = "block"; // Show the Place Order button
+       applepaybuttoncontainer.style.display = "none"; // Show the Place Order button
+    }
+}
+// Attach the event listener to all radio buttons
+document.addEventListener("DOMContentLoaded", () => {
+    const radioButtons = document.querySelectorAll('input[name="payment_type"]'); // Replace with your payment method radio name
+    radioButtons.forEach((radio) => {
+        radio.addEventListener("change", togglePlaceOrderButton);
+    });
+    // Initial check on page load
+    togglePlaceOrderButton();
+});
 </script>
 
 @endsection

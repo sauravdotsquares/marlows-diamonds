@@ -16,7 +16,15 @@ use Illuminate\Support\Facades\Route;
 use App\Models\UrlRedirects;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Front\StripeController;
+use App\Http\Controllers\Front\ApplePayController;
+
+// routes/api.php
 use Illuminate\Support\Facades\Artisan;
+
+Route::post('/api/orders', [ApplePayController::class, 'appleApiOrder']);
+Route::post('/api/orders/{id}/capture', [ApplePayController::class, 'appleApiOrderCapture']);
+Route::get('/api/getorder/{id}', [ApplePayController::class, 'getOrderDetails']);
+
 
 Route::get('/clear-cache', function() {
 	Artisan::call('optimize:clear');
@@ -338,6 +346,11 @@ Route::group(['middleware' => ['customer']], function () {
 
 Route::namespace('Front')->middleware(['WebCommonHandler'])->group(function () {
 
+	// GET route to show the success page after the POST request
+// Route to handle success page with dynamic id
+Route::get('/success-page/{id}', [ApplePayController::class, 'showSuccessPage'])->name('success.page');
+
+
     Route::get('/', 'PageController@page')->name('home');
 
 
@@ -510,3 +523,9 @@ Route::group(['prefix' => 'api/v1'], function() {
 Route::any('{all}/{subpage}','Front\ProductController@productListPage')->where('all', '.*')->middleware('CaseInsensitiveRoutes');
 
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
+Route::get('/paypal-payment', [ApplePayController::class, 'generateClientToken']);
+Route::get('/generate-client-token', 'PaymentController@generateClientToken');
+Route::post('/validate-apple-pay', [ApplePayController::class, 'validateApplePay']);
+Route::post('/process-apple-pay', [ApplePayController::class, 'processApplePay']);
+Route::post('/update-order-status', [ApplePayController::class, 'updateStatus']);
+Route::post('/update-order-google-status', [ApplePayController::class, 'updateGoogleStatus']);

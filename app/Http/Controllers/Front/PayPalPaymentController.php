@@ -135,7 +135,7 @@ class PayPalPaymentController extends Controller
         ];
         if (env('APP_ENV') == 'production') {
             $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
-                Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request,$admin_email, $transaction_emails ){
+                Mail::send('email.orderstatusqueueprocess', array('data1' => $data,), function($message) use ($request,$admin_email, $transaction_emails ){
                 $message->from('dssmtp@marlows-diamonds.co.uk');
 
                 $admin_email_london = "london@marlows-diamonds.co.uk";
@@ -153,7 +153,7 @@ class PayPalPaymentController extends Controller
             });
         } else if (env('APP_ENV') == 'local') {
             $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
-            Mail::send('email.orderstatus-cancel', array('data1' => $data,), function($message) use ($request, $transaction_emails ){
+            Mail::send('email.orderstatusqueueprocess', array('data1' => $data,), function($message) use ($request, $transaction_emails ){
                 $message->from('dssmtp@marlows-diamonds.co.uk');
 
                 $admin_email_london = "sharma.gajendra@dotsquares.com";
