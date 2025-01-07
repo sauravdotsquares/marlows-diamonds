@@ -25,7 +25,7 @@
         $merchantId = env("PAYPAL_MERCHANTID_LIVE");
     }elseif (env('APP_ENV') == 'local') {
         $clientId = "AfLQcRuY8C2VcpdsSImup4E10vYi5Yi3w4gJ6d1WhqubKbHttdwpUe8RIW1pVkW0OsrXW4uNBl44RIqp"; // Hardcode or set these manually
-        $merchantId = env("PAYPAL_MERCHANTID_STAG");
+        $merchantId = env("PAYPAL_MERCHANTID_STAG").'&currency=GBP&buyer-country=GB';
     }
 
   
@@ -46,7 +46,7 @@
 </script>
 <script src="https://pay.google.com/gp/p/js/pay.js"></script>
 
-<script src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id=<?= $clientId ?>&merchant-id=<?= urlencode($merchantId) ?>&currency=GBP&buyer-country=GB"
+<script src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id=<?= $clientId ?>&merchant-id=<?= urlencode($merchantId) ?>"
         data-client-token="<?= $clientToken ?>" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
 </script>
 

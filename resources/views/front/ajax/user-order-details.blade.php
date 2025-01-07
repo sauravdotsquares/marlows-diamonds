@@ -163,4 +163,17 @@
             </address>
         </div>
     </div>
+    <div class="view-order-billing-details">
+        <h4>Shipping address</h4>
+        <div class="woocommerce-customer-details">
+            <address>
+                {!!isset($getOrderDetails->order_shipping_address->first_name)?$getOrderDetails->order_shipping_address->first_name."<br>":''!!}
+                {!!isset($getOrderDetails->order_shipping_address->company_name)?$getOrderDetails->order_shipping_address->company_name.'<br>':'' !!}  
+                {!!isset($getOrderDetails->order_shipping_address->street_address_l1)?$getOrderDetails->order_shipping_address->street_address_l1.'<br>':''!!}{!!isset($getOrderDetails->order_shipping_address->street_address_l2)?$getOrderDetails->order_shipping_address->street_address_l2.'<br>':''!!}{!!isset($getOrderDetails->order_shipping_address->town_city)?$getOrderDetails->order_shipping_address->town_city:''!!} {!!isset($getOrderDetails->order_shipping_address->state)?$getOrderDetails->order_shipping_address->state.'<br>':''!!}{!!isset($getOrderDetails->order_shipping_address->pin_code)?$getOrderDetails->order_shipping_address->pin_code:''!!}
+                <p class="woocommerce-customer-details--phone"> {{isset($getOrderDetails->order_shipping_address->mobile)?$getOrderDetails->order_shipping_address->mobile:''}} </p>
+
+                <p class="woocommerce-customer-details--email">{{isset($getOrderDetails->order_shipping_address->email)?$getOrderDetails->order_shipping_address->email:''}}</p>
+            </address>
+        </div>
+    </div>
 </div>
