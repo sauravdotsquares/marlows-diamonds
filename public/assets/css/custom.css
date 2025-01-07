@@ -1103,6 +1103,14 @@ background-position: -216px -217px;width: 140px;height: 39px;float: right;}
 .checkout-payment-options ul li.cc_payment_methods label.paypal_label a {text-decoration: none; color: #8e2e65; font-size: 18px; font-weight: bold; margin: 0 0 0 6px;}
 .payment-box-main-drop {background:#fff4fa;position: relative;padding:20px 23px 25px;margin-top: 20px; color: #404040; font-size: 18px; font-weight: bold;}
 .checkout-payment-options ul li input[type="radio"] {top: 1px; position: relative;}
+
+.checkout-payment-options ul li.cc_payment_methods.googlepay_payment.googlepaygateway_wrap .payment-box-main-drop.googlepay-box{margin: 0;}
+.checkout-payment-options ul li.cc_payment_methods.googlepay_payment.googlepaygateway_wrap .google_pay_button {
+padding: 10px 0 0 15px;}
+.checkout-payment-options ul li.cc_payment_methods.applepay_payment.applepaygateway_wrap input#applepay_radio {
+margin: 0 0 0 15px;}
+.checkout-payment-options li.cc_payment_methods.googlepay_payment.googlepaygateway_wrap .google_pay_button label.googlepay_label a, 
+.checkout-payment-options ul li.cc_payment_methods.applepay_payment.applepaygateway_wrap label.applepay_label a {color: #8e2e65;}
 .payment-box-main-drop::after {
 	content: "";
 	width: 0;
