@@ -35,8 +35,6 @@ class ApplePayController extends Controller
 
     public function updateGoogleStatus(Request $request)
     {
-       
-
         // Get the raw content from the request body
         $rawData = $request->getContent();
         // Decode the JSON string into an array
@@ -46,16 +44,6 @@ class ApplePayController extends Controller
         $tokenOrdIdUp = $getData['tokenOrdIdUp'];
         $getDataToken = $getData['token']; // The second parameter 'true' converts it to an array
         
-        
-
-        // return response()->json(['success' => false, 'message' => $getData], 200);
-        // return response()->json(['success' => false, 'message' =>  $request->input('billingAddress')], 200);
-
-        // $getData = json_decode($request->all());
-        // return response()->json(['success' => false, 'messageasdfaf' => $getData], 200);
-        // Validate incoming data
-
-
         $request->validate([
             'paymentMethod' => 'required|string',
             'token' => 'required|string',
@@ -65,8 +53,6 @@ class ApplePayController extends Controller
 
         // Example of finding the order by a specific order identifier (you can adjust this as needed)
         $order = Order::find($tokenOrdIdUp);
-        
-        //return response()->json(['success' => false, 'message' => $order], 200);
 
         if (!$order) {
             return response()->json(['success' => false, 'message' => 'Order not found'], 404);
@@ -159,14 +145,6 @@ class ApplePayController extends Controller
  // Function to show success page
     public function showSuccessPage(Request $request)
     {
-       $order = Order::where('id', $request->id)->first();
-
-        if (!$order->custom_order_id) {
-            // Generate and update the custom_order_id only if it does not already exist
-            $order->custom_order_id = rand(1000, 1000000) . '-' . $request->id;
-            $order->save();  // Save the updated record
-        }
-
         // Fetch the updated order details
         $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id', $request->id)->first()->toArray();
 
@@ -175,20 +153,12 @@ class ApplePayController extends Controller
             'response' => 'Your Order number('.$getOrderDetailsMail['custom_order_id'].') has been successfully paid',
         ];
         return view('front.pages.success-page',$result);
-        // Retrieve the passed data from the query string (URL)
-        $getResponses = $request->query('data');
-
-        // Pass the data to the success page view
-        return view('front.pages.success-page', compact('getResponses'));
     }
 
 
 
 
     public function email_order_custom($orderId){
-
-       
-        
         $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id',$orderId)->first()->toArray();
         
         if (isset($getOrderDetailsMail['email_status']) && $getOrderDetailsMail['email_status'] == 2) {

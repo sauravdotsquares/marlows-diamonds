@@ -141,7 +141,7 @@ class PlaceOrderController extends Controller
                 $getOrders->paymentccdetails = $request->paymentccdetails;
                 $getOrders->depositpercentage = $request->depositepercentage;
                 $getOrders->status = 0;
-                $getOrders->save(); 
+                $getOrders->save();
 
                 if($getOrders){
                     $getSessionProductData = session('cart');
@@ -176,9 +176,9 @@ class PlaceOrderController extends Controller
                             $orderDekopayFinance->totalAmts = $request->final_price;
 
                             $orderDekopayFinance->save();
-                            Order::where('id',$getOrders->id)->update(['custom_order_id'=>$getOrders->id.'-'.base64_encode($getEmailExists->id.'-'.$getOrders->id),'status'=>1,'deko_status'=>'pending']);
-                            session()->put('custom_order_id', $getOrders->id.'-'.base64_encode($getEmailExists->id.'-'.$getOrders->id));
                         }
+                        Order::where('id',$getOrders->id)->update(['custom_order_id'=>'31002'.''.$getOrderDetails->user_id.'-'.$getOrders->id,'status'=>1,'deko_status'=>'pending']);
+                        session()->put('custom_order_id', $getOrders->id.'-'.base64_encode($getEmailExists->id.'-'.$getOrders->id));
 
                         CustomerAddress::where('user_id',$getEmailExists->id)->update(['order_id'=>$getOrders->id]);
                         

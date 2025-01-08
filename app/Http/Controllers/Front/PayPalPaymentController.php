@@ -41,14 +41,6 @@ class PayPalPaymentController extends Controller
     public function handlePayment($orderId)
     {
         $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id',$orderId)->first();
-        $maxOrderId = Order::max('custom_order_id');
-        
-
-        if(isset($maxOrderId) && !empty($maxOrderId)){
-            $generateCustomOrderId = '31002'.''.$getOrderDetails->user_id.''.$getOrderDetails->id;
-        }else{
-            $generateCustomOrderId = '31002';
-        }
 
         $getProdustItems = [];
         foreach($getOrderDetails->getOrderDetailsFunction as $key => $orderDetails){
@@ -106,11 +98,11 @@ class PayPalPaymentController extends Controller
         }
 
         if (isset($redirect_url)) {
-            $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'custom_order_id'=>$generateCustomOrderId,'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>1]);
+            $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>1]);
             return Redirect::away($redirect_url);
         }
 
-        $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'custom_order_id'=>$generateCustomOrderId,'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>0]);
+        $getOrderDetails = Order::where('id',$orderId)->update(['token'=>$payment->getToken(),'pay_timestamp'=>date('Y-m-d h:i:s', strtotime($payment->getCreateTime())),'acknowledge'=>$payment->getState(),'status'=>0]);
 
         return redirect()->back()->with('error','Payment gateway initiliazation failed.');
     }
@@ -217,7 +209,7 @@ class PayPalPaymentController extends Controller
                         if(!empty($transaction_emails)){
                             $emails_to_cc = explode(',', $transaction_emails);
                             foreach ($emails_to_cc as $email_to_cc) {
-                                $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                                $message->cc($emails_to_cc, 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');
                             }
                         }
 

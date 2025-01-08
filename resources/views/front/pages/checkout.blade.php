@@ -576,6 +576,7 @@
                                 <input type="hidden" id="total_price" name="total_price" value="{{ $totalPrice }}">
                                 <input type="hidden" id="deposited_price" name="deposited_price" value="{{ $depositedPrice }}">
                                 <input type="hidden" id="selected_payment_type" name="selected_payment_type" value="paypal">
+                                <input type="hidden" id="already_inserted" name="already_inserted" value="">
 
 
                                 <div class="checkout-payment-options">
@@ -1082,71 +1083,75 @@
             },
         },
         submitHandler: function(form) {
-            $('.cc_place_order_btn button').text('Please Wait ...');
-            $('.cc_place_order_btn button').prop('disabled', true);
-            var form_data = new FormData(form);
-            $.ajax({
-                url: "{{ route('place.order') }}",
-                method: "POST",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                success: function(response) {
-                    
-                    $('.cc_place_order_btn button').text('Place Order');
-                    $('.cc_place_order_btn button').prop('disabled', false);
-                    if (response.status == 500) {
-                        $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
-                        toastr.info(response.msg);
+            const getValue =  $('#already_inserted').val('order_inserted');
+            if(getValue != "order_inserted"){
+                $('.cc_place_order_btn button').text('Please Wait ...');
+                $('.cc_place_order_btn button').prop('disabled', true);
+                var form_data = new FormData(form);
+                $.ajax({
+                    url: "{{ route('place.order') }}",
+                    method: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    success: function(response) {
+                        
+                        $('.cc_place_order_btn button').text('Place Order');
+                        $('.cc_place_order_btn button').prop('disabled', false);
+                        if (response.status == 500) {
+                            $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
+                            toastr.info(response.msg);
+                        }
+    
+                    const totalFinalPricesElement = document.getElementById("totalFinalPrices");
+    
+                    if (!totalFinalPricesElement) {
+                        console.error("Error: #totalFinalPrices element not found in the DOM.");
+                        return 0; 
                     }
-
-                const totalFinalPricesElement = document.getElementById("totalFinalPrices");
-
-                if (!totalFinalPricesElement) {
-                    console.error("Error: #totalFinalPrices element not found in the DOM.");
-                    return 0; 
-                }
-
-                const strongTag = totalFinalPricesElement.querySelector("strong");
-
-                if (!strongTag) {
-                    console.error("Error: <strong> tag not found inside #totalFinalPrices.");
-                    return 0; // Default price if <strong> is missing
-                }
-
-                const strongValue = strongTag.textContent.trim();
-
-                // Remove currency symbols or extra characters, if any
-                const numericValue = strongValue.replace(/[^0-9.]/g, "");
-
-                const price = parseFloat(numericValue);
-
-
-                    if (response.status == 200) {
-                        const selectedPaymentType = $('#selected_payment_type').val();
-
-                         $('#tokenOrdId').val(response.order_dt);
-
-                        if (selectedPaymentType == 'paypal') {
-                            window.location.href = "{{route('make.payment')}}/" + response.order_dt;
-                        } else if (selectedPaymentType == 'stripe') {
-                            // $('#tokenOrdId').val(btoa(response.order_dt));
-                            $('#stripePayModal').modal('show');
-                        } else if (selectedPaymentType == 'googlepay') {
-                            onGooglePaymentButtonClicked(price,response.order_dt);
+    
+                    const strongTag = totalFinalPricesElement.querySelector("strong");
+    
+                    if (!strongTag) {
+                        console.error("Error: <strong> tag not found inside #totalFinalPrices.");
+                        return 0; // Default price if <strong> is missing
+                    }
+    
+                    const strongValue = strongTag.textContent.trim();
+    
+                    // Remove currency symbols or extra characters, if any
+                    const numericValue = strongValue.replace(/[^0-9.]/g, "");
+    
+                    const price = parseFloat(numericValue);
+    
+    
+                        if (response.status == 200) {
+                            const selectedPaymentType = $('#selected_payment_type').val();
+    
+                             $('#tokenOrdId').val(response.order_dt);
+    
+                            if (selectedPaymentType == 'paypal') {
+                                window.location.href = "{{route('make.payment')}}/" + response.order_dt;
+                            } else if (selectedPaymentType == 'stripe') {
+                                // $('#tokenOrdId').val(btoa(response.order_dt));
+                                $('#stripePayModal').modal('show');
+                            } else if (selectedPaymentType == 'googlepay') {
+                                onGooglePaymentButtonClicked(price,response.order_dt);
+                                }
+                            else if (selectedPaymentType == 'applepay') {
+                                $('#already_inserted').val('order_inserted');
+                                 $('.applepay-button-container').show();
+                     $('#place-order').hide();
                             }
-                        else if (selectedPaymentType == 'applepay') {
-                            $('.applepay-button-container').show();
-                            $('#place-order').hide();
+                            else {
+                                window.location.href = "{{route('make.dekopay')}}/" + response.order_dt;
+                            }
+    
                         }
-                        else {
-                            window.location.href = "{{route('make.dekopay')}}/" + response.order_dt;
-                        }
-
                     }
-                }
-            });
+                });
+            }
         }
     });
 </script>
@@ -1313,7 +1318,7 @@ document.addEventListener("DOMContentLoaded", () => {
         radio.addEventListener("change", togglePlaceOrderButton);
     });
     // Initial check on page load
-    togglePlaceOrderButton();
+    // togglePlaceOrderButton();
 });
 </script>
 
