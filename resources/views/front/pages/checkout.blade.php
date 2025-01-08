@@ -860,6 +860,7 @@
 
         $('input[type=radio][name=payment_type]').on('change', function() {
             $('#selected_payment_type').val($(this).val());
+            $('#already_inserted').val('');
             switch ($(this).val()) {
                 case 'paypal':
                     $(".via_deko_payment").removeClass('dekopaymentgateway_wrap');
@@ -1083,7 +1084,7 @@
             },
         },
         submitHandler: function(form) {
-            const getValue =  $('#already_inserted').val('order_inserted');
+            const getValue =  $('#already_inserted').val();
             if(getValue != "order_inserted"){
                 $('.cc_place_order_btn button').text('Please Wait ...');
                 $('.cc_place_order_btn button').prop('disabled', true);
