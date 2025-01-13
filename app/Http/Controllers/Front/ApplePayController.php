@@ -9,6 +9,7 @@ use App\Models\Settings;
 use Mail;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 
 class ApplePayController extends Controller
 {
@@ -21,64 +22,116 @@ class ApplePayController extends Controller
 
         return response()->json($merchantSession);
     }
-
+    
     public function processApplePay(Request $request)
     {
 
         $paymentData = $request->input('payment');
-
-        // Use Stripe or custom logic to process the payment
-        $result = true; // Example response
-
-        return response()->json(['success' => $result,'data' => $paymentData]);
-    }
-
-    public function updateGoogleStatus(Request $request)
-    {
-        // Get the raw content from the request body
-        $rawData = $request->getContent();
-        // Decode the JSON string into an array
-
-        $getData = json_decode($rawData, true); // The second parameter 'true' converts it to an array
-
-        $tokenOrdIdUp = $getData['tokenOrdIdUp'];
-        $getDataToken = $getData['token']; // The second parameter 'true' converts it to an array
         
-        $request->validate([
-            'paymentMethod' => 'required|string',
-            'token' => 'required|string',
-            'billingAddress' => 'required|array',
-            'countryCode' => 'required|string',
-        ]);
+        Log::info("paymentData====>");
+        Log::info($paymentData);
+        // Use Stripe or custom logic to process the payment
+        $tokenOrdIdUp = $request->tokenOrdIdUpdated;
+        Log::info("tokenisationdata====>");
+        Log::info($paymentData['paymentMethodData']['tokenizationData']['token']);
 
         // Example of finding the order by a specific order identifier (you can adjust this as needed)
         $order = Order::find($tokenOrdIdUp);
-
+        Log::info("Order Data for Id tokenOrdIdUp");
+        Log::info($tokenOrdIdUp);
+        Log::info("Order Data for Id Orders Data");
+        Log::info($order);
         if (!$order) {
-            return response()->json(['success' => false, 'message' => 'Order not found'], 404);
+            Log::info("Not Found order in processApplePay");
+            return response()->json(['success' => false, 'message' => 'Order not found']);
+        }else{
+            Log::info("Found order Data in processApplePay");
+            // Update the order status, payment method, etc.
+            $order->status = 2; // You can set the status to "paid" or another value based on your logic
+            $order->payment_method = $paymentData['paymentMethodData']['description'];
+            $order->token = $paymentData['paymentMethodData']['tokenizationData']['token'];
+            $order->billingAddress = json_encode($paymentData['paymentMethodData']['info']['billingAddress']); // You can save the address as a JSON string or map it to specific fields.
+            
+            // Save the updated order
+            $order->save();
+            
+            Log::info("Found order in processApplePay");
+            
+            $this->email_order_custom($tokenOrdIdUp);
+            session()->forget('cart');
+            // Construct the URL directly instead of using route()
+            $redirectUrl = url("/success-page/{$tokenOrdIdUp}");
+            // Return JSON with the URL to redirect to
+            return response()->json([
+                'success' => true,
+                'redirect' => $redirectUrl
+            ]);
         }
-
-        // Update the order status, payment method, etc.
-        $order->status = 2; // You can set the status to "paid" or another value based on your logic
-        $order->payment_method = $getData['paymentMethod'];
-        $order->token = $getDataToken;
-        $order->billingAddress = json_encode($request->input('billingAddress')); // You can save the address as a JSON string or map it to specific fields.
-        
-        // Save the updated order
-        $order->save();
-
-        $getResponses = $this->email_order_custom($tokenOrdIdUp);
-        session()->forget('cart');
-        // Return JSON response with redirect URL
-        // Construct the URL directly instead of using route()
-                $redirectUrl = url("/success-page/{$tokenOrdIdUp}");
-
-                // Return JSON with the URL to redirect to
-                return response()->json([
-                    'success' => true,
-                    'redirect' => $redirectUrl
-                ]);
     }
+
+    // public function processApplePay(Request $request)
+    // {
+
+    //     $paymentData = $request->input('payment');
+        
+    //     Log::info($paymentData);
+    //     // Use Stripe or custom logic to process the payment
+    //     $result = true; // Example response
+
+    //     return response()->json(['success' => $result,'data' => $paymentData]);
+    // }
+
+    // public function updateGoogleStatus(Request $request)
+    // {
+    //     Log::info("into the updateGoogleStatus functions, All Reqquest Data");
+    //     Log::info($request->all());
+    //     Log::info("Content From Request Data");
+    //     Log::info($request->getContent());
+    //     // Get the raw content from the request body
+    //     $rawData = $request->getContent();
+    //     // Decode the JSON string into an array
+
+    //     $getData = json_decode($rawData, true); // The second parameter 'true' converts it to an array
+    //     Log::info($getData);
+    //     $tokenOrdIdUp = $getData['tokenOrdIdUp'];
+    //     $getDataToken = $getData['token']; // The second parameter 'true' converts it to an array
+    //     Log::info($getData['token']);
+    //     $request->validate([
+    //         'paymentMethod' => 'required|string',
+    //         'token' => 'required|string',
+    //         'billingAddress' => 'required|array',
+    //         'countryCode' => 'required|string',
+    //     ]);
+
+    //     // Example of finding the order by a specific order identifier (you can adjust this as needed)
+    //     $order = Order::find($tokenOrdIdUp);
+    //     Log::info("Order Data for Id {$tokenOrdIdUp}");
+    //     Log::info($order);
+    //     if (!$order) {
+    //         return response()->json(['success' => false, 'message' => 'Order not found'], 404);
+    //     }
+
+    //     // Update the order status, payment method, etc.
+    //     $order->status = 2; // You can set the status to "paid" or another value based on your logic
+    //     $order->payment_method = $getData['paymentMethod'];
+    //     $order->token = $getDataToken;
+    //     $order->billingAddress = json_encode($request->input('billingAddress')); // You can save the address as a JSON string or map it to specific fields.
+        
+    //     // Save the updated order
+    //     $order->save();
+
+    //     $getResponses = $this->email_order_custom($tokenOrdIdUp);
+    //     session()->forget('cart');
+    //     // Return JSON response with redirect URL
+    //     // Construct the URL directly instead of using route()
+    //             $redirectUrl = url("/success-page/{$tokenOrdIdUp}");
+
+    //             // Return JSON with the URL to redirect to
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'redirect' => $redirectUrl
+    //             ]);
+    // }
     
      public function updateStatus(Request $request)
     {
@@ -188,7 +241,7 @@ class ApplePayController extends Controller
                 }
         
                 $message->cc($requestCustomerEmail, 'Customer')->subject('Your Marlows Diamonds order has been received!');
-                $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received pro!');
+                $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received');
             });
         } else if (env('APP_ENV') == 'local') {
             $requestCustomerEmail = $getOrderDetailsMail['user_details']['email'];

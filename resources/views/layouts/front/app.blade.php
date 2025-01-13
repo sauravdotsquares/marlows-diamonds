@@ -11,7 +11,7 @@
     <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
     <meta name="keywords" content="{!! isset($data->meta_keyword)?$data->meta_keyword:'' !!}">
-    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @if (env('APP_ENV')=='local')
       <meta name="robots" content="noindex,nofollow">
     @elseif(env('APP_ENV')=='production')
@@ -75,7 +75,7 @@
     <!-- End Google Tag Manager -->
     {!! (!empty($seoScriptData) && !empty($seoScriptData->header_script)) ? $seoScriptData->header_script : '' !!}
     @if(env('APP_ENV')=='production')
-      <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"307000705", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
+      <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"307000705", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","https://bat.bing.com/bat.js","uetq");</script>
       @yield('successtrackingscript')
       
       
