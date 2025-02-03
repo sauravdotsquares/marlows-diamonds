@@ -1450,7 +1450,46 @@ class ProductController extends Controller
             }
         }
     }
-    
+
+
+    /**
+     * Show Image Data
+     *
+     * @param Request $request
+     * @return void
+     */
+
+     public function getSelectedVariationsImageData(Request $request)
+    {
+         $getProduct = Products::where('slug', $request->slug)->first();
+         $getProductVariationId = ProductVariations::where('product_id', $getProduct->id)
+             ->pluck('id')
+             ->toArray();
+ 
+         if (!empty($getProductVariationId)) {
+             $getVariDetails = ProductVariationDetails::groupBy('value')
+                 ->whereIn('variation_id', $getProductVariationId)
+                 ->where('value', $request->metal_type)
+                 ->first();
+        }
+         $newArray = [];
+
+         if (isset($getVariDetails) && !empty($getVariDetails)) {
+             // Get product variation price
+             $getSelectedVariationVideoImages = ProductVariations::where('id', $getVariDetails->variation_id)
+                 ->select('vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video') ->first();
+
+             $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+             $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+             $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
+             $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
+             return response()->json($newArray);
+        } else {
+             return response()->json(['statusCode' => '500', 'msg' => 'No Variation Found']);
+        }
+    }
+
+
     public function getRelatedProductList(Request $request)
     {
         $getCatIdArray = explode(',', $request->catid);

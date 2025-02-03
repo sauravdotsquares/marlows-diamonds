@@ -44,7 +44,9 @@
     margin-bottom: 0;
     margin-top: 45px;
 }
-}@media(max-width:767px) {
+.ring-size-content .findyoursize {display: grid;grid-template-columns: repeat(2, 1fr);}
+}
+@media(max-width:767px) {
     .column-one-fifth, .main-banner-col, .product-info-media, .width-50 {
     flex: 0 0 100%;
     -ms-flex: 0 0 100%;
@@ -368,7 +370,14 @@ body {
 .category-banner.engagement-banner {
     padding: 65px 0;
 }
-}@media(max-width:500px) {
+
+.ring-size-content .findyoursize {display: grid;grid-template-columns: repeat(1, 1fr);}
+
+.product-info-main .discount-offerproduct h3{ font-size: 24px;}
+.product-info-main .discount-offerproduct h4{ font-size: 14px;}
+}
+
+@media(max-width:500px) {
     .product-grid-items-item {
     flex: 0 0 100%;
     max-width: 100%;
@@ -609,10 +618,6 @@ body {
     flex: 0 0 33.33%;
     max-width: 33.33%;
     -ms-flex: 0 0 33.33%}
-.category-sidebar-wrap {
-    width: 30%}
-.category-list-wrap {
-    width: 69%}
 .cols-ryt-tags:not(.wedding-rings, .diamond-jewellery) .filter-tags-col {
     max-width: 18%;
     flex: 0 0 18%;
@@ -682,9 +687,6 @@ body {
     max-width: 115px;
     position: relative;
 }
-.category-sidebar-wrap .accordion-item .category-filter-title h6 {
-    font-size: 15px;
-}
 .guide-secret {
     padding: 0 45px;
 }
@@ -698,13 +700,16 @@ body {
 .financeoptionprocess.product-finance {
     max-width: 95%}
 .product-grid-items-item {
-    flex: 0 0 50%;
-    max-width: 50%}
+    flex: 0 0 33%;
+    max-width: 33%}
 /** visit us page**/
 .visit-form{padding: 20px 30px;}
 .visit-form-map .col-lg-8 {width: 50%;}
 .visit-form-map .col-lg-4 {width: 50%;}
 /** visit us page end**/
+
+
+.discount-sale-sec .discount-saleinner .pricetotalbag-sec a.btn-bg-small {padding: 11px 10px;}
 }
 @media(max-width:1024px) {
     .sticky-header .post-bar {
@@ -970,6 +975,8 @@ header.header-main.sticky-header .middle-topbar .formgroup {
 }
 }
 @media(max-width:991px) {
+    .category-banner{ margin-top: 46px;}
+
     .diamond-field-labels {
     margin-bottom: 8px;
 }
@@ -1020,13 +1027,18 @@ header.header-main.sticky-header .middle-topbar .formgroup {
     width: auto;
 }
 .category-sidebar-wrap .filter-container {
-    margin-top: 60px;
+    margin-top:0;
+    margin-bottom: 20px;
 }
 .category-sidebar-wrap .filter-clear {
-    position: absolute;
-    top: 55px;
+    position: relative;
+    top: 0;
     z-index: 9;
+    width: 100%;
 }
+
+.category-sidebar-wrap .accordion-item .category-filter-title{padding: 0 0 15px;}
+
 .inspiration-box h3, .ring-guide-banner .ring-personal-desc p {
     font-size: 16px;
 }
@@ -1125,6 +1137,10 @@ p#offer-text {
 .visit-form-map .col-lg-8 {width: 100%;}
 .visit-form-map .col-lg-4 {width: 100%;}
 /** visit us page end**/
+.discount-sale-sec .discount-saleinner {display: flex;align-items:normal;flex-direction: row;flex-wrap: wrap;justify-content: space-between;}
+.discount-sale-sec .discount-saleinner .diamond-sale h5 {font-size: 12px;color: #fff;font-weight: normal;display: block;text-align: center;margin: 0;}
+.discount-sale-sec .discount-saleinner .pricetotalbag-sec{ display: inline-block;}
+.discount-sale-sec .discount-saleinner .pricetotalbag-sec .pricetotalbag {margin: 0 0 15px;}
 }
 @media(max-width:767px) {
     .heading-h-one, h1 {
@@ -1213,8 +1229,11 @@ header.header-main.sticky-header .middle-topbar{top: 92px;}
     position: relative;
 }
 .container.product-panel-new, .shopfrom-best .product-item-slider {
-    padding: 0;
+    /*padding: 0;*/
+   
 }
+.category-sidebar-wrap .accordion-item .category-filter-title{justify-content: space-between;margin: 0 0px 0 0px; padding-bottom: 10px;}
+
 .shopfrom-best .product-item-slider .owl-stage-outer {
     margin-top: 70px!important;
 }
@@ -1485,6 +1504,7 @@ a.btn-bg-small.expdia {
 .product-items-item-name a {
     min-height: auto;
 }
+.category-sidebar-wrap .filter-container ul{ max-width: 100%;}
 .category-sidebar-wrap {
     margin-top: 0;
 }
@@ -1526,6 +1546,7 @@ a.btn-bg-small.expdia {
 }
 .category-sidebar-wrap .filter-container {
     margin-top: 25px;
+    width: 100%;
 }
 .category-sidebar-wrap .sortmobile {
     display: block;
@@ -1625,7 +1646,8 @@ a.btn-bg-small.expdia {
     height: 200px;
     margin: 0 0 30px; width: 100%;
 }
-}@media(min-width:992px) and (max-width:1199px) {
+}
+@media(min-width:992px) and (max-width:1199px) {
     .diamond-search-table {
     overflow-x: auto;
 }
@@ -1661,6 +1683,9 @@ a.btn-bg-small.expdia {
 .best-selling-marlows .product-info .price-section div h4{ line-height: 21px;}
 }
 @media(max-width:575px) {
+
+.product-info-media .product-info-media-site-icon{top: 15px;} 
+
     .site-logo-main img {
         max-width: 100px;
     }
@@ -1762,12 +1787,16 @@ body .fancybox-navigation .fancybox-button--arrow_left {
     margin: 0;
 }
 
-.category-banner{background-position: center;background-size: cover;padding: 30px 0;min-height: 200px; height: 100%;}
+.category-banner{background-position: center;background-size: cover;padding: 30px 0;min-height: 200px; height: 100%;margin-top: 52px;}
 .category-banner-text h1 {font-size: 24px; line-height: 26px;}
 .category-banner.left {background-position: left;}
 
 .not-logedin-block .alert_icon {display: flex;align-items: center;justify-content: center;}
 
+}
+
+@media(max-width:500px) {
+    .product-info-main a.customise-ring b {position: relative;top: 104px; width: 100%;}
 }
 
 @media(max-width:479px) {
@@ -1800,6 +1829,15 @@ body .fancybox-navigation .fancybox-button--arrow_left {
     header.header-main.sticky-header .middle-topbar {
         top: 77px;
     }
+
+.discount-sale-sec .discount-saleinner{justify-content: center}
+.discount-sale-sec .discount-saleinner .diamond-sale {width: 100%;}
+.discount-sale-sec .discount-saleinner .pricetotalbag-sec {display: inline-block;width:auto;margin-left: 0; margin: auto;margin-top: 6px;  }
+.discount-sale-sec .discount-saleinner .pricetotalbag-sec a.btn-bg-small {padding: 11px 5px;font-size: 9px;}
+.discount-sale-sec .discount-saleinner .pricetotalbag-sec .pricetotalbag{justify-content: center;}
+.discount-sale-sec .pricetotalbag-sec .pricetotalbag .salesvates h5{ font-size: 12px;}
+
+
 }
 @media(max-width:350px) {
     .product-titles {

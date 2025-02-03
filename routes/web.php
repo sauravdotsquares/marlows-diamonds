@@ -408,6 +408,7 @@ Route::get('/success-page/{id}', [ApplePayController::class, 'showSuccessPage'])
 	Route::post('product/get-product-list','ProductController@getProductList');
 
 	Route::post('product/get-related-product-list','ProductController@getRelatedProductList')->name('get.related.product.list');
+	Route::any('product/get-variations-image-data','ProductController@getSelectedVariationsImageData')->name('get-variations-image-data');
 	
 
 	Route::post('product/get-custom-filter','ProductController@getCustomFilter')->name('custom-filter');

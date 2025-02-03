@@ -55,6 +55,9 @@
             display: none;
         }
       }
+      .cc-revoke {
+      display: none !important;
+      }
     </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1365164-1"></script>-->
@@ -75,7 +78,7 @@
     <!-- End Google Tag Manager -->
     {!! (!empty($seoScriptData) && !empty($seoScriptData->header_script)) ? $seoScriptData->header_script : '' !!}
     @if(env('APP_ENV')=='production')
-      <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"307000705", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","https://bat.bing.com/bat.js","uetq");</script>
+      <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"307000705", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
       @yield('successtrackingscript')
       
       
@@ -128,7 +131,13 @@
 <script src="{{asset('/assets/js/jquery.lazyload.min.js?').env('VERSION')}}"></script>
 {{-- .env('VERSION') --}}
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 
+<!-- Cookie Consent JavaScript -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
 
 @yield('js')
 <script>
@@ -146,7 +155,7 @@
       // this code is remove empty p tag and empty div tag End
       
       $(".mobile_search").on('click',function(){
-          $("#homeSearchForm").toggle();
+          $("#homeSearchForm").show();
       });
 
       // for lazyload functions applied in instagram section images.
@@ -201,59 +210,93 @@
 
 
 </script>
+
 <script>
-    // $(window).scroll(function(){
-    //     if ($(this).scrollTop() >= 10) {
-    //       $('.header-main').addClass('sticky-header');
-    //         $('.botto-to-top').fadeIn(200);    // Fade in the arrow
-    //         if ($(window).width() < 767){
-    //           $('#homeSearchForm').hide();
-    //         }
-    //     } else {
-    //       $('.header-main').removeClass('sticky-header');
-    //       $('.botto-to-top').fadeOut(200);   // Else fade out the arrow
-    //       if ($(window).width() < 767){
-    //           $('#homeSearchForm').show();
-    //         }
-    //     }
-    // });
+
+  window.addEventListener("load", function(){
+  
+      window.cookieconsent.initialise({
+  
+          "type": "opt-in",  // Enables both Accept and Decline buttons
+  
+          "palette": {
+  
+              "popup": {
+  
+                  "background": "#000000",
+  
+                  "text": "#ffffff"
+  
+              },
+  
+              "button": {
+  
+                  "background": "#f1d600",
+  
+                  "text": "#000000"
+  
+              }
+  
+          },
+  
+          "theme": "classic",
+  
+          "position": "bottom",
+  
+          "content": {
+  
+              "message": "This website uses cookies to ensure you get the best experience on our website.",
+  
+              "allow": "Accept",
+  
+              "deny": "Decline",
+  
+              "link": "",
+  
+            "showLink": false,
+  
+          },
+  
+          onStatusChange: function(status) {
+  
+              if (status === 'allow') {
+  
+                  // console.log("Cookies accepted");
+  
+              } else if (status === 'deny') {
+  
+                  // console.log("Cookies declined");
+  
+              }
+  
+          }
+  
+      });
+  
+  });
+  
+  </script>
+
+<script>
+    $(window).scroll(function(){
+        if ($(this).scrollTop() >= 10) {
+           $('.header-main').addClass('sticky-header');
+            $('.botto-to-top').fadeIn(200);    // Fade in the arrow
+            if ($(window).width() < 767){
+              $('#homeSearchForm').hide();
+            }
+        } else {
+           $('.header-main').removeClass('sticky-header');
+           $('.botto-to-top').fadeOut(200);   // Else fade out the arrow
+           if ($(window).width() < 767){
+              $('#homeSearchForm').show();
+            }
+        }
+    });
 </script>
 <!-- Menu toggle -->
 <script>
 $(document).ready(function(){
-    
-    let isSearchBarClicked = false;
-
-    // Prevent hiding when the search bar is clicked
-    $('#homeSearchForm').on('focus click', function () {
-        isSearchBarClicked = true;
-    });
-
-    // Detect scroll events
-    $(window).on('scroll touchmove', function () {
-        const scrollTop = $(window).scrollTop();
-        const isMobile = $(window).width() < 767;
-
-        if (isSearchBarClicked) {
-            isSearchBarClicked = false; // Reset flag after preventing the hide
-            return; // Do not hide the search bar
-        }
-
-        if (scrollTop >= 30) {
-            $('.header-main').addClass('sticky-header');
-            $('.botto-to-top').fadeIn(200); // Fade in the arrow
-            if (isMobile) {
-                $('#homeSearchForm').hide(); // Hide the form for smaller screens
-            }
-        } else {
-            $('.header-main').removeClass('sticky-header');
-            $('.botto-to-top').fadeOut(200); // Fade out the arrow
-            if (isMobile) {
-                $('#homeSearchForm').show(); // Show the form for smaller screens
-            }
-        }
-    });
-    
   $(".togglebar-nav").click(function(){
     $("body").toggleClass("navbars-show");
   });

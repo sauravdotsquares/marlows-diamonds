@@ -2370,18 +2370,18 @@ if (!function_exists("getMonthwiseDiscountText")) {
     function getMonthwiseDiscountText()
     {
         return [
-            '1' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '2' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '3' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '4' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '5' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '6' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '7' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '8' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '9' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '10' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '11' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
-            '12' => 'Trusted by Thousands. Forever low prices. 30 day returns .<a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;"href="/terms">*T&amp;C</a>.',
+            '1' => 'Winter Sale upto 40% off',
+            '2' => 'Valentines Sale 40% off',
+            '3' => 'Spring Sale 40% off',
+            '4' => 'Spring Sale 40% off',
+            '5' => 'Mid Season Sale 40% off',
+            '6' => 'Summer Sale 40% off',
+            '7' => 'Summer Sale 40% off',
+            '8' => 'Summer Sale Up to 40% off',
+            '9' => 'Autumn Sale 40% off',
+            '10' => 'Mid Season Sale 40% off',
+            '11' => 'Winter Sale 40% off',
+            '12' => 'Christmas Sale 40% off',
         ];
     }
 }

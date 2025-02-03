@@ -11,6 +11,21 @@
         font-weight: 800;
     }
     .search-suggestion.hide_254 {display: none;}
+    
+.top-bar p {
+    margin: 0;
+    line-height: 30px;
+    color: #000;
+}
+
+.top-bar p a {
+    color: #8e2e65;
+}
+
+
+.close-popup-btn:hover {
+    background: #8e2e65;
+}
 </style>
 <!-- Header Start here -->
 <header class="header-main">
@@ -69,7 +84,10 @@
                     </a> --}}
                     {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
                     {{-- <p id="offer-text">  --}}
-                        {!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}
+                        {{-- {!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!} --}}
+
+                        {{$header_settings->get_options('top-bar-desktop')}}
+                        <a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;" href="/TERMS">*T&amp;C</a>
                      {{-- </p> --}}
                     
                     {{-- <p>

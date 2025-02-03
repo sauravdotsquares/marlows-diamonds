@@ -1,5 +1,5 @@
 @extends('layouts.front.app')
-
+@inject('footer_settings', 'App\Models\Settings')
 @section('css')
 	<style>
 		.thumbnail{position:relative;padding:0;margin-bottom:20px}
@@ -47,43 +47,125 @@
 @section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/storage/'.$prodImages[0]->image_url}}" />@endsection
 <!-- product info and media -->
 
+
+{{-- pop up content start from here --}}
+
+<div class="modal fade sharesocial" id="sharesocial" tabindex="-1" aria-labelledby="sharesocialLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-body">
+            <h3 class="modal-title" id="sharesociallLabel">Share</h3>
+            <div id="copy-link">
+                <p id="copy-text">https://marlows-diamonds.co.uk/</p>
+                <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+            </div>
+        </div>
+
+
+		@php
+        
+		$baseUrl = 'https://marlows-diamonds.co.uk';
+		$productUrl = $baseUrl . '/product/' . $data->slug;
+		@endphp
+
+
+
+
+        <div class="sharesocialicon">
+            <ul>
+                <li><a href="{{ Share::page(URL::current())->facebook()->getRawLinks() }}" target="_blank" class="btn btn-facebook">
+						<i class="fa fa-facebook"></i>
+					</a></li>
+				<li>
+					<a href="https://twitter.com/intent/tweet?text=Default+share+text&url={{ urlencode($productUrl) }}" target="_blank" class="btn btn-twitter">
+						<i class="fa fa-twitter" aria-hidden="true"></i>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.pinterest.com/pin/create/button/?url={{ urlencode($productUrl) }}" target="_blank" class="btn btn-pinterest">
+						<i class="fa fa-pinterest"></i>
+					</a>
+				</li>
+
+				<li>
+					<a href="https://api.whatsapp.com/send/?text={{ urlencode($productUrl) }}&type=custom_url&app_absent=0" target="_blank" class="btn btn-whatsapp">
+						<i class="fa fa-whatsapp"></i>
+					</a>
+				</li>
+            </ul>
+        </div>
+
+
+
+
+
+    </div>
+    </div>
+  </div>
+{{-- ends here --}}
+
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 			<div class="product-info-media">
+			<div class="product-info-media-site-icon">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
-				<div id="carousel" class="owl-carousel">
-					@if(!empty($data->getProductVariation[0]->vari_video))
-						<div class="item product-items-carousel">
-							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
-								<a id="variationAnchorVideo" data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" data-caption="">
-									<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
-											<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
-									</video>
-								</a>
-							@else
-								<a id="variationAnchorVideo" data-fancybox="gallery1" href="" data-caption="">
-									<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
-										<source src="" type="video/mp4" type="video/mp4" />
-									</video>
-								</a>
-							@endif
+				<a href="#" class="product-gallery__trigger"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+				<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#sharesocial" class=""><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+			</div>
+			<div id="carousel" class="owl-carousel">
+				@if(!empty($data->getProductVariation[0]->vari_video))
+					<div class="item product-items-carousel">
+						@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
+							<a id="variationAnchorVideo" data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" data-caption="">
+								<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+										<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
+								</video>
+							</a>
+						@else
+							<a id="variationAnchorVideo" data-fancybox="gallery1" href="" data-caption="">
+								<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+									<source src="" type="video/mp4" type="video/mp4" />
+								</video>
+							</a>
+						@endif
+					</div>
+				@endif
+				@if($prodImages)
+					@foreach($prodImages as $key=>$images)
+						@php
+							$explode = explode('/',$images->image_url);
+							$explode1 = explode('.',$explode[1]);
+						@endphp
+						<div class="item product-items-carousel  @if($key==0) active @endif">		
+							<a data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{$explode1[0]}}">
+								<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{$explode1[0]}}">
+							</a>
 						</div>
-					@endif
-					@if($prodImages)
-						@foreach($prodImages as $key=>$images)
-							@php
-								$explode = explode('/',$images->image_url);
-								$explode1 = explode('.',$explode[1]);
-							@endphp
-							<div class="item product-items-carousel  @if($key==0) active @endif">		
-								<a data-fancybox="gallery1" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{$explode1[0]}}">
-									<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{$explode1[0]}}">
-								</a>
-							</div>
-						@endforeach
-					@endif
-				</div>
+					@endforeach
+				@endif
+			</div>
+			<div id="thumbnail-carousel" class="owl-carousel">
+				@if(isset($data->getProductVariation[0]->vari_video))
+				<a class="btn-360" data-index="{{ $key }}" data-video="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}">
+					<img src="/assets/images/360icon.jpg" alt="360">
+                </a>
+				@if($prodImages)
+					@foreach($prodImages as $key=>$images)
+						@php
+							$explode = explode('/',$images->image_url);
+							$explode1 = explode('.',$explode[1]);
+						@endphp
+						<div class="item thumbnail-item">
+							<a href="javascript:void(0)" class="thumbnail-link" data-index="{{ $key }}">
+								<img class="thumbnail-img" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{$explode1[0]}}">
+							</a>
+						</div>
+					@endforeach
+				@endif
+			 @endif
+			</div>
 				<!-- <video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 					@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 						<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
@@ -91,6 +173,11 @@
 						<source src="" type="video/mp4" type="video/mp4" />
 					@endif
 				</video> -->
+				<div class="productdetailbtns">
+					<a type="button" class="btn-bg-small" onclick="$('label.error').css('display', 'none');return false;" data-bs-toggle="modal" data-bs-target="#requestAppointment"> Book an Appointment </a>
+					<a href="tel:447535425059" class="btn-bg-small">Contact Us</a>
+					<a target="_blank" href="https://maps.app.goo.gl/Xqo2hCwJrVK4FbfB6" class="btn-bg-small">Get Directions</a>
+				</div>
 				<div id="myDivChanges"></div>
 			</div>
 			<?php 
@@ -108,6 +195,7 @@
 				<div class="product-title-name">
 					<h1>{{isset($data->title)?$data->title:''}}</h1>
 				</div>
+				
 				<div class="diamond-type">
 					<label>Diamond Type</label>
 					<div class="d-type-input">
@@ -120,7 +208,7 @@
 					</div>
 				</div>
                 <?php $default = "lab_grown"; ?>
-
+				<a class="customise-ring" href="https://marlows-diamonds.co.uk/ring-size-guide" ><b>Customise your Ring</b></a>
 
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
@@ -213,9 +301,9 @@
 								<option value="VVS1">VVS1 - Minute Inclusions</option>
 								<option value="VVS2">VVS2 - Minute Inclusions</option>
 								<option value="VS1">VS1 - Very Small Inclusions</option>
-								<option value="VS2" selected="selected">VS2 - Very Small Inclusions</option>
+								<option value="VS2">VS2 - Very Small Inclusions</option>
 								<option value="SI1">SI1 - Small Inclusions</option>
-								<!--<option value="SI2">SI2 - Small Inclusions</option>-->
+								<option value="SI2" selected="selected">SI2 - Small Inclusions</option>
 							</select>
 						</div>
                         @if(isset($data->diamond_shape) && $data->diamond_shape == 'ROUND')
@@ -279,8 +367,14 @@
 					{!! $data->lab_description ? $data->description.'<br>'.$data->lab_description :  $data->description  !!}
 				</div>
 				<p class="delieveryDescription">
-					{{$getVariationDescription->description}}
+					{!! str_replace(
+						'Contact us',
+						'<a href="/contact" style="text-decoration: underline; color: #8e2e65;">Contact us</a>',
+						$getVariationDescription->description
+					) !!}
 				</p>
+				<p class="customringlink">If you want to customize your ring please <a href="javascript:void(0)" onclick="$('label.error').css('display', 'none');return false;"  data-bs-toggle="modal" data-bs-target="#requestAppointment"><b>Book an appointment</b></a></p>
+
 				<div class="price-section">
 					<div style="display: flex;">
 						<h4><del style="color:#000" id="shopPrice"> </del> </h4>
@@ -327,12 +421,26 @@
 					</div>
 				</div>
 				<div class="product-postactions">
-					<a href="https://www.google.com/search?q=marlows+diamond+google+review&amp;oq=marlows+diamond+google+review&amp;aqs=chrome..69i57.8073j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x4870bcedd24f2c3d:0x1dc68827b10987fa,1,,," class="review-action" target="_blank">
+					<a href="https://g.page/r/CXBl1avOXsIkEB0/review " class="review-action" target="_blank">
 						Reviews
 					</a>
 					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
 					<a class="store-locator store-locator-border-right" href="{{asset('visit-us')}}">Store Locator</a>
 					<!-- <a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a> -->
+				</div>
+
+				<?php
+				$getMonthTextArray = getMonthwiseDiscountText();
+				$getCurrentMonth = (int)date('m');
+				$now = new DateTime("now");
+				$lastDate = new DateTime('now');
+				$lastDate->modify('last day of this month');
+				$dist_future = $lastDate->format('m/d/Y');
+				 ?>
+
+				<div class="discount-offerproduct">
+					<h3>{!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}</h3>
+					<h4>Selected Lines only. T&C's apply*</h4>
 				</div>
 				<div id="social-links" class="social-share-buttons">
 					<!-- Facebook -->
@@ -386,6 +494,42 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+
+<div class="discount-sale-sec">
+	<div class="container">
+	<div class="discount-saleinner">
+		<div class="diamond-sale">
+			<h5>Diamond Spec: <span></span></h5>
+		</div>
+      <div class="pricetotalbag-sec">
+		<div class="pricetotalbag">
+			<div class="salesvates">
+				{{-- <h5>Christmas Sale Price <span>£832.50 inc. VAT</span></h5> --}}
+                <h5><del style="color:#000" id="shopPricefooter"> </del> </h5>
+				<div class="product-finder-price" id="finaldiamondpricefooter">
+				</div>
+			</div>
+			<div class="subpricetotal">
+				{{-- <h5>Subtotal: <span>£925</span></h5> --}}
+				<h5><span>You Save : <span id="savePricefooter"></span></span> |  <del id="rrpPricefooter"> </del> </h5>
+			</div>
+		</div>
+		<div class="pricetotalbag-btn">
+            <a id="addtobasketfooter" href="javascript:void(0);" class="btn-bg-small" role="button">Add to Basket</a>
+			<a type="button" class="btn-bg-small" onclick="$('label.error').css('display', 'none');return false;" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+				Request An Appointment
+				</a>
+		</div>
+      </div>
+	</div>
+ </div>
+ </div>
+
+
 
 <!-- Related Product start heRe -->
 <div class="related-products-section">
@@ -576,6 +720,40 @@
 </div>
 
 
+
+{{-- <div class="discount-sale-sec">
+	<div class="container">
+	<div class="discount-saleinner">
+		<div class="diamond-sale">
+			<h5>Diamond Spec: <span>0.20ctHSI2</span></h5>
+		</div>
+
+      <div class="pricetotalbag-sec">	
+
+		<div class="pricetotalbag">
+			<div class="salesvates">
+				<h5>Christmas Sale Price <span>£832.50 inc. VAT</span></h5>
+			</div>
+			<div class="subpricetotal">
+				<h5>Subtotal: <span>£925</span></h5>
+			</div>
+		</div>
+
+		<div class="pricetotalbag-btn">
+            <a id="addtobasket" href="javascript:void(0);" class="btn-bg-small" role="button">Add to Bag</a>
+
+			<a type="button" class="btn-bg-small" onclick="$('label.error').css('display', 'none');return false;" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+				Book Appointment
+				</a>
+		</div>
+</div>
+
+
+
+	</div>
+	</div>
+</div> --}}
+
 <!-- Modal -->
 <div class="modal fade" id="requestAppointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -730,11 +908,22 @@
 				"preventDuplicates": true,
 				"preventOpenDuplicates": true
 			};
+
+            // Custom method to check for spaces or empty values
+			jQuery.validator.addMethod(
+				"noSpacesOnly",
+				function(value, element) {
+					return $.trim(value).length > 0; // Ensures value isn't just spaces
+				},
+				"This field cannot be empty or contain only spaces."
+			);
+
             $('form#contactForm').validate({
                 rules: {
                     title: {
                         required: true,
-						lettersonly: true
+						lettersonly: true,
+						noSpacesOnly: true
                     },
                     email: {
                         required: true,
@@ -746,11 +935,13 @@
 					},
                     description: {
                         required: true,
+						noSpacesOnly: true
                     }
                 },
                 messages: {
                     title: {
                         required: 'Name is required',
+						 noSpacesOnly: "Name cannot be empty or not contain spaces."
                     },
                     email: {
                         required: 'Email is required',
@@ -762,6 +953,7 @@
                     },
                     description: {
                         required: 'Description is required',
+						noSpacesOnly: "Description cannot be empty or not contain spaces."
                     }
                 },
                 submitHandler: function (form) {
@@ -815,6 +1007,10 @@
 			});
 
 			$('#addtobasket').on('click',function(){
+				addtobasketFunction('{{route("add.to.cart")}}','{{$data->slug}}','');
+			});
+
+			$('#addtobasketfooter').on('click',function(){
 				addtobasketFunction('{{route("add.to.cart")}}','{{$data->slug}}','');
 			});
 
@@ -991,13 +1187,23 @@
 							$('.delieveryDescription').html(res.delivery_description);
 						}
 						$('#rrpPrice').html('RRP: {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+						$('#rrpPricefooter').html('RRP: {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+
 						if(res.allPrices.shop_price == res.allPrices.discounted_price){
 						    $('#shopPrice').html('');
+							$('#shopPricefooter').html('');
 						}else{
 						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+							$('#shopPricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
 						}
 						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+
+						$('#finaldiamondpricefooter').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+
 						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+
+						$('#savePricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+
 						$('#getLabDiamondPrices').val(res.getLabDiamondPrices.toFixed(2));
 					}else if(res.status == 500){
 						$('#price-section').html('{{MY_CURRENCY_SYMBOL}} Pending...');
@@ -1184,11 +1390,65 @@
 						<td>${$('#'+forId).val()}</td>
 						</tr>
 					`;
-				}			
+				}
 			});
 			designTable += `</table>`;
 			$('#myDivChanges').html(designTable);
 		}
+
+
+    // start
+	let designTable = `<table class="table table-bordered table-responsive">
+                        <tr class="tableheading text-white tablehover">
+                            <th>Type</th>
+                            <th>Selected</th>
+                        </tr>`;
+
+// Loop through each type variation column and build the table rows
+$('.type-variations-col').each(function() { 
+    let forId = $(this).find('label').attr('for');
+    let forText = $(this).find('label').text();
+    const diamondType = $('.diamond_type:checked').val();
+
+    // Exclude certain conditions based on the diamond type
+    if ((diamondType === 'lab_grown') && (forId === 'diamond-certificate' || forId === 'diamond-colour' || forId === 'diamond-clarity' || forId === 'carat' || forId === 'diamond-grade')) {
+
+    }
+	 else if ((diamondType === 'mined_diamond') && (forId === 'lab_grown_carat' || forId === 'lab_grown_colour' || forId === 'lab_grown_clarity' )) {
+    } else {
+        designTable += `
+            <tr>
+                <td>${forText}</td>
+                <td>${$('#'+forId).val()}</td>
+            </tr>
+        `;
+    }
+});
+
+let tempContainer = document.createElement('div');
+tempContainer.innerHTML = designTable;
+
+
+const rows = tempContainer.querySelectorAll('tr:not(.tableheading)');
+const selectedValues = [];
+
+rows.forEach(row => {
+    const selectedCell = row.querySelector('td:nth-child(2)');
+    if (selectedCell) {
+        selectedValues.push(selectedCell.textContent.trim());
+    }
+});
+
+
+const result = selectedValues.join(', ');
+
+document.querySelector('.diamond-sale h5 span').textContent = result;
+
+	
+	//ends
+
+
+
 
         function getRelatedProduct(){
             $.ajax({
@@ -1317,6 +1577,52 @@ $getFinalPrice = getMinimumPriceFunction($data);
 				.trigger('play.owl.autoplay',[15000, 300]);
 			});
 	    });
+    // copy element starts from here
+    function copyToClipboard() {
+        const copyText = document.getElementById('copy-text').innerText;
+        navigator.clipboard.writeText(copyText).then(function() {
+            alert('Link copied!');
+        }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+            alert('Failed to copy text. Please try again.');
+        });
+    }
 	</script>
+
+  {{-- thumbmail image start here --}}
+ <script>
+	$(document).ready(function(){
+		$('#carousel').owlCarousel({
+			items: 1,
+			loop: true,
+			autoplay: false,
+			nav: true,
+			dots: false,
+		});
+		$('#thumbnail-carousel').owlCarousel({
+			items: 4,
+			loop: true,
+			nav: true,
+			dots: false,
+		});
+		$('.thumbnail-link').on('click', function() {
+			var index = $(this).data('index');
+			$('#carousel').trigger('to.owl.carousel', [index+1, 300]);
+		});
+
+
+		$('.btn-360').on('click', function() {
+			var videoUrl = $(this).data('video');
+			$('#carousel').trigger('to.owl.carousel', [0, 300]);
+
+			// Update the main carousel to show the 360 video
+			var videoHtml = `<a id="variationAnchorVideo" data-fancybox="gallery1" href="${videoUrl}" data-caption="">
+			<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+			<source src="${videoUrl}" type="video/mp4" />
+			</video></a>`;
+			$('#carousel .owl-item.active').html(videoHtml);
+		});
+	});
+</script>
 
 @endsection

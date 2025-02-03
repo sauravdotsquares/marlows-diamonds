@@ -199,11 +199,20 @@ $(document).ready(function() {
         return this.optional(element) || /^[a-z," "]+$/i.test(value);
     }, "Letters and spaces only please"); 
 
+    jQuery.validator.addMethod(
+        "noSpacesOnly",
+            function(value, element) {
+                return $.trim(value).length > 3;
+            },
+            "This field cannot be empty or contain only spaces."
+        );
+
     $('form#contactForm').validate({
         rules: {
             title: {
                 required: true,
-                lettersonly: true
+                lettersonly: true,
+                noSpacesOnly: true
             },
             email: {
                 required: true,
@@ -215,11 +224,14 @@ $(document).ready(function() {
             },
             description: {
                 required: true,
+                noSpacesOnly: true
             }
         },
         messages: {
             title: {
                 required: 'Name is required',
+                noSpacesOnly: "Name cannot be empty or not contain spaces."
+
             },
             email: {
                 required: 'Email is required',
@@ -231,6 +243,7 @@ $(document).ready(function() {
             },
             description: {
                 required: 'Description is required',
+                noSpacesOnly: "Name cannot be empty or not contain spaces."
             }
         },
         submitHandler: function (form) {

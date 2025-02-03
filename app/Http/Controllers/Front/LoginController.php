@@ -236,8 +236,7 @@ class LoginController extends Controller
     {
 
         if(Auth::guard('customer')->check()){
-            $getUserDetails = User::with('getCustomerAddressFunction')->where('id',Auth::guard('customer')->user()->id)->first();
-            $getCountries = Country::get();
+            $getUserDetails = User::with('getCustomerAddressFunction','getCustomerShippingAddressFunction')->where('id',Auth::guard('customer')->user()->id)->first();            $getCountries = Country::get();
     
             return view('front.loginpages.dashboardpage',compact('getUserDetails','getCountries'));
         }

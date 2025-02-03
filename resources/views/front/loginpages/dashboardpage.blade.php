@@ -114,6 +114,13 @@
                                                     <h3>Billing Address</h3>
                                                     <address>{!!isset($getUserDetails->getCustomerAddressFunction->street_address_l1)?$getUserDetails->getCustomerAddressFunction->street_address_l1.'<br>':''!!}{!!isset($getUserDetails->getCustomerAddressFunction->street_address_l2)?$getUserDetails->getCustomerAddressFunction->street_address_l2.'<br>':''!!}{!!isset($getUserDetails->getCustomerAddressFunction->state)?$getUserDetails->getCustomerAddressFunction->state:''!!} {!!isset($getUserDetails->getCustomerAddressFunction->state)?$getUserDetails->getCustomerAddressFunction->state.'<br>':''!!}{{isset($getUserDetails->getCustomerAddressFunction->state)?$getUserDetails->getCustomerAddressFunction->state:''}} {{isset($getUserDetails->getCustomerAddressFunction->country_name)?$getUserDetails->getCustomerAddressFunction->country_name:''}} {{isset($getUserDetails->getCustomerAddressFunction->pin_code)?$getUserDetails->getCustomerAddressFunction->pin_code:''}}</address>
                                                 </div>
+                                                <div class="addresbox-block">
+
+                                                    <h3>Shipping Address</h3>
+
+                                                    <address>{!!isset($getUserDetails->getCustomerShippingAddressFunction->street_address_l1)?$getUserDetails->getCustomerShippingAddressFunction->street_address_l1.'<br>':''!!}{!!isset($getUserDetails->getCustomerShippingAddressFunction->street_address_l2)?$getUserDetails->getCustomerShippingAddressFunction->street_address_l2.'<br>':''!!}{!!isset($getUserDetails->getCustomerShippingAddressFunction->state)?$getUserDetails->getCustomerShippingAddressFunction->state:''!!} {!!isset($getUserDetails->getCustomerShippingAddressFunction->state)?$getUserDetails->getCustomerShippingAddressFunction->state.'<br>':''!!}{{isset($getUserDetails->getCustomerShippingAddressFunction->state)?$getUserDetails->getCustomerShippingAddressFunction->state:''}} {{isset($getUserDetails->getCustomerShippingAddressFunction->country_name)?$getUserDetails->getCustomerShippingAddressFunction->country_name:''}} {{isset($getUserDetails->getCustomerShippingAddressFunction->pin_code)?$getUserDetails->getCustomerShippingAddressFunction->pin_code:''}}</address>
+
+                                                </div>
                                             </div>
                                         </div>
 

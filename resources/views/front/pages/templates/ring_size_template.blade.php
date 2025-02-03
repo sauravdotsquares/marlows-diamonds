@@ -46,6 +46,37 @@
         <p>
             We're here to ensure that your chosen engagement ring reflects the significance of your love and your proposal in every way. Dive into our ring size guide UK to ensure a perfectly fitted ring.
         </p>
+
+
+        <h2 class="fingsizeheading">Fing Your Size</h2>
+        <div class="findyoursize">
+            <div class="findyoursizebox">
+                <div class="ringsize-img"><img src="assets/images/find-your-size1.jpg" alt="finger-image"></div>
+                    <div class="ringsize-content"><p>Using a piece of string or a strip of 
+                        paper, wrap around your ring finger. </p>
+                    </div>
+            </div>
+
+            <div class="findyoursizebox">
+                <div class="ringsize-img"><img src="assets/images/find-your-size2.jpg" alt="finger-image"></div>
+                    <div class="ringsize-content"><p>Mark spot where the string overlaps, make sure to mark both pieces where the overlap occurs.</p>
+                    </div>
+            </div>
+
+            <div class="findyoursizebox">
+                <div class="ringsize-img"><img src="assets/images/find-your-size3.jpg" alt="scale"></div>
+                    <div class="ringsize-content"><p>Measure the distance between the two points using a ruler or tape measure. then enter the distance below and click calculate. </p>
+                    </div>
+            </div>
+
+        </div>
+
+        <div class="ring-size-tabing">
+            <p>
+               If in the unnlikely event you aren't happy with the fit of your ring. We offer a free resizing for all purchases.
+            </p>
+        </div>
+
         <div class="ring-size-tabing">
             <h2>Ring Size Charts</h2>
             <p>

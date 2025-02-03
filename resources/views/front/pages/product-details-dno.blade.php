@@ -1,5 +1,5 @@
 @extends('layouts.front.app')
-
+@inject('footer_settings', 'App\Models\Settings')
 @section('css')
 	<style>
 		.thumbnail {position: relative;padding: 0px;margin-bottom: 20px;}
@@ -57,11 +57,65 @@
 	}
 	$diamondtype = isset($requestData["diamond_type"])?$requestData["diamond_type"]:'';
 @endphp
+
+{{-- pop up content start from here --}}
+
+<div class="modal fade sharesocial" id="sharesocial" tabindex="-1" aria-labelledby="sharesocialLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-body">
+            <h3 class="modal-title" id="sharesociallLabel">Share</h3>
+            <div id="copy-link">
+                <p id="copy-text">https://marlows-diamonds.co.uk</p>
+                <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+            </div>
+        </div>
+
+		@php
+        
+		$baseUrl = 'https://marlows-diamonds.co.uk';
+		$productUrl = $baseUrl . '/product/' . $data->slug;
+		@endphp
+
+
+        <div class="sharesocialicon">
+			<ul>
+                <li><a href="{{ Share::page(URL::current())->facebook()->getRawLinks() }}" target="_blank" class="btn btn-facebook">
+						<i class="fa fa-facebook"></i>
+					</a></li>
+				<li>
+					<a href="https://twitter.com/intent/tweet?text=Default+share+text&url={{ urlencode($productUrl) }}" target="_blank" class="btn btn-twitter">
+						<i class="fa fa-twitter" aria-hidden="true"></i>
+					</a>
+				</li>
+				<li>
+					<a href="https://www.pinterest.com/pin/create/button/?url={{ urlencode($productUrl) }}" target="_blank" class="btn btn-pinterest">
+						<i class="fa fa-pinterest"></i>
+					</a>
+				</li>
+
+				<li>
+					<a href="https://api.whatsapp.com/send/?text={{ urlencode($productUrl) }}&type=custom_url&app_absent=0" target="_blank" class="btn btn-whatsapp">
+						<i class="fa fa-whatsapp"></i>
+					</a>
+				</li>
+            </ul>
+        </div>
+    </div>
+    </div>
+  </div>
+{{-- ends here --}}
 <div class="product-detail-wraper">
 	<div class="container">
 		<div class="product-detail-row flexed flex-flex-wrap">
 
 			<div class="product-info-media">
+				<div class="product-info-media-site-icon">
+					<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
+					<a href="#" class="product-gallery__trigger"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+					<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#sharesocial" class=""><i class="fa fa-share-alt" aria-hidden="true"></i></a>
+				</div>
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 
 				@if($plainbandMulti==false)
@@ -90,12 +144,12 @@
 
 										@if(isset($images->is_featured) && $images->is_featured != 1)
 											<div class="item product-items-carousel">
-												<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{isset($data->title)?$data->title:''}}">				
-													<?php if(in_array($ext,$video_extensions)){ ?>													
+												<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{isset($data->title)?$data->title:''}}">
+													<?php if(in_array($ext,$video_extensions)){ ?>
 														<video style="width: 100%;" loop autoplay muted="1" playsinline>
 															<source class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" type="video/mp4" type="video/mp4" />
 														</video>
-													<?php }else{ ?>										
+													<?php }else{ ?>
 														<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
 													<?php } ?>
 												</a>
@@ -105,6 +159,39 @@
 								@endforeach
 							@endif
 						</div>
+                      <!-- Thumbnails Section Below -->
+					<div id="thumbnail-carousel" class="owl-carousel">
+						@if($variationImages)
+							@foreach($variationImages as $images)
+								@if(isset($images->vari_image) && !empty($images->vari_image))
+									<div class="item thumbnail-item">
+										<a href="javascript:void(0)" class="thumbnail-link">
+										<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
+									</a>
+									</div>
+								@endif
+							@endforeach
+						@endif
+
+						@if(isset($prodImages) && $prodImages)
+							@foreach($prodImages as $images)
+								@if(isset($images->image_url) && !empty($images->image_url))
+									@php
+										$explode = explode('/',$images->image_url);
+										$ext = pathinfo($images->image_url, PATHINFO_EXTENSION);
+									@endphp
+
+									@if(isset($images->is_featured) && $images->is_featured != 1)
+										<div class="item thumbnail-item">
+											<a href="javascript:void(0)" class="thumbnail-link">
+											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
+										</a>
+										</div>
+									@endif
+								@endif
+							@endforeach
+						@endif
+					</div>
 						<?php
 							$thumbailsAllowed =	getMasterValuesByType('slider_thumbnails');
 							if(in_array($data->id, $thumbailsAllowed)){
@@ -168,6 +255,8 @@
 					@endif
 				@endif
 
+				<a class="customise-ring" href="https://marlows-diamonds.co.uk/ring-size-guide" ><b>Customise your Ring</b></a>
+
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
 					</div>
@@ -197,8 +286,13 @@
 				@endif
 
 				<p class="delieveryDescription">
-					{{$getVariationDescription->description}}
+					{!! str_replace(
+						'Contact us',
+						'<a href="/contact" style="text-decoration: underline; color: #8e2e65;">Contact us</a>',
+						$getVariationDescription->description
+					) !!}
 				</p>
+                <p class="customringlink">If you want to customize your ring please <a href="javascript:void(0)" onclick="$('label.error').css('display', 'none');return false;"  data-bs-toggle="modal" data-bs-target="#requestAppointment"><b>Book an appointment</b></a></p>
 
 				<div style="display: flex;">
 					<h4><del style="color:#000" class="shopPriceval"id="shopPrice"> </del> </h4>
@@ -238,6 +332,32 @@
 						</a>
 					</div>
 				</div>
+
+
+				<div class="product-postactions">
+					<a href="https://g.page/r/CXBl1avOXsIkEB0/review " class="review-action" target="_blank">
+						Reviews
+					</a>
+					<!-- <a target="_blank" class="review-action" href="#">Reviews</a> -->
+					<a class="store-locator store-locator-border-right" href="{{asset('visit-us')}}">Store Locator</a>
+					<!-- <a target="_blank" id="productCertificateLink" class="view-certificate mined-certificate" href="#">View Certificate</a> -->
+				</div>
+
+				<?php
+				$getMonthTextArray = getMonthwiseDiscountText();
+				$getCurrentMonth = (int)date('m');
+				$now = new DateTime("now");
+				$lastDate = new DateTime('now');
+				$lastDate->modify('last day of this month');
+				$dist_future = $lastDate->format('m/d/Y');
+				 ?>
+
+				<div class="discount-offerproduct">
+					<h3>{!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}</h3>
+					<h4>Selected Lines only. T&C's apply*</h4>
+				</div>
+
+
 				<div id="social-links" class="social-share-buttons">
 					<!-- Facebook -->
 					<a href="{{ Share::page(URL::current())->facebook()->getRawLinks() }}" target="_blank" class="btn btn-facebook">
@@ -282,6 +402,39 @@
 		</div>
 	</div>
 </div>
+<div class="discount-sale-sec">
+	<div class="container">
+	<div class="discount-saleinner">
+		<div class="diamond-sale">
+			<h5>Diamond Spec: <span></span></h5>
+		</div>
+      <div class="pricetotalbag-sec">
+		<div class="pricetotalbag">
+			<div class="salesvates">
+				{{-- <h5>Christmas Sale Price <span>£832.50 inc. VAT</span></h5> --}}
+                <h5><del style="color:#8e2e65" id="shopPricefooter"> </del> </h5>
+				<div class="product-finder-price" id="finaldiamondpricefooter">
+				</div>
+			</div>
+			<div class="subpricetotal">
+				{{-- <h5>Subtotal: <span>£925</span></h5> --}}
+				<h5><span>You Save : <span id="savePricefooter"></span></span> |  <del id="rrpPricefooter"> </del> </h5>
+			</div>
+		</div>
+		<div class="pricetotalbag-btn">
+            <a id="addtobasketfooter" href="javascript:void(0);" class="btn-bg-small" role="button">Add to Basket</a>
+
+
+			{{-- addtobasket --}}
+			
+			<a type="button" class="btn-bg-small" onclick="$('label.error').css('display', 'none');return false;" data-bs-toggle="modal" data-bs-target="#requestAppointment">
+				Request an Appointment
+				</a>
+		</div>
+      </div>
+	</div>
+ </div>
+ </div>
 
 <!-- Related Product start heRe -->
 <div class="related-products-section">
@@ -539,11 +692,9 @@
 							<button type="submit" name="send" value="Submit">Send Message</button>
 						</div>
 					</form>
-
 				</div>
 		</div>
       </div>
-
     </div>
   </div>
 </div>
@@ -592,6 +743,17 @@
 			}
 		}
 
+		function changeDescriptionfooter($element=null){
+			if($element){
+				const selectedElement = $element.val();
+				if(selectedElement == 'mined' || selectedElement == 'lab_grown'){
+					$(".product-description-common").css('display','none');
+					$(".product-description-common_"+selectedElement).css('display','block');
+				}
+			}
+		}
+
+
 		$.validator.addMethod("phoneno", function(phone_number, element) {
 			phone_number = phone_number.replace(/\s+/g, "");
 			return phone_number.length > 9 ;
@@ -607,11 +769,22 @@
 					current.$image.attr('alt', '{{$data->title}}' );
 				}
 			});
+
+				jQuery.validator.addMethod(
+			"noSpacesOnly",
+			function(value, element) {
+				return $.trim(value).length > 0; // Ensures value isn't just spaces
+			},
+			"This field cannot be empty or contain only spaces."
+		);
+
+
             $('form#contactForm').validate({
                 rules: {
 					title: {
                         required: true,
-						lettersonly: true
+						lettersonly: true,
+						noSpacesOnly: true 
                     },
                     email: {
                         required: true,
@@ -623,11 +796,13 @@
 					},
                     description: {
                         required: true,
+						noSpacesOnly: true 
                     }
                 },
                 messages: {
                     title: {
                         required: 'Name is required',
+						noSpacesOnly: "Name cannot be empty or not contain spaces."
                     },
                     email: {
                         required: 'Email is required',
@@ -639,6 +814,7 @@
                     },
                     description: {
                         required: 'Description is required',
+						noSpacesOnly: "Message cannot be empty or not contain spaces."
                     }
                 },
                 submitHandler: function (form) {
@@ -682,6 +858,10 @@
 				addtobasketFunction('{{route("add.to.cart")}}','{{$data->slug}}','');
 			});
 
+			$('#addtobasketfooter').on('click',function(){
+				addtobasketFunction('{{route("add.to.cart")}}','{{$data->slug}}','');
+			});
+
 			$("#productWishList").on('click',function(){
 				addtobasketFunction('{{route("set-product-wishlist")}}','{{$data->slug}}','')
 			});
@@ -697,6 +877,14 @@
 				getCustomPriceFinalFunction();
 				getSelectedDataVariation();
 			});
+
+
+            $(document).on('change','.type-variations-colfooter select, .d-type-input input',function(){
+				changeDescriptionfooter($(this));
+				getCustomPriceFinalFunctionfooter();
+				getSelectedDataVariationfooter();
+			});
+
 
             $(document).on('change','#metal-type',function(){
 				// getSelectedVariationsData($(this).val());
@@ -746,7 +934,7 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-					$('.delieveryDescription').html(res.delivery_description);
+					$('.delieveryDescription').html(res.getVariationDescription.description);
 					$('.product-description-common_mined').html(res.description);
 					
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
@@ -822,6 +1010,8 @@
 							$('#carousel').trigger('to.owl.carousel', [$("#carousel .owl-stage .owl-item").find('a[href*="'+variation_image+'"]').parent().data( 'position' ), $speed])
 						}
 					}
+
+					
 					
 					/** TODO: remove in carousel */
 					/** TODO: Add image in carousel */
@@ -1002,6 +1192,9 @@
             });
         }
 
+
+
+
 		function getSelectedDataVariation(){
 			let designTable = `<table class="table  table-bordered  table-responsive">
 						<tr class="tableheading text-white tablehover">
@@ -1021,7 +1214,42 @@
 			});
 			designTable += `</table>`;
 			$('#myDivChanges').html(designTable);
+			// console.log('designTable', designTable)
 		}
+
+
+
+
+             // start
+			function getSelectedDataVariation() {
+			let designTable = `<table class="table table-bordered table-responsive">
+								<tr class="tableheading text-white tablehover">
+									<th>Type</th>
+									<th>Selected</th>
+								</tr>`;
+			let allTdValues = [];
+			$('.type-variations-col').each(function() {
+				let forId = $(this).find('label').attr('for');
+				let forText = $(this).find('label').text();
+				let selectedValue = $('#' + forId).val();
+				designTable += `
+				<tr>
+					<td>${forText}</td>
+					<td>${selectedValue}</td>
+				</tr>
+				`;
+				allTdValues.push(selectedValue);
+			});
+
+			designTable += `</table>`;
+			$('#myDivChanges').html(designTable);
+			let commaSeparatedValues = allTdValues.join(', ');
+			$('.diamond-sale span').text(commaSeparatedValues);
+		    }
+	       //ends
+
+
+
 		function getCustomPriceFinalFunction(selectedDiamondPrice=null){
 			getSelectedVariationsData($('#metal-type').val());
 			let diamondCaratWeight;
@@ -1086,19 +1314,26 @@
 
 						if(res.allPrices.rrp_price != res.allPrices.discounted_price){
 							$('#rrpPrice').html('RRP:  {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#rrpPricefooter').html('RRP: {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
 							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
 						}
 
 						if(res.allPrices.shop_price == res.allPrices.discounted_price){
 						    $('#shopPrice').html('');
+							$('#shopPricefooter').html('');
 						}else{
 						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
 							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
+							$('#shopPricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
 						}
 						$('#finaldiamondprice').html(' <span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 						
 						// $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
 						// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						$('#finaldiamondpricefooter').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+
+						$('#savePricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+
 						
 						// $('#getLabDiamondPrices').val(res.getLabDiamondPrices);
 					}else if(res.status == 500){
@@ -1113,13 +1348,115 @@
 
 		}
 
+
+		function getCustomPriceFinalFunctionfooter(selectedDiamondPrice=null){
+			getSelectedVariationsData($('#metal-type').val());
+			let diamondCaratWeight;
+			let diamondColour;
+			var diamondShape;
+			let diamondGrade;
+			let diamondClarity;
+			let diamondCertificate;
+
+			var variations = [];
+			$('.type-variations-row select').each(function(i, sel){
+
+				if($(sel).attr('name')!='finger-size')
+					variations.push($(sel).val());
+			});
+
+			if($('.diamond_type:checked').val() == 'mined_diamond'){
+				diamondCaratWeight = $('#carat').val();
+				diamondColour = $('#diamond-colour').val();
+				diamondShape = $('#selected_diamond_shape').val();
+				diamondGrade = $('#diamond-grade').val();
+				diamondClarity = $('#diamond-clarity').val();
+				diamondCertificate = $('#diamond-certificate').val();
+				$('.product-description-common_lab_grown').css('display','none');
+				$('.product-description-common_mined').css('display','block');
+			}else if($('.diamond_type:checked').val() == 'lab_grown'){
+				diamondCaratWeight = $('#lab_grown_carat').val();
+				diamondColour = $('#lab_grown_colour').val();
+				diamondGrade = '';
+				diamondClarity = $('#lab_grown_clarity').val();
+				diamondCertificate = '';
+				$('.product-description-common_lab_grown').css('display','block');
+				$('.product-description-common_mined').css('display','none');
+			}
+
+			$.ajax({
+                type: 'POST',
+                url: '{{route("get-product-variation-prices")}}',
+                dataType: 'json',
+                data: {
+                    '_token': "{{csrf_token()}}",
+					'productMetalType' : $('#metal-type').val(),
+					'metal_type' : $('#metal-type').val(),
+					'fingersize' : $('#finger-size').val(),
+					'variations' : variations,
+					'productCarat' : $('#Carat').val(),
+					'productWidthMM' : $('#width-mm').val(),
+					'productTotalDiamondWeight' : $('#total-diamond-weight').val(),
+					'diamondCaratWeight' : diamondCaratWeight,
+					'diamondColour' : diamondColour,
+					'diamondGrade' : diamondGrade,
+					'diamondClarity' : diamondClarity,
+					'diamondCertificate' : diamondCertificate,
+					'diamondShape' : diamondShape,
+					'selectedDiamondPrice' : selectedDiamondPrice,
+					'type': 0,
+					'slug': '{{$data->slug}}',
+					'diamond_type' : $('.diamond_type:checked').val()
+                },
+                success: function (res) {
+					if(res.status == 200){
+
+						if(res.allPrices.rrp_price != res.allPrices.discounted_price){
+							$('#rrpPrice').html('RRP:  {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#rrpPricefooter').html('RRP: {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
+						}
+
+						if(res.allPrices.shop_price == res.allPrices.discounted_price){
+						    $('#shopPrice').html('');
+							$('#shopPricefooter').html('');
+						}else{
+						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
+							$('#shopPricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+						}
+						$('#finaldiamondprice').html(' <span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						
+						// $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+						// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						$('#finaldiamondpricefooter').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+
+						$('#savePricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+
+						
+						// $('#getLabDiamondPrices').val(res.getLabDiamondPrices);
+					}else if(res.status == 500){
+						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#getLabDiamondPrices').val('');
+					}
+                }
+            });
+
+		}
+
+
+
+
         $(document).ready(function() {
 	      	var $owl = $('#carousel');
 			$owl.children().each( function( index ) {
 			  $(this).attr( 'data-position', index ); // NB: .attr() instead of .data()
 			});
 	        $owl.owlCarousel({
-			  autoplay: true,
+			  autoplay: false,
 			  rewind: true,
 			  responsiveClass: true,
 			  autoplayTimeout: 15000,
@@ -1217,4 +1554,140 @@ $getFinalPrice = getMinimumPriceFunction($data);
 }
 </script>
 	<!-- Product Schema code end -->
+
+	<script>
+		$(document).ready(function() {
+				  var $owl = $('#carousel');
+				$owl.children().each( function( index ) {
+				  $(this).attr( 'data-position', index ); // NB: .attr() instead of .data()
+				});
+				$owl.owlCarousel({
+				  autoplay: false,
+				  rewind: true,
+				  responsiveClass: true,
+				  autoplayTimeout: 15000,
+				  smartSpeed: 300,
+				  nav: true,
+				  items : 1,
+					  onInitialized: function() {
+						$owl.find('.owl-item').each((index, element)=>{
+							const src = $(element).find('.thumbnail-src').attr('src');
+							const video_extensions = ['mp4'];
+							const extension = src.split(/[#?]/)[0].split('.').pop().trim();
+							let thumbnailItem = `<li class="list-inline-item ${ index ? '' : 'active' }">`;
+							thumbnailItem += `<a href="javascript:;" id="carousel-selector-${index}" class="carousel-thumbnail-item ${ index ? '' : 'selected' }" data-slide-to="${index}" data-target="#carousel">`;
+	
+							if(video_extensions.includes(extension)){
+								thumbnailItem += `<video muted class="img-fluid" style="height:100px; width:100px;">`;
+								thumbnailItem += `<source src="${src}" type="video/mp4" type="video/mp4" />`;
+								thumbnailItem += `</video>`;
+							}else{
+								thumbnailItem += `<img src="${src}" class="img-fluid" style="height:100px; width:100px;">`;
+							}
+							thumbnailItem += `</li>`;
+	
+							$(".carousel-thumbnails").append(thumbnailItem);
+	
+						})
+					},
+				}).on("changed.owl.carousel", function(el) {
+					var index = el.item.index;
+					$('.carousel-thumbnail-item').closest('li').removeClass('active');
+					$('#carousel-selector-'+index).closest('li').addClass('active');
+				});
+				
+				$(document).on('click','.product-gallery__trigger',function(e){
+					e.preventDefault();
+					$('#carousel .owl-item.active a').click();
+					$('#carousel1 .product-items-carousel.active a').click();
+				});
+	
+				$(document).on('click','.carousel-thumbnail-item', function(){
+					const itemPosition = $(this).data('slide-to');
+					$owl
+					.trigger('to.owl.carousel', [itemPosition, 0])
+					.trigger('stop.owl.autoplay')
+					.trigger('play.owl.autoplay',[15000, 300]);
+				});
+			});
+		// copy element starts from here
+		function copyToClipboard() {
+			const copyText = document.getElementById('copy-text').innerText;
+			navigator.clipboard.writeText(copyText).then(function() {
+				alert('Link copied!');
+			}).catch(function(err) {
+				console.error('Could not copy text: ', err);
+				alert('Failed to copy text. Please try again.');
+			});
+		}
+		</script>
+	
+	
+	  {{-- thumbmail image start here --}}
+	 {{-- <script>
+		$(document).ready(function(){
+			$('#carousel').owlCarousel({
+				items: 1,
+				loop: true,
+				autoplay: false,
+				nav: true,
+				dots: false,
+			});
+	
+			
+			$('#thumbnail-carousel').owlCarousel({
+				items: 4,
+				loop: true,
+				nav: true,
+				dots: false,
+			});
+	
+	
+			$('.thumbnail-link').on('click', function() {
+				var index = $(this).data('index');
+				$('#carousel').trigger('to.owl.carousel', [index+1, 300]);
+			});
+	
+	
+			$('.btn-360').on('click', function() {
+				var videoUrl = $(this).data('video');
+				$('#carousel').trigger('to.owl.carousel', [0, 300]);
+	
+				// Update the main carousel to show the 360 video
+				var videoHtml = `<a id="variationAnchorVideo" data-fancybox="gallery1" href="${videoUrl}" data-caption="">
+				<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+				<source src="${videoUrl}" type="video/mp4" />
+				</video></a>`;
+				$('#carousel .owl-item.active').html(videoHtml);
+			});
+		});
+	</script> --}}
+
+
+
+<script>
+	$(document).ready(function(){
+		// Initialize both the main and thumbnail carousels
+		$('#carousel').owlCarousel({
+			items: 1,
+			loop: true,
+			nav: true,
+			autoplay: false,
+			dots: false,
+		});
+
+		$('#thumbnail-carousel').owlCarousel({
+			items: 4,
+			loop: true,
+			nav: false,
+			dots: true,
+		});
+
+
+		$('#thumbnail-carousel .thumbnail-item').click(function(){
+			var index = $('#thumbnail-carousel .thumbnail-item').index(this);
+			$('#carousel').trigger('to.owl.carousel', [index+2, 300]);
+		});
+	});
+</script>
 @endsection
