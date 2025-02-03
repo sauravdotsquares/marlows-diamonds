@@ -213,9 +213,9 @@
 								<option value="VVS1">VVS1 - Minute Inclusions</option>
 								<option value="VVS2">VVS2 - Minute Inclusions</option>
 								<option value="VS1">VS1 - Very Small Inclusions</option>
-								<option value="VS2">VS2 - Very Small Inclusions</option>
+								<option value="VS2" selected="selected">VS2 - Very Small Inclusions</option>
 								<option value="SI1">SI1 - Small Inclusions</option>
-								<option value="SI2" selected="selected">SI2 - Small Inclusions</option>
+								<!--<option value="SI2">SI2 - Small Inclusions</option>-->
 							</select>
 						</div>
                         @if(isset($data->diamond_shape) && $data->diamond_shape == 'ROUND')

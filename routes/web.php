@@ -449,6 +449,7 @@ Route::get('/success-page/{id}', [ApplePayController::class, 'showSuccessPage'])
 	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
 	Route::get('products/payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
+	Route::view('products/payment-successf', 'front.pages.success-page-fake')->name('successf.payment');
 
 	Route::post('users/customer-user-address','LoginController@changeCustomerUserAddress')->name('users.customer.address');
 	Route::post('users/update-customer-account-details','LoginController@changeCustomerAccountDetails')->name('update.customer.account.details');

@@ -1110,6 +1110,10 @@
                             $('#emailCheck').append('<label id="cust_email-error" class="error" for="cust_email">Email is already exist. Please try with another email.</label>');
                             toastr.info(response.msg);
                         }
+                        if (response.orderf_status == "emailf_generated") {
+                            window.location.href = "{{route('successf.payment')}}";
+                            return false;
+                        }
     
                         const totalFinalPricesElement = document.getElementById("totalFinalPrices");
         

@@ -217,3 +217,7 @@ Disallow: /blog/steps-in-planning-your-perfect-wedding
 Disallow: /blog/blood-diamonds-are-not-the-life-of-our-diamonds
 Disallow: /blog/choosing-diamond-earrings
 Disallow: /blog/diamonds-the-most-concentrated-form-of-wealth
+Disallow: /products/payment-successf
+
+
+

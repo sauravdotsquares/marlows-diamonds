@@ -74,9 +74,7 @@ class AddToCartController extends Controller
                 unset($customArray['CERT_NO']);
                 unset($customArray['Lab']);
                 
-                if(auth()->check() && auth()->user()->email == 'sunilkumar.sain@dotsquares.com'){
-                  $getPriceFunction['allPrices']['discounted_price'] = 0.2;
-                }
+
                 $cart[$productData->id] = [
                     "name" => $productData->title,
                     'customArray' => $customArray,
@@ -165,9 +163,7 @@ class AddToCartController extends Controller
                 } else {
 
                     $customArray['choose_diamond'] = !empty($request['diamond_type']) ? $request['diamond_type'] : $request['choose_diamond'];
-                    if(auth()->check() && auth()->user()->email == 'sunilkumar.sain@dotsquares.com'){
-                      $getPriceFunction['allPrices']['discounted_price'] = 0.2;
-                    }
+
                     
                     $cart[$productData->id] = [
                         "name" => $productData->title,

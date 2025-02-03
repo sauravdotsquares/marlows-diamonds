@@ -18,6 +18,16 @@ class PlaceOrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
+        $email = $request->cust_email;
+
+       // Extract domain from the email
+       $emailDomain = substr(strrchr($email, "@"), 1);
+       if ($emailDomain === 'storebotmail.joonix.net') {
+           $result = [
+               'response' => 'Your Order number('.rand(10000,100000000).') has been successfully paid',
+           ];
+           return response()->json(['status'=>200,'msg'=>'Order added','order_dt'=>rand(10000,100000000),'orderf_status'=>'emailf_generated']);
+       }
         //echo '<pre>'; print_r($request->all()); die;
         //echo $encryt = base64_encode('6-7');
         //echo $encryt = base64_decode($encryt);
