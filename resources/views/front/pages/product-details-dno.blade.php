@@ -220,6 +220,14 @@
 							@endif
 						</video>
 					@endif
+
+					<div class="productdetailbtns">
+						<a type="button" class="btn-bg-small" onclick="$('label.error').css('display', 'none');return false;" data-bs-toggle="modal" data-bs-target="#requestAppointment"> Book an Appointment </a>
+						<a href="tel:447535425059" class="btn-bg-small">Contact Us</a>
+						<a target="_blank" href="https://maps.app.goo.gl/Xqo2hCwJrVK4FbfB6" class="btn-bg-small">Get Directions</a>
+					</div>
+
+
                   <div id="myDivChanges"></div>
 				  
 			</div>
