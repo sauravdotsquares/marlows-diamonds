@@ -67,7 +67,7 @@
         <div class="modal-body">
             <h3 class="modal-title" id="sharesociallLabel">Share</h3>
             <div id="copy-link">
-                <p id="copy-text">https://marlows-diamonds.co.uk</p>
+                <p id="copy-text">{{ URL::current() }}</p>
                 <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
             </div>
         </div>
