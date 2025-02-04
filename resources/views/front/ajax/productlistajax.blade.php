@@ -146,9 +146,11 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 
 
 		<div class="color-buttons">
+			@if (stripos($product->title, 'engagement ring') === false)
 			<a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a>
 			<a class="color-btn rose-gold" id="fetchvariationRoseimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Rose Gold">Rose Gold</a>
 			<a class="color-btn yellow-gold" id="fetchvariationYellowimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Yellow Gold">Yellow Gold</a>
+			@endif
 		</div>
 
 
