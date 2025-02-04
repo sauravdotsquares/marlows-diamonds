@@ -208,7 +208,7 @@
 					</div>
 				</div>
                 <?php $default = "lab_grown"; ?>
-				<a class="customise-ring" href="https://marlows-diamonds.co.uk/ring-size-guide" ><b>Customise your Ring</b></a>
+				<a class="customise-ring" href="https://marlows-diamonds.co.uk/ring-size-guide" target="_blank"><b>Customise your Ring</b></a>
 
 				<div class="product-type-variations" id="filterDataDesign">
 					<div class="type-variations-row">
@@ -440,7 +440,7 @@
 
 				<div class="discount-offerproduct">
 					<h3>{!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}</h3>
-					<h4>Selected Lines only. T&C's apply*</h4>
+					<h4>Selected Lines only. <a href="/terms" style="text-decoration: underline; color: #fff;">T&C's </a> apply*</h4>
 				</div>
 				<div id="social-links" class="social-share-buttons">
 					<!-- Facebook -->
