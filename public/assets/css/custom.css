@@ -696,6 +696,7 @@ padding: 10px 10px 8px;display: inline-block;font-size: 11px;}
 
 
 .product-items-item-info .color-buttons {display: flex;justify-content: center;gap: 9px;}
+.color-buttons .color-default {font-size: 0;width: 15px;height: 15px;display: inline-block;background: #ccc;border-radius: 50px;border: 1px solid #5c5c5c; cursor: pointer;}
 .color-buttons .color-btn {font-size: 0;width: 15px;height: 15px;display: inline-block;background: #ccc;border-radius: 50px;border: 1px solid #5c5c5c;}
 .color-buttons .color-btn.silver {background: #eaeaea;}
 .color-buttons .color-btn.rose-gold {background: #f4cfb5;}

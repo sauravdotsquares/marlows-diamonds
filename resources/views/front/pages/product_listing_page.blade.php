@@ -800,7 +800,14 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
                                         <div class="color-buttons">
                                             @if (stripos($product->title, 'engagement ring') === false)
-                                            <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a>
+
+                                            <a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default">Default</a>
+
+
+
+                                            {{-- <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a> --}}
+
+
                                             <a class="color-btn rose-gold" id="fetchvariationRoseimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Rose Gold">Rose Gold</a>
                                             <a class="color-btn yellow-gold" id="fetchvariationYellowimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Yellow Gold">Yellow Gold</a>
                                             @endif
@@ -1341,7 +1348,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 }
             },
             submitHandler: function (form) {
-                console.log('first');
                 // if (grecaptcha.getResponse()) {
                     var form_data = new FormData(form);
                     $(form).find("button[type='submit']").prop('disabled',true);
@@ -1697,11 +1703,12 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 '_token': "{{csrf_token()}}",
                 'slug': slug,
                 'metal_type': metalType,
+                'final_price': parseInt($('#selected_final_price').val()) || 0,
             },
             success: function (res) {
                 // Remove the button if the variation doesn't exist
                 if (!res || !res.vari_image) {
-                    $this.remove();
+                     $this.remove();
                 }
             },
             error: function () {
@@ -1710,10 +1717,28 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
         });
     });
 
-    $(document).on('click', "[id^=fetchvariationSilverimages]",function(){
-        var tokenIndex = parseInt($(this).attr("id").replace("fetchvariationSilverimages", ''));
-        getSelectedVariationsData(tokenIndex,$(this).data('color'),$(this).data('slug'));
-    });
+
+
+
+
+    
+    $(document).on('click', "[id^=fetchdefaultimages]", function () {
+    let productId = parseInt($(this).attr("id").replace("fetchdefaultimages", '')); // Extract product ID
+    let sortedArray = @json($sortedArray);
+
+    // Find the specific product in the array
+    let product = sortedArray.find(p => p.id === productId);
+
+    if (product && product.getProductImages?.image_url) {
+        let imageUrl = 'https://admin.marlowsdiamonds.com/storage/' + product.getProductImages.image_url;
+
+        // Update the image for the specific product
+        $('#variationImageShown' + productId + ' img').attr('src', imageUrl);
+    }
+});
+
+
+
     $(document).on('click', "[id^=fetchvariationRoseimages]",function(){
         var tokenIndex = parseInt($(this).attr("id").replace("fetchvariationRoseimages", ''));
         getSelectedVariationsData(tokenIndex,$(this).data('color'),$(this).data('slug'));
