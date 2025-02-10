@@ -941,7 +941,7 @@
                 messages: {
                     title: {
                         required: 'Name is required',
-						 noSpacesOnly: "Name cannot be empty or not contain spaces."
+						 noSpacesOnly: "Name cannot be empty and must not contain spaces."
                     },
                     email: {
                         required: 'Email is required',
@@ -949,11 +949,11 @@
                     },
                     phone: {
                         required: 'Phone is required',
-						digits: 'Phone is only Digits',
+						digits: 'Please enter a valid phone number with only digits',
                     },
                     description: {
                         required: 'Description is required',
-						noSpacesOnly: "Description cannot be empty or not contain spaces."
+						noSpacesOnly: "Description cannot be empty and must not contain spaces."
                     }
                 },
                 submitHandler: function (form) {
