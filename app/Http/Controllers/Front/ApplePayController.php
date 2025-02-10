@@ -230,7 +230,7 @@ class ApplePayController extends Controller
                 Mail::send('email.orderstatus', array(
                 'data1' => $data,
             ), function($message) use ($requestCustomerEmail,$admin_email, $transaction_emails ){
-                $message->from('dssmtp@marlows-diamonds.co.uk');
+                $message->from('order@marlows-diamonds.co.uk');
                 $message->to($admin_email, 'Admin')->subject('Your Marlows Diamonds order has been received!');
         
                 if(!empty($transaction_emails)){
@@ -248,7 +248,7 @@ class ApplePayController extends Controller
                 Mail::send('email.orderstatus', array(
                 'data1' => $data,
             ), function($message) use ($requestCustomerEmail,$admin_email, $transaction_emails ){
-                $message->from('dssmtp@marlows-diamonds.co.uk');
+                $message->from('order@marlows-diamonds.co.uk');
                 $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('Your Marlows Diamonds order has been received!');
         
                 if(!empty($transaction_emails)){

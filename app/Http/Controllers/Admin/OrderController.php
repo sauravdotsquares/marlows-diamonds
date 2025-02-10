@@ -63,7 +63,7 @@ class OrderController extends Controller
             Mail::send('email.orderstatus', array(
                 'data1' => $data,
             ), function($message) use ($request,$admin_email ){
-                $message->from('dssmtp@marlows-diamonds.co.uk');
+                $message->from('order@marlows-diamonds.co.uk');
                 $message->to($admin_email, 'Admin')->subject('Order Status');
                 $message->cc($request['customer_email'], 'Customer')->subject('Order Status');
                 

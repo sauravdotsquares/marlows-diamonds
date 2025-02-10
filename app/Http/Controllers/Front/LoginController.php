@@ -140,7 +140,7 @@ class LoginController extends Controller
         // if (env('APP_ENV') == 'production') {
         //     //$request['customer_email'] = $request->email;
         //     Mail::send('email.registereduser-welcomemail',array('data1' => $data), function($message) use ($request ){
-        //         $message->from('dssmtp@marlows-diamonds.co.uk');
+        //         $message->from('order@marlows-diamonds.co.uk');
         //         // $admin_email_london = "london@marlows-diamonds.co.uk";
         //         // $admin_email_london = "sharma.gajendra@dotsquares.com";
         //         $message->to($request->email, 'Customer')->subject('Marlows Diamonds: Welcome Mail');
@@ -149,7 +149,7 @@ class LoginController extends Controller
         //     });
         // } else if (env('APP_ENV') == 'local') {
         //     Mail::send('email.registereduser-welcomemail',array('data1' => $data), function($message) use ($request){
-        //         $message->from('dssmtp@marlows-diamonds.co.uk');
+        //         $message->from('order@marlows-diamonds.co.uk');
         //         $admin_email_london = "sharma.gajendra@dotsquares.com";
         //         $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Welcome Mail');
                 
