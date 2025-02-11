@@ -758,7 +758,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                                                     $wishListClass = 'fa-heart';
                                                 }
                                             @endphp
-                                            <a href="javascript:void(0);" class="share-file" type="button" data-bs-toggle="modal" data-bs-target="#sharesocial">
+                                            <a href="javascript:void(0);" class="share-file" type="button" data-bs-toggle="modal" data-bs-target="#sharesocial" data-url="{{ asset('product/' . $product->slug) }}">
                                                 <img src="/assets/images/share.png" alt="share">
                                             </a>
                                             <a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{ $product->id }}" data-productslug="{{ $product->slug }}">
@@ -1234,37 +1234,26 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 <div class="modal fade sharesocial" id="sharesocial" tabindex="-1" aria-labelledby="sharesocialLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <div class="modal-body">
-            <h3 class="modal-title" id="sharesociallLabel">Share</h3>
-            <div id="copy-link">
-                <p id="copy-text">{{ URL::current() }}</p>
-                <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <h3 class="modal-title">Share</h3>
+                <div id="copy-link">
+                    <p id="copy-text"></p> <!-- Now this will be dynamically updated -->
+                    <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+                </div>
+            </div>
+            <div class="sharesocialicon">
+                <ul>
+                    <li><a href="#" id="facebookShare" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#" id="twitterShare" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#" id="pinterestShare" target="_blank" class="btn btn-linkedin"><i class="fa fa-pinterest"></i></a></li>
+                    <li><a href="#" id="whatsappShare" target="_blank" class="btn btn-whatsapp"><i class="fa fa-whatsapp"></i></a></li>
+                </ul>
             </div>
         </div>
-        <div class="sharesocialicon">
-            <ul>
-                <li><a href="{{ Share::page(URL::current())->facebook()->getRawLinks() }}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-
-                <li><a href="{{ Share::page(URL::current())->twitter()->getRawLinks()['twitter'] }}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-
-                {{-- <li><a href="https://www.instagram.com/?url={{ urlencode(URL::current()) }}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li> --}}
-
-                <li><a href="{{ Share::page(URL::current())->pinterest()->getRawLinks()['pinterest'] }}" target="_blank" class="btn btn-linkedin">
-                    <i class="fa fa-pinterest"></i>
-                </a></li>
-
-                {{-- <li><a href="" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></li> --}}
-
-                <li><a href="{{ Share::page(URL::current())->whatsapp()->getRawLinks()['whatsapp'] }}" target="_blank" class="btn btn-whatsapp">
-                    <i class="fa fa-whatsapp"></i>
-                </a></li>
-            </ul>
-        </div>
     </div>
-    </div>
-  </div>
+</div>
 
 @endsection
 @section('js')
@@ -2136,20 +2125,31 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 {{-- copy element starts from here --}}
 <script>
-    function copyToClipboard() {
-        // Get the text to copy
-        const copyText = document.getElementById('copy-text').innerText;
+  document.addEventListener("DOMContentLoaded", function() {
+    var shareModal = document.getElementById('sharesocial');
+    shareModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var productUrl = button.getAttribute('data-url');
+        document.getElementById('copy-text').textContent = productUrl;
 
-        // Use the Clipboard API to copy the text
-        navigator.clipboard.writeText(copyText).then(function() {
-            // Success callback
-            alert('Link copied!');
-        }).catch(function(err) {
-            // Error callback
-            console.error('Could not copy text: ', err);
-            alert('Failed to copy text. Please try again.');
-        });
-    }
+        // Update social media share links
+        document.getElementById('facebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}`;
+        document.getElementById('twitterShare').href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(productUrl)}`;
+        document.getElementById('pinterestShare').href = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(productUrl)}`;
+        document.getElementById('whatsappShare').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(productUrl)}`;
+    });
+});
+
+// Copy to clipboard function
+function copyToClipboard() {
+    var text = document.getElementById('copy-text').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+        alert("Link copied to clipboard!");
+    }).catch(function(error) {
+        console.error("Failed to copy text:", error);
+        alert("Failed to copy text. Please try again.");
+    });
+}
 </script>
 {{-- copy element ends here --}}
 

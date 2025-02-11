@@ -649,13 +649,23 @@
 
     jQuery.validator.addMethod("lettersonly", function(value, element) {
         return this.optional(element) || /^[a-z," "]+$/i.test(value);
-    }, "Letters and spaces only please"); 
+    }, "Letters and spaces only please");
+
+
+    jQuery.validator.addMethod(
+        "noSpacesOnly",
+            function(value, element) {
+                return $.trim(value).length > 3;
+            },
+            "This field cannot be empty or contain only spaces."
+        );
 
     $('form#contactForm').validate({
         rules: {
             title: {
                 required: true,
-                lettersonly: true
+                lettersonly: true,
+                noSpacesOnly: true
             },
             email: {
                 required: true,
@@ -663,11 +673,13 @@
             },
             description: {
                 required: true,
+                noSpacesOnly: true
             }
         },
         messages: {
             title: {
                 required: 'Name is required',
+                 noSpacesOnly: "Name cannot be empty and must not contain spaces."
             },
             email: {
                 required: 'Email is required',
@@ -675,6 +687,7 @@
             },
             description: {
                 required: 'Message is required',
+                noSpacesOnly: "Description cannot be empty and must not contain spaces."
             }
         },
         submitHandler: function(form) {

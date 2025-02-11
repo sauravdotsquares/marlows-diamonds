@@ -111,7 +111,9 @@
 			<div class="product-info-media">
 			<div class="product-info-media-site-icon">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
-				<a href="#" class="product-gallery__trigger"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+
+				<a href="javascript:void(0);"  id="productWishListImage" ><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+
 				<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#sharesocial" class=""><i class="fa fa-share-alt" aria-hidden="true"></i></a>
 			</div>
 			<div id="carousel" class="owl-carousel">
@@ -1017,6 +1019,11 @@
 			$(document).on('change', "[id^=productWishList]", function () {
       			var index = parseInt($(this).attr("id").replace("attributevari", ''),'{{$data->slug}}','');
 			});
+            $(document).on('change', "[id^=productWishListImage]", function () {
+      			var index = parseInt($(this).attr("id").replace("attributevari", ''),'{{$data->slug}}','');
+			});
+
+
 
 			$(document).on('click', "[id^=productWishListRelated]", function () {
 				var index = parseInt($(this).attr("id").replace("productWishListRelated", ''));
@@ -1025,6 +1032,10 @@
 			});
 
 			$("#productWishList").on('click',function(){
+				addtobasketFunction('{{route("set-product-wishlist")}}','{{$data->slug}}','');
+			});
+
+			$("#productWishListImage").on('click',function(){
 				addtobasketFunction('{{route("set-product-wishlist")}}','{{$data->slug}}','');
 			});
 			// $(document).on('change','#metal-type',function(){
@@ -1293,6 +1304,10 @@
 							}else{
 								$('#productWishList'+index).children('i').removeClass('fa-heart-o');
 								$('#productWishList'+index).children('i').addClass('fa-heart');
+
+								$('#productWishListImage'+index).children('i').removeClass('fa-heart-o');
+								$('#productWishListImage'+index).children('i').addClass('fa-heart');
+
 							}
 							if(res.wishcount > 0){
 								$('.my-whishlist-blk .wishcount').removeClass('fa-heart-o');
@@ -1311,6 +1326,10 @@
 							}else{
 								$('#productWishList'+index).children('i').removeClass('fa-heart');
 								$('#productWishList'+index).children('i').addClass('fa-heart-o');
+
+								$('#productWishImage'+index).children('i').removeClass('fa-heart');
+								$('#productWishListImage'+index).children('i').addClass('fa-heart-o');
+
 							}
 							if(res.wishcount > 0){
 								$('.my-whishlist-blk .wishcount').removeClass('fa-heart-o');

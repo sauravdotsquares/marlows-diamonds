@@ -112,7 +112,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 			$wishListClass = "fa-heart";
 			}
 			@endphp
-    <a href="javascript:void(0);" class="share-file" type="button"  data-bs-toggle="modal" data-bs-target="#share2"><img
+    <a href="javascript:void(0);" class="share-file" type="button"  data-bs-toggle="modal" data-bs-target="#shared" data-url="{{ asset('product/' . $product->slug) }}"><img
 	src="/assets/images/share.png" alt="share"></a>
 			<a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{$product->id}}" data-productslug="{{$product->slug}}"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
 		</div>
@@ -229,14 +229,14 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 
 {{-- model code --}}
 
-<div class="modal fade sharesocial" id="share2" tabindex="-1" aria-labelledby="share2Label" aria-hidden="true">
+<div class="modal fade sharesocial" id="shared" tabindex="-1" aria-labelledby="sharedLabel" aria-hidden="true">
     <div class="modal-dialog" >
       <div class="modal-content">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         <div class="modal-body">
-            <h3 class="modal-title" id="share2lLabel">Share</h3>
+            <h3 class="modal-title">Share</h3>
             <div id="copy-link">
-                <p id="copy-text">{{ URL::current() }}</p>
+                <p id="copy-text"></p>
                 <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
             </div>
         </div>
@@ -379,20 +379,23 @@ popup.style.display = 'none';
 
 {{-- copy element starts from here --}}
 <script>
-    function copyToClipboard() {
-        // Get the text to copy
-        const copyText = document.getElementById('copy-text').innerText;
+    var shareModal = document.getElementById('shared');
+    shareModal.addEventListener('show.bs.modal', function(event) {
+        var button = event.relatedTarget;
+        var productUrl = button.getAttribute('data-url');
+        document.getElementById('copy-text').textContent = productUrl;
+    });
 
-        // Use the Clipboard API to copy the text
-        navigator.clipboard.writeText(copyText).then(function() {
-            // Success callback
-            alert('Link copied!');
-        }).catch(function(err) {
-            // Error callback
-            console.error('Could not copy text: ', err);
-            alert('Failed to copy text. Please try again.');
-        });
-    }
+// Copy to clipboard function
+function copyToClipboard() {
+    var text = document.getElementById('copy-text').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+        alert("Link copied to clipboard!");
+    }).catch(function(error) {
+        console.error("Failed to copy text:", error);
+        alert("Failed to copy text. Please try again.");
+    });
+}
 </script>
 {{-- copy element ends here --}}
 
