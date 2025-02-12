@@ -16,7 +16,7 @@ $getInstaData = getInstagramDataDetails();
                             <img src="{{ $instagramImageUrl }}" alt="{{isset($insta->alt)?$insta->alt:'GIA Certified Diamond Jewellery Supplier | London and Birmingham'}}" loading="lazy">
                         </div>
                         <div class="insta-link">
-                            <a href="{{$insta->link}}" target="_blank" rel="nofollow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="{{$insta->link}}" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
