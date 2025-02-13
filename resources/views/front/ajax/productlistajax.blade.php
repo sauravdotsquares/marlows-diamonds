@@ -145,22 +145,22 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 
 
 
-		{{-- <div class="color-buttons">
+		<div class="color-buttons">
 
-			@if (stripos($product->title, 'engagement ring') === false)
+			{{-- @if (stripos($product->title, 'engagement ring') === false) --}}
 
 
-			<a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default">Default</a>
+			<a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default" data-src="{{ isset($product->getProductImages->image_url) ? env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages->image_url : '' }}">Default</a>
 			
-			<a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a>
+			{{-- <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a> --}}
 
 
 
 
 			<a class="color-btn rose-gold" id="fetchvariationRoseimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Rose Gold">Rose Gold</a>
 			<a class="color-btn yellow-gold" id="fetchvariationYellowimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Yellow Gold">Yellow Gold</a>
-			@endif
-		</div> --}}
+			{{-- @endif --}}
+		</div>
 
 
 
@@ -400,6 +400,17 @@ function copyToClipboard() {
 {{-- copy element ends here --}}
 
 <script>
+
+
+	$(document).on('click', "[id^=fetchdefaultimages]", function () {
+			let productId = parseInt($(this).attr("id").replace("fetchdefaultimages", '')); // Extract product ID
+		let imageUrl = $(this).attr("data-src"); // Get the image URL from data-src
+		if (imageUrl) {
+			$('#variationImageShown' + productId + ' img').attr('src', imageUrl);
+		} else {
+			console.error('No image URL found for this product.');
+		}
+	});
  
  $(".color-btn").each(function () {
         var $this = $(this);
