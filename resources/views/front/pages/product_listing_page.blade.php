@@ -798,20 +798,20 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                                         </div>
 
 
-                                        <div class="color-buttons">
-                                            {{-- @if (stripos($product->title, 'engagement ring') === false) --}}
+                                        {{-- <div class="color-buttons">
+                                            @if (stripos($product->title, 'engagement ring') === false)
 
                                             <a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default">Default</a>
 
 
 
-                                            {{-- <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a> --}}
+                                            <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a>
 
 
                                             <a class="color-btn rose-gold" id="fetchvariationRoseimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Rose Gold">Rose Gold</a>
                                             <a class="color-btn yellow-gold" id="fetchvariationYellowimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Yellow Gold">Yellow Gold</a>
-                                            {{-- @endif --}}
-                                        </div>
+                                            @endif
+                                        </div> --}}
 
                                         
                                         <div class="product-items-item-details">
@@ -1262,11 +1262,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-
-<script>
-    var sortedArray = @json($sortedArray);
-</script>
-
 <script>
     $(document).ready(function() {
 
@@ -1381,8 +1376,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
     //ends
 
         $(document).on('click', '.pagination a', function(event) {
-            event.preventDefault();
-
             $('li').removeClass('active');
             $(this).parent('li').addClass('active');
             event.preventDefault();
@@ -1395,29 +1388,8 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             } else {
                 var sortingData = '';
             }
-            sendDataValues(page, 'append', sortingData, function(response) {
-            // Update sortedArray after pagination
-            sortedArray = response.sortedArray;
-
-            // Reattach event listener for default images
-            attachDefaultImageClick();
-    });
+            sendDataValues(page, 'append', sortingData);
         });
-
-
-        function attachDefaultImageClick() {
-        $(document).off('click', "[id^=fetchdefaultimages]").on('click', "[id^=fetchdefaultimages]", function () {
-            let productId = parseInt($(this).attr("id").replace("fetchdefaultimages", '')); 
-            let product = sortedArray.find(p => p.id === productId);
-
-            if (product && product.getProductImages?.image_url) {
-                let imageUrl = 'https://admin.marlowsdiamonds.com/storage/' + product.getProductImages.image_url;
-                $('#variationImageShown' + productId + ' img').attr('src', imageUrl);
-            }
-        });
-    }
-
-
 
         $("#slider").slider({
             range: true,
