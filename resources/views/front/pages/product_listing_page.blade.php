@@ -1262,6 +1262,11 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+<script>
+    var sortedArray = @json($sortedArray);
+</script>
+
 <script>
     $(document).ready(function() {
 
@@ -1376,6 +1381,8 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
     //ends
 
         $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+
             $('li').removeClass('active');
             $(this).parent('li').addClass('active');
             event.preventDefault();
@@ -1388,30 +1395,28 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             } else {
                 var sortingData = '';
             }
-            sendDataValues(page, 'append', sortingData);
+            sendDataValues(page, 'append', sortingData, function(response) {
+            // Update sortedArray after pagination
+            sortedArray = response.sortedArray;
 
-
-            setTimeout(function() {
-                attachDefaultImageClick();
-            }, 500);
-           
-
+            // Reattach event listener for default images
+            attachDefaultImageClick();
+    });
         });
 
 
         function attachDefaultImageClick() {
-            console.log('attachDefaultImageClick')
-        $(document).on('click', "[id^=fetchdefaultimages]", function () {
-            let productId = parseInt($(this).attr("id").replace("fetchdefaultimages", '')); // Extract product ID
-            let sortedArray = @json($sortedArray);
-
+        $(document).off('click', "[id^=fetchdefaultimages]").on('click', "[id^=fetchdefaultimages]", function () {
+            let productId = parseInt($(this).attr("id").replace("fetchdefaultimages", '')); 
             let product = sortedArray.find(p => p.id === productId);
+
             if (product && product.getProductImages?.image_url) {
                 let imageUrl = 'https://admin.marlowsdiamonds.com/storage/' + product.getProductImages.image_url;
                 $('#variationImageShown' + productId + ' img').attr('src', imageUrl);
             }
         });
     }
+
 
 
         $("#slider").slider({
