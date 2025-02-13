@@ -1389,7 +1389,30 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 var sortingData = '';
             }
             sendDataValues(page, 'append', sortingData);
+
+
+            setTimeout(function() {
+                attachDefaultImageClick();
+            }, 500);
+           
+
         });
+
+
+        function attachDefaultImageClick() {
+            console.log('attachDefaultImageClick')
+        $(document).on('click', "[id^=fetchdefaultimages]", function () {
+            let productId = parseInt($(this).attr("id").replace("fetchdefaultimages", '')); // Extract product ID
+            let sortedArray = @json($sortedArray);
+
+            let product = sortedArray.find(p => p.id === productId);
+            if (product && product.getProductImages?.image_url) {
+                let imageUrl = 'https://admin.marlowsdiamonds.com/storage/' + product.getProductImages.image_url;
+                $('#variationImageShown' + productId + ' img').attr('src', imageUrl);
+            }
+        });
+    }
+
 
         $("#slider").slider({
             range: true,
