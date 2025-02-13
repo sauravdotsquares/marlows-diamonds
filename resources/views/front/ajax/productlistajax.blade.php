@@ -150,7 +150,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 			{{-- @if (stripos($product->title, 'engagement ring') === false) --}}
 
 
-			<a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default" data-src="{{ isset($product->getProductImages->image_url) ? env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages->image_url : '' }}">Default</a>
+			<a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default" data-src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}">Default</a>
 			
 			{{-- <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a> --}}
 
@@ -405,6 +405,7 @@ function copyToClipboard() {
 	$(document).on('click', "[id^=fetchdefaultimages]", function () {
 			let productId = parseInt($(this).attr("id").replace("fetchdefaultimages", '')); // Extract product ID
 		let imageUrl = $(this).attr("data-src"); // Get the image URL from data-src
+		console.log('imageUrl', imageUrl)
 		if (imageUrl) {
 			$('#variationImageShown' + productId + ' img').attr('src', imageUrl);
 		} else {
