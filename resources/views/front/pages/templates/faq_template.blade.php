@@ -1,6 +1,35 @@
 
 
 @extends('layouts.front.app')
+@section('css')
+@php
+    $getFaqs = getFaqs(); // Retrieve FAQs before using them
+@endphp
+<script type="application/ld+json">
+   {
+       "@context": "https://schema.org",
+       "@type": "FAQPage",
+       "mainEntity": [
+           @php
+               $faqArray = [];
+               foreach($getFaqs as $faqcat) {
+                   foreach($faqcat->getFAQData as $faq) {
+                       $faqArray[] = [
+                           "@type" => "Question",
+                           "name" => addslashes($faq->title),
+                           "acceptedAnswer" => [
+                               "@type" => "Answer",
+                               "text" => addslashes(strip_tags($faq->description))
+                           ]
+                       ];
+                   }
+               }
+               echo json_encode($faqArray, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+           @endphp
+       ]
+   }
+</script>
+@endsection
 @section('content')
 <!-- category header banner start -->
 <div class="category-banner" style="background-image:url({{env('APP_IMAGE_URL').'/assets/images/blog-main-bg.jpg'}})">
