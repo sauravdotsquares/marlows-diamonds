@@ -213,6 +213,7 @@
 								@endforeach
 							@endif
 						</div>
+						<div id="carousel" class="owl-carousel">
 						<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 								<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
@@ -220,6 +221,57 @@
 								<source src="" type="video/mp4" type="video/mp4" />
 							@endif
 						</video>
+
+						@foreach($prodImages as $key => $images)
+							<div class="item product-items-carousel">
+								<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{isset($data->title)?     $data->title:''}}">
+								<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
+								</a>
+							</div>
+						@endforeach
+
+                       </div>
+                        {{-- Engagement Ring multistone Thumbnail  --}}
+
+						
+
+						<div id="thumbnail-carousel" class="owl-carousel">
+
+							@if(isset($data->getProductVariation[0]->vari_video))
+							<a class="btn-360" data-index="{{ $key }}" data-video="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}">
+								<img src="/assets/images/360icon.jpg" alt="360">
+							</a>
+							@endif
+
+
+								@foreach($variationImages as $images)
+										<div class="item thumbnail-item">
+											<a href="javascript:void(0)" class="thumbnail-link">
+											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
+										</a>
+										</div>
+								@endforeach
+
+                         @if(isset($prodImages) && $prodImages)
+							@foreach($prodImages as $images)
+								@if(isset($images->image_url) && !empty($images->image_url))
+									@php
+										$explode = explode('/',$images->image_url);
+										$ext = pathinfo($images->image_url, PATHINFO_EXTENSION);
+									@endphp
+
+									@if(isset($images->is_featured) && $images->is_featured != 1)
+										<div class="item thumbnail-item">
+											<a href="javascript:void(0)" class="thumbnail-link">
+											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
+										</a>
+										</div>
+									@endif
+								@endif
+							@endforeach
+						 @endif
+					    </div>
+{{--  --}}
 					@endif
 
 					<div class="productdetailbtns">
@@ -1681,6 +1733,7 @@ $getFinalPrice = getMinimumPriceFunction($data);
 				</video></a>`;
 				$('#carousel .owl-item.active').html(videoHtml);
 			});
+			
 		});
 	</script> --}}
 
@@ -1708,6 +1761,17 @@ $getFinalPrice = getMinimumPriceFunction($data);
 		$('#thumbnail-carousel .thumbnail-item').click(function(){
 			var index = $('#thumbnail-carousel .thumbnail-item').index(this);
 			$('#carousel').trigger('to.owl.carousel', [index+2, 300]);
+		});
+		$('.btn-360').on('click', function() {
+			var videoUrl = $(this).data('video');
+			$('#carousel').trigger('to.owl.carousel', [0, 300]);
+
+			// Update the main carousel to show the 360 video
+			var videoHtml = `<a id="variationAnchorVideo" data-fancybox="gallery1" href="${videoUrl}" data-caption="">
+			<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
+			<source src="${videoUrl}" type="video/mp4" />
+			</video></a>`;
+			$('#carousel .owl-item.active').html(videoHtml);
 		});
 	});
 </script>
