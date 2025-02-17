@@ -798,7 +798,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                                         </div>
 
 
-                                         <div class="color-buttons">
+                                         <div class="color-buttons" @if(strpos(request()->url(), 'exclusive-to-marlows') !== false) style="display: none;" @endif>
                                             {{-- @if (stripos($product->title, 'engagement ring') === false) --}}
 
                                             <a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default"  data-src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}" >Default</a>

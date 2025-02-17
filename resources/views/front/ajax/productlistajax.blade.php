@@ -145,7 +145,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 
 
 
-		<div class="color-buttons">
+		<div class="color-buttons" @if(strpos(request()->url(), 'exclusive-to-marlows') !== false) style="display: none;" @endif>
 
 			{{-- @if (stripos($product->title, 'engagement ring') === false) --}}
 
