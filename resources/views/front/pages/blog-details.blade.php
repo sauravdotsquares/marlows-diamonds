@@ -23,6 +23,33 @@
 	</div>
 </div>
 
+<script type="application/ld+json">
+	{
+	  "@context": "https://schema.org",
+	  "@type": "BlogPosting",
+	  "mainEntityOfPage": {
+		"@type": "WebPage",
+		"@id": "{{ url('/blog/' . (isset($data->slug) ? $data->slug : '')) }}"
+	  },
+	  "headline": "{{ isset($data->title) ? $data->title : '' }}",
+	  "description": "{{ isset($data->description) ? strip_tags($data->description) : '' }}",
+	  "image": "{{ env('APP_IMAGE_URL') . '/storage/' . (isset($data->image) ? $data->image : '') }}",
+	  "author": {
+		"@type": "Organization",
+		"name": "MarlowsDiamonds",
+		"url": "https://marlows-diamonds.co.uk/"
+	  },
+	  "publisher": {
+		"@type": "Organization",
+		"name": "MarlowsDiamonds",
+		"logo": {
+		  "@type": "ImageObject",
+		  "url": "https://admin.marlowsdiamonds.com/images/logo/logo_201517063_07_07_2023_12_41_48.png"
+		}
+	  },
+	  "datePublished": "{{ isset($data->created_at) ? $data->created_at->format('Y-m-d') : '' }}"
+	}
+	</script>
 <!--  Bread Crumb of blog end-->
 <div class="blogdetails-wrap">
 	<div class="container">
