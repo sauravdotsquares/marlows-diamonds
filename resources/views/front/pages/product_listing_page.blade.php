@@ -1695,7 +1695,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             success: function (res) {
                 // Remove the button if the variation doesn't exist
                 if (!res || !res.vari_image) {
-                    //  $this.remove();
+                      $this.remove();
                 }
             },
             error: function () {
