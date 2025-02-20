@@ -272,15 +272,15 @@ class ApiController extends Controller
                 ];
 
                 $customerEmail = $order['user_details']['email'];
-                $adminEmailLondon = "sharma.gajendra@dotsquares.com";
+                $adminEmailLondon = "london@marlows-diamonds.co.uk";
 
                 
                 $when = Carbon::now()->addHours(24);
                 Mail::send('email.orderstatusqueueprocess', ['data1' => $data], function($message) use ($customerEmail, $adminEmailLondon) {
 
-                    $message->from('dssmtp@marlows-diamonds.co.uk');
+                    $message->from('order@marlows-diamonds.co.uk');
                     $message->to($adminEmailLondon, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
-                    $message->cc('kartik.tanwar@dotsquares.com', 'Customer');
+                    $message->cc($customerEmail, 'Customer');
             });
 
                Order::where('id', $order['id'])->update(['email_status' => 2]);
