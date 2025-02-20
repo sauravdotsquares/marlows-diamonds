@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\HKDiamondStock;
 use App\Models\Order;
+use App\Mail\OrderAbandonmentMail;
 use App\Mail\OrderMailProcess;
 use Mail;
 use SoapClient,Log;
@@ -231,7 +232,65 @@ class ApiController extends Controller
             Log::info("-------------");
             die;
         }
+
+        sendAbandonmentMailTest();
     }
+
+
+    //pending and processing starts from here
+    public function sendAbandonmentMailTest(){
+
+        $orders = Order:: with('getOrderDetailsFunction')->whereBetween('created_at', [Carbon::now()->subDay(), Carbon::now()])
+            ->where(function ($query) {$query->where('status', 0) ->orWhere('status', 1)->orWhere('status', 2)->orWhere('status', 3);})->get()->toArray();
+
+            $excludedUsers = [];
+            foreach ($orders as $item) {
+                if ($item['status'] == 2|| $item['status'] == 3) {
+                    $excludedUsers[$item['user_id']] = true;
+                }
+            }
+
+            $filteredData = array_filter($orders, function ($item) use ($excludedUsers) {
+                return !isset($excludedUsers[$item['user_id']]);
+            });
+
+            $uniqueUsers = [];
+            $result = [];
+
+            foreach ($filteredData as $item) {
+                if (!isset($uniqueUsers[$item['user_id']])) {
+                    $uniqueUsers[$item['user_id']] = true;
+                    $result[] = $item;
+                }
+            }
+
+            foreach($result as $order) {
+
+                Log::info("Email sent successfully for order ID Started: {$order['id']}");
+                $data = [
+                    'data' => $order,
+                ];
+
+                $customerEmail = $order['user_details']['email'];
+                $adminEmailLondon = "london@marlows-diamonds.co.uk";
+
+                
+                $when = Carbon::now()->addHours(24);
+                Mail::send('email.orderstatusqueueprocess', ['data1' => $data], function($message) use ($customerEmail, $adminEmailLondon) {
+
+                    $message->from('order@marlows-diamonds.co.uk');
+                    $message->to($adminEmailLondon, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
+                    $message->cc($customerEmail, 'Customer');
+            });
+
+               Order::where('id', $order['id'])->update(['email_status' => 2]);
+               Log::info("Email sent successfully for order ID Ended: {$order['id']}");
+        }
+        echo "Mail Send Completed";
+    }
+
+
+    //pending and processing ends here
 
     function getOrderMailProcessingFunction() {
 

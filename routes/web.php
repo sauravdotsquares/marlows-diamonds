@@ -357,6 +357,7 @@ Route::get('/success-page/{id}', [ApplePayController::class, 'showSuccessPage'])
 	Route::get('hk-data-fetch', 'ApiController@getHariKrishnaFunction');
 	Route::get('order-send-processing-mail', 'ApiController@getOrderMailProcessingFunction');
 	Route::get('order-send-processing-mail-preview', 'ApiController@getOrderMailProcessingPreviewFunction');
+	Route::get('order-abandonment', 'ApiController@sendAbandonmentMailTest');
 
 	/** Change after SEO discuss 05Jan2023 seo_change */
 	Route::get('/blog/{slug}', 'PageController@show');

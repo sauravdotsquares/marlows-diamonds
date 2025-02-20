@@ -11,7 +11,7 @@
 		<img src="https://admin.marlowsdiamonds.com/images/logo/logo_201517063_07_07_2023_12_41_48.png" alt="Marlow's Diamond">
 	</div>
 	<div style="width: 975px; margin: 0 auto; margin-top:20px;">
-		<h3>Dear <strong>{{$data1['data']['order_address']['first_name']}}</strong></h3>
+		<h3>Dear <strong>{{ isset($data1['data']['order_address']['first_name']) ? $data1['data']['order_address']['first_name'] : '' }}</strong></h3>
 		<p>Thank you for visiting <a href="https://marlows-diamonds.co.uk/" target="_blank" style="color:#8e2e65">www.marlows-diamonds.co.uk</a>. We value your time and see that you tried to place an order but could not complete the transaction for the following item:</p>
 	</div>
 	<h2 colspan="2" style="font-size: 26px;font-family:Arial;padding: 10px 0 10px 0;text-align: center;">
