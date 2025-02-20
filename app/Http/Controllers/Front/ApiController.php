@@ -280,7 +280,7 @@ class ApiController extends Controller
 
                     $message->from('dssmtp@marlows-diamonds.co.uk');
                     $message->to($adminEmailLondon, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
-                    $message->cc($customerEmail, 'Customer');
+                    $message->cc('kartik.tanwar@dotsquares.com', 'Customer');
             });
 
                Order::where('id', $order['id'])->update(['email_status' => 2]);
