@@ -21,7 +21,7 @@ class MailListFormController extends Controller {
             // 'description' => 'required',
         ]);
         
-        if(isset($request->email) && $request->email == 'sample@email.tst'){
+        if(isset($request->email) && ($request->email == 'sample@email.tst' || $request->email == 'testing@example.com' )){
             return response()->json(['status'=> 200, 'success'=>'We have received your message and would like to thank you for writing to us.']);
         }
         //  Store data in database
