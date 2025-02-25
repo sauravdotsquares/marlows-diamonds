@@ -112,7 +112,14 @@
 			<div class="product-info-media-site-icon">
 				<a href="#" class="product-gallery__trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
 
-				<a href="javascript:void(0);"  id="productWishListImage" ><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+				@php
+					$wishlist = session()->get('wishlist', []);
+                     $wishListClass = "fa-heart-o";
+					if(array_key_exists($data->id,$wishlist)){
+						$wishListClass = "fa-heart";
+					}
+				@endphp
+				<a href="javascript:void(0);"  id="productWishListImage" ><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
 
 				<a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#sharesocial" class=""><i class="fa fa-share-alt" aria-hidden="true"></i></a>
 			</div>
