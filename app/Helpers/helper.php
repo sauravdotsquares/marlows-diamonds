@@ -2371,17 +2371,17 @@ if (!function_exists("getMonthwiseDiscountText")) {
     {
         return [
             '1' => 'Winter Sale upto 40% off',
-            '2' => 'Valentines Sale 40% off',
-            '3' => 'Spring Sale 40% off',
-            '4' => 'Spring Sale 40% off',
-            '5' => 'Mid Season Sale 40% off',
-            '6' => 'Summer Sale 40% off',
-            '7' => 'Summer Sale 40% off',
-            '8' => 'Summer Sale Up to 40% off',
-            '9' => 'Autumn Sale 40% off',
-            '10' => 'Mid Season Sale 40% off',
-            '11' => 'Winter Sale 40% off',
-            '12' => 'Christmas Sale 40% off',
+            '2' => 'Seasonal Sale upto 40% off',
+            '3' => 'Spring Sale upto 40% off',
+            '4' => 'Spring Sale upto 40% off',
+            '5' => 'Mid Season Sale upto 40% off',
+            '6' => 'Summer Sale upto 40% off',
+            '7' => 'Summer Sale upto 40% off',
+            '8' => 'Summer Sale upto 40% off',
+            '9' => 'Autumn Sale upto 40% off',
+            '10' => 'Mid Season Sale upto 40% off',
+            '11' => 'Winter Sale upto 40% off',
+            '12' => 'Christmas Sale upto 40% off',
         ];
     }
 }
