@@ -233,7 +233,7 @@ class ApiController extends Controller
             die;
         }
 
-        sendAbandonmentMailTest();
+        // sendAbandonmentMailTest();
     }
 
 
@@ -281,12 +281,12 @@ class ApiController extends Controller
                     $message->from('order@marlows-diamonds.co.uk');
                     $message->to($adminEmailLondon, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
                     $message->cc($customerEmail, 'Customer');
+                    $message->bcc('sharma.gajendra@dotsquares.com', 'Customer');
             });
 
                Order::where('id', $order['id'])->update(['email_status' => 2]);
                Log::info("Email sent successfully for order ID Ended: {$order['id']}");
         }
-        echo "Mail Send Completed";
     }
 
 
