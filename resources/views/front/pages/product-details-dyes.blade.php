@@ -239,6 +239,10 @@
 								<option value="2.00-2.49">2.00-2.49</option>
 								<option value="2.50-2.99">2.50-2.99</option>
 								<option value="3.00-3.99">3.00-3.99</option>
+								<option value="4.00-4.99">4.00-4.99</option>
+								<option value="5.00-5.99">5.00-5.99</option>
+
+								
 							</select>
 						</div>
 						<div class="type-variations-col">
