@@ -1915,6 +1915,10 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 'page': page,
                 'per_page_product': 30
             },
+            beforeSend: function () {
+                // $(".ajax-load").show().html("Loading products..."); // Show loader
+                $("#showProductList").css("opacity", "0.5"); // Reduce opacity for effect
+            },
             success: function(res) {
                 // filterShapechanged();
                 // resetFilterButton
@@ -1931,6 +1935,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                     return false;
                 }
                 $('.ajax-load').hide();
+                $("#showProductList").css("opacity", "1");
                 // $('.category-list-item-searchsort').css('display','inherit');
                 if (type == 'append') {
                     $("#showProductList").html(res.productItems);
@@ -1941,6 +1946,14 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 .totalProductCount);
                 $('#sectionHeight').val($('#showProductList').height());
                 $('#scrollFlag').val(0);
+
+
+                  // Ensure images are loaded before hiding loader
+                $("#showProductList img").on("load", function () {
+                    $(".ajax-load").hide();
+                }).each(function () {
+                    if (this.complete) $(this).trigger("load"); // Ensure already loaded images trigger event
+                });
             }
         });
     }

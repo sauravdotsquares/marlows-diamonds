@@ -136,7 +136,8 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 			<a href="{{asset('product/'.$product->slug)}}" id="variationImageShown{{$product->id}}" class="{{ $thumbnailGif ? 'product-hov' : '' }}">
 				@if(isset($product->getProductImages) && !empty($product->getProductImages['image_url']))
 				{{-- <img src="{{ getImageOptimizeDetails('/storage/'.$product->getProductImages['image_url'],'217','217')}}" alt="{{$product->title}}" loading="lazy">--}}
-				<img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages['image_url'] }}" alt="{{$product->title}}" loading="lazy">
+				<div class="ajax-load" style="display: none; text-align: center;">Loading products...</div>
+				<img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages['image_url'] }}" alt="{{$product->title}}" loading="lazy">	
 				@endif
 			</a>
 		</div>
