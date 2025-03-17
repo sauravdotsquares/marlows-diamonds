@@ -30,6 +30,78 @@
 <!-- Header Start here -->
 
 
+
+
+    <!-- Mobile Top end here -->
+
+    <!--Top bar start -->
+    <div class="top-bar">
+
+        <?php
+            $getMonthTextArray = getMonthwiseDiscountText();
+            $getCurrentMonth = (int)date('m');
+        ?>
+    
+        
+        
+        <?php
+            $now = new DateTime("now");
+            $lastDate = new DateTime('now');
+            $lastDate->modify('last day of this month');        
+            $dist_future = $lastDate->format('m/d/Y');
+        ?>
+    
+      <div class="post-bar">
+            <div class="container">
+                <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
+                    {{-- <div class="post-bar-left header-post-bar-left">
+                        <p>{!!$header_settings->get_options('header-left')!!}</p>
+                    </div> --}}
+                    @if($lastDate > $now)
+                    <div class="post-bar-center" style="height: 40px;">
+                        {{-- <a href="{{ route('products.exclusive') }}" >
+                            <span> Exclusive to Marlows </span>
+                        </a> --}}
+                        {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
+                        {{-- <p id="offer-text">  --}}
+                            {{-- {!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!} --}}
+    
+                            {{$header_settings->get_options('top-bar-desktop')}}
+                            <a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;" href="/TERMS">*T&amp;C</a>
+                         {{-- </p> --}}
+                        
+                        {{-- <p>
+                    <span class="header-heighlight-text">Up to 35% off</span> 
+                             <span class="header-heighlight-text discount_timer"></span>
+                            <br>
+    
+                        </p> --}}
+                    </div>
+                    @endif
+                    {{-- <div class="post-bar-right header-post-bar-left">
+                        <p>{!!$header_settings->get_options('header-right')!!}</p>
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+    
+    
+    
+    
+    
+    
+        
+    
+    
+            {{-- <div class="container">
+                <p>{{$header_settings->get_options('top-bar-desktop')}}</p>
+            </div> --}}
+        </div>
+
+
+
+
+
 <header class="header-main">
     <!-- Mobile Top Start here -->
 
@@ -59,56 +131,6 @@
         </div>
     </div>
 
-
-
-    <div class="top-bar">
-
-        <?php
-    
-            $getMonthTextArray = getMonthwiseDiscountText();
-    
-            $getCurrentMonth = (int)date('m');
-    
-        ?>
-    
-      <div class="post-bar">
-    
-            <div class="container">
-                <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
-                    {{-- <div class="post-bar-left header-post-bar-left">
-                        <p>{!!$header_settings->get_options('header-left')!!}</p>
-                    </div> --}}
-                    @if($lastDate > $now)
-                    <div class="post-bar-center" style="height: 40px;">
-                        {{-- <a href="{{ route('products.exclusive') }}" >
-                            <span> Exclusive to Marlows </span>
-                        </a> --}}
-                        {{-- <p>Mid Season Sale - Up to 30% off </p>  --}}
-                        {{-- <p id="offer-text">  --}}
-                            {{-- {!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!} --}}
-                            {{$header_settings->get_options('top-bar-desktop')}}
-                            <a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;" href="/TERMS">*T&amp;C</a>
-                         {{-- </p> --}}
-                        {{-- <p>
-                    <span class="header-heighlight-text">Up to 35% off</span> 
-                             <span class="header-heighlight-text discount_timer"></span>
-                            <br>
-                        </p> --}}
-                    </div>
-    
-                    @endif
-                    {{-- <div class="post-bar-right header-post-bar-left">
-                        <p>{!!$header_settings->get_options('header-right')!!}</p>
-                    </div> --}}
-                </div>
-            </div>
-        </div>
-    
-            {{-- <div class="container">
-                <p>{{$header_settings->get_options('top-bar-desktop')}}</p>
-            </div> --}}
-    
-        </div>
     <!--Top bar end -->
 
     <!--middle Top bar start -->
