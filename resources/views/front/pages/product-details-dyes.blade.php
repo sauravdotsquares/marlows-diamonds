@@ -1552,6 +1552,28 @@ $getFinalPrice = getMinimumPriceFunction($data);
 </script>
 <!-- Product Schema code end -->
 
+{{-- video schema starts from here --}}
+@php
+$videoUrl = env('APP_IMAGE_URL') . '/storage/' . $data->getProductVariation[0]->vari_video;
+$thumbnailUrl = str_replace('.mp4', '.jpg', $videoUrl);
+$VideoThumbnailUrl = str_replace('.jpg', '.mp4', $videoUrl);
+$uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at)->format('Y-m-d') : now()->format('Y-m-d');
+@endphp
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "{{isset($data->title)?$data->title:''}}",
+      "description": "{{ isset($data->description) ? strip_tags($data->description) : '' }}",
+      "thumbnailUrl": "{{ $VideoThumbnailUrl }}",
+      "uploadDate": "{{ $uploadDate }}",
+      "duration": "PT0M20S"
+    }
+    </script>
+{{-- video schema ends here --}}
+
+
 <script>
 	$(document).ready(function() {
 	      	var $owl = $('#carousel');

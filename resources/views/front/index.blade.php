@@ -6,6 +6,17 @@
         .error {color: #e74c3c !important;}
     </style>
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "VideoObject",
+          "name": "Why Choose Marlow’s Diamonds?",
+          "description": "Our diamonds and gemstones offer exceptional value, consistently surpassing any like-for-like comparison with other UK jewellers. Our collection features multiple shape diamonds, including ovals, marquises, emerald cuts, and cushions, all expertly polished to the highest standards. We guarantee that most of our diamonds visually appear larger than their carat weight. Our skilled polishers focus on maximising proportions rather than just carat weight, meaning our 1ct diamonds often look equivalent to a 1.25ct from other jewellers. We invite you to visit any of our stores to be amazed. Furthermore, if you find a better price elsewhere, simply send us a link, and we will gladly beat it—guaranteeing you the best deal.",
+          "thumbnailUrl": "https://admin.marlowsdiamonds.com/storage/HomePageVideos/homeopagevideo.mp4",
+          "uploadDate": "2021-06-01",
+          "duration": "PT0M43S"
+        }
+        </script>
 @endsection
 @section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" />@endsection
     <!-- home main-banner start -->

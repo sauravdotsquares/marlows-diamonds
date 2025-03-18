@@ -103,3 +103,68 @@
       
     }
 </script>
+
+
+{{-- Breadcrumb schema starts from here --}}
+@php
+$baseURL = url('/');
+$currentURL = url()->current();
+
+$parsedUrl = parse_url($currentURL);
+$path = isset($parsedUrl['path']) ? trim($parsedUrl['path'], '/') : '';
+
+$pathSegments = explode('/', $path);
+$breadcrumbs = [];
+
+$breadcrumbs[] = [
+    '@type' => 'ListItem',
+    'position' => 1,
+    'name' => 'Home',
+    'item' => $baseURL
+];
+
+$fullPath = $baseURL;
+$isProductPage = in_array('product', $pathSegments);
+
+if (!empty($pathSegments[0])) {
+    foreach ($pathSegments as $index => $segment) {
+
+      // Convert URL segment into a readable format
+      $formattedName = ucwords(str_replace('-', ' ', $segment));
+
+      // Apply condition for "Engagement Rings"
+      if ($formattedName === 'Engagement Rings') {
+          $formattedName = 'Diamond Engagement Rings';
+          $segment = 'diamond-engagement-rings'; // Updated URL slug
+      }
+
+
+         // Fix subsequent segments to not include "diamond-" in the URL
+          if ($index > 0 && strpos($fullPath, 'diamond-engagement-rings') !== false) {
+              $fullPath = str_replace('diamond-engagement-rings', 'engagement-rings', $fullPath);
+          }
+
+
+        $fullPath .= '/' . $segment;
+        // Skip "Product" breadcrumb on product detail pages
+        if ($isProductPage && $segment === 'product' && $index < count($pathSegments) - 1) {
+            continue;
+        }
+
+        $breadcrumbs[] = [
+            '@type' => 'ListItem',
+            'position' => count($breadcrumbs) + 1,
+            'name' => $formattedName,
+            'item' => $fullPath
+        ];
+    }
+}
+@endphp
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BreadcrumbList",
+  "itemListElement": {!! json_encode($breadcrumbs, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT) !!}
+}
+</script>
