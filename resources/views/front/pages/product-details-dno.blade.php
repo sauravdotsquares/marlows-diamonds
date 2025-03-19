@@ -1636,6 +1636,30 @@ $getFinalPrice = getMinimumPriceFunction($data);
   }
 }
 </script>
+ 
+{{-- video schema starts from here --}}
+@php
+$videoPath = $data->getProductVariation[0]->vari_video ?? null;
+$videoUrl = $videoPath ? env('APP_IMAGE_URL') . '/storage/' . $videoPath : null;
+$thumbnailUrl = $videoUrl ? str_replace('.mp4', '.jpg', $videoUrl) : null;
+$uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at)->format('Y-m-d') : now()->format('Y-m-d');
+@endphp
+
+@if($videoUrl)
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "{{ isset($data->title) ? $data->title : '' }}",
+      "description": "{{ isset($data->description) ? strip_tags($data->description) : '' }}",
+      "thumbnailUrl": "{{ $thumbnailUrl }}",
+      "uploadDate": "{{ $uploadDate }}",
+      "duration": "PT0M20S"
+    }
+</script>
+@endif
+{{-- video schema ends here --}}
+
 	<!-- Product Schema code end -->
 
 	<script>
