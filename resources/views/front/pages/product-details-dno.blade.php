@@ -1641,7 +1641,7 @@ $getFinalPrice = getMinimumPriceFunction($data);
 @php
 $videoPath = $data->getProductVariation[0]->vari_video ?? null;
 $videoUrl = $videoPath ? env('APP_IMAGE_URL') . '/storage/' . $videoPath : null;
-$thumbnailUrl = $videoUrl ? str_replace('.mp4', '.jpg', $videoUrl) : null;
+$thumbnailUrl = $videoUrl ? str_replace('.mp4', '.mp4', $videoUrl) : null;
 $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at)->format('Y-m-d') : now()->format('Y-m-d');
 @endphp
 
