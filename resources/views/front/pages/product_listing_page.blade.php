@@ -1911,7 +1911,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 'ids': $('.filter-item-data').serializeArray(),
                 'sorting': sorting,
                 'keyword': $('#searchd').val(),
-                'path': '{{ $path }}',
+                'path': '',
                 'page': page,
                 'per_page_product': 30
             },

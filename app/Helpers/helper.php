@@ -1489,8 +1489,9 @@ if (!function_exists('validate_breadcrumb')) {
         } else {
             $query = $query->orderBy('title', 'asc');
         }
-
-        $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo);
+ 
+        $dynamicPath = request()->query('path');
+        $getProductListFinal = $query->paginate($page, ['*'], 'page', $pageNo)->withPath($dynamicPath);
         $getActualProductArray = $getProductListFinal->toArray();
         $productSingleArray = [];
         $getMinedLabStatus = '';

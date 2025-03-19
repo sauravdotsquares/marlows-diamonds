@@ -7,7 +7,8 @@
   <link rel="alternate" href="https://marlows-diamonds.co.uk{{$getURLWithParameter?$getURLWithParameter:''}}" hreflang="en-gb" />--}}
 
 {{-- OG Canonical --}}
-<link rel="canonical" href="{{request()->fullUrl()}}" />
+{{-- <link rel="canonical" href="{{request()->fullUrl()}}" /> --}}
+<link rel="canonical" href="{{ request()->url() }}" />
 @if(isset($productListingData['previous_url']) && !empty($productListingData['previous_url']))
   <link rel="prev" href="{{$productListingData['previous_url']}}" />
 @endif
