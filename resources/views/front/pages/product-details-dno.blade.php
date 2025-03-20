@@ -221,7 +221,11 @@
 								@endforeach
 							@endif
 						</div>
-						{{-- <div id="carousel" class="owl-carousel"> --}}
+
+
+
+						{{-- Today work starts --}}
+						<div id="carousel" class="owl-carousel">
 						<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
 							@if(isset($data->getProductVariation) && !empty($data->getProductVariation[0]->vari_video))
 								<source src="{{env('APP_IMAGE_URL').'/storage/'.$data->getProductVariation[0]->vari_video}}" type="video/mp4" type="video/mp4" />
@@ -230,15 +234,15 @@
 							@endif
 						</video>
 
-						{{-- @foreach($prodImages as $key => $images)
+						@foreach($prodImages as $key => $images)
 							<div class="item product-items-carousel">
 								<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{isset($data->title)?     $data->title:''}}">
 								<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
 								</a>
 							</div>
-						@endforeach --}}
+						@endforeach
 
-                       {{-- </div> --}}
+                       </div>
                         {{-- Engagement Ring multistone Thumbnail  --}}
 
 						
@@ -279,6 +283,9 @@
 							@endforeach
 						 @endif
 					    </div> --}}
+
+
+						{{-- Today work ends --}}
                    {{--  --}}
 					@endif
 
@@ -1729,9 +1736,9 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 		}
 		</script>
 	
-	
+	 {{-- Today's script starts here --}}
 	  {{-- thumbmail image start here --}}
-	 {{-- <script>
+	 <script>
 		$(document).ready(function(){
 			$('#carousel').owlCarousel({
 				items: 1,
@@ -1769,7 +1776,9 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 			});
 			
 		});
-	</script> --}}
+	</script>
+
+{{-- Today's script ends here --}}
 
 
 
