@@ -1014,10 +1014,13 @@
 					'variations' : variations,
 				},
 				success: function (res) {
-					// $('.delieveryDescription').html(res.getVariationDescription.description);
 					$('.product-description-common_mined').html(res.description);
 					$('.product-description-common_lab_grown').html(res.description);
-                    $('.delieveryDescription').html(res.getVariationDescription.description);
+					if (res.getVariationDescription && res.getVariationDescription.description) {
+						$('.delieveryDescription').html(res.getVariationDescription.description);
+					} else {
+						console.warn("getVariationDescription or description is undefined", res);
+					}
 					
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
 						const multipleImages = res.multi_vari_img.split(',');
