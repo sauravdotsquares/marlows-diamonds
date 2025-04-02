@@ -1492,18 +1492,18 @@ class ProductController extends Controller
 
     public function getRelatedProductList(Request $request)
     {
-        $getCatIdArray = explode(',', $request->catid);
+        $getCatIdArray = array_reverse(explode(',', $request->catid));
         $getAjaxResponses = false;
         $getCateProductId = array();
         foreach ($getCatIdArray as $prKey => $proVal) {
-            $getProductList = Products::whereRaw("find_in_set('" . $proVal . "',categories)")
-                ->pluck('id')->toArray();
-            array_push($getCateProductId, $getProductList);
+            if($prKey == 0){
+                $getProductList = Products::whereRaw("find_in_set('" . $proVal . "',categories)")
+                    ->pluck('id')->toArray();
+                array_push($getCateProductId, $getProductList);
+            }
         }
-
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
-
-        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->inRandomOrder()->where('status',1)->take(4)->get();
+        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->where('status',1)->take(4)->get();
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
             $view = view('front.ajax.related-productajax', compact('getProductListFinal','getAjaxResponses'))->render();
         } else {

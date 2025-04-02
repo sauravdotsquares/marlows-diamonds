@@ -119,7 +119,7 @@ right: -149px;position: absolute;height: 100%;top: 44px;}*/
 .product-info-main a.customise-ring b {width: 49%;float: right;}
 
 /** header css start here **/
-.header-main {position: relative; z-index: 99; height:100%; background: #fff}
+.header-main {position: sticky; top: 0; z-index: 99; height:100%; background: #fff}
 /** top bar css start **/
 .top-bar{background:#8e2e65;text-align:center;color:#fff}
 .top-bar p{margin:0;line-height:30px}
@@ -2333,6 +2333,15 @@ padding: 0 10px 0 10px !important;
 .blog-detail-search-field .seach-btn{
 left: revert;
 right: 10px !important;
+}
+
+.product-count-mobile {
+    display: none; /* Hide by default */
+}
+@media (max-width: 767px) { /* Mobile devices */
+    .product-count-mobile {
+        display: block; /* Show only on mobile */
+    }
 }
 
 /*aman media css start*/

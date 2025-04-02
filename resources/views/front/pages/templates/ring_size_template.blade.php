@@ -702,7 +702,7 @@
                     Find Perfectly Sized Diamond Engagement Rings at Marlow’s Diamonds
                 </h2>
                 <p>
-                    Discover your perfect fit with Marlow's Diamonds, where precise sizing meets unparalleled elegance in our diamond engagement rings. Our extensive collection of GIA-certified diamond rings ensures a perfect match for every finger. The expert jewellers in our team will happily resize your ring according to your requirements, ensuring a flawless fit.
+                    Discover your perfect fit with Marlow's Diamonds, where precise sizing meets unparalleled elegance in <a href="{{ asset('diamond-engagement-rings') }}" style="color:#8e2e65">diamond engagement rings</a>. Our extensive collection of GIA-certified diamond rings ensures a perfect match for every finger. The expert jewellers in our team will happily resize your ring according to your requirements, ensuring a flawless fit.
                 </p>
                 <p>
                     Though the above methods in our guide for ring sizes work perfectly, you can reach out for personalised ring size recommendations

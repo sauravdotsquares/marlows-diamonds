@@ -415,7 +415,10 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
     </div>
 
     <div class="category-list-item-searchsort dropdown-content-desktop">
-        <input type="text" name="title" class="search-item empty search-mobile" id="searchm" value="" placeholder="Search for product" aria-label="Search">
+        <input type="text" class="search-item empty search-mobile" id="searchm" value="" placeholder="Search for product" aria-label="Search">
+        <p class="product-count-mobile"><span id="productCountDataMobile">Showing {{ $product_count }} of
+            {{ isset($productListingData['totalProductCount']) ? $productListingData['totalProductCount'] : 12 }}</span>
+        </p>
     </div>
 
     <div class="category-listing-wrap" ng-controller="ProductController" ng-cloak>
@@ -423,7 +426,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             <div class="category-listing-row">
                 <div class="category-sidebar-wrap category-sidebar-left">
                     <a href="javascript:void(0)" class="clearallfilter-desktop resetFilterButton"
-                        id="resetFilterButton">All Filter Category</a>
+                        id="resetFilterButton">Sort by Style & Design</a>
                     <div class="filter-clear">
                         <button href="#collapse1" class="nav-toggle btn" style=""><i class="fa fa-angle-down"
                                 style="color:#993168"></i> Filter </button>
@@ -642,7 +645,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                                     Category</a>
                             </div>
                             <div class="category-list-item-searchsort dropdown-content-desktop">
-                                <input type="text" name="title" class="search-item empty" id="searchd"
+                                <input type="text" class="search-item empty" id="searchd"
                                     value="" placeholder="Search for product" aria-label="Search">
                                 <div class="dropdown">
                                     <select class="form-control dropdown-content" name="sortingDSelect"
@@ -1882,7 +1885,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
     //     }
     // });
 
-    $('#searchd').on('keyup', function(event) {
+    $('#searchd, #searchm').on('keyup', function(event) {
         let searchTextData = $(this).val();
         if (searchTextData.trim() != '' && searchTextData.length > 2) {
             $("#showProductList").html('');
@@ -1902,6 +1905,14 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
     function sendDataValues(page, type = 'append', sorting = 'asc') {
         // $("input[name=filter-by-shape]").attr('onclick', 'return false;');
         // filterShapechanged();
+        let keyword = '';
+
+        if ($('#searchd').is(':visible') && $('#searchd').val().trim() !== '') {
+            keyword = $('#searchd').val().trim();
+        } else if ($('#searchm').is(':visible') && $('#searchm').val().trim() !== '') {
+            keyword = $('#searchm').val().trim();
+        } 
+
         $('.ajax-load').show();
         $.ajax({
             type: 'GET',
@@ -1910,7 +1921,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 '_token': "{{ csrf_token() }}",
                 'ids': $('.filter-item-data').serializeArray(),
                 'sorting': sorting,
-                'keyword': $('#searchd').val(),
+                'keyword': keyword,
                 'path': '',
                 'page': page,
                 'per_page_product': 30
@@ -1932,6 +1943,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                     // $('.category-list-item-searchsort').css('display','none');
                     $('.ajax-load').html("0 Product Found");
                     $('#productCountData').text("");
+                    $('#productCountDataMobile').text("");
                     return false;
                 }
                 $('.ajax-load').hide();
@@ -1944,6 +1956,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 }
                 $('#productCountData').text('Showing ' + res.product_count + ' of ' + res
                 .totalProductCount);
+                $('#productCountDataMobile').text('Showing ' + res.product_count + ' of ' + res.totalProductCount);
                 $('#sectionHeight').val($('#showProductList').height());
                 $('#scrollFlag').val(0);
 

@@ -280,13 +280,13 @@
 <script>
     $(window).scroll(function(){
         if ($(this).scrollTop() >= 10) {
-           $('.header-main').addClass('sticky-header');
+           $('.header-main').addClass('');
             $('.botto-to-top').fadeIn(200);    // Fade in the arrow
             if ($(window).width() < 767){
               $('#homeSearchForm').hide();
             }
         } else {
-           $('.header-main').removeClass('sticky-header');
+           $('.header-main').removeClass('');
            $('.botto-to-top').fadeOut(200);   // Else fade out the arrow
            if ($(window).width() < 767){
               $('#homeSearchForm').show();

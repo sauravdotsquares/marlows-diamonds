@@ -17,7 +17,7 @@
 		<div class="category-banner-text">
 			<h1>MARLOWS DIAMONDS BIRMINGHAM & LONDON</h1>
 			<h2>CERTIFIED DIAMOND JEWELLERS</h2>
-			<p>Pop by one of our stores and take a look at our wide range of diamonds. We’ve helped generations of<br> people find their perfect diamond, come and talk to us today.</p>
+			<p>Pop by one of our stores and take a look at our wide range of <a href="{{ asset('diamond-engagement-rings') }}">diamond engagement rings</a>. We’ve helped generations of<br> people find their perfect diamond, come and talk to us today.</p>
 		</div>
 	</div>
 </div>
