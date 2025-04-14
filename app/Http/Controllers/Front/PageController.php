@@ -31,10 +31,10 @@ class PageController
             $productCategories = Category::where('slug',$slug)->first();
             
             if($pageData){
-                if($pageData->slug == 'engagement-rings'){
-                    $redirectTo = route('page', '/diamond-engagement-rings');
-                    return redirect($redirectTo, 301);
-                }
+                // if($pageData->slug == 'engagement-rings'){
+                //     $redirectTo = route('page', '/diamond-engagement-rings');
+                //     return redirect($redirectTo, 301);
+                // }
                 $redirectTo = pageRedirects(request()->path());
                 if(!empty($redirectTo)){
                     return redirect($redirectTo, 301);
