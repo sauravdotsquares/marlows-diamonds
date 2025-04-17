@@ -136,6 +136,11 @@ class XMLController extends Controller
                                     }
                                     $price = $dataArray->regular_price;
                                 }
+
+                                echo "data<pre>";
+                                print_r($productArrayNew->id);
+                                die;
+
                                 $productGroupId        =  'ig_'.$productArrayNew->id;
                                 $productName = htmlspecialchars($productArrayNew->title.' - '.(($caratType!='')?$caratType.' - ':'').(($diamondWeight!='')?$diamondWeight.' - ':'').(($widthType!='')?$widthType.' - ':'').(($diamondType!='')?$diamondType.'  ':''));
                                 $productId        =  'p_id_'.$productArrayNew->id;
