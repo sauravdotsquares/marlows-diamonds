@@ -50,10 +50,6 @@ class XMLController extends Controller
 
         $filePath = public_path('files/book_final.xml');
 
-        echo "data<pre>";
-                                print_r($filePath);
-                                die;
-
         $dom     = new \DOMDocument('1.0', 'utf-8');
 
         $root = $dom->createElement('rss');
