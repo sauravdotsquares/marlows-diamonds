@@ -241,6 +241,9 @@ class XMLController extends Controller
                                     $price = $dataArray->regular_price;
                                 }
     
+                                echo "data<pre>";
+                                print_r($productArrayNew->id);
+                                die;
     
                                 if(isset($linkQuery) && !empty($linkQuery)){
                                     $productGroupId        =  'ig_'.$productArrayNew->id;
