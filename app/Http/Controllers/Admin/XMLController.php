@@ -138,7 +138,7 @@ class XMLController extends Controller
                                 }
                                 $productGroupId        =  'ig_'.$productArrayNew->id;
                                 $productName = htmlspecialchars($productArrayNew->title.' - '.(($caratType!='')?$caratType.' - ':'').(($diamondWeight!='')?$diamondWeight.' - ':'').(($widthType!='')?$widthType.' - ':'').(($diamondType!='')?$diamondType.'  ':''));
-                                $productId        =  'p_id_'.$productArrayNew->id;
+                                $productId        =  'p_id_'.md5($productName);
                                 $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
