@@ -50,6 +50,10 @@ class XMLController extends Controller
 
         $filePath = public_path('files/book_final.xml');
 
+        echo "data<pre>";
+                                print_r($filePath);
+                                die;
+
         $dom     = new \DOMDocument('1.0', 'utf-8');
 
         $root = $dom->createElement('rss');
@@ -136,14 +140,9 @@ class XMLController extends Controller
                                     }
                                     $price = $dataArray->regular_price;
                                 }
-
-                                echo "data<pre>";
-                                print_r($productArrayNew->id);
-                                die;
-
                                 $productGroupId        =  'ig_'.$productArrayNew->id;
                                 $productName = htmlspecialchars($productArrayNew->title.' - '.(($caratType!='')?$caratType.' - ':'').(($diamondWeight!='')?$diamondWeight.' - ':'').(($widthType!='')?$widthType.' - ':'').(($diamondType!='')?$diamondType.'  ':''));
-                                $productId        =  'p_id_'.$productArrayNew->id;
+                                $productId        =  'p_id_'.md5($productName);
                                 $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
                                 $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                 $productLink     =  url('').'/product/'.$productArrayNew->slug;
@@ -241,14 +240,11 @@ class XMLController extends Controller
                                     $price = $dataArray->regular_price;
                                 }
     
-                                echo "data<pre>";
-                                print_r($productArrayNew->id);
-                                die;
     
                                 if(isset($linkQuery) && !empty($linkQuery)){
                                     $productGroupId        =  'ig_'.$productArrayNew->id;
                                     $productName = htmlspecialchars($productArrayNew->title.' - '.(($caratType!='')?$caratType.' - ':'').(($diamondWeight!='')?$diamondWeight.' - ':'').(($widthType!='')?$widthType.' - ':'').(($diamondType!='')?$diamondType.'  ':''));
-                                    $productId        =  'p_id_'.($productArrayNew->id);
+                                    $productId        =  'p_id_'.md5($productName);
                                     $productDescription    =  htmlspecialchars(strip_tags($productArrayNew->short_description));
                                     $productQueryLink=  url('').'/product/'.$productArrayNew->slug . ($linkQuery ? '?'.$linkQuery : '');
                                     $productLink     =  url('').'/product/'.$productArrayNew->slug;
