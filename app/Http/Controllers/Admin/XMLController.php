@@ -44,9 +44,6 @@ class XMLController extends Controller
 
     public function createXMLfileNewFormat($productArray){
 
-        echo "data<pre>";
-        die;
-
         if (!file_exists(public_path('files/'))) {
             mkdir(public_path('files/'), 0777);
         }
