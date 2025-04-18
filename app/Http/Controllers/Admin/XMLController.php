@@ -148,7 +148,7 @@ class XMLController extends Controller
                                 $productIdentifierExists  =  'no';
                                 $productType  =  $productArrayNew->cat_details;
                                 $product = $dom->createElement('item');
-                                $productid  = $dom->createElement('g:id', $productArrayNew->id);
+                                $productid  = $dom->createElement('g:id', $productId);
                                 $product->appendChild($productid);
                                 $title   = $dom->createElement('g:title', $productName);
                                 $product->appendChild($title);
@@ -250,7 +250,7 @@ class XMLController extends Controller
                                     $productIdentifierExists  =  'no';
                                     $productType  =  $productArrayNew->cat_details;
                                     $product = $dom->createElement('item');
-                                    $productid  = $dom->createElement('g:id', $productArrayNew->id);
+                                    $productid  = $dom->createElement('g:id', $productId);
                                     $product->appendChild($productid);
                                     $title   = $dom->createElement('g:title', $productName);
                                     $product->appendChild($title);
