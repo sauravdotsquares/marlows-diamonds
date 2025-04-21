@@ -18,11 +18,12 @@
       @if(Auth::check())
       { event: "setCustomerId", id: {{ Auth::user()->id }} }
       @endif
-      { event: "viewList",
+
+      {event: "viewList",
         item:  [@foreach($sortedArray as $index => $product)
-              id: "ig_{{ $product->id }}"
+        "ig_{{ $product->id }}"
             @if (!$loop->last),@endif
-          @endforeach]
+        @endforeach]
       }
     );
   </script>
