@@ -6,6 +6,28 @@
         .error {color: #e74c3c !important;}
     </style>
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
+
+     {{-- start --}}
+
+     <script type="text/javascript">
+        window.criteo_q = window.criteo_q || [];
+        var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
+        window.criteo_q.push(
+          { event: "setAccount", account: 119681 },
+          @if(Auth::check())
+            { event: "setEmail", email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}", hash_method: "sha256" },
+            { event: "setEmail", email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}", hash_method: "md5" },
+          @endif
+          { event: "setSiteType", type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}" },
+          @if(Auth::check())
+          { event: "setCustomerId", id: {{ Auth::user()->id }} },
+          @endif
+          { event: "viewHome" }
+        );
+      </script>
+      
+     {{-- end --}}
+
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",

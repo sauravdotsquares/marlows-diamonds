@@ -1,4 +1,40 @@
 @extends('layouts.front.app')
+{{--criteo start --}}
+
+@section('criteo-tracking')
+<script type="text/javascript">
+    window.criteo_q = window.criteo_q || [];
+    window.criteo_q.push(
+      { event: "setAccount", account: 119681 },
+       @if(Auth::check())
+      { event: "setEmail", email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}", hash_method: "sha256" },
+      { event: "setEmail", email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}", hash_method: "md5" },
+      @endif
+
+      { event: "setSiteType", type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}" },
+      @if(Auth::check())
+      { event: "setCustomerId", id: {{Auth::user()->id}} },
+      @endif
+      {
+        event: "addToCart",
+        currency: "GBP",
+        item: [
+          @foreach(session('cart', []) as $id => $details)
+            {
+                id: "ig_{{ $id }}",
+              price: {{ $details['deposited_price'] }},
+              quantity: {{ $details['quantity'] }}
+            }@if (!$loop->last),@endif
+          @endforeach
+        ]
+      }
+    );
+
+  </script>
+
+@endsection
+
+{{-- ends --}}
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection

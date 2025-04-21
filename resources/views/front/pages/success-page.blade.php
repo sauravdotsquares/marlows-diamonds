@@ -37,6 +37,47 @@
 @endsection
 @section('content')
 
+{{--criteo start --}}
+@section('criteo-tracking')
+@if (!empty($pay) && !empty($pay['get_order_details_function']))
+
+<script type="text/javascript">
+    window.criteo_q = window.criteo_q || [];
+    window.criteo_q.push(
+        { event: "setAccount", account: 119681 },
+        { event: "setEmail", email: "{{ hash('sha256', strtolower(trim($pay['user_details']['email']))) }}", hash_method: "sha256" },
+        { event: "setEmail", email: "{{ md5(strtolower(trim($pay['user_details']['email']))) }}", hash_method: "md5" },
+        @if (!empty($pay['order_address']['mobile']))
+        { event: "setSha256HashedPhoneNumber", phone_number: "{{ hash('sha256', preg_replace('/[^0-9]/', '', $pay['order_address']['mobile'])) }}" },
+        @endif
+        { event: "setSiteType", type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}" },
+        { event: "setCustomerId", id: "{{ $pay['user_details']['id'] ?? 'guest' }}" },
+        { event: "setRetailerVisitorId", id: "{{ session()->getId() }}" },
+        @if (!empty($pay['order_address']['pin_code']))
+        { event: "setZipcode", zipcode: "{{ $pay['order_address']['pin_code'] }}" },
+        @endif
+        {
+            event: "trackTransaction",
+            id: "{{ $pay['custom_order_id'] }}",
+            new_customer: "{{ isset($pay['user_details']['is_new']) && $pay['user_details']['is_new'] ? '1' : '0' }}",
+            deduplication: "",
+            currency: "GBP",
+            item: [
+                @foreach($pay['get_order_details_function'] as $item)
+                    {
+                        id: "ig_{{ $item['product_id'] }}",
+                        price: {{ $item['deposited_product_price'] }},
+                        quantity: 1
+                    }@if (!$loop->last),@endif
+                @endforeach
+            ]
+        }
+    );
+</script>
+@endif
+@endsection
+{{-- ends --}}
+
     <div class="category-banner" style="background-image:url(../assets/images/cart-bg.jpg)">
         <div class="container">
             <div class="category-banner-text">

@@ -104,6 +104,7 @@
     <!-- End Google Tag Manager (noscript) -->
     
     @yield('google-ecommerce')
+    @yield('criteo-tracking')
     @include('layouts.front.header')
 
     @if(session('success'))

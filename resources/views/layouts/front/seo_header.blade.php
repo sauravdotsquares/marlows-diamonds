@@ -55,6 +55,7 @@
     </noscript>
     <!-- End Meta Pixel Code -->
 @endif
+<script type="text/javascript" src="https://dynamic.criteo.com/js/ld/ld.js?a=119681" async="true"></script>
 <script type="application/ld+json">
     {
       "@context": "http://schema.org",
