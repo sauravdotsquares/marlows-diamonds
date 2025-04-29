@@ -640,7 +640,7 @@
                                         {{-- google checkbox --}}
                
                                        
-                                        <li class="cc_payment_methods googlepay_payment googlepaygateway_wrap">
+                                        {{-- <li class="cc_payment_methods googlepay_payment googlepaygateway_wrap">
                                           
                                             <div class="google_pay_button">
                                             <input type="radio" name="payment_type" id="googlepay_radio" value="googlepay" autocomplete="off">
@@ -657,7 +657,7 @@
                                                 Pay via Google Pay; a fast and secure way to pay using your saved cards.
                                             </div>
                                             <div id="googlepay-button-container" class="googlepay-button-container"></div>
-                                        </li>
+                                        </li> --}}
                                         
 
                                         {{-- <div class="container">
