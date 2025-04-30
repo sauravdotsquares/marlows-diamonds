@@ -1117,6 +1117,7 @@ class ProductController extends Controller
             }
         }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
             $productData->description = strip_tags(str_replace('G/H VS', 'I-J. SI-I1', $productData->description));
+            $productData->description = strip_tags(str_replace('D-E Clarity VVS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('F, Clarity VS.', 'I-J. SI-I1', $productData->description));
@@ -1127,6 +1128,7 @@ class ProductController extends Controller
             $productData->description = strip_tags(str_replace('G/H VS', 'G-H SI', $productData->description));
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'G-H SI', $productData->description));
             $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'G-H SI', $productData->description));
+            $productData->description = strip_tags(str_replace('D-E Clarity VVS', 'G-H SI', $productData->description));
             $productData->description = strip_tags(str_replace('F, Clarity VS.', 'G-H SI', $productData->description));
             $productData->description = strip_tags(str_replace('F-G diamond clarity VS-SI.', 'G-H SI', $productData->description));
             $productData->description = strip_tags(str_replace('FVS', 'G-H SI', $productData->description));
