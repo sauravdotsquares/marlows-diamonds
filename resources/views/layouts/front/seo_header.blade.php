@@ -56,6 +56,10 @@
     <!-- End Meta Pixel Code -->
 @endif
 <script type="text/javascript" src="https://dynamic.criteo.com/js/ld/ld.js?a=119681" async="true"></script>
+
+<script async data-environment="production" src="https://js.klarna.com/web-sdk/v1/klarna.js"
+data-client-id="klarna_live_client_JGxTOTgoZVMxbjRWaD9uLUwpaGlzY1ZVKEx6UjVFVDYsMTJjNjY2MWYtYTgxZS00MGY2LTk0ZmItNTUxNThjZjMyMGNjLDEscDBldCtZQy95S2lQQnhqRXBFaFlteWdINDBsTGdLdXRFTW9rSzhYZldSZz0"></script>
+
 <script type="application/ld+json">
     {
       "@context": "http://schema.org",
