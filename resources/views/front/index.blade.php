@@ -6,9 +6,7 @@
         .error {color: #e74c3c !important;}
     </style>
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
-
      {{-- start --}}
-
      <script type="text/javascript">
         window.criteo_q = window.criteo_q || [];
         var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
@@ -25,9 +23,7 @@
           { event: "viewHome" }
         );
       </script>
-      
      {{-- end --}}
-
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -58,13 +54,12 @@
                     <?php 
                         $ringImageUrl = getImageOptimizeDetails('/assets/images/ring-img.webp','340','500');
                     ?>
-                    <img src="{{ $ringImageUrl }}" alt="Ring image">
+                    <img src="{{ $ringImageUrl }}" alt="Ring">
                 </div>
             </div>
         </div>
     </div>
     <!-- home main-banner endt -->
-
 
     <!-- Shop from the Best start here -->
     <div class="shopfrom-best">
@@ -104,7 +99,7 @@
                         <div class="product-info">
                             <div class="product-image">
                                 <a href="{{ asset('/diamonds-rings') }}">
-                                    <?php 
+                                    <?php
                                         $ringImageDiamondRingUrl = getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg','340','340');
                                     ?>
                                     <img src="{{$ringImageDiamondRingUrl}}" alt="Multi Stone Rings">
@@ -182,7 +177,7 @@
                         <div class="product-info">
                             <div class="product-image">
                                 <a href="{{ asset('/diamond-jewellery') }}">
-                                    <?php 
+                                    <?php
                                         $ringImageDiamondJewelleryUrl = getImageOptimizeDetails('/assets/images/diamond-jewellery.png','340','340');
                                     ?>
                                     <img src="{{$ringImageDiamondJewelleryUrl}}" alt="Diamond Jewellery">
@@ -234,7 +229,7 @@
                         <div class="product-info">
                             <div class="product-image">
                                 <a href="{{ asset('/engagement-rings/multi-stone') }}">
-                                    <?php 
+                                    <?php
                                         $ringImageMultistoneRingUrl = getImageOptimizeDetails('/assets/images/multi-stone.png','340','340');
                                     ?>
                                     <img src="{{$ringImageMultistoneRingUrl}}" alt="Multi Stone Rings">
@@ -320,7 +315,7 @@
                                 </a>
                             </div>
                             <div class="product-item-details">
-                                <a href="{{ asset('/wedding-rings/mens') }}">   
+                                <a href="{{ asset('/wedding-rings/mens') }}">
                                     <div class="product-titles">
                                         Men's Wedding ring
                                     </div>
@@ -339,7 +334,7 @@
                         <div class="product-info">
                             <div class="product-image">
                                 <a href="{{ asset('/wedding-rings/womens') }}">
-                                    <?php 
+                                    <?php
                                         $ringImageWomensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/217231453wed052-silver-front.png','340','340');
                                     ?>
                                     <img src="{{$ringImageWomensWeddingRingUrl}}" alt="Multi Stone Rings">
