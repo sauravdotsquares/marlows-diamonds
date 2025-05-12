@@ -114,7 +114,7 @@
                         TRUSTED BY THOUSANDS. FOREVER LOW PRICES.
                         {{-- {!!$header_settings->get_options('header-right')!!} --}}
                         {{--WHATSAPP_TITLE--}} {{--$header_settings->get_options('field1')--}}
-                    </a><a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;" href="/TERMS">*T&amp;C</a>
+                    </a><a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 10px;" href="/TERMS">*T&amp;C</a>
                 </div>
                 <div class="item">
                     <div class="addr-number">
