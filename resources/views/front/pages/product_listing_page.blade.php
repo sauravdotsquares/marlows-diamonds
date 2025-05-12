@@ -1021,7 +1021,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                                 <div class="item">
                                     <div class="product-info">
                                         <div class="product-image">
-                                            <a href="{{ asset('diamond-engagement-rings') }}">
+                                            <a href="{{ isset($preContentData->button_url) ? $preContentData->button_url : '' }}">
                                                 <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $preContentData->image_url }}"
                                                     alt="{{ isset($preContentData->image_alt_title) ? $preContentData->image_alt_title : '' }}">
                                             </a>
