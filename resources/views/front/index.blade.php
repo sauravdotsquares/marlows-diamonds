@@ -385,7 +385,7 @@
                         skilled polishers focus on maximising proportions rather than just carat weight, meaning our 1ct diamonds often look equivalent to a 1.25ct from other jewellers. We invite you to visit any
                         of our stores to be amazed. Furthermore, if you find a better price elsewhere, simply send us a link, and we will gladly
                         beat it—guaranteeing you the best deal.</p>
-                    <video src="{{env('APP_IMAGE_URL').'/storage/HomePageVideos/homeopagevideo.mp4'}}" controls autoplay muted id="video" poster="/storage/HomePageVideos/homeopagevideo.png"></video >
+                    <video src="{{env('APP_IMAGE_URL').'/storage/HomePageVideos/homeopagevideo.mp4'}}" controls autoplay muted loop id="video" poster="/storage/HomePageVideos/homeopagevideo.png"></video >
                 </div>
                 <div class="text-center" id="getDirectionDetails1">
                     <a class="btn-bg-small getdirection" href="#location_data_section">Find Marlow’s</a>
