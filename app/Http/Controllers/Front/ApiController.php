@@ -281,7 +281,7 @@ class ApiController extends Controller
                     $message->from('order@marlows-diamonds.co.uk');
                     $message->to($adminEmailLondon, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
                     $message->cc($customerEmail, 'Customer');
-                    $message->bcc('sharma.gajendra@dotsquares.com', 'Customer');
+                    $message->bcc('kartik.tanwar@dotsquares.com', 'Customer');
             });
 
                Order::where('id', $order['id'])->update(['email_status' => 2]);
@@ -317,7 +317,7 @@ class ApiController extends Controller
                     $data = [
                         'data' => $order->toArray()
                     ];
-                    $adminEmail = 'sharma.gajendra@dotsquares.com'; // use it on production $order->user_details->email
+                    $adminEmail = 'kartik.tanwar@dotsquares.com'; // use it on production $order->user_details->email
                     $when = Carbon::now()->addMinutes(250);
                     // $when = Carbon::now()->addSeconds(10);
                     Mail::to($adminEmail)->cc('jyoti21tp@gmail.com')->bcc('gajendra3036@gmail.com')->later($when, new OrderMailProcess($data));

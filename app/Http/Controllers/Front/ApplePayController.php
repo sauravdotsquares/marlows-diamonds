@@ -241,7 +241,7 @@ class ApplePayController extends Controller
                 }
         
                 $message->cc($requestCustomerEmail, 'Customer')->subject('Your Marlows Diamonds order has been received!');
-                $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received');
+                $message->bcc('kartik.tanwar@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received');
             });
         } else if (env('APP_ENV') == 'local') {
             $requestCustomerEmail = $getOrderDetailsMail['user_details']['email'];
@@ -249,16 +249,16 @@ class ApplePayController extends Controller
                 'data1' => $data,
             ), function($message) use ($requestCustomerEmail,$admin_email, $transaction_emails ){
                 $message->from('order@marlows-diamonds.co.uk');
-                $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('Your Marlows Diamonds order has been received!');
+                $message->to('kartik.tanwar@dotsquares.com', 'Admin')->subject('Your Marlows Diamonds order has been received!');
         
                 if(!empty($transaction_emails)){
                     $emails_to_cc = explode(',', $transaction_emails);
                     foreach ($emails_to_cc as $email_to_cc) {
-                        $message->cc('sharma.gajendra@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                        $message->cc('kartik.tanwar@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
                     }
                 }
                 $message->cc($requestCustomerEmail, 'Customer')->subject('Your Marlows Diamonds order has been received!');
-                $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
+                $message->bcc('kartik.tanwar@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
             });
         }
         

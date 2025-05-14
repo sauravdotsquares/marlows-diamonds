@@ -148,7 +148,7 @@ class PayPalPaymentController extends Controller
             Mail::send('email.orderstatusqueueprocess', array('data1' => $data,), function($message) use ($request, $transaction_emails ){
                 $message->from('order@marlows-diamonds.co.uk');
 
-                $admin_email_london = "sharma.gajendra@dotsquares.com";
+                $admin_email_london = "kartik.tanwar@dotsquares.com";
                 $message->to($admin_email_london, 'Admin')->subject('Marlows Diamonds: Your transaction not completed.');
                 
                 /** add cc for more users  */
@@ -214,7 +214,7 @@ class PayPalPaymentController extends Controller
                         }
 
                         $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
-                        $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
+                        $message->bcc('kartik.tanwar@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
                     });
                 } else if (env('APP_ENV') == 'local') {
                     $request['customer_email'] = $getOrderDetailsMail['user_details']['email'];
@@ -222,16 +222,16 @@ class PayPalPaymentController extends Controller
                         'data1' => $data,
                     ), function($message) use ($request,$admin_email, $transaction_emails ){
                         $message->from('order@marlows-diamonds.co.uk');
-                        $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('Your Marlows Diamonds order has been received!');
+                        $message->to('kartik.tanwar@dotsquares.com', 'Admin')->subject('Your Marlows Diamonds order has been received!');
 
                         if(!empty($transaction_emails)){
                             $emails_to_cc = explode(',', $transaction_emails);
                             foreach ($emails_to_cc as $email_to_cc) {
-                                $message->cc('sharma.gajendra@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
+                                $message->cc('kartik.tanwar@dotsquares.com', 'Third party')->subject('Marlows Diamonds: Your transaction not completed.');   
                             }
                         }
                         $message->cc($request['customer_email'], 'Customer')->subject('Your Marlows Diamonds order has been received!');
-                        $message->bcc('sharma.gajendra@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
+                        $message->bcc('kartik.tanwar@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
                     });
                 }
 

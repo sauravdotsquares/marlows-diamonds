@@ -44,8 +44,8 @@ class ContactUsFormController extends Controller {
                 'description' => $request->get('description'),
             ];
             
-            // $adminEmail = 'sharma.gajendra@dotsquares.com';
-            Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
+            // $adminEmail = 'kartik.tanwar@dotsquares.com';
+            Mail::to($admin_email)->bcc('kartik.tanwar@dotsquares.com')->queue(new WelcomeEmail($requestData));
             
             
             // Mail::send('email.mail', array(
@@ -57,7 +57,7 @@ class ContactUsFormController extends Controller {
             // ), function($message) use ($request,$admin_email ){
             //     $message->from('order@marlows-diamonds.co.uk');
             //     $message->to($admin_email, 'Admin')->subject('New Website Enquiry');
-            //     $message->bcc('sharma.gajendra@dotsquares.com', 'Dev bcc')->subject('New Website Enquiry');
+            //     $message->bcc('kartik.tanwar@dotsquares.com', 'Dev bcc')->subject('New Website Enquiry');
             // });
         }else{
             $requestData = [
@@ -68,8 +68,8 @@ class ContactUsFormController extends Controller {
                 'description' => $request->get('description'),
             ];
             
-            // $adminEmail = 'sharma.gajendra@dotsquares.com';
-            Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
+            // $adminEmail = 'kartik.tanwar@dotsquares.com';
+            Mail::to($admin_email)->bcc('kartik.tanwar@dotsquares.com')->queue(new WelcomeEmail($requestData));
 
             // $requestData = [
             //     'title' => $request->get('title'),
@@ -79,7 +79,7 @@ class ContactUsFormController extends Controller {
             //     'description' => $request->get('description'),
             // ];
             
-            // $adminEmail = 'sharma.gajendra@dotsquares.com';
+            // $adminEmail = 'kartik.tanwar@dotsquares.com';
             
             // SendEmailJob::dispatch($requestData, $adminEmail);
 
@@ -91,7 +91,7 @@ class ContactUsFormController extends Controller {
             //     'user_query' => $request->get('description'),
             // ), function($message) use ($request,$admin_email ){
             //     $message->from('order@marlows-diamonds.co.uk');
-            //     $message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry');
+            //     $message->to('kartik.tanwar@dotsquares.com', 'Admin')->subject('New Website Enquiry');
             // });
         }
 

@@ -38,9 +38,9 @@ class MailListFormController extends Controller {
                 'description' => $request->get('description'),
             ];
             
-            // $adminEmail = 'sharma.gajendra@dotsquares.com';
-            Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
-            // Mail::to('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
+            // $adminEmail = 'kartik.tanwar@dotsquares.com';
+            Mail::to($admin_email)->bcc('kartik.tanwar@dotsquares.com')->queue(new WelcomeEmail($requestData));
+            // Mail::to('kartik.tanwar@dotsquares.com')->queue(new WelcomeEmail($requestData));
 
             
     //         Mail::send('email.mail', array(
@@ -52,7 +52,7 @@ class MailListFormController extends Controller {
     //         ), function($message) use ($request,$admin_email ){
     //             $message->from('order@marlows-diamonds.co.uk');
     // 			$message->to($admin_email, 'Admin')->subject('New Website Enquiry');
-    // 			$message->bcc('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry');
+    // 			$message->bcc('kartik.tanwar@dotsquares.com', 'Admin')->subject('New Website Enquiry');
     //         });
         }else{
             $requestData = [
@@ -63,8 +63,8 @@ class MailListFormController extends Controller {
                 'description' => $request->get('description'),
             ];
             
-            // $adminEmail = 'sharma.gajendra@dotsquares.com';
-            Mail::to($admin_email)->bcc('sharma.gajendra@dotsquares.com')->queue(new WelcomeEmail($requestData));
+            // $adminEmail = 'kartik.tanwar@dotsquares.com';
+            Mail::to($admin_email)->bcc('kartik.tanwar@dotsquares.com')->queue(new WelcomeEmail($requestData));
             // SendEmailJob::dispatch($requestData, $adminEmail);
             // Mail::send('email.mail', array(
             //     'title' => $request->get('title'),
@@ -74,7 +74,7 @@ class MailListFormController extends Controller {
             //     'user_query' => $request->get('description'),
             // ), function($message) use ($request,$admin_email ){
             //     $message->from('order@marlows-diamonds.co.uk');
-    		// 	$message->to('sharma.gajendra@dotsquares.com', 'Admin')->subject('New Website Enquiry local');
+    		// 	$message->to('kartik.tanwar@dotsquares.com', 'Admin')->subject('New Website Enquiry local');
     		// 	//$message->cc('gajendra30@gmail.com', 'Admin')->subject('New Website Enquiry local');
             // });
         }

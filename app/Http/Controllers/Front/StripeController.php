@@ -107,8 +107,8 @@ class StripeController extends Controller
             Mail::send('email.orderstatus', array(
                 'data1' => $data,
             ), function ($message) use ($request, $admin_email, $transaction_emails) {
-                $message->from("sharma.gajendra@dotsquares.com");
-                $message->to("sharma.gajendra@dotsquares.com", 'Admin')->subject('Your Marlows Diamonds order has been received!');
+                $message->from("kartik.tanwar@dotsquares.com");
+                $message->to("kartik.tanwar@dotsquares.com", 'Admin')->subject('Your Marlows Diamonds order has been received!');
                 if (!empty($transaction_emails)) {
                     $emails_to_cc = explode(',', $transaction_emails);
                     foreach ($emails_to_cc as $email_to_cc) {
