@@ -642,6 +642,7 @@
 @endsection
 @section('js')
 <script src='https://www.google.com/recaptcha/api.js' async></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN"></script>
 <script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
 <?php
