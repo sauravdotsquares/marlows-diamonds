@@ -12,8 +12,11 @@
 				<a href="{{env('APP_URL')}}">Home</a>
 			</li>
 			<li>
-				<a href="{{asset($data->cat_name->slug)}}">{{isset($data->cat_name->name)?$data->cat_name->name:'Uncategorized'}}</a>
+				<a href="{{env('APP_URL')}}/blog">Blog</a>
 			</li>
+			{{-- <li>
+				<a href="{{asset($data->cat_name->slug)}}">{{isset($data->cat_name->name)?$data->cat_name->name:'Uncategorized'}}</a>
+			</li> --}}
 			<li>
 				{{--  Change after SEO discuss 05Jan2023 seo_change --}}
 				{{isset($data->title)?$data->title:'Title'}}
