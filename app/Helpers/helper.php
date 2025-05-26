@@ -2532,6 +2532,77 @@ if (!function_exists("generateClientToken")) {
     }
 }
 
+
+
+
+//klarna start
+if (!function_exists("generateKlarnaClientToken")) {
+    function generateKlarnaClientToken($orderId)
+    {
+        $klarnaUsername = env('KLARNA_USERNAME');
+        $klarnaPassword = env('KLARNA_PASSWORD');
+        $klarnaBaseUrl = 'https://api.klarna.com/';
+
+        
+
+        $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id', $orderId)->first();
+
+        
+
+        if (!$getOrderDetails || !$getOrderDetails->getOrderDetailsFunction) {
+            \Log::error('Order not found or missing product details', ['order_id' => $orderId]);
+            return null;
+        }
+
+        $payload = [
+            'purchase_country' => 'GB',
+            'purchase_currency' => 'GBP',
+            'locale' => 'en-GB',
+            'order_amount' => (int) round($getOrderDetails->deposited_price * 100),  // Convert to pence (cents)
+            'order_tax_amount' => 0,
+            'order_lines' => $getOrderDetails->getOrderDetailsFunction->map(function ($item) {
+                return [
+                    'name' => $item->product_name ?? 'Unknown Product',
+                    'type' => 'physical',
+                    'quantity' => $item->quantity ?? 1,
+                    'unit_price' => (int) round($item->deposited_price * 100), // Ensure rounding and integer
+                    'total_amount' => (int) round($item->deposited_price * 100 * ($item->quantity ?? 1)),// Convert to pence (cents)
+                ];
+            }),
+        ];
+
+ 
+
+        \Log::info('Klarna session payload:', ['payload' => $payload]);
+
+        $response = Http::withBasicAuth($klarnaUsername, $klarnaPassword)
+            ->withHeaders([
+                'Content-Type' => 'application/json',
+            ])
+            ->post("{$klarnaBaseUrl}/payments/v1/sessions", $payload);
+
+                //   dd($response);
+
+        if ($response->successful()) {
+            \Log::info('Klarna response:', $response->json());
+            return $response->json('client_token');
+        }
+
+        \Log::error('Failed to generate Klarna client token', [
+            'status' => $response->status(),
+            'body' => $response->body(),
+        ]);
+
+        return null;
+    }
+}
+
+//klarna ends
+
+
+
+
+
 if (!function_exists("generateAccessToken")) {
     function generateAccessToken()
     {

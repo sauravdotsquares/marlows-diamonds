@@ -17,6 +17,7 @@ use App\Models\UrlRedirects;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Front\StripeController;
 use App\Http\Controllers\Front\ApplePayController;
+use App\Http\Controllers\Front\KlarnaController;
 
 // routes/api.php
 use Illuminate\Support\Facades\Artisan;
@@ -32,6 +33,11 @@ Route::get('/clear-cache', function() {
 	Artisan::call('view:clear');
 	echo 'Application cache cleared';
 });
+
+
+Route::get('/klarna', [KlarnaController::class, 'showKlarnaPage']);
+Route::post('/klarna/place-order', [KlarnaController::class, 'placeOrder']);
+Route::get('/klarna/order-status/{orderId}', [KlarnaController::class, 'checkOrderStatus']);
 
 /**
  * Admin routes
@@ -452,6 +458,16 @@ Route::get('/success-page/{id}', [ApplePayController::class, 'showSuccessPage'])
 	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
 	Route::get('products/payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
 	Route::view('products/payment-successf', 'front.pages.success-page-fake')->name('successf.payment');
+
+    Route::get('order-success/{orderId?}', 'KlarnaController@paymentSuccess')->name('order.success');
+
+
+	Route::get('/klarna/generate-client-token/{orderId}', function ($orderId) {
+		$clientToken = generateKlarnaClientToken($orderId);
+		return response()->json(['client_token' => $clientToken]);
+	});
+
+
 
 	Route::post('users/customer-user-address','LoginController@changeCustomerUserAddress')->name('users.customer.address');
 	Route::post('users/update-customer-account-details','LoginController@changeCustomerAccountDetails')->name('update.customer.account.details');

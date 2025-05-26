@@ -54,6 +54,7 @@
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" >
 <script  src="https://code.jquery.com/jquery-2.2.4.min.js"  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="  crossorigin="anonymous"></script>
+<script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
 <?php
     // Request client token from the server-side PHP
     $clientToken = generateClientToken();
@@ -682,6 +683,28 @@
                                             </div>
                                             <div id="applepay-button-container" class="applepay-button-container" style="display:none"></div>
                                         </li>
+
+
+
+                                          <!-- Klarna Payment Option -->
+                                        <li class="cc_payment_methods klarna_payment">
+                                            <input type="radio" name="payment_type" id="klarna_radio" value="klarna" autocomplete="off">
+                                            <label class="klarna_label" for="klarna_radio">
+                                                Klarna
+                                                <a class="what-klarna" href="https://www.klarna.com/" target="_blank">
+                                                    What is Klarna?
+                                                </a>
+                                            </label>
+                                            <i class="diamond-icon payment-checkout"></i>
+                                            <div class="payment-box-main-drop klarna-box">
+                                                Pay securely via Klarna. Flexible payment options available.
+                                            </div>
+                                        </li>
+                                        <div id="klarna_container" style="display: none;"></div>
+
+
+
+
                                     </ul>
                                         {{-- <div id="container"></div> --}}
                                         {{-- @include('front.pages.payments.dekopay',['totalAmount'=>$total]) 
@@ -1184,7 +1207,16 @@
                                 window.location.href = "{{route('make.payment')}}/" + response.order_dt;
                             } else if (selectedPaymentType == 'googlepay') {
                                 onGooglePaymentButtonClicked(price,response.order_dt);
-                            } else if (selectedPaymentType == 'applepay') {
+                            }
+                            
+                               else if (selectedPaymentType == 'klarna')
+                                {
+                                    console.log('selected option is klarna !!');
+                                    handleKlarnaPayment(response.order_dt);
+                                }
+
+                            
+                             else if (selectedPaymentType == 'applepay') {
                                 $('#already_inserted').val('order_inserted');
                                 $('.applepay-button-container').show();
                                 $('#place-order').hide();
@@ -1361,6 +1393,88 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initial check on page load
     // togglePlaceOrderButton();
 });
+
+
+
+
+
+        // Klarna Payment Flow
+        function handleKlarnaPayment(orderId) {
+            fetch(`/klarna/generate-client-token/${orderId}`, {
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                const clientToken = data.client_token;
+                console.log('clientToken', clientToken);
+
+                if (!clientToken) {
+                    alert("Client token is missing.");
+                    return;
+                }
+
+                Klarna.Payments.init({ client_token: clientToken });
+
+                Klarna.Payments.load({
+                    container: "#klarna_container",
+                    payment_method_category: "pay_over_time"
+                }, function (res) {
+                    if (res.error) {
+                        console.error("Klarna load error:", res);
+                        alert("Failed to load Klarna payment method.");
+                        return;
+                    }
+
+                    Klarna.Payments.authorize({ payment_method_category: "pay_over_time" }, function (res) {
+                        if (res.error) {
+                            console.error("Authorization error:", res);
+                            alert("Authorization failed.");
+                            return;
+                        }
+
+                        if (res.approved) {
+                            fetch('/klarna/place-order', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    authorization_token: res.authorization_token,
+                                    order_Id: orderId
+                                })
+                            })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert("Order placed successfully!");
+                                    window.location.href = "{{route('order.success')}}/" + orderId;
+                                } else {
+                                    alert("Order placement failed: " + (data.error || "Unknown error"));
+                                }
+                            })
+                            .catch(err => {
+                                alert("Order placement failed.");
+                                console.error(err);
+                            });
+                        } else {
+                            alert("Payment not approved.");
+                        }
+                    });
+                });
+            })
+            .catch(err => {
+                console.error("Error fetching client token:", err);
+                alert("Failed to generate Klarna client token.");
+            });
+        }
+
+    // });
+
+
 </script>
 
 @endsection
