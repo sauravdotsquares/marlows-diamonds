@@ -127,8 +127,8 @@ class LoginController extends Controller
     {
         $request->validate([
             'username' => 'required|max:255',
-            'email' => 'required|unique:users|max:255',
-            'password' => 'required',
+            'email' => 'required|email:rfc,dns|unique:users|max:255',
+            'password' => ['required','min:6','regex:/[!@#$%^&*(),.?":{}|<>]/'],
         ]);
         unset($request['_token']);
         $getRegisterResponse = $this->registerLoginFrontPage($request->all(''));
