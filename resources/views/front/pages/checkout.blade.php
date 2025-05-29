@@ -687,7 +687,7 @@
 
 
                                           <!-- Klarna Payment Option -->
-                                        <li class="cc_payment_methods klarna_payment">
+                                        {{-- <li class="cc_payment_methods klarna_payment">
                                             <input type="radio" name="payment_type" id="klarna_radio" value="klarna" autocomplete="off">
                                             <label class="klarna_label" for="klarna_radio">
                                                 Klarna
@@ -700,7 +700,7 @@
                                                 Pay securely via Klarna. Flexible payment options available.
                                             </div>
                                         </li>
-                                        <div id="klarna_container" style="display: none;"></div>
+                                        <div id="klarna_container" style="display: none;"></div> --}}
 
 
 
