@@ -22,7 +22,7 @@ class KlarnaController extends Controller
     {
         $this->klarnaUsername = env('KLARNA_USERNAME'); // Store in .env
         $this->klarnaPassword = env('KLARNA_PASSWORD'); // Store in .env
-        $this->klarnaBaseUrl = 'https://api.klarna.com/';
+        $this->klarnaBaseUrl = 'https://api.klarna.com';
     }
 
 
@@ -107,7 +107,7 @@ private function getOrderPayload(Order $order): array
                 'total_amount' => $priceInMinorUnits,
             ],
         ],
-        'merchant_reference' => 'PK2539718',
+        'merchant_reference' => 'K7477132',
     ];
 }
 

@@ -2541,11 +2541,12 @@ if (!function_exists("generateKlarnaClientToken")) {
     {
         $klarnaUsername = env('KLARNA_USERNAME');
         $klarnaPassword = env('KLARNA_PASSWORD');
-        $klarnaBaseUrl = 'https://api.klarna.com/';
+        $klarnaBaseUrl = 'https://api.klarna.com';
 
-        
+        //  dd($klarnaUsername);
 
         $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id', $orderId)->first();
+
 
         
 
@@ -2581,7 +2582,6 @@ if (!function_exists("generateKlarnaClientToken")) {
             ])
             ->post("{$klarnaBaseUrl}/payments/v1/sessions", $payload);
 
-                //   dd($response);
 
         if ($response->successful()) {
             \Log::info('Klarna response:', $response->json());
