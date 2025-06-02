@@ -12,6 +12,11 @@
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
     <meta name="keywords" content="{!! isset($data->meta_keyword)?$data->meta_keyword:'' !!}">
     <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
+    <script>
+    window.uetq = window.uetq || [];
+    window.uetq.push('consent', 'update', {
+        'ad_storage': 'granted' });
+    </script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if (env('APP_ENV')=='local')
       <meta name="robots" content="noindex,nofollow">
@@ -216,67 +221,41 @@
 <script>
 
   window.addEventListener("load", function(){
-  
       window.cookieconsent.initialise({
-  
           "type": "opt-in",  // Enables both Accept and Decline buttons
-  
           "palette": {
-  
               "popup": {
-  
                   "background": "#000000",
-  
                   "text": "#ffffff"
-  
               },
   
               "button": {
-  
                   "background": "#f1d600",
-  
                   "text": "#000000"
-  
               }
-  
           },
   
           "theme": "classic",
-  
           "position": "bottom",
-  
           "content": {
   
               "message": "This website uses cookies to ensure you get the best experience on our website.",
-  
               "allow": "Accept",
-  
               "deny": "Decline",
-  
               "link": "",
-  
             "showLink": false,
-  
           },
   
           onStatusChange: function(status) {
-  
               if (status === 'allow') {
-  
                   // console.log("Cookies accepted");
-  
               } else if (status === 'deny') {
-  
                   // console.log("Cookies declined");
-  
               }
-  
           }
-  
       });
-  
   });
-  
+
   </script>
 
 <script>
