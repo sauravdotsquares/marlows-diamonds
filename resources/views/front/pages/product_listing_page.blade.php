@@ -52,7 +52,7 @@
     cursor: pointer;
 }
     </style>
-@endsection
+@endsection 
 <?php
 $pathData = explode('/',strtolower($path));
 if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings',$pathData)) { ?>
