@@ -43,7 +43,7 @@
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
                     <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
-                    <p><strong>Over 2500 mined and lab grown diamonds in stock</strong></p>
+                    <p><strong>Buy a natural diamond and get a similar lab grown for free. Offer valid till 30th June for in store only</strong></p>
                     <div class="shop-engage-btn">
                     <a class="btn-bg-large" href="{{ asset('diamond-engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
                     </div>
