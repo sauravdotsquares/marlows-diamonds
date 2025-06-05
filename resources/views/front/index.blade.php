@@ -4,7 +4,7 @@
 @section('css')
     <style>
         .error {color: #e74c3c !important;}
-    </style>
+    </style> 
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
      {{-- start --}}
      <script type="text/javascript">
