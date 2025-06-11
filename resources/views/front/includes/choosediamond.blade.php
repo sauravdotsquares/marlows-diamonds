@@ -12,7 +12,7 @@
         </div>
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
-                @foreach($product_data as $key => $product)
+                @foreach($product_data as $key => $product) 
                 @if($product->title != 'SADIE - 2 Rows Round Cut Diamond Wedding Ring')
                     <?php 
                         $getProductListingPrices = getMinimumPriceFunction($product);
