@@ -8,7 +8,7 @@
     <div class="container">
         <div class="head-para-three">
             <h2 class="heading-h-three">Diamond Engagement Rings by Marlow's</h2>
-            <p>Explore a variety of designs and settings from a classic solitaire to trilogy</p>
+            <p>Explore a variety of designs and settings from a classic solitaire to trilogyy</p>
         </div>
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
