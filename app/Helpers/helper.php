@@ -2563,7 +2563,7 @@ if (!function_exists("generateKlarnaClientToken")) {
             'order_tax_amount' => 0,
             'order_lines' => $getOrderDetails->getOrderDetailsFunction->map(function ($item) {
                 return [
-                    'name' => $item->product_name ?? 'Unknown Product',
+                    'name' => $item->product_name ?? 'Product',
                     'type' => 'physical',
                     'quantity' => $item->quantity ?? 1,
                     'unit_price' => (int) round($item->deposited_price * 100), // Ensure rounding and integer
