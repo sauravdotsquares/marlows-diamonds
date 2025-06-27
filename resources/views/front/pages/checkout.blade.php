@@ -1400,9 +1400,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Klarna Payment Flow
         function handleKlarnaPayment(orderId) {
+
+         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
             fetch(`/klarna/generate-client-token/${orderId}`, {
                 headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-CSRF-TOKEN': csrfToken,
                     'Content-Type': 'application/json'
                 }
             })
