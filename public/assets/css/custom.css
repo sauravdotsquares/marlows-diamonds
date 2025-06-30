@@ -217,6 +217,10 @@ transition: all 0.2s ease;}
 .main-navigaiton .nav-navbars .level-zero ul.inner-submenu li.level-one .diamond-shape_princess {background-position: -59px -279px;width: 28px;height: 24px;}
 
 
+/*banner css*/
+.home-main-banner .main-banner-left-text ul {margin-left: 25px; margin-bottom: 20px;} 
+.home-main-banner .main-banner-left-text ul li {font-size: 18px; color: #000;}
+/*banner css end*/
 
 
 @keyframes fadeIn{from{opacity:0;transform:translate3d(0,-7%,0)}
@@ -2245,6 +2249,9 @@ span#deposited_message {font-size: 15px;margin: 4px 0;line-height: 15px;}
 
 .modal.guide-mode .modal-dialog{width: 275px;}
 
+/*banner css*/
+.home-main-banner .main-banner-left-text ul li {font-size: 15px;}
+/*banner css end*
 
 /** checkout **/
 .payment-box-main-drop{ font-size: 13px; padding: 15px 15px 20px;}

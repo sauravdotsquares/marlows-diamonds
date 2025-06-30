@@ -43,7 +43,17 @@
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
                     <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
-                    <p><strong>Buy a natural diamond and get a similar lab grown for free. Offer valid till 30th June for in store only</strong></p>
+                    {{-- <p><strong>Buy a natural diamond and get a similar lab grown for free. Offer valid till 30th June for in store only</strong></p> --}}
+
+                     <h2 > The<img src="/assets/images/logo-ups.png" alt="{{$header_settings->get_options('site_title')}}" style="padding-left: 5px;"> USP</h2>
+
+                    <ul>
+                    <li>Meet staff with over 150 years combined jewellery experience</li>
+                    <li>Choose your setting from a selection of over 600 designs</li>
+                    <li>Choose your diamond or gemstone from a selection of over 2500</li>
+                    <li>Our experienced in-house workshop finishes it for you</li>
+                    <li>Take it away same day should you want</li>
+                   </ul>
                     <div class="shop-engage-btn">
                     <a class="btn-bg-large" href="{{ asset('diamond-engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
                     </div>
