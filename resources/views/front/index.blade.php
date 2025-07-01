@@ -788,4 +788,15 @@
         }
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var video = document.getElementById('video');
+        video.muted = true;  // Enforce muted via JS
+        video.play().catch(function (error) {
+            console.log('Autoplay failed:', error);
+        });
+    });
+</script>
+
 @endsection
