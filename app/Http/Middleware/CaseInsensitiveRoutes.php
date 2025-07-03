@@ -26,8 +26,7 @@ class CaseInsensitiveRoutes
         // Check if there is a difference in case
         if ($originalUri !== $lowercaseUri) {
             // Redirect to the lowercase URI
-            return redirect($lowercaseUri, 
-            ); // 301 for a permanent redirect
+            return redirect($lowercaseUri, 301); // 301 for a permanent redirect
         }
 
         // Proceed with the request if no case difference

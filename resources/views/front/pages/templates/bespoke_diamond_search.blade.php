@@ -13,6 +13,9 @@
 		color: #FF0000 !important;
 		text-align: center !important;
 	}
+	.capitalize-text {
+  text-transform: capitalize;
+}
 
 	.ui-slider .ui-slider-handle{
         height: 1.5em; color: #8e2e65 !important;}
@@ -534,7 +537,7 @@
 								</thead>
 								<tbody>
 									<tr ng-if="data.length>0 && loader==false" ng-repeat="records in data" class="<%$index%>" id="selectedDiamondRow<%$index%>">
-										<td id="tdShape<%$index%>"><%records.Shape%></td>
+										<td id="tdShape<%$index%>" class="capitalize-text"><%records.Shape.toLowerCase()%></td>
 										<td id="tdCarat<%$index%>"><%records.Carat | number : 2%></td>
 										<td id="tdColor<%$index%>"><%records.Color%></td>
 										<td id="tdClarity<%$index%>"><%records.Clarity%></td>
