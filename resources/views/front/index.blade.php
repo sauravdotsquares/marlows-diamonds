@@ -396,16 +396,16 @@
                         of our stores to be amazed. Furthermore, if you find a better price elsewhere, simply send us a link, and we will gladly
                         beat it—guaranteeing you the best deal.</p>
                     <video
-    id="video"
-    autoplay
-    muted
-    loop
-    playsinline
-    poster="/storage/HomePageVideos/homeopagevideo.png"
->
-    <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.mp4' }}" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
+                    id="video"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    poster="/storage/HomePageVideos/homeopagevideo.png"
+                >
+                    <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.mp4' }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
 
                 </div>
                 <div class="text-center" id="getDirectionDetails1">
