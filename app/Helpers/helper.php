@@ -2634,35 +2634,3 @@ if (!function_exists("generateAccessToken")) {
         return $json['access_token'];
     }
 }
-
-if (!function_exists("getOptimizedImage")) {
-    function getOptimizedImage(string $relativePath, int $width, int $height, string $fallback = 'images/placeholder.jpg'): string
-    {
-        $sourcePath = public_path($relativePath);
-
-        if (!file_exists($sourcePath) || !@getimagesize($sourcePath)) {
-            return asset($fallback);
-        }
-
-        $optimizedDir = 'tempfolderpath';
-        $optimizedFilename = pathinfo($relativePath, PATHINFO_FILENAME) . "_{$width}x{$height}." . pathinfo($relativePath, PATHINFO_EXTENSION);
-        $optimizedRelativePath = $optimizedDir . '/' . $optimizedFilename;
-        $optimizedFullPath = public_path($optimizedRelativePath);
-
-        if (!file_exists($optimizedFullPath)) {
-            if (!file_exists(public_path($optimizedDir))) {
-                mkdir(public_path($optimizedDir), 0755, true);
-            }
-
-            try {
-                $image = Image::make($sourcePath)->resize($width, $height);
-                $image->save($optimizedFullPath);
-            } catch (\Exception $e) {
-                \Log::error("Image resize failed for {$relativePath}: " . $e->getMessage());
-                return asset($fallback);
-            }
-        }
-
-        return asset($optimizedRelativePath);
-    }
-}
