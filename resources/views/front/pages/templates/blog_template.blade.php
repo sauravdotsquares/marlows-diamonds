@@ -41,7 +41,7 @@
 		<div class="col-md-9">
 			<div id="post-data" class="post-data-col"></div>
 			<div class="ajax-load text-center" style="display:none">
-				<p><img alt="Loader image" src="{{ env('APP_IMAGE_URL').'/images/spinner.gif' }}">Loading More post</p>
+				<p><img alt="spinner" src="{{ env('APP_IMAGE_URL').'/images/spinner.gif' }}">Loading More post</p>
 			</div>
 		</div>
 		<div class="col-lg-3">
@@ -244,7 +244,7 @@
 	                $('.ajax-load').html("No more records found");
 	                return;
 	            }else{
-					$('.ajax-load').html(`<p><img src="${loadingDataImg}">Loading More post</p>`)
+					$('.ajax-load').html(`<p><img src="${loadingDataImg}"alt="Loading">Loading More post</p>`)
 				}
 
 

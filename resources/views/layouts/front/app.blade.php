@@ -35,7 +35,7 @@
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/developer.css?').env('VERSION') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/responsive.min.css') }}" rel="stylesheet">
 
     @yield('css')
 

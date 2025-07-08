@@ -213,7 +213,7 @@
                     <button style="display: none;" class="ajax-load-btn">Load more data</button>
                 </div>
                 <div class="ajax-loader">
-                    <img src="{{env('APP_IMAGE_URL').'/images/spinner.gif' }}" id="loading-data-image" class="img-responsive" style="display:none;" />
+                    <img src="{{env('APP_IMAGE_URL').'/images/spinner.gif' }}" id="loading-data-image" class="img-responsive" style="display:none;" alt="spinner"/>
                 </div>
                 <br>
                 <br>
