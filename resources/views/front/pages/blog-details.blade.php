@@ -1,10 +1,6 @@
 @extends('layouts.front.app')
 @section('content')
 
-
-
-<!--  Bread Crumb of blog start-->
-
 <div class="container">
 	<div class="breadcrumb-navs">
 		<ul>
@@ -14,11 +10,7 @@
 			<li>
 				<a href="{{env('APP_URL')}}/blog">Blog</a>
 			</li>
-			{{-- <li>
-				<a href="{{asset($data->cat_name->slug)}}">{{isset($data->cat_name->name)?$data->cat_name->name:'Uncategorized'}}</a>
-			</li> --}}
 			<li>
-				{{--  Change after SEO discuss 05Jan2023 seo_change --}}
 				{{isset($data->title)?$data->title:'Title'}}
 			</li>
 
@@ -80,7 +72,6 @@
 			<div class="col-lg-3">
 				<div class="blog-search-field">
 				</div>
-	
 				<div class="blogdetails-sidebar blog-list-sidebar blog-list-sidebar-first mobile-sidebar">
 					<div class="blogall-latest-resc">
 					<div class="accordion" id="accordion_categoreis">
@@ -96,7 +87,7 @@
 									@php
 										$getCategories = getCategories();
 									@endphp
-									@foreach($getCategories as $category)	
+									@foreach($getCategories as $category)
 										<li><a href="{{ route('blog_list', $category->slug) }}">{{isset($category->name)?$category->name:""}}</a></li>
 									@endforeach
 								</ul>

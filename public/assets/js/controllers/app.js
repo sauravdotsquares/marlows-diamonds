@@ -1,32 +1,23 @@
 var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSanitize'], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
-    
     });
-    
-    // var base_url = "/api/v1/";
+
     var base_url = systemBaseUrl + 'api/v1/';
     
     /******** Define the Common controller  ***************/
     
     MarlowsAPP.controller("CommonController",function($scope, $http,$compile) {
-        
         $scope.searchProducts = function(){
-            //console.log($scope.search);
             var url  = base_url+"searchproducts";
             $http({
                 method  : 'POST',
                 url     : url,
                 data    : {name:$scope.search}
-    
             }).success(function(data) {
-               // console.log(data);
-                $scope.searchResults = data;
-                
+                $scope.searchResults = data;   
             });
         }
-    
-       
     });
     /******** Define the diamond search controller  ***************/
     
@@ -38,7 +29,6 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
             $scope.totalPages = 0;
             $scope.currentPage = 1;
             $scope.range = [];
-    
             $scope.shape = $("input[name='shape']:checked").val(); // Shape
             $scope.payment_mode = $("input[name='payment_mode']:checked").val(); // Shape
     
@@ -97,12 +87,7 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
             
             
             function getData(){
-                
                 $scope.fromService = diamondSearchService.diamondSearch($scope.limit,$scope.currentPage,$scope.next_page_url,$scope.shape,$scope.carat_min,$scope.carat_max,$scope.colour,$scope.clarity,$scope.grade,$scope.polish,$scope.symmetry,$scope.fluorescence,$scope.certificate,$scope.partial_deposit_payment).then(function(result) {
-    
-                    
-                   
-                   
                     $scope.data = result.data.data;
                     
                     $scope.paging = result.data;
@@ -121,12 +106,8 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
                     $scope.VAT = $scope.paging.VAT;
                     $scope.firstDiamondAmount = $scope.paging.firstDiamondAmount;
                     
-                    // $scope.partial_deposit_payment = $scope.paging.firstDiamondAmount/10;
                     $scope.loader=false;
-                    // console.log('Sumit', $scope);
                 });
-    
-    
             }
             $scope.pageChanged = function() {
                 $scope.loader=true;
@@ -141,15 +122,12 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
             }else{
                 $scope.partial_deposit_payment = $scope.firstDiamondAmount * ($scope.temp_value_partial_deposit_payment / 100);
             }
-            // console.log("Sumit", $scope);
         }
-    
     });
     
     /******** Define the Product controller  ***************/
     
     MarlowsAPP.controller("ProductController",function($scope, $http,$compile) {
-        
         $scope.productCatFilters = function(cat1,cat2,cat3){
             $scope.display_filter = false;
             var url  = base_url+"getproductcatfilter";
@@ -171,8 +149,6 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
                 }
             });
         }
-    
-       
     });
     /******** Define the Dekopay controller  ***************/
     
@@ -190,20 +166,15 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
             $('#totalOrderText').attr('data-val',$scope.productPrice);
             $('#financeAvailableModal').modal('show');
             if(undefined !== $('#totalOrderText') && null != $('#totalOrderText')){
-                
                 alterFilters(); 
-    
                 $scope.dekoInit(); 
             }
         }
         $scope.financeOptionsCheckout = function(){
             $scope.term='ONIB12-22.9';
             $scope.percentage='10';
-           
             alterFilters(); 
-    
-            $scope.dekoInit(); 
-            
+            $scope.dekoInit();      
         }
         $scope.calculate = function(){
            $scope.dekoInit(); 
@@ -225,7 +196,7 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
                         $('select[name="percentage"] option').removeAttr('disabled'); 
                     }
             }
-         }
+        }
         function alterMinOption(){
            var payedVal = $('select[name="percentage"]').val();
            var update = false;
@@ -247,9 +218,7 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
            //Call the api 
            var price = $('#totalOrder').val();
            var payedVal = $('#payed').val();
-    
            var deposit  = parseFloat($('#payed').val()); 
-    
            var code = $('#terms').val();
           
            $('#payPro').val(code); 
@@ -259,8 +228,6 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
            var my_fd = new FinanceDetails(code, parseFloat(price), deposit, amount);
            
            var preSetVal = parseFloat($('#preSetValue').val());
-           //console.log(my_fd);
-           //console.log(preSetVal);
            if(price>preSetVal){
                 $('.finance-available-options').css('display','block');
                 $('.finance_options_not_available').css('display','none');
@@ -268,7 +235,6 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
                 $('.finance-available-options').css('display','none');
                 $('.finance_options_not_available').css('display','block');
            }
-    
            $('#perMonths').text(parseFloat(my_fd.m_inst).toFixed(2)); 
            $('#cashPrices').text(parseFloat(my_fd.goods_val).toFixed(2));
            $('#Deposited').text(parseFloat(my_fd.d_amount).toFixed(2));
@@ -279,13 +245,11 @@ var MarlowsAPP = angular.module('MarlowsAPP', ['ui.bootstrap','ngRoute', 'ngSani
            $('#noTerm').text(my_fd.term);
            $('#rointerest').text(my_fd.rate_of_interest);
            $('#apr_represent').text(my_fd.apr);
-        }
-       
+        }  
     });
     /*
     *** Angular JS Services
     */
-    
     MarlowsAPP.service('diamondSearchService', function($http, $location){
         var apiUrl = base_url;
         this.diamondSearch= function(limit,currentPage, nextpage,shape,carat_min,carat_max,colour,clarity,grade,polish,symmetry,fluorescence,certificate){

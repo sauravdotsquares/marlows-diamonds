@@ -44,6 +44,7 @@
 .ring-size-content .findyoursize {display: grid;grid-template-columns: repeat(2, 1fr);}
 }
 @media(max-width:767px) {
+    .perfect-certified-head h1 {margin-top: 30px;}
     .column-one-fifth, .main-banner-col, .product-info-media, .width-50 {
     flex: 0 0 100%;
     -ms-flex: 0 0 100%;

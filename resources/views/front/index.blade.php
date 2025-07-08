@@ -43,10 +43,7 @@
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
                     <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
-                    {{-- <p><strong>Buy a natural diamond and get a similar lab grown for free. Offer valid till 30th June for in store only</strong></p> --}}
-
                      <h2 > The<img src="/assets/images/logo-ups.png" alt="{{$header_settings->get_options('site_title')}}" style="padding-left: 5px;"> USP</h2>
-
                     <ul>
                     <li>Meet staff with over 150 years combined jewellery experience</li>
                     <li>Choose your setting from a selection of over 600 designs</li>
@@ -94,10 +91,6 @@
                                     <div class="product-titles">
                                         Engagement Ring
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Choose from an exotic range of diamond Rings or have your very own bespoke design made
-                                        for your special day.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small" href="{{ asset('diamond-engagement-rings') }}">Shop Now</a>
@@ -120,13 +113,9 @@
                                     <div class="product-titles">
                                         Diamond Rings
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Choose from our diverse range of diamond bands available in solitaire, multi-stone, shoulder set and halo ring styles for all purposes.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
-                                    <a class="btn-bg-small"
-                                        href="{{ asset('/diamonds-rings') }}">Shop Now</a>
+                                    <a class="btn-bg-small" href="{{ asset('/diamonds-rings') }}">Shop Now</a>
                                 </div>
                             </div>
                         </div>
@@ -146,9 +135,6 @@
                                     <div class="product-titles">
                                         Eternity Rings
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Select eternity rings for your love and elevate your love's beauty with an eternal sparkle. Find your perfect ring in the UK from our collection.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
@@ -172,9 +158,6 @@
                                     <div class="product-titles">
                                         Wedding Rings
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Something everlasting and as special as the marriage itself. Shop bespoke wedding rings from our collection.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small" href="{{ asset('/wedding-rings') }}">Shop
@@ -198,9 +181,6 @@
                                     <div class="product-titles">
                                         Diamond Jewellery
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Select your favourite diamond jewellery from a range of GIA certified diamonds for your most special moments.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small" href="{{ asset('/diamond-jewellery') }}">Shop
@@ -224,9 +204,6 @@
                                     <div class="product-titles">
                                         Halo Ring
                                     </div>
-                                    {{-- <div class="product-description">
-                                        A stunning GIA certified diamond - Halo Engagement rings - discovered from our collection. Our collection surely makes your day.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
@@ -250,10 +227,6 @@
                                     <div class="product-titles">
                                         Multi Stone Rings
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Why stick to classic solitaires when you can have a stunning multi-stone ring in a
-                                        unique arrangement?
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
@@ -277,9 +250,6 @@
                                     <div class="product-titles">
                                         Shoulder Set Ring
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Looking for a classic ring for your lover, our shoulder set diamond engagement rings are right ones for you.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
@@ -303,9 +273,6 @@
                                     <div class="product-titles">
                                         Solitaire Ring
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Find the perfect symbol of everlasting love and sophistication with our stunning assortment of solitaire engagement rings UK.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
@@ -329,9 +296,6 @@
                                     <div class="product-titles">
                                         Men's Wedding ring
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Check our collection of diamond & plain wedding bands for men and show your love & commitment. Shop our certified mens wedding rings online.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
@@ -355,9 +319,6 @@
                                     <div class="product-titles">
                                         Women's Wedding Ring
                                     </div>
-                                    {{-- <div class="product-description">
-                                        Looking for a beautiful diamond wedding ring for your special one, shop a ring from our collection of diamond & plain wedding bands.
-                                    </div> --}}
                                 </a>
                                 <div class="product-action-btn">
                                     <a class="btn-bg-small"
@@ -395,14 +356,7 @@
                         skilled polishers focus on maximising proportions rather than just carat weight, meaning our 1ct diamonds often look equivalent to a 1.25ct from other jewellers. We invite you to visit any
                         of our stores to be amazed. Furthermore, if you find a better price elsewhere, simply send us a link, and we will gladly
                         beat it—guaranteeing you the best deal.</p>
-                    <video
-                    id="video"
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    poster="/storage/HomePageVideos/homeopagevideo.png"
-                >
+                    <video  id="video" autoplay muted loop playsinline  poster="/storage/HomePageVideos/homeopagevideo.png">
                     <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.mp4' }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -466,65 +420,9 @@
 
     <!-- Best Selling Marlow's Diamond Jewellery start here -->
     @include('front.includes.featuredproduct')
-    <!-- Best Selling Marlow's Diamond Jewellery end here -->
     <!-- Best Selling Marlow's Diamond Jewellery start here -->
     @include('front.includes.visit-our-showrooms')
     <!-- Best Selling Marlow's Diamond Jewellery end here -->
-
-    <!-- Marlow's start here -->
-    <!-- <div class="marlows-diamond">
-        <div class="container">
-            <div class="marlows-diamond-title heading-h-two">
-                Marlow's Diamonds: Inspiring a Generation of Love.
-            </div>
-        </div>
-
-    </div> -->
-
-
-    <!-- Marlow's End here -->
-    {{-- <div class="whychoose-rows flex-flex-wrap flexed">
-        <a href="/terms" class="whychoose-col whychoose-link">
-            <div class="whychoose-col-inner">
-                <div class="whychoose-col-img">
-                    <i class="diamond-icon search-lifetime"></i>
-                </div>
-                <div class="whychoose-col-text">
-                    Lifetime Warranty T&c Apply
-                </div>
-            </div>
-        </a>
-        <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
-            <div class="whychoose-col-inner">
-                <div class="whychoose-col-img">
-                    <i class="diamond-icon search-giacertified"></i>
-                </div>
-                <div class="whychoose-col-text">
-                    GIA Certified Diamonds
-                </div>
-            </div>
-        </a>
-        <a href="/diamond-certificates/" class="whychoose-col whychoose-link">
-            <div class="whychoose-col-inner">
-                <div class="whychoose-col-img">
-                    <i class="diamond-icon search-experienced"></i>
-                </div>
-                <div class="whychoose-col-text">
-                    70 Years Experience
-                </div>
-            </div>
-        </a>
-        <a href="/delivery-and-returns-policy" class="whychoose-col whychoose-link">
-            <div class="whychoose-col-inner">
-                <div class="whychoose-col-img">
-                    <i class="diamond-icon search-terms-conditions"></i>
-                </div>
-                <div class="whychoose-col-text">
-                    30 Day Returns. T&c Apply
-                </div>
-            </div>
-        </a>
-    </div> --}}
 
     <!--Shop from Marlow’s GIA Certified Diamond Rings start -->
     <div class="shopfrom-block">
@@ -533,24 +431,14 @@
                 <h3 class="heading-h-three">
                     Our Happy Customers
                 </h3>
-                <!--<p>Diamond rings are more than just jewellery. We understand the symbolism that they represent. So that they
-                    can withstand the test of time our<br> diamond jewellery is certified by the GIA, so they provide quality
-                    and longevity.</p>-->
-                <!--<div class="explore-btn">
-                    <a class="btn-bg-small" href="/diamonds-rings">Explore Diamond Rings</a>
-                </div>-->
             </div>
-           <!-- <div class="rating-img">
-               <i class="diamond-icon search-starviews"></i>
-            </div>-->
-
             <div class="product-rating">
-<div class="rating-review"><h5>3000+</h5><span><img src="/assets/images/one-star1.png" alt=""> </span></div>
-    <div class="start-standing">
-        <div class="start-position"><span><img src="/assets/images/five-star11.png" alt=""> </span></div>
-        <h4>Outstanding  <span>(5 out of 5)</span></h4>
-    </div>
-</div>
+            <div class="rating-review"><h5>3000+</h5><span><img src="/assets/images/one-star1.png" alt=""> </span></div>
+                <div class="start-standing">
+                    <div class="start-position"><span><img src="/assets/images/five-star11.png" alt=""> </span></div>
+                    <h4>Outstanding  <span>(5 out of 5)</span></h4>
+                </div>
+            </div>
 
             <div class="rating-review-block">
                 <div class="owl-carousel owl-theme slider-review">
@@ -600,13 +488,7 @@
                                 @endif
                             </div>
                         </div>
-                         {{-- <div class="form-rows flexed flex-flex-wrap">
-                            <div class="form-col">
-                                <label>Message</label>
-                                <textarea required="required" name="description"
-                                    class="input-control {{ $errors->has('description') ? 'error' : '' }}" placeholder="Message"></textarea>
-                            </div>
-                        </div>  --}}
+
                         @if(env('APP_ENV') == 'production')
                             <div class="google-capatcha form-controls">
                                 <div class="g-recaptcha"
@@ -756,12 +638,8 @@
                         success: function(response) {
                             blankForm();
                             $("button[type='submit']").text("Subscribe");
-                            // $(this).find("button[type='submit']").prop('disabled',true);
-                            // console.log(response);
-                            // return false;
                             if (response.status == 200) {
                                 toastr.success(response.success);
-                                // window.location.reload();
                             } else {
                                 toastr.info(response.error);
                             }
@@ -784,12 +662,8 @@
                     success: function(response) {
                         blankForm();
                         $("button[type='submit']").text("Subscribe");
-                        // $(this).find("button[type='submit']").prop('disabled',true);
-                        // console.log(response);
-                        // return false;
                         if (response.status == 200) {
                             toastr.success(response.success);
-                            // window.location.reload();
                         } else {
                             toastr.info(response.error);
                         }
@@ -799,5 +673,4 @@
         }
     });
 </script>
-
 @endsection
