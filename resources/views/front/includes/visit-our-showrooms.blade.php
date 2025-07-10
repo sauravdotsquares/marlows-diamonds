@@ -17,10 +17,14 @@
 	    	<div class="visit-showrooms-image">
 	      <div class="row">
 	        <div class="col-md-6">
-	          <img src="/assets/images/visit-store-birmingham.jpg" class="img-fluid" alt="Birmingham Store Image">
+
+	          <img src="/assets/images/visit-store-birmingham.webp" class="img-fluid" alt="Birmingham Store Image">
+
 	        </div>
 	        <div class="col-md-6">
-	          <img src="/assets/images/visit-store-birmingham-store.jpg" class="img-fluid" alt="Birmingham Store Image">
+
+	          <img src="/assets/images/visit-store-birmingham-store.webp" class="img-fluid" alt="Birmingham Store Image">
+
 	        </div>
 	      </div>
 	    </div>
@@ -61,10 +65,14 @@
 	    	<div class="visit-showrooms-image">
 	      <div class="row mt-4">
 	        <div class="col-md-6">
-	          <img src="/assets/images/visit-store-img.png" class="img-fluid" alt="Birmingham Store Image">
+
+	          <img src="/assets/images/visit-store-img.webp" class="img-fluid" alt="Birmingham Store Image">
+
 	        </div>
 	        <div class="col-md-6">
-	          <img src="/assets/images/visit-store-img-inner.jpg" class="img-fluid" alt="Birmingham Store Image">
+
+	          <img src="/assets/images/visit-store-img-inner.webp" class="img-fluid" alt="Birmingham Store Image">
+
 	        </div>
 	      </div>
 	    </div>
