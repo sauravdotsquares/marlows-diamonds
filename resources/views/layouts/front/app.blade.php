@@ -31,7 +31,7 @@
 	  <link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
 	  <link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css?v=2.0.2') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/developer.css?').env('VERSION') }}" rel="stylesheet">
@@ -44,7 +44,8 @@
     </script>
     
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('assets/js/angular.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/angular.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.min.js" integrity="sha512-ATReN+hO4MtnEUKPL23NQVpaIp9Lc/7Ke91f9jAAEqwQkzdWzCDiwPi0Q8b2xZGsOA5OUDVPIpqqPqUsucXBVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
       [ng-cloak] {  display: none !important; }
       @media screen and (max-width: 720px) {
@@ -128,8 +129,12 @@
       const mapMarker = '{{ asset("images/map_marker.png") }}';
     </script>
 
-<script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
-<script src="{{ asset('assets/js/angular-sanitize.js?').env('VERSION')}}"></script>
+{{-- <script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
+<script src="{{ asset('assets/js/angular-sanitize.js?').env('VERSION')}}"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-route.min.js" integrity="sha512-Bs3EAi5hQciV/Wg1ReXlGbkZchIoKNGrOrISSayU2O2u3meEQ+Tyc3FKMiifNkjXIhMqRDDBSFqW2HVtjdbAzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-sanitize.min.js" integrity="sha512-DNnzJS0bLZfPhFmQwU+55AAKSbCD+7xH3tuTqapSpWABrZBtt7cja34cdS+b+a30vqoylXUGdMDHVAbFC26MSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
