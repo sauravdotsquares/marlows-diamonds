@@ -48,7 +48,7 @@
 			<div class="blog-search-field">
 				<div class="formgroup">
 					<input value="{{ request()->searchKeyword }}" type="text" name="search" class="blog-search-input" placeholder="Search for blog.." autocomplete="off">
-					<button class="seach-btn" type="button">
+					<button class="seach-btn" type="button" aria-label="search">
 						<img class="search-icon"
 						src="{{ env('APP_IMAGE_URL').'/assets/images/search.png' }}" alt="search"></button>
 				</div>

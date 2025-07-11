@@ -123,7 +123,7 @@
                         <form id="homeSearchForm" ng-controller="CommonController">
                             <div class="formgroup">
                                 <input type="text" name="search" class="typeahead search-selection-text" placeholder="Search for product.." ng-model="search" ng-keyup="searchProducts()" autocomplete="off">
-                                <button class="seach-btn" type="button"><i class="diamond-icon search-top"></i></button>
+                                <button class="seach-btn" type="button" aria-label="Search"><i class="diamond-icon search-top"></i></button>
                             </div>
                             <div class="search-suggestion hide_<%searchResults.length%>" ng-if="searchResults.length>0" ng-cloak>
                                 <div class="search-suggestion-list" ng-repeat="result in searchResults">
