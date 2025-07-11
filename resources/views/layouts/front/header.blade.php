@@ -243,7 +243,7 @@
                             </a>
                       </div> --}}
                     <div class="mobile-wishlist mobile-acc">
-                            <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true"></i></a>
+                            <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true" aria-label="account"></i></a>
                     </div>
                     <div class="mobile-wishlist">
                         <?php

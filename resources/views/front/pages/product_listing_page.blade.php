@@ -796,7 +796,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                                             <a href="javascript:void(0);" class="share-file" type="button" data-bs-toggle="modal" data-bs-target="#sharesocial" data-url="{{ asset('product/' . $product->slug) }}">
                                                 <img src="/assets/images/share.png" alt="share">
                                             </a>
-                                            <a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{ $product->id }}" data-productslug="{{ $product->slug }}">
+                                            <a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{ $product->id }}" data-productslug="{{ $product->slug }}" aria-label="wishlist">
                                                 <i class="fa {{ $wishListClass }} wishcount" aria-hidden="true"></i>
                                             </a>
                                         </div>

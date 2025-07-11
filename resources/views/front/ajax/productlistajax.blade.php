@@ -114,7 +114,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 			@endphp
     <a href="javascript:void(0);" class="share-file" type="button"  data-bs-toggle="modal" data-bs-target="#shared" data-url="{{ asset('product/' . $product->slug) }}"><img
 	src="/assets/images/share.png" alt="share"></a>
-			<a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{$product->id}}" data-productslug="{{$product->slug}}"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true"></i></a>
+			<a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{$product->id}}" data-productslug="{{$product->slug}}"><i class="fa {{$wishListClass}} wishcount" aria-hidden="true" aria-label="wishlist"></i></a>
 		</div>
 
 		<?php
