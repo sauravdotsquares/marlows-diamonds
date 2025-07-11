@@ -11,7 +11,7 @@
     <title>{!! isset($data->meta_title)?$data->meta_title:config('app.name') !!}</title>
     <meta name="description" content="{!! isset($data->meta_description)?$data->meta_description:'' !!}" />
     <meta name="keywords" content="{!! isset($data->meta_keyword)?$data->meta_keyword:'' !!}">
-    <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
+    {{-- <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script> --}}
     <script>
     window.uetq = window.uetq || [];
     window.uetq.push('consent', 'update', {
