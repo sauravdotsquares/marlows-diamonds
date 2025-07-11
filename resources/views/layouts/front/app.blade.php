@@ -66,16 +66,7 @@
       display: none !important;
       }
     </style>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1365164-1"></script>-->
-    <!--<script>-->
-      <!--  window.dataLayer = window.dataLayer || [];-->
-      <!--  function gtag(){dataLayer.push(arguments);}-->
-      <!--  gtag('js', new Date());-->
-      <!--  gtag('config', 'UA-1365164-1');-->
-      <!--</script>-->
-      
-    
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -87,8 +78,6 @@
     @if(env('APP_ENV')=='production')
       <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"307000705", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
       @yield('successtrackingscript')
-      
-      
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMHF7CDK9W"></script>
         <script>
@@ -98,10 +87,6 @@
           gtag('config', 'G-MMHF7CDK9W');
         </script>
     @endif
-    
-    
-   
-    
 </head>
 <body ng-app="MarlowsAPP">
     
@@ -148,24 +133,13 @@
 <!-- Cookie Consent JavaScript -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
-
 @yield('js')
 <script>
   
 
 
   $(document).ready(function(){
-      // this code is remove empty p tag and empty div tag start
-      // $("p").each(function(){
-      //   if ($.trim($(this).text()) == ""){
-      //     $(this).remove();
-      //   }
-      // });
-      
-      // this code is remove empty p tag and empty div tag End
-      
       $(".mobile_search").on('click',function(){
           $("#homeSearchForm").show();
       });
@@ -184,8 +158,6 @@
           $(this).text('Read less');
           element.addClass('show-text-col');
         }
-
-        // $(this).parents('.reviewr-review-text').toggleClass("show-text-col");
       });
 
     // Zopim zendesk Chat JS function Call start
@@ -196,7 +168,6 @@
             window.zopimloaded = true;
         }
     }, 3000);
-    // Zopim zendesk Chat JS function Call End
   });
 
     // Zopim zendesk Chat JS function apply Start
@@ -217,10 +188,6 @@
             $zopim.livechat.button.setColor('#FFCC00');
         });
     }
-
-    // Zopim zendesk Chat JS function apply End
-
-
 </script>
 
 <script>
@@ -250,14 +217,6 @@
               "link": "",
             "showLink": false,
           },
-  
-          onStatusChange: function(status) {
-              if (status === 'allow') {
-                  // console.log("Cookies accepted");
-              } else if (status === 'deny') {
-                  // console.log("Cookies declined");
-              }
-          }
       });
   });
 
@@ -305,17 +264,6 @@ $(document).ready(function(){
         });
     });
   }
-
-
-  function moveDiv() {
-      if ($(window).width() < 767) {
-          // $('#getDirectionDetails').css('display','block');
-          // $('.location_view_desktop').hide();
-      } else {
-          // $('#getDirectionDetails').css('display','none');
-          // $('.location_view_desktop').show();
-      }
-  }
 </script>
 
 <!-- header dropdown menu level collapse -->
@@ -335,38 +283,6 @@ if ($(window).innerWidth() <= 1024) {
         });
     });
 }
-</script>
-
-
-
-<script>
-    /*$(function() {
-        $('input.typeahead').focusout(function() {
-          $(this).val(" ");
-          $('.search-suggestion').html(" ");
-          $('.search-suggestion').hide();
-        });
-    });*/
-
-    /*$("input.typeahead").on('keyup',function(e){
-        $('.search-suggestion').html(" ");
-        if (e.target.value.length >= 3) {
-          $.ajax({
-              url: '{{ route("autocomplete") }}',
-              method: "get",
-              data: {
-                  _token: '{{ csrf_token() }}',
-                  query: $(this).val(),
-              },
-              success: function (response) {
-                  if(response.html){
-                    $('.search-suggestion').append(response.html);
-                    $('.search-suggestion').css('display','block');
-                  }
-              }
-          });
-        }
-    });*/
 </script>
 {!! (!empty($seoScriptData) && !empty($seoScriptData->footer_script)) ? $seoScriptData->footer_script : '' !!}
 </body>
