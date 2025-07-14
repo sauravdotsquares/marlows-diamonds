@@ -92,7 +92,7 @@
     
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBT3LKH"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    height="0" width="0" style="display:none;visibility:hidden" title="GTM"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
     @yield('google-ecommerce')
@@ -126,8 +126,7 @@
 <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 <script src="{{asset('/assets/js/jquery.lazyload.min.js?').env('VERSION')}}"></script>
-{{-- .env('VERSION') --}}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 
 <!-- Cookie Consent JavaScript -->
