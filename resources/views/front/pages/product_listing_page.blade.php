@@ -1,6 +1,6 @@
 @extends('layouts.front.app')
-{{--criteo start --}}
 
+{{--criteo start --}}
 @section('criteo-tracking')
 <script type="text/javascript">
     window.criteo_q = window.criteo_q || [];
@@ -441,7 +441,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 
     <div class="filter-header">
-        <!-- <span>Filter by:</span> -->
         <div class="selected-filters" id="selected-filters">
         </div>
     </div>
@@ -476,11 +475,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                         </div>
                     </div>
 
-
-
-                    {{-- start from here --}}
-
-
+                    {{--Filter start from here --}}
 
                     <div class="filter-container" id="collapse1">
                         @foreach ($filter_items as $filter_key => $filter_item)
@@ -702,7 +697,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                     <div class="search-result" style="margin-top: -15px;">
                         <div class="product-grid-wrap">
                             <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
-                                {{-- <img src="/assets/images/banner_image.png" alt="banner"> --}}
                                 @foreach ($sortedArray as $index => $product)
                                 <?php
                                 $thumbnailGif = getThumbnailGif($product->id);
@@ -794,7 +788,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                                                 }
                                             @endphp
                                             <a href="javascript:void(0);" class="share-file" type="button" data-bs-toggle="modal" data-bs-target="#sharesocial" data-url="{{ asset('product/' . $product->slug) }}">
-                                                <img src="/assets/images/share.png" alt="share">
+                                                <img src="/assets/images/share.png" alt="share" width="18" height="18">
                                             </a>
                                             <a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{ $product->id }}" data-productslug="{{ $product->slug }}" aria-label="wishlist">
                                                 <i class="fa {{ $wishListClass }} wishcount" aria-hidden="true"></i>
@@ -812,8 +806,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                                         <div class="product-items-item-image">
                                             <div class="list-discount-btn">
                                                 <div class="disbtn-box">{!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}</div>
-                                                {{-- <div class="disbtn-box extradis">Extra 10% Off</div>
-                                                <div class="disbtn-box freebtn">Free Gift</div> --}}
                                             </div>
                                             <a href="{{ asset('product/' . $product->slug) }}" id="variationImageShown{{$product->id}}" class="{{ $thumbnailGif ? 'product-hov' : '' }}">
                                                 @if (isset($product->getProductImages) && !empty($product->getProductImages['image_url']))
@@ -965,11 +957,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
        $customCss = 'col-lg-3 col-sm-6 col-md-3';
    }
    ?>
-
-
-   <center>
-       <!-- <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3> -->
-   </center>
 @else
    <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
        @foreach ($filter_items as $filter_key => $filter_item)
@@ -1847,24 +1834,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
     })
 
     $(document).on('touchstart', '.product-hover-affect', function() {
-        // $(this).find('a.product-hov').css({
-        //     '-webkit-transition': 'all 200ms ease-in',
-        //     '-webkit-transform': 'scale(1.2)',
-        //     '-ms-transition': 'all 200ms ease-in',
-        //     '-ms-transform': 'scale(1.2)',
-        //     '-moz-transition': 'all 200ms ease-in',
-        //     '-moz-transform': 'scale(1.2)',
-        //     'transition': 'all 200ms ease-in',
-        //     'transform': 'scale(1.2)'
-        // });
-        // $(this).find('.product-hover-video').css({
-        //     'display': "block",
-        //     'position': "absolute",
-        //     'top': "0",
-        //     "width": "100%",
-        //     "height": "100%",
-        //     "background": "#fff"
-        // });
         if ($(this).find('video').length) {
             $(this).find('video')[0].play()
         }
@@ -1892,10 +1861,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
     window.addEventListener('load', function() {
         document.getElementById('sortingDSelect').value = '';
     });
-    //     $(document).on('change', "#sortingMSelect", function() {
-    //        $("#showProductList").html('');
-    //         sendDataValues(1,'append',$(this).val());
-    //    });
+
 
     $(window).on('hashchange', function() {
         if (window.location.hash) {
@@ -1908,14 +1874,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
         }
     });
 
-    // $(window).scroll(function() {
-    //     var scroll = $('#scrollFlag').val();
-    //     if (scroll == 0 && ($(window).scrollTop() >= parseInt($('#sectionHeight').val()))) {
-    //         var page = $('#pagescroll').val();
-    //         sendDataValues(page);
-    //         // $('#scrollFlag').val(1);
-    //     }
-    // });
 
     $('#searchd, #searchm').on('keyup', function(event) {
         let searchTextData = $(this).val();
@@ -2157,7 +2115,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
         updateSelectedFilters();
 
-// Reset filter button functionality
+        // Reset filter button functionality
         document.getElementById("resetFilterButton").addEventListener("click", () => {
             document.querySelectorAll(".filter-item-data:checked").forEach(input => input.checked =
                 false);
@@ -2165,11 +2123,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
         });
     });
 </script>
-
-
-
-
-
 
 
 

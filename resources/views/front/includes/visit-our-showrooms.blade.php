@@ -5,10 +5,10 @@
           </div>
 
 	  <ul class="nav nav-tabs visit-showrooms-tab" id="myTab" role="tablist">
-	    <li class="nav-item">
+	    <li class="nav-item" role="presentation">
 	      <a class="nav-link active" id="birmingham-tab" data-toggle="tab" href="#birmingham" role="tab" aria-controls="birmingham" aria-selected="true">Birmingham</a>
 	    </li>
-	    <li class="nav-item">
+	    <li class="nav-item" role="presentation">
 	      <a class="nav-link" id="london-tab" data-toggle="tab" href="#london" role="tab" aria-controls="london" aria-selected="false">London</a>
 	    </li>
 	  </ul>
