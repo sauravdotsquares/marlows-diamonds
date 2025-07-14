@@ -708,7 +708,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                             <div class="product-grid-items-item">
                                 @if ($index === 3)
                                  <a href = "https://marlows-diamonds.co.uk/live-diamond-search">
-                                    <img class="diamond-engage-banner" src="/assets/images/banner_image.png" alt="Banner">
+                                    <img class="diamond-engage-banner" src="/assets/images/banner_image.png" alt="Banner" width="343" height="505">
                                  </a>
                                 @else
                                   
