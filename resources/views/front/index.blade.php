@@ -45,11 +45,11 @@
                     <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
                      <h2 > The<img src="/assets/images/logo-ups.png" alt="{{$header_settings->get_options('site_title')}}" style="padding-left: 5px;"> USP</h2>
                     <ul>
-                    <li>Meet staff with over 150 years combined jewellery experience</li>
-                    <li>Choose your setting from a selection of over 600 designs</li>
-                    <li>Choose your diamond or gemstone from a selection of over 2500</li>
-                    <li>Our experienced in-house workshop finishes it for you</li>
-                    <li>Take it away same day should you want</li>
+                    <li>Be guided by our expert team with over 150 years of combined jewellery experience</li>
+                    <li>Choose your perfect setting from a handpicked collection of over 600 timeless designs</li>
+                    <li>Select your diamond or gemstone from more than 2,500 exquisite options</li>
+                    <li>Our in-house workshop brings your vision to life with precision and care</li>
+                    <li>Take your piece home the same day, if you wish</li>
                    </ul>
                     <div class="shop-engage-btn">
                     <a class="btn-bg-large" href="{{ asset('diamond-engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
