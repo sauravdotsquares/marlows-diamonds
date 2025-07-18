@@ -50,7 +50,7 @@
                     @if($lastDate > $now)
                     <div class="post-bar-center" style="height: 40px;">
                     {{$header_settings->get_options('top-bar-desktop')}}
-                    <a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;" href="/TERMS">*T&amp;C</a>
+                    <a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;" href="/terms">*T&amp;C</a>
                     </div>
                     @endif
                 </div>
@@ -66,7 +66,7 @@
                 <div class="item">
                     <a class="whatspp-num" href="javascript:void(0);">
                         TRUSTED BY THOUSANDS. FOREVER LOW PRICES.
-                    </a><a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 10px;" href="/TERMS">*T&amp;C</a>
+                    </a><a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 10px;" href="/terms">*T&amp;C</a>
                 </div>
                 <div class="item">
                     <div class="addr-number">
