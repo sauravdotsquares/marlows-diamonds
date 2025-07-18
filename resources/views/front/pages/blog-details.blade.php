@@ -5,10 +5,10 @@
 	<div class="breadcrumb-navs">
 		<ul>
 			<li>
-				<a href="{{env('APP_URL')}}">Home</a>
+				<a href="{{env('APP_ROOT_URL')}}">Home</a>
 			</li>
 			<li>
-				<a href="{{env('APP_URL')}}/blog">Blog</a>
+				<a href="{{env('APP_ROOT_URL')}}/blog">Blog</a>
 			</li>
 			<li>
 				{{isset($data->title)?$data->title:'Title'}}
