@@ -245,6 +245,8 @@ textarea.input-control{height:100px}
 .post-bar-left,.post-bar-center,.post-bar-right{width:33.33%}
 .post-bar-center{text-align:center}
 .post-bar-right{text-align:right}
+.header-post-bar-wraper{ height: 40px;justify-content:center;}
+.header-post-bar-left{ width: 30% !important; text-align: center !important;}
 /** header post bar css end **/
 
 /** Footer Css Start here  **/

@@ -2,12 +2,6 @@
 <?php 
   $getURLWithParameter = str_replace(Request::root(), '', request()->fullUrl());
 ?>
-  <!-- for hreflang keywords for all suggested country Start -->
-  {{--<link rel="alternate" href="https://marlowsdiamonds.com{{($getURLWithParameter)?$getURLWithParameter:''}}" hreflang="x-default" />
-  <link rel="alternate" href="https://marlows-diamonds.co.uk{{$getURLWithParameter?$getURLWithParameter:''}}" hreflang="en-gb" />--}}
-
-{{-- OG Canonical --}}
-{{-- <link rel="canonical" href="{{request()->fullUrl()}}" /> --}}
 <link rel="canonical" href="{{ request()->url() }}" />
 @if(isset($productListingData['previous_url']) && !empty($productListingData['previous_url']))
   <link rel="prev" href="{{$productListingData['previous_url']}}" />
@@ -24,7 +18,6 @@
 <meta property="og:url" content="{{url()->current()}}" />
 <meta property="og:site_name" content="{!! config('app.name') !!}" />
 @yield('dynamic_og_image')
-{{-- <meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" />--}}
 <meta property="og:image:width" content="120" />
 <meta property="og:image:height" content="120" />
 <meta property="og:image:type" content="image/jpeg" />
