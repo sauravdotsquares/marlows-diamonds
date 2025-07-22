@@ -1,119 +1,80 @@
 <?php
-$getInstaData = getInstagramDataDetails();
+ $getInstaData = getInstagramDataDetails();
 ?>
-@if(count($getInstaData) > 0)
+{{-- @if(count($getInstaData) > 0) --}}
 <div class="share-moment">
-    <div class="share-moment-heading">
-        <div class="heading-h-two">
-            Share your special moments with us<br><span> #marlowsengagements</span>
-        </div>
-    </div>
+    <div class="share-moment-heading"><div class="heading-h-two">Share your special moments with us<br><span> #marlowsengagements</span></div></div>
     <div class="insta-photo-list">
         <div class="owl-carousel owl-theme photo-slider">
-           <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta1.jpg" alt="band shimmer" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DMMz3h_ID0X/" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div> 
-            <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta2.jpg" alt="ruby diamond ring" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DL7FgkPIzTa/" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            @foreach($getInstaData as $key => $insta)
+
+                <div class="item">
+                    <div class="instaphoto-info">
+                        <div class="instaphoto-img">
+                          <img src="{{ $insta->image_url}}" alt="{{ $insta->alt ?? 'Instagram Image' }}" loading="lazy">
+                        </div>
+                        <div class="insta-link">
+                            <a href="{{$insta->link}}" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-             <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta3.jpg" alt="couple" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DLpMDMlIeIU/" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta4.jpg" alt="passion love" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DLjaaTJofec/" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta5.jpg" alt="round cut shoulders" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DLe535qoW1K" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta6.jpg" alt="necklace" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DLb_4gtIjza" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta7.jpg" alt="princess cut" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DLZMsJbo8Yf/" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta8.jpg" alt="gift" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DLSc6qIoTeB/" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta9.jpg" alt="ring" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DLIJnuBIJXv/" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="instaphoto-info">
-                    <div class="instaphoto-img">
-                        <img src="/images/insta/insta10.jpg" alt="necklace" loading="lazy">
-                    </div>
-                    <div class="insta-link">
-                        <a href="https://www.instagram.com/p/DKq3dy3IsoC/" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     <div class="insta-btn" id="getdirection">
         <a class="btn-bg-small" href="https://www.instagram.com/marlows_diamonds/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> View on Instagram</a>
     </div>
 </div>
-@endif
+{{-- @endif --}}
+<script>
+  fetch('https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,timestamp,username&access_token=IGAARcSE6ZBZBB1BZAE9mN0xMTWU3OTgzODY1NXJCbTFEOExrZA29VSVpTVlFldmROM09aSzRwZAEdhVkRmc2tMWS1DbUlFR0lIU0syVGxvM1dlNkFETWNNMmp1NnlfeXp0WWFsV01JU29hREFNdVVfNGpld1JtVGVva0VNZAXFSTzY0UQZDZD&limit=50')
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("insta-feed");
+      if (!data || !data.data) return;
+
+      const postsToRender = [];
+
+    //   let count = 0;
+    //   data.data.forEach(post => {
+    //     if (count >= 50) return;
+    //     if (post.media_type !== 'VIDEO') {
+    //       count++;
+    //       postsToRender.push(post);
+    //     }
+    //   });
+      // Send data to backend
+      fetch('/save-instagram-posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ posts: postsToRender })
+      })
+      .then(res => res.json())
+      .then(result => {
+        console.log('Saved to backend:', result);
+      })
+      .catch(error => {
+        console.error('Error saving posts:', error);
+      });
+
+      // Initialize Owl Carousel
+      if (typeof $ !== 'undefined' && $('.photo-slider').owlCarousel) {
+        $('.photo-slider').owlCarousel({
+          loop: true,
+          margin: 10,
+          nav: true,
+          responsive: {
+            0: { items: 1 },
+            600: { items: 2 },
+            767: { items: 3 },
+            1000: { items: 5 }
+          }
+        });
+      }
+    });
+</script>
+
+

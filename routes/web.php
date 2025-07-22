@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Front\StripeController;
 use App\Http\Controllers\Front\ApplePayController;
 use App\Http\Controllers\Front\KlarnaController;
+use App\Http\Controllers\Front\InstagramController;
 
 // routes/api.php
 use Illuminate\Support\Facades\Artisan;
@@ -38,6 +39,10 @@ Route::get('/clear-cache', function() {
 Route::get('/klarna', [KlarnaController::class, 'showKlarnaPage']);
 Route::post('/klarna/place-order', [KlarnaController::class, 'placeOrder']);
 Route::get('/klarna/order-status/{orderId}', [KlarnaController::class, 'checkOrderStatus']);
+
+// Instagram new route.
+Route::get('/update-instagram-posts', [InstagramController::class, 'fetchAndStoreInstagramPosts']);
+Route::get('/sync-instagram-feed', [InstagramController::class, 'fetchAndStoreInstagramPosts']);
 
 /**
  * Admin routes
