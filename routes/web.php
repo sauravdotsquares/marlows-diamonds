@@ -41,8 +41,10 @@ Route::post('/klarna/place-order', [KlarnaController::class, 'placeOrder']);
 Route::get('/klarna/order-status/{orderId}', [KlarnaController::class, 'checkOrderStatus']);
 
 // Instagram new route.
-Route::get('/update-instagram-posts', [InstagramController::class, 'fetchAndStoreInstagramPosts']);
-Route::get('/sync-instagram-feed', [InstagramController::class, 'fetchAndStoreInstagramPosts']);
+Route::post('/save-instagram-posts', [InstagramController::class, 'storePostsFromClient']);
+Route::get('/sync-instagram-feed', function(){
+	return view ('layouts.front.instagram-update');
+});
 
 /**
  * Admin routes

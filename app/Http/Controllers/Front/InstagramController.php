@@ -59,38 +59,38 @@ public function fetchAndStoreInstagramPosts()
 
 
 
-// public function storePostsFromClient(Request $request)
-// {
-//     $posts = $request->input('posts');
+public function storePostsFromClient(Request $request)
+{
+    $posts = $request->input('posts');
 
-//     if (!is_array($posts)) {
-//         return response()->json(['error' => 'Invalid data format'], 400);
-//     }
+    if (!is_array($posts)) {
+        return response()->json(['error' => 'Invalid data format'], 400);
+    }
 
-//     $savedPosts = [];
+    $savedPosts = [];
 
-//     foreach (array_slice($posts, 0, 50) as $post) {
-//         // Only store IMAGE or CAROUSEL_ALBUM
-//         if ($post['media_type'] !== 'VIDEO') {
-//             $saved = InstagramData::updateOrCreate(
-//                 ['insta_id' => $post['id']],
-//                 [
-//                     'link' => $post['permalink'] ?? null,
-//                     'image_url' => $post['media_url'] ?? null,
-//                     'alt' => substr($post['caption'] ?? '', 0, 150),
-//                     'title' => $post['caption'] ?? null,
-//                     'media_type' => $post['media_type'] ?? null,
-//                     'insta_timestamp' => $post['timestamp'] ?? null,
-//                     'username' => $post['username'] ?? null,
-//                     'status' => 1,
-//                 ]
-//             );
+    foreach (array_slice($posts, 0, 50) as $post) {
+        // Only store IMAGE or CAROUSEL_ALBUM
+        if ($post['media_type'] !== 'VIDEO') {
+            $saved = InstagramData::updateOrCreate(
+                ['insta_id' => $post['id']],
+                [
+                    'link' => $post['permalink'] ?? null,
+                    'image_url' => $post['media_url'] ?? null,
+                    'alt' => substr($post['caption'] ?? '', 0, 150),
+                    'title' => $post['caption'] ?? null,
+                    'media_type' => $post['media_type'] ?? null,
+                    'insta_timestamp' => $post['timestamp'] ?? null,
+                    'username' => $post['username'] ?? null,
+                    'status' => 1,
+                ]
+            );
 
-//             $savedPosts[] = $saved;
-//         }
-//     }
+            $savedPosts[] = $saved;
+        }
+    }
 
-//     return response()->json(['message' => 'Posts saved successfully', 'count' => count($savedPosts)]);
-// }
+    return response()->json(['message' => 'Posts saved successfully', 'count' => count($savedPosts)]);
+}
 
 }

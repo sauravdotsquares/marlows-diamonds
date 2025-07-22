@@ -35,30 +35,16 @@
 
       const postsToRender = [];
 
-    //   let count = 0;
-    //   data.data.forEach(post => {
-    //     if (count >= 50) return;
-    //     if (post.media_type !== 'VIDEO') {
-    //       count++;
-    //       postsToRender.push(post);
-    //     }
-    //   });
-      // Send data to backend
-      fetch('/save-instagram-posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ posts: postsToRender })
-      })
-      .then(res => res.json())
-      .then(result => {
-        console.log('Saved to backend:', result);
-      })
-      .catch(error => {
-        console.error('Error saving posts:', error);
+      let count = 0;
+      data.data.forEach(post => {
+        if (count >= 50) return;
+        if (post.media_type !== 'VIDEO') {
+          count++;
+          postsToRender.push(post);
+        }
       });
+      // Send data to backend
+      
 
       // Initialize Owl Carousel
       if (typeof $ !== 'undefined' && $('.photo-slider').owlCarousel) {
