@@ -6,8 +6,10 @@
     <div class="share-moment-heading"><div class="heading-h-two">Share your special moments with us<br><span> #marlowsengagements</span></div></div>
     <div class="insta-photo-list">
         <div class="owl-carousel owl-theme photo-slider">
-            @foreach($getInstaData as $key => $insta)
-
+          @foreach($getInstaData as $key => $insta)
+          @if($key >= 10)
+                  @break
+              @endif
                 <div class="item">
                     <div class="instaphoto-info">
                         <div class="instaphoto-img">
@@ -43,9 +45,6 @@
           postsToRender.push(post);
         }
       });
-      // Send data to backend
-      
-
       // Initialize Owl Carousel
       if (typeof $ !== 'undefined' && $('.photo-slider').owlCarousel) {
         $('.photo-slider').owlCarousel({
@@ -62,5 +61,4 @@
       }
     });
 </script>
-
 

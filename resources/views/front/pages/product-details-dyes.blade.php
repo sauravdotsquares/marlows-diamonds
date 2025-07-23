@@ -1593,9 +1593,10 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
       "@type": "VideoObject",
       "name": "{{isset($data->title)?$data->title:''}}",
       "description": "{{ isset($data->description) ? strip_tags($data->description) : '' }}",
-      "thumbnailUrl": "{{ $VideoThumbnailUrl }}",
-      "uploadDate": "{{ $uploadDate }}",
-      "duration": "PT0M20S"
+      "thumbnailUrl": "{{ env('APP_IMAGE_URL').'/storage/'.$data->getProductImages->image_url }}",
+      "duration": "PT20S",
+	  "contentUrl": "{{ $VideoThumbnailUrl }}",
+	  "embedUrl":"{{url()->current()}}"
     }
     </script>
 {{-- video schema ends here --}}
