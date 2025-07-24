@@ -81,7 +81,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('diamond-engagement-rings') }}">
                                     <?php 
-                                        $ringImageEngagementRingUrl = getImageOptimizeDetails('/assets/images/engagement-ring.png','340','340');
+                                        $ringImageEngagementRingUrl = getImageOptimizeDetails('/assets/images/engagement-ring.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageEngagementRingUrl}}" alt="Engagement Ring">
                                 </a>
@@ -103,7 +103,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/diamonds-rings') }}">
                                     <?php
-                                        $ringImageDiamondRingUrl = getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg','340','340');
+                                        $ringImageDiamondRingUrl = getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageDiamondRingUrl}}" alt="Multi Stone Rings">
                                 </a>
@@ -125,7 +125,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/eternity-rings') }}">
                                     <?php 
-                                        $ringImageEternityRingUrl = getImageOptimizeDetails('/storage/Products/ET112-F-G-VS-SI_T_W.jpg','340','340');
+                                        $ringImageEternityRingUrl = getImageOptimizeDetails('/storage/Products/ET112-F-G-VS-SI_T_W.webp','340','340');
                                     ?>
                                     <img src="{{ $ringImageEternityRingUrl }}" alt="Multi Stone Rings">
                                 </a>
@@ -148,7 +148,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/wedding-rings') }}">
                                     <?php 
-                                        $ringImageWeddingRingUrl = getImageOptimizeDetails('/assets/images/wedding-ring.png','340','340');
+                                        $ringImageWeddingRingUrl = getImageOptimizeDetails('/assets/images/wedding-ring.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageWeddingRingUrl}}" alt="Wedding Rings">
                                 </a>
@@ -171,7 +171,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/diamond-jewellery') }}">
                                     <?php
-                                        $ringImageDiamondJewelleryUrl = getImageOptimizeDetails('/assets/images/diamond-jewellery.png','340','340');
+                                        $ringImageDiamondJewelleryUrl = getImageOptimizeDetails('/assets/images/diamond-jewellery.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageDiamondJewelleryUrl}}" alt="Diamond Jewellery">
                                 </a>
@@ -194,7 +194,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/engagement-rings/halo') }}">
                                     <?php
-                                        $ringImageHaloUrl = getImageOptimizeDetails('/storage/Products/RC2029_00003_1650430327.jpg','340','340');
+                                        $ringImageHaloUrl = getImageOptimizeDetails('/storage/Products/RC2029_00003_1650430327.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageHaloUrl}}" alt="Multi Stone Rings">
                                 </a>
@@ -217,7 +217,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/engagement-rings/multi-stone') }}">
                                     <?php
-                                        $ringImageMultistoneRingUrl = getImageOptimizeDetails('/assets/images/multi-stone.png','340','340');
+                                        $ringImageMultistoneRingUrl = getImageOptimizeDetails('/assets/images/multi-stone.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageMultistoneRingUrl}}" alt="Multi Stone Rings">
                                 </a>
@@ -240,7 +240,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/engagement-rings/shoulder-set') }}">
                                     <?php 
-                                        $ringImageShoulderSetUrl = getImageOptimizeDetails('/storage/Products/R1-2294_00003_1650373913.jpg','340','340');
+                                        $ringImageShoulderSetUrl = getImageOptimizeDetails('/storage/Products/R1-2294_00003_1650373913.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageShoulderSetUrl}}" alt="Multi Stone Rings">
                                 </a>
@@ -263,7 +263,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/engagement-rings/solitaire') }}">
                                     <?php 
-                                        $ringImageSolitaireUrl = getImageOptimizeDetails('/storage/Products/R1-327_00003_1650432540.jpg','340','340');
+                                        $ringImageSolitaireUrl = getImageOptimizeDetails('/storage/Products/R1-327_00003_1650432540.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageSolitaireUrl}}" alt="Multi Stone Rings">
                                 </a>
@@ -286,7 +286,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/wedding-rings/mens') }}">
                                     <?php 
-                                        $ringImageMensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/WED028_T_W.jpg','340','340');
+                                        $ringImageMensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/WED028_T_W.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageMensWeddingRingUrl}}" alt="Multi Stone Rings">
                                 </a>
@@ -309,7 +309,7 @@
                             <div class="product-image">
                                 <a href="{{ asset('/wedding-rings/womens') }}">
                                     <?php
-                                        $ringImageWomensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/217231453wed052-silver-front.png','340','340');
+                                        $ringImageWomensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/217231453wed052-silver-front.webp','340','340');
                                     ?>
                                     <img src="{{$ringImageWomensWeddingRingUrl}}" alt="Multi Stone Rings">
                                 </a>
