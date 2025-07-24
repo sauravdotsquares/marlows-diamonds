@@ -107,13 +107,6 @@
         </div>
     </div>
     <div class="whatspp-num-1" style="display:none;">
-        <!-- <div class="container">
-            <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
-            <span id="scroll-to-top">
-                WhatsApp
-            </span>
-            </a>
-        </div> -->
     </div>
 </footer>
 <!-- Footer end here -->

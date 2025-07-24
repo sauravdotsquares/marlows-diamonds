@@ -37,7 +37,6 @@
                                     <div class="price-section">
                                         <?php if(!empty($getProductListingPrices['final_shop_price']) && $getProductListingPrices['final_shop_price'] != 0.0){ ?>
                                                 <div style="display: flex;">
-                                                    <!-- <h4><del style="color:#000" id="shopPrice"></del> </h4> -->
                                                     @if($getProductListingPrices['final_discounted_price'] != $getProductListingPrices['final_shop_price'])
                                                     <h4><del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_shop_price'])}}</del> </h4>
                                                     @endif
@@ -47,11 +46,8 @@
                                                 @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_discounted_price'])
                                                     <p><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $getProductListingPrices['final_rrp_price'] - $getProductListingPrices['final_discounted_price']) }}</span></span> |  <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_rrp_price'])}}</del> </p>
                                                 @endif
-                                        <?php } ?> 
+                                        <?php } ?>
                                     </div>
-                                   <!--  <div class="product-action-btn">
-                                        <a class="btn-bg-small" href="{{asset('product/'.$product->slug)}}">Select Options</a>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -59,9 +55,6 @@
                 @endforeach
             </div>
         </div>
-       <!--  <div class="text-center">
-            <a class="btn-bg-small expdia" href="{{asset('/diamond-engagement-rings')}}">Explore all Diamond Engagement Rings Now</a>
-        </div> -->
     </div>
 </div>
 @endif

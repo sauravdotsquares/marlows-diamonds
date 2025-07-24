@@ -236,12 +236,7 @@
                               <i class="fa fa-search" aria-hidden="true"></i>
                           </a>
                       </div>
-                      {{-- <div class="whats_app">
-                            <a class="whatspp-num" target="_blank" href="https://api.whatsapp.com/send?phone=447449262928">
-                                <img src="{{asset('assets/images/whatsapp.png')}}" alt="whatsApp">
-                                 <span class="tooltiptext">10% Price Beat Guarantee on WhatsApp. Share a link to a competitor's product, and we’ll offer at least 10% off on any lab-grown product, exclusively through WhatsApp.</span>
-                            </a>
-                      </div> --}}
+
                     <div class="mobile-wishlist mobile-acc">
                             <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true" aria-label="account"></i></a>
                     </div>
@@ -387,7 +382,6 @@
         $(document).ready(function(){
             // Attach click event to body
             $('body').click(function(){
-                // Clear search input value
                 var removedDiv = $('.search-suggestion-list.ng-scope').remove();
                 if(removedDiv){
                     $('.search-suggestion.hide_1').css('border','none');
@@ -396,25 +390,17 @@
                 }
             });
 
-            // Prevent search input click event propagation
             $('.head-mini-search').click(function(event){
                 event.stopPropagation();
             });
         });
-        // $(".search-selection-text").focusin(function(){
-        //     $('.search-suggestion').css('display','block');
-        // });
-        // $(".search-selection-text").focusout(function(){
-        //     $('.search-suggestion').css('display','none');
-        // });
-        
-        // let discountDate = "05/31/2024 23:59:32"; //{{$dist_future}}";
+
         let discountText = "{{$getMonthTextArray[$getCurrentMonth]}}";
         let discountDate = "{{$dist_future}}"+" "+"23:59:32";
         var countDownDate = new Date(discountDate).getTime();
         var myfunc = setInterval(function() {
 
-        var now = new Date().getTime();      
+        var now = new Date().getTime();
         var timeleft = countDownDate - now;
 
         // Calculating the days, hours, minutes and seconds left
@@ -434,10 +420,6 @@
         $(".discount_timer").text(timerToShow);
         // $("#offer-text").text('Wedding Rings Sale - Up to 35% off');
         $("#offer-text").text(discountText);
-        // console.log('first', hoursToShow);
-        // console.log('first', minutesToShow);
-        // console.log('first', secondsToShow);
-        // Display the message when countdown is over
         if (timeleft < 0) {
             clearInterval(myfunc);
             $(".discount_timer").text('');

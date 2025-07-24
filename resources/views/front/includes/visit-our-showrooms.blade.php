@@ -18,12 +18,12 @@
 	      <div class="row">
 	        <div class="col-md-6">
 
-	          <img src="/assets/images/visit-store-birmingham.webp" class="img-fluid" alt="Birmingham Store Image">
+	          <img src="/assets/images/visit-store-birmingham.webp" class="img-fluid" alt="Birmingham Store">
 
 	        </div>
 	        <div class="col-md-6">
 
-	          <img src="/assets/images/visit-store-birmingham-store.webp" class="img-fluid" alt="Birmingham Store Image">
+	          <img src="/assets/images/visit-store-birmingham-store.webp" class="img-fluid" alt="Birmingham Store">
 
 	        </div>
 	      </div>
