@@ -28,7 +28,7 @@
     </div>
 </div>
 {{-- @endif --}}
-<script>
+{{-- <script>
   fetch('https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,timestamp,username&access_token=IGAARcSE6ZBZBB1BZAE9mN0xMTWU3OTgzODY1NXJCbTFEOExrZA29VSVpTVlFldmROM09aSzRwZAEdhVkRmc2tMWS1DbUlFR0lIU0syVGxvM1dlNkFETWNNMmp1NnlfeXp0WWFsV01JU29hREFNdVVfNGpld1JtVGVva0VNZAXFSTzY0UQZDZD&limit=50')
     .then(res => res.json())
     .then(data => {
@@ -60,5 +60,5 @@
         });
       }
     });
-</script>
+</script> --}}
 

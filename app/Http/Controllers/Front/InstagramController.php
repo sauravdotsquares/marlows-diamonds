@@ -9,42 +9,42 @@ use App\Models\InstagramData;
 
 class InstagramController extends Controller
 {
-public function fetchAndStoreInstagramPosts()
-{
-    $accessToken = 'IGAARcSE6ZBZBB1BZAE9mN0xMTWU3OTgzODY1NXJCbTFEOExrZA29VSVpTVlFldmROM09aSzRwZAEdhVkRmc2tMWS1DbUlFR0lIU0syVGxvM1dlNkFETWNNMmp1NnlfeXp0WWFsV01JU29hREFNdVVfNGpld1JtVGVva0VNZAXFSTzY0UQZDZD';
-    $endpoint = "https://graph.instagram.com/me/media";
-    $fields = "id,caption,media_type,media_url,permalink,timestamp,username";
-    $url = "{$endpoint}?fields={$fields}&access_token={$accessToken}";
+// public function fetchAndStoreInstagramPosts()
+// {
+//     $accessToken = 'IGAARcSE6ZBZBB1BZAE9mN0xMTWU3OTgzODY1NXJCbTFEOExrZA29VSVpTVlFldmROM09aSzRwZAEdhVkRmc2tMWS1DbUlFR0lIU0syVGxvM1dlNkFETWNNMmp1NnlfeXp0WWFsV01JU29hREFNdVVfNGpld1JtVGVva0VNZAXFSTzY0UQZDZD';
+//     $endpoint = "https://graph.instagram.com/me/media";
+//     $fields = "id,caption,media_type,media_url,permalink,timestamp,username";
+//     $url = "{$endpoint}?fields={$fields}&access_token={$accessToken}";
 
-    $response = Http::get($url);
-    //   dd($response->json());
-    if ($response->successful()) {
-        $data = $response->json()['data'] ?? [];
+//     $response = Http::get($url);
+//     //   dd($response->json());
+//     if ($response->successful()) {
+//         $data = $response->json()['data'] ?? [];
 
-        // Limit to only 50 items
-        $limitedPosts = array_slice($data, 0, 50);
+//         // Limit to only 50 items
+//         $limitedPosts = array_slice($data, 0, 50);
 
-        foreach ($limitedPosts as $post) {
-            InstagramData::updateOrCreate(
-                ['insta_id' => $post['id']],
-                [
-                    'link' => $post['permalink'] ?? null,
-                    'image_url' => $post['media_url'] ?? null,
-                    'alt' => substr($post['caption'] ?? '', 0, 150),
-                    'title' => $post['caption'] ?? null,
-                    'media_type' => $post['media_type'] ?? null,
-                    'insta_timestamp' => $post['timestamp'] ?? null,
-                    'username' => $post['username'] ?? null,
-                    'status' => 1,
-                ]
-            );
-        }
+//         foreach ($limitedPosts as $post) {
+//             InstagramData::updateOrCreate(
+//                 ['insta_id' => $post['id']],
+//                 [
+//                     'link' => $post['permalink'] ?? null,
+//                     'image_url' => $post['media_url'] ?? null,
+//                     'alt' => substr($post['caption'] ?? '', 0, 150),
+//                     'title' => $post['caption'] ?? null,
+//                     'media_type' => $post['media_type'] ?? null,
+//                     'insta_timestamp' => $post['timestamp'] ?? null,
+//                     'username' => $post['username'] ?? null,
+//                     'status' => 1,
+//                 ]
+//             );
+//         }
 
-        return response()->json(['message' => 'Latest 50 Instagram posts updated successfully']);
-    } else {
-        return response()->json(['error' => 'Failed to fetch data from Instagram'], 500);
-    }
-}
+//         return response()->json(['message' => 'Latest 50 Instagram posts updated successfully']);
+//     } else {
+//         return response()->json(['error' => 'Failed to fetch data from Instagram'], 500);
+//     }
+// }
 
     // Optional: Fetch posts from DB to use in frontend
     // public function getInstagramPosts()
