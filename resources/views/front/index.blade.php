@@ -43,7 +43,7 @@
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
                     <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
-                     <h2 > The<img src="/assets/images/logo-ups.png" alt="{{$header_settings->get_options('site_title')}}" style="padding-left: 5px;"> USP</h2>
+                     <h2 > The<img src="/assets/images/logo-ups.png" alt="{{$header_settings->get_options('site_title')}}" style="padding-left: 5px;height:58px;width:155px;"> USP</h2>
                     <ul>
                     <li>Be guided by our expert team with over 150 years of combined jewellery experience</li>
                     <li>Choose your perfect setting from a handpicked collection of over 600 timeless designs</li>

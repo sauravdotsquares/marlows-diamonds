@@ -233,12 +233,12 @@
                 <div class="mobile-cart-wishlist">
                       <div class="mobile_search">
                           <a>
-                              <i class="fa fa-search" aria-hidden="true"></i>
+                              <i class="fa fa-search" aria-hidden="true" style="width: 20px height: 18px;"></i>
                           </a>
                       </div>
 
                     <div class="mobile-wishlist mobile-acc">
-                            <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true" aria-label="account"></i></a>
+                            <a href="/my-account"><i class="fa fa-user-o" aria-hidden="true" aria-label="account" style="width: 20px height: 18px;"></i></a>
                     </div>
                     <div class="mobile-wishlist">
                         <?php
@@ -250,17 +250,16 @@
                                 }
                             ?>
                             <a href="{{ route('products.wishlist') }}" title="Wishlist"><i
-                                    class="fa {{ $wishlistIcon }} wishcount" aria-hidden="true"></i>
+                                    class="fa {{ $wishlistIcon }} wishcount" aria-hidden="true" style="width: 20px height: 18px;" ></i>
                             </a>
                     </div>
                     <div class="mobile-cart">
                         <a href="{{ route('product.cart') }}">
-                            <img src="{{env('APP_IMAGE_URL').'/assets/images/cart-color-black.png'}}" alt="cart">
+                            <img src="{{env('APP_IMAGE_URL').'/assets/images/cart-color-black.png'}}" alt="cart" style="width: 20px height: 18px;">
                             <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
                         <span class="mob-cart-number cartcount">{{ count((array) session('cart')) }}</span>
                         </a>
                     </div>
-
                 </div>
                 <div class="main-navigaiton">
                     <div class="navbar-toggler">
