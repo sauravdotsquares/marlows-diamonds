@@ -67,6 +67,16 @@ public function storePostsFromClient(Request $request)
         return response()->json(['error' => 'Invalid data format'], 400);
     }
 
+    // Sort posts by timestamp descending (latest first)
+    usort($posts, function ($a, $b) {
+        return strtotime($b['timestamp']) <=> strtotime($a['timestamp']);
+    });
+
+    // If more than 4 posts are coming in, delete all existing InstagramData
+    if (count($posts) > 4) {
+        InstagramData::truncate(); // OR ->delete() if you want to keep soft deletes/history
+    }
+
     $savedPosts = [];
 
     foreach (array_slice($posts, 0, 50) as $post) {
@@ -90,7 +100,11 @@ public function storePostsFromClient(Request $request)
         }
     }
 
-    return response()->json(['message' => 'Posts saved successfully', 'count' => count($savedPosts)]);
+    return response()->json([
+        'message' => 'Posts saved successfully',
+        'count' => count($savedPosts),
+    ]);
 }
+
 
 }
