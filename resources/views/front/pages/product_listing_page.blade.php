@@ -958,7 +958,18 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
    }
    ?>
 @else
-   <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
+   @if (Str::contains(request()->url(), 'engagement-rings/'))
+        <div class="head-para-three">
+        <?php
+        $currentUrl = $_SERVER['REQUEST_URI'];
+        $urlParts = explode('/', trim($currentUrl, '/'));
+        $shapeSlug = end($urlParts);
+        $shapeName = ucwords(str_replace('-', ' ', $shapeSlug));
+        ?>
+      <h2 class="heading-h-three"> Explore More <?php echo $shapeName; ?> Shape Engagement Rings Styles</h2>
+
+ </div>
+   <div class="category_listing engagement_rings" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
        @foreach ($filter_items as $filter_key => $filter_item)
            @if ($filter_item->slug == 'style-categories')
                @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
@@ -973,7 +984,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                        <p>
                            @if (isset($product_item_item->parent_category_slug) &&
                                    !empty($product_item_item->parent_category_slug->parent_cate->slug))
-                               <a
+                               <a style="color: #8e2e65; font-weight: bold;  font-size: 18px;  text-decoration: none;"
                                    href="{{ url($product_item_item->parent_category_slug->parent_cate->slug . '/' . $product_item_item->item_slug) }}">{{ $product_item_item->item_name }}</a>
                            @endif
                        </p>
@@ -982,6 +993,597 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
            @endif
        @endforeach
    </div>
+@else
+
+
+{{-- precontent start --}}
+
+{{-- For the wedding ring mens --}}
+
+@if (Str::endsWith(request()->url(), '/wedding-rings/mens'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Men's</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://marlows-diamonds.co.uk/tempfolderpath/1695626574WED025-F-G-VS-SI_T_W_1650703527.jpg"
+      alt="Diamond Band"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/wedding-rings/mens/diamond-band">Men's Diamond Band</a>
+    </p>
+  </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/WED003_T_W_1650709427.jpg"
+      alt="Plain Band"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/wedding-rings/mens/plain-band"> Men's Plain Band</a>
+    </p>
+  </div>
+</div>
+@endif
+
+
+
+
+
+
+
+
+
+{{-- For the wedding ring womens --}}
+
+@if (Str::endsWith(request()->url(), '/wedding-rings/womens'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Women's</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://marlows-diamonds.co.uk/tempfolderpath/1695626574WED025-F-G-VS-SI_T_W_1650703527.jpg"
+      alt="Diamond Band"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/wedding-rings/womens/diamond-band">Women's Diamond Band</a>
+    </p>
+  </div>
+
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/WED003_T_W_1650709427.jpg"
+      alt="Plain Band"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/wedding-rings/womens/plain-band">Women's Plain Band</a>
+    </p>
+  </div>
+</div>
+@endif
+
+
+
+
+
+
+
+{{-- For the wedding diamond band --}}
+
+@if (Str::contains(request()->url(), '/wedding-rings/mens/diamond-band'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Men's Plain Band</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/WED003_T_W_1650709427.jpg"
+      alt="Plain Band"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/wedding-rings/mens/plain-band">Men's Plain Band</a>
+    </p>
+  </div>
+</div>
+@endif
+
+
+
+
+
+{{-- For the men's plain band --}}
+
+@if (Str::contains(request()->url(), '/wedding-rings/mens/plain-band'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Men's Diamond Band</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://devstaging.marlows-diamonds.co.uk/storage/Products/WED030_T_W-1.jpg"
+      alt="Men's Band"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/wedding-rings/wedding-rings/mens/diamond-band">Men's Diamond Band</a>
+    </p>
+  </div>
+
+
+</div>
+@endif
+
+
+
+
+
+{{-- For the women's diamond band --}}
+
+@if (Str::contains(request()->url(), '/wedding-rings/womens/diamond-band'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Women's Plain Band</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/WED003_T_W_1650709427.jpg"
+      alt="Plain Band"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/wedding-rings/womens/plain-band">Women's Plain Band</a>
+    </p>
+  </div>
+</div>
+@endif
+
+
+
+
+
+
+
+
+
+
+{{-- For the wedding plain band --}}
+
+@if (Str::contains(request()->url(), '/wedding-rings/womens/plain-band'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Women's Diamond Band</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://marlows-diamonds.co.uk/tempfolderpath/1695626626ET106-F-VS_T_W-1.jpg"
+      alt="Diamond Band"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/wedding-rings/womens/diamond-band">Women's Diamond Band</a>
+    </p>
+  </div>
+
+</div>
+@endif
+
+
+
+
+
+
+ 
+
+
+
+
+ 
+{{-- For the diamond-jewellery --}}
+
+@if (Str::endsWith(request()->url(), '/diamond-jewellery'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Diamond Jewellery</h2>
+ </div>
+<div class="owl-carousel owl-theme listing-slider" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
+      alt="Bracelets"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
+    </p>
+  </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://devstaging.marlows-diamonds.co.uk/storage/Products/D_S022_90_W_1650547324.jpg"
+      alt="Earrings"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
+    </p>
+  </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
+      alt="Necklaces"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
+    </p>
+  </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
+    </p>
+  </div>
+
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive to Marlows</a>
+    </p>
+  </div>
+
+</div>
+@endif
+
+
+
+
+
+
+
+
+
+{{-- For the Bracelets --}}
+
+@if (Str::contains(request()->url(), '/diamond-jewellery/bracelets'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Diamond Jewellery</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
+      alt="Earrings"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
+    </p>
+  </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
+      alt="Necklaces"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
+    </p>
+  </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
+    </p>
+  </div>
+
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive to Marlows</a>
+    </p>
+  </div>
+
+</div>
+@endif
+
+
+
+
+
+
+{{-- For the Earrings --}}
+
+@if (Str::contains(request()->url(), '/diamond-jewellery/earrings'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Diamond Jewellery</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
+      alt="Bracelets"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
+    </p>
+  </div>
+
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
+      alt="Necklaces"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
+    </p>
+  </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
+    </p>
+  </div>
+
+
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive to Marlows</a>
+    </p>
+  </div>
+
+</div>
+@endif
+
+
+
+
+
+
+
+
+{{-- For the Necklaces --}}
+
+@if (Str::contains(request()->url(), '/diamond-jewellery/necklaces'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Diamond Jewellery</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
+      alt="Bracelets"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
+    </p>
+  </div>
+
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/D_S022_90_W_1650547324.jpg"
+      alt="Earrings"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
+    </p>
+    </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
+    </p>
+  </div>
+
+
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive to Marlows</a>
+    </p>
+  </div>
+
+</div>
+@endif
+
+
+
+
+
+
+
+
+{{-- For the pendants --}}
+
+@if (Str::contains(request()->url(), '/diamond-jewellery/pendants'))
+     <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Diamond Jewellery</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
+      alt="Bracelets"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
+    </p>
+  </div>
+
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
+      alt="Necklaces"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
+    </p>
+  </div>
+
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/D_S022_90_W_1650547324.jpg"
+      alt="Earrings"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
+    </p>
+    </div>
+
+
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive to Marlows</a>
+    </p>
+  </div>
+
+</div>
+@endif
+
+
+
+
+
+{{-- For the exclusive --}}
+
+@if (Str::contains(request()->url(), '/diamond-jewellery/exclusive-to-marlows'))
+ <div class="head-para-three">
+ <h2 class="heading-h-three">Explore More Options for Diamond Jewellery</h2>
+ </div>
+<div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
+      alt="Bracelets"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
+    </p>
+  </div>
+
+  <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
+      alt="Necklaces"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
+    </p>
+  </div>
+
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
+      alt="Pendants"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
+    </p>
+  </div>
+
+    <div class="item" style="width: 216.5px;">
+    <img
+      src="https://admin.marlowsdiamonds.com/storage/Products/D_S022_90_W_1650547324.jpg"
+      alt="Earrings"
+      style="max-width: 100%; height: auto;"
+    />
+    <p>
+      <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
+    </p>
+    </div>
+</div>
+@endif
+
+
+
+
+
+
+
+
+
+
+
+@endif
+{{-- precontent ends --}}
+
+
+
+
+
+
+
 @endif
 
    {{-- ends here --}}
@@ -2316,10 +2918,10 @@ function copyToClipboard() {
                     items: 3
                 },
                 991: {
-                    items: 5
+                    items: 4
                 },
                 1100: {
-                    items: 6
+                    items: 4
                 }
             }
         });

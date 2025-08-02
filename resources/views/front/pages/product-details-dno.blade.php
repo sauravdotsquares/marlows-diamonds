@@ -1835,7 +1835,7 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 
 		$('#thumbnail-carousel .thumbnail-item').click(function(){
 			var index = $('#thumbnail-carousel .thumbnail-item').index(this);
-			$('#carousel').trigger('to.owl.carousel', [index+2, 300]);
+			$('#carousel').trigger('to.owl.carousel', [index+1, 300]);
 		});
 		$('.btn-360').on('click', function() {
 			var videoUrl = $(this).data('video');

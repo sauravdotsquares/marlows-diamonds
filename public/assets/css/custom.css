@@ -613,6 +613,11 @@ left: 6px; display: block;}
 .category-list-wrap .category-list-top .category-list-item-searchsort .dropdown .dropdown-content {position: relative;background: none;min-width: 113px;box-shadow: none;
 z-index: 1;height: 30px;text-align: left;font-weight: 500;border: 1px solid #d6d6d6;padding: 0 8px;font-size: 12px;}
 
+/* static list css */
+
+.product-panel-new .category_listing .item p a { color: #8e2e65; font-weight: bold; font-size: 18px; text-decoration: none;}
+.category_listing {gap: 60px !important;}.engagement_rings {gap:10px !important}
+
 .category-listing-row .category-list-wrap .text-center {margin: 25px 0;}
 .category-listing-row .category-list-wrap .text-center b {color: #8e2e65;font-size: 18px;}
 
