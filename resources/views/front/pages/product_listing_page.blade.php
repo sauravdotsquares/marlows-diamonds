@@ -1002,7 +1002,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 @if (Str::endsWith(request()->url(), '/wedding-rings/mens'))
      <div class="head-para-three">
- <h2 class="heading-h-three">Explore More Options for Men's</h2>
+ <h2 class="heading-h-three">Explore More Options for Men's Wedding Rings</h2>
  </div>
 <div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
 
@@ -1042,7 +1042,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 @if (Str::endsWith(request()->url(), '/wedding-rings/womens'))
      <div class="head-para-three">
- <h2 class="heading-h-three">Explore More Options for Women's</h2>
+ <h2 class="heading-h-three">Explore More Options for Women's Wedding Rings</h2>
  </div>
 <div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
   <div class="item" style="width: 216.5px;">
@@ -1080,7 +1080,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 @if (Str::contains(request()->url(), '/wedding-rings/mens/diamond-band'))
      <div class="head-para-three">
- <h2 class="heading-h-three">Explore More Options for Men's Plain Band</h2>
+ <h2 class="heading-h-three">Explore More Options for Men's Band</h2>
  </div>
 <div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
 
@@ -1105,7 +1105,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 @if (Str::contains(request()->url(), '/wedding-rings/mens/plain-band'))
      <div class="head-para-three">
- <h2 class="heading-h-three">Explore More Options for Men's Diamond Band</h2>
+ <h2 class="heading-h-three">Explore More Options for Men's Band</h2>
  </div>
 <div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
 
@@ -1133,7 +1133,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 @if (Str::contains(request()->url(), '/wedding-rings/womens/diamond-band'))
      <div class="head-para-three">
- <h2 class="heading-h-three">Explore More Options for Women's Plain Band</h2>
+ <h2 class="heading-h-three">Explore More Options for Women's Band</h2>
  </div>
 <div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
 
@@ -1163,7 +1163,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 @if (Str::contains(request()->url(), '/wedding-rings/womens/plain-band'))
      <div class="head-para-three">
- <h2 class="heading-h-three">Explore More Options for Women's Diamond Band</h2>
+ <h2 class="heading-h-three">Explore More Options for Women's Band</h2>
  </div>
 <div class="category_listing" style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
   <div class="item" style="width: 216.5px;">
