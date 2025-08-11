@@ -20,6 +20,9 @@
 		
 		</div>
 	</div>
+	    @if(Str::contains(request()->path(), 'gia-certified-diamonds'))
+         @include('front.includes.choosediamond')
+        @endif
 </div>
 
 
