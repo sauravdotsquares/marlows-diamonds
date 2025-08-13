@@ -52,7 +52,7 @@
                     <li>Take your piece home the same day, if you wish</li>
                    </ul>
                     <div class="shop-engage-btn">
-                    <a class="btn-bg-large" href="{{ asset('diamond-engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
+                    <a class="btn-bg-large" href="{{ asset('engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
                     </div>
                 </div>
             </div>
