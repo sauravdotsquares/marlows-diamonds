@@ -62,8 +62,24 @@
         <div class="sitemap-part">
             <h2>Product categories</h2>
             <ul>
-                @foreach ($categoryUrlsList as  $category)
-                    <li><a href="{{ url($category['url']) }}">{!! strip_tags($category['name']) !!}</a></li>
+                @foreach ($categoryUrlsList as $category)
+                    @php
+                        $path = parse_url($category['url'], PHP_URL_PATH);
+                        $isEngagementSub = preg_match('#^/engagement-rings/[^/]+/.+#', $path);
+                    @endphp
+
+                    @if (!$isEngagementSub)
+                        <li><a href="{{ url($category['url']) }}">{!! strip_tags($category['name']) !!}</a></li>
+                    @endif
+                @endforeach        
+            </ul>
+        </div>
+
+        <div class="sitemap-part">
+            <h2>Other pages</h2>
+            <ul>
+                @foreach ($otherPages as $key => $other_page)
+                    <li><a href="{{ url( $other_page ) }}">{{ $key }}</a></li>
                 @endforeach        
             </ul>
         </div>
