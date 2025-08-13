@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="text-center">
-            <a class="btn-bg-small expdia" href="{{asset('/diamond-engagement-rings')}}">All Diamond Engagement Rings</a>
+            <a class="btn-bg-small expdia" href="{{asset('/engagement-rings')}}">All Diamond Engagement Rings</a>
         </div>
     </div>
 </div>
