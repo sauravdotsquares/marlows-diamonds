@@ -59,10 +59,29 @@
             </ul>
         </div>
 
+
+
+
+
+
+
+        
+
+
+        @php
+            // Remove the unwanted items from the array before looping
+            $filteredCategories = array_filter($categoryUrlsList, function($category) {
+                return !in_array(trim(strip_tags($category['name'])), [
+                    'Engagement Rings',
+                    'ETERNITY DIAMOND RINGS'
+                ]);
+            });
+        @endphp
+
         <div class="sitemap-part">
             <h2>Product categories</h2>
             <ul>
-                @foreach ($categoryUrlsList as $category)
+                @foreach ($filteredCategories as $category)
                     @php
                         $path = parse_url($category['url'], PHP_URL_PATH);
                         $isEngagementSub = preg_match('#^/engagement-rings/[^/]+/.+#', $path);
@@ -72,8 +91,28 @@
                         <li><a href="{{ url($category['url']) }}">{!! strip_tags($category['name']) !!}</a></li>
                     @endif
                 @endforeach        
+
+                {{-- Static list items --}}
+                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/round">Round Engagement Rings</a></li>
+                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/oval">Oval Engagement Rings</a></li>
+                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/cushion">Cushion Engagement Rings</a></li>
+                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/heart">Heart Engagement Rings</a></li>
+                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/pear">Pear Engagement Rings</a></li>
+                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/marquise">Marquise Engagement Rings</a></li>
+                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/emerald">Emerald Engagement Rings</a></li>
+                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/princess">Princess Engagement Rings</a></li>
             </ul>
         </div>
+
+
+
+
+
+        
+
+
+
+
 
         <div class="sitemap-part">
             <h2>Other pages</h2>
