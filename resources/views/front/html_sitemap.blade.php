@@ -78,40 +78,62 @@
             });
         @endphp
 
-        <div class="sitemap-part">
-            <h2>Product categories</h2>
-            <ul>
-                @foreach ($filteredCategories as $category)
-                    @php
-                        $path = parse_url($category['url'], PHP_URL_PATH);
-                        $isEngagementSub = preg_match('#^/engagement-rings/[^/]+/.+#', $path);
-                    @endphp
+       @php
+    // Categories that should appear first
+    $priorityNames = [
+        'Halo Engagement Rings',
+        'Shoulder Set Engagement Rings',
+        'Solitare Engagement Rings',
+        'Hidden Halo',
+    ];
 
-                    @if (!$isEngagementSub)
-                        <li><a href="{{ url($category['url']) }}">{!! strip_tags($category['name']) !!}</a></li>
-                    @endif
-                @endforeach        
+    // Find and extract priority items
+    $priorityItems = array_filter($filteredCategories, function($category) use ($priorityNames) {
+        return in_array(trim(strip_tags($category['name'])), $priorityNames);
+    });
 
-                {{-- Static list items --}}
-                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/round">Round Engagement Rings</a></li>
-                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/oval">Oval Engagement Rings</a></li>
-                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/cushion">Cushion Engagement Rings</a></li>
-                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/heart">Heart Engagement Rings</a></li>
-                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/pear">Pear Engagement Rings</a></li>
-                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/marquise">Marquise Engagement Rings</a></li>
-                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/emerald">Emerald Engagement Rings</a></li>
-                <li><a href="https://marlows-diamonds.co.uk/engagement-rings/princess">Princess Engagement Rings</a></li>
-            </ul>
-        </div>
+    // Remove them from the original array
+    $remainingItems = array_filter($filteredCategories, function($category) use ($priorityNames) {
+        return !in_array(trim(strip_tags($category['name'])), $priorityNames);
+    });
+
+    // Merge priority items first, then remaining
+    $reorderedCategories = array_merge($priorityItems, $remainingItems);
+@endphp
+
+<div class="sitemap-part">
+    <h2>Product categories</h2>
+    <ul>
+  
+        {{-- Static list items --}}
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings">Engagement Rings</a></li>
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings/round">Round Engagement Rings</a></li>
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings/oval">Oval Engagement Rings</a></li>
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings/cushion">Cushion Engagement Rings</a></li>
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings/heart">Heart Engagement Rings</a></li>
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings/pear">Pear Engagement Rings</a></li>
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings/marquise">Marquise Engagement Rings</a></li>
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings/emerald">Emerald Engagement Rings</a></li>
+        <li><a href="https://marlows-diamonds.co.uk/engagement-rings/princess">Princess Engagement Rings</a></li>
+
+        @foreach ($reorderedCategories as $category)
+            @php
+                $path = parse_url($category['url'], PHP_URL_PATH);
+                $isEngagementSub = preg_match('#^/engagement-rings/[^/]+/.+#', $path);
+            @endphp
+
+            @if (!$isEngagementSub)
+                <li><a href="{{ url($category['url']) }}">{!! strip_tags($category['name']) !!}</a></li>
+            @endif
+        @endforeach
+    </ul>
+</div>
 
 
 
 
 
         
-
-
-
 
 
         <div class="sitemap-part">
