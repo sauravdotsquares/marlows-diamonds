@@ -167,26 +167,24 @@
 								@endforeach
 							@endif
 							
-							@if(isset($prodImages) && $prodImages)
+							 @if(!empty($prodImages))
 								@foreach($prodImages as $images)
-									@if(isset($images->image_url) && !empty($images->image_url))
+									@if(!empty($images->image_url))
 										@php
-											$explode = explode('/',$images->image_url);
-											$explode1 = explode('.',$explode[1]);
 											$ext = pathinfo($images->image_url, PATHINFO_EXTENSION);
-											$video_extensions = ['mp4'];
+											$video_extensions = ['mp4']; // add 'webm','ogg' if you use them
 										@endphp
 
-										@if(isset($images->is_featured) && $images->is_featured != 1)
+										@if(($images->is_featured ?? null) != 1)
 											<div class="item product-items-carousel">
-												<a data-fancybox="gallery2" href="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" data-caption="{{isset($data->title)?$data->title:''}}">
-													<?php if(in_array($ext,$video_extensions)){ ?>
-														<video style="width: 100%;" loop autoplay muted="1" playsinline>
-															<source class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" type="video/mp4" type="video/mp4" />
+												<a data-fancybox="gallery2" href="{{ env('APP_IMAGE_URL').'/storage/'.$images->image_url }}" data-caption="{{ $data->title ?? '' }}">
+													@if(in_array(strtolower($ext), $video_extensions))
+														<video style="width:100%;" loop autoplay muted playsinline>
+															<source src="{{ env('APP_IMAGE_URL').'/storage/'.$images->image_url }}" type="video/mp4" />
 														</video>
-													<?php }else{ ?>
-														<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
-													<?php } ?>
+													@else
+														<img class="thumbnail-src" src="{{ env('APP_IMAGE_URL').'/storage/'.$images->image_url }}" alt="{{ $data->title ?? '' }}">
+													@endif
 												</a>
 											</div>
 										@endif
@@ -194,39 +192,37 @@
 								@endforeach
 							@endif
 						</div>
+
                       <!-- Thumbnails Section Below -->
-					<div id="thumbnail-carousel" class="owl-carousel">
-						@if($variationImages)
-							@foreach($variationImages as $images)
-								@if(isset($images->vari_image) && !empty($images->vari_image))
-									<div class="item thumbnail-item">
-										<a href="javascript:void(0)" class="thumbnail-link">
-										<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->vari_image}}" alt="{{isset($data->title)?$data->title:''}}">
-									</a>
-									</div>
-								@endif
-							@endforeach
-						@endif
-
-						@if(isset($prodImages) && $prodImages)
-							@foreach($prodImages as $images)
-								@if(isset($images->image_url) && !empty($images->image_url))
-									@php
-										$explode = explode('/',$images->image_url);
-										$ext = pathinfo($images->image_url, PATHINFO_EXTENSION);
-									@endphp
-
-									@if(isset($images->is_featured) && $images->is_featured != 1)
-										<div class="item thumbnail-item">
+					    @php $thumbIndex = 0; @endphp
+						<div id="thumbnail-carousel" class="owl-carousel">
+							@if($variationImages)
+								@foreach($variationImages as $images)
+									@if(!empty($images->vari_image))
+										<div class="item thumbnail-item" data-index="{{ $thumbIndex }}">
 											<a href="javascript:void(0)" class="thumbnail-link">
-											<img class="thumbnail-src" src="{{env('APP_IMAGE_URL').'/storage/'.$images->image_url}}" alt="{{isset($data->title)?$data->title:''}}">
-										</a>
+												<img class="thumbnail-src" src="{{ env('APP_IMAGE_URL').'/storage/'.$images->vari_image }}" alt="{{ $data->title ?? '' }}">
+											</a>
 										</div>
+										@php $thumbIndex++; @endphp
 									@endif
-								@endif
-							@endforeach
-						@endif
-					</div>
+								@endforeach
+							@endif
+
+							@if(!empty($prodImages))
+								@foreach($prodImages as $images)
+									@if(!empty($images->image_url) && (($images->is_featured ?? null) != 1))
+										<div class="item thumbnail-item" data-index="{{ $thumbIndex }}">
+											<a href="javascript:void(0)" class="thumbnail-link">
+												<img class="thumbnail-src" src="{{ env('APP_IMAGE_URL').'/storage/'.$images->image_url }}" alt="{{ $data->title ?? '' }}">
+											</a>
+										</div>
+										@php $thumbIndex++; @endphp
+									@endif
+								@endforeach
+							@endif
+						</div>
+
 						<?php
 							$thumbailsAllowed =	getMasterValuesByType('slider_thumbnails');
 							if(in_array($data->id, $thumbailsAllowed)){
@@ -1786,6 +1782,7 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 				loop: true,
 				nav: true,
 				dots: false,
+				autoplay: false,
 			});
 	
 	
@@ -1816,27 +1813,32 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 
 <script>
 	$(document).ready(function(){
-		// Initialize both the main and thumbnail carousels
-		$('#carousel').owlCarousel({
-			items: 1,
-			loop: true,
-			nav: true,
-			autoplay: false,
-			dots: false,
-		});
+	 var $main = $('#carousel');
+    var $thumb = $('#thumbnail-carousel');
 
-		$('#thumbnail-carousel').owlCarousel({
-			items: 4,
-			loop: true,
-			nav: false,
-			dots: true,
-		});
+    $main.owlCarousel({
+        items: 1,
+        loop: true,
+        autoplay: false,
+        nav: true,
+        dots: false,
+    });
+
+    $thumb.owlCarousel({
+        items: 4,
+        loop: false,
+        nav: true,
+        dots: false,
+        margin: 8
+    });
+
+    // Click on thumbnail -> go to that exact slide in main
+    $thumb.on('click', '.thumbnail-item', function () {
+        var index = $(this).data('index'); // this is 0..N-1 across ALL slides
+        $main.trigger('to.owl.carousel', [index, 300, true]);
+    });
 
 
-		$('#thumbnail-carousel .thumbnail-item').click(function(){
-			var index = $('#thumbnail-carousel .thumbnail-item').index(this);
-			$('#carousel').trigger('to.owl.carousel', [index+2, 300]);
-		});
 		$('.btn-360').on('click', function() {
 			var videoUrl = $(this).data('video');
 			$('#carousel').trigger('to.owl.carousel', [0, 300]);
