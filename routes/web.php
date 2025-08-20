@@ -19,9 +19,15 @@ use App\Http\Controllers\Front\StripeController;
 use App\Http\Controllers\Front\ApplePayController;
 use App\Http\Controllers\Front\KlarnaController;
 use App\Http\Controllers\Front\InstagramController;
+use App\Http\Controllers\Front\CSVController;
+
 
 // routes/api.php
 use Illuminate\Support\Facades\Artisan;
+
+
+Route::get('/upload-csv-products-variations-import', [CSVController::class, 'csvProductsVariationImportFunction']);
+
 
 Route::post('/api/orders', [ApplePayController::class, 'appleApiOrder']);
 Route::post('/api/orders/{id}/capture', [ApplePayController::class, 'appleApiOrderCapture']);
