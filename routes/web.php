@@ -26,7 +26,7 @@ use App\Http\Controllers\Front\CSVController;
 use Illuminate\Support\Facades\Artisan;
 
 
-Route::get('/upload-csv-products-variations-import', [CSVController::class, 'csvProductsVariationImportFunction']);
+// Route::get('/upload-csv-products-variations-import', [CSVController::class, 'csvProductsVariationImportFunction']);
 
 
 Route::post('/api/orders', [ApplePayController::class, 'appleApiOrder']);
