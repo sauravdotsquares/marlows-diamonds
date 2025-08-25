@@ -51,10 +51,6 @@
         .color-btn {
     cursor: pointer;
 }
-
-   .hide-on-load {
-    display: none !important;
-    }
     </style>
 @endsection 
 <?php
@@ -1594,7 +1590,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
 
     <!-- Choose a dreamy start here-->
-    <div class="choosedreamy-wrap hide-on-load">
+    <div class="choosedreamy-wrap">
         <div class="container">
             <div class="head-para-three">
                 {{-- <h2 class="heading-h-three">{{ $categoryData->pre_content[0]->title }}</h2> --}}
@@ -2529,10 +2525,6 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             success: function(res) {
                 // filterShapechanged();
                 // resetFilterButton
-             
-                 setTimeout(function() {
-                    $('.choosedreamy-wrap').removeClass('hide-on-load');
-                }, 2000);
 
 
                 $('#pagescroll').val(res.nextPage);
