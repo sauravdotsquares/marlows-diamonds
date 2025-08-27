@@ -35,6 +35,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Illuminate\Support\Facades\Cache;
 
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
@@ -307,11 +308,53 @@ if (!function_exists('validate_breadcrumb')) {
 		}
 	}
 
-	if (!function_exists("getFeaturedProducts")) {
+if (!function_exists("getFeaturedProducts")) {
+        // function getFeaturedProducts()
+        // {
+        //     $featured = Products::with(['getProductImages'])->where('is_featured', 1)->limit(10)->get();
+        //     return $featured;
+        // }
+
+        // Deepak Sharma
+        /**
+         * Returns up to 10 featured products, cached.
+         * Cache key is 'featured_products'.
+         */
+        // function getFeaturedProducts()
+        // {
+        //     // Adjust TTL (seconds) as you like
+        //     $ttl = 3600;
+
+        //     return Cache::remember('featured_products', $ttl, function () {
+        //         return Products::where('is_featured', 1)
+        //             ->with(['getProductImages'])
+        //             ->limit(10)
+        //             ->get();
+        //     });
+        // }
         function getFeaturedProducts()
         {
-            $featured = Products::with(['getProductImages'])->where('is_featured', 1)->limit(10)->get();
-            return $featured;
+            $ttl = 3600; // cache time in seconds (1 hour)
+
+            return Cache::remember('featured_products', $ttl, function () {
+                // preload lab price once
+                $labPrice = LabPricesList::whereBetween('carat', [1.00, 1.19])
+                    ->where(['color' => 'D', 'clarity' => 'VS2', 'is_active' => 1, 'is_deleted' => 0])
+                    ->first();
+
+                // preload products + variations + images
+                $products = Products::where('is_featured', 1)
+                    ->with(['getProductImages'])
+                    ->limit(10)
+                    ->get();
+
+                // compute getMinimumPriceFunction for each product
+                foreach ($products as $product) {
+                    $product->getMinimumPriceFunction = getMinimumPriceFunction($product, $labPrice);
+                }
+
+                return $products;
+            });
         }
     }
 
@@ -2003,41 +2046,173 @@ function getVariationDiamondPrices($requestData)
         }
     }
     
-    
     if (!function_exists('chnageMenuLanguage')) {
-        function chnageMenuLanguage($data, $relation, $colum_arr = [], $defult_language = null)
-        {
-            if ($defult_language == null)
-                $defult_language = getDefultAdminLanguage();
-            // if ($defult_language != env('DEFULT_LANG_CODE')) {
-    
-                if (isset($data[0])) {
-                    foreach ($data as $key => $value) {
-                        if (isset($value->$relation[0])) {
-                            foreach ($value->$relation as $value1) {
-                                if ($value1->lang == $defult_language) {
-                                    foreach ($colum_arr as $colum_key => $colum_value) {
-                                        $data[$key]->$colum_value = $value1->$colum_value;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    if (isset($data->$relation)) {
-                        foreach ($data->$relation as $value1) {
-                            if ($value1->lang == $defult_language) {
-                                foreach ($colum_arr as $colum_key => $colum_value) {
-                                    $data->$colum_value = $value1->$colum_value;
-                                }
-                            }
-                        }
-                    }
-                }
-            // }
+    // function chnageMenuLanguage($data, $relation, $colum_arr = [], $defult_language = null)
+    // {
+    //     if ($defult_language == null)
+    //         $defult_language = getDefultAdminLanguage();
+    //     // if ($defult_language != env('DEFULT_LANG_CODE')) {
+
+    //         if (isset($data[0])) {
+    //             foreach ($data as $key => $value) {
+    //                 if (isset($value->$relation[0])) {
+    //                     foreach ($value->$relation as $value1) {
+    //                         if ($value1->lang == $defult_language) {
+    //                             foreach ($colum_arr as $colum_key => $colum_value) {
+    //                                 $data[$key]->$colum_value = $value1->$colum_value;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         } else {
+    //             if (isset($data->$relation)) {
+    //                 foreach ($data->$relation as $value1) {
+    //                     if ($value1->lang == $defult_language) {
+    //                         foreach ($colum_arr as $colum_key => $colum_value) {
+    //                             $data->$colum_value = $value1->$colum_value;
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     // }
+    //     return $data;
+    // }
+    function chnageMenuLanguageOld($data, $relation, $colum_arr = [], $defult_language = null)
+    {
+        // Early return if no data
+        if (empty($data) || empty($colum_arr)) {
             return $data;
         }
+
+        // Cache the default language to avoid multiple function calls
+        if ($defult_language === null) {
+            $defult_language = getDefultAdminLanguage();
+        }
+
+        // Handle collection/array of items
+        if (isset($data[0])) {
+            foreach ($data as $key => $item) {
+                $data[$key] = processItemLanguage($item, $relation, $colum_arr, $defult_language);
+            }
+        } else {
+            // Handle single item
+            $data = processItemLanguage($data, $relation, $colum_arr, $defult_language);
+        }
+
+        return $data;
     }
+
+    /**
+     * Process language for a single item
+     * Extracted to avoid code duplication
+     */
+    function processItemLanguage($item, $relation, $colum_arr, $defult_language)
+    {
+        // Early return if no relation exists
+        if (!isset($item->$relation)) {
+            return $item;
+        }
+
+        // Find the matching language record efficiently
+        $languageRecord = findLanguageRecord($item->$relation, $defult_language);
+
+        if ($languageRecord) {
+            // Apply all column values in one loop
+            foreach ($colum_arr as $column) {
+                if (property_exists($languageRecord, $column)) {
+                    $item->$column = $languageRecord->$column;
+                }
+            }
+        }
+
+        return $item;
+    }
+
+    /**
+     * Find the language record more efficiently
+     * Uses first() instead of looping through all records
+     */
+    function findLanguageRecord($relations, $target_language)
+    {
+        // If it's a Laravel Collection, use Collection methods
+        if (method_exists($relations, 'first')) {
+            return $relations->first(function ($record) use ($target_language) {
+                return $record->lang === $target_language;
+            });
+        }
+
+        // Fallback for arrays or other iterables
+        foreach ($relations as $record) {
+            if ($record->lang === $target_language) {
+                return $record;
+            }
+        }
+
+        return null;
+    }
+
+    // Alternative optimized version if you prefer to keep it as a single function:
+    function chnageMenuLanguage($data, $relation, $colum_arr = [], $defult_language = null)
+    {
+        // Early returns for better performance
+        if (empty($data) || empty($colum_arr)) {
+            return $data;
+        }
+
+        // Cache the default language
+        $defult_language = $defult_language ?? getDefultAdminLanguage();
+
+        // Helper function to process single item
+        $processItem = function ($item) use ($relation, $colum_arr, $defult_language) {
+            if (!isset($item->$relation)) {
+                return $item;
+            }
+
+            // Find matching language record efficiently
+            $relations = $item->$relation;
+            $languageRecord = null;
+
+            // Use Collection methods if available, otherwise loop
+            if (method_exists($relations, 'first')) {
+                $languageRecord = $relations->first(fn($record) => $record->lang === $defult_language);
+            } else {
+                foreach ($relations as $record) {
+                    if ($record->lang === $defult_language) {
+                        $languageRecord = $record;
+                        break; // Exit early when found
+                    }
+                }
+            }
+
+            // Apply column values if language record found
+            if ($languageRecord) {
+                foreach ($colum_arr as $column) {
+                    if (property_exists($languageRecord, $column)) {
+                        $item->$column = $languageRecord->$column;
+                    }
+                }
+            }
+
+            return $item;
+        };
+
+        // Handle collection vs single item
+        if (isset($data[0])) {
+            // Process array/collection
+            foreach ($data as $key => $item) {
+                $data[$key] = $processItem($item);
+            }
+        } else {
+            // Process single item
+            $data = $processItem($data);
+        }
+
+        return $data;
+    }
+}
+
 
 if (!function_exists("getBreadcrumbCategoryName")) {
     function getBreadcrumbCategoryName($breadCrumbURL)
@@ -2403,6 +2578,8 @@ if (!function_exists("getAllCategoryProducts")) {
                 foreach ($productsArray as $products) {
                     $getCategoryArray = explode(',',$products->categories);
                     if (!in_array('54', $getCategoryArray) && !in_array('8', $getCategoryArray) && ($products->id != 1)) {
+                        // compute getMinimumPriceFunction for each product
+                        $products->getMinimumPriceFunction = getMinimumPriceFunction($products);
                         $getAllCategoryProducts[] = $products;
                     }
                 }

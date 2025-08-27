@@ -15,7 +15,9 @@
                 @foreach($product_data as $key => $product) 
                 @if($product->title != 'SADIE - 2 Rows Round Cut Diamond Wedding Ring')
                     <?php 
-                        $getProductListingPrices = getMinimumPriceFunction($product);
+                        // $getProductListingPrices = getMinimumPriceFunction($product);
+                        $getProductListingPrices = $product->getMinimumPriceFunction;
+                        
                     ?>
                     {{--@if($product->ProductVariationMinMaxPrice->MaxPrice > 0) --}}
                         <div class="item">

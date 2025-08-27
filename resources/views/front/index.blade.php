@@ -1,4 +1,4 @@
-@inject('header_settings', 'App\Models\Settings')
+{{-- @inject('header_settings', 'App\Models\Settings') --}}
 @extends('layouts.front.app')
 @section('content')
 @section('css')
@@ -36,14 +36,14 @@
         }
         </script>
 @endsection
-@section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" />@endsection
+@section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings['logo']}}" />@endsection
     <!-- home main-banner start -->
     <div class="home-main-banner">
         <div class="main-banner-wraper flex-flex-wrap flexed">
             <div class="main-banner-col banner-left-col">
                 <div class="main-banner-left-text">
                     <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
-                     <h2 > The<img src="/assets/images/logo-ups.png" alt="{{$header_settings->get_options('site_title')}}" style="padding-left: 5px;height:58px;width:155px;"> USP</h2>
+                     <h2 > The<img src="/assets/images/logo-ups.png" alt="{{$header_settings['site_title']}}" style="padding-left: 5px;height:58px;width:155px;"> USP</h2>
                     <ul>
                     <li>Be guided by our expert team with over 150 years of combined jewellery experience</li>
                     <li>Choose your perfect setting from a handpicked collection of over 600 timeless designs</li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menus;
+use App\Providers\AppServiceProvider;
 
 class MenuController extends Controller
 {
@@ -86,6 +87,7 @@ class MenuController extends Controller
 	     	$this->saveChildData($value,$menusId, 0);
 
     	}
+		app(AppServiceProvider::class)->clearMenuCache();
     	return redirect()->back()->with('status','Menus Successfully Updated.');
     }
 

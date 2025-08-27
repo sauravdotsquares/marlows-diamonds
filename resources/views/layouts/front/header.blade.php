@@ -1,4 +1,4 @@
-@inject('header_settings', 'App\Models\Settings')
+{{-- @inject('header_settings', 'App\Models\Settings') --}}
 @inject('header_settingss', 'App\Models\SettingsLang')
 <style>
     .discount_timer{
@@ -40,16 +40,16 @@
         <?php
             $now = new DateTime("now");
             $lastDate = new DateTime('now');
-            $lastDate->modify('last day of this month');        
+            $lastDate->modify('last day of this month');
             $dist_future = $lastDate->format('m/d/Y');
         ?>
-    
+
       <div class="post-bar">
             <div class="container">
                 <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
                     @if($lastDate > $now)
                     <div class="post-bar-center" style="height: 40px;">
-                    {{$header_settings->get_options('top-bar-desktop')}}
+                    {{$header_settings['top-bar-desktop']}}
                     <a style="color:#fff;font-weight: bold !important;text-decoration: underline;font-size: 17px;" href="/terms">*T&amp;C</a>
                     </div>
                     @endif
@@ -70,14 +70,14 @@
                 </div>
                 <div class="item">
                     <div class="addr-number">
-                        <p>{!!$header_settings->get_options('field2')!!}</p>
+                        <p>{!!$header_settings['field2']!!}</p>
                     </div>
                 </div>
                 <div class="item">
-                    <p>{!!$header_settings->get_options('field3')!!}</p>
+                    <p>{!!$header_settings['field3']!!}</p>
                 </div>
                 <div class="item">
-                    {!!$header_settings->get_options('field4')!!}
+                    {!!$header_settings['field4']!!}
                 </div>
             </div>
         </div>
@@ -103,11 +103,11 @@
                             <div class="location-drop">
                                 <div class="location-drop-inner">
                                     <p class="location-details-title">{{BRIMINGHAM_LOCATION_TITLE}}</p>
-                                    <p class="location-text">{!!$header_settings->get_options('location1')!!}</p>
+                                    <p class="location-text">{!!$header_settings['location1']!!}</p>
                                 </div>
                                 <div class="location-drop-inner">
                                     <p class="location-details-title">{{LONDON_LOCATION_TITLE}}</p>
-                                    <p class="location-text">{!!$header_settings->get_options('location2')!!}</p>
+                                    <p class="location-text">{!!$header_settings['location2']!!}</p>
                                 </div>
                             </div>
                         </a>
@@ -135,7 +135,7 @@
                                             <div class="search-suggestion-title">
                                                 <%result.title%>
                                             </div>
-    
+
                                         </div>
                                     </a>
                                 </div>
@@ -147,7 +147,7 @@
                     </div>
                         </li>
                         <li class="my-account-blk">
-                        @if(auth()->guard('customer')->check())   
+                        @if(auth()->guard('customer')->check())
                             <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
                         @else
                             <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_LOGIN}}</a>
@@ -219,12 +219,12 @@
             <div class="logo-menu-bar-wrap flexed flex-justify-between">
 
                 <div class="site-logo-main">
-                    <a href="{{url('/')}}" title="{{$header_settings->get_options('site_title')}}">
-                        @if($header_settings->get_options('logo')!='')
-                            <img src="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}" alt="{{$header_settings->get_options('site_title')}}">
-                        @elseif($header_settings->get_options('site_title')!='')
-                            <div>{{$header_settings->get_options('site_title')}}</div>
-                            <span>{{$header_settings->get_options('site_tagline')}}</span>
+                    <a href="{{url('/')}}" title="{{$header_settings['site_title']}}">
+                        @if($header_settings['logo']!='')
+                            <img src="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings['logo']}}" alt="{{$header_settings['site_title']}}">
+                        @elseif($header_settings['site_title']!='')
+                            <div>{{$header_settings['site_title']}}</div>
+                            <span>{{$header_settings['site_tagline']}}</span>
                         @else
                             <span>{{env('APP_NAME')}}</span>
                         @endif
@@ -293,7 +293,7 @@
                         <!--                        <div class="search-suggestion-title">-->
                         <!--                            <%result.title%>-->
                         <!--                        </div>-->
-        
+
                         <!--                    </div>-->
                         <!--                </a>-->
                         <!--            </div>-->
@@ -347,7 +347,7 @@
         <div class="container">
             <div class="post-bar-wraper flexed flex-justify-between flex-items-center header-post-bar-wraper">
                 <div class="post-bar-left header-post-bar-left">
-                    <p>{!!$header_settings->get_options('header-left')!!}</p>
+                    <p>{!!$header_settings['header-left']!!}</p>
                 </div>
                 @if($lastDate > $now)
                 <div class="post-bar-center" style="height: 40px;">
@@ -365,7 +365,7 @@
                 </div>
                 @endif
                 <div class="post-bar-right header-post-bar-left">
-                    <p>{!!$header_settings->get_options('header-right')!!}</p>
+                    <p>{!!$header_settings['header-right']!!}</p>
                 </div>
             </div>
         </div>

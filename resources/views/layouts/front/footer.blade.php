@@ -1,4 +1,4 @@
-@inject('footer_settings', 'App\Models\Settings') 
+{{-- @inject('header_settings', 'App\Models\Settings')  --}}
 <!-- Footer start here -->
 <footer class="footer-main">
     <div class="container">
@@ -6,44 +6,44 @@
             <div class="footer-links-row flexed flex-flex-wrap">
                 <div class="column-one-fifth about-footer">
                     <div class="footer-title">
-                        <h4>{!!$footer_settings->get_options('footer_sec1-title')!!}</h4>
+                        <h4>{!!$header_settings['footer_sec1-title']!!}</h4>
                     </div>
                     <div class="footerabout-col footer-inn-text">
-                        <p>{!!$footer_settings->get_options('about')!!}</p>
+                        <p>{!!$header_settings['about']!!}</p>
 
                     </div>
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4 class="accordian-toggle">{!!$footer_settings->get_options('footer_sec2-title')!!}</h4>
+                        <h4 class="accordian-toggle">{!!$header_settings['footer_sec2-title']!!}</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
-                        {!!$footer_settings->get_options('catalogue')!!}
+                        {!!$header_settings['catalogue']!!}
                     </div>
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4 class="accordian-toggle">{!!$footer_settings->get_options('footer_sec3-title')!!}</h4>
+                        <h4 class="accordian-toggle">{!!$header_settings['footer_sec3-title']!!}</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
-                        {!!$footer_settings->get_options('resources')!!}
+                        {!!$header_settings['resources']!!}
                     </div>
                 </div>
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4 class="accordian-toggle">{!!$footer_settings->get_options('footer_sec4-title')!!}</h4>
+                        <h4 class="accordian-toggle">{!!$header_settings['footer_sec4-title']!!}</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
-                        {!!$footer_settings->get_options('sec-resources')!!}
+                        {!!$header_settings['sec-resources']!!}
                     </div>
                 </div>
 
                 <div class="column-one-fifth">
                     <div class="footer-title">
-                        <h4 class="accordian-toggle">{!!$footer_settings->get_options('footer_sec5-title')!!}</h4>
+                        <h4 class="accordian-toggle">{!!$header_settings['footer_sec5-title']!!}</h4>
                     </div>
                     <div class="footerlinks-col footer-inn-text">
-                        {!!$footer_settings->get_options('policies')!!}
+                        {!!$header_settings['policies']!!}
                     </div>
                 </div>
             </div>
@@ -51,34 +51,38 @@
             <div class="footer-content-wrap flexed flex-flex-wrap">
                 <div class="fcontent-column icon-payment">
                 <div class="fcontent-column disclaimer-content">
-                    {!!$footer_settings->get_options('footer-center')!!}
+                    {!!$header_settings['footer-center']!!}
                 </div>
                 <div class="footer-social">
-                            @if($footer_settings->get_options('facebook')!='')
-                                <a href="{{$footer_settings->get_options('facebook')}}" target="_blank" rel="follow"><i class="fa fa-facebook" aria-hidden="true" aria-label="facebook"></i></a>
+                            @if($header_settings['facebook']!='')
+                                <a href="{{$header_settings['facebook']}}" target="_blank" rel="follow"><i class="fa fa-facebook" aria-hidden="true" aria-label="facebook"></i></a>
                             @endif
-                            @if($footer_settings->get_options('twitter')!='')
-                                <a href="{{$footer_settings->get_options('twitter')}}" target="_blank" rel="follow"><i class="fa fa-twitter" aria-hidden="true" aria-label="twitter"></i></a>
+                            @if($header_settings['twitter']!='')
+                                <a href="{{$header_settings['twitter']}}" target="_blank" rel="follow"><i class="fa fa-twitter" aria-hidden="true" aria-label="twitter"></i></a>
                             @endif
-                            @if($footer_settings->get_options('instagram')!='')
-                                <a href="{{$footer_settings->get_options('instagram')}}" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"aria-label="instagram"></i></a>
+                            @if($header_settings['instagram']!='')
+                                <a href="{{$header_settings['instagram']}}" target="_blank" rel="follow"><i class="fa fa-instagram" aria-hidden="true"aria-label="instagram"></i></a>
                             @endif
-                            @if($footer_settings->get_options('pinterest')!='')
-                                <a href="{{$footer_settings->get_options('pinterest')}}" target="_blank" rel="follow"><i class="fa fa-pinterest" aria-hidden="true"aria-label="pinterest"></i></a>
+                            @if($header_settings['pinterest']!='')
+                                <a href="{{$header_settings['pinterest']}}" target="_blank" rel="follow"><i class="fa fa-pinterest" aria-hidden="true"aria-label="pinterest"></i></a>
                             @endif
-                            @if($footer_settings->get_options('youtube')!='')
-                                <a href="{{$footer_settings->get_options('youtube')}}" target="_blank" rel="follow"><i class="fa fa-youtube" aria-hidden="true"aria-label="youtube"></i></a>
+                            @if($header_settings['youtube']!='')
+                                <a href="{{$header_settings['youtube']}}" target="_blank" rel="follow"><i class="fa fa-youtube" aria-hidden="true"aria-label="youtube"></i></a>
                             @endif
-                            @if($footer_settings->get_options('linkedin')!='')
-                                <a href="{{$footer_settings->get_options('linkedin')}}" target="_blank" rel="follow"><i class="fa fa-linkedin" aria-hidden="true"aria-label="linkedin"></i></a>
+                            @if($header_settings['linkedin']!='')
+                                <a href="{{$header_settings['linkedin']}}" target="_blank" rel="follow"><i class="fa fa-linkedin" aria-hidden="true"aria-label="linkedin"></i></a>
                             @endif
                         </div>
                         <div class="fcontent-column disclaimer-content">
-                    <b>Birmingham Store:</b> 46-47 Warstone Lane Hockley, Birmingham B18 6JJ.<br><b>Email: </b><a style="color:#fff; text-decoration: none;" href="mailto:hello@marlows-diamonds.co.uk">hello@marlows-diamonds.co.uk</a><br>
-                    <b>London Store:</b> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ. <br> Registraton No. 00867377. VAT No. GB 111114741<br>
+                    <b>Birmingham Store:</b> 46-47 Warstone Lane Hockley, Birmingham B18 6JJ.
+<b>Email: </b><a style="color:#fff; text-decoration: none;" href="mailto:hello@marlows-diamonds.co.uk">hello@marlows-diamonds.co.uk</a>
+
+                    <b>London Store:</b> 20 Beauchamp Pl, Knightsbridge, London SW3 1NQ. 
+ Registraton No. 00867377. VAT No. GB 111114741
+
                 </div>
                 </div>
-                {!!$footer_settings->get_options('footer-left')!!}
+                {!!$header_settings['footer-left']!!}
 
             </div>
         </div>
@@ -114,7 +118,7 @@
     document.addEventListener('scroll', function() {
         const footer = document.querySelector('.footer-main');
         const trustpilotWidget = document.getElementById('trustpilot-gtm-floating-wrapper');
-    
+
         if (footer && trustpilotWidget) {
             const footerPosition = footer.getBoundingClientRect();
             const viewportHeight = window.innerHeight;
@@ -127,3 +131,4 @@
         }
     });
 </script>
+ 

@@ -14,7 +14,8 @@ use App\Models\ProductVariations;
 use App\Models\ProductVariationDetails;
 use App\Models\LabPricesList;
 use DB;
-
+use Illuminate\Support\Facades\Cache;
+ 
 
 class Products extends Model
 {
@@ -303,6 +304,29 @@ class Products extends Model
         }
         return null;
 
+    }
+
+    // Deepak Sharma
+    /*
+        This code will clear the cache
+     */
+    protected static function booted()
+    {
+        // Clear the featured products cache on any write operation
+        $flush = function () {
+            // If you use cache tags (Redis/Memcached), prefer tags:
+            if (Cache::getStore() instanceof \Illuminate\Cache\TaggableStore) {
+                Cache::tags(['products'])->forget('featured_products'); // if you used tags in Step 1
+            } else {
+                Cache::forget('featured_products');
+            }
+        };
+
+        static::created($flush);
+        static::updated($flush);
+        static::deleted($flush);
+        // static::restored($flush);
+        // static::forceDeleted($flush);
     }
 
 }

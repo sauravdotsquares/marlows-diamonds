@@ -14,9 +14,11 @@
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
                 @foreach($product_data as $key => $product)
                     <?php 
-                        $getProductListingPrices = getMinimumPriceFunction($product);
+                        // $getProductListingPrices = getMinimumPriceFunction($product);
+                        $getProductListingPrices = $product->getMinimumPriceFunction;
                     ?>
                     {{--@if($product->ProductVariationMinMaxPrice->MaxPrice > 0) --}}
+                    {{-- @dd($getProductListingPrices); --}}
                         <div class="item">
                             <div class="product-info">
                                 <div class="product-image">

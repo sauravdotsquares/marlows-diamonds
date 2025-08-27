@@ -1,4 +1,4 @@
-@inject('header_settings', 'App\Models\Settings')
+{{-- @inject('header_settings', 'App\Models\Settings') --}}
 <?php 
   $getURLWithParameter = str_replace(Request::root(), '', request()->fullUrl());
 ?>
@@ -55,7 +55,7 @@
       "@type": "Organization",
       "name": "Marlows Diamonds",
       "url": "https://marlows-diamonds.co.uk",
-      "logo": "{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings->get_options('logo')}}",
+      "logo": "{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings['logo']}}",
       "description": "Marlows Diamonds offers a wide range of exquisite diamond jewelry, engagement rings, and luxury watches.",
       "address": {
         "@type": "PostalAddress",

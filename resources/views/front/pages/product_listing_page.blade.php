@@ -694,233 +694,249 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
 
                     <!--<div class="text-center">{!! isset($filterItemTextData->top_text) ? $filterItemTextData->top_text : '' !!}</div>-->
                     <br>
-                    <div class="search-result" style="margin-top: -15px;">
-                        <div class="product-grid-wrap">
-                            <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
-                                @foreach ($sortedArray as $index => $product)
-                                <?php
-                                $thumbnailGif = getThumbnailGif($product->id);
-                                $getCategory = explode(',', $product->categories);
-                                ?>
-                            
-                            @if ($index === 3 || $index === 11)
-                            <!-- Add the image or modal content as a separate grid item -->
-                            <div class="product-grid-items-item">
-                                @if ($index === 3)
-                                 <a href = "https://marlows-diamonds.co.uk/live-diamond-search">
-                                    <img class="diamond-engage-banner" src="/assets/images/banner_image.png" alt="Banner" width="343" height="505">
-                                 </a>
-                                @else
-                                  
+                    <div id="products-section" style="display:none;">
+                        <script>
+                            // document.addEventListener("DOMContentLoaded", function () {
+                                // Once DOM is ready (foreach already rendered by Blade/PHP)
+                                document.getElementById("loader-overlay").style.display = "flex";
+                                document.getElementById("products-section").style.display = "flex";
+                            // });
+                        </script>
+                        <div class="search-result" style="margin-top: -15px;">
+                            <div class="product-grid-wrap">
+                                <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
+                                    @foreach ($sortedArray as $index => $product)
+                                    <?php
+                                    $thumbnailGif = getThumbnailGif($product->id);
+                                    $getCategory = explode(',', $product->categories);
+                                    ?>
+                                
+                                @if ($index === 3 || $index === 11)
+                                <!-- Add the image or modal content as a separate grid item -->
+                                <div class="product-grid-items-item">
+                                    @if ($index === 3)
+                                    <a href = "https://marlows-diamonds.co.uk/live-diamond-search">
+                                        <img class="diamond-engage-banner" src="/assets/images/banner_image.png" alt="Banner" width="343" height="505">
+                                    </a>
+                                    @else
+                                    
 
 
-                                    <div class="modal-body productvisitform">
-                                      <div class="col-lg-12">
-                                          <!-- Success message -->
-                                          @if(Session::has('success'))
-                                              <div class="alert alert-success">
-                                                  {{Session::get('success')}}
-                                              </div>
-                                          @endif
-                                              <div class="visit-form">
-                                                <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
-                              
-                                                  <form id="contactForm">
-                                                  @csrf
-                                                      <input type="hidden" name="custom_url" id="custom_url" value="{{url()->full()}}">
-                                                      <div class="form-controls">
-                                                          <input type="text" name="title" id="title" class="{{ $errors->has('title') ? 'error' : '' }}" placeholder="Your Name">
-                                                          <!-- Error -->
-                                                          @if ($errors->has('name'))
-                                                          <div class="error">
-                                                              {{ $errors->first('name') }}
-                                                          </div>
-                                                          @endif
-                                                      </div>
-                                                      <div class="form-controls">
-                                                          <input type="email" name="email" id="email" class="{{ $errors->has('email') ? 'error' : '' }}" placeholder="Your Email Address">
-                                                          @if ($errors->has('email'))
-                                                          <div class="error">
-                                                              {{ $errors->first('email') }}
-                                                          </div>
-                                                          @endif
-                                                      </div>
-                                                      <div class="form-controls">
-                                                          <input type="text" name="phone" id="phone" class="{{ $errors->has('phone') ? 'error' : '' }}" placeholder="Your Contact No.">
-                                                          @if ($errors->has('phone'))
-                                                          <div class="error">
-                                                              {{ $errors->first('phone') }}
-                                                          </div>
-                                                          @endif
-                                                      </div>
-                                                      <div class="form-controls">
-                                                          <textarea name="description" id="description" class="{{ $errors->has('description') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
-                                                          @if ($errors->has('description'))
-                                                          <div class="error">
-                                                              {{ $errors->first('description') }}
-                                                          </div>
-                                                          @endif
-                                                      </div>
-                                                      <div class="action-submit">
-                                                          <button type="submit" name="send" value="Submit">Send Message</button>
-                                                      </div>
-                                                  </form>
-                              
-                                              </div>
-                                      </div>
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
-                            
-                                <!-- Continue rendering the product card for every product -->
-                                <div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
-                                    <div class="product-items-item-info">
-                                        <div class="product-item-top">
-                                            <div class="product-onsale">
-                                                <!-- On Sale -->
-                                            </div>
-                                            @php
-                                                $wishlist = session()->get('wishlist', []);
-                                                $wishListClass = 'fa-heart-o';
-                                                if (array_key_exists($product->id, $wishlist)) {
-                                                    $wishListClass = 'fa-heart';
-                                                }
-                                            @endphp
-                                            <a href="javascript:void(0);" class="share-file" type="button" data-bs-toggle="modal" data-bs-target="#sharesocial" data-url="{{ asset('product/' . $product->slug) }}">
-                                                <img src="/assets/images/share.png" alt="share" width="18" height="18">
-                                            </a>
-                                            <a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{ $product->id }}" data-productslug="{{ $product->slug }}" aria-label="wishlist">
-                                                <i class="fa {{ $wishListClass }} wishcount" aria-hidden="true"></i>
-                                            </a>
+                                        <div class="modal-body productvisitform">
+                                        <div class="col-lg-12">
+                                            <!-- Success message -->
+                                            @if(Session::has('success'))
+                                                <div class="alert alert-success">
+                                                    {{Session::get('success')}}
+                                                </div>
+                                            @endif
+                                                <div class="visit-form">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Request an appointment</h5>
+                                
+                                                    <form id="contactForm">
+                                                    @csrf
+                                                        <input type="hidden" name="custom_url" id="custom_url" value="{{url()->full()}}">
+                                                        <div class="form-controls">
+                                                            <input type="text" name="title" id="title" class="{{ $errors->has('title') ? 'error' : '' }}" placeholder="Your Name">
+                                                            <!-- Error -->
+                                                            @if ($errors->has('name'))
+                                                            <div class="error">
+                                                                {{ $errors->first('name') }}
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="form-controls">
+                                                            <input type="email" name="email" id="email" class="{{ $errors->has('email') ? 'error' : '' }}" placeholder="Your Email Address">
+                                                            @if ($errors->has('email'))
+                                                            <div class="error">
+                                                                {{ $errors->first('email') }}
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="form-controls">
+                                                            <input type="text" name="phone" id="phone" class="{{ $errors->has('phone') ? 'error' : '' }}" placeholder="Your Contact No.">
+                                                            @if ($errors->has('phone'))
+                                                            <div class="error">
+                                                                {{ $errors->first('phone') }}
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="form-controls">
+                                                            <textarea name="description" id="description" class="{{ $errors->has('description') ? 'error' : '' }}"  placeholder="Your Message"></textarea>
+                                                            @if ($errors->has('description'))
+                                                            <div class="error">
+                                                                {{ $errors->first('description') }}
+                                                            </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="action-submit">
+                                                            <button type="submit" name="send" value="Submit">Send Message</button>
+                                                        </div>
+                                                    </form>
+                                
+                                                </div>
                                         </div>
-                                        <?php
-                                        $getMonthTextArray = getMonthwiseDiscountText();
-                                        $getCurrentMonth = (int)date('m');
-                                        $now = new DateTime("now");
-                                        $lastDate = new DateTime('now');
-                                        $lastDate->modify('last day of this month');
-                                        $dist_future = $lastDate->format('m/d/Y');
-                                         ?>
-                                        
-                                        <div class="product-items-item-image">
-                                            <div class="list-discount-btn">
-                                                <div class="disbtn-box">{!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}</div>
-                                            </div>
-                                            <a href="{{ asset('product/' . $product->slug) }}" id="variationImageShown{{$product->id}}" class="{{ $thumbnailGif ? 'product-hov' : '' }}">
-                                                @if (isset($product->getProductImages) && !empty($product->getProductImages['image_url']))
-                                                    <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}" alt="{{ $product->title }}" loading="lazy">
-                                                @endif
-                            
-                                                <!-- @if ($thumbnailGif)
-                                                    @if ($thumbnailGif->extension == 'gif')
-                                                        <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $thumbnailGif->image_url }}" class="product-hover-video" loading="lazy">
-                                                    @elseif ($thumbnailGif->extension == 'mp4')
-                                                        {{-- Add mp4 handling logic here if needed --}}
-                                                    @else
-                                                        <img class="product-hover-video" src="{{ env('APP_IMAGE_URL') . '/storage/' . $thumbnailGif->image_url }}" alt="{{ $product->title }}">
-                                                    @endif
-                                                @endif -->
-                                            </a>
                                         </div>
-
-
-                                         <div class="color-buttons" @if(strpos(request()->url(), 'exclusive-to-marlows') !== false) style="display: none;" @endif>
-                                            {{-- @if (stripos($product->title, 'engagement ring') === false) --}}
-
-                                            <a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default"  data-src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}" >Default</a>
-
-                                            {{-- <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a> --}}
-
-                                            <a class="color-btn rose-gold" id="fetchvariationRoseimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Rose Gold">Rose Gold</a>
-                                            <a class="color-btn yellow-gold" id="fetchvariationYellowimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Yellow Gold">Yellow Gold</a>
-                                            {{-- @endif --}}
-                                        </div> 
-
-                                        
-                                        <div class="product-items-item-details">
-                                            <div class="product-items-item-name">
-                                                <div class="list_product_title">
-                                                    <?php
-                                                    $titleSplits = [];
-                                                    if (isset($product->title) && !empty($product->title)) {
-                                                        $titleSplits = explode('|', $product->title);
+                                    @endif
+                                </div>
+                            @endif
+                                
+                                    <!-- Continue rendering the product card for every product -->
+                                    <div class="product-grid-items-item {{ $thumbnailGif ? 'product-hover-affect' : '' }}">
+                                        <div class="product-items-item-info">
+                                            <div class="product-item-top">
+                                                <div class="product-onsale">
+                                                    <!-- On Sale -->
+                                                </div>
+                                                @php
+                                                    $wishlist = session()->get('wishlist', []);
+                                                    $wishListClass = 'fa-heart-o';
+                                                    if (array_key_exists($product->id, $wishlist)) {
+                                                        $wishListClass = 'fa-heart';
                                                     }
-                                                    ?>
-                                                    @if (isset($product->slug) && !empty($product->slug))
-                                                        <a href="{{ asset('product/' . $product->slug) }}" class="title-list-heading">{{ isset($titleSplits[0]) ? $titleSplits[0] : '' }}</a>
-                                                        @if (isset($titleSplits[1]) && !empty($titleSplits[1]))
-                                                            <a href="{{ asset('product/' . $product->slug) }}">{{ $titleSplits[1] }}</a>
-                                                        @endif
-                                                    @else
-                                                        <a href="#">{{ isset($titleSplits[0]) ? $titleSplits[0] : '' }}</a>
-                                                        <a href="#">{{ isset($titleSplits[1]) ? $titleSplits[1] : '' }}</a>
+                                                @endphp
+                                                <a href="javascript:void(0);" class="share-file" type="button" data-bs-toggle="modal" data-bs-target="#sharesocial" data-url="{{ asset('product/' . $product->slug) }}">
+                                                    <img src="/assets/images/share.png" alt="share" width="18" height="18">
+                                                </a>
+                                                <a href="javascript:void(0);" class="wishlist-heart" id="productWishListRelated{{ $product->id }}" data-productslug="{{ $product->slug }}" aria-label="wishlist">
+                                                    <i class="fa {{ $wishListClass }} wishcount" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <?php
+                                            $getMonthTextArray = getMonthwiseDiscountText();
+                                            $getCurrentMonth = (int)date('m');
+                                            $now = new DateTime("now");
+                                            $lastDate = new DateTime('now');
+                                            $lastDate->modify('last day of this month');
+                                            $dist_future = $lastDate->format('m/d/Y');
+                                            ?>
+                                            
+                                            <div class="product-items-item-image">
+                                                <div class="list-discount-btn">
+                                                    <div class="disbtn-box">{!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}</div>
+                                                </div>
+                                                <a href="{{ asset('product/' . $product->slug) }}" id="variationImageShown{{$product->id}}" class="{{ $thumbnailGif ? 'product-hov' : '' }}">
+                                                    @if (isset($product->getProductImages) && !empty($product->getProductImages['image_url']))
+                                                        <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}" alt="{{ $product->title }}" loading="lazy">
                                                     @endif
+                                
+                                                    <!-- @if ($thumbnailGif)
+                                                        @if ($thumbnailGif->extension == 'gif')
+                                                            <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $thumbnailGif->image_url }}" class="product-hover-video" loading="lazy">
+                                                        @elseif ($thumbnailGif->extension == 'mp4')
+                                                            {{-- Add mp4 handling logic here if needed --}}
+                                                        @else
+                                                            <img class="product-hover-video" src="{{ env('APP_IMAGE_URL') . '/storage/' . $thumbnailGif->image_url }}" alt="{{ $product->title }}">
+                                                        @endif
+                                                    @endif -->
+                                                </a>
+                                            </div>
+
+
+                                            <div class="color-buttons" @if(strpos(request()->url(), 'exclusive-to-marlows') !== false) style="display: none;" @endif>
+                                                {{-- @if (stripos($product->title, 'engagement ring') === false) --}}
+
+                                                <a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default"  data-src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}" >Default</a>
+
+                                                {{-- <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a> --}}
+
+                                                <a class="color-btn rose-gold" id="fetchvariationRoseimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Rose Gold">Rose Gold</a>
+                                                <a class="color-btn yellow-gold" id="fetchvariationYellowimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="18ct Yellow Gold">Yellow Gold</a>
+                                                {{-- @endif --}}
+                                            </div> 
+
+                                            
+                                            <div class="product-items-item-details">
+                                                <div class="product-items-item-name">
+                                                    <div class="list_product_title">
+                                                        <?php
+                                                        $titleSplits = [];
+                                                        if (isset($product->title) && !empty($product->title)) {
+                                                            $titleSplits = explode('|', $product->title);
+                                                        }
+                                                        ?>
+                                                        @if (isset($product->slug) && !empty($product->slug))
+                                                            <a href="{{ asset('product/' . $product->slug) }}" class="title-list-heading">{{ isset($titleSplits[0]) ? $titleSplits[0] : '' }}</a>
+                                                            @if (isset($titleSplits[1]) && !empty($titleSplits[1]))
+                                                                <a href="{{ asset('product/' . $product->slug) }}">{{ $titleSplits[1] }}</a>
+                                                            @endif
+                                                        @else
+                                                            <a href="#">{{ isset($titleSplits[0]) ? $titleSplits[0] : '' }}</a>
+                                                            <a href="#">{{ isset($titleSplits[1]) ? $titleSplits[1] : '' }}</a>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                            
-                                        <!-- Price section logic remains the same -->
-                                        @if (!in_array(50, $getCategory) && !in_array(53, $getCategory) && !in_array(54, $getCategory))
-                                            @if (isset($product->lab_grown) && $product->lab_grown != 0.0)
+                                
+                                            <!-- Price section logic remains the same -->
+                                            @if (!in_array(50, $getCategory) && !in_array(53, $getCategory) && !in_array(54, $getCategory))
+                                                @if (isset($product->lab_grown) && $product->lab_grown != 0.0)
+                                                    <div class="price-section">
+                                                        <div style="display: flex;">
+                                                            @if (isset($product->discounted_lab_grown) && !empty($product->discounted_lab_grown))
+                                                                @if ($product->discounted_lab_grown !== $product->lab_grown)
+                                                                    <h4>
+                                                                        <del style="color:#000" class="shopPriceval" id="shopPrice">
+                                                                            {{ MY_CURRENCY_SYMBOL }} {{ round($product->lab_grown, 2) }}</del>
+                                                                    </h4>
+                                                                @endif
+                                
+                                                                <div class="product-finder-price" id="finaldiamondprice">
+                                                                    <span class="price">{{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->discounted_lab_grown) }}</span>
+                                                                </div>
+                                                            @else
+                                                                <div class="product-finder-price" id="finaldiamondprice">
+                                                                    <span class="price">{{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->lab_grown) }}</span>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        <p class="save_price">
+                                                            <span style="color:green">You Save : <span id="savePrice">
+                                                                {{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->lab_grown_rrp - $product->discounted_lab_grown) }}</span>
+                                                            </span> | <del id="rrpPrice">RRP: {{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->lab_grown_rrp) }}</del>
+                                                        </p>
+                                                    </div>
+                                                @endif
+                                            @elseif (in_array(54, $getCategory))
                                                 <div class="price-section">
                                                     <div style="display: flex;">
-                                                        @if (isset($product->discounted_lab_grown) && !empty($product->discounted_lab_grown))
-                                                            @if ($product->discounted_lab_grown !== $product->lab_grown)
-                                                                <h4>
-                                                                    <del style="color:#000" class="shopPriceval" id="shopPrice">
-                                                                        {{ MY_CURRENCY_SYMBOL }} {{ round($product->lab_grown, 2) }}</del>
-                                                                </h4>
-                                                            @endif
-                            
-                                                            <div class="product-finder-price" id="finaldiamondprice">
-                                                                <span class="price">{{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->discounted_lab_grown) }}</span>
-                                                            </div>
-                                                        @else
-                                                            <div class="product-finder-price" id="finaldiamondprice">
-                                                                <span class="price">{{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->lab_grown) }}</span>
-                                                            </div>
-                                                        @endif
+                                                        <div class="product-finder-price" id="finaldiamondprice">
+                                                            <span class="price">{{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->mined_diamond) }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @elseif (in_array(53, $getCategory) || in_array(50, $getCategory))
+                                                <div class="price-section">
+                                                    <div style="display: flex;">
+                                                        <div class="product-finder-price" id="finaldiamondprice">
+                                                            <span class="price">{{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->mined_diamond) }}</span>
+                                                        </div>
                                                     </div>
                                                     <p class="save_price">
                                                         <span style="color:green">You Save : <span id="savePrice">
-                                                            {{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->lab_grown_rrp - $product->discounted_lab_grown) }}</span>
-                                                        </span> | <del id="rrpPrice">RRP: {{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->lab_grown_rrp) }}</del>
+                                                            {{ MY_CURRENCY_SYMBOL }} {{ $product->mined_diamond_rrp - $product->mined_diamond }}</span>
+                                                        </span> | <del id="rrpPrice">RRP: {{ MY_CURRENCY_SYMBOL }} {{ $product->mined_diamond_rrp }}</del>
                                                     </p>
                                                 </div>
                                             @endif
-                                        @elseif (in_array(54, $getCategory))
-                                            <div class="price-section">
-                                                <div style="display: flex;">
-                                                    <div class="product-finder-price" id="finaldiamondprice">
-                                                        <span class="price">{{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->mined_diamond) }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @elseif (in_array(53, $getCategory) || in_array(50, $getCategory))
-                                            <div class="price-section">
-                                                <div style="display: flex;">
-                                                    <div class="product-finder-price" id="finaldiamondprice">
-                                                        <span class="price">{{ MY_CURRENCY_SYMBOL }} {{ sprintf('%0.2f', $product->mined_diamond) }}</span>
-                                                    </div>
-                                                </div>
-                                                <p class="save_price">
-                                                    <span style="color:green">You Save : <span id="savePrice">
-                                                        {{ MY_CURRENCY_SYMBOL }} {{ $product->mined_diamond_rrp - $product->mined_diamond }}</span>
-                                                    </span> | <del id="rrpPrice">RRP: {{ MY_CURRENCY_SYMBOL }} {{ $product->mined_diamond_rrp }}</del>
-                                                </p>
-                                            </div>
-                                        @endif
+                                        </div>
                                     </div>
+                                @endforeach
+                                
+
+                                    {!! $getProductListFinal->render() !!}
                                 </div>
-                            @endforeach
-                            
-
-                                {!! $getProductListFinal->render() !!}
                             </div>
-                        </div>
 
+                        </div>
                     </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            // Once DOM is ready (foreach already rendered by Blade/PHP)
+                            document.getElementById("loader-overlay").style.display = "none";
+                            // document.getElementById("products-section").style.display = "none";
+                        });
+                    </script>
                     <div class="loading-data-element"></div>
                     <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                     <div class="ajax-load text-center" style="display:none;">
@@ -2521,6 +2537,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
             beforeSend: function () {
                 // $(".ajax-load").show().html("Loading products..."); // Show loader
                 $("#showProductList").css("opacity", "0.5"); // Reduce opacity for effect
+                document.getElementById("loader-overlay").style.display = "flex";
             },
             success: function(res) {
                 // filterShapechanged();
@@ -2559,6 +2576,7 @@ if(in_array('diamond-engagement-rings',$pathData) || in_array('engagement-rings'
                 }).each(function () {
                     if (this.complete) $(this).trigger("load"); // Ensure already loaded images trigger event
                 });
+                document.getElementById("loader-overlay").style.display = "none";
             }
         });
     }

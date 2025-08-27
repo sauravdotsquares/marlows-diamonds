@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Settings;
+use App\Providers\AppServiceProvider;
 
 class SettingsController extends Controller
 {
@@ -48,6 +49,7 @@ class SettingsController extends Controller
 				'option_value'=>$value,
 			]);	
 			
+			app(AppServiceProvider::class)->clearSettingsCache();
 		}
 		
 		
@@ -81,7 +83,10 @@ class SettingsController extends Controller
 				'option_value'=>$value,
 			]);	
 			
+
 		}
+
+					app(AppServiceProvider::class)->clearSettingsCache();
 		
 		
 		
@@ -115,7 +120,7 @@ class SettingsController extends Controller
 			]);	
 			
 		}
-		
+		app(AppServiceProvider::class)->clearSettingsCache();
 		
 		
 		return back()->withInput(array('msg' => 'Setting Updated Successfully'));
