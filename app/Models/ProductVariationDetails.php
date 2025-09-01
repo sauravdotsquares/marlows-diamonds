@@ -14,7 +14,7 @@ class ProductVariationDetails extends Model
     protected $fillable = [
         'variation_id','key','value',
     ];
-    
+
     // protected $appends = ['product_id'];
 
     // public function getProductIdAttribute()
@@ -24,5 +24,9 @@ class ProductVariationDetails extends Model
 
     public function getProductId(){
         return $this->hasOne(ProductVariations::class,'id','variation_id');
+    }
+
+    public function variation() {
+        return $this->belongsTo(ProductVariations::class, 'variation_id');
     }
 }

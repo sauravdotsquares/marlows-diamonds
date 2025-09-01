@@ -32,6 +32,7 @@ use SoapClient;
 use Rapnet;
 use App\Repnet\nusoap;
 use App\Http\Controllers\Front\ApiController;
+use App\Repositories\ProductRepository;
 use View;
 use Illuminate\Support\Arr;
 use DB;
@@ -39,6 +40,12 @@ use billythekid\dekopay\Core\DekoPayApiClient;
 
 class ProductController extends Controller
 {
+    protected $productRepo;
+
+    public function __construct()
+    {
+        $this->productRepo = new ProductRepository();
+    }
 
     public function productCategory($cat1 = null, $cat2 = null, $cat3 = null)
     {
@@ -110,7 +117,7 @@ class ProductController extends Controller
     public function productDetails(Request $request, $productSlug = null)
     {
 
-        $getVariationDescription = ProductVariationDescription::where('variation','9ct White Gold')->first();
+        $getVariationDescription = ProductVariationDescription::where('variation', '9ct White Gold')->first();
 
 
         // $dekoEnabled = true;
@@ -127,7 +134,7 @@ class ProductController extends Controller
 
         if ($productSlug != null) {
             // $productSlug = str_replace("_","-",$productSlug);
-            $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('status',1)->where('slug', $productSlug)->first();
+            $getProduct = Products::with(['getProductImages', 'getProductVariation'])->where('status', 1)->where('slug', $productSlug)->first();
 
             if (empty($getProduct)) {
                 /** If data not found with existing slug then check in redirections table and redirect */
@@ -170,7 +177,7 @@ class ProductController extends Controller
                 // store in session for recent viewd products End
 
                 // Product Images
-                $prodImages = ProductImages::where('product_id', $getProduct->id)->where('status',0)->get();
+                $prodImages = ProductImages::where('product_id', $getProduct->id)->where('status', 0)->get();
 
                 if ($getProduct->dfinder_status == 1) {
                     $productVariationId = ProductVariations::where('product_id', $getProduct->id)->pluck('id')->toArray();
@@ -248,9 +255,9 @@ class ProductController extends Controller
                 }
             } else {
                 $getActualSlug = getProductCategorySlug($productSlug);
-                if(isset($getActualSlug) && !empty($getActualSlug)){
-                    $makeNewURL = '/' .$getActualSlug;
-                }else{
+                if (isset($getActualSlug) && !empty($getActualSlug)) {
+                    $makeNewURL = '/' . $getActualSlug;
+                } else {
                     $makeNewURL = asset('/diamonds-rings');
                 }
                 return Redirect::to($makeNewURL, 301);
@@ -351,7 +358,7 @@ class ProductController extends Controller
                 // }
             }
             $getAjaxResponses = false;
-            $view = view('front.ajax.related-productajax', compact('getProductListFinal','getAjaxResponses'))->render();
+            $view = view('front.ajax.related-productajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
         } else {
             $view = '';
             $getProductListFinal = '';
@@ -448,7 +455,7 @@ class ProductController extends Controller
 
     public function getCustomFilter(Request $request)
     {
-        
+
         $product_id = Products::where('slug', $request->slug)->value('id');
         if ($product_id != '') {
             $productSelectedAttribute = ProductVariationAttributes::where('product_id', $product_id)->value('attr_values');
@@ -469,14 +476,14 @@ class ProductController extends Controller
                     // remove after update product start gk.
 
                     if (isset($request->categorySlug) && !empty($request->categorySlug)) {
-                        if(trim($request->categorySlug) == 'wedding-rings'){
+                        if (trim($request->categorySlug) == 'wedding-rings') {
                             $insert[] =  [
                                 "id" => 2,
                                 "name" => "Finger Size",
                                 "slug" => "finger-size",
                                 "values" => "G | G-1/2 | H | H-1/2 | I | I-1/2 | J | J-1/2 | K | K-1/2 | L | L-1/2 | M | M-1/2 | N | N-1/2 "
                             ];
-                        }else{
+                        } else {
                             $insert[] =  [
                                 "id" => 2,
                                 "name" => "Finger Size",
@@ -492,9 +499,9 @@ class ProductController extends Controller
                                 $insert,
                                 array_slice($attributes, 1)
                             );
-                        }else{
-                            if(trim($request->categorySlug) == 'wedding-rings'){
-                                $attributes = $this->replaceArrayById($attributes,2,[
+                        } else {
+                            if (trim($request->categorySlug) == 'wedding-rings') {
+                                $attributes = $this->replaceArrayById($attributes, 2, [
                                     "id" => 2,
                                     "name" => "Finger Size",
                                     "slug" => "finger-size",
@@ -560,7 +567,7 @@ class ProductController extends Controller
                             $final_attr['attri_' . $attribute['slug']] = $found;
                         }
 
-                        $variationArray[] = View::make('front.includes.show_variations', ['final_attr' => $final_attr, 'type' => $request->type, 'selected' => $selected,'diamondType'=>$request->diamondType])->render();
+                        $variationArray[] = View::make('front.includes.show_variations', ['final_attr' => $final_attr, 'type' => $request->type, 'selected' => $selected, 'diamondType' => $request->diamondType])->render();
                     }
                 }
                 return $variationArray;
@@ -569,9 +576,10 @@ class ProductController extends Controller
         return response()->json(['status' => 'Not attribute selected']);
     }
 
-    public function replaceArrayById($array, $id, $newData) {
+    public function replaceArrayById($array, $id, $newData)
+    {
         foreach ($array as &$item) {
-            
+
             if ($item['id'] == $id) {
                 $item = $newData;
                 break;
@@ -582,13 +590,13 @@ class ProductController extends Controller
 
     public function getProductVideo(Request $request)
     {
-        if(isset($request->metal_color) && !empty($request->metal_color)){
+        if (isset($request->metal_color) && !empty($request->metal_color)) {
             $metalType = $request->metal_color;
-        }else{
+        } else {
             $metalType = '9ct White Gold';
         }
-        $getVariationDescription = ProductVariationDescription::where('variation',$metalType)->first();
-        $getProduct = Products::where('slug', $request->slug)->select('id','description','lab_description','short_description')->first();
+        $getVariationDescription = ProductVariationDescription::where('variation', $metalType)->first();
+        $getProduct = Products::where('slug', $request->slug)->select('id', 'description', 'lab_description', 'short_description')->first();
 
         if (isset($getProduct) && !empty($getProduct->id)) {
             $getProductVariationId = ProductVariations::where('product_id', $getProduct->id)->pluck('id')->toArray();
@@ -683,7 +691,7 @@ class ProductController extends Controller
         $hkData = getHKApiRecords($data);
         $hkData = array_map([$this, 'amountChange'], $hkData);
         $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
-        
+
         $rapnetRecords = [];
         if (!empty($rapnetData)) {
             foreach ($rapnetData as $key => $result) {
@@ -713,15 +721,15 @@ class ProductController extends Controller
         $apiData['data'] = Arr::collapse([$rapnetRecords, $hkData]);
 
         usort($apiData['data'], function ($a, $b) {
-			// return $b['Amount'] - $a['Amount']; // sort by descending
-			return $a['Amount'] - $b['Amount']; // sort by ascending
-		});
+            // return $b['Amount'] - $a['Amount']; // sort by descending
+            return $a['Amount'] - $b['Amount']; // sort by ascending
+        });
 
         $apiData['VAT'] = getVAT();
-        
+
         // Ensure $dataArray is always defined
         $dataArray = [];
-        
+
         if (!empty($apiData['data'])) {
             if ($request->type && $request->diamond_type == "mined_diamond") {
                 if (isset($request->selectedDiamondPrice) && !empty($request->selectedDiamondPrice)) {
@@ -737,16 +745,17 @@ class ProductController extends Controller
         return response()->json(['html' => $dataArray]);
     }
 
-    public function amountChange($num){
-		$marginAPIPercentage = MarginApiRange::where('api_type','harikrishna')->whereRaw('"'.$num['Amount'].'" between `from_price` and `to_price`')
-		->where('status', 1)
-		->first();
-		$num['oldAmount'] = $num['Amount'];
-        if(isset($num['Amount']))
+    public function amountChange($num)
+    {
+        $marginAPIPercentage = MarginApiRange::where('api_type', 'harikrishna')->whereRaw('"' . $num['Amount'] . '" between `from_price` and `to_price`')
+            ->where('status', 1)
+            ->first();
+        $num['oldAmount'] = $num['Amount'];
+        if (isset($num['Amount']))
             $num['Amount'] = $num['Amount'] * $marginAPIPercentage->percentage;
         return $num;
     }
-    
+
     public function autocomplete(Request $request)
     {
         $getSearchedData = Products::with(['getProductImages'])->select("title", 'id', 'slug')
@@ -761,15 +770,15 @@ class ProductController extends Controller
     {
 
         $productData = Products::where('slug', $request->slug)->first();
-        
-        if($request->diamond_type == "lab_grown"){
-            $getArrayCategories = explode(',',$productData->categories);
-            if(in_array('18',$getArrayCategories)){
-                $productData->description = $productData->lab_description.' <br> '.$productData->description;
-            }else{
+
+        if ($request->diamond_type == "lab_grown") {
+            $getArrayCategories = explode(',', $productData->categories);
+            if (in_array('18', $getArrayCategories)) {
+                $productData->description = $productData->lab_description . ' <br> ' . $productData->description;
+            } else {
                 $productData->description = $productData->lab_description;
             }
-        }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations) || in_array('Silver',$request->variations))){
+        } elseif ($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold', $request->variations) || in_array('9ct White Gold', $request->variations) || in_array('9ct Rose Gold', $request->variations) || in_array('Silver', $request->variations))) {
             $productData->description = strip_tags(str_replace('G/H VS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'I-J. SI-I1', $productData->description));
@@ -777,7 +786,7 @@ class ProductController extends Controller
             $productData->description = strip_tags(str_replace('F-G diamond clarity VS-SI.', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('FVS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('G-H SI', 'I-J. SI-I1', $productData->description));
-        } 
+        }
 
         $runOldCode = true;
 
@@ -1096,26 +1105,26 @@ class ProductController extends Controller
     public function getSelectedVariationsData(Request $request)
     {
 
-        if(isset($request->metal_type) && !empty($request->metal_type)){
+        if (isset($request->metal_type) && !empty($request->metal_type)) {
             $metalType = $request->metal_type;
-        }else{
+        } else {
             $metalType = '9ct White Gold';
         }
-        $getVariationDescription = ProductVariationDescription::where('variation',$metalType)->first();
+        $getVariationDescription = ProductVariationDescription::where('variation', $metalType)->first();
 
         $productData = Products::where('slug', $request->slug)->first();
 
-         if($request->diamond_type == "lab_grown"){
-            $getArrayCategories = explode(',',$productData->categories);
-            if(in_array('18',$getArrayCategories)){
+        if ($request->diamond_type == "lab_grown") {
+            $getArrayCategories = explode(',', $productData->categories);
+            if (in_array('18', $getArrayCategories)) {
                 $productData->description = str_replace('G-H Clarity SI', 'D-E. VVS', $productData->description);
-                
-                $productData->description = $productData->lab_description.' <br> '.$productData->description;
-            }else{
+
+                $productData->description = $productData->lab_description . ' <br> ' . $productData->description;
+            } else {
                 // $productData->description = str_replace('D-E Clarity VVS', 'D-E. VVS', $productData->lab_description);
                 $productData->description = str_replace('D-E Clarity VVS', 'D-E. VVS', $productData->lab_description);
             }
-        }elseif($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold',$request->variations) || in_array('9ct White Gold',$request->variations) || in_array('9ct Rose Gold',$request->variations))){
+        } elseif ($request->diamond_type == "mined_diamond" && (in_array('9ct Yellow Gold', $request->variations) || in_array('9ct White Gold', $request->variations) || in_array('9ct Rose Gold', $request->variations))) {
             $productData->description = strip_tags(str_replace('G/H VS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('D-E Clarity VVS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'I-J. SI-I1', $productData->description));
@@ -1124,7 +1133,7 @@ class ProductController extends Controller
             $productData->description = strip_tags(str_replace('F-G diamond clarity VS-SI.', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('FVS', 'I-J. SI-I1', $productData->description));
             $productData->description = strip_tags(str_replace('G-H SI', 'I-J. SI-I1', $productData->description));
-        } elseif ($request->diamond_type == "mined_diamond" && (in_array('18ct Yellow Gold',$request->variations) || in_array('18ct White Gold',$request->variations) || in_array('18ct Rose Gold',$request->variations) || in_array('Platinum',$request->variations))){
+        } elseif ($request->diamond_type == "mined_diamond" && (in_array('18ct Yellow Gold', $request->variations) || in_array('18ct White Gold', $request->variations) || in_array('18ct Rose Gold', $request->variations) || in_array('Platinum', $request->variations))) {
             $productData->description = strip_tags(str_replace('G/H VS', 'G-H SI', $productData->description));
             $productData->description = strip_tags(str_replace('G-H Clarity SI', 'G-H SI', $productData->description));
             $productData->description = strip_tags(str_replace('F-G Clarity VS-SI', 'G-H SI', $productData->description));
@@ -1461,35 +1470,71 @@ class ProductController extends Controller
      * @return void
      */
 
-     public function getSelectedVariationsImageData(Request $request)
+    //  public function getSelectedVariationsImageData(Request $request)
+    // {
+    //      $getProduct = Products::where('slug', $request->slug)->first();
+    //      $getProductVariationId = ProductVariations::where('product_id', $getProduct->id)
+    //          ->pluck('id')
+    //          ->toArray();
+
+    //      if (!empty($getProductVariationId)) {
+    //          $getVariDetails = ProductVariationDetails::groupBy('value')
+    //              ->whereIn('variation_id', $getProductVariationId)
+    //              ->where('value', $request->metal_type)
+    //              ->first();
+    //     }
+    //      $newArray = [];
+
+    //      if (isset($getVariDetails) && !empty($getVariDetails)) {
+    //          // Get product variation price
+    //          $getSelectedVariationVideoImages = ProductVariations::where('id', $getVariDetails->variation_id)
+    //              ->select('vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video') ->first();
+
+    //          $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
+    //          $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
+    //          $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
+    //          $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
+    //          return response()->json($newArray);
+    //     } else {
+    //          return response()->json(['statusCode' => '500', 'msg' => 'No Variation Found']);
+    //     }
+    // }
+    public function getSelectedVariationsImageData(Request $request)
     {
-         $getProduct = Products::where('slug', $request->slug)->first();
-         $getProductVariationId = ProductVariations::where('product_id', $getProduct->id)
-             ->pluck('id')
-             ->toArray();
- 
-         if (!empty($getProductVariationId)) {
-             $getVariDetails = ProductVariationDetails::groupBy('value')
-                 ->whereIn('variation_id', $getProductVariationId)
-                 ->where('value', $request->metal_type)
-                 ->first();
-        }
-         $newArray = [];
+        try {
+            $product = Products::where('slug', $request->slug)->first();
 
-         if (isset($getVariDetails) && !empty($getVariDetails)) {
-             // Get product variation price
-             $getSelectedVariationVideoImages = ProductVariations::where('id', $getVariDetails->variation_id)
-                 ->select('vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video') ->first();
+            if (!$product) {
+                return response()->json(['statusCode' => 404, 'msg' => 'Product not found']);
+            }
 
-             $newArray['vari_image'] = $getSelectedVariationVideoImages->vari_image;
-             $newArray['vari_video'] = $getSelectedVariationVideoImages->vari_video;
-             $newArray['multi_vari_img'] = $getSelectedVariationVideoImages->multi_vari_img;
-             $newArray['multi_vari_video'] = $getSelectedVariationVideoImages->multi_vari_video;
-             return response()->json($newArray);
-        } else {
-             return response()->json(['statusCode' => '500', 'msg' => 'No Variation Found']);
+            $variationDetail = ProductVariationDetails::whereHas('variation', function ($query) use ($product) {
+                $query->where('product_id', $product->id);
+            })
+                ->where('value', isset($request->metal_type) && strtolower(trim($request->metal_type)) != 'default' ? trim($request->metal_type) : null)
+                ->first();
+                // ->toSql();
+                // dd($variationDetail);
+
+            if (!$variationDetail) {
+                return response()->json(['statusCode' => 500, 'msg' => 'No Variation Found']);
+            }
+
+            $variation = $variationDetail->variation()
+                ->select('vari_image', 'vari_video', 'multi_vari_img', 'multi_vari_video')
+                ->first();
+
+            return response()->json([
+                'vari_image'       => $variation->vari_image,
+                'vari_video'       => $variation->vari_video,
+                'multi_vari_img'   => $variation->multi_vari_img,
+                'multi_vari_video' => $variation->multi_vari_video,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['statusCode' => 500, 'msg' => 'Something went wrong!']);
         }
     }
+
 
 
     public function getRelatedProductList(Request $request)
@@ -1498,16 +1543,16 @@ class ProductController extends Controller
         $getAjaxResponses = false;
         $getCateProductId = array();
         foreach ($getCatIdArray as $prKey => $proVal) {
-            if($prKey == 0){
+            if ($prKey == 0) {
                 $getProductList = Products::whereRaw("find_in_set('" . $proVal . "',categories)")
                     ->pluck('id')->toArray();
                 array_push($getCateProductId, $getProductList);
             }
         }
         $output = array_unique(call_user_func_array('array_merge', $getCateProductId));
-        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->where('status',1)->take(4)->get();
+        $getProductListFinal = Products::with('getProductImages')->whereIn('id', $output)->where('status', 1)->take(4)->get();
         if (isset($getProductListFinal) && !empty($getProductListFinal)) {
-            $view = view('front.ajax.related-productajax', compact('getProductListFinal','getAjaxResponses'))->render();
+            $view = view('front.ajax.related-productajax', compact('getProductListFinal', 'getAjaxResponses'))->render();
         } else {
             $view = '';
         }
@@ -1901,8 +1946,8 @@ class ProductController extends Controller
 
     public function productListingData(Request $request)
     {
-
-        $productListingData = getProductListing($request['slug'], $request['slug2'], $request['slug3'], $request->all());
+        // $productListingData = getProductListing($request['slug'], $request['slug2'], $request['slug3'], $request->all());
+        $productListingData = $this->productRepo->getProductListing($request['slug'], $request['slug2'], $request['slug3'], $request->all());
         if ($productListingData['status'] == 404) {
             // return view('layouts.errors.404');
             return response()->json([
@@ -1935,14 +1980,14 @@ class ProductController extends Controller
 
         // ->where('status',1)
         // ->where('status',1)
-        $products = Products::select('slug', 'updated_at')->where('status',1)->groupBy('slug')->get();
+        $products = Products::select('slug', 'updated_at')->where('status', 1)->groupBy('slug')->get();
         $posts = Posts::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
         $posts_categories = PostCategory::select('slug', 'updated_at')->groupBy('slug')->where('status', 1)->get();
         $pages = Pages::select('slug', 'updated_at')->groupBy('slug')->where('slug', '!=', 'engagement-rings')->where(['status' => 1, 'is_deleted' => 0])->get();
-        $menuCategoryLinks = Menus::select('slug as url', 'updated_at')->where('slug', '!=', '/engagement-rings/')->whereBetween('id',[1,31])->where(['status' => 1])->groupBy('slug')->get();
+        $menuCategoryLinks = Menus::select('slug as url', 'updated_at')->where('slug', '!=', '/engagement-rings/')->whereBetween('id', [1, 31])->where(['status' => 1])->groupBy('slug')->get();
 
         $otherPages = [
-            'homepage'=>'/',
+            'homepage' => '/',
             // 'product/wishlist',
             'my-account',
             'products/cart',
@@ -1956,9 +2001,9 @@ class ProductController extends Controller
         foreach ($dataOfCategories as $category_key => $category_value) {
             if (!empty($category_value)) {
                 $categoryItem = explode('@', $category_value);
-                if($categoryItem[0] !== 'engagement-rings'){
-                   $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
-                    $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') .'/'. $categoryUrl;
+                if ($categoryItem[0] !== 'engagement-rings') {
+                    $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
+                    $categoryUrlsList[$category_key]['url'] =  env('APP_ROOT_URL') . '/' . $categoryUrl;
                     $categoryUrlsList[$category_key]['updated_at'] = $categoryItem[1];
                 }
             }
@@ -2036,7 +2081,7 @@ class ProductController extends Controller
 
         // ->where('status',1)
         // ->where('status',1)
-        $products = Products::select('slug', 'updated_at', 'title')->where('status',1)->groupBy('slug')->get();
+        $products = Products::select('slug', 'updated_at', 'title')->where('status', 1)->groupBy('slug')->get();
         $posts = Posts::select('slug', 'updated_at', 'title')->groupBy('slug')->where('status', 1)->get();
         $posts_categories = PostCategory::select('slug', 'updated_at', 'name')->groupBy('slug')->where('status', 1)->get();
         $pages = Pages::select('slug', 'updated_at', 'title')->groupBy('slug')->where(['status' => 1, 'is_deleted' => 0])->get();
@@ -2056,7 +2101,7 @@ class ProductController extends Controller
             if (!empty($category_value)) {
                 $categoryItem = explode('@', $category_value);
                 $categoryUrl = $this->attachParentSlugToCategory($categoryItem[0]);
-                if($categoryUrl == 'wedding-rings/womens/diamond-band-womens/' || $categoryUrl == 'wedding-rings/womens/plain-band-womens/'){
+                if ($categoryUrl == 'wedding-rings/womens/diamond-band-womens/' || $categoryUrl == 'wedding-rings/womens/plain-band-womens/') {
                     $categoryUrl = str_replace('-womens/', '/', $categoryUrl);
                 }
                 $categoryUrlsList[$category_key]['url'] = url($categoryUrl);
@@ -2088,42 +2133,43 @@ class ProductController extends Controller
         $request = request();
         $path =  strtolower($request->path());
 
-        $getActiveURLs = ActiveCategoryUrl::where('url',$path)->first();
+        $getActiveURLs = ActiveCategoryUrl::where('url', $path)->first();
 
-        if(isset($getActiveURLs) && !empty($getActiveURLs)){
+        if (isset($getActiveURLs) && !empty($getActiveURLs)) {
             $slugs = explode('/', $path);
-            $productListingData = getProductListing($slugs, request()->all());
+            // $productListingData = getProductListing($slugs, request()->all());
+            $productListingData = $this->productRepo->getProductListing($slugs, $request->all());
             if (!empty($productListingData) && $productListingData['status'] != 404) {
-                
+
                 $productItems = $productListingData['productItems'];
                 $sortedArray = $productListingData['sortedArray'];
                 $getProductListFinal = $productListingData['getProductListFinal'];
                 $product_count = $productListingData['product_count'];
-                
+
                 $isNextPage = $productListingData['isNextPage'];
                 $nextPage = $productListingData['nextPage'];
                 $categoryData = $productListingData['categoryData'];
-    
+
                 $path = request()->path();
-    
+
                 /** Items for filter */
-                $filter_items = ProductFilter::whereHas('product_items', function ($query) {
+                $filter_items = ProductFilter::select('id', 'name', 'slug', 'input_type')->whereHas('product_items', function ($query) {
                     $query->where(['is_deleted' => 0, 'is_active' => 1]);
                 })
-                    ->with('product_items')
+                    ->with('product_items:product_filter_id,item_value,item_name,item_slug,filter_category_slug')
                     ->where(['is_deleted' => 0, 'is_active' => 1])
                     ->get();
-    
+
                 $slugText = '';
                 if (isset($slugs[1]) && !empty($slugs[1])) {
                     $slugText = $slugs[1];
                 } elseif (isset($slugs[0]) && !empty($slugs[0])) {
                     $slugText = $slugs[0];
                 }
-    
+
                 $filterItemTextData = ProductFilterItems::where('item_slug', $slugText)->select('top_text', 'bottom_text')->first();
 
-    
+
                 if ($request->isMethod('POST')) {
                     return response()->json([
                         "status" => true,
@@ -2133,9 +2179,9 @@ class ProductController extends Controller
                         "nextPage" => $nextPage
                     ]);
                 }
-                
+
                 $data = $categoryData;
-                $pageData = Pages::where('slug','engagement-rings')->where(['status'=>1, 'is_deleted'=>0])->first();
+                $pageData = Pages::where('slug', 'engagement-rings')->where(['status' => 1, 'is_deleted' => 0])->first();
                 return view('front.pages.product_listing_page', compact([
                     'filterItemTextData',
                     'productItems',
@@ -2157,8 +2203,8 @@ class ProductController extends Controller
         return view('layouts.errors.404');
     }
 
-   /**
-     * Get Product Listing Data 
+    /**
+     * Get Product Listing Data
      *
      * @param Request $request
      * @return void
@@ -2167,13 +2213,13 @@ class ProductController extends Controller
     {
         $dataArray = [];
         if (isset($request->ids) && !empty($request->ids)) {
-           foreach ($request->ids as $key => $value) {
+            foreach ($request->ids as $key => $value) {
                 $dataArray[$value['name']][] = $value['value'];
             }
         }
 
-        if(isset($dataArray['ring-categories']) && count($dataArray) == 2){
-            if($dataArray['ring-categories']['0'] == 'plain-band' || $dataArray['ring-categories']['0'] == 'diamond-band'){
+        if (isset($dataArray['ring-categories']) && count($dataArray) == 2) {
+            if ($dataArray['ring-categories']['0'] == 'plain-band' || $dataArray['ring-categories']['0'] == 'diamond-band') {
                 $dataArray['style-categories'][] = 'womens';
             }
         }
@@ -2186,42 +2232,43 @@ class ProductController extends Controller
         $dataArray['per_page_product'] = $request->per_page_product;
         $dataArray['keyword'] = $request->keyword;
         $slugs = explode('/', $request->path);
-        return $productListingData = getProductListing($slugs, $dataArray, $sorting);
+        // return $productListingData = getProductListing($slugs, $dataArray, $sorting);
+        return $this->productRepo->getProductListing($slugs, $dataArray, $sorting);
     }
 
     public function getProductVariationPrices(Request $request)
     {
-        $getRegularPrices = getRagularFilterPrices($request->all(),$request['diamond_type'], $request->slug, $request->metal_type);
+        $getRegularPrices = getRagularFilterPrices($request->all(), $request['diamond_type'], $request->slug, $request->metal_type);
         $getLabDiamondPrices = 0;
 
         if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
-            if(isset($request->type) && $request->type){
-                if(isset($request->diamond_type) && $request->diamond_type == 'mined_diamond'){
+            if (isset($request->type) && $request->type) {
+                if (isset($request->diamond_type) && $request->diamond_type == 'mined_diamond') {
                     $getLabDiamondPrices = $this->getCustomApiFilterData($request);
-                }else{
+                } else {
                     $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
                 }
             }
-        }else{
+        } else {
             $getLabDiamondPrices = $request->selectedDiamondPrice;
         }
 
-        $resultedArray = array_map(function($num) use ($getLabDiamondPrices) {
-            return round($num + $getLabDiamondPrices,2);
+        $resultedArray = array_map(function ($num) use ($getLabDiamondPrices) {
+            return round($num + $getLabDiamondPrices, 2);
         }, $getRegularPrices);
         unset($resultedArray['parent_category']);
-        if(isset($resultedArray) && !empty($resultedArray)){
+        if (isset($resultedArray) && !empty($resultedArray)) {
             return [
-                'status'=> 200,
-                'allPrices'=>getFlatDiscountRanges($resultedArray,$getRegularPrices['parent_category'],$request['diamond_type']),
-                'getLabDiamondPrices'=>round($getLabDiamondPrices,2),
+                'status' => 200,
+                'allPrices' => getFlatDiscountRanges($resultedArray, $getRegularPrices['parent_category'], $request['diamond_type']),
+                'getLabDiamondPrices' => round($getLabDiamondPrices, 2),
             ];
         }
 
         return [
-            'status'=> 500,
-            'allPrices'=>0.00,
-            'getLabDiamondPrices'=>0.00,
+            'status' => 500,
+            'allPrices' => 0.00,
+            'getLabDiamondPrices' => 0.00,
         ];
     }
 }
