@@ -13,7 +13,7 @@
         <div class="product-item-slider">
             <div class="owl-carousel owl-theme owlslidertwo st-arrows">
                 @foreach($product_data as $key => $product)
-                    <?php 
+                    <?php
                         // $getProductListingPrices = getMinimumPriceFunction($product);
                         $getProductListingPrices = $product->getMinimumPriceFunction;
                     ?>
@@ -42,7 +42,7 @@
                                                     @if($getProductListingPrices['final_discounted_price'] != $getProductListingPrices['final_shop_price'])
                                                     <h4><del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_shop_price'])}}</del> </h4>
                                                     @endif
-                                                    
+
                                                     <div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $getProductListingPrices['final_discounted_price'])}} </span></div>
                                                 </div>
                                                 @if($getProductListingPrices['final_rrp_price'] != $getProductListingPrices['final_discounted_price'])

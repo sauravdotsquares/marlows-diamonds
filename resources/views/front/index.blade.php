@@ -3,27 +3,45 @@
 @section('content')
 @section('css')
     <style>
-        .error {color: #e74c3c !important;}
-    </style> 
+        .error {
+            color: #e74c3c !important;
+        }
+    </style>
     <link rel="stylesheet" href="{{ asset('assets/vendors/toastr/build/toastr.min.css') }}">
-     {{-- start --}}
-     <script type="text/javascript">
+    {{-- start --}}
+    <script type="text/javascript">
         window.criteo_q = window.criteo_q || [];
-        var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
-        window.criteo_q.push(
-          { event: "setAccount", account: 119681 },
-          @if(Auth::check())
-            { event: "setEmail", email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}", hash_method: "sha256" },
-            { event: "setEmail", email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}", hash_method: "md5" },
-          @endif
-          { event: "setSiteType", type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}" },
-          @if(Auth::check())
-          { event: "setCustomerId", id: {{ Auth::user()->id }} },
-          @endif
-          { event: "viewHome" }
+        var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/
+            .test(navigator.userAgent) ? "m" : "d";
+        window.criteo_q.push({
+                event: "setAccount",
+                account: 119681
+            },
+            @if (Auth::check())
+                {
+                    event: "setEmail",
+                    email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                    hash_method: "sha256"
+                }, {
+                    event: "setEmail",
+                    email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                    hash_method: "md5"
+                },
+            @endif {
+                event: "setSiteType",
+                type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}"
+            },
+            @if (Auth::check())
+                {
+                    event: "setCustomerId",
+                    id: {{ Auth::user()->id }}
+                },
+            @endif {
+                event: "viewHome"
+            }
         );
-      </script>
-     {{-- end --}}
+    </script>
+    {{-- end --}}
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
@@ -36,511 +54,530 @@
         }
         </script>
 @endsection
-@section('dynamic_og_image')<meta property="og:image" content="{{env('APP_IMAGE_URL').'/images/logo/'.$header_settings['logo']}}" />@endsection
-    <!-- home main-banner start -->
-    <div class="home-main-banner">
-        <div class="main-banner-wraper flex-flex-wrap flexed">
-            <div class="main-banner-col banner-left-col">
-                <div class="main-banner-left-text">
-                    <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
-                     <h2 > The<img src="/assets/images/logo-ups.png" alt="{{$header_settings['site_title']}}" style="padding-left: 5px;height:58px;width:155px;"> USP</h2>
-                    <ul>
+@section('dynamic_og_image')
+    <meta property="og:image" content="{{ env('APP_IMAGE_URL') . '/images/logo/' . $header_settings['logo'] }}" />
+@endsection
+<!-- home main-banner start -->
+<div class="home-main-banner">
+    <div class="main-banner-wraper flex-flex-wrap flexed">
+        <div class="main-banner-col banner-left-col">
+            <div class="main-banner-left-text">
+                <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
+                <h2> The<img src="/assets/images/logo-ups.png" alt="{{ $header_settings['site_title'] }}"
+                        style="padding-left: 5px;height:58px;width:155px;"> USP</h2>
+                <ul>
                     <li>Be guided by our expert team with over 150 years of combined jewellery experience</li>
                     <li>Choose your perfect setting from a handpicked collection of over 600 timeless designs</li>
                     <li>Select your diamond or gemstone from more than 2,500 exquisite options</li>
                     <li>Our in-house workshop brings your vision to life with precision and care</li>
                     <li>Take your piece home the same day, if you wish</li>
-                   </ul>
-                    <div class="shop-engage-btn">
+                </ul>
+                <div class="shop-engage-btn">
                     <a class="btn-bg-large" href="{{ asset('engagement-rings') }}">SHOP ENGAGEMENT RINGS</a>
-                    </div>
-                </div>
-            </div>
-            <div class="main-banner-col banner-ryt-col">
-                <div class="main-banner-ryt-img">
-                    <?php 
-                        $ringImageUrl = getImageOptimizeDetails('/assets/images/ring-img.webp','340','500');
-                    ?>
-                    <img src="{{ $ringImageUrl }}" alt="Ring">
                 </div>
             </div>
         </div>
+        <div class="main-banner-col banner-ryt-col">
+            <div class="main-banner-ryt-img">
+                <?php
+                $ringImageUrl = getImageOptimizeDetails('/assets/images/ring-img.webp', '340', '500');
+                ?>
+                <img src="{{ $ringImageUrl }}" alt="Ring">
+            </div>
+        </div>
     </div>
-    <!-- home main-banner endt -->
+</div>
+<!-- home main-banner endt -->
 
-    <!-- Shop from the Best start here -->
-    <div class="shopfrom-best">
-        <div class="container">
+<!-- Shop from the Best start here -->
+<div class="shopfrom-best">
+    <div class="container">
+        <div class="head-para-three">
+            <h2 class="heading-h-three">Our Best Selling Collections</h2>
+        </div>
+        <div class="product-item-slider">
+            <div class="owl-carousel owl-theme owlsliderone st-arrows">
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('diamond-engagement-rings') }}">
+                                <?php
+                                $ringImageEngagementRingUrl = getImageOptimizeDetails('/assets/images/engagement-ring.png', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageEngagementRingUrl }}" alt="Engagement Ring">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('diamond-engagement-rings') }}">
+                                <div class="product-titles">
+                                    Engagement Ring
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('diamond-engagement-rings') }}">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/diamonds-rings') }}">
+                                <?php
+                                $ringImageDiamondRingUrl = getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageDiamondRingUrl }}" alt="Multi Stone Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/diamonds-rings') }}">
+                                <div class="product-titles">
+                                    Diamond Rings
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/diamonds-rings') }}">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/eternity-rings') }}">
+                                <?php
+                                $ringImageEternityRingUrl = getImageOptimizeDetails('/storage/Products/ET112-F-G-VS-SI_T_W.jpg', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageEternityRingUrl }}" alt="Multi Stone Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/eternity-rings') }}">
+                                <div class="product-titles">
+                                    Eternity Rings
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/eternity-rings') }}">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/wedding-rings') }}">
+                                <?php
+                                $ringImageWeddingRingUrl = getImageOptimizeDetails('/assets/images/wedding-ring.png', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageWeddingRingUrl }}" alt="Wedding Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/wedding-rings') }}">
+                                <div class="product-titles">
+                                    Wedding Rings
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/wedding-rings') }}">Shop
+                                    Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/diamond-jewellery') }}">
+                                <?php
+                                $ringImageDiamondJewelleryUrl = getImageOptimizeDetails('/assets/images/diamond-jewellery.png', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageDiamondJewelleryUrl }}" alt="Diamond Jewellery">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/diamond-jewellery') }}">
+                                <div class="product-titles">
+                                    Diamond Jewellery
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/diamond-jewellery') }}">Shop
+                                    Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/engagement-rings/halo') }}">
+                                <?php
+                                $ringImageHaloUrl = getImageOptimizeDetails('/storage/Products/RC2029_00003_1650430327.jpg', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageHaloUrl }}" alt="Multi Stone Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/engagement-rings/halo') }}">
+                                <div class="product-titles">
+                                    Halo Ring
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/engagement-rings/halo') }}">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/engagement-rings/multi-stone') }}">
+                                <?php
+                                $ringImageMultistoneRingUrl = getImageOptimizeDetails('/assets/images/multi-stone.png', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageMultistoneRingUrl }}" alt="Multi Stone Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/engagement-rings/multi-stone') }}">
+                                <div class="product-titles">
+                                    Multi Stone Rings
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/engagement-rings/multi-stone') }}">Shop
+                                    Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/engagement-rings/shoulder-set') }}">
+                                <?php
+                                $ringImageShoulderSetUrl = getImageOptimizeDetails('/storage/Products/R1-2294_00003_1650373913.jpg', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageShoulderSetUrl }}" alt="Multi Stone Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/engagement-rings/shoulder-set') }}">
+                                <div class="product-titles">
+                                    Shoulder Set Ring
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/engagement-rings/shoulder-set') }}">Shop
+                                    Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/engagement-rings/solitaire') }}">
+                                <?php
+                                $ringImageSolitaireUrl = getImageOptimizeDetails('/storage/Products/R1-327_00003_1650432540.jpg', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageSolitaireUrl }}" alt="Multi Stone Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/engagement-rings/solitaire') }}">
+                                <div class="product-titles">
+                                    Solitaire Ring
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/engagement-rings/solitaire') }}">Shop
+                                    Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/wedding-rings/mens') }}">
+                                <?php
+                                $ringImageMensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/WED028_T_W.jpg', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageMensWeddingRingUrl }}" alt="Multi Stone Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/wedding-rings/mens') }}">
+                                <div class="product-titles">
+                                    Men's Wedding ring
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/wedding-rings/mens') }}">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="product-info">
+                        <div class="product-image">
+                            <a href="{{ asset('/wedding-rings/womens') }}">
+                                <?php
+                                $ringImageWomensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/217231453wed052-silver-front.png', '340', '340');
+                                ?>
+                                <img src="{{ $ringImageWomensWeddingRingUrl }}" alt="Multi Stone Rings">
+                            </a>
+                        </div>
+                        <div class="product-item-details">
+                            <a href="{{ asset('/wedding-rings/womens') }}">
+                                <div class="product-titles">
+                                    Women's Wedding Ring
+                                </div>
+                            </a>
+                            <div class="product-action-btn">
+                                <a class="btn-bg-small" href="{{ asset('/wedding-rings/womens') }}">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Shop from the Best end here -->
+
+<!-- Choose Your Diamond Engagement ring from Marlow's  start here -->
+{!! Cache::remember('choosediamond', 3600, function() {
+    return view('front.includes.choosediamond')->render();
+}) !!}
+{{-- @include('front.includes.choosediamond') --}}
+<!-- Choose Your Diamond Engagement ring from Marlow's end here -->
+
+<!-- whay choose marlows start here -->
+<div class="whychoose-marlows">
+    <div class="container">
+        <div class="whychoose-wraper">
             <div class="head-para-three">
-                <h2 class="heading-h-three">Our Best Selling Collections</h2>
-            </div>
-            <div class="product-item-slider">
-                <div class="owl-carousel owl-theme owlsliderone st-arrows">
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('diamond-engagement-rings') }}">
-                                    <?php
-                                        $ringImageEngagementRingUrl = getImageOptimizeDetails('/assets/images/engagement-ring.png','340','340');
-                                    ?>
-                                    <img src="{{$ringImageEngagementRingUrl}}" alt="Engagement Ring">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('diamond-engagement-rings') }}">
-                                    <div class="product-titles">
-                                        Engagement Ring
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small" href="{{ asset('diamond-engagement-rings') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/diamonds-rings') }}">
-                                    <?php
-                                        $ringImageDiamondRingUrl = getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg','340','340');
-                                    ?>
-                                    <img src="{{$ringImageDiamondRingUrl}}" alt="Multi Stone Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/diamonds-rings') }}">
-                                    <div class="product-titles">
-                                        Diamond Rings
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small" href="{{ asset('/diamonds-rings') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/eternity-rings') }}">
-                                    <?php
-                                        $ringImageEternityRingUrl = getImageOptimizeDetails('/storage/Products/ET112-F-G-VS-SI_T_W.jpg','340','340');
-                                    ?>
-                                    <img src="{{ $ringImageEternityRingUrl }}" alt="Multi Stone Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/eternity-rings') }}">
-                                    <div class="product-titles">
-                                        Eternity Rings
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small"
-                                        href="{{ asset('/eternity-rings') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/wedding-rings') }}">
-                                    <?php
-                                        $ringImageWeddingRingUrl = getImageOptimizeDetails('/assets/images/wedding-ring.png','340','340');
-                                    ?>
-                                    <img src="{{$ringImageWeddingRingUrl}}" alt="Wedding Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/wedding-rings') }}">
-                                    <div class="product-titles">
-                                        Wedding Rings
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small" href="{{ asset('/wedding-rings') }}">Shop
-                                        Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/diamond-jewellery') }}">
-                                    <?php
-                                        $ringImageDiamondJewelleryUrl = getImageOptimizeDetails('/assets/images/diamond-jewellery.png','340','340');
-                                    ?>
-                                    <img src="{{$ringImageDiamondJewelleryUrl}}" alt="Diamond Jewellery">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/diamond-jewellery') }}">
-                                    <div class="product-titles">
-                                        Diamond Jewellery
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small" href="{{ asset('/diamond-jewellery') }}">Shop
-                                        Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/engagement-rings/halo') }}">
-                                    <?php
-                                        $ringImageHaloUrl = getImageOptimizeDetails('/storage/Products/RC2029_00003_1650430327.jpg','340','340');
-                                    ?>
-                                    <img src="{{$ringImageHaloUrl}}" alt="Multi Stone Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/engagement-rings/halo') }}">
-                                    <div class="product-titles">
-                                        Halo Ring
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small"
-                                        href="{{ asset('/engagement-rings/halo') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/engagement-rings/multi-stone') }}">
-                                    <?php
-                                        $ringImageMultistoneRingUrl = getImageOptimizeDetails('/assets/images/multi-stone.png','340','340');
-                                    ?>
-                                    <img src="{{$ringImageMultistoneRingUrl}}" alt="Multi Stone Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/engagement-rings/multi-stone') }}">
-                                    <div class="product-titles">
-                                        Multi Stone Rings
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small"
-                                        href="{{ asset('/engagement-rings/multi-stone') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/engagement-rings/shoulder-set') }}">
-                                    <?php
-                                        $ringImageShoulderSetUrl = getImageOptimizeDetails('/storage/Products/R1-2294_00003_1650373913.jpg','340','340');
-                                    ?>
-                                    <img src="{{$ringImageShoulderSetUrl}}" alt="Multi Stone Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/engagement-rings/shoulder-set') }}">
-                                    <div class="product-titles">
-                                        Shoulder Set Ring
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small"
-                                        href="{{ asset('/engagement-rings/shoulder-set') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/engagement-rings/solitaire') }}">
-                                    <?php
-                                        $ringImageSolitaireUrl = getImageOptimizeDetails('/storage/Products/R1-327_00003_1650432540.jpg','340','340');
-                                    ?>
-                                    <img src="{{$ringImageSolitaireUrl}}" alt="Multi Stone Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/engagement-rings/solitaire') }}">
-                                    <div class="product-titles">
-                                        Solitaire Ring
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small"
-                                        href="{{ asset('/engagement-rings/solitaire') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/wedding-rings/mens') }}">
-                                    <?php
-                                        $ringImageMensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/WED028_T_W.jpg','340','340');
-                                    ?>
-                                    <img src="{{$ringImageMensWeddingRingUrl}}" alt="Multi Stone Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/wedding-rings/mens') }}">
-                                    <div class="product-titles">
-                                        Men's Wedding ring
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small"
-                                        href="{{ asset('/wedding-rings/mens') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="product-info">
-                            <div class="product-image">
-                                <a href="{{ asset('/wedding-rings/womens') }}">
-                                    <?php
-                                        $ringImageWomensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/217231453wed052-silver-front.png','340','340');
-                                    ?>
-                                    <img src="{{$ringImageWomensWeddingRingUrl}}" alt="Multi Stone Rings">
-                                </a>
-                            </div>
-                            <div class="product-item-details">
-                                <a href="{{ asset('/wedding-rings/womens') }}">
-                                    <div class="product-titles">
-                                        Women's Wedding Ring
-                                    </div>
-                                </a>
-                                <div class="product-action-btn">
-                                    <a class="btn-bg-small"
-                                        href="{{ asset('/wedding-rings/womens') }}">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="heading-h-three">
+                    Why Choose Marlow’s Diamonds?
+                    <p style="line-height: 2;">Because we are specialists in affordable luxury-the one stop jewellery
+                        superstore</p>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Shop from the Best end here -->
-
-    <!-- Choose Your Diamond Engagement ring from Marlow's  start here -->
-    @include('front.includes.choosediamond')
-    <!-- Choose Your Diamond Engagement ring from Marlow's end here -->
-    
-    <!-- whay choose marlows start here -->
-    <div class="whychoose-marlows">
-        <div class="container">
-            <div class="whychoose-wraper">
-                <div class="head-para-three">
-                    <div class="heading-h-three">
-                        Why Choose Marlow’s Diamonds?
-                        <p style="line-height: 2;">Because we are specialists in affordable luxury-the one stop jewellery superstore</p>
-                    </div>
-                    <p>For over three generations, we have proudly assisted countless happy couples in expressing
-                        their love and commitment. We share your values of quality and dedication, and that is why
-                        Marlow’s is a must.</p>
-                    <p class="second-para">Our diamonds and gemstones offer exceptional value, consistently surpassing any like-for-like comparison with other UK jewellers. Our      collection features multiple shape diamonds,
-                        including ovals, marquises, emerald cuts, and cushions, all expertly polished to the highest
-                        standards. We guarantee that most of our diamonds visually appear larger than their carat weight. Our
-                        skilled polishers focus on maximising proportions rather than just carat weight, meaning our 1ct diamonds often look equivalent to a 1.25ct from other jewellers. We invite you to visit any
-                        of our stores to be amazed. Furthermore, if you find a better price elsewhere, simply send us a link, and we will gladly
-                        beat it—guaranteeing you the best deal.</p>
-                    <video  id="video" autoplay muted loop playsinline  poster="/storage/HomePageVideos/homeopagevideo.webp">
-                    <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.mp4' }}" type="video/mp4">
+                <p>For over three generations, we have proudly assisted countless happy couples in expressing
+                    their love and commitment. We share your values of quality and dedication, and that is why
+                    Marlow’s is a must.</p>
+                <p class="second-para">Our diamonds and gemstones offer exceptional value, consistently surpassing any
+                    like-for-like comparison with other UK jewellers. Our collection features multiple shape diamonds,
+                    including ovals, marquises, emerald cuts, and cushions, all expertly polished to the highest
+                    standards. We guarantee that most of our diamonds visually appear larger than their carat weight.
+                    Our
+                    skilled polishers focus on maximising proportions rather than just carat weight, meaning our 1ct
+                    diamonds often look equivalent to a 1.25ct from other jewellers. We invite you to visit any
+                    of our stores to be amazed. Furthermore, if you find a better price elsewhere, simply send us a
+                    link, and we will gladly
+                    beat it—guaranteeing you the best deal.</p>
+                <video id="video" autoplay muted loop playsinline
+                    poster="/storage/HomePageVideos/homeopagevideo.webp">
+                    <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.mp4' }}"
+                        type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
 
-                </div>
-                <div class="text-center" id="getDirectionDetails1">
-                    <a class="btn-bg-small getdirection" href="#location_data_section">Find Marlow’s</a>
-                </div>
-                
-
-                <div class="whychoose-rows flex-flex-wrap flexed">
-                    <a href="/terms" class="whychoose-col whychoose-link">
-                        <div class="whychoose-col-inner">
-                            <div class="whychoose-col-img">
-                                <i class="diamond-icon search-lifetime"></i>
-                            </div>
-                            <div class="whychoose-col-text">
-                                Lifetime Warranty T&c Apply
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
-                        <div class="whychoose-col-inner">
-                            <div class="whychoose-col-img">
-                                <i class="diamond-icon search-giacertified"></i>
-                            </div>
-                            <div class="whychoose-col-text">
-                                GIA Certified Diamonds
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/diamond-certificates/" class="whychoose-col whychoose-link">
-                        <div class="whychoose-col-inner">
-                            <div class="whychoose-col-img">
-                                <i class="diamond-icon search-experienced"></i>
-                            </div>
-                            <div class="whychoose-col-text">
-                                70 Years Experience
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/delivery-and-returns-policy" class="whychoose-col whychoose-link">
-                        <div class="whychoose-col-inner">
-                            <div class="whychoose-col-img">
-                                <i class="diamond-icon search-terms-conditions"></i>
-                            </div>
-                            <div class="whychoose-col-text">
-                                30 Day Returns. T&c Apply
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="rating-img">
-                    <i class="diamond-icon search-starviews"></i>
-                </div>
             </div>
-        </div>
-    </div>
-    <!-- whay choose marlows end here -->
-
-    <!-- Best Selling Marlow's Diamond Jewellery start here -->
-    @include('front.includes.featuredproduct')
-    <!-- Best Selling Marlow's Diamond Jewellery start here -->
-    @include('front.includes.visit-our-showrooms')
-    <!-- Best Selling Marlow's Diamond Jewellery end here -->
-
-    <!--Shop from Marlow’s GIA Certified Diamond Rings start -->
-    <div class="shopfrom-block">
-        <div class="container">
-            <div class="head-para-three">
-                <h3 class="heading-h-three">
-                    Our Happy Customers
-                </h3>
-            </div>
-            <div class="product-rating">
-            <div class="rating-review"><h5>3000+</h5><span><img src="/assets/images/one-star1.png" alt=""> </span></div>
-                <div class="start-standing">
-                    <div class="start-position"><span><img src="/assets/images/five-star11.png" alt=""> </span></div>
-                    <h4>Outstanding  <span>(5 out of 5)</span></h4>
-                </div>
+            <div class="text-center" id="getDirectionDetails1">
+                <a class="btn-bg-small getdirection" href="#location_data_section">Find Marlow’s</a>
             </div>
 
-            <div class="rating-review-block">
-                <div class="owl-carousel owl-theme slider-review">
-                    @include('front.pages.reviews')
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Shop from Marlow’s GIA Certified Diamond Rings end -->
-    {!! isset($data->description) ? $data->description : '' !!}
-    <!-- Join our mailing list section start -->
-    <div class="joinour-mailing">
-        <div class="container">
-            <div class="joinour-wraper">
-                <div class="joinour-heading">
-                    <div class="heading-h-two white-text">
-                        Join our mailing list
+
+            <div class="whychoose-rows flex-flex-wrap flexed">
+                <a href="/terms" class="whychoose-col whychoose-link">
+                    <div class="whychoose-col-inner">
+                        <div class="whychoose-col-img">
+                            <i class="diamond-icon search-lifetime"></i>
+                        </div>
+                        <div class="whychoose-col-text">
+                            Lifetime Warranty T&c Apply
+                        </div>
                     </div>
-                    <p>Join our world full of diamonds and we’ll sparkle your inbox by keeping you up-to-date.</p>
-                </div>
-                <div class="joinour-mailing-form">
-                    <form id="contactForm">
-                        @csrf
-                        <div class="form-rows flexed flex-flex-wrap">
-                            <input type="hidden" name="custom_url" id="custom_url" value="{{ url()->full() }}">
-                            <div class="form-col width-50">
-                                <label>Your Name<sup>*</sup></label>
-                                <input required="required"
-                                    class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text"
-                                    name="title" placeholder="Your Name">
-                                <!-- Error -->
-                                @if ($errors->has('title'))
-                                    <div class="error">
-                                        {{ $errors->first('title') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="form-col width-50">
-                                <label>Email<sup>*</sup></label>
-                                <input required="required"
-                                    class="input-control {{ $errors->has('email') ? 'error' : '' }}" type="text"
-                                    name="email" placeholder="Email Address">
-                                @if ($errors->has('email'))
-                                    <div class="error">
-                                        {{ $errors->first('email') }}
-                                    </div>
-                                @endif
-                            </div>
+                </a>
+                <a href="/gia-certified-diamonds" class="whychoose-col whychoose-link">
+                    <div class="whychoose-col-inner">
+                        <div class="whychoose-col-img">
+                            <i class="diamond-icon search-giacertified"></i>
                         </div>
+                        <div class="whychoose-col-text">
+                            GIA Certified Diamonds
+                        </div>
+                    </div>
+                </a>
+                <a href="/diamond-certificates/" class="whychoose-col whychoose-link">
+                    <div class="whychoose-col-inner">
+                        <div class="whychoose-col-img">
+                            <i class="diamond-icon search-experienced"></i>
+                        </div>
+                        <div class="whychoose-col-text">
+                            70 Years Experience
+                        </div>
+                    </div>
+                </a>
+                <a href="/delivery-and-returns-policy" class="whychoose-col whychoose-link">
+                    <div class="whychoose-col-inner">
+                        <div class="whychoose-col-img">
+                            <i class="diamond-icon search-terms-conditions"></i>
+                        </div>
+                        <div class="whychoose-col-text">
+                            30 Day Returns. T&c Apply
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-                        @if(env('APP_ENV') == 'production')
-                            <div class="google-capatcha form-controls">
-                                <div class="g-recaptcha"
-                                    data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
+            <div class="rating-img">
+                <i class="diamond-icon search-starviews"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- whay choose marlows end here -->
+
+<!-- Best Selling Marlow's Diamond Jewellery start here -->
+{!! Cache::remember('featuredproduct', 3600, function() {
+    return view('front.includes.featuredproduct')->render();
+}) !!}
+{{-- @include('front.includes.featuredproduct') --}}
+
+<!-- Best Selling Marlow's Diamond Jewellery start here -->
+{!! Cache::remember('visitOurShowrooms', 3600, function() {
+    return view('front.includes.visit-our-showrooms')->render();
+}) !!}
+{{-- @include('front.includes.visit-our-showrooms') --}}
+<!-- Best Selling Marlow's Diamond Jewellery end here -->
+
+<!--Shop from Marlow’s GIA Certified Diamond Rings start -->
+<div class="shopfrom-block">
+    <div class="container">
+        <div class="head-para-three">
+            <h3 class="heading-h-three">
+                Our Happy Customers
+            </h3>
+        </div>
+        <div class="product-rating">
+            <div class="rating-review">
+                <h5>3000+</h5><span><img src="/assets/images/one-star1.png" alt=""> </span>
+            </div>
+            <div class="start-standing">
+                <div class="start-position"><span><img src="/assets/images/five-star11.png" alt=""> </span>
+                </div>
+                <h4>Outstanding <span>(5 out of 5)</span></h4>
+            </div>
+        </div>
+
+        <div class="rating-review-block">
+            <div class="owl-carousel owl-theme slider-review">
+                @include('front.pages.reviews')
+            </div>
+        </div>
+    </div>
+</div>
+<!--Shop from Marlow’s GIA Certified Diamond Rings end -->
+{!! isset($data->description) ? $data->description : '' !!}
+<!-- Join our mailing list section start -->
+<div class="joinour-mailing">
+    <div class="container">
+        <div class="joinour-wraper">
+            <div class="joinour-heading">
+                <div class="heading-h-two white-text">
+                    Join our mailing list
+                </div>
+                <p>Join our world full of diamonds and we’ll sparkle your inbox by keeping you up-to-date.</p>
+            </div>
+            <div class="joinour-mailing-form">
+                <form id="contactForm">
+                    @csrf
+                    <div class="form-rows flexed flex-flex-wrap">
+                        <input type="hidden" name="custom_url" id="custom_url" value="{{ url()->full() }}">
+                        <div class="form-col width-50">
+                            <label>Your Name<sup>*</sup></label>
+                            <input required="required"
+                                class="input-control {{ $errors->has('title') ? 'error' : '' }}" type="text"
+                                name="title" placeholder="Your Name">
+                            <!-- Error -->
+                            @if ($errors->has('title'))
+                                <div class="error">
+                                    {{ $errors->first('title') }}
                                 </div>
-                                @if ($errors->has('g-recaptcha-response'))
-                                    <div class="error">
-                                        {{ $errors->first('g-recaptcha-response') }}
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
-                        <div class="action-btn">
-                            <button class="white-bg-btn" type="submit">Subscribe</button>
+                            @endif
                         </div>
-                    </form>
-                </div>
-                @if (Session::has('success'))
-                    <div class="alert alert-success">
-                        {{ Session::get('success') }}
+                        <div class="form-col width-50">
+                            <label>Email<sup>*</sup></label>
+                            <input required="required"
+                                class="input-control {{ $errors->has('email') ? 'error' : '' }}" type="text"
+                                name="email" placeholder="Email Address">
+                            @if ($errors->has('email'))
+                                <div class="error">
+                                    {{ $errors->first('email') }}
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                @endif
+
+                    @if (env('APP_ENV') == 'production')
+                        <div class="google-capatcha form-controls">
+                            <div class="g-recaptcha" data-sitekey="6LfQrxUgAAAAAFD1c2BmyaKHy1F20WUJEloRiyie">
+                            </div>
+                            @if ($errors->has('g-recaptcha-response'))
+                                <div class="error">
+                                    {{ $errors->first('g-recaptcha-response') }}
+                                </div>
+                            @endif
+                        </div>
+                    @endif
+                    <div class="action-btn">
+                        <button class="white-bg-btn" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+            @if (Session::has('success'))
+                <div class="alert alert-success">
+                    {{ Session::get('success') }}
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
+<!-- Join our mailing list section End -->
+@include('front.includes.instagram-section')
+@include('front.includes.location_section')
+
+<!-- insta photos section end -->
+@php
+    $getPopups = getPromotionalPOPup();
+@endphp
+@if (isset($getPopups) && !empty($getPopups))
+    <!-- Modal -->
+    <div class="modal fade" id="showPromotionPopup" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{ isset($getPopups->title) ? $getPopups->title : '' }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        {!! isset($getPopups->description) ? $getPopups->description : '' !!}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Join our mailing list section End -->
-    @include('front.includes.instagram-section')
-    @include('front.includes.location_section')
-
-    <!-- insta photos section end -->
-    @php
-        $getPopups = getPromotionalPOPup();
-    @endphp
-    @if(isset($getPopups) && !empty($getPopups))
-        <!-- Modal -->
-        <div class="modal fade" id="showPromotionPopup" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ isset($getPopups->title)?$getPopups->title:'' }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-lg-12">
-                            {!! isset($getPopups->description)?$getPopups->description:'' !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
+@endif
 
 @endsection
 @section('js')
@@ -549,128 +586,15 @@
 <script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
 <?php
-    $environment = env('APP_ENV');
+$environment = env('APP_ENV');
 ?>
+
+{{-- Blade variables --}}
 <script>
-    var stagingVar = '{{$environment}}';
-    if(stagingVar == 'production'){
-    grecaptcha.ready(function() {
-        grecaptcha.execute('6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN', {
-            action: 'contact'
-        }).then(function(token) {
-            if (token) {
-                document.getElementById('recaptcha').value = token;
-            }
-        });
-    });
-
-    $(document).ready(function(){
-        $('#showPromotionPopup').modal('show');
-    });
-    }
-
-    function blankForm() {
-        $('input[name="title"]').val('');
-        $('input[name="email"]').val('');
-        $('textarea[name="description"]').val('');
-        $("button[type='submit']").prop('disabled', false);
-        if(stagingVar == 'production'){
-        grecaptcha.reset();
-        }
-    }
-
-    jQuery.validator.addMethod("lettersonly", function(value, element) {
-        return this.optional(element) || /^[a-z," "]+$/i.test(value);
-    }, "Letters and spaces only please");
-
-
-    jQuery.validator.addMethod(
-        "noSpacesOnly",
-            function(value, element) {
-                return $.trim(value).length > 3;
-            },
-            "This field cannot be empty or contain only spaces."
-        );
-
-    $('form#contactForm').validate({
-        rules: {
-            title: {
-                required: true,
-                lettersonly: true,
-                noSpacesOnly: true
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            description: {
-                required: true,
-                noSpacesOnly: true
-            }
-        },
-        messages: {
-            title: {
-                required: 'Name is required',
-                 noSpacesOnly: "Name cannot be empty and must not contain spaces."
-            },
-            email: {
-                required: 'Email is required',
-                email: 'Valid email is required',
-            },
-            description: {
-                required: 'Message is required',
-                noSpacesOnly: "Description cannot be empty and must not contain spaces."
-            }
-        },
-        submitHandler: function(form) {
-            if(stagingVar == 'production'){
-                if (grecaptcha.getResponse()) {
-                    var form_data = new FormData(form);
-                    $(form).find("button[type='submit']").prop('disabled', true);
-                    $("button[type='submit']").text("Please Wait...");
-                    $.ajax({
-                        url: "{{ route('maillist') }}",
-                        method: "POST",
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        data: form_data,
-                        success: function(response) {
-                            blankForm();
-                            $("button[type='submit']").text("Subscribe");
-                            if (response.status == 200) {
-                                toastr.success(response.success);
-                            } else {
-                                toastr.info(response.error);
-                            }
-                        }
-                    });
-                } else {
-                    alert('Please confirm captcha to proceed')
-                }
-            } else {
-                var form_data = new FormData(form);
-                $(form).find("button[type='submit']").prop('disabled', true);
-                $("button[type='submit']").text("Please Wait...");
-                $.ajax({
-                    url: "{{ route('maillist') }}",
-                    method: "POST",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: form_data,
-                    success: function(response) {
-                        blankForm();
-                        $("button[type='submit']").text("Subscribe");
-                        if (response.status == 200) {
-                            toastr.success(response.success);
-                        } else {
-                            toastr.info(response.error);
-                        }
-                    }
-                });
-            }
-        }
-    });
+    const CSRFTOKEN = "{{ csrf_token() }}";
+    const environmentPhpVariable = "{{ $environment }}";
+    const mailListRoute = "{{ route('maillist') }}";
 </script>
+
+<script src="{{ asset('custom/js/index/index.js') }}"></script>
 @endsection
