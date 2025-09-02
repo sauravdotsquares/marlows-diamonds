@@ -94,19 +94,9 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script> --}}
 
-    <style>
-        .leftright-imt-col.leftright-text.postcontent100 {
-            width: 100%;
-            flex: 0 0 100%;
-            max-width: 100%;
-        }
-
-        .color-btn {
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/product_listing_page.css') }}">
 @endsection
 
 
@@ -116,307 +106,23 @@
     $pathData = explode('/', strtolower($path));
     ?>
     @if (in_array('diamond-engagement-rings', $pathData) || in_array('engagement-rings', $pathData))
-        <style>
-            .diamondribgbanner {
-                display: none;
-            }
-
-            @media (min-width: 320px) and (max-width: 376px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/320_3.jpg') }}');
-                }
-            }
-
-            @media (min-width: 377px) and (max-width: 575px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/575_3.jpg') }}');
-                }
-            }
-
-            @media (min-width: 576px) and (max-width: 768px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/767_3.jpg') }}');
-                }
-            }
-
-            @media (min-width: 769px) and (max-width: 991px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/991_3.jpg') }}');
-                }
-            }
-
-            @media (min-width: 992px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/1199_3.jpg') }}');
-                    background-position: bottom center;
-                    background-position: center;
-                    padding: 130px 0;
-                }
-            }
-
-            @media (min-width: 1399px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/1900_3.jpg') }}');
-                    background-position: center;
-                    padding: 130px 0;
-                }
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/diamond_engagement_rings.css') }}">
     @elseif (in_array('wedding-rings', $pathData) || in_array('eternity-rings', $pathData))
-        <style>
-            .diamondribgbanner {
-                display: none;
-            }
-
-            @media (min-width: 320px) and (max-width: 376px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/320_1.jpg') }}');
-                }
-            }
-
-            @media (min-width: 377px) and (max-width: 575px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/575_1.jpg') }}');
-                }
-            }
-
-            @media (min-width: 576px) and (max-width: 768px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/768_1.jpg') }}');
-                }
-            }
-
-            @media (min-width: 769px) and (max-width: 991px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/991_1.jpg') }}');
-                }
-            }
-
-            @media (min-width: 992px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/1199_1.jpg') }}');
-                }
-            }
-
-            @media (min-width: 1399px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/1900_1.jpg') }}');
-                }
-            }
-        </style>
+            <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/wedding_rings_eternity_rings.css') }}">
     @elseif (in_array('diamond-jewellery', $pathData))
-        <style>
-            .diamondribgbanner {
-                display: none;
-            }
-
-            @media (min-width: 320px) and (max-width: 376px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/320_2.jpg') }}');
-                    background-position: bottom center;
-                }
-            }
-
-            @media (min-width: 377px) and (max-width: 575px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/575_2.jpg') }}');
-                    background-position: bottom center;
-                }
-            }
-
-            @media (min-width: 576px) and (max-width: 768px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/767_2.jpg') }}');
-                    background-position: bottom center;
-                }
-            }
-
-            @media (min-width: 769px) and (max-width: 991px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/991_2.jpg') }}');
-                    background-position: bottom center;
-                }
-            }
-
-            @media (min-width: 992px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/1199_2.jpg') }}');
-                    background-position: bottom center;
-                }
-            }
-
-            @media (min-width: 1399px) {
-                .banner {
-                    background-image: url('{{ asset('assets/BannerCategory/1900_2.jpg') }}');
-                    background-position: bottom center;
-                }
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/diamond_jewellery.css') }}">
     @elseif (in_array('diamonds-rings', $pathData))
-        <style>
-            .diamondribgbanner {
-                display: block;
-            }
-
-            .banner {
-                background-size: cover;
-                background-position: center;
-                padding: 0;
-                display: flex;
-                position: relative;
-                flex-wrap: wrap;
-            }
-
-            .banner:before {
-                display: none;
-            }
-
-            .banner img.diamondribgbanner-dektop {
-                width: 100%;
-                height: 100%;
-            }
-
-            .banner img.diamondribgbanner-mobile {
-                display: none;
-            }
-
-            .banner .category-banner-text {
-                max-width: 550px;
-                margin: auto;
-                height: 100%;
-                background-size: cover;
-                display: flex;
-                align-items: center;
-                padding: 0 40px;
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                background: url(https://marlows-diamonds.co.uk/assets/BannerCategory/1199_41.png) no-repeat;
-                background-size: cover;
-            }
-
-            .banner .category-banner-text h1 {
-                margin: 0 0 25px;
-            }
-
-            .banner .category-banner-text p {
-                font-size: 18px;
-                margin: 0 0 18px;
-            }
-
-            .banner .category-banner-text p a {
-                font-weight: bold;
-                text-decoration: none;
-                color: #ffcc00;
-                transition: all 0.9s ease;
-            }
-
-            .banner .category-banner-text p a:hover {
-                color: #d764b7;
-                transition: all 0.9s ease;
-            }
-
-            .banner img.diamondribgbanner-dektop {
-                object-fit: cover;
-            }
-
-            @media (max-width: 1399px) {
-                .banner .category-banner-text p {
-                    font-size: 16px;
-                }
-            }
-
-            @media (max-width: 1199px) {
-                .banner .category-banner-text {
-                    width: 400px;
-                }
-
-                .banner .category-banner-text h1 {
-                    margin: 0 0 10px;
-                    font-size: 24px;
-                    line-height: 24px;
-                }
-
-                .banner .category-banner-text p {
-                    font-size: 14px;
-                    line-height: 18px;
-                }
-            }
-
-            @media (max-width: 991px) {
-                .banner {
-                    height: 260px;
-                }
-
-                .banner img.diamondribgbanner-dektop {
-                    height: 100%;
-                }
-
-                .banner .category-banner-text {
-                    height: 100%;
-                }
-            }
-
-            @media (max-width: 575px) {
-                .banner .category-banner-text {
-                    width: 100%;
-                    background: none;
-                    padding: 0 15px;
-                    align-items: end;
-                }
-
-                .banner .category-banner-text:before {
-                    background: rgb(142 46 101 / 76%);
-                    content: '';
-                    top: 0;
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                }
-
-                .banner .category-banner-text .category-banner-textcontent {
-                    z-index: 1;
-                }
-
-                .banner .category-banner-text {
-                    padding: 0 15px;
-                }
-
-                .banner img.diamondribgbanner-mobile {
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-
-                .banner img.diamondribgbanner-dektop {
-                    display: none;
-                }
-
-                .banner .category-banner-text:before {
-                    display: none;
-                }
-
-                .banner .category-banner-text p {
-                    font-size: 14px;
-                    line-height: 18px;
-                    margin-bottom: 7px;
-                }
-            }
-        </style>
+            <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/diamonds_rings.css') }}">
     @endif
-
 
     @if (isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
         @section('dynamic_og_image')
             <meta property="og:image" content="{{ env('APP_IMAGE_URL') . '/storage/' . $categoryData->banner_image_url }}" />
         @endsection
         <div class="category-banner banner">
-            <img src="https://marlows-diamonds.co.uk/assets/BannerCategory/1199_4.png" alt=""
+            <img src="{{asset('assets/BannerCategory/1199_4.png')}}" alt=""
                 class="diamondribgbanner diamondribgbanner-dektop">
-            <img src="https://marlows-diamonds.co.uk/assets/BannerCategory/526_4.png" alt=""
+            <img src="{{asset('assets/BannerCategory/526_4.png')}}" alt=""
                 class="diamondribgbanner diamondribgbanner-mobile">
         @else
             @section('dynamic_og_image')
@@ -2002,6 +1708,6 @@
         const setProductWishlistRoute = "{{ route('set-product-wishlist') }}";
     </script>
 
-    <script src="{{ asset('custom/js/product_listing_page.js') }}"></script>
+    <script src="{{ asset('custom/js/product_listing_page/product_listing_page.js') }}"></script>
 
 @endsection

@@ -1,0 +1,9 @@
+.leftright-imt-col.leftright-text.postcontent100 {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.color-btn {
+    cursor: pointer;
+}

@@ -1,0 +1,44 @@
+.diamondribgbanner {
+    display: none;
+}
+
+@media (min-width: 320px) and (max-width: 376px) {
+    .banner {
+        background-image: url('../../../assets/BannerCategory/320_3.jpg');
+    }
+}
+
+@media (min-width: 377px) and (max-width: 575px) {
+    .banner {
+        background-image: url('../../../assets/BannerCategory/575_3.jpg');
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .banner {
+        background-image: url('../../../assets/BannerCategory/767_3.jpg');
+    }
+}
+
+@media (min-width: 769px) and (max-width: 991px) {
+    .banner {
+        background-image: url('../../../assets/BannerCategory/991_3.jpg');
+    }
+}
+
+@media (min-width: 992px) {
+    .banner {
+        background-image: url('../../../assets/BannerCategory/1199_3.jpg');
+        background-position: bottom center;
+        background-position: center;
+        padding: 130px 0;
+    }
+}
+
+@media (min-width: 1399px) {
+    .banner {
+        background-image: url('../../../assets/BannerCategory/1900_3.jpg');
+        background-position: center;
+        padding: 130px 0;
+    }
+}
