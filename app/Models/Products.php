@@ -348,7 +348,7 @@ class Products extends Model
      */
     protected static function booted()
     {
-        // Clear the featured products cache on any write operation
+        // Clear the products cache on any write operation
         $flush = function () {
             // If you use cache tags (Redis/Memcached), prefer tags:
             if (Cache::getStore() instanceof \Illuminate\Cache\TaggableStore) {
@@ -356,6 +356,9 @@ class Products extends Model
             } else {
                 Cache::forget('featured_products');
             }
+            Cache::forget('choosediamond');
+            Cache::forget('featuredproduct');
+            Cache::forget('visitOurShowrooms');
         };
 
         static::created($flush);
