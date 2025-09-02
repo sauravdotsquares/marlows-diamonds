@@ -1,0 +1,5 @@
+Analyse this excel file, If varaition "metal-type" is 18ct Yellow Gold then increase the prices columns of RRP_Mined_Price, Mined_Price, RRP_Lab_Price, Lab_Price by 40% and if 
+
+varaition "metal-type" is 9ct Yellow Gold then increase the prices columns of RRP_Mined_Price, Mined_Price, RRP_Lab_Price, Lab_Price by 15%
+
+ 

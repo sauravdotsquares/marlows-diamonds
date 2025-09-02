@@ -1,0 +1,9 @@
+[26-Dec-2024 06:40:49 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function dump() in /home/stagingmarlows/public_html/marlows/public/applepay_sdk/backend.php:2
+Stack trace:
+#0 {main}
+  thrown in /home/stagingmarlows/public_html/marlows/public/applepay_sdk/backend.php on line 2
+[26-Dec-2024 09:54:54 UTC] PHP Warning:  Undefined variable $clientId in /home/stagingmarlows/public_html/marlows/public/applepay_sdk/index.php on line 36
+[26-Dec-2024 09:55:00 UTC] PHP Warning:  Undefined variable $clientId in /home/stagingmarlows/public_html/marlows/public/applepay_sdk/index.php on line 36
+[26-Dec-2024 09:55:04 UTC] PHP Warning:  Undefined variable $clientId in /home/stagingmarlows/public_html/marlows/public/applepay_sdk/index.php on line 36
+[26-Dec-2024 09:55:11 UTC] PHP Warning:  Undefined variable $clientId in /home/stagingmarlows/public_html/marlows/public/applepay_sdk/index.php on line 36
+[26-Dec-2024 09:55:28 UTC] PHP Warning:  Undefined variable $clientId in /home/stagingmarlows/public_html/marlows/public/applepay_sdk/index.php on line 36

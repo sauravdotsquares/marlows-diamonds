@@ -58,6 +58,8 @@ Header always set Content-Security-Policy "upgrade-insecure-requests;"
    php_flag zlib.output_compression Off
 </IfModule>
 
+SetEnvIfNoCase Request_URI .(mp4|ogv|webm)$ no-gzip dont-vary
+
 # <IfModule mod_deflate.c>
 #   # Compress HTML, CSS, JavaScript, Text, XML and fonts
 #   AddOutputFilterByType DEFLATE application/javascript

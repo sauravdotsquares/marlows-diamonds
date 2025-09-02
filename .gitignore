@@ -1,6 +1,8 @@
 /node_modules
 /live_backup
-/public
+/public/temp_images
+/public/tempfolderpath
+/public/storage
 /storage
 /vendor
 .env
