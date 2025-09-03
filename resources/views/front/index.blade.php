@@ -52,7 +52,7 @@
           "uploadDate": "2021-06-01",
           "duration": "PT0M43S"
         }
-        </script>
+    </script>
 @endsection
 @section('dynamic_og_image')
     <meta property="og:image" content="{{ env('APP_IMAGE_URL') . '/images/logo/' . $header_settings['logo'] }}" />
@@ -352,7 +352,7 @@
 <!-- Shop from the Best end here -->
 
 <!-- Choose Your Diamond Engagement ring from Marlow's  start here -->
-{!! Cache::remember('choosediamond', 3600, function() {
+{!! Cache::remember('choosediamond', 3600, function () {
     return view('front.includes.choosediamond')->render();
 }) !!}
 {{-- @include('front.includes.choosediamond') --}}
@@ -446,13 +446,13 @@
 <!-- whay choose marlows end here -->
 
 <!-- Best Selling Marlow's Diamond Jewellery start here -->
-{!! Cache::remember('featuredproduct', 3600, function() {
+{!! Cache::remember('featuredproduct', 3600, function () {
     return view('front.includes.featuredproduct')->render();
 }) !!}
 {{-- @include('front.includes.featuredproduct') --}}
 
 <!-- Best Selling Marlow's Diamond Jewellery start here -->
-{!! Cache::remember('visitOurShowrooms', 3600, function() {
+{!! Cache::remember('visitOurShowrooms', 3600, function () {
     return view('front.includes.visit-our-showrooms')->render();
 }) !!}
 {{-- @include('front.includes.visit-our-showrooms') --}}
@@ -551,8 +551,14 @@
     </div>
 </div>
 <!-- Join our mailing list section End -->
-@include('front.includes.instagram-section')
-@include('front.includes.location_section')
+{!! Cache::remember('instagramSection', 3600, function () {
+    return view('front.includes.instagram-section')->render();
+}) !!}
+{{-- @include('front.includes.instagram-section') --}}
+{!! Cache::remember('locationSection', 3600, function () {
+    return view('front.includes.location_section')->render();
+}) !!}
+{{-- @include('front.includes.location_section') --}}
 
 <!-- insta photos section end -->
 @php
@@ -580,11 +586,12 @@
 @endif
 
 @endsection
+
 @section('js')
 <script src='https://www.google.com/recaptcha/api.js' async></script>
-<script src="https://www.google.com/recaptcha/api.js?render=6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN"></script>
-<script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN" async></script>
+<script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}" defer></script>
+<script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}" defer></script>
 <?php
 $environment = env('APP_ENV');
 ?>
