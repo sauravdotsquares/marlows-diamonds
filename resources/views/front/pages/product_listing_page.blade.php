@@ -1658,7 +1658,7 @@
 
     </div>
     <div class="engagement-ring-img">
-        <img src="{{ getImageOptimizeDetails('assets/images/viewguide.webp', '1349', '537') }}"
+        <img src="{{ getImageOptimizeDetails('/images/viewguide.webp', '1349', '537') }}"
             alt="Find the perfect engagement ring">
         <div class="engagement-ring-img-content">
             <div class="container">

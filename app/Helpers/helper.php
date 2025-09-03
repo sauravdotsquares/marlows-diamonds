@@ -2609,6 +2609,36 @@ if (!function_exists("getImageOptimizeDetails")) {
             return '#';
         }
     }
+    // function getImageOptimizeDetails($imageUrl, $width, $height)
+    // {
+    //     try {
+    //         $path_parts = pathinfo($imageUrl);
+
+    //         $tempPath = public_path('tempfolderpath');
+
+    //         if (!file_exists($tempPath)) {
+    //             mkdir($tempPath, 0777, true);
+    //         }
+
+    //         $filename = $tempPath . '/' . $path_parts['basename'];
+
+    //         if (file_exists($filename)) {
+    //             $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
+    //         } else {
+    //             // Image manipulation
+    //             $img = Image::make(APPIMAGEURL . $imageUrl)->resize($width, $height);
+    //             $img->save($filename);
+
+    //             $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
+    //         }
+
+    //         return $imageUrl;
+    //     } catch (\Throwable $th) {
+    //         Log::alert('Image error: ' . APPIMAGEURL . $imageUrl);
+    //         // Log::alert($th->getMessage());
+    //         return '#';
+    //     }
+    // }
 }
 
 if (!function_exists("getProductCategorySlug")) {
