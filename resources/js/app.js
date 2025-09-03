@@ -2,6 +2,7 @@
 
 // If not available via npm, import from your assets folder:
 import './front/js/bootstrap.bundle.min.js';
+// import './front/js/jquery-3.6.0.min.js';
 import './front/js/controllers/app.js';
 import './front/js/owl.carousel.min.js';
 import './front/js/ui-bootstrap-tpls-0.5.0.js';

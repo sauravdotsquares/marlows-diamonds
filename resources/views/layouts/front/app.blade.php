@@ -37,7 +37,7 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/developer.css?').env('VERSION') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/developer.css?') . env('VERSION') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/responsive.min.css') }}" rel="stylesheet">
 
     @yield('css')
@@ -318,14 +318,14 @@
         integrity="sha512-DNnzJS0bLZfPhFmQwU+55AAKSbCD+7xH3tuTqapSpWABrZBtt7cja34cdS+b+a30vqoylXUGdMDHVAbFC26MSg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    {{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js?').env('VERSION')}}"></script>
-<script src="{{ asset('assets/js/controllers/app.js?').env('VERSION')}}"></script>
-<script src="{{ asset('assets/js/owl.carousel.min.js?').env('VERSION') }}"></script>
-<script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?').env('VERSION') }}"></script>
-<script src="{{ asset('assets/js/custom.js') }}"></script>
-<script src="{{asset('/assets/js/jquery.lazyload.min.js?').env('VERSION')}}"></script> --}}
+    {{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}"></script> --}}
 
-    @vite('resources/js/app.js')
+    <script src="{{ mix('js/app.js') }}"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 

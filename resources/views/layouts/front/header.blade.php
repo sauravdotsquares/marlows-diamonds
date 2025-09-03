@@ -11,7 +11,7 @@
         font-weight: 800;
     }
     .search-suggestion.hide_254 {display: none;}
-    
+
 .top-bar p {
     margin: 0;
     line-height: 30px;
@@ -303,12 +303,14 @@
                         <!--        </div>-->
                         <!--    </form>-->
                         <!--</div>-->
-                    <nav class="nav-navbars">
+
+                        {{-- Adding Navbar from cached view --}}
+                    {{-- <nav class="nav-navbars">
 
                         <ul class="static-megamenu">
 
                             @if(!empty($navbars))
-                                
+
                                 @foreach($navbars as $keyCount => $navbarItem)
                                     <li class="level-zero submenu {{$navbarItem['class_level']}}">
                                         <span>
@@ -328,7 +330,10 @@
 
                             @endif
                         </ul>
-                    </nav>
+                    </nav> --}}
+                    {!! Cache::remember('navbarLoop', 3600, function () {
+                        return view('layouts.front.navbar-loop')->render();
+                    }) !!}
                     </div>
                 </div>
 
@@ -338,8 +343,8 @@
     <!-- Navbars and logo end here -->
 
     <!-- Post bar start -->
-                            
-    <?php 
+
+    <?php
         $getMonthTextArray = getMonthwiseDiscountText();
         $getCurrentMonth = (int)date('m');
     ?>

@@ -1708,6 +1708,8 @@
         const setProductWishlistRoute = "{{ route('set-product-wishlist') }}";
     </script>
 
-    <script src="{{ asset('custom/js/product_listing_page/product_listing_page.js') }}"></script>
+    <script src="{{ mix('js/product_listing_page.js') }}"></script>
+
+    {{-- <script src="{{ asset('custom/js/product_listing_page/product_listing_page.js') }}"></script> --}}
 
 @endsection

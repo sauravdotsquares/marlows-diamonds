@@ -3,6 +3,8 @@
 /public/temp_images
 /public/tempfolderpath
 /public/storage
+/public/js
+/public/css
 /storage
 /vendor
 .env

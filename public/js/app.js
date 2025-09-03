@@ -23,6 +23,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _front_js_jquery_lazyload_min_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_front_js_jquery_lazyload_min_js__WEBPACK_IMPORTED_MODULE_5__);
 // require('./bootstrap');
 // If not available via npm, import from your assets folder:
+ // import './front/js/jquery-3.6.0.min.js';
 
 
 
