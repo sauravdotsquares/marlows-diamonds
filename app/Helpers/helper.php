@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Cache;
 //use SoapClient;
 use billythekid\dekopay\Core\DekoPayApiClient;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 if (!function_exists("helper_test")) {
     function helper_test()
@@ -2584,24 +2585,29 @@ if (!function_exists("checkDiamondLabValue")) {
 if (!function_exists("getImageOptimizeDetails")) {
     function getImageOptimizeDetails($imageUrl, $width, $height)
     {
-        $path_parts = pathinfo($imageUrl);
+        try {
 
-        file_exists("test.txt");
-        $filename = 'tempfolderpath/' . $path_parts['basename'];
+            $path_parts = pathinfo($imageUrl);
 
-        if (file_exists($filename)) {
-            $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
-        } else {
-            // Image manipulation
-            $img = Image::make(env('APP_IMAGE_URL') . $imageUrl)->resize($width, $height);
-            $tempPath = public_path('tempfolderpath');
-            $tempFile = $tempPath . '/' . $path_parts['basename'];
-            $img->save($tempFile);
-            // Pass the image URL to the view
-            $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
-            // $imageUrl = env('APP_IMAGE_URL').$imageUrl;
+            $filename = 'tempfolderpath/' . $path_parts['basename'];
+
+            if (file_exists($filename)) {
+                $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
+            } else {
+                // Image manipulation
+                $img = Image::make(APPIMAGEURL . $imageUrl)->resize($width, $height);
+                $tempPath = public_path('tempfolderpath');
+                $tempFile = $tempPath . '/' . $path_parts['basename'];
+                $img->save($tempFile);
+                // Pass the image URL to the view
+                $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
+            }
+            return $imageUrl;
+        } catch (\Throwable $th) {
+            Log::alert(APPIMAGEURL . $imageUrl);
+            // Log::alert(json_encode($th));
+            return '#';
         }
-        return $imageUrl;
     }
 }
 

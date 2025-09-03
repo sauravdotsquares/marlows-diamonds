@@ -1569,8 +1569,10 @@
         <!-- Your Journery of a lifetime start here end-->
 
         <!-- Best Post Carousel Block start here -->
-        @include('front.includes.postcarouselblock')
-
+        {{-- @include('front.includes.postcarouselblock') --}}
+        {!! Cache::remember('productListingPagePostcarouselblock', 900, function () {
+            return view('front.includes.postcarouselblock')->render();
+        }) !!}
         <!-- Best Post Carousel Block start here -->
 
         <!-- FAQ Section start here -->
@@ -1579,13 +1581,16 @@
         <div class="container review-section">
             <div class="rating-review-block">
                 <div class="owl-carousel owl-theme slider-review">
-                    @include('front.pages.reviews')
+                    {{-- @include('front.pages.reviews') --}}
+                    {!! Cache::remember('productListingPageReviews', 1800, function () {
+                        return view('front.pages.reviews')->render();
+                    }) !!}
                 </div>
             </div>
         </div>
 
 
-        @php
+        {{-- @php
             $getEngagementFaqs = getFaqByCategory(explode(',', $categoryData->faq_category));
         @endphp
 
@@ -1641,12 +1646,19 @@
                 </div>
             </div>
             <!-- FAQ Section End -->
-        @endif
+        @endif --}}
+        {!! Cache::remember('productListingPageFaqCategoryWise', 3600, function () use ($categoryData) {
+            return view('front.includes.faq-category-wise',compact('categoryData'))->render();
+        }) !!}
 
-        @include('front.includes.instagram-section')
+        {{-- @include('front.includes.instagram-section') --}}
+        {!! Cache::remember('instagramSection', 3600, function () {
+            return view('front.includes.instagram-section')->render();
+        }) !!}
+
     </div>
     <div class="engagement-ring-img">
-        <img src="{{ getImageOptimizeDetails('/images/viewguide.webp', '1349', '537') }}"
+        <img src="{{ getImageOptimizeDetails('assets/images/viewguide.webp', '1349', '537') }}"
             alt="Find the perfect engagement ring">
         <div class="engagement-ring-img-content">
             <div class="container">
