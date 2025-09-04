@@ -2605,7 +2605,6 @@ if (!function_exists("getImageOptimizeDetails")) {
             return $imageUrl;
         } catch (\Throwable $th) {
             Log::alert(APPIMAGEURL . $imageUrl);
-            // Log::alert(json_encode($th));
             return '#';
         }
     }

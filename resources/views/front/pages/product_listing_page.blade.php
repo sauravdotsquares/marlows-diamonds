@@ -2,53 +2,6 @@
 
 {{-- criteo start --}}
 @section('criteo-tracking')
-    {{-- <script type="text/javascript">
-        window.criteo_q = window.criteo_q || [];
-        var deviceType = /iPad/.test(navigator.userAgent) ? "t" : /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/
-            .test(navigator.userAgent) ? "m" : "d";
-
-        window.criteo_q.push({
-                event: "setAccount",
-                account: 119681
-            },
-            @if (Auth::check())
-                {
-                    event: "setEmail",
-                    email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                    hash_method: "sha256"
-                }, {
-                    event: "setEmail",
-                    email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                    hash_method: "md5"
-                },
-            @endif
-
-            {
-                event: "setSiteType",
-                type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}"
-            },
-
-            @if (Auth::check())
-                {
-                    event: "setCustomerId",
-                    id: {{ Auth::user()->id }}
-                }
-            @endif
-
-            {
-                event: "viewList",
-                item: [
-                    @foreach ($sortedArray as $index => $product)
-                        "ig_{{ $product->id }}"
-                        @if (!$loop->last)
-                            ,
-                        @endif
-                    @endforeach
-                ]
-            }
-        );
-    </script> --}}
-
     <script type="text/javascript">
         window.criteo_q = window.criteo_q || [];
 
@@ -102,17 +55,17 @@
 
 @section('content')
 
-    <?php
-    $pathData = explode('/', strtolower($path));
-    ?>
+    @php
+        $pathData = explode('/', strtolower($path));
+    @endphp
     @if (in_array('diamond-engagement-rings', $pathData) || in_array('engagement-rings', $pathData))
         <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/diamond_engagement_rings.css') }}">
     @elseif (in_array('wedding-rings', $pathData) || in_array('eternity-rings', $pathData))
-            <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/wedding_rings_eternity_rings.css') }}">
+        <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/wedding_rings_eternity_rings.css') }}">
     @elseif (in_array('diamond-jewellery', $pathData))
         <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/diamond_jewellery.css') }}">
     @elseif (in_array('diamonds-rings', $pathData))
-            <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/diamonds_rings.css') }}">
+        <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/diamonds_rings.css') }}">
     @endif
 
     @if (isset($categoryData->banner_image_url) && !empty($categoryData->banner_image_url))
@@ -120,9 +73,9 @@
             <meta property="og:image" content="{{ env('APP_IMAGE_URL') . '/storage/' . $categoryData->banner_image_url }}" />
         @endsection
         <div class="category-banner banner">
-            <img src="{{asset('assets/BannerCategory/1199_4.png')}}" alt=""
+            <img src="{{ asset('assets/BannerCategory/1199_4.png') }}" alt=""
                 class="diamondribgbanner diamondribgbanner-dektop">
-            <img src="{{asset('assets/BannerCategory/526_4.png')}}" alt=""
+            <img src="{{ asset('assets/BannerCategory/526_4.png') }}" alt=""
                 class="diamondribgbanner diamondribgbanner-mobile">
         @else
             @section('dynamic_og_image')
@@ -147,62 +100,16 @@
                 <p class="burgarmenu">
                     <a href="{{ url('/') }}">Home </a>
                     <span>
-                        <?php
-                        $url = $path;
-                        if (isset($url) && !empty($url)) {
-                            echo ' / ';
-                        }
+                        @php
+                            $url = $path;
+                            if (isset($url) && !empty($url)) {
+                                echo ' / ';
+                            }
 
-                        echo getBreadcrumbCategoryName($url);
-                        ?>
+                            echo getBreadcrumbCategoryName($url);
+                        @endphp
                     </span>
                 </p>
-
-
-                {{-- @if (isset($categoryData->pre_content) && $categoryData->pre_content->count())
-                <?php
-                if ($categoryData->pre_content->count() == 1) {
-                    $customCss = 'col-lg-12 col-sm-12 col-md-12';
-                } elseif ($categoryData->pre_content->count() == 2) {
-                    $customCss = 'col-lg-6 col-sm-6 col-md-6';
-                } elseif ($categoryData->pre_content->count() == 3) {
-                    $customCss = 'col-lg-4 col-sm-6 col-md-4';
-                } elseif ($categoryData->pre_content->count() == 4) {
-                    $customCss = 'col-lg-3 col-sm-6 col-md-3';
-                } else {
-                    $customCss = 'col-lg-3 col-sm-6 col-md-3';
-                }
-                ?>
-
-
-                <center>
-                    <!-- <h3>{!! !empty($categoryData->title) ? $categoryData->title : '' !!}</h3> -->
-                </center>
-            @else
-                <div class="owl-carousel owl-theme listing-slider" style="text-align: center; ">
-                    @foreach ($filter_items as $filter_key => $filter_item)
-                        @if ($filter_item->slug == 'style-categories')
-                            @foreach ($filter_item->product_items as $product_item_key => $product_item_item)
-                                <div class="item">
-                                    @if (isset($product_item_item->category_images) && !empty($product_item_item->category_images))
-                                        <img src="{{ getImageOptimizeDetails('/storage/' . $product_item_item->category_images, '217', '217') }}"
-                                            alt="{{ $product_item_item->item_name }}">
-                                    @else
-                                        <img src="{{ getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg', '217', '217') }}"
-                                            alt="{{ $product_item_item->item_name }}">
-                                    @endif
-                                    <p>
-                                        @if (isset($product_item_item->parent_category_slug) && !empty($product_item_item->parent_category_slug->parent_cate->slug))
-                                            <a
-                                                href="{{ url($product_item_item->parent_category_slug->parent_cate->slug . '/' . $product_item_item->item_slug) }}">{{ $product_item_item->item_name }}</a>
-                                        @endif
-                                    </p>
-                                </div>
-                            @endforeach
-                        @endif
-                    @endforeach
-                </div>
-            @endif --}}
             </div>
         </div>
 
@@ -277,15 +184,15 @@
                                                             @endphp
 
                                                             @if (in_array(Str::lower($product_item_item->item_value), $slugs))
-                                                                <?php
-                                                                $checkVariable = 'false';
-                                                                $checkVariableNew = 'checked';
-                                                                ?>
+                                                                @php
+                                                                    $checkVariable = 'false';
+                                                                    $checkVariableNew = 'checked';
+                                                                @endphp
                                                             @elseif(in_array(Str::lower(Str::replace(' ', '-', $product_item_item->item_name)), $slugs))
-                                                                <?php
-                                                                $checkVariable = 'false';
-                                                                $checkVariableNew = 'checked';
-                                                                ?>
+                                                                @php
+                                                                    $checkVariable = 'false';
+                                                                    $checkVariableNew = 'checked';
+                                                                @endphp
                                                             @endif
 
                                                             @if (isset($product_item_item->item_name) && $product_item_item->item_name == 'price')
@@ -297,7 +204,8 @@
                                                                                     <span>Min</span>
                                                                                     <input id="sliderRangeSetMin"
                                                                                         disabled="" data-index="0"
-                                                                                        class="sliderValue" value="100">
+                                                                                        class="sliderValue"
+                                                                                        value="100">
                                                                                 </div>
                                                                                 <div class="maxrange">
                                                                                     <span>Max</span>
@@ -532,11 +440,12 @@
                             <div class="search-result" style="margin-top: -15px;">
                                 <div class="product-grid-wrap">
                                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
+                                        {{-- @dd($sortedArray) --}}
                                         @foreach ($sortedArray as $index => $product)
-                                            <?php
-                                            $thumbnailGif = getThumbnailGif($product->id);
-                                            $getCategory = explode(',', $product->categories);
-                                            ?>
+                                            @php
+                                                $thumbnailGif = getThumbnailGif($product->id);
+                                                $getCategory = explode(',', $product->categories);
+                                            @endphp
 
                                             @if ($index === 3 || $index === 11)
                                                 <!-- Add the image or modal content as a separate grid item -->
@@ -649,14 +558,14 @@
                                                                 aria-hidden="true"></i>
                                                         </a>
                                                     </div>
-                                                    <?php
-                                                    $getMonthTextArray = getMonthwiseDiscountText();
-                                                    $getCurrentMonth = (int) date('m');
-                                                    $now = new DateTime('now');
-                                                    $lastDate = new DateTime('now');
-                                                    $lastDate->modify('last day of this month');
-                                                    $dist_future = $lastDate->format('m/d/Y');
-                                                    ?>
+                                                    @php
+                                                        $getMonthTextArray = getMonthwiseDiscountText();
+                                                        $getCurrentMonth = (int) date('m');
+                                                        $now = new DateTime('now');
+                                                        $lastDate = new DateTime('now');
+                                                        $lastDate->modify('last day of this month');
+                                                        $dist_future = $lastDate->format('m/d/Y');
+                                                    @endphp
 
                                                     <div class="product-items-item-image">
                                                         <div class="list-discount-btn">
@@ -669,30 +578,18 @@
                                                                 <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}"
                                                                     alt="{{ $product->title }}" loading="lazy">
                                                             @endif
-
-                                                            {{-- @if ($thumbnailGif)
-                                                        @if ($thumbnailGif->extension == 'gif')
-                                                        <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $thumbnailGif->image_url }}" class="product-hover-video" loading="lazy">
-                                                        @elseif ($thumbnailGif->extension == 'mp4')
-                                                        <!-- Add mp4 handling logic here if needed -->
-                                                        @else
-                                                        <img class="product-hover-video" src="{{ env('APP_IMAGE_URL') . '/storage/' . $thumbnailGif->image_url }}" alt="{{ $product->title }}">
-                                                        @endif
-                                                        @endif --}}
                                                         </a>
                                                     </div>
 
 
                                                     <div class="color-buttons"
                                                         @if (strpos(request()->url(), 'exclusive-to-marlows') !== false) style="display: none;" @endif>
-                                                        {{-- @if (stripos($product->title, 'engagement ring') === false) --}}
 
                                                         <a class="color-default"
                                                             id="fetchdefaultimages{{ $product->id }}"
                                                             data-slug="{{ $product->slug }}" data-color="Default"
                                                             data-src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}">Default</a>
 
-                                                        {{-- <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a> --}}
 
                                                         <a class="color-btn rose-gold"
                                                             id="fetchvariationRoseimages{{ $product->id }}"
@@ -702,19 +599,21 @@
                                                             id="fetchvariationYellowimages{{ $product->id }}"
                                                             data-slug="{{ $product->slug }}"
                                                             data-color="18ct Yellow Gold">Yellow Gold</a>
-                                                        {{-- @endif --}}
                                                     </div>
 
 
                                                     <div class="product-items-item-details">
                                                         <div class="product-items-item-name">
                                                             <div class="list_product_title">
-                                                                <?php
-                                                                $titleSplits = [];
-                                                                if (isset($product->title) && !empty($product->title)) {
-                                                                    $titleSplits = explode('|', $product->title);
-                                                                }
-                                                                ?>
+                                                                @php
+                                                                    $titleSplits = [];
+                                                                    if (
+                                                                        isset($product->title) &&
+                                                                        !empty($product->title)
+                                                                    ) {
+                                                                        $titleSplits = explode('|', $product->title);
+                                                                    }
+                                                                @endphp
                                                                 @if (isset($product->slug) && !empty($product->slug))
                                                                     <a href="{{ asset('product/' . $product->slug) }}"
                                                                         class="title-list-heading">{{ isset($titleSplits[0]) ? $titleSplits[0] : '' }}</a>
@@ -819,18 +718,11 @@
                         <div class="loading-data-element"></div>
                         <input type="hidden" name="nextPageNumber" id="nextPageNumber" value="{{ $nextPage }}" />
                         <div class="ajax-load text-center" style="display:none;">
-                            <!-- <img loading="lazy" alt="Product loader" src="{{ env('APP_IMAGE_URL') . '/assets/images/spinner-ring.gif' }}"> -->
-                            <!-- <p>Loading More Products</p>
-                                                    <button style="display: none;" class="ajax-load-btn">Load more data</button> -->
                         </div>
                         <div class="ajax-loader">
-                            {{-- <img src="{{env('APP_IMAGE_URL').'/images/spinner.gif' }}" id="loading-data-image"
-                                class="img-responsive" style="display:none;" /> --}}
                         </div>
                         <br>
                         <br>
-                        <!--<div class="text-center">{!! isset($filterItemTextData->bottom_text) ? $filterItemTextData->bottom_text : '' !!}</div>-->
-                        {{-- {!! isset($categoryData->description) ? $categoryData->description : '' !!} --}}
                     </div>
                 </div>
             </div>
@@ -851,13 +743,13 @@
         @else
             @if (Str::contains(request()->url(), 'engagement-rings/'))
                 <div class="head-para-three">
-                    <?php
-                    $currentUrl = $_SERVER['REQUEST_URI'];
-                    $urlParts = explode('/', trim($currentUrl, '/'));
-                    $shapeSlug = end($urlParts);
-                    $shapeName = ucwords(str_replace('-', ' ', $shapeSlug));
-                    ?>
-                    <h2 class="heading-h-three"> Explore More <?php echo $shapeName; ?> Shape Engagement Rings Styles</h2>
+                    @php
+                        $currentUrl = $_SERVER['REQUEST_URI'];
+                        $urlParts = explode('/', trim($currentUrl, '/'));
+                        $shapeSlug = end($urlParts);
+                        $shapeName = ucwords(str_replace('-', ' ', $shapeSlug));
+                    @endphp
+                    <h2 class="heading-h-three"> Explore More @php echo $shapeName; @endphp Shape Engagement Rings Styles</h2>
 
                 </div>
                 <div class="category_listing engagement_rings"
@@ -1523,13 +1415,13 @@
                         <div class="leftright-img-text-wraper">
                             <div class="leftright-imt-rows flexed flex-flex-wrap flex-items-center">
                                 @if (empty($postContent->image_url))
-                                    <?php
-                                    $conditionalCss = 'postcontent100';
-                                    ?>
+                                    @php
+                                        $conditionalCss = 'postcontent100';
+                                    @endphp
                                 @else
-                                    <?php
-                                    $conditionalCss = '';
-                                    ?>
+                                    @php
+                                        $conditionalCss = '';
+                                    @endphp
                                 @endif
                                 <div class="leftright-imt-col leftright-text {{ $conditionalCss }}">
                                     <h2 class="leftright-heading heading-h-three">
@@ -1590,65 +1482,13 @@
         </div>
 
 
-        {{-- @php
-            $getEngagementFaqs = getFaqByCategory(explode(',', $categoryData->faq_category));
+        @php
+            $faqCategoryKey = md5($categoryData->faq_category);
         @endphp
-
-        @if (isset($getEngagementFaqs) && sizeof($getEngagementFaqs))
-            <!-- FAQ Section start here -->
-            <div class="faq-section engagement-ring-faq">
-                <div class="container">
-                    <div class="head-para-three">
-                        <h2 class="heading-h-three">
-                            {{ isset($data->faq_title) ? $data->faq_title : "FAQ's" }}
-                        </h2>
-                        <p>Some of the most common Q&A's</p>
-                    </div>
-                    <div class="faq-list">
-                        <div class="accordion" id="accordionExample">
-                            @foreach ($getEngagementFaqs as $key => $faq)
-                                <div class="accordion-item">
-                                    <h3 class="accordion-header" id="{{ $faq->id }}">
-                                        @if ($key == 0)
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapse{{ $faq->id }}" aria-expanded="true"
-                                                aria-controls="collapse{{ $faq->id }}">{{ isset($faq->title) ? $faq->title : '' }}
-                                            </button>
-                                        @else
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapse{{ $faq->id }}"
-                                                aria-expanded="true"
-                                                aria-controls="collapse{{ $faq->id }}">{{ isset($faq->title) ? $faq->title : '' }}
-                                            </button>
-                                        @endif
-
-                                    </h3>
-                                    @if ($key == 0)
-                                        <div id="collapse{{ $faq->id }}" class="accordion-collapse collapse show"
-                                            aria-labelledby="{{ $faq->id }}" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                {!! isset($faq->description) ? $faq->description : '' !!}
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div id="collapse{{ $faq->id }}" class="accordion-collapse collapse"
-                                            aria-labelledby="{{ $faq->id }}" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body">
-                                                {!! isset($faq->description) ? $faq->description : '' !!}
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endforeach
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- FAQ Section End -->
-        @endif --}}
-        {!! Cache::remember('productListingPageFaqCategoryWise', 3600, function () use ($categoryData) {
-            return view('front.includes.faq-category-wise',compact('categoryData'))->render();
+        {!! Cache::remember('productListingPageFaqCategoryWise_{$faqCategoryKey}', 3600, function () use (
+            $categoryData,
+        ) {
+            return view('front.includes.faq-category-wise', compact('categoryData'))->render();
         }) !!}
 
         {{-- @include('front.includes.instagram-section') --}}
@@ -1723,5 +1563,4 @@
     <script src="{{ mix('js/product_listing_page.js') }}"></script>
 
     {{-- <script src="{{ asset('custom/js/product_listing_page/product_listing_page.js') }}"></script> --}}
-
 @endsection
