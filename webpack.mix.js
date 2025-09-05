@@ -16,3 +16,15 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]).version();
+
+const crypto = require("crypto");
+module.exports = {
+    resolve: {
+        fallback: {
+            crypto: false
+        }
+    },
+    output: {
+        hashFunction: "xxhash64"  // fallback to a non-wasm hashing algorithm
+    }
+};

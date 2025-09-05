@@ -39,6 +39,7 @@
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/developer.css?') . env('VERSION') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/responsive.min.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
     @yield('css')
 
@@ -175,57 +176,6 @@
     </div>
 
     <!-- Global Loader JS -->
-    {{-- <script>
-        (function() {
-            const loader = document.getElementById('loader-overlay');
-            let activeRequests = 0;
-
-            function showLoader() {
-                loader.style.display = 'flex';
-            }
-
-            function hideLoader() {
-                loader.style.display = 'none';
-            }
-
-            // Override fetch globally
-            const originalFetch = window.fetch;
-            window.fetch = async (...args) => {
-                activeRequests++;
-                showLoader();
-                try {
-                    return await originalFetch(...args);
-                } finally {
-                    activeRequests--;
-                    if (activeRequests === 0) hideLoader();
-                }
-            };
-
-            // Override XMLHttpRequest globally
-            const origOpen = XMLHttpRequest.prototype.open;
-            XMLHttpRequest.prototype.open = function(...args) {
-                this.addEventListener('loadstart', () => {
-                    activeRequests++;
-                    showLoader();
-                });
-                this.addEventListener('loadend', () => {
-                    activeRequests--;
-                    if (activeRequests === 0) hideLoader();
-                });
-                return origOpen.apply(this, args);
-            };
-
-            document.addEventListener("DOMContentLoaded", function() {
-                const loader = document.getElementById('loader-overlay');
-                loader.style.display = "none"; // hide once DOM ready
-            });
-
-            window.addEventListener("beforeunload", function() {
-                const loader = document.getElementById('loader-overlay');
-                loader.style.display = "flex"; // show before leaving page
-            });
-        })();
-    </script> --}}
     <script>
         (function() {
             const loader = document.getElementById('loader-overlay');
@@ -318,14 +268,14 @@
         integrity="sha512-DNnzJS0bLZfPhFmQwU+55AAKSbCD+7xH3tuTqapSpWABrZBtt7cja34cdS+b+a30vqoylXUGdMDHVAbFC26MSg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    {{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
     <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script>
     <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}"></script>
     <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-    <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}"></script> --}}
+    <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}"></script>
 
-    <script src="{{ mix('js/app.js') }}"></script>
+    {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 
@@ -333,6 +283,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @yield('js')
     <script>
         $(document).ready(function() {
