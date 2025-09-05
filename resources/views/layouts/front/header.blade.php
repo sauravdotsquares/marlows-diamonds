@@ -399,8 +399,8 @@
             });
         });
 
-        let discountText = "{{$getMonthTextArray[$getCurrentMonth]}}";
-        let discountDate = "{{$dist_future}}"+" "+"23:59:32";
+        var discountText = "{{$getMonthTextArray[$getCurrentMonth]}}";
+        var discountDate = "{{$dist_future}}"+" "+"23:59:32";
         var countDownDate = new Date(discountDate).getTime();
         var myfunc = setInterval(function() {
 

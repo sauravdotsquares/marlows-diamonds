@@ -11,11 +11,12 @@ $(document).ready(function () {
     }, "Letters and spaces only please");
 
     // $(document).ready(function() {
-    $('[data-fancybox="gallery1"]').fancybox({
-        afterLoad: function (instance, current) {
-            current.$image.attr('alt', dataPhpVariable.title);
-        }
-    });
+    // $('[data-fancybox="gallery1"]').fancybox({
+    //     afterLoad: function (instance, current) {
+    //         current.$image.attr('alt', dataPhpVariable.title);
+    //     }
+    // });
+
 
     toastr.options = {
         "preventDuplicates": true,
@@ -177,7 +178,6 @@ $(document).ready(function () {
     var input0 = document.getElementById('input-carat-min');
     var input1 = document.getElementById('input-carat-max');
     var inputs = [input0, input1];
-
     $('.resetFilterButton').on('click', function () {
         $('.filter-item-data').prop("checked", false);
         var value = pathPhpVariable;
@@ -197,6 +197,7 @@ $(document).ready(function () {
         $("#showProductList").html('');
         sendDataValues(1, 'append');
     });
+
 
     var value = pathPhpVariable;
     var arrVars = value.split("/");

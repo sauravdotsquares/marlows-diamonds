@@ -49,6 +49,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script> --}}
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/product_listing_page.css') }}">
 @endsection
 
@@ -440,7 +441,6 @@
                             <div class="search-result" style="margin-top: -15px;">
                                 <div class="product-grid-wrap">
                                     <div class="product-grid-row flexed flex-flex-wrap" id="showProductList">
-                                        {{-- @dd($sortedArray) --}}
                                         @foreach ($sortedArray as $index => $product)
                                             @php
                                                 $thumbnailGif = getThumbnailGif($product->id);
@@ -546,7 +546,7 @@
                                                         @endphp
                                                         <a href="javascript:void(0);" class="share-file" type="button"
                                                             data-bs-toggle="modal" data-bs-target="#sharesocial"
-                                                            data-url="{{ asset('product/' . $product->slug) }}">
+                                                            data-url="{{ url('product/' . $product->slug) }}">
                                                             <img src="/assets/images/share.png" alt="share"
                                                                 width="18" height="18">
                                                         </a>
@@ -571,7 +571,7 @@
                                                         <div class="list-discount-btn">
                                                             <div class="disbtn-box">{!! strtoupper($getMonthTextArray[$getCurrentMonth]) !!}</div>
                                                         </div>
-                                                        <a href="{{ asset('product/' . $product->slug) }}"
+                                                        <a href="{{ url('product/' . $product->slug) }}"
                                                             id="variationImageShown{{ $product->id }}"
                                                             class="{{ $thumbnailGif ? 'product-hov' : '' }}">
                                                             @if (isset($product->getProductImages) && !empty($product->getProductImages['image_url']))
@@ -615,11 +615,11 @@
                                                                     }
                                                                 @endphp
                                                                 @if (isset($product->slug) && !empty($product->slug))
-                                                                    <a href="{{ asset('product/' . $product->slug) }}"
+                                                                    <a href="{{ url('product/' . $product->slug) }}"
                                                                         class="title-list-heading">{{ isset($titleSplits[0]) ? $titleSplits[0] : '' }}</a>
                                                                     @if (isset($titleSplits[1]) && !empty($titleSplits[1]))
                                                                         <a
-                                                                            href="{{ asset('product/' . $product->slug) }}">{{ $titleSplits[1] }}</a>
+                                                                            href="{{ url('product/' . $product->slug) }}">{{ $titleSplits[1] }}</a>
                                                                     @endif
                                                                 @else
                                                                     <a
@@ -1545,8 +1545,6 @@
 @section('js')
     <script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
     {{-- Blade variables --}}

@@ -2156,7 +2156,7 @@ class ProductController extends Controller
                 $filter_items = ProductFilter::select('id', 'name', 'slug', 'input_type')->whereHas('product_items', function ($query) {
                     $query->where(['is_deleted' => 0, 'is_active' => 1]);
                 })
-                    ->with('product_items:product_filter_id,item_value,item_name,item_slug,filter_category_slug')
+                    ->with('product_items:id,product_filter_id,item_value,item_name,item_slug,filter_category_slug')
                     ->where(['is_deleted' => 0, 'is_active' => 1])
                     ->get();
 

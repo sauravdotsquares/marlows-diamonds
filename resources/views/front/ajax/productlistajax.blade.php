@@ -323,8 +323,8 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 // });
 
 // let discountDate = "05/31/2024 23:59:32"; //{{$dist_future}}";
-let discountText = "{{$getMonthTextArray[$getCurrentMonth]}}";
-let discountDate = "{{$dist_future}}"+" "+"23:59:32";
+var discountText = "{{$getMonthTextArray[$getCurrentMonth]}}";
+var discountDate = "{{$dist_future}}"+" "+"23:59:32";
 var countDownDate = new Date(discountDate).getTime();
 var myfunc = setInterval(function() {
 
@@ -389,13 +389,30 @@ popup.style.display = 'none';
 
 // Copy to clipboard function
 function copyToClipboard() {
-    var text = document.getElementById('copy-text').textContent;
-    navigator.clipboard.writeText(text).then(function() {
-        alert("Link copied to clipboard!");
-    }).catch(function(error) {
-        console.error("Failed to copy text:", error);
-        alert("Failed to copy text. Please try again.");
-    });
+    const text = document.getElementById('copy-text')?.textContent;
+    if (!text) return;
+
+    navigator.clipboard.writeText(text)
+        .then(() => showToast("✅ Link copied!"))
+        .catch(() => showToast("❌ Failed to copy link"));
+}
+
+// Small toast function instead of blocking alert
+function showToast(message) {
+    const toast = document.createElement("div");
+    toast.textContent = message;
+    toast.style.cssText = `
+                position: fixed; top: 20px; right: 20px;
+                background: #333; color: #fff; padding: 8px 12px;
+                border-radius: 6px; font-size: 14px; z-index: 9999;
+                opacity: 0; transition: opacity 0.3s ease;
+            `;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.style.opacity = "1");
+    setTimeout(() => {
+        toast.style.opacity = "0";
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
 }
 </script>
 {{-- copy element ends here --}}
@@ -406,7 +423,6 @@ function copyToClipboard() {
 	$(document).on('click', "[id^=fetchdefaultimages]", function () {
 			let productId = parseInt($(this).attr("id").replace("fetchdefaultimages", '')); // Extract product ID
 		let imageUrl = $(this).attr("data-src"); // Get the image URL from data-src
-		console.log('imageUrl', imageUrl)
 		if (imageUrl) {
 			$('#variationImageShown' + productId + ' img').attr('src', imageUrl);
 		} else {
