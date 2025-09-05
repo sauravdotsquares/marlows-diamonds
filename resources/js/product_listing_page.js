@@ -11,11 +11,11 @@ $(document).ready(function () {
     }, "Letters and spaces only please");
 
     // $(document).ready(function() {
-    $('[data-fancybox="gallery1"]').fancybox({
-        afterLoad: function (instance, current) {
-            current.$image.attr('alt', dataPhpVariable.title);
-        }
-    });
+    // $('[data-fancybox="gallery1"]').fancybox({
+    //     afterLoad: function (instance, current) {
+    //         current.$image.attr('alt', dataPhpVariable.title);
+    //     }
+    // });
 
     toastr.options = {
         "preventDuplicates": true,
