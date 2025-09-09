@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script> --}}
 
     <link rel="stylesheet" href="{{ asset('custom/css/product_listing_page/product_listing_page.css') }}">
@@ -73,16 +73,18 @@
             <meta property="og:image" content="{{ env('APP_IMAGE_URL') . '/storage/' . $categoryData->banner_image_url }}" />
         @endsection
         <div class="category-banner banner">
-            <img src="{{ asset('assets/BannerCategory/1199_4.png') }}" alt=""
+            <img src="{{ asset('assets/BannerCategory/1199_4.png') }}" loading="lazy" alt=""
                 class="diamondribgbanner diamondribgbanner-dektop">
-            <img src="{{ asset('assets/BannerCategory/526_4.png') }}" alt=""
+            <img src="{{ asset('assets/BannerCategory/526_4.png') }}" loading="lazy" alt=""
                 class="diamondribgbanner diamondribgbanner-mobile">
-        @else
-            @section('dynamic_og_image')
-                <meta property="og:image" content="{{ asset('assets/images/engagement-rings-banner.png') }}" />
-            @endsection
-            <div class="category-banner"
-                style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
+        </div>
+    @else
+        @section('dynamic_og_image')
+            <meta property="og:image" content="{{ asset('assets/images/engagement-rings-banner.png') }}" />
+        @endsection
+        <div class="category-banner"
+            style="background-image:url({{ asset('') }}assets/images/engagement-rings-banner.png)">
+        </div>
     @endif
 
     <div class="container">
@@ -93,7 +95,7 @@
             </div>
         </div>
     </div>
-    </div>
+    {{-- </div> --}}
     <div class="container product-panel-new">
         <div class="row">
             <div class="col-sm-12">
@@ -452,8 +454,8 @@
                                                     @if ($index === 3)
                                                         <a href = "https://marlows-diamonds.co.uk/live-diamond-search">
                                                             <img class="diamond-engage-banner"
-                                                                src="/assets/images/banner_image.png" alt="Banner"
-                                                                width="343" height="505">
+                                                                src="/assets/images/banner_image.png" loading="lazy"
+                                                                alt="Banner" width="343" height="505">
                                                         </a>
                                                     @else
                                                         <div class="modal-body productvisitform">
@@ -546,8 +548,8 @@
                                                         <a href="javascript:void(0);" class="share-file" type="button"
                                                             data-bs-toggle="modal" data-bs-target="#sharesocial"
                                                             data-url="{{ url('product/' . $product->slug) }}">
-                                                            <img src="/assets/images/share.png" alt="share"
-                                                                width="18" height="18">
+                                                            <img src="/assets/images/share.png" loading="lazy"
+                                                                alt="share" width="18" height="18">
                                                         </a>
                                                         <a href="javascript:void(0);" class="wishlist-heart"
                                                             id="productWishListRelated{{ $product->id }}"
@@ -759,10 +761,10 @@
                                 <div class="item">
                                     @if (isset($product_item_item->category_images) && !empty($product_item_item->category_images))
                                         <img src="{{ getImageOptimizeDetails('/storage/' . $product_item_item->category_images, '217', '217') }}"
-                                            alt="{{ $product_item_item->item_name }}">
+                                            loading="lazy" alt="{{ $product_item_item->item_name }}">
                                     @else
                                         <img src="{{ getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg', '217', '217') }}"
-                                            alt="{{ $product_item_item->item_name }}">
+                                            loading="lazy" alt="{{ $product_item_item->item_name }}">
                                     @endif
                                     <p>
                                         @if (isset($product_item_item->parent_category_slug) &&
@@ -790,7 +792,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://marlows-diamonds.co.uk/tempfolderpath/1695626574WED025-F-G-VS-SI_T_W_1650703527.jpg"
-                                alt="Diamond Band" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Diamond Band" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/wedding-rings/mens/diamond-band">Men's Diamond
                                     Band</a>
@@ -799,7 +801,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/WED003_T_W_1650709427.jpg"
-                                alt="Plain Band" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Plain Band" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/wedding-rings/mens/plain-band"> Men's Plain
                                     Band</a>
@@ -826,7 +828,7 @@
                         style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                         <div class="item" style="width: 216.5px;">
                             <img src="https://marlows-diamonds.co.uk/tempfolderpath/1695626574WED025-F-G-VS-SI_T_W_1650703527.jpg"
-                                alt="Diamond Band" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Diamond Band" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/wedding-rings/womens/diamond-band">Women's Diamond
                                     Band</a>
@@ -836,7 +838,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/WED003_T_W_1650709427.jpg"
-                                alt="Plain Band" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Plain Band" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/wedding-rings/womens/plain-band">Women's Plain
                                     Band</a>
@@ -862,7 +864,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/WED003_T_W_1650709427.jpg"
-                                alt="Plain Band" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Plain Band" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/wedding-rings/mens/plain-band">Men's Plain Band</a>
                             </p>
@@ -886,7 +888,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://devstaging.marlows-diamonds.co.uk/storage/Products/WED030_T_W-1.jpg"
-                                alt="Men's Band" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Men's Band" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/wedding-rings/wedding-rings/mens/diamond-band">Men's
                                     Diamond Band</a>
@@ -912,7 +914,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/WED003_T_W_1650709427.jpg"
-                                alt="Plain Band" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Plain Band" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/wedding-rings/womens/plain-band">Women's Plain
                                     Band</a>
@@ -940,7 +942,7 @@
                         style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                         <div class="item" style="width: 216.5px;">
                             <img src="https://marlows-diamonds.co.uk/tempfolderpath/1695626626ET106-F-VS_T_W-1.jpg"
-                                alt="Diamond Band" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Diamond Band" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/wedding-rings/womens/diamond-band">Women's Diamond
                                     Band</a>
@@ -972,7 +974,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
-                                alt="Bracelets" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Bracelets" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
                             </p>
@@ -980,7 +982,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://devstaging.marlows-diamonds.co.uk/storage/Products/D_S022_90_W_1650547324.jpg"
-                                alt="Earrings" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Earrings" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
                             </p>
@@ -988,7 +990,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
-                                alt="Necklaces" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Necklaces" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
                             </p>
@@ -996,7 +998,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
                             </p>
@@ -1005,7 +1007,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive
                                     to Marlows</a>
@@ -1034,7 +1036,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
-                                alt="Earrings" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Earrings" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
                             </p>
@@ -1042,7 +1044,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
-                                alt="Necklaces" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Necklaces" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
                             </p>
@@ -1050,7 +1052,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
                             </p>
@@ -1058,7 +1060,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive
                                     to Marlows</a>
@@ -1083,7 +1085,7 @@
                         style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                         <div class="item" style="width: 216.5px;">
                             <img src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
-                                alt="Bracelets" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Bracelets" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
                             </p>
@@ -1092,7 +1094,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
-                                alt="Necklaces" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Necklaces" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
                             </p>
@@ -1100,7 +1102,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
                             </p>
@@ -1109,7 +1111,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive
                                     to Marlows</a>
@@ -1136,7 +1138,7 @@
                         style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                         <div class="item" style="width: 216.5px;">
                             <img src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
-                                alt="Bracelets" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Bracelets" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
                             </p>
@@ -1145,7 +1147,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/D_S022_90_W_1650547324.jpg"
-                                alt="Earrings" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Earrings" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
                             </p>
@@ -1153,7 +1155,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
                             </p>
@@ -1162,7 +1164,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive
                                     to Marlows</a>
@@ -1189,7 +1191,7 @@
                         style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                         <div class="item" style="width: 216.5px;">
                             <img src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
-                                alt="Bracelets" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Bracelets" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
                             </p>
@@ -1198,7 +1200,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
-                                alt="Necklaces" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Necklaces" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
                             </p>
@@ -1206,7 +1208,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/D_S022_90_W_1650547324.jpg"
-                                alt="Earrings" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Earrings" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
                             </p>
@@ -1215,7 +1217,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/1822000435tanzanite-1.jpeg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/exclusive-to-marlows">Exclusive
                                     to Marlows</a>
@@ -1239,7 +1241,7 @@
                         style="text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                         <div class="item" style="width: 216.5px;">
                             <img src="	https://admin.marlowsdiamonds.com/storage/Products/D_S028_T_W-1_1650533593.jpg"
-                                alt="Bracelets" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Bracelets" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/bracelets">Bracelets</a>
                             </p>
@@ -1247,7 +1249,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/DS004_T_W-1_1650622901.jpg"
-                                alt="Necklaces" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Necklaces" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/necklaces">Necklaces</a>
                             </p>
@@ -1255,7 +1257,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/D_S025_90_W_1650633402.jpg"
-                                alt="Pendants" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Pendants" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/pendants">Pendants</a>
                             </p>
@@ -1263,7 +1265,7 @@
 
                         <div class="item" style="width: 216.5px;">
                             <img src="https://admin.marlowsdiamonds.com/storage/Products/D_S022_90_W_1650547324.jpg"
-                                alt="Earrings" style="max-width: 100%; height: auto;" />
+                                loading="lazy" alt="Earrings" style="max-width: 100%; height: auto;" />
                             <p>
                                 <a href="https://marlows-diamonds.co.uk/diamond-jewellery/earrings">Earrings</a>
                             </p>
@@ -1308,6 +1310,7 @@
                                                 <a
                                                     href="{{ isset($preContentData->button_url) ? $preContentData->button_url : '' }}">
                                                     <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $preContentData->image_url }}"
+                                                        loading="lazy"
                                                         alt="{{ isset($preContentData->image_alt_title) ? $preContentData->image_alt_title : '' }}">
                                                 </a>
                                             </div>
@@ -1343,6 +1346,7 @@
                                             @if (isset($preContentData->image_url) && !empty($preContentData->image_url))
                                                 <!-- <a href="/engagement-rings/solitaire"> -->
                                                 <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $preContentData->image_url }}"
+                                                    loading="lazy"
                                                     alt="{{ isset($preContentData->image_alt_title) ? $preContentData->image_alt_title : '' }}">
                                                 <!-- </a> -->
                                             @endif
@@ -1437,6 +1441,7 @@
                                 @if (isset($postContent->image_url) && !empty($postContent->image_url))
                                     <div class="leftright-imt-col leftright-img">
                                         <img src="{{ env('APP_IMAGE_URL') . '/storage/' . $postContent->image_url }}"
+                                            loading="lazy"
                                             alt="{{ isset($postContent->image_alt_title) ? $postContent->image_alt_title : '' }}">
                                     </div>
                                 @endif
@@ -1497,7 +1502,7 @@
 
     </div>
     <div class="engagement-ring-img">
-        <img src="{{ getImageOptimizeDetails('/images/viewguide.webp', '1349', '537') }}"
+        <img src="{{ getImageOptimizeDetails('/images/viewguide.webp', '1349', '537') }}" loading="lazy"
             alt="Find the perfect engagement ring">
         <div class="engagement-ring-img-content">
             <div class="container">

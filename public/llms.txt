@@ -1,0 +1,28 @@
+# llms.txt — Instructions for AI crawlers / Large Language Models
+
+# 1. General permissions
+User-agent: *
+Allow: /
+
+# 2. Exclusions (optional)
+# Disallow AI crawlers from internal or sensitive areas
+Disallow: /cart/
+Disallow: /account/
+Disallow: /admin/
+Disallow: /products/payment-successf
+
+
+# 3. Attribution & licensing
+License: All content is © 2025 Marlow’s Diamonds. All Rights Reserved.
+Attribution-Name: Marlow’s Diamonds
+Attribution-URL: https://marlows-diamonds.co.uk/
+Attribution-Requirement: Please credit “Marlow’s Diamonds” with a link.
+Contact: hello@marlows-diamonds.co.uk
+
+# 4. FAQs & updates feed
+# Link to blog posts for AI to check for fresh content
+Feed: https://marlows-diamonds.co.uk/blog
+
+
+# 5. Product feed
+https://marlows-diamonds.co.uk/diamonds-rings

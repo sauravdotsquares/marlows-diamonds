@@ -63,7 +63,7 @@
         <div class="main-banner-col banner-left-col">
             <div class="main-banner-left-text">
                 <h1 class="123">GIA Certified Diamond Rings by Marlows</h1>
-                <h2> The<img src="/assets/images/logo-ups.png" alt="{{ $header_settings['site_title'] }}"
+                <h2> The<img src="/assets/images/logo-ups.png" loading="lazy" alt="{{ $header_settings['site_title'] }}"
                         style="padding-left: 5px;height:58px;width:155px;"> USP</h2>
                 <ul>
                     <li>Be guided by our expert team with over 150 years of combined jewellery experience</li>
@@ -79,10 +79,10 @@
         </div>
         <div class="main-banner-col banner-ryt-col">
             <div class="main-banner-ryt-img">
-                <?php
-                $ringImageUrl = getImageOptimizeDetails('/assets/images/ring-img.webp', '340', '500');
-                ?>
-                <img src="{{ $ringImageUrl }}" alt="Ring">
+                @php
+                    $ringImageUrl = getImageOptimizeDetails('/assets/images/ring-img.webp', '340', '500');
+                @endphp
+                <img src="{{ $ringImageUrl }}" loading="lazy" alt="Ring">
             </div>
         </div>
     </div>
@@ -101,10 +101,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('diamond-engagement-rings') }}">
-                                <?php
-                                $ringImageEngagementRingUrl = getImageOptimizeDetails('/assets/images/engagement-ring.png', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageEngagementRingUrl }}" alt="Engagement Ring">
+                                @php
+                                    $ringImageEngagementRingUrl = getImageOptimizeDetails(
+                                        '/assets/images/engagement-ring.png',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageEngagementRingUrl }}" loading="lazy" alt="Engagement Ring">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -123,10 +127,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/diamonds-rings') }}">
-                                <?php
-                                $ringImageDiamondRingUrl = getImageOptimizeDetails('/storage/Products/CX9-SC48_00003_1650365432.jpg', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageDiamondRingUrl }}" alt="Multi Stone Rings">
+                                @php
+                                    $ringImageDiamondRingUrl = getImageOptimizeDetails(
+                                        '/storage/Products/CX9-SC48_00003_1650365432.jpg',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageDiamondRingUrl }}" loading="lazy" alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -145,10 +153,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/eternity-rings') }}">
-                                <?php
-                                $ringImageEternityRingUrl = getImageOptimizeDetails('/storage/Products/ET112-F-G-VS-SI_T_W.jpg', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageEternityRingUrl }}" alt="Multi Stone Rings">
+                                @php
+                                    $ringImageEternityRingUrl = getImageOptimizeDetails(
+                                        '/storage/Products/ET112-F-G-VS-SI_T_W.jpg',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageEternityRingUrl }}" loading="lazy" alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -167,10 +179,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/wedding-rings') }}">
-                                <?php
-                                $ringImageWeddingRingUrl = getImageOptimizeDetails('/assets/images/wedding-ring.png', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageWeddingRingUrl }}" alt="Wedding Rings">
+                                @php
+                                    $ringImageWeddingRingUrl = getImageOptimizeDetails(
+                                        '/assets/images/wedding-ring.png',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageWeddingRingUrl }}" loading="lazy" alt="Wedding Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -190,10 +206,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/diamond-jewellery') }}">
-                                <?php
-                                $ringImageDiamondJewelleryUrl = getImageOptimizeDetails('/assets/images/diamond-jewellery.png', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageDiamondJewelleryUrl }}" alt="Diamond Jewellery">
+                                @php
+                                    $ringImageDiamondJewelleryUrl = getImageOptimizeDetails(
+                                        '/assets/images/diamond-jewellery.png',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageDiamondJewelleryUrl }}" loading="lazy" alt="Diamond Jewellery">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -213,10 +233,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/engagement-rings/halo') }}">
-                                <?php
-                                $ringImageHaloUrl = getImageOptimizeDetails('/storage/Products/RC2029_00003_1650430327.jpg', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageHaloUrl }}" alt="Multi Stone Rings">
+                                @php
+                                    $ringImageHaloUrl = getImageOptimizeDetails(
+                                        '/storage/Products/RC2029_00003_1650430327.jpg',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageHaloUrl }}" loading="lazy" alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -235,10 +259,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/engagement-rings/multi-stone') }}">
-                                <?php
-                                $ringImageMultistoneRingUrl = getImageOptimizeDetails('/assets/images/multi-stone.png', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageMultistoneRingUrl }}" alt="Multi Stone Rings">
+                                @php
+                                    $ringImageMultistoneRingUrl = getImageOptimizeDetails(
+                                        '/assets/images/multi-stone.png',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageMultistoneRingUrl }}" loading="lazy" alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -258,10 +286,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/engagement-rings/shoulder-set') }}">
-                                <?php
-                                $ringImageShoulderSetUrl = getImageOptimizeDetails('/storage/Products/R1-2294_00003_1650373913.jpg', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageShoulderSetUrl }}" alt="Multi Stone Rings">
+                                @php
+                                    $ringImageShoulderSetUrl = getImageOptimizeDetails(
+                                        '/storage/Products/R1-2294_00003_1650373913.jpg',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageShoulderSetUrl }}" loading="lazy" alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -281,10 +313,14 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/engagement-rings/solitaire') }}">
-                                <?php
-                                $ringImageSolitaireUrl = getImageOptimizeDetails('/storage/Products/R1-327_00003_1650432540.jpg', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageSolitaireUrl }}" alt="Multi Stone Rings">
+                                @php
+                                    $ringImageSolitaireUrl = getImageOptimizeDetails(
+                                        '/storage/Products/R1-327_00003_1650432540.jpg',
+                                        '340',
+                                        '340',
+                                    );
+                                @endphp
+                                <img src="{{ $ringImageSolitaireUrl }}" loading="lazy" alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -304,10 +340,11 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/wedding-rings/mens') }}">
-                                <?php
-                                $ringImageMensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/WED028_T_W.jpg', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageMensWeddingRingUrl }}" alt="Multi Stone Rings">
+                                @php
+                                    $ringImageMensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/WED028_T_W.jpg', '340', '340');
+                                @endphp
+                                <img src="{{ $ringImageMensWeddingRingUrl }}" loading="lazy"
+                                    alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -326,10 +363,11 @@
                     <div class="product-info">
                         <div class="product-image">
                             <a href="{{ asset('/wedding-rings/womens') }}">
-                                <?php
-                                $ringImageWomensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/217231453wed052-silver-front.png', '340', '340');
-                                ?>
-                                <img src="{{ $ringImageWomensWeddingRingUrl }}" alt="Multi Stone Rings">
+                                @php
+                                    $ringImageWomensWeddingRingUrl = getImageOptimizeDetails('/storage/Products/217231453wed052-silver-front.png', '340', '340');
+                                @endphp
+                                <img src="{{ $ringImageWomensWeddingRingUrl }}" loading="lazy"
+                                    alt="Multi Stone Rings">
                             </a>
                         </div>
                         <div class="product-item-details">
@@ -468,10 +506,11 @@
         </div>
         <div class="product-rating">
             <div class="rating-review">
-                <h5>3000+</h5><span><img src="/assets/images/one-star1.png" alt=""> </span>
+                <h5>3000+</h5><span><img src="/assets/images/one-star1.png" loading="lazy" alt=""> </span>
             </div>
             <div class="start-standing">
-                <div class="start-position"><span><img src="/assets/images/five-star11.png" alt=""> </span>
+                <div class="start-position"><span><img src="/assets/images/five-star11.png" loading="lazy"
+                            alt=""> </span>
                 </div>
                 <h4>Outstanding <span>(5 out of 5)</span></h4>
             </div>
@@ -480,6 +519,9 @@
         <div class="rating-review-block">
             <div class="owl-carousel owl-theme slider-review">
                 @include('front.pages.reviews')
+                {!! Cache::remember('indexPageReviews', 3600, function () {
+                    return view('front.pages.reviews')->render();
+                }) !!}
             </div>
         </div>
     </div>
@@ -592,9 +634,9 @@
 <script src="https://www.google.com/recaptcha/api.js?render=6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN" async></script>
 <script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}" defer></script>
 <script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}" defer></script>
-<?php
-$environment = env('APP_ENV');
-?>
+@php
+    $environment = env('APP_ENV');
+@endphp
 
 {{-- Blade variables --}}
 <script>

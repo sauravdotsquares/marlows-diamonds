@@ -253,38 +253,58 @@ if (!function_exists('validate_breadcrumb')) {
     if (!function_exists("getReviews")) {
         function getReviews()
         {
-            $reviews = Reviews::where('status', 1)->get();
-            return ($reviews);
+            try {
+                $reviews = Reviews::where('status', 1)->get();
+                return ($reviews);
+            } catch (\Throwable $th) {
+                return [];
+            }
         }
     }
 
     if (!function_exists("getCategories")) {
         function getCategories()
         {
-            $postcategories = PostCategory::orderBy('name', 'asc')->get();
-            return ($postcategories);
+            try {
+                $postcategories = PostCategory::orderBy('name', 'asc')->get();
+                return ($postcategories);
+            } catch (\Throwable $th) {
+                return [];
+            }
         }
     }
 
     if (!function_exists("getRecentPosts")) {
         function getRecentPosts()
         {
-            $recentposts = Posts::take(5)->orderBy('id', 'DESC')->where('status', 1)->get();
-            return ($recentposts);
+            try {
+                $recentposts = Posts::take(5)->orderBy('id', 'DESC')->where('status', 1)->get();
+                return ($recentposts);
+            } catch (\Throwable $th) {
+                return [];
+            }
         }
     }
     if (!function_exists("getRelatedPosts")) {
         function getRelatedPosts()
         {
-            $relatedposts = Posts::take(5)->orderBy('id', 'DESC')->where('status', 1)->get();
-            return ($relatedposts);
+            try {
+                $relatedposts = Posts::take(5)->orderBy('id', 'DESC')->where('status', 1)->get();
+                return ($relatedposts);
+            } catch (\Throwable $th) {
+                return [];
+            }
         }
     }
     if (!function_exists("getEngagementRingsPosts")) {
         function getEngagementRingsPosts()
         {
-            $relatedposts = Posts::take(10)->orderBy('id', 'DESC')->where('categories', 18)->where('status', 1)->select('title', 'slug', 'description', 'image')->get();
-            return ($relatedposts);
+            try {
+                $relatedposts = Posts::take(10)->orderBy('id', 'DESC')->where('categories', 18)->where('status', 1)->select('title', 'slug', 'description', 'image')->get();
+                return ($relatedposts);
+            } catch (\Throwable $th) {
+                return [];
+            }
         }
     }
     if (!function_exists("getFaqs")) {
