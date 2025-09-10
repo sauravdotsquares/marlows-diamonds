@@ -25,7 +25,7 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="{{ route('admin.login') }}" method="post">
+      <form action="{{ route('admin.login.post') }}" method="post">
         {{ csrf_field() }}
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Email" name="email">
@@ -64,7 +64,7 @@
       <p class="mb-1">
         <a href="/users/forget-password">I forgot my password</a>
       </p>
-     
+
     </div>
     <!-- /.card-body -->
   </div>
@@ -82,7 +82,7 @@
 <script>
 $(document).ready(function() {
     $("#show_hide_password a").on('click', function(event) {
-     
+
         event.preventDefault();
         if($('#show_hide_password input').attr("type") == "text"){
             $('#show_hide_password input').attr('type', 'password');

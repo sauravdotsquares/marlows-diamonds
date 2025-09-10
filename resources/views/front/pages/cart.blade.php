@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 @endsection
 @section('successtrackingscript')
-<?php 
+<?php
     if(session('cart')){
         $value = array_sum(array_column(session('cart'),'deposited_price'));
     }else{
@@ -77,7 +77,7 @@
                         </thead>
                         <tbody>
                             @php $total = 0 @endphp
-                            
+
                             @foreach(session('cart') as $id => $details)
 
                             @php
@@ -163,36 +163,36 @@
                                         </div>
                                     </div>
                                 </td>
-                          
+
                                 <td class="product-price-col" data-th="Price">
-                                
+
                                 @if(isset($details['rrp_price']) && !empty($details['rrp_price']) && ($details['shop_price'] != $details['rrp_price']))
-                                    <p> 
-                                        <span> RRP: </span> 
-                                        <del>{{MY_CURRENCY_SYMBOL}} {{$details['rrp_price']}}</del>
+                                    <p>
+                                        <span> RRP: </span>
+                                        <del>{{config('constants.MY_CURRENCY_SYMBOL')}} {{$details['rrp_price']}}</del>
                                     </p>
                                 @endif
-                               <!-- <p> <span> Save Price: </span> {{MY_CURRENCY_SYMBOL}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
+                               <!-- <p> <span> Save Price: </span> {{config('constants.MY_CURRENCY_SYMBOL')}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
                                 @if(isset($details['shop_price']) && !empty($details['shop_price']))
                                     @if($details['price']!= $details['shop_price'])
-                                    <p> 
-                                        <span> Our Price: </span> 
-                                        <del> {{MY_CURRENCY_SYMBOL}} {{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
+                                    <p>
+                                        <span> Our Price: </span>
+                                        <del> {{config('constants.MY_CURRENCY_SYMBOL')}} {{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
                                     </p>
                                     @endif
                                 @endif
                                     @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['shopPricedata'])
-                                        <del>{{MY_CURRENCY_SYMBOL}} {{
+                                        <del>{{config('constants.MY_CURRENCY_SYMBOL')}} {{
                                             number_format($details['customArray']['final_price'],2) }}
                                         </del>
                                     @endif
-                                    &nbsp; {{MY_CURRENCY_SYMBOL}} {{
+                                    &nbsp; {{config('constants.MY_CURRENCY_SYMBOL')}} {{
                                     number_format($details['price'],2) }}</td>
                                 <td class="product-quantity-col" data-th="Quantity">
                                     <input type="text" disabled="disabled" value="{{ $details['quantity'] }}"
                                         class="form-control quantity update-cart" />
                                 </td>
-                                <td class="product-subtotal-col" data-th="Subtotal">{{MY_CURRENCY_SYMBOL}} {{
+                                <td class="product-subtotal-col" data-th="Subtotal">{{config('constants.MY_CURRENCY_SYMBOL')}} {{
                                     number_format($details['deposited_price'] * $details['quantity'],2) }}</td>
                                 <td class="product-action-col" class="actions" data-th="">
                                     <button class="btn btn-danger btn-sm remove-from-cart"><i
@@ -214,7 +214,7 @@
 
                                 <tr class="box-cart-total">
                                     <th>Total</th>
-                                    <td> {{MY_CURRENCY_SYMBOL}} {{ number_format($total,2) }}</td>
+                                    <td> {{config('constants.MY_CURRENCY_SYMBOL')}} {{ number_format($total,2) }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -268,7 +268,7 @@
                             @php $total = 0 @endphp
                             @if(session('cart'))
                             @foreach(session('cart') as $id => $details)
-                            
+
                                     @php $total += $details['deposited_price'] * $details['quantity'] @endphp
                                     <tr data-id="{{ $id }}">
                                         <td class="product-info-col" data-th="Product">

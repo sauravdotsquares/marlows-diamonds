@@ -125,8 +125,8 @@
                                     @endforeach --}}
                                 </ul>
                             </td>
-                            <td> {{MY_CURRENCY_SYMBOL}} {{ $value->product_price * $value->quantity}}</td>
-                            <td> {{MY_CURRENCY_SYMBOL}} {{ isset($value->deposited_product_price)?$value->deposited_product_price:$value->total_price}}</td>
+                            <td> {{config('constants.MY_CURRENCY_SYMBOL')}} {{ $value->product_price * $value->quantity}}</td>
+                            <td> {{config('constants.MY_CURRENCY_SYMBOL')}} {{ isset($value->deposited_product_price)?$value->deposited_product_price:$value->total_price}}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -134,7 +134,7 @@
                     <tr>
                         <th scope="row">Subtotal:</th>
                         <td><span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span></td>
+                                    class="woocommerce-Price-currencySymbol">{{config('constants.MY_CURRENCY_SYMBOL')}}</span>{{isset($getOrderDetails->total_price)?$getOrderDetails->total_price:$getOrderDetails->final_price}}</span></td>
                     </tr>
                     <tr>
                         <th scope="row">Payment method:</th>
@@ -143,7 +143,7 @@
                     <tr>
                         <th scope="row">Deposited Total:</th>
                         <td><span class="woocommerce-Price-amount amount"><span
-                                    class="woocommerce-Price-currencySymbol">{{MY_CURRENCY_SYMBOL}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span> </td>
+                                    class="woocommerce-Price-currencySymbol">{{config('constants.MY_CURRENCY_SYMBOL')}}</span>{{isset($getOrderDetails->deposited_price)?$getOrderDetails->deposited_price:$getOrderDetails->final_price}}</span> </td>
                     </tr>
                 </tfoot>
             </table>
@@ -155,7 +155,7 @@
         <div class="woocommerce-customer-details">
             <address>
                 {!!isset($getOrderDetails->order_address->first_name)?$getOrderDetails->order_address->first_name."<br>":''!!}
-                {!!isset($getOrderDetails->order_address->company_name)?$getOrderDetails->order_address->company_name.'<br>':'' !!}  
+                {!!isset($getOrderDetails->order_address->company_name)?$getOrderDetails->order_address->company_name.'<br>':'' !!}
                 {!!isset($getOrderDetails->order_address->street_address_l1)?$getOrderDetails->order_address->street_address_l1.'<br>':''!!}{!!isset($getOrderDetails->order_address->street_address_l2)?$getOrderDetails->order_address->street_address_l2.'<br>':''!!}{!!isset($getOrderDetails->order_address->town_city)?$getOrderDetails->order_address->town_city:''!!} {!!isset($getOrderDetails->order_address->state)?$getOrderDetails->order_address->state.'<br>':''!!}{!!isset($getOrderDetails->order_address->pin_code)?$getOrderDetails->order_address->pin_code:''!!}
                 <p class="woocommerce-customer-details--phone"> {{isset($getOrderDetails->order_address->mobile)?$getOrderDetails->order_address->mobile:''}} </p>
 
@@ -168,7 +168,7 @@
         <div class="woocommerce-customer-details">
             <address>
                 {!!isset($getOrderDetails->order_shipping_address->first_name)?$getOrderDetails->order_shipping_address->first_name."<br>":''!!}
-                {!!isset($getOrderDetails->order_shipping_address->company_name)?$getOrderDetails->order_shipping_address->company_name.'<br>':'' !!}  
+                {!!isset($getOrderDetails->order_shipping_address->company_name)?$getOrderDetails->order_shipping_address->company_name.'<br>':'' !!}
                 {!!isset($getOrderDetails->order_shipping_address->street_address_l1)?$getOrderDetails->order_shipping_address->street_address_l1.'<br>':''!!}{!!isset($getOrderDetails->order_shipping_address->street_address_l2)?$getOrderDetails->order_shipping_address->street_address_l2.'<br>':''!!}{!!isset($getOrderDetails->order_shipping_address->town_city)?$getOrderDetails->order_shipping_address->town_city:''!!} {!!isset($getOrderDetails->order_shipping_address->state)?$getOrderDetails->order_shipping_address->state.'<br>':''!!}{!!isset($getOrderDetails->order_shipping_address->pin_code)?$getOrderDetails->order_shipping_address->pin_code:''!!}
                 <p class="woocommerce-customer-details--phone"> {{isset($getOrderDetails->order_shipping_address->mobile)?$getOrderDetails->order_shipping_address->mobile:''}} </p>
 

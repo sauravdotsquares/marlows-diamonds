@@ -33,13 +33,20 @@
 
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
     <link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
-    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/developer.css?') . env('VERSION') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/responsive.min.css') }}" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/developer.css?') . env('VERSION') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/responsive.min.css') }}">
+    <noscript>
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+            as="style" onload="this.rel='stylesheet'">
+    </noscript>
+    <noscript>
+        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css"
+            as="style" onload="this.rel='stylesheet'" />
+    </noscript>
 
     @yield('css')
 
@@ -117,7 +124,7 @@
         </script>
         @yield('successtrackingscript')
         <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMHF7CDK9W"></script>
+        <script defer src="https://www.googletagmanager.com/gtag/js?id=G-MMHF7CDK9W"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
 
@@ -262,28 +269,27 @@
 <script src="{{ asset('assets/js/angular-sanitize.js?').env('VERSION')}}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-route.min.js"
         integrity="sha512-Bs3EAi5hQciV/Wg1ReXlGbkZchIoKNGrOrISSayU2O2u3meEQ+Tyc3FKMiifNkjXIhMqRDDBSFqW2HVtjdbAzg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer" async></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-sanitize.min.js"
         integrity="sha512-DNnzJS0bLZfPhFmQwU+55AAKSbCD+7xH3tuTqapSpWABrZBtt7cja34cdS+b+a30vqoylXUGdMDHVAbFC26MSg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer" async></script>
 
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
-    <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script>
-    <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}"></script>
-    <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}"></script>
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
-    <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}" defer></script>
+    <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}" defer></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}" defer></script>
+    <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}" defer></script>
+    <script src="{{ asset('assets/js/custom.js') }}" defer></script>
+    <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}" defer></script>
 
     {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 
     <!-- Cookie Consent JavaScript -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js" async></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" defer></script>
     @yield('js')
     <script>
         $(document).ready(function() {
@@ -452,6 +458,14 @@
         }
     </script>
     {!! !empty($seoScriptData) && !empty($seoScriptData->footer_script) ? $seoScriptData->footer_script : '' !!}
+    <script>
+        window.addEventListener("load", function() {
+            var gtag = document.createElement("script");
+            gtag.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXX";
+            gtag.async = true;
+            document.body.appendChild(gtag);
+        });
+    </script>
 </body>
 
 </html>

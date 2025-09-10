@@ -99,14 +99,14 @@
                     <i class="diamond-icon info-icon"></i>
                     <div class="location-top-h">
                         <a href="{{asset('visit-us')}}">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>{{LOCATION_TITLE}}
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>{{config('constants.LOCATION_TITLE')}}
                             <div class="location-drop">
                                 <div class="location-drop-inner">
-                                    <p class="location-details-title">{{BRIMINGHAM_LOCATION_TITLE}}</p>
+                                    <p class="location-details-title">{{config('constants.BRIMINGHAM_LOCATION_TITLE')}}</p>
                                     <p class="location-text">{!!$header_settings['location1']!!}</p>
                                 </div>
                                 <div class="location-drop-inner">
-                                    <p class="location-details-title">{{LONDON_LOCATION_TITLE}}</p>
+                                    <p class="location-details-title">{{config('constants.LONDON_LOCATION_TITLE')}}</p>
                                     <p class="location-text">{!!$header_settings['location2']!!}</p>
                                 </div>
                             </div>
@@ -148,9 +148,9 @@
                         </li>
                         <li class="my-account-blk">
                         @if(auth()->guard('customer')->check())
-                            <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_TITLE}}</a>
+                            <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{config('constants.MY_ACCOUNT_TITLE')}}</a>
                         @else
-                            <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{MY_ACCOUNT_LOGIN}}</a>
+                            <a href="{{route('my-account')}}"><i class="fa fa-user-o" aria-hidden="true"></i>{{config('constants.MY_ACCOUNT_LOGIN')}}</a>
                         @endif
                         </li>
                         <li class="my-whishlist-blk">
@@ -162,10 +162,10 @@
                                     $wishlistIcon = 'fa-heart-o';
                                 }
                             ?>
-                                <a href="{{route('products.wishlist')}}"><i class="fa {{$wishlistIcon}} wishcount" aria-hidden="true"></i>{{MY_WISHLIST_TITLE}}</a>
+                                <a href="{{route('products.wishlist')}}"><i class="fa {{$wishlistIcon}} wishcount" aria-hidden="true"></i>{{config('constants.MY_WISHLIST_TITLE')}}</a>
                         </li>
                         <!-- <li class="my-cart-blk">
-                            <a href="#"><img src="assets/images/cart-color.png" alt="cart"> {{MY_CART_TITLE}}<span class="cart-number">(0)</span></a>
+                            <a href="#"><img src="assets/images/cart-color.png" alt="cart"> {{config('constants.MY_CART_TITLE')}}<span class="cart-number">(0)</span></a>
                         </li> -->
                         <li class="dropdown">
                             <a href="{{ route('product.cart') }}">
@@ -173,7 +173,7 @@
                                 <!--<img src="{{env('APP_IMAGE_URL').'/assets/images/cart-color.png'}}" alt="cart">-->
                                 <i class="diamond-icon search-cart"></i>
                                 <!-- <i class="fa fa-shopping-bag" aria-hidden="true"></i> -->
-                                {{MY_CART_TITLE}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
+                                {{config('constants.MY_CART_TITLE')}} <span class="badge badge-pill badge-danger cartcount">{{ count((array) session('cart')) }}</span>
 
                             </a>
                             <div class="dropdown-menu">

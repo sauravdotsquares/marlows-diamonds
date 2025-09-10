@@ -1,6 +1,6 @@
 @if(isset($getSearchedData) && count($getSearchedData))
 @foreach($getSearchedData as $key => $product)
-<?php 
+<?php
     // echo "in ythe ajax files in foreachj <pre>";
     // print_r($product->ProductVariationMinMaxPrice);
     // die;
@@ -21,11 +21,11 @@
             </div>
             <div class="search-suggestion-price">
                 @if(isset($product->ProductVariationMinMaxPrice) && $product->ProductVariationMinMaxPrice->MinPrice == $product->ProductVariationMinMaxPrice->MaxPrice)
-                <span>{{MY_CURRENCY_SYMBOL}} {{$product->ProductVariationMinMaxPrice->MinPrice}}</span>
+                <span>{{config('constants.MY_CURRENCY_SYMBOL')}} {{$product->ProductVariationMinMaxPrice->MinPrice}}</span>
                 @else
-                <span>{{MY_CURRENCY_SYMBOL}} {{$product->ProductVariationMinMaxPrice->MinPrice}}</span>
+                <span>{{config('constants.MY_CURRENCY_SYMBOL')}} {{$product->ProductVariationMinMaxPrice->MinPrice}}</span>
                     -
-                <span>{{MY_CURRENCY_SYMBOL}} {{$product->ProductVariationMinMaxPrice->MaxPrice}}</span>
+                <span>{{config('constants.MY_CURRENCY_SYMBOL')}} {{$product->ProductVariationMinMaxPrice->MaxPrice}}</span>
                 @endif
             </div>
 

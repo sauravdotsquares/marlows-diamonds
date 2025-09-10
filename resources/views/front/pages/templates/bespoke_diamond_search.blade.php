@@ -167,7 +167,7 @@
 											<div class="quote-icon-pop helping-text-container">
 												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
-													{{CARAT_TOOLTIP}}
+													{{config('constants.CARAT_TOOLTIP')}}
 												</div>
 											</div>
 										</div>
@@ -202,7 +202,7 @@
 												    <i class="diamond-icon info-icon"></i>
 												    </a>
 												<div class="m-quote-pop">
-													{{COLOUR_TOOLTIP}}
+													{{config('constants.COLOUR_TOOLTIP')}}
 												</div>
 											</div>
 										</div>
@@ -275,7 +275,7 @@
 											<div class="quote-icon-pop helping-text-container ">
 												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
-													{{CLARITY_TOOLTIP}}
+													{{config('constants.CLARITY_TOOLTIP')}}
 												</div>
 											</div>
 										</div>
@@ -319,7 +319,7 @@
 											<div class="quote-icon-pop helping-text-container ">
 												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
-													{{CUT_GRADE_TOOLTIP}}
+													{{config('constants.CUT_GRADE_TOOLTIP')}}
 												</div>
 											</div>
 										</div>
@@ -362,7 +362,7 @@
 											<div class="quote-icon-pop helping-text-container ">
 												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
-													{{POLISH_TOOLTIP}}
+													{{config('constants.POLISH_TOOLTIP')}}
 												</div>
 											</div>
 										</div>
@@ -405,7 +405,7 @@
 											<div class="quote-icon-pop helping-text-container ">
 												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
-													{{SYMMETRY_TOOLTIP}}
+													{{config('constants.SYMMETRY_TOOLTIP')}}
 												</div>
 											</div>
 										</div>
@@ -461,7 +461,7 @@
 											<div class="quote-icon-pop helping-text-container ">
 												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
-													{{FLUORESCENCE_TOOLTIP}}
+													{{config('constants.FLUORESCENCE_TOOLTIP')}}
 												</div>
 											</div>
 										</div>
@@ -497,7 +497,7 @@
 											<div class="quote-icon-pop helping-text-container ">
 												<a class="ma-info-icon" href="javascript:void(0)"><i class="diamond-icon info-icon"></i></a>
 												<div class="m-quote-pop">
-													{{CERTIFICATE_TOOLTIP}}
+													{{config('constants.CERTIFICATE_TOOLTIP')}}
 												</div>
 											</div>
 										</div>

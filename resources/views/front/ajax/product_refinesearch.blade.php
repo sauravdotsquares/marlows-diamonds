@@ -12,7 +12,7 @@
             <td>
                 <a href="#" target="_blank" class="certificate-link">{{isset($refineData['Lab'])?$refineData['Lab']:''}}</a>
             </td>
-            <td>{{MY_CURRENCY_SYMBOL}}<span class="custom_pricediamond">{{isset($refineData['Amount'])?number_format($refineData['Amount'],2):''}}<span></td>
+            <td>{{config('constants.MY_CURRENCY_SYMBOL')}}<span class="custom_pricediamond">{{isset($refineData['Amount'])?number_format($refineData['Amount'],2):''}}<span></td>
             <td>
                 <a href="{{isset($refineData['CertificateLink'])?$refineData['CertificateLink']:''}}" target="_blank" class="table-btn certificate-link">View</a>
             </td>

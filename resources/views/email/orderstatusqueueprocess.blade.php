@@ -176,11 +176,11 @@
 												</td>
 												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0;
                                                 line-height: 20px; font-size: 14px;border: 1px solid #808080; text-align:center;">
-													{{MY_CURRENCY_SYMBOL}}{{$orderDetails['total_price']}}
+													{{config('constants.MY_CURRENCY_SYMBOL')}}{{$orderDetails['total_price']}}
 												</td>
 												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0;
                                                 line-height: 20px; font-size: 14px;border: 1px solid #808080;text-align:center;">
-													{{MY_CURRENCY_SYMBOL}}{{$orderDetails['deposited_product_price']}}
+													{{config('constants.MY_CURRENCY_SYMBOL')}}{{$orderDetails['deposited_product_price']}}
 												</td>
 											</tr>
 											@endforeach
@@ -199,7 +199,7 @@
 
 												</td>
 												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0; line-height: 20px; font-size: 14px;border: 1px solid #808080;text-align:center;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
+													{{config('constants.MY_CURRENCY_SYMBOL')}}{{$data1['data']['total_price']}}
 												</td>
 											</tr>
 											<tr>
@@ -246,7 +246,7 @@
 												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0;line-height: 20px; font-size: 14px;border: 1px solid #808080;">
 												</td>
 												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0; line-height: 20px; font-size: 14px;border: 1px solid #808080;text-align:center;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['total_price']}}
+													{{config('constants.MY_CURRENCY_SYMBOL')}}{{$data1['data']['total_price']}}
 												</td>
 											</tr>
 											<tr>
@@ -262,7 +262,7 @@
 
 												</td>
 												<td style="font-family:Arial; border-bottom: 1px solid #808080; padding: 15px 0; line-height: 20px; font-size: 14px;border: 1px solid #808080;text-align:center;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
+													{{config('constants.MY_CURRENCY_SYMBOL')}}{{$data1['data']['deposited_price']}}
 												</td>
 											</tr>
 										</tbody>
@@ -371,7 +371,7 @@
 		<tbody>
 			<tr>
 				<td style="text-align:center;">
-					
+
 					<p style="padding:20px 0; text-align:center;"><strong>Note -</strong>If you wish to create your own design, we can quote you to manufacture a bespoke piece at a competitive price. </p>
 					<h3>Happy To Help You!</h3>
 				</td>

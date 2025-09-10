@@ -111,11 +111,11 @@
                             <h5>Jewellery Care Plan</h5>
                             <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
                                 <option value="0" @if(isset($details['yearlySupport']) && $details['yearlySupport']==0) selected @endif>No applied</option>
-                                <option value="89" @if(isset($details['yearlySupport']) && $details['yearlySupport']==89) selected @endif>1 year {{MY_CURRENCY_SYMBOL}}89</option>
-                                <option value="170" @if(isset($details['yearlySupport']) && $details['yearlySupport']==170) selected @endif>2 years {{MY_CURRENCY_SYMBOL}}170</option>
-                                <option value="220" @if(isset($details['yearlySupport']) && $details['yearlySupport']==220) selected @endif>3 years {{MY_CURRENCY_SYMBOL}}220</option>
-                                <option value="300" @if(isset($details['yearlySupport']) && $details['yearlySupport']==300) selected @endif>4 years {{MY_CURRENCY_SYMBOL}}300</option>
-                                <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport']==400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
+                                <option value="89" @if(isset($details['yearlySupport']) && $details['yearlySupport']==89) selected @endif>1 year {{config('constants.MY_CURRENCY_SYMBOL')}}89</option>
+                                <option value="170" @if(isset($details['yearlySupport']) && $details['yearlySupport']==170) selected @endif>2 years {{config('constants.MY_CURRENCY_SYMBOL')}}170</option>
+                                <option value="220" @if(isset($details['yearlySupport']) && $details['yearlySupport']==220) selected @endif>3 years {{config('constants.MY_CURRENCY_SYMBOL')}}220</option>
+                                <option value="300" @if(isset($details['yearlySupport']) && $details['yearlySupport']==300) selected @endif>4 years {{config('constants.MY_CURRENCY_SYMBOL')}}300</option>
+                                <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport']==400) selected @endif>5 years {{config('constants.MY_CURRENCY_SYMBOL')}}400</option>
                             </select>
                         </div>
                         @endif
@@ -126,17 +126,17 @@
                     <span id="productPrice{{$id}}">
                         @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
                         <span> Our Price: </span>
-                        <del>{{MY_CURRENCY_SYMBOL}}{{ $details['customArray']['final_price'] }}</del>
+                        <del>{{config('constants.MY_CURRENCY_SYMBOL')}}{{ $details['customArray']['final_price'] }}</del>
                         @endif <br>
                         @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
-                        {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                        {{config('constants.MY_CURRENCY_SYMBOL')}}{{ $details['price'] }}
                         @else
-                        {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                        {{config('constants.MY_CURRENCY_SYMBOL')}}{{ $details['price'] }}
                         @endif
                     </span>
                 </td>
                 <td class="check-product-total">
-                    <span id="subtotalPrice{{$id}}">{{MY_CURRENCY_SYMBOL}}{{ round($details['deposited_price'],2) }}</span>
+                    <span id="subtotalPrice{{$id}}">{{config('constants.MY_CURRENCY_SYMBOL')}}{{ round($details['deposited_price'],2) }}</span>
                 </td>
             </tr>
             @endforeach
@@ -146,13 +146,13 @@
             <tr class="checkout-cart-subtotal">
                 <th>Subtotal</th>
                 <td id="subTotalPrices">
-                    <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
+                    <strong>{{config('constants.MY_CURRENCY_SYMBOL')}}{{ round($total,2) }}</strong>
                 </td>
             </tr>
             <tr class="checkout-cart-total">
                 <th>Total</th>
                 <td id="totalFinalPrices">
-                    <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
+                    <strong>{{config('constants.MY_CURRENCY_SYMBOL')}}{{ round($total,2) }}</strong>
                 </td>
             </tr>
         </tfoot>

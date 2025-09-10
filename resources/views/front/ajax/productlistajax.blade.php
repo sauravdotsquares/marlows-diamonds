@@ -37,7 +37,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 		<img src="/assets/images/banner_image.png" alt="Banner">
 	</a>
 	@else
-	  
+
 		<div class="modal-body">
 		  <div class="col-lg-12">
 			  <!-- Success message -->
@@ -88,7 +88,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 							  <button type="submit" name="send" value="Submit">Send Message</button>
 						  </div>
 					  </form>
-  
+
 				  </div>
 		  </div>
 		</div>
@@ -137,7 +137,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 				@if(isset($product->getProductImages) && !empty($product->getProductImages['image_url']))
 				{{-- <img src="{{ getImageOptimizeDetails('/storage/'.$product->getProductImages['image_url'],'217','217')}}" alt="{{$product->title}}" loading="lazy">--}}
 				<div class="ajax-load" style="display: none; text-align: center;">Loading products...</div>
-				<img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages['image_url'] }}" alt="{{$product->title}}" loading="lazy">	
+				<img src="{{ env('APP_IMAGE_URL').'/storage/'.$product->getProductImages['image_url'] }}" alt="{{$product->title}}" loading="lazy">
 				@endif
 			</a>
 		</div>
@@ -152,7 +152,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 
 
 			<a class="color-default" id="fetchdefaultimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Default" data-src="{{ env('APP_IMAGE_URL') . '/storage/' . $product->getProductImages['image_url'] }}">Default</a>
-			
+
 			{{-- <a class="color-btn silver" id="fetchvariationSilverimages{{ $product->id }}" data-slug="{{ $product->slug }}" data-color="Silver">Silver</a> --}}
 
 
@@ -185,7 +185,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 					<a href="#">{{isset($titleSplits[1])?$titleSplits[1]:''}}</a>
 					@endif
 				</div>
-				
+
 				<?php
 				if (!in_array(50, $getCategory) && !in_array(53, $getCategory) && !in_array(54, $getCategory)) { ?>
 					<?php
@@ -196,32 +196,32 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 
 									@if($product->discounted_lab_grown !== $product->lab_grown)
 										<h4>
-											<del style="color:#000" class="shopPriceval" id="shopPrice"> {{MY_CURRENCY_SYMBOL}} {{round(($product->lab_grown),2)}}</del>
+											<del style="color:#000" class="shopPriceval" id="shopPrice"> {{config('constants.MY_CURRENCY_SYMBOL')}} {{round(($product->lab_grown),2)}}</del>
 										</h4>
 									@endif
-									<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{ sprintf('%0.2f', $product->discounted_lab_grown) }} </span></div>
+									<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{config('constants.MY_CURRENCY_SYMBOL')}} {{ sprintf('%0.2f', $product->discounted_lab_grown) }} </span></div>
 								@else
-									<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown) }} </span></div>
+									<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{config('constants.MY_CURRENCY_SYMBOL')}} {{sprintf('%0.2f', $product->lab_grown) }} </span></div>
 								@endif
 							</div>
-								<p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp - $product->discounted_lab_grown)}}</span></span> | <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->lab_grown_rrp) }}</del> </p>
+								<p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{config('constants.MY_CURRENCY_SYMBOL')}} {{sprintf('%0.2f', $product->lab_grown_rrp - $product->discounted_lab_grown)}}</span></span> | <del id="rrpPrice">RRP: {{config('constants.MY_CURRENCY_SYMBOL')}} {{sprintf('%0.2f', $product->lab_grown_rrp) }}</del> </p>
 						</div>
 					<?php } ?>
 				<?php } else if (in_array(54, $getCategory)) { ?>
 					<div class="price-section">
 						<div style="display: flex;">
-							<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
+							<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{config('constants.MY_CURRENCY_SYMBOL')}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
 						</div>
 					</div>
 				<?php } elseif (in_array(53, $getCategory) || in_array(50, $getCategory)) { ?>
 					<div class="price-section">
 						<div style="display: flex;">
-							<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{MY_CURRENCY_SYMBOL}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
+							<div class="product-finder-price" id="finaldiamondprice"><span class="price">{{config('constants.MY_CURRENCY_SYMBOL')}} {{sprintf('%0.2f', $product->mined_diamond)}} </span></div>
 						</div>
-						<p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp - $product->mined_diamond}}</span></span> | <del id="rrpPrice">RRP: {{MY_CURRENCY_SYMBOL}} {{$product->mined_diamond_rrp}}</del> </p>
+						<p class="save_price"><span style="color:green">You Save : <span id="savePrice">{{config('constants.MY_CURRENCY_SYMBOL')}} {{$product->mined_diamond_rrp - $product->mined_diamond}}</span></span> | <del id="rrpPrice">RRP: {{config('constants.MY_CURRENCY_SYMBOL')}} {{$product->mined_diamond_rrp}}</del> </p>
 					</div>
 				<?php } ?>
-				
+
 			</div>
 		</div>
 	</div>
@@ -244,7 +244,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 
 
 		<?php
-					
+
 		// echo "kartik<pre>";
 			//  dd(Share::page(asset('product/'.$product->slug))->facebook()->getRawLinks()) ;
             //  dd(Share::page(asset('product/'.$product->slug))->twitter()->getRawLinks()) ;
@@ -257,12 +257,12 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 				<li><a href="{{ is_array(Share::page(asset('product/'.$product->slug))->facebook()->getRawLinks()) ? Share::page(asset('product/'.$product->slug))->facebook()->getRawLinks()['facebook'] : Share::page(asset('product/'.$product->slug))->facebook()->getRawLinks() }}" target="_blank">
 					<i class="fa fa-facebook" aria-hidden="true"></i>
 				</a></li>
-				
+
 				<li><a href="{{ is_array(Share::page(asset('product/'.$product->slug))->twitter()->getRawLinks()) ? Share::page(asset('product/'.$product->slug))->twitter()->getRawLinks()['twitter'] : Share::page(asset('product/'.$product->slug))->twitter()->getRawLinks() }}" target="_blank">
 					<i class="fa fa-twitter" aria-hidden="true"></i>
 				</a></li>
-				
-				
+
+
 
 
 
@@ -277,7 +277,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
                 <li><a href="{{ Share::page(asset('product/'.$product->slug))->whatsapp()->getRawLinks()['whatsapp'] }}" target="_blank" class="btn btn-whatsapp">
                     <i class="fa fa-whatsapp"></i>
                 </a></li>
-				
+
             </ul>
         </div>
     </div>
@@ -289,7 +289,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
 {!! $getProductListFinal->links() !!}
 {{--
 @if($getAjaxResponses)
-	$getProductListFinal->links() 
+	$getProductListFinal->links()
 @endif
 --}}
 
@@ -308,7 +308,7 @@ $thumbnailGif = getThumbnailGif($product->id); ?>
         }
     });
 
-	
+
 
     // Prevent search input click event propagation
     $('.head-mini-search').click(function(event){
@@ -328,7 +328,7 @@ var discountDate = "{{$dist_future}}"+" "+"23:59:32";
 var countDownDate = new Date(discountDate).getTime();
 var myfunc = setInterval(function() {
 
-var now = new Date().getTime();      
+var now = new Date().getTime();
 var timeleft = countDownDate - now;
 
 // Calculating the days, hours, minutes and seconds left
@@ -429,7 +429,7 @@ function showToast(message) {
 			console.error('No image URL found for this product.');
 		}
 	});
- 
+
  $(".color-btn").each(function () {
         var $this = $(this);
         var metalType = $this.data("color");

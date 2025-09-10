@@ -28,7 +28,7 @@
                         Price :
                     </div>
                     <div class="payment-cc-details-values">
-                        {{MY_CURRENCY_SYMBOL}} <span id="totalP" class="totalP-dekopay">{{ $totalAmount }}</span>
+                        {{config("constants.MY_CURRENCY_SYMBOL")}} <span id="totalP" class="totalP-dekopay">{{ $totalAmount }}</span>
                     </div>
                 </div>
                 <div class="payment-cc-details-inner">

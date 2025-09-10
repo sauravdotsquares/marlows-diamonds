@@ -160,7 +160,7 @@
             <!-- login form end-->
             <div class="checkout-main-wrap">
                 <!--<div class="checkout-table">
-    
+
     <ul>
         <li><span class="active">1</span>Shipping</li>
         <li><span>2</span>Payment</li>
@@ -258,7 +258,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     @guest
                                     <!-- <div class="checkout-create-account">
@@ -527,11 +527,11 @@
                                             <h5>Jewellery Care Plan</h5>
                                             <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
                                                 <option value="0" @if(isset($details['yearlySupport']) && $details['yearlySupport']==0) selected @endif>No applied</option>
-                                                <option value="89" @if(isset($details['yearlySupport']) && $details['yearlySupport']==89) selected @endif>1 year {{MY_CURRENCY_SYMBOL}}89</option>
-                                                <option value="170" @if(isset($details['yearlySupport']) && $details['yearlySupport']==170) selected @endif>2 years {{MY_CURRENCY_SYMBOL}}170</option>
-                                                <option value="220" @if(isset($details['yearlySupport']) && $details['yearlySupport']==220) selected @endif>3 years {{MY_CURRENCY_SYMBOL}}220</option>
-                                                <option value="300" @if(isset($details['yearlySupport']) && $details['yearlySupport']==300) selected @endif>4 years {{MY_CURRENCY_SYMBOL}}300</option>
-                                                <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport']==400) selected @endif>5 years {{MY_CURRENCY_SYMBOL}}400</option>
+                                                <option value="89" @if(isset($details['yearlySupport']) && $details['yearlySupport']==89) selected @endif>1 year {{config('constants.MY_CURRENCY_SYMBOL')}}89</option>
+                                                <option value="170" @if(isset($details['yearlySupport']) && $details['yearlySupport']==170) selected @endif>2 years {{config('constants.MY_CURRENCY_SYMBOL')}}170</option>
+                                                <option value="220" @if(isset($details['yearlySupport']) && $details['yearlySupport']==220) selected @endif>3 years {{config('constants.MY_CURRENCY_SYMBOL')}}220</option>
+                                                <option value="300" @if(isset($details['yearlySupport']) && $details['yearlySupport']==300) selected @endif>4 years {{config('constants.MY_CURRENCY_SYMBOL')}}300</option>
+                                                <option value="400" @if(isset($details['yearlySupport']) && $details['yearlySupport']==400) selected @endif>5 years {{config('constants.MY_CURRENCY_SYMBOL')}}400</option>
                                             </select>
                                         </div>
                                        {{-- @endif --}}
@@ -540,36 +540,36 @@
                                     </td>
                                     <td>
                                         @if(isset($details['rrp_price']) && !empty($details['rrp_price']))
-                                        <!-- <p> 
-                                                    <span> RRP: </span> 
-                                                    <del>{{MY_CURRENCY_SYMBOL}} {{$details['rrp_price']}}</del>
+                                        <!-- <p>
+                                                    <span> RRP: </span>
+                                                    <del>{{config('constants.MY_CURRENCY_SYMBOL')}} {{$details['rrp_price']}}</del>
                                                 </p> -->
                                         @endif
-                                        <!-- <p> <span> Save Price: </span> {{MY_CURRENCY_SYMBOL}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
+                                        <!-- <p> <span> Save Price: </span> {{config('constants.MY_CURRENCY_SYMBOL')}} {{ isset($details['savePrice'])?$details['savePrice']:'' }}</p> -->
                                         @if(isset($details['shop_price']) && !empty($details['shop_price']))
                                         @if($details['price']!= $details['shop_price'])
-                                        <!-- <p> 
-                                                        <span> Our Price: </span> 
-                                                        <del> {{MY_CURRENCY_SYMBOL}}{{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
+                                        <!-- <p>
+                                                        <span> Our Price: </span>
+                                                        <del> {{config('constants.MY_CURRENCY_SYMBOL')}}{{ isset($details['shop_price'])?$details['shop_price']:'' }}</del>
                                                     </p> -->
                                         @endif
                                         @endif
                                         <span id="productPrice{{$id}}">
                                             @if(isset($details['customArray']['final_price']) && !empty($details['customArray']['final_price']) && $details['customArray']['final_price'] != $details['price'])
                                             <span> Our Price: </span>
-                                            <del>{{MY_CURRENCY_SYMBOL}}{{
+                                            <del>{{config('constants.MY_CURRENCY_SYMBOL')}}{{
                                                             $details['customArray']['final_price'] }}
                                             </del>
                                             @endif <br>
                                             @if(isset($details['customArray']['choose_diamond']) && $details['customArray']['choose_diamond'] == 'lab_grown')
-                                            {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                                            {{config('constants.MY_CURRENCY_SYMBOL')}}{{ $details['price'] }}
                                             @else
-                                            {{MY_CURRENCY_SYMBOL}}{{ $details['price'] }}
+                                            {{config('constants.MY_CURRENCY_SYMBOL')}}{{ $details['price'] }}
                                             @endif
                                         </span>
                                     </td>
                                     <td class="check-product-total">
-                                        <span id="subtotalPrice{{$id}}">{{MY_CURRENCY_SYMBOL}}{{ round($details['deposited_price'],2) }}</span>
+                                        <span id="subtotalPrice{{$id}}">{{config('constants.MY_CURRENCY_SYMBOL')}}{{ round($details['deposited_price'],2) }}</span>
                                     </td>
                                     </tr>
                                     @endforeach
@@ -579,13 +579,13 @@
                                         <tr class="checkout-cart-subtotal">
                                             <th>Subtotal</th>
                                             <td id="subTotalPrices">
-                                                <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
+                                                <strong>{{config('constants.MY_CURRENCY_SYMBOL')}}{{ round($total,2) }}</strong>
                                             </td>
                                         </tr>
                                         <tr class="checkout-cart-total">
                                             <th>Total</th>
                                             <td id="totalFinalPrices">
-                                                <strong>{{MY_CURRENCY_SYMBOL}}{{ round($total,2) }}</strong>
+                                                <strong>{{config('constants.MY_CURRENCY_SYMBOL')}}{{ round($total,2) }}</strong>
                                             </td>
                                         </tr>
                                     </tfoot>
@@ -628,7 +628,7 @@
                                     <ul class="cc_payment_methods_options">
 
                                         {{-- previous paypal --}}
-                                        @include('front.pages.payments.paypal',['totalAmount'=>$total])  
+                                        @include('front.pages.payments.paypal',['totalAmount'=>$total])
 
                                         {{-- new payapl integration --}}
                                         {{-- <div id="paypal-button-container"></div>
@@ -639,10 +639,10 @@
 
 
                                         {{-- google checkbox --}}
-               
-                                       
+
+
                                         {{-- <li class="cc_payment_methods googlepay_payment googlepaygateway_wrap">
-                                          
+
                                             <div class="google_pay_button">
                                             <input type="radio" name="payment_type" id="googlepay_radio" value="googlepay" autocomplete="off">
                                             <label class="googlepay_label" for="googlepay_radio">
@@ -659,7 +659,7 @@
                                             </div>
                                             <div id="googlepay-button-container" class="googlepay-button-container"></div>
                                         </li> --}}
-                                        
+
 
                                         {{-- <div class="container">
                                             <h3>Apple Pay with PayPal Integration</h3>
@@ -667,7 +667,7 @@
                                             <div id="applepay-container"></div>
                                             <div><i>Use Apple Pay test cards for the sandbox environment.</i></div>
                                         </div> --}}
-                                        
+
                                         <ul>
                                         <li class="cc_payment_methods applepay_payment applepaygateway_wrap" style="display: none;">
                                             <input type="radio" name="payment_type" id="applepay_radio" value="applepay" autocomplete="off">
@@ -707,7 +707,7 @@
 
                                     </ul>
                                         {{-- <div id="container"></div> --}}
-                                        {{-- @include('front.pages.payments.dekopay',['totalAmount'=>$total]) 
+                                        {{-- @include('front.pages.payments.dekopay',['totalAmount'=>$total])
                                         @include('front.pages.payments.stripepay',['totalAmount'=>$total])--}}
                                     </ul>
                                 </div>
@@ -796,11 +796,11 @@
                 },
                 success: function(response) {
                     $.each(response.result.sessionCartValues, function(keyIndex, value) {
-                        $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
-                        $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
+                        $('#subtotalPrice' + keyIndex).text('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices' + keyIndex).text('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.finalPrice);
                     });
-                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.result.finalPrice + '</strong>');
-                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.result.finalPrice + '</strong>');
+                    $('#subTotalPrices').html('<strong>{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.result.finalPrice + '</strong>');
+                    $('#totalFinalPrices').html('<strong>{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.result.finalPrice + '</strong>');
                     $('#deposited_price').val(response.result.finalPrice);
                     $('#final_price').val(response.result.finalPrice);
                     /** For dekopay */
@@ -825,8 +825,8 @@
                 },
                 success: function(response) {
                     $.each(response.sessionCartValues, function(keyIndex, value) {
-                        $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
-                        $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
+                        $('#subtotalPrice' + keyIndex).text('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices' + keyIndex).text('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.finalPrice);
                         // console.log(keyIndex + ": " + value.deposited_price.toFixed(2));
                         // console.log("checking again ");
                         $('#applyCouponCode' + keyIndex).text(response.statustext);
@@ -834,8 +834,8 @@
                         $('#coupon_code' + keyIndex).val(value.couponCodeText);
                         // alert( index + ": " + value );
                     });
-                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
-                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
+                    $('#subTotalPrices').html('<strong>{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.finalPrice + '</strong>');
+                    $('#totalFinalPrices').html('<strong>{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.finalPrice + '</strong>');
                     $('#deposited_price').val(response.finalPrice);
 
                     // console.log(response);
@@ -843,18 +843,18 @@
                     // // window.location.reload();
                     // if(response.status == 200){
 
-                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.finalPrice);
                     //     $('#applyCouponCode'+index).text(response.statustext);
-                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#subtotalPrice'+index).html('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.deposited_price);
                     //     $('#deposited_price').val(response.finalPrice);
                     //     $('#couponCodeMessage'+index).html(response.errormsg);
                     // }else if(response.status == 500){
                     //     $('#applyCouponCode'+index).text(response.statustext);
-                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#subtotalPrice'+index).html('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.deposited_price);
                     //     $('#couponCodeMessage'+index).html(response.errormsg);
-                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#subTotalPrices').text('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.finalPrice);
                     //     $('#deposited_price').val(response.finalPrice);
-                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.finalPrice);
                     // }
                 }
             });
@@ -873,8 +873,8 @@
                 },
                 success: function(response) {
                     $.each(response.sessionCartValues, function(keyIndex, value) {
-                        $('#subtotalPrice' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + value.deposited_price.toFixed(2));
-                        $('#totalFinalPrices' + keyIndex).text('{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice);
+                        $('#subtotalPrice' + keyIndex).text('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + value.deposited_price.toFixed(2));
+                        $('#totalFinalPrices' + keyIndex).text('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.finalPrice);
                         // console.log(keyIndex + ": " + value.deposited_price.toFixed(2));
                         // console.log("checking again ");
                         $('#applyCouponCode' + keyIndex).text(response.statustext);
@@ -882,27 +882,27 @@
                         $('#coupon_code' + keyIndex).val(value.couponCodeText);
                         // alert( index + ": " + value );
                     });
-                    $('#subTotalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
-                    $('#totalFinalPrices').html('<strong>{{MY_CURRENCY_SYMBOL}} ' + response.finalPrice + '</strong>');
+                    $('#subTotalPrices').html('<strong>{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.finalPrice + '</strong>');
+                    $('#totalFinalPrices').html('<strong>{{config("constants.MY_CURRENCY_SYMBOL")}} ' + response.finalPrice + '</strong>');
                     $('#deposited_price').val(response.finalPrice);
                     // console.log(response);
 
-                    // $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    // $('#subtotalPrice'+index).html('{{config("constants.config("constants.MY_CURRENCY_SYMBOL")")}} '+response.deposited_price);
                     // window.location.reload();
                     // if(response.status == 200){
-                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
-                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#subTotalPrices').text('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.finalPrice);
                     //     $('#applyCouponCode'+index).text(response.statustext);
-                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#subtotalPrice'+index).html('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.deposited_price);
                     //     $('#deposited_price').val(response.finalPrice);
                     //     $('#couponCodeMessage'+index).html(response.errormsg);
                     // }else if(response.status == 500){
                     //     $('#applyCouponCode'+index).text(response.statustext);
-                    //     $('#subtotalPrice'+index).html('{{MY_CURRENCY_SYMBOL}} '+response.deposited_price);
+                    //     $('#subtotalPrice'+index).html('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.deposited_price);
                     //     $('#couponCodeMessage'+index).html(response.errormsg);
-                    //     $('#subTotalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#subTotalPrices').text('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.finalPrice);
                     //     $('#deposited_price').val(response.finalPrice);
-                    //     $('#totalFinalPrices').text('{{MY_CURRENCY_SYMBOL}} '+response.finalPrice);
+                    //     $('#totalFinalPrices').text('{{config("constants.MY_CURRENCY_SYMBOL")}} '+response.finalPrice);
                     // }
                 }
             });
@@ -1164,7 +1164,7 @@
                     processData: false,
                     data: form_data,
                     success: function(response) {
-                        
+
                         $('.cc_place_order_btn button').text('Place Order');
                         $('.cc_place_order_btn button').prop('disabled', false);
                         if (response.status == 500) {
@@ -1175,52 +1175,52 @@
                             window.location.href = "{{route('successf.payment')}}";
                             return false;
                         }
-    
+
                         const totalFinalPricesElement = document.getElementById("totalFinalPrices");
-        
+
                         if (!totalFinalPricesElement) {
                             console.error("Error: #totalFinalPrices element not found in the DOM.");
-                            return 0; 
+                            return 0;
                         }
-        
+
                         const strongTag = totalFinalPricesElement.querySelector("strong");
-        
+
                         if (!strongTag) {
                             console.error("Error: <strong> tag not found inside #totalFinalPrices.");
                             return 0; // Default price if <strong> is missing
                         }
-        
+
                         const strongValue = strongTag.textContent.trim();
-        
+
                         // Remove currency symbols or extra characters, if any
                         const numericValue = strongValue.replace(/[^0-9.]/g, "");
-        
+
                         const price = parseFloat(numericValue);
-    
-    
+
+
                         if (response.status == 200) {
                             const selectedPaymentType = $('#selected_payment_type').val();
-    
+
                             $('#tokenOrdId').val(response.order_dt);
-    
+
                             if (selectedPaymentType == 'paypal') {
                                 window.location.href = "{{route('make.payment')}}/" + response.order_dt;
                             } else if (selectedPaymentType == 'googlepay') {
                                 onGooglePaymentButtonClicked(price,response.order_dt);
                             }
-                            
+
                                else if (selectedPaymentType == 'klarna')
                                 {
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
                                 }
 
-                            
+
                              else if (selectedPaymentType == 'applepay') {
                                 $('#already_inserted').val('order_inserted');
                                 $('.applepay-button-container').show();
                                 $('#place-order').hide();
-                            } 
+                            }
                         }
                     }
                 });
@@ -1356,7 +1356,7 @@
     const applePayElement = document.querySelector('.applepay_payment');
 
     // Check if the user is on an Apple device
-    const isAppleDevice = /iPhone|iPad|Macintosh/i.test(navigator.userAgent) || 
+    const isAppleDevice = /iPhone|iPad|Macintosh/i.test(navigator.userAgent) ||
                           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
     if (isAppleDevice) {
@@ -1370,7 +1370,7 @@
 
 // Function to handle radio button selection and toggle the Place Order button
 function togglePlaceOrderButton() {
-    
+
     const placeOrderButton = document.getElementById("place-order");
     const applepaybuttoncontainer = document.getElementById("applepay-button-container");
     const applePayRadio = document.getElementById("applepay_radio"); // ID of the Apple Pay radio button

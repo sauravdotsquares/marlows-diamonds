@@ -49,36 +49,36 @@
                         <ul class="pay_details" id="OCFDefault">
                             <li class="clearfix">
                                 <p> Monthly Payment </p>
-                                <p class="priced"> {{ MY_CURRENCY_SYMBOL }} <span id="perMonths">83.66</span>
+                                <p class="priced"> {{ config('constants.MY_CURRENCY_SYMBOL') }} <span id="perMonths">83.66</span>
                                 </p>
                             </li>
                             <li class="clearfix">
                                 <p> Cash Price </p>
-                                <p class="priced"> {{ MY_CURRENCY_SYMBOL }} <span id="cashPrices">1026.00</span>
+                                <p class="priced"> {{ config('constants.MY_CURRENCY_SYMBOL') }} <span id="cashPrices">1026.00</span>
                                 </p>
                             </li>
                             <li class="clearfix">
                                 <p> Deposit to Pay</p>
-                                <p class="priced"> {{ MY_CURRENCY_SYMBOL }} <span id="Deposited">102.60</span>
+                                <p class="priced"> {{ config('constants.MY_CURRENCY_SYMBOL') }} <span id="Deposited">102.60</span>
                                 </p>
                             </li>
                             <li class="clearfix">
                                 <p> Loan Amount </p>
-                                <p class="priced"> {{ MY_CURRENCY_SYMBOL }} <span id="loanAmt">923.40</span></p>
+                                <p class="priced"> {{ config('constants.MY_CURRENCY_SYMBOL') }} <span id="loanAmt">923.40</span></p>
                             </li>
                             <li class="clearfix">
                                 <p> Loan Repayment </p>
-                                <p class="priced">{{ MY_CURRENCY_SYMBOL }} <span id="loanRepay">1003.90</span>
+                                <p class="priced">{{ config('constants.MY_CURRENCY_SYMBOL') }} <span id="loanRepay">1003.90</span>
                                 </p>
                             </li>
                             <li class="clearfix">
                                 <p> Cost of Loan</p>
-                                <p class="priced"> {{ MY_CURRENCY_SYMBOL }} <span id="costLoan">80.50</span>
+                                <p class="priced"> {{ config('constants.MY_CURRENCY_SYMBOL') }} <span id="costLoan">80.50</span>
                                 </p>
                             </li>
                             <li class="clearfix">
                                 <p> Total Amount Payable </p>
-                                <p class="priced"> {{ MY_CURRENCY_SYMBOL }} <span id="totalAmt">1106.50</span>
+                                <p class="priced"> {{ config('constants.MY_CURRENCY_SYMBOL') }} <span id="totalAmt">1106.50</span>
                                 </p>
                             </li>
                             <li class="clearfix">

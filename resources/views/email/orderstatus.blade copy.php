@@ -106,7 +106,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$orderDetails['total_price']}}
+													{{config('constants.MY_CURRENCY_SYMBOL')}}{{$orderDetails['total_price']}}
 											</td>
 										</tr>
 										<?php // die; ?>
@@ -126,7 +126,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['final_price']}}
+													{{config('constants.MY_CURRENCY_SYMBOL')}}{{$data1['data']['final_price']}}
 											</td>
 										</tr>
 
@@ -159,9 +159,9 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-													{{MY_CURRENCY_SYMBOL}}{{$data1['data']['final_price']}}
+													{{config('constants.MY_CURRENCY_SYMBOL')}}{{$data1['data']['final_price']}}
 
-                                                    
+
 											</td>
 										</tr>
 									</tbody>

@@ -148,7 +148,7 @@ $(document).ready(function() {
 
 	getProductPrice();
 	function getProductPrice() {
-		$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+		$('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} Pending... </span>');
 		const ids = getSelectedAttributeIds();
 		// var ids = [];
 		// $('.attr-selection').each((index,element)=>{
@@ -176,9 +176,9 @@ $(document).ready(function() {
 
 					if(data.price.price_after_combination == data.price.price_after_discount){
 						// If discounted price and main price are same
-						$('#finaldiamondprice').html('<span class="price"> {{MY_CURRENCY_SYMBOL}} '+data.price.price_after_discount+' </span>');
+						$('#finaldiamondprice').html('<span class="price"> {{config("constants.MY_CURRENCY_SYMBOL")}} '+data.price.price_after_discount+' </span>');
 					}else{
-						$('#finaldiamondprice').html('<del>{{MY_CURRENCY_SYMBOL}} '+data.price.price_after_combination+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+data.price.price_after_discount+' </span>');
+						$('#finaldiamondprice').html('<del>{{config("constants.MY_CURRENCY_SYMBOL")}} '+data.price.price_after_combination+'</del> <span class="price" > {{MY_CURRENCY_SYMBOL}} '+data.price.price_after_discount+' </span>');
 					}
 
 

@@ -642,20 +642,20 @@
                                                                             <h4>
                                                                                 <del style="color:#000"
                                                                                     class="shopPriceval" id="shopPrice">
-                                                                                    {{ MY_CURRENCY_SYMBOL }}
+                                                                                    {{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                                     {{ round($product->lab_grown, 2) }}</del>
                                                                             </h4>
                                                                         @endif
 
                                                                         <div class="product-finder-price"
                                                                             id="finaldiamondprice">
-                                                                            <span class="price">{{ MY_CURRENCY_SYMBOL }}
+                                                                            <span class="price">{{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                                 {{ sprintf('%0.2f', $product->discounted_lab_grown) }}</span>
                                                                         </div>
                                                                     @else
                                                                         <div class="product-finder-price"
                                                                             id="finaldiamondprice">
-                                                                            <span class="price">{{ MY_CURRENCY_SYMBOL }}
+                                                                            <span class="price">{{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                                 {{ sprintf('%0.2f', $product->lab_grown) }}</span>
                                                                         </div>
                                                                     @endif
@@ -663,10 +663,10 @@
                                                                 <p class="save_price">
                                                                     <span style="color:green">You Save : <span
                                                                             id="savePrice">
-                                                                            {{ MY_CURRENCY_SYMBOL }}
+                                                                            {{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                             {{ sprintf('%0.2f', $product->lab_grown_rrp - $product->discounted_lab_grown) }}</span>
                                                                     </span> | <del id="rrpPrice">RRP:
-                                                                        {{ MY_CURRENCY_SYMBOL }}
+                                                                        {{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                         {{ sprintf('%0.2f', $product->lab_grown_rrp) }}</del>
                                                                 </p>
                                                             </div>
@@ -675,7 +675,7 @@
                                                         <div class="price-section">
                                                             <div style="display: flex;">
                                                                 <div class="product-finder-price" id="finaldiamondprice">
-                                                                    <span class="price">{{ MY_CURRENCY_SYMBOL }}
+                                                                    <span class="price">{{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                         {{ sprintf('%0.2f', $product->mined_diamond) }}</span>
                                                                 </div>
                                                             </div>
@@ -684,16 +684,16 @@
                                                         <div class="price-section">
                                                             <div style="display: flex;">
                                                                 <div class="product-finder-price" id="finaldiamondprice">
-                                                                    <span class="price">{{ MY_CURRENCY_SYMBOL }}
+                                                                    <span class="price">{{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                         {{ sprintf('%0.2f', $product->mined_diamond) }}</span>
                                                                 </div>
                                                             </div>
                                                             <p class="save_price">
                                                                 <span style="color:green">You Save : <span id="savePrice">
-                                                                        {{ MY_CURRENCY_SYMBOL }}
+                                                                        {{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                         {{ $product->mined_diamond_rrp - $product->mined_diamond }}</span>
                                                                 </span> | <del id="rrpPrice">RRP:
-                                                                    {{ MY_CURRENCY_SYMBOL }}
+                                                                    {{ config("constants.MY_CURRENCY_SYMBOL") }}
                                                                     {{ $product->mined_diamond_rrp }}</del>
                                                             </p>
                                                         </div>

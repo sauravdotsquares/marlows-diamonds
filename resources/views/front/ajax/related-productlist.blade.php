@@ -14,7 +14,7 @@
                     <a href="{{asset('product/'.$product->slug)}}">{{isset($product->title)?$product->title:''}}</a>
                 </div>
                 <div class="product-price">
-                    {{MY_CURRENCY_SYMBOL}}
+                    {{config('constants.MY_CURRENCY_SYMBOL')}}
                     {{$product->ProductVariationMinMaxPrice->MinPrice}}-{{$product->ProductVariationMinMaxPrice->MaxPrice}}
                 </div>
             </div>

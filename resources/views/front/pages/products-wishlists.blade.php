@@ -110,7 +110,7 @@
 
                                         </td>
                                         <!-- <td class="wish-product-price-col">
-                                            <span> {{MY_CURRENCY_SYMBOL}} {{isset($details['price'])?$details['price']:''}} </span>
+                                            <span> {{config("constants.MY_CURRENCY_SYMBOL")}} {{isset($details['price'])?$details['price']:''}} </span>
                                         </td> -->
                                         <td class="wish-product-date-col">
                                             <span>{{isset($details['added_date'])?$details['added_date']:''}}</span>

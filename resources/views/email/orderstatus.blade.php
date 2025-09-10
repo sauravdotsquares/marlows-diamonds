@@ -273,11 +273,11 @@
                                                 </td>
                                                 <td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
                                                 color: #505050;line-height: 20px; font-size: 14px;">
-                                                        {{MY_CURRENCY_SYMBOL}}{{$orderDetails['total_price']}}
+                                                        {{config('constants.MY_CURRENCY_SYMBOL')}}{{$orderDetails['total_price']}}
                                                 </td>
                                                 <td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
                                                 color: #505050;line-height: 20px; font-size: 14px;">
-                                                        {{MY_CURRENCY_SYMBOL}}{{$orderDetails['deposited_product_price']}}
+                                                        {{config('constants.MY_CURRENCY_SYMBOL')}}{{$orderDetails['deposited_product_price']}}
                                                 </td>
                                             </tr>
 										@endforeach
@@ -297,7 +297,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-												{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
+												{{config('constants.MY_CURRENCY_SYMBOL')}}{{$data1['data']['deposited_price']}}
 											</td>
 										</tr> -->
 
@@ -338,7 +338,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-												{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
+												{{config('constants.MY_CURRENCY_SYMBOL')}}{{$data1['data']['deposited_price']}}
 											</td>
 										</tr>
 										<tr>
@@ -358,7 +358,7 @@
 											</td>
 											<td align="right" style="font-family:Arial; border-bottom: 1px dashed #808080; padding: 15px 0;
 											color: #505050;line-height: 20px; font-size: 14px;">
-												{{MY_CURRENCY_SYMBOL}}{{$data1['data']['deposited_price']}}
+												{{config('constants.MY_CURRENCY_SYMBOL')}}{{$data1['data']['deposited_price']}}
 											</td>
 										</tr>
 									</tbody>
@@ -394,7 +394,7 @@
 											</td>
 
 											@if(isset($data1['data']['order_address']['shipping_status']) && $data1['data']['order_address']['shipping_status'] == 0)
-											<?php 
+											<?php
 												$colSpanMerge = 'colspan=2';
 											?>
 											<td align="center" style="border: 1px dashed #808080;font-family:Arial; font-size: 15px; color: #808080; padding: 30px 20px; line-height: 24px;">

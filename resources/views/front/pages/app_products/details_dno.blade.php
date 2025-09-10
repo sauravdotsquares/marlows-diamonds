@@ -192,7 +192,7 @@
 
 				</div>
 				{{-- <div class="product-finder-price">
-					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
+					<span class="price">{{config("constants.MY_CURRENCY_SYMBOL")}} <span id="finaldiamondprice">0.00</span> </span>
 				</div> --}}
 
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
@@ -614,7 +614,7 @@
 		}
 
 		function getSelectedVariationsData(){
-			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+			$('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} Pending... </span>');
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 
 			var variations = [];
@@ -662,9 +662,9 @@
                             $('#finaldiamondprice').html('<span class="price-not-found"> Sorry we have no diamonds matching your selection. </span>');
                         }else{
                             if(regular_p == res.regular_price_with_vat_discount){
-                                $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+                                $('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
                             }else{
-                                $('#finaldiamondprice').html('<span><del>{{MY_CURRENCY_SYMBOL}} '+Math.round(regular_p)+'</del> </span> <span class="price" >{{MY_CURRENCY_SYMBOL}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
+                                $('#finaldiamondprice').html('<span><del>{{config("constants.MY_CURRENCY_SYMBOL")}} '+Math.round(regular_p)+'</del> </span> <span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+ Math.round(res.regular_price_with_vat_discount)+ ' </span>');
 
                                 $('#selected_discounted_price').val(res.regular_price_with_vat_discount);
                             }
@@ -691,7 +691,7 @@
 						$('#selected_variation_price').val(res.sale_price);
 						$('#selected_final_price').val(Math.round(sale_p_final));
 						// $('#finaldiamondprice').text(Math.round(sale_p_final));
-                        $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+Math.round(sale_p_final)+' </span>');
+                        $('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+Math.round(sale_p_final)+' </span>');
 					}
 
 					if(res.vari_image!='' && res.vari_image!=null){
@@ -705,7 +705,7 @@
 			});
 		}
 		function getCustomFilter(){
-			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+			$('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} Pending... </span>');
 			$.ajax({
                 type: 'POST',
                 url: '{{route("app_products.customfilternew")}}',

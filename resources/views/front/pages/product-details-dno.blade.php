@@ -63,7 +63,7 @@
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 	<link href="{{ asset('assets/vendors/fancybox-master/dist/jquery.fancybox.min.css') }}" rel="stylesheet" />
-	
+
 
 @endsection
 
@@ -99,7 +99,7 @@
         </div>
 
 		@php
-        
+
 		$baseUrl = 'https://marlows-diamonds.co.uk';
 		$productUrl = $baseUrl . '/product/' . $data->slug;
 		@endphp
@@ -154,7 +154,7 @@
 				</div>
 
 				@if($plainbandMulti==false)
-						<div id="carousel" class="owl-carousel"> 
+						<div id="carousel" class="owl-carousel">
 							@if($variationImages)
 								@foreach($variationImages as $images)
 									@if(isset($images->vari_image) && !empty($images->vari_image))
@@ -166,7 +166,7 @@
 									@endif
 								@endforeach
 							@endif
-							
+
 							 @if(!empty($prodImages))
 								@foreach($prodImages as $images)
 									@if(!empty($images->image_url))
@@ -231,7 +231,7 @@
 							</ol>
 						<?php } ?>
 					@else
-						<div id="carousel1" class="owl-carousel1"> 
+						<div id="carousel1" class="owl-carousel1">
 							@if($prodImages)
 								@foreach($prodImages as $key => $images)
 									@if(isset($images->image_url) && !preg_match("/\.(mp4)$/", $images->image_url))
@@ -267,7 +267,7 @@
                        </div>
                         {{-- Engagement Ring multistone Thumbnail  --}}
 
-						
+
 
 						{{-- <div id="thumbnail-carousel" class="owl-carousel">
 
@@ -319,7 +319,7 @@
 
 
                   <div id="myDivChanges"></div>
-				  
+
 			</div>
 			<div class="product-info-main">
 				<div class="product-title-name">
@@ -373,7 +373,7 @@
                             @endphp
 							{!!$data->description ? $data->description : $data->description!!}
 						@else
-								
+
 							{!!$data->lab_description ? $data->lab_description : $data->description!!}
                         @endif
 					</div>
@@ -400,7 +400,7 @@
 				<p><span style="color:green"> <span id="savePrice" class="save"></span></span> <del id="rrpPrice" class="rrpPriceval"> </del> </p>
 
 				{{-- <div class="product-finder-price">
-					<span class="price">{{MY_CURRENCY_SYMBOL}} <span id="finaldiamondprice">0.00</span> </span>
+					<span class="price">{{config("constants.MY_CURRENCY_SYMBOL")}} <span id="finaldiamondprice">0.00</span> </span>
 				</div> --}}
 
 				<input type="hidden" name="selected_variation_price" id="selected_variation_price" value="{{isset($data->getProductVariation[0]->regular_price)?$data->getProductVariation[0]->regular_price:0.00}}">
@@ -464,7 +464,7 @@
 
 					<!-- Twitter -->
 					<a href="{{ Share::page(URL::current())->twitter()->getRawLinks()['twitter'] }}" target="_blank" class="btn btn-twitter">
-						<i class="fa fa-twitter"></i> 
+						<i class="fa fa-twitter"></i>
 					</a>
 
 					<!-- LinkedIn -->
@@ -524,7 +524,7 @@
 
 
 			{{-- addtobasket --}}
-			
+
 			<a type="button" class="btn-bg-small" onclick="$('label.error').css('display', 'none');return false;" data-bs-toggle="modal" data-bs-target="#requestAppointment">
 				Request an Appointment
 				</a>
@@ -859,10 +859,10 @@
 
 		jQuery.validator.addMethod("lettersonly", function(value, element) {
 			return this.optional(element) || /^[a-z," "]+$/i.test(value);
-		}, "Letters and spaces only please"); 
+		}, "Letters and spaces only please");
 
 		$(document).ready(function(){
-			$('[data-fancybox="gallery2"]').fancybox({ 
+			$('[data-fancybox="gallery2"]').fancybox({
 				afterLoad : function(instance, current) {
 					current.$image.attr('alt', '{{$data->title}}' );
 				}
@@ -882,7 +882,7 @@
 					title: {
                         required: true,
 						lettersonly: true,
-						noSpacesOnly: true 
+						noSpacesOnly: true
                     },
                     email: {
                         required: true,
@@ -894,7 +894,7 @@
 					},
                     description: {
                         required: true,
-						noSpacesOnly: true 
+						noSpacesOnly: true
                     }
                 },
                 messages: {
@@ -1002,7 +1002,7 @@
 					getCustomFilter();
 				    // var selectedMetalTypes = '{{ isset($requestData["metal-type"]) ? $requestData["metal-type"] : "Platinum" }}';
 					// console.log(selectedMetalTypes);
-					
+
 					// $("#metal-type option[value=' "+selectedMetalTypes+" ']").prop('selected', true);
 					// $("#metal-type").val(selectedMetalTypes);
 					// $("#metal-type").attr('value', 'Platinum ').attr('selected', 'selected');
@@ -1011,10 +1011,10 @@
 				}
 			});
 		})
-	
+
 		function getSelectedVariationsData(metalType = null){
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
-			
+
 			var variations = [];
 			$('.type-variations-row select').each(function(i, sel){
 
@@ -1043,7 +1043,7 @@
 					} else {
 						console.warn("getVariationDescription or description is undefined", res);
 					}
-					
+
 					if(typeof res.multi_vari_img !='undefined' && res.multi_vari_img && res.multi_vari_img!='' && 0){
 						const multipleImages = res.multi_vari_img.split(',');
 						const carouselItem = $('#carousel');
@@ -1118,8 +1118,8 @@
 						}
 					}
 
-					
-					
+
+
 					/** TODO: remove in carousel */
 					/** TODO: Add image in carousel */
 					// if(res.vari_image!='' && res.vari_image!=null){
@@ -1132,7 +1132,7 @@
 		}
 
 		function getCustomFilter(){
-			$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
+			$('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} Pending... </span>');
 			var diamond_type = $('input[name="attribute_choose-your-diamond"]:checked').val();
 			$.ajax({
                 type: 'POST',
@@ -1177,7 +1177,7 @@
 			var shopPricedata= $('#shopPrice.shopPriceval').text().replace(/[^\0-9.-]+/g, '');
 
 			let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
-			
+
 			let diamondCaratWeight;
 			let diamondColour;
 			var diamondShape;
@@ -1231,9 +1231,9 @@
 					'savePrice':parseInt(savePriceval) || 0,
 					'shopPrice':parseInt(shopPricedata) || 0,
 					'diamond_type' : $(".diamond_type:checked").val(),
-					'discounted_price':parseInt($('#selected_discounted_price').val()) || 0, 
-					'final_price':parseInt($('#selected_final_price').val()) || 0, 
-                    'setting_price': parseInt(trdata) || 0, 
+					'discounted_price':parseInt($('#selected_discounted_price').val()) || 0,
+					'final_price':parseInt($('#selected_final_price').val()) || 0,
+                    'setting_price': parseInt(trdata) || 0,
                 },
                 success: function (res) {
 					if(res.success != '' && typeof res.success !== "undefined"){
@@ -1316,7 +1316,7 @@
 						<th>Type</th>
 						<th>Selected</th>
 						</tr>`;
-			$('.type-variations-col').each(function() { 
+			$('.type-variations-col').each(function() {
 				let forId = $(this).find('label').attr('for');
 				let forText = $(this).find('label').text();
 				designTable += `
@@ -1325,7 +1325,7 @@
 					<td>`+$('#'+forId).val()+`</td>
 				</tr>
 				`;
-				
+
 			});
 			designTable += `</table>`;
 			$('#myDivChanges').html(designTable);
@@ -1428,34 +1428,34 @@
 					if(res.status == 200){
 
 						if(res.allPrices.rrp_price != res.allPrices.discounted_price){
-							$('#rrpPrice').html('RRP:  {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
-							$('#rrpPricefooter').html('RRP: {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
-							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
+							$('#rrpPrice').html('RRP:  {{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#rrpPricefooter').html('RRP: {{MY_CURconfig("constants.MY_CURRENCY_SYMBOL")RENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#savePrice').html('You Save : {{config("constants.MY_CURRENCY_SYMBOL")}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
 						}
 
 						if(res.allPrices.shop_price == res.allPrices.discounted_price){
 						    $('#shopPrice').html('');
 							$('#shopPricefooter').html('');
 						}else{
-						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
-							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
-							$('#shopPricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+						    $('#shopPrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.shop_price.toFixed(2));
+							$('#savePrice').html('You Save : {{config("constants.MY_CURRENCY_SYMBOL")}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
+							$('#shopPricefooter').html('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.shop_price.toFixed(2));
 						}
-						$('#finaldiamondprice').html(' <span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
-						
-						// $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
-						// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
-						$('#finaldiamondpricefooter').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						$('#finaldiamondprice').html(' <span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 
-						$('#savePricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+						// $('#shopPrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.shop_price.toFixed(2));
+						// $('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						$('#finaldiamondpricefooter').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 
-						
+						$('#savePricefooter').html('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+
+
 						// $('#getLabDiamondPrices').val(res.getLabDiamondPrices);
 					}else if(res.status == 500){
-						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
-						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
-						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
-						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} Pending... </span>');
+						$('#rrpPrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} Pending...');
+						$('#shopPrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} Pending...');
+						$('#savePrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} Pending...');
 						$('#getLabDiamondPrices').val('');
 					}
                 }
@@ -1527,34 +1527,34 @@
 					if(res.status == 200){
 
 						if(res.allPrices.rrp_price != res.allPrices.discounted_price){
-							$('#rrpPrice').html('RRP:  {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
-							$('#rrpPricefooter').html('RRP: {{MY_CURRENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
-							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
+							$('#rrpPrice').html('RRP:  {{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#rrpPricefooter').html('RRP: {{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#savePrice').html('You Save : {{config("constants.MY_CURRENCY_SYMBOL")}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
 						}
 
 						if(res.allPrices.shop_price == res.allPrices.discounted_price){
 						    $('#shopPrice').html('');
 							$('#shopPricefooter').html('');
 						}else{
-						    $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
-							$('#savePrice').html('You Save : {{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
-							$('#shopPricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
+						    $('#shopPrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.shop_price.toFixed(2));
+							$('#savePrice').html('You Save : {{config("constants.MY_CURRENCY_SYMBOL")}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
+							$('#shopPricefooter').html('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.shop_price.toFixed(2));
 						}
-						$('#finaldiamondprice').html(' <span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
-						
-						// $('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} ' + res.allPrices.shop_price.toFixed(2));
-						// $('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
-						$('#finaldiamondpricefooter').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						$('#finaldiamondprice').html(' <span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 
-						$('#savePricefooter').html('{{MY_CURRENCY_SYMBOL}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+						// $('#shopPrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.shop_price.toFixed(2));
+						// $('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
+						$('#finaldiamondpricefooter').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} '+res.allPrices.discounted_price.toFixed(2)+' </span>');
 
-						
+						$('#savePricefooter').html('{{config("constants.MY_CURRENCY_SYMBOL")}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
+
+
 						// $('#getLabDiamondPrices').val(res.getLabDiamondPrices);
 					}else if(res.status == 500){
-						$('#finaldiamondprice').html('<span class="price" >{{MY_CURRENCY_SYMBOL}} Pending... </span>');
-						$('#rrpPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
-						$('#shopPrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
-						$('#savePrice').html('{{MY_CURRENCY_SYMBOL}} Pending...');
+						$('#finaldiamondprice').html('<span class="price" >{{config("constants.MY_CURRENCY_SYMBOL")}} Pending... </span>');
+						$('#rrpPrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} Pending...');
+						$('#shopPrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} Pending...');
+						$('#savePrice').html('{{config("constants.MY_CURRENCY_SYMBOL")}} Pending...');
 						$('#getLabDiamondPrices').val('');
 					}
                 }
@@ -1604,7 +1604,7 @@
 				$('.carousel-thumbnail-item').closest('li').removeClass('active');
 				$('#carousel-selector-'+index).closest('li').addClass('active');
 			});
-			
+
             $(document).on('click','.product-gallery__trigger',function(e){
 				e.preventDefault();
 				$('#carousel .owl-item.active a').click();
@@ -1625,7 +1625,7 @@
 
 	<!-- Product Schema code start -->
 
-<?php 
+<?php
 $schemaProImages = []; // Initialize an empty array
 foreach ($prodImages as $key => $images) {
     if($key == 0){
@@ -1641,8 +1641,8 @@ $getFinalPrice = getMinimumPriceFunction($data);
 ?>
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org/", 
-  "@type": "Product", 
+  "@context": "https://schema.org/",
+  "@type": "Product",
   "name": "{{isset($data->title)?$data->title:''}}",
   "image": "{{ $ImagesURLS }}",
   "url": "{{url()->full()}}",
@@ -1669,7 +1669,7 @@ $getFinalPrice = getMinimumPriceFunction($data);
   }
 }
 </script>
- 
+
 {{-- video schema starts from here --}}
 @php
 $videoPath = $data->getProductVariation[0]->vari_video ?? null;
@@ -1718,7 +1718,7 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 							const extension = src.split(/[#?]/)[0].split('.').pop().trim();
 							let thumbnailItem = `<li class="list-inline-item ${ index ? '' : 'active' }">`;
 							thumbnailItem += `<a href="javascript:;" id="carousel-selector-${index}" class="carousel-thumbnail-item ${ index ? '' : 'selected' }" data-slide-to="${index}" data-target="#carousel">`;
-	
+
 							if(video_extensions.includes(extension)){
 								thumbnailItem += `<video muted class="img-fluid" style="height:100px; width:100px;">`;
 								thumbnailItem += `<source src="${src}" type="video/mp4" type="video/mp4" />`;
@@ -1727,9 +1727,9 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 								thumbnailItem += `<img src="${src}" class="img-fluid" style="height:100px; width:100px;">`;
 							}
 							thumbnailItem += `</li>`;
-	
+
 							$(".carousel-thumbnails").append(thumbnailItem);
-	
+
 						})
 					},
 				}).on("changed.owl.carousel", function(el) {
@@ -1737,13 +1737,13 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 					$('.carousel-thumbnail-item').closest('li').removeClass('active');
 					$('#carousel-selector-'+index).closest('li').addClass('active');
 				});
-				
+
 				$(document).on('click','.product-gallery__trigger',function(e){
 					e.preventDefault();
 					$('#carousel .owl-item.active a').click();
 					$('#carousel1 .product-items-carousel.active a').click();
 				});
-	
+
 				$(document).on('click','.carousel-thumbnail-item', function(){
 					const itemPosition = $(this).data('slide-to');
 					$owl
@@ -1763,7 +1763,7 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 			});
 		}
 		</script>
-	
+
 	 {{-- Today's script starts here --}}
 	  {{-- thumbmail image start here --}}
 	 <script>
@@ -1775,8 +1775,8 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 				nav: true,
 				dots: false,
 			});
-	
-			
+
+
 			$('#thumbnail-carousel').owlCarousel({
 				items: 4,
 				loop: true,
@@ -1784,18 +1784,18 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 				dots: false,
 				autoplay: false,
 			});
-	
-	
+
+
 			$('.thumbnail-link').on('click', function() {
 				var index = $(this).data('index');
 				$('#carousel').trigger('to.owl.carousel', [index+1, 300]);
 			});
-	
-	
+
+
 			$('.btn-360').on('click', function() {
 				var videoUrl = $(this).data('video');
 				$('#carousel').trigger('to.owl.carousel', [0, 300]);
-	
+
 				// Update the main carousel to show the 360 video
 				var videoHtml = `<a id="variationAnchorVideo" data-fancybox="gallery1" href="${videoUrl}" data-caption="">
 				<video id="variationVideo" style="width: 100%;" loop autoplay muted="1" playsinline>
@@ -1803,7 +1803,7 @@ $uploadDate = isset($data->created_at) ? \Carbon\Carbon::parse($data->created_at
 				</video></a>`;
 				$('#carousel .owl-item.active').html(videoHtml);
 			});
-			
+
 		});
 	</script>
 
