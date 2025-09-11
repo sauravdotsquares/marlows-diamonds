@@ -267,23 +267,23 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-sanitize.min.js"
         integrity="sha512-DNnzJS0bLZfPhFmQwU+55AAKSbCD+7xH3tuTqapSpWABrZBtt7cja34cdS+b+a30vqoylXUGdMDHVAbFC26MSg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" async></script>
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}" defer></script>
-    <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}" defer></script>
-    <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}" defer></script>
-    <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}" defer></script>
-    <script src="{{ asset('assets/js/custom.js') }}" defer></script>
-    <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}" defer></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}"></script>
 
     {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 
 
     <!-- Cookie Consent JavaScript -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js" async></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU" async></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @yield('js')
     <script>
         $(document).ready(function() {
