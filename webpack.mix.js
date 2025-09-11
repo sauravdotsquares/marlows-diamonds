@@ -12,7 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .copy('resources/js/index.js', 'public/js')
     .copy('resources/js/product_listing_page.js', 'public/js')
+    .copy('resources/js/product-details-dyes.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]).version();

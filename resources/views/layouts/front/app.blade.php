@@ -39,14 +39,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/developer.css?') . env('VERSION') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.min.css') }}">
-    <noscript>
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
-            as="style" onload="this.rel='stylesheet'">
-    </noscript>
-    <noscript>
-        <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css"
-            as="style" onload="this.rel='stylesheet'" />
-    </noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 
     @yield('css')
 
@@ -247,7 +241,7 @@
     <!-- End Google Tag Manager (noscript) -->
 
     @yield('google-ecommerce')
-    @yield('criteo-tracking')
+    {{-- @yield('criteo-tracking') --}}
     @include('layouts.front.header')
 
     @if (session('success'))
@@ -314,45 +308,49 @@
             });
 
             // Zopim zendesk Chat JS function Call start
-            window.zopimloaded = false;
-            setTimeout(function() {
-                if (window.zopimloaded == false) {
-                    loadZopim();
-                    window.zopimloaded = true;
-                }
-            }, 3000);
+            // window.zopimloaded = false;
+            // setTimeout(function() {
+            //     if (window.zopimloaded == false) {
+            //         loadZopim();
+            //         window.zopimloaded = true;
+            //     }
+            // }, 3000);
         });
 
         // Zopim zendesk Chat JS function apply Start
-        function loadZopim() {
-            window.$zopim || (function(d, s) {
-                var z = $zopim = function(c) {
-                        z._.push(c)
-                    },
-                    $ = z.s =
-                    d.createElement(s),
-                    e = d.getElementsByTagName(s)[0];
-                z.set = function(o) {
-                    z.set.
-                    _.push(o)
-                };
-                z._ = [];
-                z.set._ = [];
-                $.async = !0;
-                $.setAttribute('charset', 'utf-8');
-                $.setAttribute('defer', 'defer');
-                $.src = 'https://v2.zopim.com/?lAfFPTz4EQR4ncicqFdIqIA6clXDoO0f';
-                z.t = +new Date;
-                $.
-                type = 'text/javascript';
-                e.parentNode.insertBefore($, e)
-            })(document, 'script');
+        // function loadZopim() {
+        //     window.$zopim || (function(d, s) {
+        //         var z = $zopim = function(c) {
+        //                 z._.push(c)
+        //             },
+        //             $ = z.s =
+        //             d.createElement(s),
+        //             e = d.getElementsByTagName(s)[0];
+        //         z.set = function(o) {
+        //             z.set.
+        //             _.push(o)
+        //         };
+        //         z._ = [];
+        //         z.set._ = [];
+        //         $.async = !0;
+        //         $.setAttribute('charset', 'utf-8');
+        //         $.setAttribute('defer', 'defer');
+        //         $.src = 'https://v2.zopim.com/?lAfFPTz4EQR4ncicqFdIqIA6clXDoO0f';
+        //         z.t = +new Date;
+        //         $.
+        //         type = 'text/javascript';
+        //         e.parentNode.insertBefore($, e)
+        //     })(document, 'script');
 
-            $zopim(function() {
-                $zopim.livechat.button.setColor('#FFCC00');
-            });
-        }
+        //     $zopim(function() {
+        //         $zopim.livechat.button.setColor('#FFCC00');
+        //     });
+        // }
     </script>
+
+
+
+
 
     <script>
         window.addEventListener("load", function() {
@@ -458,6 +456,51 @@
         }
     </script>
     {!! !empty($seoScriptData) && !empty($seoScriptData->footer_script) ? $seoScriptData->footer_script : '' !!}
+
+    {{-- Zopim Code script move here at end --}}
+    <script>
+        function loadZopim() {
+            if (window.$zopim) return; // prevent duplicate loads
+            (function(d, s) {
+                var z = (window.$zopim = function(c) {
+                    z._.push(c);
+                });
+                var $ = (z.s = d.createElement(s));
+                var e = d.getElementsByTagName(s)[0];
+                z.set = function(o) {
+                    z.set._.push(o);
+                };
+                z._ = [];
+                z.set._ = [];
+                $.async = true;
+                $.charset = "utf-8";
+                $.defer = true;
+                $.src = "https://v2.zopim.com/?lAfFPTz4EQR4ncicqFdIqIA6clXDoO0f"; // your key
+                z.t = +new Date();
+                e.parentNode.insertBefore($, e);
+            })(document, "script");
+
+            window.$zopim(function() {
+                $zopim.livechat.button.setColor("#FFCC00");
+            });
+        }
+
+        // Lazy load strategy
+        let zopimLoaded = false;
+
+        function triggerZopim() {
+            if (!zopimLoaded) {
+                loadZopim();
+                zopimLoaded = true;
+            }
+        }
+
+        // Load only when needed
+        window.addEventListener("scroll", triggerZopim, {
+            once: true
+        }); // load on first scroll
+        setTimeout(triggerZopim, 5000); // fallback: load after 5s
+    </script>
     <script>
         window.addEventListener("load", function() {
             var gtag = document.createElement("script");
@@ -467,5 +510,7 @@
         });
     </script>
 </body>
+
+@yield('criteo-tracking')
 
 </html>

@@ -1429,7 +1429,7 @@
 
 						if(res.allPrices.rrp_price != res.allPrices.discounted_price){
 							$('#rrpPrice').html('RRP:  {{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.rrp_price.toFixed(2));
-							$('#rrpPricefooter').html('RRP: {{MY_CURconfig("constants.MY_CURRENCY_SYMBOL")RENCY_SYMBOL}} ' + res.allPrices.rrp_price.toFixed(2));
+							$('#rrpPricefooter').html('RRP: {{config("constants.MY_CURRENCY_SYMBOL")}} ' + res.allPrices.rrp_price.toFixed(2));
 							$('#savePrice').html('You Save : {{config("constants.MY_CURRENCY_SYMBOL")}} ' + (parseFloat(res.allPrices.rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2) + ' | ');
 						}
 
