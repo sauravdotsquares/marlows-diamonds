@@ -53,6 +53,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.min.js"
         integrity="sha512-ATReN+hO4MtnEUKPL23NQVpaIp9Lc/7Ke91f9jAAEqwQkzdWzCDiwPi0Q8b2xZGsOA5OUDVPIpqqPqUsucXBVw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-route.min.js"
+        integrity="sha512-Bs3EAi5hQciV/Wg1ReXlGbkZchIoKNGrOrISSayU2O2u3meEQ+Tyc3FKMiifNkjXIhMqRDDBSFqW2HVtjdbAzg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-sanitize.min.js"
+        integrity="sha512-DNnzJS0bLZfPhFmQwU+55AAKSbCD+7xH3tuTqapSpWABrZBtt7cja34cdS+b+a30vqoylXUGdMDHVAbFC26MSg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <style>
         [ng-cloak] {
             display: none !important;
@@ -252,7 +260,10 @@
 
     @yield('content')
 
-    @include('layouts.front.footer')
+    {!! Cache::remember('layoutsFrontFooter', 3600, function () {
+        return view('layouts.front.footer')->render();
+    }) !!}
+    {{-- @include('layouts.front.footer') --}}
 
 
     <script>
@@ -261,13 +272,6 @@
 
     {{-- <script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
 <script src="{{ asset('assets/js/angular-sanitize.js?').env('VERSION')}}"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-route.min.js"
-        integrity="sha512-Bs3EAi5hQciV/Wg1ReXlGbkZchIoKNGrOrISSayU2O2u3meEQ+Tyc3FKMiifNkjXIhMqRDDBSFqW2HVtjdbAzg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" async></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-sanitize.min.js"
-        integrity="sha512-DNnzJS0bLZfPhFmQwU+55AAKSbCD+7xH3tuTqapSpWABrZBtt7cja34cdS+b+a30vqoylXUGdMDHVAbFC26MSg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
     <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script>
@@ -457,50 +461,8 @@
     </script>
     {!! !empty($seoScriptData) && !empty($seoScriptData->footer_script) ? $seoScriptData->footer_script : '' !!}
 
-    {{-- Zopim Code script move here at end --}}
-    <script>
-        function loadZopim() {
-            if (window.$zopim) return; // prevent duplicate loads
-            (function(d, s) {
-                var z = (window.$zopim = function(c) {
-                    z._.push(c);
-                });
-                var $ = (z.s = d.createElement(s));
-                var e = d.getElementsByTagName(s)[0];
-                z.set = function(o) {
-                    z.set._.push(o);
-                };
-                z._ = [];
-                z.set._ = [];
-                $.async = true;
-                $.charset = "utf-8";
-                $.defer = true;
-                $.src = "https://v2.zopim.com/?lAfFPTz4EQR4ncicqFdIqIA6clXDoO0f"; // your key
-                z.t = +new Date();
-                e.parentNode.insertBefore($, e);
-            })(document, "script");
 
-            window.$zopim(function() {
-                $zopim.livechat.button.setColor("#FFCC00");
-            });
-        }
 
-        // Lazy load strategy
-        let zopimLoaded = false;
-
-        function triggerZopim() {
-            if (!zopimLoaded) {
-                loadZopim();
-                zopimLoaded = true;
-            }
-        }
-
-        // Load only when needed
-        window.addEventListener("scroll", triggerZopim, {
-            once: true
-        }); // load on first scroll
-        setTimeout(triggerZopim, 5000); // fallback: load after 5s
-    </script>
     <script>
         window.addEventListener("load", function() {
             var gtag = document.createElement("script");
@@ -510,6 +472,70 @@
         });
     </script>
 </body>
+{{-- Zopim Code script move here at end --}}
+<script>
+    function loadZopim() {
+        if (window.$zopim) return; // prevent duplicate loads
+        (function(d, s) {
+            var z = (window.$zopim = function(c) {
+                z._.push(c);
+            });
+            var $ = (z.s = d.createElement(s));
+            var e = d.getElementsByTagName(s)[0];
+            z.set = function(o) {
+                z.set._.push(o);
+            };
+            z._ = [];
+            z.set._ = [];
+            $.async = true;
+            $.charset = "utf-8";
+            $.defer = true;
+            $.src = "https://v2.zopim.com/?lAfFPTz4EQR4ncicqFdIqIA6clXDoO0f"; // your key
+            z.t = +new Date();
+            e.parentNode.insertBefore($, e);
+        })(document, "script");
+
+        window.$zopim(function() {
+            $zopim.livechat.button.setColor("#FFCC00");
+        });
+    }
+
+    // Lazy load strategy
+    let zopimLoaded = false;
+
+    function triggerZopim() {
+        if (!zopimLoaded) {
+            loadZopim();
+            zopimLoaded = true;
+        }
+    }
+
+    // Load only when needed
+    window.addEventListener("scroll", triggerZopim, {
+        once: true
+    }); // load on first scroll
+    setTimeout(triggerZopim, 5000); // fallback: load after 5s
+</script>
+
+{{-- TrustPilot start --}}
+<script>
+    document.addEventListener('scroll', function() {
+        const footer = document.querySelector('.footer-main');
+        const trustpilotWidget = document.getElementById('trustpilot-gtm-floating-wrapper');
+
+        if (footer && trustpilotWidget) {
+            const footerPosition = footer.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+
+            if (footerPosition.top < viewportHeight && footerPosition.bottom >= 0) {
+                trustpilotWidget.style.display = 'none';
+            } else {
+                trustpilotWidget.style.display = 'block';
+            }
+        }
+    });
+</script>
+{{-- TrustPilot end --}}
 
 @yield('criteo-tracking')
 

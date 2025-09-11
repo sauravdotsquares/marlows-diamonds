@@ -3,37 +3,42 @@
 {{-- criteo start --}}
 @section('criteo-tracking')
     <script type="text/javascript">
-        window.criteo_q = window.criteo_q || [];
+        setTimeout(function() {
+            window.criteo_q = window.criteo_q || [];
 
-        // Device type detection (JS only)
-        var deviceType = /iPad/.test(navigator.userAgent) ? "t" :
-            /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ?
-            "m" : "d";
+            // Device type detection (JS only)
+            var deviceType = /iPad/.test(navigator.userAgent) ? "t" :
+                /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ?
+                "m" : "d";
 
-        window.criteo_q.push({
-                event: "setAccount",
-                account: 119681
-            }, {
-                event: "setSiteType",
-                type: deviceType
-            },
-
-            @if (Auth::check())
-                {
-                    event: "setEmail",
-                    email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                    hash_method: "sha256"
+            window.criteo_q.push({
+                    event: "setAccount",
+                    account: 119681
                 }, {
-                    event: "setCustomerId",
-                    id: {{ Auth::user()->id }}
+                    event: "setSiteType",
+                    type: deviceType
                 },
-            @endif
 
-            {
-                event: "viewList",
-                item: {!! json_encode($sortedArray->pluck('id')->map(fn($id) => "ig_$id")) !!}
-            }
-        );
+                @if (Auth::check())
+                    {
+                        event: "setEmail",
+                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                        hash_method: "sha256"
+                    }, {
+                        event: "setCustomerId",
+                        id: {{ Auth::user()->id }}
+                    },
+                @endif
+
+                {
+                    event: "viewList",
+                    item: {!! json_encode($sortedArray->pluck('id')->map(fn($id) => "ig_$id")) !!}
+                }
+            );
+
+            console.log('Loaded Criteo script after 5 sec...');
+
+        }, 5000); // ⏳ load after 5 seconds
     </script>
 @endsection
 {{-- criteo ends --}}
@@ -642,20 +647,22 @@
                                                                             <h4>
                                                                                 <del style="color:#000"
                                                                                     class="shopPriceval" id="shopPrice">
-                                                                                    {{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                                    {{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                                     {{ round($product->lab_grown, 2) }}</del>
                                                                             </h4>
                                                                         @endif
 
                                                                         <div class="product-finder-price"
                                                                             id="finaldiamondprice">
-                                                                            <span class="price">{{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                            <span
+                                                                                class="price">{{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                                 {{ sprintf('%0.2f', $product->discounted_lab_grown) }}</span>
                                                                         </div>
                                                                     @else
                                                                         <div class="product-finder-price"
                                                                             id="finaldiamondprice">
-                                                                            <span class="price">{{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                            <span
+                                                                                class="price">{{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                                 {{ sprintf('%0.2f', $product->lab_grown) }}</span>
                                                                         </div>
                                                                     @endif
@@ -663,10 +670,10 @@
                                                                 <p class="save_price">
                                                                     <span style="color:green">You Save : <span
                                                                             id="savePrice">
-                                                                            {{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                            {{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                             {{ sprintf('%0.2f', $product->lab_grown_rrp - $product->discounted_lab_grown) }}</span>
                                                                     </span> | <del id="rrpPrice">RRP:
-                                                                        {{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                        {{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                         {{ sprintf('%0.2f', $product->lab_grown_rrp) }}</del>
                                                                 </p>
                                                             </div>
@@ -675,7 +682,8 @@
                                                         <div class="price-section">
                                                             <div style="display: flex;">
                                                                 <div class="product-finder-price" id="finaldiamondprice">
-                                                                    <span class="price">{{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                    <span
+                                                                        class="price">{{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                         {{ sprintf('%0.2f', $product->mined_diamond) }}</span>
                                                                 </div>
                                                             </div>
@@ -684,16 +692,17 @@
                                                         <div class="price-section">
                                                             <div style="display: flex;">
                                                                 <div class="product-finder-price" id="finaldiamondprice">
-                                                                    <span class="price">{{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                    <span
+                                                                        class="price">{{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                         {{ sprintf('%0.2f', $product->mined_diamond) }}</span>
                                                                 </div>
                                                             </div>
                                                             <p class="save_price">
                                                                 <span style="color:green">You Save : <span id="savePrice">
-                                                                        {{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                        {{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                         {{ $product->mined_diamond_rrp - $product->mined_diamond }}</span>
                                                                 </span> | <del id="rrpPrice">RRP:
-                                                                    {{ config("constants.MY_CURRENCY_SYMBOL") }}
+                                                                    {{ config('constants.MY_CURRENCY_SYMBOL') }}
                                                                     {{ $product->mined_diamond_rrp }}</del>
                                                             </p>
                                                         </div>
