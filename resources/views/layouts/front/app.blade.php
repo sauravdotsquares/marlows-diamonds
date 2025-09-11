@@ -271,13 +271,15 @@
     </script>
 
     {{-- <script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
-<script src="{{ asset('assets/js/angular-sanitize.js?').env('VERSION')}}"></script> --}}
+    <script src="{{ asset('assets/js/angular-sanitize.js?').env('VERSION')}}"></script> --}}
 
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
-    <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script>
+    {{-- <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script> --}}
+    <script src="{{ asset('assets/js/controllers/app.min.js?') . env('VERSION') }}"></script>
     <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}"></script>
     <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}"></script>
-    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/custom.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/custom.min.js') }}"></script>
     <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}"></script>
 
     {{-- <script src="{{ mix('js/app.js') }}"></script> --}}
