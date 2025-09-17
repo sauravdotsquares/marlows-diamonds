@@ -34,7 +34,7 @@ class Order extends Model
         'status',
     ];
 
-    protected $appends = ['user_details','order_address','order_shipping_address','status_details','total_quantity','status_details_designs'];
+    protected $appends = ['user_details', 'order_address', 'order_shipping_address', 'status_details', 'total_quantity', 'status_details_designs'];
 
     public function getOrderDetailsFunction()
     {
@@ -43,63 +43,72 @@ class Order extends Model
 
     public function getUserDetailsAttribute()
     {
-        return User::where('id',$this->user_id)->first();
+        return User::where('id', $this->user_id)->first();
     }
     public function getOrderAddressAttribute()
     {
-        return CustomerAddress::where('user_id',$this->user_id)->first();
+        return CustomerAddress::where('user_id', $this->user_id)->first();
     }
     public function getOrderShippingAddressAttribute()
     {
-        return CustomerShippingAddress::where('user_id',$this->user_id)->latest()->first();
+        return CustomerShippingAddress::where('user_id', $this->user_id)->latest()->first();
     }
     public function getTotalQuantityAttribute()
     {
-        return OrderDetail::where('order_id',$this->id)->sum('quantity');
+        return OrderDetail::where('order_id', $this->id)->sum('quantity');
     }
     public function getStatusDetailsAttribute()
     {
-        if($this->status == 0){
+        if ($this->status == 0) {
             return "Pending";
-        }elseif($this->status == 1){
+        } elseif ($this->status == 1) {
             return "Processing";
-        }elseif($this->status == 2){
+        } elseif ($this->status == 2) {
             return "Payment Done";
-        }elseif($this->status == 3){
+        } elseif ($this->status == 3) {
             return "Payment Failed/Cancelled";
-        }elseif($this->status == 4){
+        } elseif ($this->status == 4) {
             return "Shipped";
-        }elseif($this->status == 5){
+        } elseif ($this->status == 5) {
             return "Delievered";
-        }elseif($this->status == 6){
+        } elseif ($this->status == 6) {
             return "Return";
-        }elseif($this->status == 7){
+        } elseif ($this->status == 7) {
             return "Cancelled";
-        }else{
+        } else {
             return "Pending";
         }
     }
     public function getStatusDetailsDesignsAttribute()
     {
-        if($this->status == 0){
+        if ($this->status == 0) {
             return '<span class="badge badge-warning">Pending</span>';
-        }elseif($this->status == 1){
+        } elseif ($this->status == 1) {
             return '<span class="badge badge-info">Processing</span>';
-        }elseif($this->status == 2){
+        } elseif ($this->status == 2) {
             return '<span class="badge badge-success">Payment Done</span>';
-        }elseif($this->status == 3){
+        } elseif ($this->status == 3) {
             return '<span class="badge badge-danger">Payment Failed/Cancelled</span>';
-        }elseif($this->status == 4){
+        } elseif ($this->status == 4) {
             return '<span class="badge badge-success">Shipped</span>';
-        }elseif($this->status == 5){
+        } elseif ($this->status == 5) {
             return '<span class="badge badge-danger">Delievered</span>';
-        }elseif($this->status == 6){
+        } elseif ($this->status == 6) {
             return '<span class="badge badge-warning">Return</span>';
-        }elseif($this->status == 7){
+        } elseif ($this->status == 7) {
             return '<span class="badge badge-warning">Cancelled</span>';
-        }else{
+        } else {
             return '<span class="badge badge-warning">Processing</span>';
         }
     }
 
+    public function customerOrderAddress()
+    {
+        return $this->hasOne(CustomerAddress::class, 'user_id', 'user_id');
+    }
+
+    public function customerShippingAddress()
+    {
+        return $this->hasOne(CustomerShippingAddress::class, 'user_id', 'user_id')->latest();
+    }
 }

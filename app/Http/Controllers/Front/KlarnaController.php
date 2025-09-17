@@ -55,6 +55,7 @@ class KlarnaController extends Controller
 
 
         $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id', $orderId)->first();
+
         if (!$authorizationToken) {
             return response()->json([
                 'success' => false,
@@ -167,12 +168,36 @@ class KlarnaController extends Controller
     {
 
         $priceInMinorUnits = intval($order->final_price * 100);
-        $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id', $order->id)->first()->toArray();
+        $getOrderDetailsMail = Order::with('getOrderDetailsFunction', 'customerOrderAddress', 'customerShippingAddress')->where('id', $order->id)->first()->toArray();
+        $customer_order_address = $getOrderDetailsMail['customer_order_address'];
+        $customer_shipping_address = $getOrderDetailsMail['customer_shipping_address'] ?? $getOrderDetailsMail['customer_order_address'];
 
 
         return [
             'purchase_country' => 'GB',
             'purchase_currency' => 'GBP',
+            'billing_address' => [
+                "given_name" => $customer_order_address['first_name'],
+                "family_name" => $customer_order_address['last_name'],
+                "email" => $customer_order_address['email'],
+                "street_address" => $customer_order_address['street_address_l1'],
+                "street_address2" => $customer_order_address['street_address_l2'] ?? null,
+                "postal_code" => $customer_order_address['pin_code'],
+                "city" => $customer_order_address['town_city'],
+                "country" => $customer_order_address['country_id'],
+                "phone" => $customer_order_address['mobile']
+            ],
+            // 'shipping_address' => [
+                // "given_name" => $customer_shipping_address['first_name'],
+                // "family_name" => $customer_shipping_address['last_name'],
+                // "email" => $customer_shipping_address['email'],
+                // "street_address" => $customer_shipping_address['street_address_l1'],
+                // "street_address2" => $customer_shipping_address['street_address_l2'] ?? null,
+                // "postal_code" => $customer_shipping_address['pin_code'],
+                // "city" => $customer_shipping_address['town_city'],
+                // "country" => strtoupper($customer_shipping_address['country_id']),
+                // "phone" => $customer_shipping_address['mobile']
+            // ],
             'locale' => 'en-GB',
             'order_amount' => $priceInMinorUnits,
             'order_tax_amount' => 0,
@@ -186,6 +211,10 @@ class KlarnaController extends Controller
                 ],
             ],
             'merchant_reference' => 'K7477132',
+
+
+            "merchant_reference1" => $getOrderDetailsMail['custom_order_id'],
+            "merchant_reference2" => "customer-id-" . $getOrderDetailsMail['id'],
         ];
     }
 
@@ -199,7 +228,6 @@ class KlarnaController extends Controller
         $getOrderDetails = Order::where('id', $orderId)->update(['status' => 2]);
 
         $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id', $orderId)->first()->toArray();
-
         $admin_email = Settings::where("option_name", 'admin_email')->value('option_value');
         $transaction_emails = Settings::where("option_name", 'transaction_emails')->value('option_value');
 
