@@ -153,8 +153,8 @@ class KlarnaController extends Controller
             //throw $th;
             return [
                 'success' => false,
-                // 'error' => 'Something went wrong!',
-                'error' => $th->getMessage(),
+                'error' => 'Something went wrong!',
+                // 'error' => $th->getMessage(),
             ];
         }
     }
