@@ -1423,7 +1423,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 Klarna.Payments.load({
                     container: "#klarna_container",
-                    payment_method_category: "pay_over_time"
+                    payment_method_category: "pay_now"
                 }, function (res) {
                     if (res.error) {
                         console.error("Klarna load error:", res);
@@ -1431,7 +1431,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-                    Klarna.Payments.authorize({ payment_method_category: "pay_over_time" }, function (res) {
+                    Klarna.Payments.authorize({ payment_method_category: "pay_now" }, function (res) {
                         if (res.error) {
                             console.error("Authorization error:", res);
                             alert("Authorization failed.");

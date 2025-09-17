@@ -2615,7 +2615,7 @@ if (!function_exists("getImageOptimizeDetails")) {
                 $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
             } else {
                 // Image manipulation
-                $img = Image::make(APPIMAGEURL . $imageUrl)->resize($width, $height);
+                $img = Image::make(config('constants.APPIMAGEURL') . $imageUrl)->resize($width, $height);
                 $tempPath = public_path('tempfolderpath');
                 $tempFile = $tempPath . '/' . $path_parts['basename'];
                 $img->save($tempFile);
@@ -2624,7 +2624,7 @@ if (!function_exists("getImageOptimizeDetails")) {
             }
             return $imageUrl;
         } catch (\Throwable $th) {
-            Log::alert(APPIMAGEURL . $imageUrl);
+            Log::alert(config('constants.APPIMAGEURL') . $imageUrl);
             return '#';
         }
     }
@@ -2645,7 +2645,7 @@ if (!function_exists("getImageOptimizeDetails")) {
     //             $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
     //         } else {
     //             // Image manipulation
-    //             $img = Image::make(APPIMAGEURL . $imageUrl)->resize($width, $height);
+    //             $img = Image::make(config('constants.APPIMAGEURL') . $imageUrl)->resize($width, $height);
     //             $img->save($filename);
 
     //             $imageUrl = asset('tempfolderpath/' . $path_parts['basename']);
@@ -2653,7 +2653,7 @@ if (!function_exists("getImageOptimizeDetails")) {
 
     //         return $imageUrl;
     //     } catch (\Throwable $th) {
-    //         Log::alert('Image error: ' . APPIMAGEURL . $imageUrl);
+    //         Log::alert('Image error: ' . config('constants.APPIMAGEURL') . $imageUrl);
     //         // Log::alert($th->getMessage());
     //         return '#';
     //     }
@@ -3104,7 +3104,11 @@ if (!function_exists("generateKlarnaClientToken")) {
     {
         $klarnaUsername = env('KLARNA_USERNAME');
         $klarnaPassword = env('KLARNA_PASSWORD');
-        $klarnaBaseUrl = 'https://api.klarna.com';
+        if (env('APP_ENV') == 'production') {
+            $klarnaBaseUrl = 'https://api.klarna.com';
+        } else {
+            $klarnaBaseUrl = 'https://api.playground.klarna.com';
+        }
 
         //  dd($klarnaUsername);
 
