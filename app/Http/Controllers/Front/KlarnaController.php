@@ -188,15 +188,15 @@ class KlarnaController extends Controller
                 "phone" => $customer_order_address['mobile']
             ],
             // 'shipping_address' => [
-                // "given_name" => $customer_shipping_address['first_name'],
-                // "family_name" => $customer_shipping_address['last_name'],
-                // "email" => $customer_shipping_address['email'],
-                // "street_address" => $customer_shipping_address['street_address_l1'],
-                // "street_address2" => $customer_shipping_address['street_address_l2'] ?? null,
-                // "postal_code" => $customer_shipping_address['pin_code'],
-                // "city" => $customer_shipping_address['town_city'],
-                // "country" => strtoupper($customer_shipping_address['country_id']),
-                // "phone" => $customer_shipping_address['mobile']
+            // "given_name" => $customer_shipping_address['first_name'],
+            // "family_name" => $customer_shipping_address['last_name'],
+            // "email" => $customer_shipping_address['email'],
+            // "street_address" => $customer_shipping_address['street_address_l1'],
+            // "street_address2" => $customer_shipping_address['street_address_l2'] ?? null,
+            // "postal_code" => $customer_shipping_address['pin_code'],
+            // "city" => $customer_shipping_address['town_city'],
+            // "country" => strtoupper($customer_shipping_address['country_id']),
+            // "phone" => $customer_shipping_address['mobile']
             // ],
             'locale' => 'en-GB',
             'order_amount' => $priceInMinorUnits,
@@ -228,12 +228,18 @@ class KlarnaController extends Controller
         $getOrderDetails = Order::where('id', $orderId)->update(['status' => 2]);
 
         $getOrderDetailsMail = Order::with('getOrderDetailsFunction')->where('id', $orderId)->first()->toArray();
+
+        if (isset($getOrderDetailsMail['email_status']) && $getOrderDetailsMail['email_status'] == 2) {
+            return Redirect::route('home');
+        }
+
         $admin_email = Settings::where("option_name", 'admin_email')->value('option_value');
         $transaction_emails = Settings::where("option_name", 'transaction_emails')->value('option_value');
 
         $data = [
             'data' => $getOrderDetailsMail
         ];
+
         if (env('APP_ENV') == 'production') {
             // $getOrderDetails['customer_email'] = $getOrderDetails['user_details']['email'];
             Mail::send('email.orderstatus', array(
@@ -268,6 +274,8 @@ class KlarnaController extends Controller
                 $message->bcc('kartik.tanwar@dotsquares.com', 'Customer')->subject('Your Marlows Diamonds order has been received!');
             });
         }
+
+        Order::where('id', $orderId)->update(['email_status' => 2]);
         $result = [
             'pay' => $getOrderDetailsMail,
             'response' => 'Your Order number(' . $getOrderDetailsMail['custom_order_id'] . ') has been successfully paid',
