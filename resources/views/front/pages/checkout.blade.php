@@ -73,6 +73,8 @@
     <script>
         // This is to capture .env value
         const environmentCheckPhp = "{{ env('APP_ENV') }}";
+        const PAYPAL_CLIENT_ID_PHP = "{{ env('PAYPAL_CLIENT_ID') }}";
+        const PAYPAL_SECRET_PHP = "{{ env('PAYPAL_SECRET') }}";
     </script>
     @php
         // Request client token from the server-side PHP
@@ -91,13 +93,12 @@
     <script>
         function onPayPalScriptLoaded() {
             if (window.paypal && paypal.Googlepay) {
-                onGooglePayLoaded();
+                // onGooglePayLoaded();
             } else {
                 console.error('Google Pay not found in PayPal SDK');
             }
         }
     </script>
-    <script src="https://pay.google.com/gp/p/js/pay.js"></script>
     {{-- <script
         src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&merchant-id={{ $merchantId }}"
         data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
@@ -106,6 +107,7 @@
         src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
         data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
     </script>
+    <script src="https://pay.google.com/gp/p/js/pay.js"></script>
 @endsection
 
 @section('content')
@@ -165,13 +167,13 @@
                                     Signup
                                 </a>
                                 <!-- <label class="rememberme">
-                                                    <input type="checkbox">
-                                                    <span>Remember me</span>
-                                                </label> -->
+                                                        <input type="checkbox">
+                                                        <span>Remember me</span>
+                                                    </label> -->
                             </div>
                             <!-- <div class="lostpassword">
-                                                <a href="javascript:void(0)">Lost your password</a>
-                                            </div> -->
+                                                    <a href="javascript:void(0)">Lost your password</a>
+                                                </div> -->
                         </form>
                     </div>
                 @endif
@@ -181,12 +183,12 @@
                 <div class="checkout-main-wrap">
                     <!--<div class="checkout-table">
 
-                                            <ul>
-                                                <li><span class="active">1</span>Shipping</li>
-                                                <li><span>2</span>Payment</li>
-                                            </ul>
+                                                <ul>
+                                                    <li><span class="active">1</span>Shipping</li>
+                                                    <li><span>2</span>Payment</li>
+                                                </ul>
 
-                                        </div> -->
+                                            </div> -->
 
                     <form id="finalPlaceOrderPage">
                         @csrf
@@ -254,9 +256,9 @@
                                                                 id="state" name="state" required="required"
                                                                 class="form-control">
                                                             <!-- <select id="state" name="state" required="required" class="form-control">
-                                                                                    <option>Select Option</option>
-                                                                                    <option>Rajasthan</option>
-                                                                                </select> -->
+                                                                                        <option>Select Option</option>
+                                                                                        <option>Rajasthan</option>
+                                                                                    </select> -->
                                                         </div>
                                                     </div>
 
@@ -1404,7 +1406,7 @@
                                     window.location.href = "{{ route('make.payment') }}/" +
                                         response.order_dt;
                                 } else if (selectedPaymentType == 'googlepay') {
-                                    onGooglePaymentButtonClicked(price, response.order_dt);
+                                    onGooglePaymentButtonClicked(price, response.order_dt,true);
                                 } else if (selectedPaymentType == 'klarna') {
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);

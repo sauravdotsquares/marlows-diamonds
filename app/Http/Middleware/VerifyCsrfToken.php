@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
         '/api/validate-merchant',
         'applepay_sdk/api/orders',
         '/api/orders/*/capture',
-        '/update-order-google-status'
+        '/update-order-google-status',
+        '/process-google-pay'
     ];
 }

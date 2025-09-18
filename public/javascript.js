@@ -1,102 +1,61 @@
+let base;
+let googlePayEnvironment
+if (environmentCheckPhp == 'production') {
+    base = 'https://api.paypal.com'; // For live environment
+    googlePayEnvironment = 'PRODUCTION';
+
+} else {
+    base = 'https://api.sandbox.paypal.com'; // For local environment
+    googlePayEnvironment = 'TEST';
+    // googlePayEnvironment = 'PRODUCTION';
+}
 /*
-* Define the version of the Google Pay API referenced when creating your
-* configuration
+* Base request for Google Pay
 */
 const baseRequest = {
     apiVersion: 2,
     apiVersionMinor: 0,
 };
-let paymentsClient = null,
-    allowedPaymentMethods = null,
-    merchantInfo = null;
-/* Configure your site's support for payment methods supported by the Google Pay */
-function getGoogleIsReadyToPayRequest(allowedPaymentMethods) {
-    return Object.assign({}, baseRequest, {
-        allowedPaymentMethods: allowedPaymentMethods,
-    });
-}
-/* Fetch Default Config from PayPal via PayPal SDK */
+
+let paymentsClient = null;
+let allowedPaymentMethods = null;
+let merchantInfo = null;
+
+/* === STEP 1: Fetch Google Pay config from PayPal SDK === */
 async function getGooglePayConfig() {
-    if (allowedPaymentMethods == null || merchantInfo == null) {
+    if (!allowedPaymentMethods || !merchantInfo) {
         const googlePayConfig = await paypal.Googlepay().config();
+        if (!googlePayConfig || !googlePayConfig.allowedPaymentMethods) {
+            console.log("Google Pay config invalid or not loaded");
+        }
         allowedPaymentMethods = googlePayConfig.allowedPaymentMethods;
         merchantInfo = googlePayConfig.merchantInfo;
     }
-    return {
+    return { allowedPaymentMethods, merchantInfo };
+}
+
+/* === STEP 2: Build paymentDataRequest === */
+async function getGooglePaymentDataRequest(subtotal) {
+    const { allowedPaymentMethods, merchantInfo } = await getGooglePayConfig();
+    if (!allowedPaymentMethods || !merchantInfo) {
+        console.error("Google Pay config missing!");
+        return null;
+    }
+
+    return Object.assign({}, baseRequest, {
         allowedPaymentMethods,
         merchantInfo,
-    };
+        transactionInfo: getGoogleTransactionInfo(subtotal),
+        // callbackIntents: ["PAYMENT_AUTHORIZATION"],
+    });
 }
-/* Configure support for the Google Pay API */
-async function getGooglePaymentDataRequest() {
-    const paymentDataRequest = Object.assign({}, baseRequest);
-    const { allowedPaymentMethods, merchantInfo } = await getGooglePayConfig();
-    paymentDataRequest.allowedPaymentMethods = allowedPaymentMethods;
-    paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
-    paymentDataRequest.merchantInfo = merchantInfo;
-    paymentDataRequest.callbackIntents = ["PAYMENT_AUTHORIZATION"];
-    console.log('getGooglePaymentDataRequest()');
-    console.log(paymentDataRequest);
 
-    return paymentDataRequest;
-}
-function onPaymentAuthorized(paymentData) {
-    return new Promise(function (resolve, reject) {
-        processPayment(paymentData)
-            .then(function (data) {
-                resolve({ transactionState: "SUCCESS" });
-            })
-            .catch(function (errDetails) {
-                resolve({ transactionState: "ERROR" });
-            });
-    });
-}
-function getGooglePaymentsClient() {
-    if (paymentsClient === null) {
-        paymentsClient = new google.payments.api.PaymentsClient({
-            environment: "PRODUCTION",  // Change from "TEST" to "PRODUCTION"
-            paymentDataCallbacks: {
-                onPaymentAuthorized: onPaymentAuthorized,
-            },
-        });
-    }
-    return paymentsClient;
-}
-async function onGooglePayLoaded() {
-    const paymentsClient = getGooglePaymentsClient();
-    const { allowedPaymentMethods } = await getGooglePayConfig();
-    paymentsClient
-        .isReadyToPay(getGoogleIsReadyToPayRequest(allowedPaymentMethods))
-        .then(function (response) {
-            if (response.result) {
-                addGooglePayButton();
-                // console.log('Google Pay is not available.');
-            }
-        })
-        .catch(function (err) {
-            console.error(err);
-        });
-}
-function addGooglePayButton() {
-    const paymentsClient = getGooglePaymentsClient();
-    const button = paymentsClient.createButton({
-        onClick: onGooglePaymentButtonClicked(),
-    });
-    document.getElementById("container").appendChild(button);
-}
+/* === STEP 3: Define transaction details === */
 function getGoogleTransactionInfo(subtotal) {
     return {
         displayItems: [
-            {
-                label: "Subtotal",
-                type: "SUBTOTAL",
-                price: subtotal,
-            },
-            {
-                label: "Tax",
-                type: "TAX",
-                price: "0",
-            },
+            { label: "Subtotal", type: "SUBTOTAL", price: subtotal },
+            { label: "Tax", type: "TAX", price: "0" },
         ],
         countryCode: "GB",
         currencyCode: "GBP",
@@ -106,125 +65,103 @@ function getGoogleTransactionInfo(subtotal) {
     };
 }
 
-async function onGooglePaymentButtonClicked(price, orderData) {
-    const subtotal = price.toString();
-    const paymentDataRequest = await getGooglePaymentDataRequest(subtotal);
-    paymentDataRequest.transactionInfo = getGoogleTransactionInfo(subtotal);
-    const paymentsClient = getGooglePaymentsClient();
-    paymentsClient.loadPaymentData(paymentDataRequest, subtotal);
+/* === STEP 4: Create Google Payments client === */
+function getGooglePaymentsClient() {
+    if (!paymentsClient) {
+        paymentsClient = new google.payments.api.PaymentsClient({
+            environment: googlePayEnvironment, // change to "PRODUCTION" later
+            // paymentDataCallbacks: {
+                // onPaymentAuthorized: onPaymentAuthorized,
+            // },
+        });
+    }
+    return paymentsClient;
 }
 
-let base;
-if (environmentCheckPhp == 'production') {
-    base = 'https://api.paypal.com'; // For live environment
-} else {
-    base = 'https://api.sandbox.paypal.com'; // For local environment
+/* === STEP 5: Handle payment authorization callback === */
+function onPaymentAuthorized(paymentData) {
+    return new Promise((resolve) => {
+        processPayment(paymentData)
+            .then(() => resolve({ transactionState: "SUCCESS" }))
+            .catch(() => resolve({ transactionState: "ERROR" }));
+    });
 }
 
+/* === STEP 6: Triggered only when user selects Google Pay === */
+async function onGooglePaymentButtonClicked(price, orderId, isCallFromAjax = false) {
+    console.group("GooglePay Triggered");
+    console.log("🔔 onGooglePaymentButtonClicked called with:", { price, orderId });
+    console.trace("Call stack:");
+    console.groupEnd();
+    if (!isCallFromAjax)
+        return;
+    try {
+        const subtotal = price.toString();
+        const paymentsClient = getGooglePaymentsClient();
+        const paymentDataRequest = await getGooglePaymentDataRequest(subtotal);
 
-async function processPayment(payment) {
-    const tokenOrdIdUpdated = $('#tokenOrdId').val();
+        const paymentData = await paymentsClient.loadPaymentData(paymentDataRequest);
+
+        // Send result to backend for processing
+        await processPayment(paymentData, orderId);
+    } catch (err) {
+        console.error("Google Pay error:", err);
+        alert("Googlepay is not available! Please try again later.");
+    }
+}
+
+/* === STEP 7: Process the payment with PayPal APIs === */
+async function processPayment(paymentData, orderID) {
+    const customOrderID = orderID;
+    console.log(customOrderID);
+
     const final_price = $('#final_price').val();
-    // Retrieve transaction info
-    const { currencyCode, subtotal } = getGoogleTransactionInfo();
 
     try {
-
-        const purchaseAmount = final_price; // Replace with dynamic amount as needed
-        const currency = "GBP"; // Set the appropriate currency
-
-        // Step 1: Create the PayPal order
-        const createOrderResponse = await createGoogleOrder(purchaseAmount, currency);
+        // Create PayPal order
+        const createOrderResponse = await createGoogleOrder(final_price, "GBP");
 
         if (createOrderResponse.status === 'CREATED') {
             const orderId = createOrderResponse.id;
-            console.log(orderId, "orderId")
 
-            // Step 2: Confirm the order with Google Pay
             const { status } = await paypal.Googlepay().confirmOrder({
                 orderId: orderId,
-                paymentMethodData: payment.paymentMethodData,
+                paymentMethodData: paymentData.paymentMethodData,
             });
 
-            const captureResponse = await captureGooglePayment(orderId);
-            // Step 3: Capture the payment if approved
             if (status === "APPROVED") {
+                const captureResponse = await captureGooglePayment(orderId);
                 console.log(captureResponse);
-                return fetch("/process-apple-pay", {
+                console.log(customOrderID);
+
+                return fetch("/process-google-pay", {
                     method: "POST",
+                    // method: "GET",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ payment, tokenOrdIdUpdated, captureResponse }),
+                    body: JSON.stringify({ customOrderID, captureResponse }),
                 })
-                    .then((response) => response.json())  // Parse JSON from the response
+                    .then((res) => res.json())
                     .then((data) => {
-                        // Log the parsed data (response body) here
                         if (data.success) {
                             window.location.href = data.redirect;
                         } else {
-                            alert('Failed to update order status:', data);
+                            alert("Failed to update order status");
                         }
-                        return data;  // Return the data if needed later
-                    })
-                    .catch((error) => {
-                        // Handle any errors that occur during the fetch
-                        console.error("Error during fetch:", error);
+                        return data;
                     });
-                return { transactionState: "SUCCESS" };
-            } else if (status === "PAYER_ACTION_REQUIRED") {
-                console.log(" ===== Confirm Payment Completed Payer Action Required ===== ");
-                paypal
-                    .Googlepay()
-                    .initiatePayerAction({ orderId: id })
-                    .then(async () => {
-                        /*
-                        * CAPTURE THE ORDER
-                        */
-                        console.log(" ===== Payer Action Completed ===== ");
-                        const captureResponse = await captureGooglePayment(orderId);
-                        console.log(" ===== Order Capture Completed ===== ");
-                        return fetch("/process-apple-pay", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ payment, tokenOrdIdUpdated, captureResponse }),
-                        })
-                            .then((response) => response.json())  // Parse JSON from the response
-                            .then((data) => {
-                                // Log the parsed data (response body) here
-                                if (data.success) {
-                                    window.location.href = data.redirect;
-                                } else {
-                                    alert('Failed to update order status:' + JSON.stringify(data, null, 2));
-                                }
-                                return data;  // Return the data if needed later
-                            })
-                            .catch((error) => {
-                                // Handle any errors that occur during the fetch
-                                console.error("Error during fetch:", error);
-                                alert('Error during fetch:' + error);
-                            });
-                    });
-            } else {
-                console.error("Payment failed during confirmation with PayPal.");
-                return { transactionState: "ERROR" };
             }
-        } else {
-            console.error("Failed to create PayPal order:", createOrderResponse);
-            return { transactionState: "ERROR" };
         }
     } catch (err) {
-        console.error("Error during payment processing:", err);
-        return {
-            transactionState: "ERROR",
-            error: { message: err.message },
-        };
+        console.error("Payment processing failed:", err);
+        throw err;
     }
 }
 
 
-// Function to create an order using PayPal API
+/* === STEP 8: Create & Capture order using PayPal API === */
 async function createGoogleOrder(purchaseAmount, currencyCode) {
-    const accessToken = await generateGoogleAccessToken(); // Get your PayPal access token
-    const url = `${base}/v2/checkout/orders`; // API endpoint for creating orders
+    const accessToken = await generateGoogleAccessToken();
+    const url = `${base}/v2/checkout/orders`;
 
     const response = await fetch(url, {
         method: "POST",
@@ -237,22 +174,17 @@ async function createGoogleOrder(purchaseAmount, currencyCode) {
             purchase_units: [
                 {
                     amount: {
-                        currency_code: currencyCode,
-                        value: purchaseAmount,
-                    },
-                },
-            ],
+                        currency_code: currencyCode, value: purchaseAmount
+                    }
+                }],
         }),
     });
-
-    const data = await response.json();
-    return data;  // Return the response from PayPal's order creation
+    return response.json();
 }
 
-// Function to capture payment for a given order using PayPal API
 async function captureGooglePayment(orderId) {
-    const accessToken = await generateGoogleAccessToken(); // Get your PayPal access token
-    const url = `${base}/v2/checkout/orders/${orderId}/capture`; // API endpoint for capturing payments
+    const accessToken = await generateGoogleAccessToken();
+    const url = `${base}/v2/checkout/orders/${orderId}/capture`;
 
     const response = await fetch(url, {
         method: "POST",
@@ -261,33 +193,22 @@ async function captureGooglePayment(orderId) {
             Authorization: `Bearer ${accessToken}`,
         },
     });
-
-    const data = await response.json();
-    return data;  // Return the response after capturing the payment
+    return response.json();
 }
 
-// Function to generate an access token for PayPal
 async function generateGoogleAccessToken() {
+    const clientCredentials = `${PAYPAL_CLIENT_ID_PHP}:${PAYPAL_SECRET_PHP}`;
+    const base64Encoded = btoa(clientCredentials);
 
-    // Base64 encode client credentials (if not done previously)
-    const clientId = "AXc2YDyTWs6VKh-EdMFo1MV1zQ7vzYzLcPTvpmYg5rHMZxSgySqtLpT-5v13dRIxG6vxvrjb1X9QvBJR";  // Replace with your actual PayPal Client ID
-    const clientSecret = "EITsZpoj19pYPdScdV6rIaJpFzND_qJDLFlhQBqHkYNhfYv__7fHwS2ESOSj7D_40_CSfJaf1rV7FD1V";  // Replace with your actual PayPal Client Secret
-    const clientCredentials = `${clientId}:${clientSecret}`;
-    const base64EncodedClientCredentials = btoa(clientCredentials);  // Base64 encode the credentials
-    // const base64EncodedClientCredentials = 'QWZMUWNSdVk4QzJWY3Bkc1NJbXVwNEUxMHZZaTVZaTN3NGdKNmQxV2hxdWJLYkh0dGR3cFVlOFJJVzFwVmtXME9zclhXNHVOQmw0NFJJcXA6RUJ6cDdFck01X01BNVlPekJKeEtwQTRhWnF0ZmNoazVuRkU4YXVOWEV5cDZVcnhzQ21XWC1lNlNsVWJaT2NPVVJzNF9pdUNfUlNxTlAzZU8=';  // encode token
-
-    // Make a request to PayPal to get an access token
     const response = await fetch(`${base}/v1/oauth2/token`, {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Basic ${base64EncodedClientCredentials}`,  // Use the Base64 encoded client credentials
+            Authorization: `Basic ${base64Encoded}`,
         },
-        body: new URLSearchParams({
-            grant_type: "client_credentials",
-        }),
+        body: new URLSearchParams({ grant_type: "client_credentials" }),
     });
 
     const data = await response.json();
-    return data.access_token;  // Return the access token
+    return data.access_token;
 }
