@@ -3,124 +3,133 @@
 * configuration
 */
 const baseRequest = {
-  apiVersion: 2,
-  apiVersionMinor: 0,
+    apiVersion: 2,
+    apiVersionMinor: 0,
 };
 let paymentsClient = null,
-  allowedPaymentMethods = null,
-  merchantInfo = null;
+    allowedPaymentMethods = null,
+    merchantInfo = null;
 /* Configure your site's support for payment methods supported by the Google Pay */
 function getGoogleIsReadyToPayRequest(allowedPaymentMethods) {
-  return Object.assign({}, baseRequest, {
-    allowedPaymentMethods: allowedPaymentMethods,
-  });
+    return Object.assign({}, baseRequest, {
+        allowedPaymentMethods: allowedPaymentMethods,
+    });
 }
 /* Fetch Default Config from PayPal via PayPal SDK */
 async function getGooglePayConfig() {
-  if (allowedPaymentMethods == null || merchantInfo == null) {
-    const googlePayConfig = await paypal.Googlepay().config();
-    allowedPaymentMethods = googlePayConfig.allowedPaymentMethods;
-    merchantInfo = googlePayConfig.merchantInfo;
-  }
-  return {
-    allowedPaymentMethods,
-    merchantInfo,
-  };
+    if (allowedPaymentMethods == null || merchantInfo == null) {
+        const googlePayConfig = await paypal.Googlepay().config();
+        allowedPaymentMethods = googlePayConfig.allowedPaymentMethods;
+        merchantInfo = googlePayConfig.merchantInfo;
+    }
+    return {
+        allowedPaymentMethods,
+        merchantInfo,
+    };
 }
 /* Configure support for the Google Pay API */
 async function getGooglePaymentDataRequest() {
-  const paymentDataRequest = Object.assign({}, baseRequest);
-  const { allowedPaymentMethods, merchantInfo } = await getGooglePayConfig();
-  paymentDataRequest.allowedPaymentMethods = allowedPaymentMethods;
-  paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
-  paymentDataRequest.merchantInfo = merchantInfo;
-  paymentDataRequest.callbackIntents = ["PAYMENT_AUTHORIZATION"];
-  return paymentDataRequest;
+    const paymentDataRequest = Object.assign({}, baseRequest);
+    const { allowedPaymentMethods, merchantInfo } = await getGooglePayConfig();
+    paymentDataRequest.allowedPaymentMethods = allowedPaymentMethods;
+    paymentDataRequest.transactionInfo = getGoogleTransactionInfo();
+    paymentDataRequest.merchantInfo = merchantInfo;
+    paymentDataRequest.callbackIntents = ["PAYMENT_AUTHORIZATION"];
+    console.log('getGooglePaymentDataRequest()');
+    console.log(paymentDataRequest);
+
+    return paymentDataRequest;
 }
 function onPaymentAuthorized(paymentData) {
-  return new Promise(function (resolve, reject) {
-    processPayment(paymentData)
-      .then(function (data) {
-        resolve({ transactionState: "SUCCESS" });
-      })
-      .catch(function (errDetails) {
-        resolve({ transactionState: "ERROR" });
-      });
-  });
+    return new Promise(function (resolve, reject) {
+        processPayment(paymentData)
+            .then(function (data) {
+                resolve({ transactionState: "SUCCESS" });
+            })
+            .catch(function (errDetails) {
+                resolve({ transactionState: "ERROR" });
+            });
+    });
 }
 function getGooglePaymentsClient() {
-  if (paymentsClient === null) {
-    paymentsClient = new google.payments.api.PaymentsClient({
-      environment: "PRODUCTION",  // Change from "TEST" to "PRODUCTION"
-      paymentDataCallbacks: {
-        onPaymentAuthorized: onPaymentAuthorized,
-      },
-    });
-  }
-  return paymentsClient;
+    if (paymentsClient === null) {
+        paymentsClient = new google.payments.api.PaymentsClient({
+            environment: "PRODUCTION",  // Change from "TEST" to "PRODUCTION"
+            paymentDataCallbacks: {
+                onPaymentAuthorized: onPaymentAuthorized,
+            },
+        });
+    }
+    return paymentsClient;
 }
 async function onGooglePayLoaded() {
-  const paymentsClient = getGooglePaymentsClient();
-  const { allowedPaymentMethods } = await getGooglePayConfig();
-  paymentsClient
-    .isReadyToPay(getGoogleIsReadyToPayRequest(allowedPaymentMethods))
-    .then(function (response) {
-      if (response.result) {
-         addGooglePayButton();
-       // console.log('Google Pay is not available.');
-      }
-    })
-    .catch(function (err) {
-      console.error(err);
-    });
+    const paymentsClient = getGooglePaymentsClient();
+    const { allowedPaymentMethods } = await getGooglePayConfig();
+    paymentsClient
+        .isReadyToPay(getGoogleIsReadyToPayRequest(allowedPaymentMethods))
+        .then(function (response) {
+            if (response.result) {
+                addGooglePayButton();
+                // console.log('Google Pay is not available.');
+            }
+        })
+        .catch(function (err) {
+            console.error(err);
+        });
 }
 function addGooglePayButton() {
-  const paymentsClient = getGooglePaymentsClient();
-  const button = paymentsClient.createButton({
-    onClick: onGooglePaymentButtonClicked(),
-  });
-  document.getElementById("container").appendChild(button);
+    const paymentsClient = getGooglePaymentsClient();
+    const button = paymentsClient.createButton({
+        onClick: onGooglePaymentButtonClicked(),
+    });
+    document.getElementById("container").appendChild(button);
 }
 function getGoogleTransactionInfo(subtotal) {
-  return {
-    displayItems: [
-      {
-        label: "Subtotal",
-        type: "SUBTOTAL",
-        price: subtotal,
-      },
-      {
-        label: "Tax",
-        type: "TAX",
-        price: "0",
-      },
-    ],
-    countryCode: "GB",
-    currencyCode: "GBP",
-    totalPriceStatus: "FINAL",
-    totalPrice: subtotal,
-    totalPriceLabel: "Total",
-  };
+    return {
+        displayItems: [
+            {
+                label: "Subtotal",
+                type: "SUBTOTAL",
+                price: subtotal,
+            },
+            {
+                label: "Tax",
+                type: "TAX",
+                price: "0",
+            },
+        ],
+        countryCode: "GB",
+        currencyCode: "GBP",
+        totalPriceStatus: "FINAL",
+        totalPrice: subtotal,
+        totalPriceLabel: "Total",
+    };
 }
 
-async function onGooglePaymentButtonClicked(price,orderData) {
-  const subtotal = price.toString();
-  const paymentDataRequest = await getGooglePaymentDataRequest(subtotal);
-  paymentDataRequest.transactionInfo = getGoogleTransactionInfo(subtotal);
-  const paymentsClient = getGooglePaymentsClient();
-  paymentsClient.loadPaymentData(paymentDataRequest,subtotal);
+async function onGooglePaymentButtonClicked(price, orderData) {
+    const subtotal = price.toString();
+    const paymentDataRequest = await getGooglePaymentDataRequest(subtotal);
+    paymentDataRequest.transactionInfo = getGoogleTransactionInfo(subtotal);
+    const paymentsClient = getGooglePaymentsClient();
+    paymentsClient.loadPaymentData(paymentDataRequest, subtotal);
 }
 
-const base = 'https://api.paypal.com'; // For live environment
+let base;
+if (environmentCheckPhp == 'production') {
+    base = 'https://api.paypal.com'; // For live environment
+} else {
+    base = 'https://api.sandbox.paypal.com'; // For local environment
+}
+
 
 async function processPayment(payment) {
     const tokenOrdIdUpdated = $('#tokenOrdId').val();
     const final_price = $('#final_price').val();
-      // Retrieve transaction info
-   const { currencyCode, subtotal } = getGoogleTransactionInfo();
+    // Retrieve transaction info
+    const { currencyCode, subtotal } = getGoogleTransactionInfo();
 
     try {
-      
+
         const purchaseAmount = final_price; // Replace with dynamic amount as needed
         const currency = "GBP"; // Set the appropriate currency
 
@@ -129,7 +138,7 @@ async function processPayment(payment) {
 
         if (createOrderResponse.status === 'CREATED') {
             const orderId = createOrderResponse.id;
-            console.log(orderId,"orderId")
+            console.log(orderId, "orderId")
 
             // Step 2: Confirm the order with Google Pay
             const { status } = await paypal.Googlepay().confirmOrder({
@@ -144,56 +153,56 @@ async function processPayment(payment) {
                 return fetch("/process-apple-pay", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ payment,tokenOrdIdUpdated,captureResponse }),
+                    body: JSON.stringify({ payment, tokenOrdIdUpdated, captureResponse }),
                 })
-                .then((response) => response.json())  // Parse JSON from the response
-                .then((data) => {
-                    // Log the parsed data (response body) here
-                    if (data.success) {
-                      window.location.href = data.redirect;
-                    } else {
-                        alert('Failed to update order status:', data);
-                    }
-                    return data;  // Return the data if needed later
-                })
-                .catch((error) => {
-                    // Handle any errors that occur during the fetch
-                    console.error("Error during fetch:", error);
-                });
-              return { transactionState: "SUCCESS" };
-            }else if(status === "PAYER_ACTION_REQUIRED"){
-                console.log(" ===== Confirm Payment Completed Payer Action Required ===== ");
-                paypal
-                  .Googlepay()
-                  .initiatePayerAction({ orderId: id })
-                  .then(async () => {
-                    /*
-                    * CAPTURE THE ORDER
-                    */
-                    console.log(" ===== Payer Action Completed ===== ");
-                    const captureResponse = await captureGooglePayment(orderId);
-                    console.log(" ===== Order Capture Completed ===== ");
-                    return fetch("/process-apple-pay", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ payment,tokenOrdIdUpdated,captureResponse }),
-                    })
                     .then((response) => response.json())  // Parse JSON from the response
                     .then((data) => {
                         // Log the parsed data (response body) here
                         if (data.success) {
-                          window.location.href = data.redirect;
+                            window.location.href = data.redirect;
                         } else {
-                          alert('Failed to update order status:' + JSON.stringify(data,null,2));
+                            alert('Failed to update order status:', data);
                         }
                         return data;  // Return the data if needed later
                     })
                     .catch((error) => {
                         // Handle any errors that occur during the fetch
                         console.error("Error during fetch:", error);
-                        alert('Error during fetch:' + error);
                     });
-                  });
+                return { transactionState: "SUCCESS" };
+            } else if (status === "PAYER_ACTION_REQUIRED") {
+                console.log(" ===== Confirm Payment Completed Payer Action Required ===== ");
+                paypal
+                    .Googlepay()
+                    .initiatePayerAction({ orderId: id })
+                    .then(async () => {
+                        /*
+                        * CAPTURE THE ORDER
+                        */
+                        console.log(" ===== Payer Action Completed ===== ");
+                        const captureResponse = await captureGooglePayment(orderId);
+                        console.log(" ===== Order Capture Completed ===== ");
+                        return fetch("/process-apple-pay", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ payment, tokenOrdIdUpdated, captureResponse }),
+                        })
+                            .then((response) => response.json())  // Parse JSON from the response
+                            .then((data) => {
+                                // Log the parsed data (response body) here
+                                if (data.success) {
+                                    window.location.href = data.redirect;
+                                } else {
+                                    alert('Failed to update order status:' + JSON.stringify(data, null, 2));
+                                }
+                                return data;  // Return the data if needed later
+                            })
+                            .catch((error) => {
+                                // Handle any errors that occur during the fetch
+                                console.error("Error during fetch:", error);
+                                alert('Error during fetch:' + error);
+                            });
+                    });
             } else {
                 console.error("Payment failed during confirmation with PayPal.");
                 return { transactionState: "ERROR" };
