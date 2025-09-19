@@ -71,7 +71,7 @@ function getGooglePaymentsClient() {
         paymentsClient = new google.payments.api.PaymentsClient({
             environment: googlePayEnvironment, // change to "PRODUCTION" later
             // paymentDataCallbacks: {
-                // onPaymentAuthorized: onPaymentAuthorized,
+            // onPaymentAuthorized: onPaymentAuthorized,
             // },
         });
     }
@@ -88,7 +88,7 @@ function onPaymentAuthorized(paymentData) {
 }
 
 /* === STEP 6: Triggered only when user selects Google Pay === */
-async function onGooglePaymentButtonClicked(price, orderId, isCallFromAjax = false) {
+async function onGooglePaymentButtonClicked(price, orderId, payloadGooglepay, isCallFromAjax = false) {
     console.group("GooglePay Triggered");
     console.log("🔔 onGooglePaymentButtonClicked called with:", { price, orderId });
     console.trace("Call stack:");
@@ -101,9 +101,11 @@ async function onGooglePaymentButtonClicked(price, orderId, isCallFromAjax = fal
         const paymentDataRequest = await getGooglePaymentDataRequest(subtotal);
 
         const paymentData = await paymentsClient.loadPaymentData(paymentDataRequest);
+        console.log('paymentData====>');
+        console.log(paymentData);
 
         // Send result to backend for processing
-        await processPayment(paymentData, orderId);
+        await processPayment(paymentData, payloadGooglepay, orderId);
     } catch (err) {
         console.error("Google Pay error:", err);
         alert("Googlepay is not available! Please try again later.");
@@ -111,15 +113,14 @@ async function onGooglePaymentButtonClicked(price, orderId, isCallFromAjax = fal
 }
 
 /* === STEP 7: Process the payment with PayPal APIs === */
-async function processPayment(paymentData, orderID) {
+async function processPayment(paymentData, payloadGooglepay, orderID) {
     const customOrderID = orderID;
-    console.log(customOrderID);
 
     const final_price = $('#final_price').val();
 
     try {
         // Create PayPal order
-        const createOrderResponse = await createGoogleOrder(final_price, "GBP");
+        const createOrderResponse = await createGoogleOrder(payloadGooglepay, final_price, "GBP");
 
         if (createOrderResponse.status === 'CREATED') {
             const orderId = createOrderResponse.id;
@@ -131,8 +132,6 @@ async function processPayment(paymentData, orderID) {
 
             if (status === "APPROVED") {
                 const captureResponse = await captureGooglePayment(orderId);
-                console.log(captureResponse);
-                console.log(customOrderID);
 
                 return fetch("/process-google-pay", {
                     method: "POST",
@@ -159,7 +158,7 @@ async function processPayment(paymentData, orderID) {
 
 
 /* === STEP 8: Create & Capture order using PayPal API === */
-async function createGoogleOrder(purchaseAmount, currencyCode) {
+async function createGoogleOrder(payloadGooglepay, purchaseAmount, currencyCode) {
     const accessToken = await generateGoogleAccessToken();
     const url = `${base}/v2/checkout/orders`;
 
@@ -169,15 +168,7 @@ async function createGoogleOrder(purchaseAmount, currencyCode) {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({
-            intent: "CAPTURE",
-            purchase_units: [
-                {
-                    amount: {
-                        currency_code: currencyCode, value: purchaseAmount
-                    }
-                }],
-        }),
+        body: JSON.stringify(payloadGooglepay, null, 2),
     });
     return response.json();
 }

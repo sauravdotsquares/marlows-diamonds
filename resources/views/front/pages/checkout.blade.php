@@ -1406,7 +1406,11 @@
                                     window.location.href = "{{ route('make.payment') }}/" +
                                         response.order_dt;
                                 } else if (selectedPaymentType == 'googlepay') {
-                                    onGooglePaymentButtonClicked(price, response.order_dt,true);
+                                    let payload = getGooglePayloadInfo(response.order_dt, response
+                                        .get_order_detail,
+                                        price, "GBP");
+                                    onGooglePaymentButtonClicked(price, response.order_dt, payload,
+                                        true);
                                 } else if (selectedPaymentType == 'klarna') {
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
@@ -1681,6 +1685,81 @@
                     console.error("Error fetching client token:", err);
                     alert("Failed to generate Klarna client token.");
                 });
+        }
+
+        // Google pay transaction payload code only
+        function getGooglePayloadInfo(internal_order_id, get_order_detail, total, currencyCode = "USD") {
+            let items = [];
+            let itemsTotal = 0;
+
+            if (get_order_detail.get_order_details_function && get_order_detail.get_order_details_function.length > 0) {
+                get_order_detail.get_order_details_function.forEach(item => {
+                    let details = {};
+                    try {
+                        details = JSON.parse(item.order_product_details || "{}");
+                    } catch (e) {
+                        details = {};
+                    }
+
+                    const price = parseFloat(item.final_product_price) || 0;
+                    const quantity = parseInt(item.quantity) || 1;
+
+                    items.push({
+                        name: details.slug || ("Product " + item.product_id),
+                        description: details.metal_type ?
+                            `${details.carat || ""} ${details.metal_type} ${details.shape || ""}`.trim() :
+                            "Order Item",
+                        unit_amount: {
+                            currency_code: currencyCode,
+                            value: price.toFixed(2)
+                        },
+                        quantity: quantity,
+                        sku: item.product_id.toString()
+                    });
+
+                    itemsTotal += price * quantity;
+                });
+            }
+
+            let payload = {
+                intent: "CAPTURE",
+                purchase_units: [{
+                    reference_id: "ORDER_REF_" + internal_order_id,
+                    amount: {
+                        currency_code: currencyCode,
+                        value: itemsTotal.toFixed(2), // must match sum
+                        breakdown: {
+                            item_total: {
+                                currency_code: currencyCode,
+                                value: itemsTotal.toFixed(2)
+                            }
+                        }
+                    },
+                    items: items
+                }]
+            };
+
+            // ✅ Add shipping if available
+            if (get_order_detail.customer_shipping_address) {
+                const shipping = get_order_detail.customer_shipping_address;
+                payload.purchase_units[0].shipping = {
+                    name: {
+                        full_name: shipping.first_name + " " + shipping.last_name
+                    },
+                    address: {
+                        address_line_1: shipping.street_address_l1,
+                        address_line_2: shipping.street_address_l2 || "",
+                        admin_area_2: shipping.town_city,
+                        admin_area_1: shipping.state,
+                        postal_code: shipping.pin_code,
+                        country_code: shipping.country_id
+                    }
+                };
+            } else {
+                payload.purchase_units[0].shipping = null;
+            }
+
+            return payload;
         }
     </script>
 @endsection

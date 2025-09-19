@@ -195,7 +195,11 @@ class PlaceOrderController extends Controller
                             )->update(['order_id' => $getOrders->id]);
                         }
 
-                        return response()->json(['status' => 200, 'msg' => 'Order added', 'order_dt' => $getOrders->id]);
+                        $getOrderDetail = Order::with('customerOrderAddress','customerShippingAddress','getOrderDetailsFunction')->find($getOrders->id);
+                        // dd($getOrderDetail);
+                        // $getOrderDetail = OrderDetail::where('order_id', '=', $getOrders->id)->get()->toArray();
+
+                        return response()->json(['status' => 200, 'msg' => 'Order added', 'order_dt' => $getOrders->id, 'get_order_detail' => $getOrderDetail]);
                         // return redirect(route('make.payment'));
                         // return redirect()->route('make.payment', ['order_id' => $getOrders->id]);
                     }
