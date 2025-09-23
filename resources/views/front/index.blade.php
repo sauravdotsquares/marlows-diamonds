@@ -668,5 +668,5 @@
     </script>
 
     {{-- <script src="{{ asset('custom/js/index/index.js') }}"></script> --}}
-    <script src="{{ mix('js/index.js') }}"></script>
+    <script src="{{ mix('js/index.min.js') }}"></script>
 @endsection

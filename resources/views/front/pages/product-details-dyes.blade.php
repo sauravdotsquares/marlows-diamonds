@@ -912,7 +912,7 @@
         // const customApiFilterDataRoute = "{{ route('custom-api-filter-data') }}";
         // const customApiFilterDataRoute = "{{ route('custom-api-filter-data') }}"
     </script>
-    <script src="{{ mix('js/product-details-dyes.js') }}"></script>
+    <script src="{{ mix('js/product-details-dyes.min.js') }}"></script>
 
     <!-- Product Schema code start -->
     @php

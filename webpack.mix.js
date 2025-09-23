@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const crypto = require("crypto");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,15 +12,28 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .copy('resources/js/index.js', 'public/js')
-    .copy('resources/js/product_listing_page.js', 'public/js')
-    .copy('resources/js/product-details-dyes.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]).version();
+// mix.js('resources/js/app.js', 'public/js')
+    // .copy('resources/js/index.js', 'public/js')
+    // .minify('public/js/index.js')
+    // .copy('resources/js/product_listing_page.js', 'public/js')
+    // .minify('public/js/product_listing_page.js')
+    // .copy('resources/js/product-details-dyes.js', 'public/js')
+    // .minify('public/js/product-details-dyes.js')
+    // .copy('resources/js/googlepay_checkout_code.js', 'public/js')
+    // .minify('public/js/googlepay_checkout_code.js')
+    // .postCss('resources/css/app.css', 'public/css', [
+        // 
+    // ]).version();
 
-const crypto = require("crypto");
+mix.scripts('resources/js/app.js', 'public/js/app.min.js')
+    .scripts('resources/js/index.js', 'public/js/index.min.js')
+    .scripts('resources/js/product_listing_page.js', 'public/js/product_listing_page.min.js')
+    .scripts('resources/js/product-details-dyes.js', 'public/js/product-details-dyes.min.js')
+    .scripts('resources/js/googlepay_checkout_code.js', 'public/js/googlepay_checkout_code.min.js')
+    .version(); // <-- important
+
+
+
 module.exports = {
     resolve: {
         fallback: {

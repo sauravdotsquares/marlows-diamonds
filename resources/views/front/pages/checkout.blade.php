@@ -83,15 +83,16 @@
         $clientToken = generateClientToken();
 
         if (env('APP_ENV') == 'production') {
-            $clientId = 'AXc2YDyTWs6VKh-EdMFo1MV1zQ7vzYzLcPTvpmYg5rHMZxSgySqtLpT-5v13dRIxG6vxvrjb1X9QvBJR'; // Hardcode or set these manually
+            // $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
             $merchantId = env('PAYPAL_MERCHANTID_LIVE');
         } elseif (env('APP_ENV') == 'local') {
-            $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
+            // $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
             $merchantId = env('PAYPAL_MERCHANTID_STAG');
         }
+        $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
     @endphp
     <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
-    <script src="{{ asset('javascript.js') }}"></script>
+    <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
     <script>
         function onPayPalScriptLoaded() {
             if (window.paypal && paypal.Googlepay) {
@@ -169,13 +170,13 @@
                                     Signup
                                 </a>
                                 <!-- <label class="rememberme">
-                                                                                                                        <input type="checkbox">
-                                                                                                                        <span>Remember me</span>
-                                                                                                                    </label> -->
+                                                                                                                            <input type="checkbox">
+                                                                                                                            <span>Remember me</span>
+                                                                                                                        </label> -->
                             </div>
                             <!-- <div class="lostpassword">
-                                                                                                                    <a href="javascript:void(0)">Lost your password</a>
-                                                                                                                </div> -->
+                                                                                                                        <a href="javascript:void(0)">Lost your password</a>
+                                                                                                                    </div> -->
                         </form>
                     </div>
                 @endif
@@ -185,12 +186,12 @@
                 <div class="checkout-main-wrap">
                     <!--<div class="checkout-table">
 
-                                                                                                                <ul>
-                                                                                                                    <li><span class="active">1</span>Shipping</li>
-                                                                                                                    <li><span>2</span>Payment</li>
-                                                                                                                </ul>
+                                                                                                                    <ul>
+                                                                                                                        <li><span class="active">1</span>Shipping</li>
+                                                                                                                        <li><span>2</span>Payment</li>
+                                                                                                                    </ul>
 
-                                                                                                            </div> -->
+                                                                                                                </div> -->
 
                     <form id="finalPlaceOrderPage">
                         @csrf
@@ -258,9 +259,9 @@
                                                                 id="state" name="state" required="required"
                                                                 class="form-control">
                                                             <!-- <select id="state" name="state" required="required" class="form-control">
-                                                                                                                                                        <option>Select Option</option>
-                                                                                                                                                        <option>Rajasthan</option>
-                                                                                                                                                    </select> -->
+                                                                                                                                                            <option>Select Option</option>
+                                                                                                                                                            <option>Rajasthan</option>
+                                                                                                                                                        </select> -->
                                                         </div>
                                                     </div>
 
