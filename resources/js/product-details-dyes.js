@@ -25,19 +25,29 @@ $(".lab_price_update_items").on('change', function () {
 });
 
 
+// $(document).on('change', '.diamond_type', function (event) {
+//     getCustomFilter();
+//     setTimeout(function () {
+//         changeDiamondType($(event.target).attr("id"));
+//     }, 500);
+//     // getCustomPriceFinalFunction();
+//     let getDiamondType = $(this).val();
+//     getSelectedDataVariation();
+//     if (getDiamondType == 'lab_grown') {
+//         getProdVideo('onChange', ' 9ct White Gold ');
+//     } else if (getDiamondType == 'mined_diamond') {
+//         getProdVideo('onChange', 'Platinum');
+//     }
+// });
+let diamondTypeTimer;
 $(document).on('change', '.diamond_type', function (event) {
-    getCustomFilter();
-    setTimeout(function () {
+    clearTimeout(diamondTypeTimer);
+    diamondTypeTimer = setTimeout(() => {
+        getCustomFilter();        // loads filter
         changeDiamondType($(event.target).attr("id"));
-    }, 500);
-    // getCustomPriceFinalFunction();
-    let getDiamondType = $(this).val();
-    getSelectedDataVariation();
-    if (getDiamondType == 'lab_grown') {
-        getProdVideo('onChange', ' 9ct White Gold ');
-    } else if (getDiamondType == 'mined_diamond') {
-        getProdVideo('onChange', 'Platinum');
-    }
+        getSelectedDataVariation();
+        getProdVideo('onChange', $(this).val() === 'lab_grown' ? ' 9ct White Gold ' : 'Platinum');
+    }, 400);
 });
 
 
@@ -146,8 +156,12 @@ $(document).ready(function () {
         }
     });
 
-    getRelatedProduct();
-    getCustomFilter(); //getProdVideo();
+    window.requestIdleCallback(() => {
+        getRelatedProduct();
+        getCustomFilter(); //getProdVideo();
+    });
+    // getRelatedProduct();
+    // getCustomFilter(); //getProdVideo();
 
 
     $(".viewdiamond-btn").click(function () {
@@ -214,6 +228,12 @@ $(document).ready(function () {
         // $("#certificate_url").val($(this).data('certurl'));
         // $("#productCertificateLink").attr('href',$(this).data('certurl'));
         // getFinalPrice();
+    });
+
+    window.addEventListener("load", function () {
+        setTimeout(() => {
+            getSelectedAttributePrice();
+        }, 1000);
     });
 });
 
@@ -316,6 +336,7 @@ function getCustomPriceFinalFunction(selectedDiamondPrice = null) {
     let diamondGrade;
     let diamondClarity;
     let diamondCertificate;
+    let diamondAllSpecs = [];
     if ($('.diamond_type:checked').val() == 'mined_diamond') {
         diamondCaratWeight = $('#carat').val();
         diamondColour = $('#diamond-colour').val();
@@ -332,6 +353,12 @@ function getCustomPriceFinalFunction(selectedDiamondPrice = null) {
         diamondCertificate = '';
     }
 
+    diamondAllSpecs.push(diamondCaratWeight);
+    diamondAllSpecs.push(diamondColour);
+    diamondAllSpecs.push(diamondClarity);
+    diamondAllSpecs = diamondAllSpecs.join(', ');
+
+    document.getElementById("loader-overlay").style.display = "flex";
     $.ajax({
         type: 'POST',
         url: getProductVariationPricesRoute,
@@ -378,6 +405,8 @@ function getCustomPriceFinalFunction(selectedDiamondPrice = null) {
                 $('#finaldiamondpricefooter').html(`<span class="price" >${MYCURRENCYSYMBOLPhpVariable} ` +
                     res.allPrices.discounted_price.toFixed(2) + ' </span>');
 
+                $('#finaldiamondspecfooter').html(diamondAllSpecs);
+
                 $('#savePrice').html(`${MYCURRENCYSYMBOLPhpVariable} ` + (parseFloat(res.allPrices
                     .rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
 
@@ -385,6 +414,8 @@ function getCustomPriceFinalFunction(selectedDiamondPrice = null) {
                     .rrp_price) - parseFloat(res.allPrices.discounted_price)).toFixed(2));
 
                 $('#getLabDiamondPrices').val(res.getLabDiamondPrices.toFixed(2));
+
+                document.getElementById("loader-overlay").style.display = "none";
             } else if (res.status == 500) {
                 $('#price-section').html(`${MYCURRENCYSYMBOLPhpVariable} Pending...`);
                 $('#getLabDiamondPrices').val('');
@@ -510,7 +541,8 @@ function addtobasketFunction(getUrl, product_slug = null, index = null) {
     });
 }
 
-getSelectedAttributePrice();
+
+// getSelectedAttributePrice();
 var triggerLab = true;
 
 function getSelectedAttributePrice() {
@@ -552,6 +584,7 @@ function getSelectedAttributePrice() {
     });
 }
 
+// Data shows in Table view
 function getSelectedDataVariation() {
 
     let designTable = `<table class="table  table-bordered  table-responsive">
@@ -658,6 +691,9 @@ function getRelatedProduct() {
 $(document).on('click', '.product-gallery__trigger', function (e) {
     e.preventDefault();
     $('#carousel .item.active a').click();
+
+    $('#carousel .owl-item.active a').click();
+    $('#carousel1 .product-items-carousel.active a').click();
 });
 
 
@@ -677,6 +713,8 @@ $(document).ready(function () {
         onInitialized: function () {
             $owl.find('.owl-item').each((index, element) => {
                 const src = $(element).find('.thumbnail-src').attr('src');
+                if (!src) return; // skip if src undefined
+
                 const video_extensions = ['mp4'];
                 const extension = src.split(/[#?]/)[0].split('.').pop().trim();
                 let thumbnailItem =
@@ -706,11 +744,11 @@ $(document).ready(function () {
         $('#carousel-selector-' + index).closest('li').addClass('active');
     });
 
-    $(document).on('click', '.product-gallery__trigger', function (e) {
-        e.preventDefault();
-        $('#carousel .owl-item.active a').click();
-        $('#carousel1 .product-items-carousel.active a').click();
-    });
+    // $(document).on('click', '.product-gallery__trigger', function (e) {
+    //     e.preventDefault();
+    //     $('#carousel .owl-item.active a').click();
+    //     $('#carousel1 .product-items-carousel.active a').click();
+    // });
 
     $(document).on('click', '.carousel-thumbnail-item', function () {
         const itemPosition = $(this).data('slide-to');

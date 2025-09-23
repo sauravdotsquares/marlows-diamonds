@@ -37,6 +37,7 @@ use View;
 use Illuminate\Support\Arr;
 use DB;
 use billythekid\dekopay\Core\DekoPayApiClient;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -455,7 +456,7 @@ class ProductController extends Controller
 
     public function getCustomFilter(Request $request)
     {
-
+        $startOld = microtime(true);
         $product_id = Products::where('slug', $request->slug)->value('id');
         if ($product_id != '') {
             $productSelectedAttribute = ProductVariationAttributes::where('product_id', $product_id)->value('attr_values');
@@ -528,7 +529,10 @@ class ProductController extends Controller
                                 return stripos($value, $arr_2) === false;
                             });
                         }
+                        $startQuery = microtime(true);
                         $getAttrVals = ProductVariationDetails::whereIn('variation_id', $variation_ids)->where('key', 'attri_' . $attribute['slug'])->pluck('value')->toArray();
+                        $endQuery = microtime(true);
+                        Log::info('ProductVariationDetails query time: ' . ($endQuery - $startQuery));
 
 
                         $found = [];
@@ -566,15 +570,87 @@ class ProductController extends Controller
                         } else {
                             $final_attr['attri_' . $attribute['slug']] = $found;
                         }
-
+                        $startRender = microtime(true);
                         $variationArray[] = View::make('front.includes.show_variations', ['final_attr' => $final_attr, 'type' => $request->type, 'selected' => $selected, 'diamondType' => $request->diamondType])->render();
+                        $endRender = microtime(true);
+                        Log::info('Blade render time: ' . ($endRender - $startRender));
                     }
                 }
+                $endOld = microtime(true);
+
+                $timeOld = $endOld - $startOld;
+                Log::info('Old function execution time: ' . $timeOld . ' seconds');
                 return $variationArray;
             }
         }
         return response()->json(['status' => 'Not attribute selected']);
     }
+    // public function getCustomFilter(Request $request)
+    // {
+    //     $startNew = microtime(true);
+    //     $product = Products::where('slug', $request->slug)->first(['id']);
+    //     if (!$product) return response()->json(['status' => 'Not attribute selected']);
+
+    //     $product_id = $product->id;
+
+    //     $attrSlugs = ProductVariationAttributes::where('product_id', $product_id)
+    //         ->value('attr_values');
+
+    //     if (!$attrSlugs) return response()->json(['status' => 'Not attribute selected']);
+
+    //     $attrSlugs = str_replace('attri_', '', explode(',', $attrSlugs));
+    //     $attributes = Attributes::whereIn('slug', $attrSlugs)->get()->toArray();
+    //     if (empty($attributes)) return response()->json(['status' => 'Not attribute selected']);
+
+    //     $variation_ids = ProductVariations::where('product_id', $product_id)->pluck('id')->toArray();
+
+    //     // Fetch all attribute values in one query
+    //     $allAttrVals = ProductVariationDetails::whereIn('variation_id', $variation_ids)
+    //         ->get(['key', 'value'])
+    //         ->groupBy('key')
+    //         ->map(fn($items) => $items->pluck('value')->toArray());
+
+    //     $variationArray = [];
+
+    //     foreach ($attributes as $attribute) {
+    //         $slug = $attribute['slug'];
+    //         $final_attr = [
+    //             'name' => $attribute['name'],
+    //             'slug' => $slug,
+    //         ];
+
+    //         $explode_attr = explode('|', $attribute['values']);
+
+    //         // Remove 9ct for mined diamonds
+    //         if (($request->diamond_type ?? '') == 'mined_diamond') {
+    //             $explode_attr = array_filter($explode_attr, fn($v) => stripos($v, '9ct') === false);
+    //         }
+
+    //         $key = 'attri_' . $slug;
+    //         $found = $allAttrVals[$key] ?? [];
+
+    //         $final_attr[$key] = array_values(array_intersect(array_map('trim', $explode_attr), $found));
+
+    //         // Handle empty case
+    //         if (empty($final_attr[$key])) $final_attr[$key] = $explode_attr;
+
+    //         $selected = $request[$slug] ?? '';
+
+    //         $variationArray[] = View::make('front.includes.show_variations', [
+    //             'final_attr' => $final_attr,
+    //             'type' => $request->type,
+    //             'selected' => $selected,
+    //             'diamondType' => $request->diamond_type
+    //         ])->render();
+    //     }
+    //     $endNew = microtime(true);
+
+    //     $timeNew = $endNew - $startNew;
+    //     Log::info('New function execution time: ' . $timeNew . ' seconds');
+
+    //     return $variationArray;
+    // }
+
 
     public function replaceArrayById($array, $id, $newData)
     {
@@ -619,37 +695,157 @@ class ProductController extends Controller
         return response()->json($getProductVariationId);
     }
 
+    // public function getCustomApiFilterData(Request $request)
+    // {
+    //     $caratFrom = '0.30';
+    //     $caratTo = '0.39';
+    //     if ($request->carat != '') {
+    //         $carat = explode('-', $request->carat);
+    //         $caratFrom = $carat[0];
+    //         $caratTo = $carat[1];
+    //     }
+
+    //     $colorFrom = $colorTo = 'D';
+    //     $colour = [];
+    //     if ($request->color != '') {
+    //         $colour = explode(',', $request->color);
+    //         $colorFrom = $colorTo = $request->color;
+    //     }
+
+    //     $clarityFrom = $clarityTo = 'SI2';
+    //     $clarity = [];
+    //     if ($request->clarity != '') {
+    //         $clarity = explode(',', $request->clarity);
+    //         $clarityFrom = $clarityTo = $request->clarity;
+    //     }
+
+    //     $gradeFrom = $gradeTo = 'EX';
+    //     $grade = [];
+    //     if ($request->grade != '') {
+    //         $grade = explode(',', $request->grade);
+    //         $gradeFrom = $gradeTo = $request->grade;
+    //     }
+
+    //     $polishFrom = 'EX';
+    //     $polishTo = 'GD';
+    //     $polish = [];
+    //     $symmetryFrom = 'EX';
+    //     $symmetryTo = 'GD';
+    //     $symmetry = [];
+    //     $fluorescence = [];
+
+    //     $certificate = [];
+    //     if ($request->certificate != '') {
+    //         $certificate = explode(',', $request->certificate);
+    //     }
+
+    //     $data = [
+    //         'shape' => $request->shape,
+    //         'colorFrom' => $colorFrom,
+    //         'colorTo' => $colorTo,
+    //         'colour' => $colour,
+    //         'clarityFrom' => $clarityFrom,
+    //         'clarityTo' => $clarityTo,
+    //         'clarity' => $clarity,
+    //         'caratFrom' => $caratFrom,
+    //         'caratTo' => $caratTo,
+    //         'gradeFrom' => $gradeFrom,
+    //         'gradeTo' => $gradeTo,
+    //         'grade' => $grade,
+    //         'polishFrom' => $polishFrom,
+    //         'polishTo' => $polishTo,
+    //         'polish' => $polish,
+    //         'symmetryFrom' => $symmetryFrom,
+    //         'symmetryTo' => $symmetryTo,
+    //         'symmetry' => $symmetry,
+    //         'fluorescence' => $fluorescence,
+    //         'certificate' => $certificate,
+    //         'num_of_row' => 1,
+    //         'PageSize' => 2
+    //     ];
+
+    //     $hkData = getHKApiRecords($data);
+    //     $hkData = array_map([$this, 'amountChange'], $hkData);
+    //     $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
+
+    //     $rapnetRecords = [];
+    //     if (!empty($rapnetData)) {
+    //         foreach ($rapnetData as $key => $result) {
+    //             $rapnetRecords[$key]['Shape'] = $result->shape;
+    //             $rapnetRecords[$key]['Carat'] = $result->size;
+    //             $rapnetRecords[$key]['Color'] = $result->color;
+    //             $rapnetRecords[$key]['Clarity'] = $result->clarity;
+    //             if (isset($result->cut))
+    //                 $rapnetRecords[$key]['Cut'] = $result->cut;
+
+    //             $rapnetRecords[$key]['Lab'] = $result->lab;
+    //             $rapnetRecords[$key]['Amount'] = $result->total_sales_price;
+    //             $rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
+    //             $rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
+
+    //             if ($result->lab == 'GIA') {
+    //                 $rapnetRecords[$key]['CertificateLink'] = 'https://www.gia.edu/cs/Satellite?reportno=' . $rapnetRecords[$key]['CERT_NO'] . '&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
+    //             } elseif ($result->lab == 'IGI') {
+    //                 $rapnetRecords[$key]['CertificateLink'] = 'https://www.igi.org/reports/verify-your-report?r=' . $rapnetRecords[$key]['CERT_NO'];
+    //             } elseif ($result->lab == 'HRD') {
+    //                 $rapnetRecords[$key]['CertificateLink'] = 'https://www.hrdantwerplink.be/?record_number=' . $rapnetRecords[$key]['CERT_NO'] . '&weight=' . $result->size;
+    //             } else {
+    //                 $rapnetRecords[$key]['CertificateLink'] = 'https://www.diamondselections.com/GetCertificate.aspx?diamondid=' . $result->DiamondID;
+    //             }
+    //         }
+    //     }
+    //     $apiData['data'] = Arr::collapse([$rapnetRecords, $hkData]);
+
+    //     usort($apiData['data'], function ($a, $b) {
+    //         // return $b['Amount'] - $a['Amount']; // sort by descending
+    //         return $a['Amount'] - $b['Amount']; // sort by ascending
+    //     });
+
+    //     $apiData['VAT'] = getVAT();
+
+    //     // Ensure $dataArray is always defined
+    //     $dataArray = [];
+
+    //     if (!empty($apiData['data'])) {
+    //         if ($request->type && $request->diamond_type == "mined_diamond") {
+    //             if (isset($request->selectedDiamondPrice) && !empty($request->selectedDiamondPrice)) {
+    //                 return $request->selectedDiamondPrice;
+    //             }
+    //             return $apiData['data'][0]['Amount'];
+    //         } else {
+    //             foreach ($apiData['data'] as $key => $data) {
+    //                 $dataArray[] = View::make('front.includes.product_detail_diamonds', ['key' => $key, 'apiRecords' => $data, 'VAT' => $apiData['VAT']])->render();
+    //             }
+    //         }
+    //     }
+    //     return response()->json(['html' => $dataArray]);
+    // }
+
     public function getCustomApiFilterData(Request $request)
     {
-        $caratFrom = '0.30';
-        $caratTo = '0.39';
-        if ($request->carat != '') {
-            $carat = explode('-', $request->carat);
-            $caratFrom = $carat[0];
-            $caratTo = $carat[1];
-        }
+        // Helper function to parse ranges or comma-separated values
+        $parseRange = fn($input, $defaultFrom, $defaultTo) => $input
+            ? explode('-', $input) + [$defaultFrom, $defaultTo]
+            : [$defaultFrom, $defaultTo];
 
-        $colorFrom = $colorTo = 'D';
-        $colour = [];
-        if ($request->color != '') {
-            $colour = explode(',', $request->color);
-            $colorFrom = $colorTo = $request->color;
-        }
+        $parseList = fn($input, $default) => $input ? explode(',', $input) : $default;
 
-        $clarityFrom = $clarityTo = 'SI2';
-        $clarity = [];
-        if ($request->clarity != '') {
-            $clarity = explode(',', $request->clarity);
-            $clarityFrom = $clarityTo = $request->clarity;
-        }
+        // Carat
+        [$caratFrom, $caratTo] = $parseRange($request->carat ?? '', '0.30', '0.39');
 
-        $gradeFrom = $gradeTo = 'EX';
-        $grade = [];
-        if ($request->grade != '') {
-            $grade = explode(',', $request->grade);
-            $gradeFrom = $gradeTo = $request->grade;
-        }
+        // Color
+        $colorFrom = $colorTo = $request->color ?? 'D';
+        $colour = $parseList($request->color ?? '', []);
 
+        // Clarity
+        $clarityFrom = $clarityTo = $request->clarity ?? 'SI2';
+        $clarity = $parseList($request->clarity ?? '', []);
+
+        // Grade
+        $gradeFrom = $gradeTo = $request->grade ?? 'EX';
+        $grade = $parseList($request->grade ?? '', []);
+
+        // Polish & Symmetry
         $polishFrom = 'EX';
         $polishTo = 'GD';
         $polish = [];
@@ -657,12 +853,9 @@ class ProductController extends Controller
         $symmetryTo = 'GD';
         $symmetry = [];
         $fluorescence = [];
+        $certificate = $parseList($request->certificate ?? '', []);
 
-        $certificate = [];
-        if ($request->certificate != '') {
-            $certificate = explode(',', $request->certificate);
-        }
-
+        // Build API payload once
         $data = [
             'shape' => $request->shape,
             'colorFrom' => $colorFrom,
@@ -688,62 +881,64 @@ class ProductController extends Controller
             'PageSize' => 2
         ];
 
-        $hkData = getHKApiRecords($data);
-        $hkData = array_map([$this, 'amountChange'], $hkData);
+        // Fetch HK and Rapnet data
+        $hkData = array_map([$this, 'amountChange'], getHKApiRecords($data));
         $rapnetData = getRapnetApiRecordsDiamondSearch($data, 1);
 
+        // Transform Rapnet records efficiently
         $rapnetRecords = [];
         if (!empty($rapnetData)) {
-            foreach ($rapnetData as $key => $result) {
-                $rapnetRecords[$key]['Shape'] = $result->shape;
-                $rapnetRecords[$key]['Carat'] = $result->size;
-                $rapnetRecords[$key]['Color'] = $result->color;
-                $rapnetRecords[$key]['Clarity'] = $result->clarity;
-                if (isset($result->cut))
-                    $rapnetRecords[$key]['Cut'] = $result->cut;
-
-                $rapnetRecords[$key]['Lab'] = $result->lab;
-                $rapnetRecords[$key]['Amount'] = $result->total_sales_price;
-                $rapnetRecords[$key]['Stock_NO'] = $result->diamond_id;
-                $rapnetRecords[$key]['CERT_NO'] = !empty($result->cert_num) ? $result->cert_num : '';
-
-                if ($result->lab == 'GIA') {
-                    $rapnetRecords[$key]['CertificateLink'] = 'https://www.gia.edu/cs/Satellite?reportno=' . $rapnetRecords[$key]['CERT_NO'] . '&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547';
-                } elseif ($result->lab == 'IGI') {
-                    $rapnetRecords[$key]['CertificateLink'] = 'https://www.igi.org/reports/verify-your-report?r=' . $rapnetRecords[$key]['CERT_NO'];
-                } elseif ($result->lab == 'HRD') {
-                    $rapnetRecords[$key]['CertificateLink'] = 'https://www.hrdantwerplink.be/?record_number=' . $rapnetRecords[$key]['CERT_NO'] . '&weight=' . $result->size;
-                } else {
-                    $rapnetRecords[$key]['CertificateLink'] = 'https://www.diamondselections.com/GetCertificate.aspx?diamondid=' . $result->DiamondID;
-                }
+            foreach ($rapnetData as $result) {
+                $certNo = $result->cert_num ?? '';
+                $rapnetRecords[] = [
+                    'Shape' => $result->shape,
+                    'Carat' => $result->size,
+                    'Color' => $result->color,
+                    'Clarity' => $result->clarity,
+                    'Cut' => $result->cut ?? null,
+                    'Lab' => $result->lab,
+                    'Amount' => $result->total_sales_price,
+                    'Stock_NO' => $result->diamond_id,
+                    'CERT_NO' => $certNo,
+                    'CertificateLink' => match ($result->lab) {
+                        'GIA' => 'https://www.gia.edu/cs/Satellite?reportno=' . $certNo . '&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&c=Page&cid=1355954554547',
+                        'IGI' => 'https://www.igi.org/reports/verify-your-report?r=' . $certNo,
+                        'HRD' => 'https://www.hrdantwerplink.be/?record_number=' . $certNo . '&weight=' . $result->size,
+                        default => 'https://www.diamondselections.com/GetCertificate.aspx?diamondid=' . $result->DiamondID
+                    }
+                ];
             }
         }
-        $apiData['data'] = Arr::collapse([$rapnetRecords, $hkData]);
 
-        usort($apiData['data'], function ($a, $b) {
-            // return $b['Amount'] - $a['Amount']; // sort by descending
-            return $a['Amount'] - $b['Amount']; // sort by ascending
-        });
+        // Combine data and sort by Amount ascending
+        $allData = array_merge($rapnetRecords, $hkData);
+        usort($allData, fn($a, $b) => $a['Amount'] <=> $b['Amount']);
 
-        $apiData['VAT'] = getVAT();
+        $VAT = getVAT();
 
-        // Ensure $dataArray is always defined
-        $dataArray = [];
-
-        if (!empty($apiData['data'])) {
-            if ($request->type && $request->diamond_type == "mined_diamond") {
-                if (isset($request->selectedDiamondPrice) && !empty($request->selectedDiamondPrice)) {
-                    return $request->selectedDiamondPrice;
-                }
-                return $apiData['data'][0]['Amount'];
-            } else {
-                foreach ($apiData['data'] as $key => $data) {
-                    $dataArray[] = View::make('front.includes.product_detail_diamonds', ['key' => $key, 'apiRecords' => $data, 'VAT' => $apiData['VAT']])->render();
-                }
+        // Return only selected diamond price for mined diamonds if available
+        if (!empty($allData)) {
+            if ($request->type && $request->diamond_type === 'mined_diamond') {
+                return $request->selectedDiamondPrice ?: $allData[0]['Amount'];
             }
+
+            // Pre-render all views efficiently
+            $dataArray = array_map(
+                fn($key, $record) => View::make('front.includes.product_detail_diamonds', [
+                    'key' => $key,
+                    'apiRecords' => $record,
+                    'VAT' => $VAT
+                ])->render(),
+                array_keys($allData),
+                $allData
+            );
+
+            return response()->json(['html' => $dataArray]);
         }
-        return response()->json(['html' => $dataArray]);
+
+        return response()->json(['html' => []]);
     }
+
 
     public function amountChange($num)
     {
@@ -1513,8 +1708,8 @@ class ProductController extends Controller
             })
                 ->where('value', isset($request->metal_type) && strtolower(trim($request->metal_type)) != 'default' ? trim($request->metal_type) : null)
                 ->first();
-                // ->toSql();
-                // dd($variationDetail);
+            // ->toSql();
+            // dd($variationDetail);
 
             if (!$variationDetail) {
                 return response()->json(['statusCode' => 500, 'msg' => 'No Variation Found']);
@@ -2236,39 +2431,81 @@ class ProductController extends Controller
         return $this->productRepo->getProductListing($slugs, $dataArray, $sorting);
     }
 
+    // public function getProductVariationPrices(Request $request)
+    // {
+    //     $getRegularPrices = getRagularFilterPrices($request->all(), $request['diamond_type'], $request->slug, $request->metal_type);
+    //     $getLabDiamondPrices = 0;
+
+    //     if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
+    //         if (isset($request->type) && $request->type) {
+    //             if (isset($request->diamond_type) && $request->diamond_type == 'mined_diamond') {
+    //                 $getLabDiamondPrices = $this->getCustomApiFilterData($request);
+    //             } else {
+    //                 $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
+    //             }
+    //         }
+    //     } else {
+    //         $getLabDiamondPrices = $request->selectedDiamondPrice;
+    //     }
+
+    //     $resultedArray = array_map(function ($num) use ($getLabDiamondPrices) {
+    //         return round($num + $getLabDiamondPrices, 2);
+    //     }, $getRegularPrices);
+    //     unset($resultedArray['parent_category']);
+    //     if (isset($resultedArray) && !empty($resultedArray)) {
+    //         dd($resultedArray);
+    //         return [
+    //             'status' => 200,
+    //             'allPrices' => getFlatDiscountRanges($resultedArray, $getRegularPrices['parent_category'], $request['diamond_type']),
+    //             'getLabDiamondPrices' => round($getLabDiamondPrices, 2),
+    //         ];
+    //     }
+
+    //     return [
+    //         'status' => 500,
+    //         'allPrices' => 0.00,
+    //         'getLabDiamondPrices' => 0.00,
+    //     ];
+    // }
+
     public function getProductVariationPrices(Request $request)
     {
-        $getRegularPrices = getRagularFilterPrices($request->all(), $request['diamond_type'], $request->slug, $request->metal_type);
-        $getLabDiamondPrices = 0;
+        $requestData = $request->all();
+        $diamondType = $request->diamond_type ?? 'mined_diamond';
+        $metalType = $request->metal_type ?? null;
+        $slug = $request->slug ?? null;
 
-        if (isset($request->selectedDiamondPrice) || $request->selectedDiamondPrice == "") {
-            if (isset($request->type) && $request->type) {
-                if (isset($request->diamond_type) && $request->diamond_type == 'mined_diamond') {
-                    $getLabDiamondPrices = $this->getCustomApiFilterData($request);
-                } else {
-                    $getLabDiamondPrices = getLabDiamondPrices($request->all())['price'];
-                }
-            }
-        } else {
-            $getLabDiamondPrices = $request->selectedDiamondPrice;
-        }
+        // Get regular prices once (optimized helper)
+        $regularPrices = getRagularFilterPrices($requestData, $diamondType, $slug, $metalType);
 
-        $resultedArray = array_map(function ($num) use ($getLabDiamondPrices) {
-            return round($num + $getLabDiamondPrices, 2);
-        }, $getRegularPrices);
-        unset($resultedArray['parent_category']);
-        if (isset($resultedArray) && !empty($resultedArray)) {
+        // Early exit if no prices found
+        if (empty($regularPrices) || !isset($regularPrices['shop_price'])) {
             return [
-                'status' => 200,
-                'allPrices' => getFlatDiscountRanges($resultedArray, $getRegularPrices['parent_category'], $request['diamond_type']),
-                'getLabDiamondPrices' => round($getLabDiamondPrices, 2),
+                'status' => 500,
+                'allPrices' => 0.00,
+                'getLabDiamondPrices' => 0.00,
             ];
         }
 
+        // Determine lab diamond price
+        $labDiamondPrice = $request->selectedDiamondPrice ?? 0;
+        if (empty($labDiamondPrice) && !empty($request->type)) {
+            $labDiamondPrice = $diamondType === 'mined_diamond'
+                ? $this->getCustomApiFilterData($request)
+                : (getLabDiamondPrices($requestData)['price'] ?? 0);
+        }
+
+        // Extract parent_category and remove from price array
+        $parentCategory = $regularPrices['parent_category'] ?? null;
+        $pricesOnly = $regularPrices;
+        unset($pricesOnly['parent_category']);
+
+        // Add lab diamond price and round in one pass
+        $finalPrices = array_map(fn($price) => round($price + $labDiamondPrice, 2), $pricesOnly);
         return [
-            'status' => 500,
-            'allPrices' => 0.00,
-            'getLabDiamondPrices' => 0.00,
+            'status' => 200,
+            'allPrices' => getFlatDiscountRanges($finalPrices, $parentCategory, $diamondType),
+            'getLabDiamondPrices' => round($labDiamondPrice, 2),
         ];
     }
 }

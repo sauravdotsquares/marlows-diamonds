@@ -59,7 +59,7 @@ a.btn-bg-large,.btn-bg-small{color:#fff}
 .btn-bg-large{background-color:#8e2e65;color:#fff;font-size:15px;padding:14px 26px;text-transform:uppercase;text-decoration:none;font-weight:700;display:inline-block; border: 1px solid #8e2e65}
 
 .btn-bg-large:hover{box-shadow:5px 5px 0 rgba(0,0,0,0.8); color: #fff}
-.btn-bg-small{background-color:#8e2e65;color:#fff;font-size:12px;padding:11px 20px;text-transform:uppercase;text-decoration:none;display:inline-block;font-weight:700; 
+.btn-bg-small{background-color:#8e2e65;color:#fff;font-size:12px;padding:11px 20px;text-transform:uppercase;text-decoration:none;display:inline-block;font-weight:700;
     border: 1px solid #8e2e65; z-index: 9; position: relative;}
 .btn-bg-small:hover{box-shadow:5px 5px 0 rgba(0,0,0,0.8); color: #fff}
 .owl-carousel .owl-item img{width: auto;margin: 0 auto;}
@@ -616,7 +616,7 @@ text-decoration: none; font-weight: 700; display: inline-block; border: 1px soli
 .product-grid-row{ margin: 0 -10px; }
 .product-items-item-info {padding: 0;border-radius: 4px;position: relative;height: 100%;border: 1px solid #dedede;overflow: hidden;box-shadow: 0px 0px 15px 0px #e7e5e5;}
 .product-items-item-info:hover{	box-shadow: 0px 1px 7px rgba(53, 53, 53, 0.2); outline: none;}
-.product-items-item-info .product-item-top {display: flex;align-items: center;justify-content: space-between;width: 100%;padding: 10px; 
+.product-items-item-info .product-item-top {display: flex;align-items: center;justify-content: space-between;width: 100%;padding: 10px;
 z-index: 9; position: relative;}
 .product-items-item-info .product-onsale {padding:0;font-size: 16px;font-weight: bold;color: #000;z-index: 9;}
 .product-items-item-info .product-item-top .wishlist-heart {float: right;font-size: 21px;color: #932d63;}
@@ -854,7 +854,7 @@ display: flex;align-items: center;justify-content: center;box-shadow: 0px 3px 4p
 #requestAppointment .modal-content .modal-header {border-bottom: none;padding: 0 15px;}
 #requestAppointment .modal-content button.btn-close {color: #fff;
 /*    background: url(../images/close-visit.svg) no-repeat;*/
-margin-top: 0;  
+margin-top: 0;
 background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
 position: absolute;right: 15px;top: 10px;padding: 8px;border-radius: 50%;background-size: 10px;}
 #requestAppointment .modal-content button.btn-close:hover{ opacity:1 }
@@ -1036,7 +1036,7 @@ display: flex;align-items: center;justify-content: center;}
 
 .billing-check {display: flex;align-items: center;margin: 18px 0 16px; background: #8e2e65;padding: 15px 15px;}
 .billing-check h4 {font-size: 15px;color: #fff;margin: 0 0 0 7px;font-family: 'Nunito';font-weight: bold;}
-.billing-check input[type="checkbox"] {margin-left: 0;transform: translateY(0px);width: 20px;height: 20px;border: 1px solid #fff;padding: 2px; -webkit-appearance: none; 
+.billing-check input[type="checkbox"] {margin-left: 0;transform: translateY(0px);width: 20px;height: 20px;border: 1px solid #fff;padding: 2px; -webkit-appearance: none;
   appearance: none; }
 
 .billing-check input[type="checkbox"]:before {
@@ -1105,6 +1105,11 @@ text-transform: uppercase;text-decoration: none;display: inline-block;font-weigh
 background-position: -216px -217px;width: 140px;height: 39px;float: right;}
 .checkout-payment-options ul li.cc_payment_methods.via_deko_payment {padding: 18px 15px;margin: 0;}
 .checkout-payment-options ul li.cc_payment_methods.via_deko_payment i.diamond-icon.deko-checkout {background-position: -165px -308px;width: 63px;height: 27px;float: right;}
+.checkout-payment-options ul li.cc_payment_methods.googlepay_payment {padding:20px 15px 20px; margin-bottom: 0;}
+.checkout-payment-options ul li.cc_payment_methods.googlepaygateway_wrap{ background: #fff4fa;}
+.checkout-payment-options ul li.cc_payment_methods.googlepaygateway_wrap i.diamond-icon.paypent-checkout {
+background-position: -216px -217px;width: 140px;height: 39px;float: right;}
+
 
 .checkout-payment-options ul li.cc_payment_methods.paypal_payment img {width: 122px;display: inline-block;margin-top: -7px;}
 .checkout-payment-options ul li.cc_payment_methods.paypal_payment .payment-box-main-drop{background: #8e2e65; color: #fff;}
@@ -1144,7 +1149,7 @@ background-position: -216px -217px;width: 140px;height: 39px;float: right;}
 .cc_how_apply strong {display: block; margin: 0 0 8px 0;}
 .cc_how_apply span {display: block;}
 .cc_how_apply span a{text-decoration: none; color: #8e2e65;}
-.payment-box-main-drop .finance-available-options .cc_pay_details .cc_pay_details_inner .cc_pay_details_label, 
+.payment-box-main-drop .finance-available-options .cc_pay_details .cc_pay_details_inner .cc_pay_details_label,
 .payment-box-main-drop .finance-available-options .cc_pay_details .cc_pay_details_values {font-size: 15px;}
 .cc_pay_details_inner {border-bottom: 1px solid #dfdfdf;padding: 10px 0;display: flex;justify-content: space-between;}
 .cc_how_apply {margin: 20px 0 0 0;}
@@ -1570,7 +1575,7 @@ h6.policyheading a { color: #8e2e65;}
 
 /*cookies css*/
 .defaultpages-cols h2, .defaultpages-cols h2.cookies_heading, .defaultpages-cols h3.vc_custom_heading {font-size: 24px !important;color: #000 !important;font-weight: 900 !important;margin: 0 0 24px;}
-.defaultpages-cols h5 {font-size: 18px;font-family: 'Nunito';color: #000;font-weight: 900;margin: 0 0 5px;} 
+.defaultpages-cols h5 {font-size: 18px;font-family: 'Nunito';color: #000;font-weight: 900;margin: 0 0 5px;}
 /*cookies css end*/
 
 
@@ -1640,7 +1645,7 @@ border: 2px solid #e6e5e1;border-bottom: none;border-radius: 5px 5px 0 0;z-index
 
 .sizing-tip-sec .sizing-tip-desc h3 {color: #000;text-align: center;font-size: 20px; margin: 0; font-family: 'Nunito';}
 .sizing-tip-sec .sizing-tip-desc h2 {z-index: 99;position: relative;margin:0px 0 18px; color: #000; text-align: center; font-size: 30px; font-weight: bold;}
-.sizing-tip-sec .sizing-tip-desc p{ color:#000; text-align: center; } 
+.sizing-tip-sec .sizing-tip-desc p{ color:#000; text-align: center; }
 
 .sizing-tip-sec .sizing-tip-sec-inner .sizing-tip-box {background: #fff;display: inline-block;border-radius: 10px;padding:20px 15px;width: 100%; border: 1px solid #e7e7e7;
 height: 100%;}
@@ -1785,7 +1790,7 @@ background-repeat: no-repeat;background-position: center;}
 
 .product-grid-items-item.product-hover-affect .product-items-item-image {overflow: hidden;}
 .related-products-list .product-grid-items-item .product-items-item-image {height:345px;justify-content: center;}
-.product-grid-items-item.product-hover-affect .product-items-item-image:focus-visible, .product-grid-items-item.product-hover-affect .product-items-item-image:focus, 
+.product-grid-items-item.product-hover-affect .product-items-item-image:focus-visible, .product-grid-items-item.product-hover-affect .product-items-item-image:focus,
 .product-grid-items-item.product-hover-affect .product-items-item-image a.product-hov img
 { outline:none !important; }
 .product-grid-items-item.product-hover-affect .product-items-item-image:hover img{     transform: inherit; }
@@ -1794,7 +1799,7 @@ background-repeat: no-repeat;background-position: center;}
 .product-grid-items-item.product-hover-affect .product-items-item-info .product-hover-video {display: none;}
 .product-grid-items-item.product-hover-affect .product-items-item-info:hover a.product-hov {-webkit-transition: all 200ms ease-in; -ms-transition: all 200ms ease-in;
 -moz-transition: all 200ms ease-in; transition: all 200ms ease-in; -webkit-transform: scale(1.1);-ms-transform: scale(1.1);transform: scale(1.1);}
-.product-grid-items-item.product-hover-affect .product-items-item-info:hover .product-hover-video {display: block;position: absolute;top: 0;width: 100%;height: auto;background: #fff; 
+.product-grid-items-item.product-hover-affect .product-items-item-info:hover .product-hover-video {display: block;position: absolute;top: 0;width: 100%;height: auto;background: #fff;
     padding: 35px;}
 
 
@@ -1869,13 +1874,13 @@ transition: all 200ms ease-in;
     background-color: #8e2e65;
     color: #fff;
     padding: 10px 24px;
-} 
+}
 
 .post-bar .post-bar-center a {
     color: #fff;
     text-decoration: none;
     margin-top: 40px;
-    
+
     text-transform: uppercase;
 }
 .post-bar .post-bar-center {
@@ -1929,7 +1934,7 @@ border: 1px solid #D0D0D0;overflow: hidden; position: relative; margin: 0 10px 3
 .product-diamond-item .product-diamond-item-details h4 {font-family: "Nunito";color: #000;font-size: 15px;}
 
 .search-result nav {width: 100%;}
-.search-result nav ul.pagination {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;width: 100%; 
+.search-result nav ul.pagination {display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-pack: center;-ms-flex-pack: center;justify-content: center;width: 100%;
 -ms-flex-wrap: wrap;flex-wrap: wrap;}
 .search-result nav ul.pagination li.page-item a.page-link {color: #000 !important; height: 35px;}
 .search-result nav ul.pagination li.page-item a.page-link:focus {box-shadow: none !important; color:#000;}
@@ -2132,7 +2137,7 @@ left:81px;background-size: 26px;bottom: -7px;} */
 /*grown diamond css end*/
 
 /** checkout **/
-.checkout-payment-options ul li.cc_payment_methods label, .checkout-payment-options ul li.cc_payment_methods label.paypal_label a, 
+.checkout-payment-options ul li.cc_payment_methods label, .checkout-payment-options ul li.cc_payment_methods label.paypal_label a,
 .payment-box-main-drop{ font-size:15px; }
 /** checkout **/
 
@@ -2161,7 +2166,7 @@ left:81px;background-size: 26px;bottom: -7px;} */
 @media(max-width:767px){
 
 .bottom-eye-icon{right: 7px;}
-.bottom-whatsapp-icon{right: 13px;}    
+.bottom-whatsapp-icon{right: 13px;}
 .home-main-banner{margin-top: 50px;}
 .main-banner-left-text h1{text-align: center !important;}
 .main-banner-left-text p{text-align: center !important;}
@@ -2326,7 +2331,7 @@ right: 10px !important;
 }
 
 @media(max-width:420px){
-    span#deposited_message {font-size: 11px;} 
+    span#deposited_message {font-size: 11px;}
 
 /*shop best css*/
 .product-item-slider .owl-carousel.owlsliderone .owl-item .item .product-image{ width:auto; }
@@ -2341,6 +2346,7 @@ right: 10px !important;
 
 .checkout-payment-options ul li.cc_payment_methods.paypalpaymentgateway_wrap input[type="radio"] {vertical-align: top;}
 .checkout-payment-options ul li.cc_payment_methods.paypalpaymentgateway_wrap label.paypal_label a.what-paypal {display: block; margin: 0;}
+.checkout-payment-options ul li.cc_payment_methods.paypalpaymentgateway_wrap label.paypal_label a.what-googlepay {display: block; margin: 0;}
 /** checkout **/
 }
 

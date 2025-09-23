@@ -2141,63 +2141,123 @@ function getVariationDiamondPrices($requestData)
     ];
 }
 
-function getRagularFilterPrices($getRequestData, $diamondType, $slug)
+// function getRagularFilterPrices($getRequestData, $diamondType, $slug)
+// {
+
+//     if (isset($diamondType) && !empty($diamondType)) {
+//         // no action needed
+//     } else {
+//         $diamondType = 'mined_diamond';
+//     }
+//     $rrpPrice = $diamondType . '_rrp';
+//     $getProductDetails = Products::where('slug', $slug)->first();
+
+//     // $getVariationsArray = ProductVariations::where('product_id',$getProductDetails->id)->pluck('id')->toArray();
+//     $getProductVariationId = ProductVariations::where('product_id', $getProductDetails->id)->pluck('id')->toArray();
+//     if (!empty($getProductVariationId)) {
+//         $attributeCount = count($getRequestData['variations']);
+//         foreach ($getProductVariationId as $productVariationId) {
+//             $variationDetails = array();
+//             foreach ($getRequestData['variations'] as $variations) {
+//                 $getVariDetails = ProductVariationDetails::where('variation_id', $productVariationId)
+//                     ->where('value', $variations)
+//                     ->get()
+//                     ->toArray();
+
+//                 if (!empty($getVariDetails)) {
+//                     $variationDetails[] = $getVariDetails;
+//                 }
+//             }
+//             if ($attributeCount == count($variationDetails)) {
+//                 break;
+//             }
+//         }
+//     }
+
+//     $categoryId = $getProductDetails->product_parent_category;
+//     if (in_array('54', explode(',', $getProductDetails->categories))) {
+//         $categoryId = 54;
+//     }
+//     try {
+//         $getRegularPrices = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])->select('regular_price', "$diamondType as shopPrice", "$rrpPrice as rrpPrice", 'product_id', 'id')->first();
+//     } catch (\Exception $e) {
+//         return $e->getMessage();
+//     }
+
+//     //$getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
+//     $getDiscountedPrice = $getRegularPrices->shopPrice;
+//     $getFingerSizePrice = 0;
+//     // if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47 || $getProductDetails->product_parent_category == 45) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
+//     //     $getFingerSizePrice = getFingerSizeHalfPrice($getRequestData['metal_type']);
+//     // }
+
+//     return [
+//         'rrp_price' => $getRegularPrices->rrpPrice + $getFingerSizePrice,
+//         'shop_price' => $getRegularPrices->shopPrice + $getFingerSizePrice,
+//         'discounted_price' => $getDiscountedPrice + $getFingerSizePrice,
+//         'parent_category' => $categoryId,
+//     ];
+// }
+function getRagularFilterPrices($requestData, $diamondType, $slug)
 {
+    $diamondType = !empty($diamondType) ? $diamondType : 'mined_diamond';
+    $rrpPriceColumn = $diamondType . '_rrp';
 
-    if (isset($diamondType) && !empty($diamondType)) {
-        // no action needed
-    } else {
-        $diamondType = 'mined_diamond';
+    // Fetch product once
+    $product = Products::select('id', 'categories')->where('slug', $slug)->first();
+    if (!$product) return ['error' => 'Product not found'];
+
+    $productVariationIds = ProductVariations::where('product_id', $product->id)->pluck('id')->toArray();
+    if (empty($productVariationIds)) {
+        return ['error' => 'No product variations found'];
     }
-    $rrpPrice = $diamondType . '_rrp';
-    $getProductDetails = Products::where('slug', $slug)->first();
 
-    // $getVariationsArray = ProductVariations::where('product_id',$getProductDetails->id)->pluck('id')->toArray();
-    $getProductVariationId = ProductVariations::where('product_id', $getProductDetails->id)->pluck('id')->toArray();
-    if (!empty($getProductVariationId)) {
-        $attributeCount = count($getRequestData['variations']);
-        foreach ($getProductVariationId as $productVariationId) {
-            $variationDetails = array();
-            foreach ($getRequestData['variations'] as $variations) {
-                $getVariDetails = ProductVariationDetails::where('variation_id', $productVariationId)
-                    ->where('value', $variations)
-                    ->get()
-                    ->toArray();
+    $requestedVariations = $requestData['variations'] ?? [];
+    $matchedVariationId = null;
 
-                if (!empty($getVariDetails)) {
-                    $variationDetails[] = $getVariDetails;
-                }
-            }
-            if ($attributeCount == count($variationDetails)) {
-                break;
-            }
+    // Fetch all variation details in one query to reduce DB calls
+    $variationDetails = ProductVariationDetails::whereIn('variation_id', $productVariationIds)
+        ->whereIn('value', $requestedVariations)
+        ->get(['variation_id', 'value'])
+        ->groupBy('variation_id');
+
+    foreach ($variationDetails as $variationId => $details) {
+        if (count($details) === count($requestedVariations)) {
+            $matchedVariationId = $variationId;
+            break;
         }
     }
 
-    $categoryId = $getProductDetails->product_parent_category;
-    if (in_array('54', explode(',', $getProductDetails->categories))) {
+    if (!$matchedVariationId) {
+        return ['error' => 'No matching variation found'];
+    }
+
+    // Determine category ID
+    $categoryId = $product->product_parent_category;
+    if (in_array('54', explode(',', $product->categories))) {
         $categoryId = 54;
     }
-    try {
-        $getRegularPrices = ProductVariations::where('id', $variationDetails[0][0]['variation_id'])->select('regular_price', "$diamondType as shopPrice", "$rrpPrice as rrpPrice", 'product_id', 'id')->first();
-    } catch (\Exception $e) {
-        return $e->getMessage();
+
+    // Fetch variation prices
+    $variationPrice = ProductVariations::select('regular_price', $diamondType . ' as shopPrice', $rrpPriceColumn . ' as rrpPrice', 'product_id', 'id')
+        ->where('id', $matchedVariationId)
+        ->first();
+
+    if (!$variationPrice) {
+        return ['error' => 'Variation price not found'];
     }
 
-    //$getDiscountedPrice = getIncreaseDiscountedPrice($categoryId,$getRegularPrices->shopPrice,$diamondType);
-    $getDiscountedPrice = $getRegularPrices->shopPrice;
-    $getFingerSizePrice = 0;
-    // if((isset($getProductDetails->product_parent_category) && $getProductDetails->product_parent_category == 47 || $getProductDetails->product_parent_category == 45) && (strpos($getRequestData['fingersize'], '-1/2') !== false)){
-    //     $getFingerSizePrice = getFingerSizeHalfPrice($getRequestData['metal_type']);
-    // }
+    $fingerSizePrice = 0; // Optional logic can be added here if needed
+    $discountedPrice = $variationPrice->shopPrice; // Currently unchanged
 
     return [
-        'rrp_price' => $getRegularPrices->rrpPrice + $getFingerSizePrice,
-        'shop_price' => $getRegularPrices->shopPrice + $getFingerSizePrice,
-        'discounted_price' => $getDiscountedPrice + $getFingerSizePrice,
+        'rrp_price' => $variationPrice->rrpPrice + $fingerSizePrice,
+        'shop_price' => $variationPrice->shopPrice + $fingerSizePrice,
+        'discounted_price' => $discountedPrice + $fingerSizePrice,
         'parent_category' => $categoryId,
     ];
 }
+
 
 function getIncreaseDiscountedPrice($category, $price, $diamondType)
 {

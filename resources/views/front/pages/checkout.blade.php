@@ -4,46 +4,48 @@
 @section('criteo-tracking')
     @if (session()->has('cart') && !empty(session('cart')))
         <script type="text/javascript">
-            window.criteo_q = window.criteo_q || [];
-            window.criteo_q.push({
-                    event: "setAccount",
-                    account: 119681
-                },
-                @if (Auth::check())
-                    {
-                        event: "setEmail",
-                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                        hash_method: "sha256}}"
-                    }, {
-                        event: "setEmail",
-                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                        hash_method: "md5"
+            setTimeout(function() {
+                window.criteo_q = window.criteo_q || [];
+                window.criteo_q.push({
+                        event: "setAccount",
+                        account: 119681
                     },
-                @endif {
-                    event: "setSiteType",
-                    type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}"
-                },
-                @if (Auth::check())
-                    {
-                        event: "setCustomerId",
-                        id: {{ Auth::user()->id }}
+                    @if (Auth::check())
+                        {
+                            event: "setEmail",
+                            email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                            hash_method: "sha256}}"
+                        }, {
+                            event: "setEmail",
+                            email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                            hash_method: "md5"
+                        },
+                    @endif {
+                        event: "setSiteType",
+                        type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}"
                     },
-                @endif {
-                    event: "viewBasket",
-                    item: [
-                        @foreach (session('cart') as $id => $details)
-                            {
-                                id: "ig_{{ $id }}",
-                                price: {{ $details['deposited_price'] }},
-                                quantity: {{ $details['quantity'] }}
-                            }
-                            @if (!$loop->last)
-                                ,
-                            @endif
-                        @endforeach
-                    ]
-                }
-            );
+                    @if (Auth::check())
+                        {
+                            event: "setCustomerId",
+                            id: {{ Auth::user()->id }}
+                        },
+                    @endif {
+                        event: "viewBasket",
+                        item: [
+                            @foreach (session('cart') as $id => $details)
+                                {
+                                    id: "ig_{{ $id }}",
+                                    price: {{ $details['deposited_price'] }},
+                                    quantity: {{ $details['quantity'] }}
+                                }
+                                @if (!$loop->last)
+                                    ,
+                                @endif
+                            @endforeach
+                        ]
+                    }
+                );
+            }, 3000); // ⏳ load after 3 seconds
         </script>
     @endif
 @endsection
@@ -167,13 +169,13 @@
                                     Signup
                                 </a>
                                 <!-- <label class="rememberme">
-                                                        <input type="checkbox">
-                                                        <span>Remember me</span>
-                                                    </label> -->
+                                                                                                                        <input type="checkbox">
+                                                                                                                        <span>Remember me</span>
+                                                                                                                    </label> -->
                             </div>
                             <!-- <div class="lostpassword">
-                                                    <a href="javascript:void(0)">Lost your password</a>
-                                                </div> -->
+                                                                                                                    <a href="javascript:void(0)">Lost your password</a>
+                                                                                                                </div> -->
                         </form>
                     </div>
                 @endif
@@ -183,12 +185,12 @@
                 <div class="checkout-main-wrap">
                     <!--<div class="checkout-table">
 
-                                                <ul>
-                                                    <li><span class="active">1</span>Shipping</li>
-                                                    <li><span>2</span>Payment</li>
-                                                </ul>
+                                                                                                                <ul>
+                                                                                                                    <li><span class="active">1</span>Shipping</li>
+                                                                                                                    <li><span>2</span>Payment</li>
+                                                                                                                </ul>
 
-                                            </div> -->
+                                                                                                            </div> -->
 
                     <form id="finalPlaceOrderPage">
                         @csrf
@@ -256,9 +258,9 @@
                                                                 id="state" name="state" required="required"
                                                                 class="form-control">
                                                             <!-- <select id="state" name="state" required="required" class="form-control">
-                                                                                        <option>Select Option</option>
-                                                                                        <option>Rajasthan</option>
-                                                                                    </select> -->
+                                                                                                                                                        <option>Select Option</option>
+                                                                                                                                                        <option>Rajasthan</option>
+                                                                                                                                                    </select> -->
                                                         </div>
                                                     </div>
 
@@ -809,7 +811,7 @@
 
                                                 {{-- new payapl integration --}}
                                                 {{-- <div id="paypal-button-container"></div>
-                                            <div id="paypal-marks-container"></div> --}}
+                                                     <div id="paypal-marks-container"></div> --}}
                                                 {{-- <div id="container"></div> --}}
 
 
@@ -831,7 +833,8 @@
                                                     </div>
 
                                                     <i class="diamond-icon paypent-checkout"></i>
-                                                    <div class="payment-box-main-drop googlepay-box">
+                                                    <div class="payment-box-main-drop googlepay-box"
+                                                        style="display: none;">
                                                         Pay via Google Pay; a fast and secure way to pay using your saved
                                                         cards.
                                                     </div>
@@ -841,52 +844,54 @@
 
 
                                                 {{-- <div class="container">
-                                                <h3>Apple Pay with PayPal Integration</h3>
-                                                <h6>Test Transaction (Live)</h6>
-                                                <div id="applepay-container"></div>
-                                                <div><i>Use Apple Pay test cards for the sandbox environment.</i></div>
-                                            </div> --}}
+                                                        <h3>Apple Pay with PayPal Integration</h3>
+                                                        <h6>Test Transaction (Live)</h6>
+                                                        <div id="applepay-container"></div>
+                                                        <div><i>Use Apple Pay test cards for the sandbox environment.</i></div>
+                                                    </div> --}}
 
-                                                <ul>
-                                                    <li class="cc_payment_methods applepay_payment applepaygateway_wrap"
+                                                {{-- <ul> --}}
+                                                <li class="cc_payment_methods applepay_payment applepaygateway_wrap"
+                                                    style="display: none;">
+                                                    <input type="radio" name="payment_type" id="applepay_radio"
+                                                        value="applepay" autocomplete="off">
+                                                    <label class="applepay_label" for="applepay_radio">
+                                                        Apple Pay
+                                                        <a class="what-applepay" href="https://www.apple.com/apple-pay/"
+                                                            target="_blank">
+                                                            What is Apple Pay?
+                                                        </a>
+                                                    </label>
+                                                    <i class="diamond-icon payment-checkout"></i>
+                                                    <div class="payment-box-main-drop applepay-box"
                                                         style="display: none;">
-                                                        <input type="radio" name="payment_type" id="applepay_radio"
-                                                            value="applepay" autocomplete="off">
-                                                        <label class="applepay_label" for="applepay_radio">
-                                                            Apple Pay
-                                                            <a class="what-applepay"
-                                                                href="https://www.apple.com/apple-pay/" target="_blank">
-                                                                What is Apple Pay?
-                                                            </a>
-                                                        </label>
-                                                        <i class="diamond-icon payment-checkout"></i>
-                                                        <div class="payment-box-main-drop applepay-box">
-                                                            Pay securely via Apple Pay using your iPhone, iPad, or Mac.
-                                                        </div>
-                                                        <div id="applepay-button-container"
-                                                            class="applepay-button-container" style="display:none"></div>
-                                                    </li>
+                                                        Pay securely via Apple Pay using your iPhone, iPad, or Mac.
+                                                    </div>
+                                                    <div id="applepay-button-container" class="applepay-button-container"
+                                                        style="display:none"></div>
+                                                </li>
 
 
 
-                                                    <!-- Klarna Payment Option -->
-                                                    <li class="cc_payment_methods klarna_payment" style="padding:20px">
-                                                        <input type="radio" name="payment_type" id="klarna_radio"
-                                                            value="klarna" autocomplete="off">
-                                                        <label class="klarna_label" for="klarna_radio">
-                                                            Klarna
-                                                            <a class="what-klarna" href="https://www.klarna.com/"
-                                                                target="_blank">
-                                                                What is Klarna?
-                                                            </a>
-                                                        </label>
-                                                        <i class="diamond-icon payment-checkout"></i>
-                                                        <div class="payment-box-main-drop klarna-box">
-                                                            Pay securely via Klarna. Flexible payment options available.
-                                                        </div>
-                                                    </li>
-                                                    <div id="klarna_container" style="display: none;"></div>
-                                                </ul>
+                                                <!-- Klarna Payment Option -->
+                                                <li class="cc_payment_methods klarna_payment klarnagateway_wrap">
+                                                    <input type="radio" name="payment_type" id="klarna_radio"
+                                                        value="klarna" autocomplete="off">
+                                                    <label class="klarna_label" for="klarna_radio">
+                                                        Klarna
+                                                        <a class="what-klarna" href="https://www.klarna.com/"
+                                                            target="_blank">
+                                                            What is Klarna?
+                                                        </a>
+                                                    </label>
+                                                    <i class="diamond-icon payment-checkout"></i>
+                                                    <div class="payment-box-main-drop klarna-box" style="display: none;">
+                                                        Pay securely via Klarna. Flexible payment options available.
+                                                    </div>
+                                                    <div id="klarna_container" class="klarna-button-container"
+                                                        style="display: none;"></div>
+                                                </li>
+                                                {{-- </ul> --}}
                                                 {{-- <div id="container"></div> --}}
                                                 {{-- @include('front.pages.payments.dekopay',['totalAmount'=>$total])
                                             @include('front.pages.payments.stripepay',['totalAmount'=>$total]) --}}
@@ -952,6 +957,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
     <script>
         $(document).ready(function() {
+            // Hide all payment boxes initially
+            $(".payment-box-main-drop").hide();
+            // Show the checked one (on page load)
+            $("input[name='payment_type']:checked").closest("li").find(".payment-box-main-drop").slideDown();
+
             $(document).on('change', "[id^=yearlySupport]", function() {
 
                 var index = parseInt($(this).attr("id").replace("yearlySupport", ''));
@@ -1122,6 +1132,8 @@
             $('input[type=radio][name=payment_type]').on('change', function() {
                 $('#selected_payment_type').val($(this).val());
                 $('#already_inserted').val('');
+                $(".payment-box-main-drop").slideUp(); // hide all
+                $(this).closest("li").find(".payment-box-main-drop").slideDown(); // show selected
                 switch ($(this).val()) {
                     case 'paypal':
                         $(".via_deko_payment").removeClass('dekopaymentgateway_wrap');
@@ -1585,9 +1597,9 @@
             // Check if the Apple Pay radio button is selected
             if (applePayRadio && applePayRadio.checked) {
                 // placeOrderButton.style.display = "none"; // Hide the Place Order button
-                applepaybuttoncontainer.style.dispnone = "block"; // Show the Place Order button
+                applepaybuttoncontainer.style.dispnone = "inline"; // Show the Place Order button
             } else {
-                placeOrderButton.style.display = "block"; // Show the Place Order button
+                placeOrderButton.style.display = "inline"; // Show the Place Order button
                 applepaybuttoncontainer.style.display = "none"; // Show the Place Order button
             }
         }
