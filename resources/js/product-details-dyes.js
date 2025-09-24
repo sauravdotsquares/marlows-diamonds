@@ -156,10 +156,26 @@ $(document).ready(function () {
         }
     });
 
-    window.requestIdleCallback(() => {
+    window.requestIdleCallback =
+        window.requestIdleCallback ||
+        function (cb) {
+            return setTimeout(() => {
+                cb();
+            }, 1);
+        };
+
+    window.cancelIdleCallback =
+        window.cancelIdleCallback ||
+        function (id) {
+            clearTimeout(id);
+        };
+
+    // Now safe to use
+    requestIdleCallback(() => {
         getRelatedProduct();
-        getCustomFilter(); //getProdVideo();
+        getCustomFilter();
     });
+
     // getRelatedProduct();
     // getCustomFilter(); //getProdVideo();
 

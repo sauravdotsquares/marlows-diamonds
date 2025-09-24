@@ -3128,12 +3128,7 @@ if (!function_exists("generateClientToken")) {
     function generateClientToken()
     {
 
-        if (env('APP_ENV') == 'production') {
-            // $base = "https://api-m.paypal.com";
-            $base = "https://api.paypal.com";
-        } elseif (env('APP_ENV') == 'local') {
-            $base = "https://api-m.sandbox.paypal.com";
-        }
+        $base = env('PAYPAL_BASE_NEW_URL');
         $accessToken = generateAccessToken();
         $ch = curl_init("$base/v1/identity/generate-token");
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -3233,17 +3228,9 @@ if (!function_exists("generateKlarnaClientToken")) {
 if (!function_exists("generateAccessToken")) {
     function generateAccessToken()
     {
-        if (env('APP_ENV') == 'production') {
-            $clientId = "AXc2YDyTWs6VKh-EdMFo1MV1zQ7vzYzLcPTvpmYg5rHMZxSgySqtLpT-5v13dRIxG6vxvrjb1X9QvBJR";
-            $appSecret = "EITsZpoj19pYPdScdV6rIaJpFzND_qJDLFlhQBqHkYNhfYv__7fHwS2ESOSj7D_40_CSfJaf1rV7FD1V";
-            // $base = "https://api-m.paypal.com";
-            $base = "https://api.paypal.com";
-        } elseif (env('APP_ENV') == 'local') {
-            $clientId = "AfLQcRuY8C2VcpdsSImup4E10vYi5Yi3w4gJ6d1WhqubKbHttdwpUe8RIW1pVkW0OsrXW4uNBl44RIqp";
-            $appSecret = "EBzp7ErM5_MA5YOzBJxKpA4aZqtfchk5nFE8auNXEyp6UrxsCmWX-e6SlUbZOcOURs4_iuC_RSqNP3eO";
-            $base = "https://api-m.sandbox.paypal.com";
-        }
-
+        $clientId = env('PAYPAL_CLIENT_ID');
+        $appSecret = env('PAYPAL_SECRET');
+        $base = env('PAYPAL_BASE_NEW_URL');
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "$base/v1/oauth2/token");

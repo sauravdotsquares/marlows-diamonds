@@ -1,11 +1,11 @@
 let base;
 let googlePayEnvironment
 if (environmentCheckPhp == 'production') {
-    base = 'https://api.paypal.com'; // For live environment
+    base = PAYPAL_BASE_URL_PHP; // For live environment
     googlePayEnvironment = 'PRODUCTION';
 
 } else {
-    base = 'https://api.sandbox.paypal.com'; // For local environment
+    base = PAYPAL_BASE_URL_PHP; // For local environment
     googlePayEnvironment = 'TEST';
     // googlePayEnvironment = 'PRODUCTION';
 }

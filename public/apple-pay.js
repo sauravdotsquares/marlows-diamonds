@@ -113,7 +113,7 @@ async function onClick() {
 const PURCHASE_AMOUNT = "1000";
 const CURRENCY_CODE = "GBP"; // Adjust as needed
 const APPLE_PAY_LABEL = "My Store";
-const BASE_URL = "https://api.paypal.com"; // Use PayPal's sandbox URL or production URL based on your environment
+const BASE_URL = PAYPAL_BASE_URL_PHP; // Use PayPal's sandbox URL or production URL based on your environment
 
 // Initialize Apple Pay
 async function initializeApplePay() {
@@ -400,8 +400,8 @@ async function capturePayment(orderId) {
 
 // Generate access token
 async function generateAccessToken() {
-  const clientId = "AXc2YDyTWs6VKh-EdMFo1MV1zQ7vzYzLcPTvpmYg5rHMZxSgySqtLpT-5v13dRIxG6vxvrjb1X9QvBJR";  // Replace with your PayPal client ID
-  const secret = "EITsZpoj19pYPdScdV6rIaJpFzND_qJDLFlhQBqHkYNhfYv__7fHwS2ESOSj7D_40_CSfJaf1rV7FD1V"; // Replace with your PayPal secret
+  const clientId = PAYPAL_CLIENT_ID_PHP;  // Replace with your PayPal client ID
+  const secret = PAYPAL_SECRET_PHP; // Replace with your PayPal secret
   const response = await fetch(`${BASE_URL}/v1/oauth2/token`, {
     method: "POST",
     headers: {

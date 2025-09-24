@@ -1,56 +1,5 @@
 @extends('layouts.front.app')
 
-{{-- criteo start --}}
-@section('criteo-tracking')
-    @if (session()->has('cart') && !empty(session('cart')))
-        <script type="text/javascript">
-            setTimeout(function() {
-                window.criteo_q = window.criteo_q || [];
-                window.criteo_q.push({
-                        event: "setAccount",
-                        account: 119681
-                    },
-                    @if (Auth::check())
-                        {
-                            event: "setEmail",
-                            email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                            hash_method: "sha256}}"
-                        }, {
-                            event: "setEmail",
-                            email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                            hash_method: "md5"
-                        },
-                    @endif {
-                        event: "setSiteType",
-                        type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}"
-                    },
-                    @if (Auth::check())
-                        {
-                            event: "setCustomerId",
-                            id: {{ Auth::user()->id }}
-                        },
-                    @endif {
-                        event: "viewBasket",
-                        item: [
-                            @foreach (session('cart') as $id => $details)
-                                {
-                                    id: "ig_{{ $id }}",
-                                    price: {{ $details['deposited_price'] }},
-                                    quantity: {{ $details['quantity'] }}
-                                }
-                                @if (!$loop->last)
-                                    ,
-                                @endif
-                            @endforeach
-                        ]
-                    }
-                );
-            }, 3000); // ⏳ load after 3 seconds
-        </script>
-    @endif
-@endsection
-{{-- ends --}}
-
 
 @section('css')
     <style>
@@ -77,6 +26,8 @@
         const environmentCheckPhp = "{{ env('APP_ENV') }}";
         const PAYPAL_CLIENT_ID_PHP = "{{ env('PAYPAL_CLIENT_ID') }}";
         const PAYPAL_SECRET_PHP = "{{ env('PAYPAL_SECRET') }}";
+        const PAYPAL_BASE_URL_PHP = "{{ env('PAYPAL_BASE_URL') }}";
+        const PAYPAL_BASE_NEW_URL_PHP = "{{ env('PAYPAL_BASE_NEW_URL') }}";
     </script>
     @php
         // Request client token from the server-side PHP
@@ -170,13 +121,13 @@
                                     Signup
                                 </a>
                                 <!-- <label class="rememberme">
-                                                                                                                            <input type="checkbox">
-                                                                                                                            <span>Remember me</span>
-                                                                                                                        </label> -->
+                                                                                                                                                                <input type="checkbox">
+                                                                                                                                                                <span>Remember me</span>
+                                                                                                                                                            </label> -->
                             </div>
                             <!-- <div class="lostpassword">
-                                                                                                                        <a href="javascript:void(0)">Lost your password</a>
-                                                                                                                    </div> -->
+                                                                                                                                                            <a href="javascript:void(0)">Lost your password</a>
+                                                                                                                                                        </div> -->
                         </form>
                     </div>
                 @endif
@@ -186,12 +137,12 @@
                 <div class="checkout-main-wrap">
                     <!--<div class="checkout-table">
 
-                                                                                                                    <ul>
-                                                                                                                        <li><span class="active">1</span>Shipping</li>
-                                                                                                                        <li><span>2</span>Payment</li>
-                                                                                                                    </ul>
+                                                                                                                                                        <ul>
+                                                                                                                                                            <li><span class="active">1</span>Shipping</li>
+                                                                                                                                                            <li><span>2</span>Payment</li>
+                                                                                                                                                        </ul>
 
-                                                                                                                </div> -->
+                                                                                                                                                    </div> -->
 
                     <form id="finalPlaceOrderPage">
                         @csrf
@@ -259,9 +210,9 @@
                                                                 id="state" name="state" required="required"
                                                                 class="form-control">
                                                             <!-- <select id="state" name="state" required="required" class="form-control">
-                                                                                                                                                            <option>Select Option</option>
-                                                                                                                                                            <option>Rajasthan</option>
-                                                                                                                                                        </select> -->
+                                                                                                                                                                                                <option>Select Option</option>
+                                                                                                                                                                                                <option>Rajasthan</option>
+                                                                                                                                                                                            </select> -->
                                                         </div>
                                                     </div>
 
@@ -1704,6 +1655,8 @@
         function getGooglePayloadInfo(internal_order_id, get_order_detail, total, currencyCode = "USD") {
             let items = [];
             let itemsTotal = 0;
+            total = parseFloat(total);
+            total = total.toFixed(2);
 
             if (get_order_detail.get_order_details_function && get_order_detail.get_order_details_function.length > 0) {
                 get_order_detail.get_order_details_function.forEach(item => {
@@ -1731,6 +1684,54 @@
                     });
 
                     itemsTotal += price * quantity;
+
+                    // Yearly Care Plan for product
+                    if (item.yearly_support_status == '1') {
+                        const carePlanPrice = parseFloat(item.yearly_support_price) || 0;
+                        const carePlanQuantity = parseInt(item.quantity) || 1;
+                        switch (item.yearly_support_price) {
+                            case '89.00':
+                                $yearCarePlan = '1 year care plan for ';
+                                break;
+
+                            case '170.00':
+                                $yearCarePlan = '2 years care plan for ';
+                                break;
+
+                            case '220.00':
+                                $yearCarePlan = '3 years care plan for ';
+                                break;
+
+                            case '300.00':
+                                $yearCarePlan = '4 years care plan for ';
+                                break;
+
+                            case '400.00':
+                                $yearCarePlan = '5 years care plan for ';
+                                break;
+
+                            default:
+                                $yearCarePlan = 'Care plan for ';
+                                break;
+                        }
+                        const carePlanName = details.slug ? $yearCarePlan + details.slug : ("Product " + item
+                            .product_id +
+                            " care plan");
+                        const carePlanDescription = details.metal_type ?
+                            `${details.carat || ""} ${details.metal_type} ${details.shape || ""}`
+                            .trim() : "Care Plan"
+                        items.push({
+                            name: carePlanName,
+                            description: carePlanDescription,
+                            unit_amount: {
+                                currency_code: currencyCode,
+                                value: carePlanPrice.toFixed(2)
+                            },
+                            quantity: carePlanQuantity,
+                            sku: item.product_id.toString()
+                        });
+                        itemsTotal += carePlanPrice * carePlanQuantity;
+                    }
                 });
             }
 
@@ -1776,3 +1777,54 @@
         }
     </script>
 @endsection
+
+{{-- criteo start --}}
+@section('criteo-tracking')
+    @if (session()->has('cart') && !empty(session('cart')))
+        <script type="text/javascript">
+            setTimeout(function() {
+                window.criteo_q = window.criteo_q || [];
+                window.criteo_q.push({
+                        event: "setAccount",
+                        account: 119681
+                    },
+                    @if (Auth::check())
+                        {
+                            event: "setEmail",
+                            email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                            hash_method: "sha256}}"
+                        }, {
+                            event: "setEmail",
+                            email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                            hash_method: "md5"
+                        },
+                    @endif {
+                        event: "setSiteType",
+                        type: "{{ request()->header('User-Agent') && preg_match('/iPad/', request()->header('User-Agent')) ? 't' : (preg_match('/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/', request()->header('User-Agent')) ? 'm' : 'd') }}"
+                    },
+                    @if (Auth::check())
+                        {
+                            event: "setCustomerId",
+                            id: {{ Auth::user()->id }}
+                        },
+                    @endif {
+                        event: "viewBasket",
+                        item: [
+                            @foreach (session('cart') as $id => $details)
+                                {
+                                    id: "ig_{{ $id }}",
+                                    price: {{ $details['deposited_price'] }},
+                                    quantity: {{ $details['quantity'] }}
+                                }
+                                @if (!$loop->last)
+                                    ,
+                                @endif
+                            @endforeach
+                        ]
+                    }
+                );
+            }, 4000); // ⏳ load after 4 seconds
+        </script>
+    @endif
+@endsection
+{{-- ends --}}

@@ -420,16 +420,9 @@ class ApplePayController extends Controller
     // SUT
     public function generateAccessToken()
     {
-
-        if (env('APP_ENV') == 'production') {
-            $clientId = "AXc2YDyTWs6VKh-EdMFo1MV1zQ7vzYzLcPTvpmYg5rHMZxSgySqtLpT-5v13dRIxG6vxvrjb1X9QvBJR";
-            $appSecret = "EITsZpoj19pYPdScdV6rIaJpFzND_qJDLFlhQBqHkYNhfYv__7fHwS2ESOSj7D_40_CSfJaf1rV7FD1V";
-            $base = "https://api.paypal.com";
-        } elseif (env('APP_ENV') == 'local') {
-            $clientId = "AfLQcRuY8C2VcpdsSImup4E10vYi5Yi3w4gJ6d1WhqubKbHttdwpUe8RIW1pVkW0OsrXW4uNBl44RIqp";
-            $appSecret = "EBzp7ErM5_MA5YOzBJxKpA4aZqtfchk5nFE8auNXEyp6UrxsCmWX-e6SlUbZOcOURs4_iuC_RSqNP3eO";
-            $base = "https://api-m.sandbox.paypal.com";
-        }
+        $clientId = env('PAYPAL_CLIENT_ID');
+        $appSecret = env('PAYPAL_SECRET');
+        $base = env('PAYPAL_BASE_NEW_URL');
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "$base/v1/oauth2/token");
@@ -460,14 +453,14 @@ class ApplePayController extends Controller
         $totalDepositedPrice = $getFinalAmount->deposited_price;
 
         if (env('APP_ENV') == 'production') {
-            $base = "https://api.paypal.com";
+            $base = env('PAYPAL_BASE_NEW_URL');
             $merchantId = env("PAYPAL_MERCHANTID_LIVE");
         } elseif (env('APP_ENV') == 'local') {
-            $base = "https://api-m.sandbox.paypal.com";
+            $base = env('PAYPAL_BASE_NEW_URL');
             $merchantId = env("PAYPAL_MERCHANTID_STAG");
         }
         $accessToken = $this->generateAccessToken();
-        $merchantId = env("PAYPAL_MERCHANTID");
+        // $merchantId = env("PAYPAL_MERCHANTID");
         $purchaseAmount = $totalDepositedPrice; // Hardcoded for demonstration purposes
 
         $orderData = [
@@ -505,11 +498,7 @@ class ApplePayController extends Controller
 
     public function capturePayment($orderId)
     {
-        if (env('APP_ENV') == 'production') {
-            $base = "https://api.paypal.com";
-        } elseif (env('APP_ENV') == 'local') {
-            $base = "https://api-m.sandbox.paypal.com";
-        }
+        $base = env('PAYPAL_BASE_NEW_URL');
         $accessToken = $this->generateAccessToken();
 
         $ch = curl_init("$base/v2/checkout/orders/$orderId/capture");
@@ -531,11 +520,7 @@ class ApplePayController extends Controller
 
     public function generateClientToken()
     {
-        if (env('APP_ENV') == 'production') {
-            $base = "https://api.paypal.com";
-        } elseif (env('APP_ENV') == 'local') {
-            $base = "https://api-m.sandbox.paypal.com";
-        }
+        $base = env('PAYPAL_BASE_NEW_URL');
         $accessToken = $this->generateAccessToken();
 
         $ch = curl_init("$base/v1/identity/generate-token");
@@ -586,9 +571,10 @@ class ApplePayController extends Controller
     //     try {
     //         // Step 1: Get the access token
     //         $accessToken = $this->generateAccessToken();
+    //         $base = env('PAYPAL_BASE_URL');
 
     //         // Step 2: Set up the cURL request to PayPal's GET endpoint
-    //         $ch = curl_init("https://api.sandbox.paypal.com/v2/checkout/orders/$orderId");
+    //         $ch = curl_init("$base/v2/checkout/orders/$orderId");
 
     //         // Step 3: Set the necessary headers, including the access token
     //         curl_setopt($ch, CURLOPT_HTTPHEADER, [
