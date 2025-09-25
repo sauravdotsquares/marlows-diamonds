@@ -64,7 +64,7 @@
                                     @csrf
                                     <div class="checkout-form-group">
                                         <label class="input-label">Username <abbr class="required">*</abbr></label>
-                                        <input type="text" name="username" id="username" required="required" class="form-control {{ $errors->has('username') ? 'error' : '' }}">
+                                        <input type="text" name="username" id="username" value="{{ old('username') }}" required="required" class="form-control {{ $errors->has('username') ? 'error' : '' }}">
                                         @if ($errors->has('username'))
                                             <div class="error">
                                                 {{ $errors->first('username') }}
@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="checkout-form-group">
                                         <label class="input-label">Email address <abbr class="required">*</abbr></label>
-                                        <input type="email" name="email" id="email" required="required" class="form-control {{ $errors->has('email') ? 'error' : '' }}">
+                                        <input type="email" name="email" id="email" value="{{ old('email') }}" required="required" class="form-control {{ $errors->has('email') ? 'error' : '' }}">
                                         @if ($errors->has('email'))
                                         <div class="error">
                                             {{ $errors->first('email') }}

@@ -49,10 +49,10 @@
     </script>
 
     <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/angular.js') }}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.min.js"
         integrity="sha512-ATReN+hO4MtnEUKPL23NQVpaIp9Lc/7Ke91f9jAAEqwQkzdWzCDiwPi0Q8b2xZGsOA5OUDVPIpqqPqUsucXBVw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular-route.min.js"
         integrity="sha512-Bs3EAi5hQciV/Wg1ReXlGbkZchIoKNGrOrISSayU2O2u3meEQ+Tyc3FKMiifNkjXIhMqRDDBSFqW2HVtjdbAzg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -138,110 +138,16 @@
         </script>
     @endif
 
-    <!-- Global Loader CSS -->
-    <style>
-        .spinner {
-            border: 6px solid #eee;
-            border-top: 6px solid #8e2e65;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
 
-        #loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            display: none;
-            /* hidden by default */
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
 
 </head>
 
 <body ng-app="MarlowsAPP">
 
     <!-- Global Loader -->
-    <div id="loader-overlay">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- Global Loader JS -->
-    <script>
-        (function() {
-            const loader = document.getElementById('loader-overlay');
-            let activeRequests = 0;
-
-            function showLoader() {
-                loader.style.display = 'flex';
-            }
-
-            function hideLoader() {
-                loader.style.display = 'none';
-            }
-
-            // ✅ Only hide after FULL page load
-            // window.addEventListener("load", function() {
-            //     hideLoader();
-            // });
-
-            // ✅ Show loader on navigation (page unload/redirect)
-            // window.addEventListener("beforeunload", function() {
-            //     showLoader();
-            // });
-
-            // ✅ Track fetch globally
-            // const originalFetch = window.fetch;
-            // window.fetch = async (...args) => {
-            //     activeRequests++;
-            //     showLoader();
-            //     try {
-            //         return await originalFetch(...args);
-            //     } finally {
-            //         activeRequests--;
-            //         if (activeRequests <= 0) {
-            //             activeRequests = 0; // safety
-            //             hideLoader();
-            //         }
-            //     }
-            // };
-
-            // ✅ Track XHR globally
-            // const origOpen = XMLHttpRequest.prototype.open;
-            // XMLHttpRequest.prototype.open = function(...args) {
-            //     this.addEventListener('loadstart', () => {
-            //         activeRequests++;
-            //         showLoader();
-            //     });
-            //     this.addEventListener('loadend', () => {
-            //         activeRequests--;
-            //         if (activeRequests <= 0) {
-            //             activeRequests = 0; // safety
-            //             hideLoader();
-            //         }
-            //     });
-            //     return origOpen.apply(this, args);
-            // };
-        })();
-    </script>
+    {!! Cache::remember('layoutsFrontLoader', 86400, function () {
+        return view('layouts.front.loader')->render();
+    }) !!}
 
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WBT3LKH" height="0" width="0"
@@ -249,7 +155,7 @@
     <!-- End Google Tag Manager (noscript) -->
 
     @yield('google-ecommerce')
-    {{-- @yield('criteo-tracking') --}}
+
     @include('layouts.front.header')
 
     @if (session('success'))
@@ -263,15 +169,11 @@
     {!! Cache::remember('layoutsFrontFooter', 3600, function () {
         return view('layouts.front.footer')->render();
     }) !!}
-    {{-- @include('layouts.front.footer') --}}
 
 
     <script>
         const mapMarker = '{{ asset('images/map_marker.png') }}';
     </script>
-
-    {{-- <script src="{{ asset('assets/js/angular-route.min.js?').env('VERSION')}}"></script>
-    <script src="{{ asset('assets/js/angular-sanitize.js?').env('VERSION')}}"></script> --}}
 
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
     {{-- <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script> --}}
@@ -286,11 +188,12 @@
 
 
     <!-- Cookie Consent JavaScript -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRuSAPepWzsXoo0rJiXvDyWDDuuaR_2YU"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
     @yield('js')
+
     <script>
         $(document).ready(function() {
             $(".mobile_search").on('click', function() {
@@ -474,6 +377,7 @@
         });
     </script>
 </body>
+
 {{-- Zopim Code script move here at end --}}
 <script>
     function loadZopim() {

@@ -364,7 +364,24 @@ class AddToCartController extends Controller
 
     public function updateCartCouponCode(Request $request)
     {
-        if(isset($request->priceStatus) && $request->priceStatus == 1){
+        if (isset($request->priceStatus) && $request->priceStatus == 1) {
+            if (!isset($request['price'])) {
+                return [
+                    'orderview' => null,
+                    'result' => [
+                        'status' => 501,
+                        'msg' => 'Something went wrong please try again',
+                    ],
+                ];
+            } else if (in_array($request['price'], ['0', '89', '170', '220', '300', '400']) == false) {
+                return [
+                    'orderview' => null,
+                    'result' => [
+                        'status' => 501,
+                        'msg' => 'Invalid yearly support plan',
+                    ],
+                ];
+            }
             $cart = session()->get('cart');
             $cart[$request->cartid]["deposited_price"] = $cart[$request->cartid]["price"] + $request->price;
             $cart[$request->cartid]["couponCodeText"] = '';

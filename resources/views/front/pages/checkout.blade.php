@@ -17,51 +17,6 @@
             margin: 0px 14px 14px;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
-    <script>
-        // This is to capture .env value
-        const environmentCheckPhp = "{{ env('APP_ENV') }}";
-        const PAYPAL_CLIENT_ID_PHP = "{{ env('PAYPAL_CLIENT_ID') }}";
-        const PAYPAL_SECRET_PHP = "{{ env('PAYPAL_SECRET') }}";
-        const PAYPAL_BASE_URL_PHP = "{{ env('PAYPAL_BASE_URL') }}";
-        const PAYPAL_BASE_NEW_URL_PHP = "{{ env('PAYPAL_BASE_NEW_URL') }}";
-    </script>
-    @php
-        // Request client token from the server-side PHP
-        $clientToken = generateClientToken();
-
-        if (env('APP_ENV') == 'production') {
-            // $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
-            $merchantId = env('PAYPAL_MERCHANTID_LIVE');
-        } elseif (env('APP_ENV') == 'local') {
-            // $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
-            $merchantId = env('PAYPAL_MERCHANTID_STAG');
-        }
-        $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
-    @endphp
-    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
-    <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
-    <script>
-        function onPayPalScriptLoaded() {
-            if (window.paypal && paypal.Googlepay) {
-                // onGooglePayLoaded();
-            } else {
-                console.error('Google Pay not found in PayPal SDK');
-            }
-        }
-    </script>
-    {{-- <script
-        src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&merchant-id={{ $merchantId }}"
-        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
-    </script> --}}
-    <script
-        src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
-        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
-    </script>
-    <script src="https://pay.google.com/gp/p/js/pay.js"></script>
 @endsection
 
 @section('content')
@@ -121,13 +76,13 @@
                                     Signup
                                 </a>
                                 <!-- <label class="rememberme">
-                                                                                                                                                                <input type="checkbox">
-                                                                                                                                                                <span>Remember me</span>
-                                                                                                                                                            </label> -->
+                                                                                                                                                                        <input type="checkbox">
+                                                                                                                                                                        <span>Remember me</span>
+                                                                                                                                                                    </label> -->
                             </div>
                             <!-- <div class="lostpassword">
-                                                                                                                                                            <a href="javascript:void(0)">Lost your password</a>
-                                                                                                                                                        </div> -->
+                                                                                                                                                                    <a href="javascript:void(0)">Lost your password</a>
+                                                                                                                                                                </div> -->
                         </form>
                     </div>
                 @endif
@@ -137,12 +92,12 @@
                 <div class="checkout-main-wrap">
                     <!--<div class="checkout-table">
 
-                                                                                                                                                        <ul>
-                                                                                                                                                            <li><span class="active">1</span>Shipping</li>
-                                                                                                                                                            <li><span>2</span>Payment</li>
-                                                                                                                                                        </ul>
+                                                                                                                                                                <ul>
+                                                                                                                                                                    <li><span class="active">1</span>Shipping</li>
+                                                                                                                                                                    <li><span>2</span>Payment</li>
+                                                                                                                                                                </ul>
 
-                                                                                                                                                    </div> -->
+                                                                                                                                                            </div> -->
 
                     <form id="finalPlaceOrderPage">
                         @csrf
@@ -210,9 +165,9 @@
                                                                 id="state" name="state" required="required"
                                                                 class="form-control">
                                                             <!-- <select id="state" name="state" required="required" class="form-control">
-                                                                                                                                                                                                <option>Select Option</option>
-                                                                                                                                                                                                <option>Rajasthan</option>
-                                                                                                                                                                                            </select> -->
+                                                                                                                                                                                                        <option>Select Option</option>
+                                                                                                                                                                                                        <option>Rajasthan</option>
+                                                                                                                                                                                                    </select> -->
                                                         </div>
                                                     </div>
 
@@ -226,8 +181,8 @@
                                                                 @foreach ($getCountries as $key => $country)
                                                                     @if (isset($getUsersDetails->getCustomerAddressFunction->country_id) &&
                                                                             $getUsersDetails->getCustomerAddressFunction->country_id == $country->shortname)
-                                                                        <option value="{{ $country->shortname }}"
-                                                                            selected>{{ $country->name }}</option>
+                                                                        <option value="{{ $country->shortname }}" selected>
+                                                                            {{ $country->name }}</option>
                                                                     @else
                                                                         <option value="{{ $country->shortname }}">
                                                                             {{ $country->name }}</option>
@@ -902,6 +857,42 @@
 @endsection
 
 @section('js')
+    <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
+    <script>
+        // This is to capture .env value
+        const environmentCheckPhp = "{{ env('APP_ENV') }}";
+        const PAYPAL_CLIENT_ID_PHP = "{{ env('PAYPAL_CLIENT_ID') }}";
+        const PAYPAL_SECRET_PHP = "{{ env('PAYPAL_SECRET') }}";
+        const PAYPAL_BASE_URL_PHP = "{{ env('PAYPAL_BASE_URL') }}";
+        const PAYPAL_BASE_NEW_URL_PHP = "{{ env('PAYPAL_BASE_NEW_URL') }}";
+    </script>
+    @php
+        // Request client token from the server-side PHP
+        $clientToken = generateClientToken();
+
+        if (env('APP_ENV') == 'production') {
+            $merchantId = env('PAYPAL_MERCHANTID_LIVE');
+        } elseif (env('APP_ENV') == 'local') {
+            $merchantId = env('PAYPAL_MERCHANTID_STAG');
+        }
+        $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
+    @endphp
+    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+    <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
+    <script>
+        function onPayPalScriptLoaded() {
+            if (window.paypal && paypal.Googlepay) {
+                // onGooglePayLoaded();
+            } else {
+                console.error('Google Pay not found in PayPal SDK');
+            }
+        }
+    </script>
+    <script
+        src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
+        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
+    </script>
+    <script src="https://pay.google.com/gp/p/js/pay.js"></script>
     <script src="{{ asset('/applepay_sdk/app.js') }}"></script>
     {{-- <script src="{{$url}}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
@@ -927,6 +918,11 @@
                         priceStatus: 1,
                     },
                     success: function(response) {
+                        if (response.result.status == 501) {
+                            toastr.info(response.result.msg);
+                            return false;
+
+                        }
                         $.each(response.result.sessionCartValues, function(keyIndex, value) {
                             $('#subtotalPrice' + keyIndex).text(
                                 '{{ config('constants.MY_CURRENCY_SYMBOL') }} ' +
@@ -946,9 +942,10 @@
                         /** For dekopay */
                         $("#totalOrder").val(response.result.finalPrice);
                         $(".totalP-dekopay").text(response.result.finalPrice);
-                        get_deko_data();
+                        // get_deko_data();
                         /** End of dekopay */
                         $('#totalP').val(response.result.finalPrice);
+                        toastr.success(response.result.errormsg);
                     }
                 });
             });
@@ -1480,12 +1477,12 @@
                     'select[name="percentage"] option:not([disabled]):first'));
                 $('select[name="percentage"] option:not([disabled]):first').prop('selected', 'selected');
 
-                get_deko_data();
+                // get_deko_data();
             });
             $("#payed").on("change", function() {
                 alterFilters();
                 alterMinOption();
-                get_deko_data();
+                // get_deko_data();
             });
 
         });

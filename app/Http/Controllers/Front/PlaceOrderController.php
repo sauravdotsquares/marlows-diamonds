@@ -20,6 +20,15 @@ class PlaceOrderController extends Controller
     {
         $email = $request->cust_email;
 
+        // Care plan validation
+        // if (isset($request['yearlySupportStatus']) && $request['yearlySupportStatus'] == 1) {
+        if (isset($request['yearlySupport'])) {
+            if (in_array($request['yearlySupport'], ['0', '89', '170', '220', '300', '400']) == false) {
+                return response()->json(['status' => 500, 'msg' => 'Invalid yearly support plan']);
+            }
+        }
+        // }
+
         // Extract domain from the email
         $emailDomain = substr(strrchr($email, "@"), 1);
         if ($emailDomain === 'storebotmail.joonix.net' || $email == "testing@example.com") {
