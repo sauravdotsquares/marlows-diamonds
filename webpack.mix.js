@@ -22,7 +22,7 @@ const crypto = require("crypto");
     // .copy('resources/js/googlepay_checkout_code.js', 'public/js')
     // .minify('public/js/googlepay_checkout_code.js')
     // .postCss('resources/css/app.css', 'public/css', [
-        // 
+        //
     // ]).version();
 
 mix.scripts('resources/js/app.js', 'public/js/app.min.js')
@@ -30,6 +30,7 @@ mix.scripts('resources/js/app.js', 'public/js/app.min.js')
     .scripts('resources/js/product_listing_page.js', 'public/js/product_listing_page.min.js')
     .scripts('resources/js/product-details-dyes.js', 'public/js/product-details-dyes.min.js')
     .scripts('resources/js/googlepay_checkout_code.js', 'public/js/googlepay_checkout_code.min.js')
+    .scripts('resources/js/applepay_checkout_code.js', 'public/js/applepay_checkout_code.min.js')
     .version(); // <-- important
 
 
