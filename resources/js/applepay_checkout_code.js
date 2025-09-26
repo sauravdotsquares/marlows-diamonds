@@ -1,7 +1,7 @@
 // ---------------------- Environment Setup ----------------------
-let base, PAYPAL_CLIENT_ID, PAYPAL_SECRET;
+let APPLE_PAY_BASE, PAYPAL_CLIENT_ID, PAYPAL_SECRET;
 
-base = PAYPAL_BASE_URL_PHP; // Dynamic base URL for both production and sandbox in this case from .env
+APPLE_PAY_BASE = PAYPAL_BASE_URL_PHP; // Dynamic URL for both production and sandbox in this case from .env
 PAYPAL_CLIENT_ID = PAYPAL_CLIENT_ID_PHP;
 PAYPAL_SECRET = PAYPAL_SECRET_PHP;
 
@@ -116,7 +116,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
 // ---------------------- PayPal Helper Functions ----------------------
 async function createPayPalOrder(payload) {
     const accessToken = await generatePayPalAccessToken();
-    const response = await fetch(`${base}/v2/checkout/orders`, {
+    const response = await fetch(`${APPLE_PAY_BASE}/v2/checkout/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
         body: JSON.stringify(payload)
@@ -126,7 +126,7 @@ async function createPayPalOrder(payload) {
 
 async function capturePayPalOrder(orderId) {
     const accessToken = await generatePayPalAccessToken();
-    const response = await fetch(`${base}/v2/checkout/orders/${orderId}/capture`, {
+    const response = await fetch(`${APPLE_PAY_BASE}/v2/checkout/orders/${orderId}/capture`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` }
     });
@@ -137,7 +137,7 @@ async function generatePayPalAccessToken() {
     const creds = `${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`;
     const base64Creds = btoa(creds);
 
-    const response = await fetch(`${base}/v1/oauth2/token`, {
+    const response = await fetch(`${APPLE_PAY_BASE}/v1/oauth2/token`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded", Authorization: `Basic ${base64Creds}` },
         body: new URLSearchParams({ grant_type: "client_credentials" })

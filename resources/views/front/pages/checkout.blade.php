@@ -894,7 +894,7 @@
         data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY"
         data-sdk-integration-source="integrationbuilder" onload="onPayPalScriptLoaded()"></script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
-    <script src="{{ asset('/applepay_sdk/app.js') }}"></script>
+    {{-- <script src="{{ asset('/applepay_sdk/app.js') }}"></script> --}}
     {{-- <script src="{{$url}}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
