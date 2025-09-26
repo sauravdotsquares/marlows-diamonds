@@ -142,27 +142,27 @@ async function capturePayPalOrder(orderId) {
     return response.json();
 }
 
-// async function generateApplePayAccessToken() {
-//     const clientCredentials = `${PAYPAL_CLIENT_ID_PHP}:${PAYPAL_SECRET_PHP}`;
-//     const base64Encoded = btoa(clientCredentials);
-
-//     const response = await fetch(`${base}/v1/oauth2/token`, {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/x-www-form-urlencoded",
-//             Authorization: `Basic ${base64Encoded}`,
-//         },
-//         body: new URLSearchParams({ grant_type: "client_credentials" }),
-//     });
-
-//     const data = await response.json();
-//     return data.access_token;
-// }
 async function generateApplePayAccessToken() {
-    console.log("Generating PayPal access token for Apple Pay");
-    const response = await fetch('/paypal/token', { method: 'POST' });
+    const clientCredentials = `${PAYPAL_CLIENT_ID_PHP}:${PAYPAL_SECRET_PHP}`;
+    const base64Encoded = btoa(clientCredentials);
+
+    const response = await fetch(`${base}/v1/oauth2/token`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Basic ${base64Encoded}`,
+        },
+        body: new URLSearchParams({ grant_type: "client_credentials" }),
+    });
+
     const data = await response.json();
-    if (!data.access_token) console.log("Failed to generate PayPal access token");
     return data.access_token;
 }
+// async function generateApplePayAccessToken() {
+//     console.log("Generating PayPal access token for Apple Pay");
+//     const response = await fetch('/paypal/token', { method: 'POST' });
+//     const data = await response.json();
+//     if (!data.access_token) console.log("Failed to generate PayPal access token");
+//     return data.access_token;
+// }
 // ---------------------- End of applepay_checkout_code.js File ----------------------
