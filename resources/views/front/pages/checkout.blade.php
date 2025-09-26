@@ -891,8 +891,8 @@
     </script>
     <script
         src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
-        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" data-sdk-integration-source="integrationbuilder" onload="onPayPalScriptLoaded()">
-    </script>
+        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY"
+        data-sdk-integration-source="integrationbuilder" onload="onPayPalScriptLoaded()"></script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
     <script src="{{ asset('/applepay_sdk/app.js') }}"></script>
     {{-- <script src="{{$url}}"></script> --}}
@@ -1377,8 +1377,8 @@
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
                                 } else if (selectedPaymentType == 'applepay') {
-                                    const applepayPriceSet = parseFloat(String(price).replace(/,/g, "").trim());
-                                    console.log(applepayPriceSet);
+                                    const applepayPriceSet = parseFloat(String(price).replace(/,/g,
+                                        "").trim());
 
                                     triggerApplePayViaPayPal(applepayPriceSet, response.order_dt, "GBP");
                                     $('#already_inserted').val('order_inserted');
