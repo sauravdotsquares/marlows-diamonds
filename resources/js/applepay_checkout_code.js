@@ -1,7 +1,7 @@
 // ---------------------- Environment Setup ----------------------
 let APPLE_PAY_BASE, PAYPAL_CLIENT_ID, PAYPAL_SECRET;
 
-APPLE_PAY_BASE = PAYPAL_BASE_URL_PHP; // Dynamic URL for both production and sandbox in this case from .env
+APPLE_PAY_BASE = PAYPAL_BASE_NEW_URL_PHP; // Dynamic URL for both production and sandbox in this case from .env
 PAYPAL_CLIENT_ID = PAYPAL_CLIENT_ID_PHP;
 PAYPAL_SECRET = PAYPAL_SECRET_PHP;
 
@@ -32,10 +32,12 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
             }],
             application_context: { shipping_preference: "NO_SHIPPING" }
         };
+        console.log("PayPal Order Payload:", payload);
+
 
         // --- Create PayPal order ---
         const createOrderResponse = await createPayPalOrder(payload);
-        if (!createOrderResponse?.id) throw new Error("Failed to create PayPal order for Apple Pay");
+        if (!createOrderResponse?.id) console.log("Failed to create PayPal order for Apple Pay");
         const paypalOrderId = createOrderResponse.id;
 
         // --- Apple Pay Request ---
@@ -46,6 +48,8 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
             supportedNetworks: ["visa", "masterCard", "amex", "discover"],
             total: { label: "Marlows Diamond", amount: amountStr, type: "final" }
         };
+        console.log("Apple Pay Request:", request);
+
 
         const session = new ApplePaySession(3, request);
 
@@ -67,6 +71,8 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 session.abort();
             }
         };
+        console.log("Merchant validation setup complete");
+
 
         // --- Payment Authorization ---
         session.onpaymentauthorized = async (event) => {
@@ -104,8 +110,11 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 session.completePayment(ApplePaySession.STATUS_FAILURE);
             }
         };
+        console.log("Payment authorization setup complete");
 
+        console.log("About to begin Apple Pay session");
         session.begin();
+        console.log("Apple Pay session.begin() called");
 
     } catch (err) {
         console.error("Apple Pay trigger error:", err);
@@ -115,7 +124,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
 
 // ---------------------- PayPal Helper Functions ----------------------
 async function createPayPalOrder(payload) {
-    const accessToken = await generatePayPalAccessToken();
+    const accessToken = await generateApplePayAccessToken();
     const response = await fetch(`${APPLE_PAY_BASE}/v2/checkout/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
@@ -125,7 +134,7 @@ async function createPayPalOrder(payload) {
 }
 
 async function capturePayPalOrder(orderId) {
-    const accessToken = await generatePayPalAccessToken();
+    const accessToken = await generateApplePayAccessToken();
     const response = await fetch(`${APPLE_PAY_BASE}/v2/checkout/orders/${orderId}/capture`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` }
@@ -133,17 +142,26 @@ async function capturePayPalOrder(orderId) {
     return response.json();
 }
 
-async function generatePayPalAccessToken() {
-    const creds = `${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`;
-    const base64Creds = btoa(creds);
+// async function generateApplePayAccessToken() {
+//     const clientCredentials = `${PAYPAL_CLIENT_ID_PHP}:${PAYPAL_SECRET_PHP}`;
+//     const base64Encoded = btoa(clientCredentials);
 
-    const response = await fetch(`${APPLE_PAY_BASE}/v1/oauth2/token`, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded", Authorization: `Basic ${base64Creds}` },
-        body: new URLSearchParams({ grant_type: "client_credentials" })
-    });
+//     const response = await fetch(`${base}/v1/oauth2/token`, {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/x-www-form-urlencoded",
+//             Authorization: `Basic ${base64Encoded}`,
+//         },
+//         body: new URLSearchParams({ grant_type: "client_credentials" }),
+//     });
+
+//     const data = await response.json();
+//     return data.access_token;
+// }
+async function generateApplePayAccessToken() {
+    const response = await fetch('/paypal/token', { method: 'POST' });
     const data = await response.json();
-    if (!data.access_token) throw new Error("Failed to generate PayPal access token");
+    if (!data.access_token) console.log("Failed to generate PayPal access token");
     return data.access_token;
 }
 // ---------------------- End of applepay_checkout_code.js File ----------------------

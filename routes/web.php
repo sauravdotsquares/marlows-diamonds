@@ -562,3 +562,19 @@ Route::post('/process-apple-pay', [ApplePayController::class, 'processApplePay']
 Route::post('/process-google-pay', [ApplePayController::class, 'processGooglePay']);
 Route::post('/update-order-status', [ApplePayController::class, 'updateStatus']);
 Route::post('/update-order-google-status', [ApplePayController::class, 'updateGoogleStatus']);
+Route::post('/paypal/token', function () {
+    $clientId = env('PAYPAL_CLIENT_ID');
+    $secret   = env('PAYPAL_SECRET');
+    $url      = env('PAYPAL_BASE_NEW_URL');
+
+    $ch = curl_init("$url/v1/oauth2/token");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Accept: application/json', 'Accept-Language: en_US']);
+    curl_setopt($ch, CURLOPT_USERPWD, "$clientId:$secret");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    return response()->json(json_decode($response, true));
+});

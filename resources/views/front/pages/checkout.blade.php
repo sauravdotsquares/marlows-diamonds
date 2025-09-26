@@ -891,9 +891,10 @@
     </script>
     <script
         src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
-        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY"
-        data-sdk-integration-source="integrationbuilder" onload="onPayPalScriptLoaded()"></script>
+        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()"></script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
+    <script src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
+    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
     {{-- <script src="{{ asset('/applepay_sdk/app.js') }}"></script> --}}
     {{-- <script src="{{$url}}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
