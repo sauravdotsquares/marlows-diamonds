@@ -1377,10 +1377,13 @@
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
                                 } else if (selectedPaymentType == 'applepay') {
-                                    triggerApplePayViaPayPal(price, response.order_dt, "GBP");
+                                    const applepayPriceSet = parseFloat(String(price).replace(/,/g, "").trim());
+                                    console.log(applepayPriceSet);
+
+                                    triggerApplePayViaPayPal(applepayPriceSet, response.order_dt, "GBP");
                                     $('#already_inserted').val('order_inserted');
-                                    $('.applepay-button-container').show();
-                                    $('#place-order').hide();
+                                    // $('.applepay-button-container').show();
+                                    // $('#place-order').hide();
                                 }
                             }
                         }

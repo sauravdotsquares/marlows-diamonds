@@ -1,5 +1,10 @@
 async function triggerApplePayViaPayPal(price, merchantOrderId, currency = "GBP") {
     try {
+        const cleanPrice = parseFloat(String(price).replace(/,/g, "").trim());
+
+        if (isNaN(cleanPrice)) {
+            throw new Error("Invalid price value: " + price);
+        }
         // ✅ Step 1: Check if Apple Pay is supported
         if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
             console.log("Apple Pay is available");
@@ -18,7 +23,7 @@ async function triggerApplePayViaPayPal(price, merchantOrderId, currency = "GBP"
             },
             body: JSON.stringify({
                 merchant_order_id: merchantOrderId,
-                amount: price,
+                amount: cleanPrice,
                 currency: currency
             })
         });
@@ -35,7 +40,7 @@ async function triggerApplePayViaPayPal(price, merchantOrderId, currency = "GBP"
             supportedNetworks: ["visa", "masterCard", "amex", "discover"],
             total: {
                 label: "Marlows Diamond",
-                amount: price.toFixed(2).toString(),
+                amount: cleanPrice,
                 type: "final"
             }
         };
