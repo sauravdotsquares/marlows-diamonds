@@ -44,7 +44,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
         const request = {
             countryCode: "GB",
             currencyCode: currency,
-            merchantCapabilities: ["supports3DS"],
+            merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
             supportedNetworks: ["visa", "masterCard", "amex", "discover"],
             total: { label: "Marlows Diamond", amount: amountStr, type: "final" }
         };
@@ -159,6 +159,7 @@ async function capturePayPalOrder(orderId) {
 //     return data.access_token;
 // }
 async function generateApplePayAccessToken() {
+    console.log("Generating PayPal access token for Apple Pay");
     const response = await fetch('/paypal/token', { method: 'POST' });
     const data = await response.json();
     if (!data.access_token) console.log("Failed to generate PayPal access token");

@@ -877,7 +877,6 @@
         }
         $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
     @endphp
-    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
     <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
     <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script>
     <script>
