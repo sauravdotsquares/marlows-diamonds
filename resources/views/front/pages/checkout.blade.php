@@ -879,6 +879,7 @@
     @endphp
     <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
     <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
+    <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script>
     <script>
         function onPayPalScriptLoaded() {
             if (window.paypal && paypal.Googlepay) {
@@ -890,7 +891,7 @@
     </script>
     <script
         src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
-        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
+        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" data-sdk-integration-source="integrationbuilder" onload="onPayPalScriptLoaded()">
     </script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
     <script src="{{ asset('/applepay_sdk/app.js') }}"></script>
@@ -1376,6 +1377,7 @@
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
                                 } else if (selectedPaymentType == 'applepay') {
+                                    triggerApplePayViaPayPal(price, response.order_dt, "GBP");
                                     $('#already_inserted').val('order_inserted');
                                     $('.applepay-button-container').show();
                                     $('#place-order').hide();
