@@ -1,10 +1,3 @@
-/**
- * Initialize & trigger Apple Pay (via PayPal) immediately.
- *
- * @param {number} amount - numeric amount (e.g. 12.34)
- * @param {string} merchantOrderId - your app's order id (response.order_dt)
- * @param {string} currency - currency code e.g. "GBP"
- */
 async function triggerApplePayViaPayPal(price, merchantOrderId, currency = "GBP") {
     try {
         // ✅ Step 1: Check if Apple Pay is supported
@@ -42,7 +35,7 @@ async function triggerApplePayViaPayPal(price, merchantOrderId, currency = "GBP"
             supportedNetworks: ["visa", "masterCard", "amex", "discover"],
             total: {
                 label: "Marlows Diamond",
-                amount: price.toFixed(2),
+                amount: price.toFixed(2).toString(),
                 type: "final"
             }
         };
