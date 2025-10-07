@@ -13,7 +13,7 @@
           "@type": "VideoObject",
           "name": "Why Choose Marlow’s Diamonds?",
           "description": "Our diamonds and gemstones offer exceptional value, consistently surpassing any like-for-like comparison with other UK jewellers. Our collection features multiple shape diamonds, including ovals, marquises, emerald cuts, and cushions, all expertly polished to the highest standards. We guarantee that most of our diamonds visually appear larger than their carat weight. Our skilled polishers focus on maximising proportions rather than just carat weight, meaning our 1ct diamonds often look equivalent to a 1.25ct from other jewellers. We invite you to visit any of our stores to be amazed. Furthermore, if you find a better price elsewhere, simply send us a link, and we will gladly beat it—guaranteeing you the best deal.",
-          "thumbnailUrl": "https://admin.marlowsdiamonds.com/storage/HomePageVideos/homeopagevideo.mp4",
+          "thumbnailUrl": "https://admin.marlowsdiamonds.com/storage/HomePageVideos/homeopagevideo.webm",
           "uploadDate": "2021-06-01",
           "duration": "PT0M43S"
         }
@@ -441,8 +441,9 @@
                         of our stores to be amazed. Furthermore, if you find a better price elsewhere, simply send us a
                         link, and we will gladly
                         beat it—guaranteeing you the best deal.</p>
-                    <video id="video" autoplay muted loop playsinline
+                    <video id="video" autoplay muted loop playsinline preload="metadata"
                         poster="/storage/HomePageVideos/homeopagevideo.webp">
+                        <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.webm' }}" type="video/webm">
                         <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.mp4' }}"
                             type="video/mp4">
                         Your browser does not support the video tag.
