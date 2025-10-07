@@ -5,6 +5,75 @@ APPLE_PAY_BASE = PAYPAL_BASE_NEW_URL_PHP; // Dynamic URL for both production and
 PAYPAL_CLIENT_ID = PAYPAL_CLIENT_ID_PHP;
 PAYPAL_SECRET = PAYPAL_SECRET_PHP;
 
+// Global variables to store order details
+let applepayLastOrderId = null;
+let applepayLastOrderAmount = null;
+
+// After Place Order Ajax succeeds
+function applepayAfterOrderCreated(orderId, price) {
+    applepayLastOrderId = orderId;
+    applepayLastOrderAmount = price;
+
+    // Hide place order button, show Apple Pay button
+    $('#already_inserted').val('order_inserted');
+    $('.applepay-button-container').show();
+    $('#place-order').hide();
+
+    initializeApplePay(); // this will insert the Apple Pay button
+}
+
+// Initialize Apple Pay button
+async function initializeApplePay() {
+    console.log("Initializing Apple Pay button");
+
+    if (!window.ApplePaySession) {
+        console.warn("Apple Pay is not available on this device/browser.");
+        alert("Apple Pay is not supported here.");
+        return;
+    }
+    console.log("Apple Pay Session is available");
+
+    if (!ApplePaySession.canMakePayments()) {
+        console.warn("Apple Pay is not available on this device/browser.");
+        alert("Apple Pay is not supported here.");
+        return;
+    }
+    console.log("Apple Pay can make payments");
+
+    if (!window.isSecureContext) {
+        console.error("Apple Pay requires a secure context (HTTPS).");
+        alert("Apple Pay only works on secure pages (HTTPS).");
+        return;
+    }
+    console.log("Secure context confirmed");
+
+    const buttonContainer = document.getElementById("applepay-button-container");
+
+    if (buttonContainer && !document.getElementById("btn-appl")) {
+        const button = document.createElement("button");
+        button.id = "btn-appl";
+        button.style = `
+            appearance: -apple-pay-button;
+            -apple-pay-button-type: buy;
+            -apple-pay-button-style: black;
+            width: 100%;
+            height: 44px;
+            margin-top: 10px;
+        `;
+
+        // 👇 This is the important part
+        button.addEventListener("click", () => {
+            if (!applepayLastOrderId || !applepayLastOrderAmount) {
+                alert("Order details missing. Please try again.");
+                return;
+            }
+            triggerApplePayViaPayPal(applepayLastOrderAmount, applepayLastOrderId, "GBP");
+        });
+
+        buttonContainer.appendChild(button);
+    }
+}
+
 // ---------------------- Apple Pay Trigger ----------------------
 async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
     console.group("Apple Pay Triggered");
@@ -15,30 +84,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
         const cleanPrice = parseFloat(String(price).replace(/,/g, "").trim());
         if (isNaN(cleanPrice) || cleanPrice <= 0) throw new Error("Invalid price: " + price);
 
-        if (!window.ApplePaySession || !ApplePaySession.canMakePayments()) {
-            console.warn("Apple Pay is not available on this device/browser.");
-            alert("Apple Pay is not supported here.");
-            return;
-        }
-
         const amountStr = cleanPrice.toFixed(2);
-
-        // --- Build PayPal Apple Pay payload ---
-        const payload = {
-            intent: "CAPTURE",
-            purchase_units: [{
-                reference_id: String(orderId),
-                amount: { currency_code: currency, value: amountStr }
-            }],
-            application_context: { shipping_preference: "NO_SHIPPING" }
-        };
-        console.log("PayPal Order Payload:", payload);
-
-
-        // --- Create PayPal order ---
-        const createOrderResponse = await createPayPalOrder(payload);
-        if (!createOrderResponse?.id) console.log("Failed to create PayPal order for Apple Pay");
-        const paypalOrderId = createOrderResponse.id;
 
         // --- Apple Pay Request ---
         const request = {
@@ -48,45 +94,77 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
             supportedNetworks: ["visa", "masterCard", "amex", "discover"],
             total: { label: "Marlows Diamond", amount: amountStr, type: "final" }
         };
-        console.log("Apple Pay Request:", request);
-
 
         const session = new ApplePaySession(3, request);
 
         // --- Merchant Validation ---
         session.onvalidatemerchant = async (event) => {
             try {
-                const validateRes = await fetch("/applepay/validate-merchant", {
+                const accessToken = await generateApplePayAccessToken();
+                const validateRes = await fetch(`${APPLE_PAY_BASE}/v1/apple-pay/validate-payment`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.content || ""
+                        Authorization: `Bearer ${accessToken}`,
                     },
-                    body: JSON.stringify({ validationUrl: event.validationURL })
+                    body: JSON.stringify({
+                        validationUrl: event.validationURL,
+                        displayName: "Marlow's Diamonds"
+                    })
                 });
+
                 const merchantSession = await validateRes.json();
                 session.completeMerchantValidation(merchantSession);
+                console.log("Merchant validation successful");
             } catch (err) {
                 console.error("Merchant validation failed", err);
                 session.abort();
             }
         };
-        console.log("Merchant validation setup complete");
-
 
         // --- Payment Authorization ---
         session.onpaymentauthorized = async (event) => {
             try {
                 const paymentData = event.payment;
 
+                // 1. Create PayPal order AFTER Apple validation
+                const payload = {
+                    intent: "CAPTURE",
+                    purchase_units: [{
+                        amount: { currency_code: currency, value: amountStr }
+                    }]
+                };
+                console.log("Creating PayPal Order:", payload);
+
+                const createOrderResponse = await createPayPalOrder(payload);
+                if (!createOrderResponse?.id) {
+                    throw new Error("Failed to create PayPal order");
+                }
+                const paypalOrderId = createOrderResponse.id;
+
+                // 2. Confirm Apple Pay payment with PayPal
                 const { status } = await paypal.Applepay().confirmOrder({
                     orderId: paypalOrderId,
                     paymentMethodData: paymentData
                 });
 
                 if (status === "APPROVED") {
+                    // 3. Capture the order
                     const captureRes = await capturePayPalOrder(paypalOrderId);
+                    const payload = {
+                        payment: payment,         // Apple Pay details (your existing object)
+                        captureRes: captureRes,   // PayPal capture response
+                        tokenOrdIdUpdated: orderId
+                    };
+                    const paymentPayload = {
+                        paymentMethod: paymentData.payment.token.paymentMethod.displayName,
+                        token: paymentData.payment.token.transactionIdentifier,
+                        billingAddress: paymentData.payment.billingContact,
+                        countryCode: paymentData.payment.billingContact.countryCode,
+                        tokenOrdIdUp: orderId
+                    };
 
+                    // 4. Notify backend
                     const backendRes = await fetch("/process-apple-pay", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -110,21 +188,19 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 session.completePayment(ApplePaySession.STATUS_FAILURE);
             }
         };
-        console.log("Payment authorization setup complete");
 
-        console.log("About to begin Apple Pay session");
         session.begin();
-        console.log("Apple Pay session.begin() called");
-
     } catch (err) {
         console.error("Apple Pay trigger error:", err);
         alert("Unable to start Apple Pay: " + err.message);
     }
 }
 
+
 // ---------------------- PayPal Helper Functions ----------------------
 async function createPayPalOrder(payload) {
     const accessToken = await generateApplePayAccessToken();
+    console.log("Generated Access Token:", accessToken);
     const response = await fetch(`${APPLE_PAY_BASE}/v2/checkout/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },

@@ -28,7 +28,9 @@ use Illuminate\Support\Facades\Artisan;
 
 // Route::get('/upload-csv-products-variations-import', [CSVController::class, 'csvProductsVariationImportFunction']);
 
-
+Route::get('/site-php-info-show', function() {
+    return phpinfo();
+});
 Route::post('/api/orders', [ApplePayController::class, 'appleApiOrder']);
 Route::post('/api/orders/{id}/capture', [ApplePayController::class, 'appleApiOrderCapture']);
 Route::get('/api/getorder/{id}', [ApplePayController::class, 'getOrderDetails']);

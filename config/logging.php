@@ -113,6 +113,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'applepay' => [
+            'driver' => 'single', // single log file
+            'path' => storage_path('logs/applepay.log'),
+            'level' => 'debug',   // you can set info, notice, warning, error as needed
+        ],
+
     ],
 
 ];

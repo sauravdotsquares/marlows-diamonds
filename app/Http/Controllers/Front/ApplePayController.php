@@ -69,6 +69,64 @@ class ApplePayController extends Controller
         }
     }
 
+
+
+    public function handleApplePay(Request $request)
+    {
+        // Start a log group for this transaction
+        Log::channel('applepay')->group('Apple Pay Transaction handleApplePay() ===>', function () use ($request) {
+            try {
+                $paymentData = $request->input('payment');
+                $captureRes = $request->input('captureRes');
+                $tokenOrdIdUp = $request->input('tokenOrdIdUpdated') ?? $request->input('tokenOrdIdUp');
+
+                Log::info("Received Apple Pay request", [
+                    'orderId' => $tokenOrdIdUp,
+                    'paymentData' => $paymentData,
+                    'captureRes' => $captureRes
+                ]);
+
+                $order = Order::find($tokenOrdIdUp);
+                if (!$order) {
+                    Log::warning("Order not found", ['orderId' => $tokenOrdIdUp]);
+                    return response()->json(['success' => false, 'message' => 'Order not found'], 404);
+                }
+
+                // Update order
+                $order->status = 2;
+                $order->payment_method = $paymentData['paymentMethodData']['description'] ?? $request->input('paymentMethod');
+                $order->token = $paymentData['paymentMethodData']['tokenizationData']['token'] ?? $request->input('token');
+                $order->billingAddress = json_encode($paymentData['paymentMethodData']['info']['billingAddress'] ?? $request->input('billingAddress'));
+                if ($captureRes) {
+                    $order->paypal_capture_response = json_encode($captureRes);
+                }
+                $order->save();
+
+                Log::info("Order updated successfully", ['orderId' => $tokenOrdIdUp]);
+
+                $this->email_order_custom($tokenOrdIdUp);
+                session()->forget('cart');
+
+                $redirectUrl = url("/success-page/{$tokenOrdIdUp}");
+                Log::info("Redirect URL generated", ['redirectUrl' => $redirectUrl]);
+
+                return response()->json(['success' => true, 'redirect' => $redirectUrl]);
+            } catch (\Exception $e) {
+                Log::error("Apple Pay / PayPal processing failed", [
+                    'message' => $e->getMessage(),
+                    'stack' => $e->getTraceAsString()
+                ]);
+
+                return response()->json(['success' => false, 'message' => 'An error occurred while processing the payment'], 500);
+            }
+        });
+    }
+
+
+
+
+
+
     public function processGooglePay(Request $request)
     {
 
@@ -460,7 +518,6 @@ class ApplePayController extends Controller
             $merchantId = env("PAYPAL_MERCHANTID_STAG");
         }
         $accessToken = $this->generateAccessToken();
-        // $merchantId = env("PAYPAL_MERCHANTID");
         $purchaseAmount = $totalDepositedPrice; // Hardcoded for demonstration purposes
 
         $orderData = [

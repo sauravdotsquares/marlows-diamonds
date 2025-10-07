@@ -878,7 +878,7 @@
         $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
     @endphp
     <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
-    <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script>
+    {{-- <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script> --}}
     <script>
         function onPayPalScriptLoaded() {
             if (window.paypal && paypal.Googlepay) {
@@ -890,11 +890,12 @@
     </script>
     <script
         src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
-        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()"></script>
+        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
+    </script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
-    <script src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
-    <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+   <script src="https://applepay.cdn-apple.com/jsapi/1/latest/apple-pay-sdk.js"></script>
     {{-- <script src="{{ asset('/applepay_sdk/app.js') }}"></script> --}}
+    <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script>
     {{-- <script src="{{$url}}"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -1377,13 +1378,21 @@
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
                                 } else if (selectedPaymentType == 'applepay') {
-                                    const applepayPriceSet = parseFloat(String(price).replace(/,/g,
-                                        "").trim());
+                                    // let applepayPayload = getApplePayPayloadInfo(response.order_dt,
+                                    //     response
+                                    //     .get_order_detail,
+                                    //     price, "GBP");
+                                    // const applepayPriceSet = parseFloat(String(price).replace(/,/g,
+                                    //     "").trim());
 
-                                    triggerApplePayViaPayPal(applepayPriceSet, response.order_dt, "GBP");
-                                    $('#already_inserted').val('order_inserted');
+                                    // triggerApplePayViaPayPal(applepayPriceSet, response.order_dt,
+                                    //     "GBP");
+                                    // $('#already_inserted').val('order_inserted');
                                     // $('.applepay-button-container').show();
                                     // $('#place-order').hide();
+
+                                    // New Flow for Apple Pay
+                                    applepayAfterOrderCreated(response.order_dt, price);
                                 }
                             }
                         }
@@ -1654,7 +1663,7 @@
         }
 
         // Google pay transaction payload code only
-        function getGooglePayloadInfo(internal_order_id, get_order_detail, total, currencyCode = "USD") {
+        function getGooglePayloadInfo(internal_order_id, get_order_detail, total, currencyCode = "GBP") {
             let items = [];
             let itemsTotal = 0;
             total = parseFloat(total);
@@ -1756,26 +1765,45 @@
             };
 
             // ✅ Add shipping if available
-            if (get_order_detail.customer_shipping_address) {
-                const shipping = get_order_detail.customer_shipping_address;
-                payload.purchase_units[0].shipping = {
-                    name: {
-                        full_name: shipping.first_name + " " + shipping.last_name
-                    },
-                    address: {
-                        address_line_1: shipping.street_address_l1,
-                        address_line_2: shipping.street_address_l2 || "",
-                        admin_area_2: shipping.town_city,
-                        admin_area_1: shipping.state,
-                        postal_code: shipping.pin_code,
-                        country_code: shipping.country_id
-                    }
-                };
-            } else {
-                payload.purchase_units[0].shipping = null;
-            }
+            // if (get_order_detail.customer_shipping_address) {
+            //     const shipping = get_order_detail.customer_shipping_address;
+            //     payload.purchase_units[0].shipping = {
+            //         name: {
+            //             full_name: shipping.first_name + " " + shipping.last_name
+            //         },
+            //         address: {
+            //             address_line_1: shipping.street_address_l1,
+            //             address_line_2: shipping.street_address_l2 || "",
+            //             admin_area_2: shipping.town_city,
+            //             admin_area_1: shipping.state,
+            //             postal_code: shipping.pin_code,
+            //             country_code: shipping.country_id
+            //         }
+            //     };
+            // } else {
+            //     payload.purchase_units[0].shipping = null;
+            // }
+
+            // Paypal check shipping address  with client address
+            payload.purchase_units[0].shipping = null;
 
             return payload;
+        }
+
+        // Apple pay transaction payload code only
+        function getApplePayPayloadInfo(internal_order_id, get_order_detail, totalAmt, currencyCode = "GBP") {
+            // --- Apple Pay Request ---
+            let applepayPayload = {
+                countryCode: "GB",
+                currencyCode: currencyCode,
+                merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
+                supportedNetworks: ["visa", "masterCard", "amex", "discover"],
+                total: {
+                    label: "Marlows Diamond",
+                    amount: totalAmt.toFixed(2),
+                    type: "final"
+                }
+            };
         }
     </script>
 @endsection

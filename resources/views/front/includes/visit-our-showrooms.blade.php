@@ -18,12 +18,12 @@
 	      <div class="row">
 	        <div class="col-md-6">
 
-	          <img src="/assets/images/visit-store-birmingham.webp" class="img-fluid" alt="Birmingham Store">
+	          <img src="/assets/images/visit-store-birmingham.webp" loading="lazy" class="img-fluid" alt="Birmingham Store">
 
 	        </div>
 	        <div class="col-md-6">
 
-	          <img src="/assets/images/visit-store-birmingham-store.webp" class="img-fluid" alt="Birmingham Store">
+	          <img src="/assets/images/visit-store-birmingham-store.webp" loading="lazy" class="img-fluid" alt="Birmingham Store">
 
 	        </div>
 	      </div>
@@ -33,7 +33,7 @@
  			 <div class="col-md-4">
  			 	<div class="visit-showrooms-detail">
  			 		<div class="visit-icon">
- 			 	<img src="/assets/images/visit-coll.png" class="img-fluid" alt="">
+ 			 	<img src="/assets/images/visit-coll.png" loading="lazy" class="img-fluid" alt="">
  			 </div>
 	          {{-- <h3>Call Us</h3> --}}
 	          <p class="py-2"><a href="tel:01212364415">0121 236 4415</a></p>
@@ -42,7 +42,7 @@
 	       <div class="col-md-4">
 	       	<div class="visit-showrooms-detail">
 	       		<div class="visit-icon">
-	       	<img src="/assets/images/visit-location.png" class="img-fluid" alt="">
+	       	<img src="/assets/images/visit-location.png" loading="lazy" class="img-fluid" alt="">
 	       </div>
 	          {{-- <h3>Find Us</h3> --}}
 	          <p class="py-2">46 Warstone Ln, Hockley, Birmingham B18 6JJ</p>
@@ -52,7 +52,7 @@
 	        <div class="col-md-4">
 	        	<div class="visit-showrooms-detail">
 	        		<div class="visit-icon">
-	        		<img src="/assets/images/visit-mail.png" class="img-fluid" alt="">
+	        		<img src="/assets/images/visit-mail.png" loading="lazy" class="img-fluid" alt="">
 	        	</div>
 	          {{-- <h3>Email Us</h3> --}}
 	          <p class="py-2"> <a href="mailto:hello@marlows-diamonds.co.uk" class="visit-get-direction">hello@marlows-diamonds.co.uk</a></p>
@@ -66,12 +66,12 @@
 	      <div class="row mt-4">
 	        <div class="col-md-6">
 
-	          <img src="/assets/images/visit-store-img.webp" class="img-fluid" alt="Birmingham Store Image">
+	          <img src="/assets/images/visit-store-img.webp" loading="lazy" class="img-fluid" alt="Birmingham Store Image">
 
 	        </div>
 	        <div class="col-md-6">
 
-	          <img src="/assets/images/visit-store-img-inner.webp" class="img-fluid" alt="Birmingham Store Image">
+	          <img src="/assets/images/visit-store-img-inner.webp" loading="lazy" class="img-fluid" alt="Birmingham Store Image">
 
 	        </div>
 	      </div>
@@ -81,7 +81,7 @@
  			 <div class="col-md-4">
  			 	<div class="visit-showrooms-detail">
  			 		<div class="visit-icon">
- 			 	<img src="/assets/images/visit-coll.png" class="img-fluid" alt="">
+ 			 	<img src="/assets/images/visit-coll.png" loading="lazy" class="img-fluid" alt="">
  			 </div>
 	          {{-- <h3>Call Us</h3> --}}
 	          <p class="py-2"><a href="tel:020 7405 1477">020 7405 1477</a></p>
@@ -90,7 +90,7 @@
 	       <div class="col-md-4">
 	       	<div class="visit-showrooms-detail">
 	       		<div class="visit-icon">
-	       	<img src="/assets/images/visit-location.png" class="img-fluid" alt="">
+	       	<img src="/assets/images/visit-location.png" loading="lazy" class="img-fluid" alt="">
 	       </div>
 	          {{-- <h3>Find Us</h3> --}}
 	          <p class="py-2">20 Beauchamp Pl, Knightsbridge, London SW3 1NQ</p>
@@ -100,7 +100,7 @@
 	        <div class="col-md-4">
 	        	<div class="visit-showrooms-detail">
 	        		<div class="visit-icon">
-	        		<img src="/assets/images/visit-mail.png" class="img-fluid" alt="">
+	        		<img src="/assets/images/visit-mail.png" loading="lazy" class="img-fluid" alt="">
 	        	</div>
 	          {{-- <h3>Email Us</h3> --}}
 	          <p class="py-2"><a href="mailto:london@marlows -diamonds.co.uk" class="visit-get-direction">london@marlows -diamonds.co.uk</a></p>
