@@ -33,10 +33,19 @@
 
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon-32x32.png') }}" type="image/x-icon" />
     <link rel="apple-touch-icon" href="{{ asset('assets/images/apple-icon-180x180.png') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+    <!-- Latest free version (replace with version you need) -->
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="{{ asset('assets/css/custom.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('assets/css/developer.css?') . env('VERSION') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -48,7 +57,8 @@
         var systemBaseUrl = '<?php echo url('/'); ?>/';
     </script>
 
-    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.min.js"
         integrity="sha512-ATReN+hO4MtnEUKPL23NQVpaIp9Lc/7Ke91f9jAAEqwQkzdWzCDiwPi0Q8b2xZGsOA5OUDVPIpqqPqUsucXBVw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -175,14 +185,23 @@
         const mapMarker = '{{ asset('images/map_marker.png') }}';
     </script>
 
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script>
+    {{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js?') . env('VERSION') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
     {{-- <script src="{{ asset('assets/js/controllers/app.js?') . env('VERSION') }}"></script> --}}
     <script src="{{ asset('assets/js/controllers/app.min.js?') . env('VERSION') }}"></script>
-    <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}"></script>
+    {{-- <script src="{{ asset('assets/js/owl.carousel.min.js?') . env('VERSION') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    {{-- <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}"></script> --}}
     <script src="{{ asset('assets/js/ui-bootstrap-tpls-0.5.0.js?') . env('VERSION') }}"></script>
+
     {{-- <script src="{{ asset('assets/js/custom.js') }}"></script> --}}
     <script src="{{ asset('assets/js/custom.min.js') }}"></script>
-    <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}"></script>
+    {{-- <script src="{{ asset('/assets/js/jquery.lazyload.min.js?') . env('VERSION') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     {{-- <script src="{{ mix('js/app.min.js') }}"></script> --}}
 
