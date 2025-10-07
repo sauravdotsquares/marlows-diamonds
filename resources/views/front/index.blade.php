@@ -20,52 +20,6 @@
     </script>
 @endsection
 
-{{-- Criteo start --}}
-@section('criteo-tracking')
-    <script type="text/javascript">
-        window.criteo_q = window.criteo_q || [];
-
-        function pushCriteoEvents() {
-            var deviceType = /iPad/.test(navigator.userAgent) ? "t" :
-                /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
-
-            window.criteo_q.push({
-                    event: "setAccount",
-                    account: 119681
-                },
-                @if (Auth::check())
-                    {
-                        event: "setEmail",
-                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                        hash_method: "sha256"
-                    }, {
-                        event: "setEmail",
-                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                        hash_method: "md5"
-                    },
-                @endif {
-                    event: "setSiteType",
-                    type: deviceType
-                },
-                @if (Auth::check())
-                    {
-                        event: "setCustomerId",
-                        id: {{ Auth::user()->id }}
-                    },
-                @endif {
-                    event: "viewHome"
-                }
-            );
-        }
-
-        // Delay firing until page load is complete
-        window.addEventListener("load", function() {
-            setTimeout(pushCriteoEvents, 3000); // fire 2s after page is loaded
-        });
-    </script>
-@endsection
-{{-- Criteo end --}}
-
 @section('dynamic_og_image')
     <meta property="og:image" content="{{ env('APP_IMAGE_URL') . '/images/logo/' . $header_settings['logo'] }}" />
 @endsection
@@ -443,7 +397,8 @@
                         beat it—guaranteeing you the best deal.</p>
                     <video id="video" autoplay muted loop playsinline preload="metadata"
                         poster="/storage/HomePageVideos/homeopagevideo.webp">
-                        <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.webm' }}" type="video/webm">
+                        <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.webm' }}"
+                            type="video/webm">
                         <source src="{{ env('APP_IMAGE_URL') . '/storage/HomePageVideos/homeopagevideo.mp4' }}"
                             type="video/mp4">
                         Your browser does not support the video tag.
@@ -655,8 +610,12 @@
 @section('js')
     {{-- <script src='https://www.google.com/recaptcha/api.js'></script> --}}
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc9hhUgAAAAAJzmHHLuY__2pxT9bHMlIPzgGbwN"></script>
-    <script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/vendors/jquery-validator/dist/jquery.validate.min.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    {{-- <script src="{{ asset('assets/vendors/toastr/build/toastr.min.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
     @php
         $environment = env('APP_ENV');
     @endphp
@@ -671,3 +630,49 @@
     {{-- <script src="{{ asset('custom/js/index/index.js') }}"></script> --}}
     <script src="{{ mix('js/index.min.js') }}"></script>
 @endsection
+
+{{-- Criteo start --}}
+@section('criteo-tracking')
+    <script type="text/javascript">
+        window.criteo_q = window.criteo_q || [];
+
+        function pushCriteoEvents() {
+            var deviceType = /iPad/.test(navigator.userAgent) ? "t" :
+                /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ? "m" : "d";
+
+            window.criteo_q.push({
+                    event: "setAccount",
+                    account: 119681
+                },
+                @if (Auth::check())
+                    {
+                        event: "setEmail",
+                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                        hash_method: "sha256"
+                    }, {
+                        event: "setEmail",
+                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                        hash_method: "md5"
+                    },
+                @endif {
+                    event: "setSiteType",
+                    type: deviceType
+                },
+                @if (Auth::check())
+                    {
+                        event: "setCustomerId",
+                        id: {{ Auth::user()->id }}
+                    },
+                @endif {
+                    event: "viewHome"
+                }
+            );
+        }
+
+        // Delay firing until page load is complete
+        window.addEventListener("load", function() {
+            setTimeout(pushCriteoEvents, 3000); // fire 2s after page is loaded
+        });
+    </script>
+@endsection
+{{-- Criteo end --}}
