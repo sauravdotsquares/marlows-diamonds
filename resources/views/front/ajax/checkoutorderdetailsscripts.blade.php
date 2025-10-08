@@ -109,7 +109,7 @@
                         @if(isset($details['name']) && $details['name'] != 'Custom Diamond')
                         <div class="plancare-section">
                             <h5>Jewellery Care Plan</h5>
-                            <select class="form-control" name="yearlySupport" id="yearlySupport{{$id}}">
+                            <select class="form-control" name="yearlySupport[]" id="yearlySupport{{$id}}">
                                 <option value="0" @if(isset($details['yearlySupport']) && $details['yearlySupport']==0) selected @endif>No applied</option>
                                 <option value="89" @if(isset($details['yearlySupport']) && $details['yearlySupport']==89) selected @endif>1 year {{config('constants.MY_CURRENCY_SYMBOL')}}89</option>
                                 <option value="170" @if(isset($details['yearlySupport']) && $details['yearlySupport']==170) selected @endif>2 years {{config('constants.MY_CURRENCY_SYMBOL')}}170</option>

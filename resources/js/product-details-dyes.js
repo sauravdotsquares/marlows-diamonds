@@ -1,3 +1,7 @@
+$(window).on('load', function () {
+    $('#loader-overlay').hide();
+    // $('#products-section').show();
+});
 function changeDiamondType(classToPerform = "") {
 
     if (classToPerform == 'mined_item') {
@@ -442,6 +446,7 @@ function getCustomPriceFinalFunction(selectedDiamondPrice = null) {
 }
 
 function addtobasketFunction(getUrl, product_slug = null, index = null) {
+    document.getElementById("loader-overlay").style.display = "flex";
     let lab_grown_price = $("#finaldiamondprice .price").text().replace("£", "");
 
     let diamondCaratWeight;
@@ -553,6 +558,7 @@ function addtobasketFunction(getUrl, product_slug = null, index = null) {
                 }
                 toastr.error(res.error);
             }
+            $('#loader-overlay').hide();
         }
     });
 }

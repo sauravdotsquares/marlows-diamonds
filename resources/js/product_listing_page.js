@@ -1,3 +1,7 @@
+$(window).on('load', function () {
+    $('#loader-overlay').hide();
+    // $('#products-section').show();
+});
 $(document).ready(function () {
 
     //start

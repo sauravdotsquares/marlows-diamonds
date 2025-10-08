@@ -1,48 +1,5 @@
 @extends('layouts.front.app')
 
-{{-- criteo start --}}
-@section('criteo-tracking')
-    <script type="text/javascript">
-        setTimeout(function() {
-            window.criteo_q = window.criteo_q || [];
-
-            // Device type detection (JS only)
-            var deviceType = /iPad/.test(navigator.userAgent) ? "t" :
-                /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ?
-                "m" : "d";
-
-            window.criteo_q.push({
-                    event: "setAccount",
-                    account: 119681
-                }, {
-                    event: "setSiteType",
-                    type: deviceType
-                },
-
-                @if (Auth::check())
-                    {
-                        event: "setEmail",
-                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
-                        hash_method: "sha256"
-                    }, {
-                        event: "setCustomerId",
-                        id: {{ Auth::user()->id }}
-                    },
-                @endif
-
-                {
-                    event: "viewList",
-                    item: {!! json_encode($sortedArray->pluck('id')->map(fn($id) => "ig_$id")) !!}
-                }
-            );
-
-            console.log('Loaded Criteo script after 5 sec...');
-
-        }, 5000); // ⏳ load after 5 seconds
-    </script>
-@endsection
-{{-- criteo ends --}}
-
 @inject('footer_settings', 'App\Models\Settings')
 
 @section('css')
@@ -1574,3 +1531,44 @@
 
     {{-- <script src="{{ asset('custom/js/product_listing_page/product_listing_page.js') }}"></script> --}}
 @endsection
+
+{{-- criteo start --}}
+@section('criteo-tracking')
+    <script type="text/javascript">
+        setTimeout(function() {
+            window.criteo_q = window.criteo_q || [];
+
+            // Device type detection (JS only)
+            var deviceType = /iPad/.test(navigator.userAgent) ? "t" :
+                /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Silk/.test(navigator.userAgent) ?
+                "m" : "d";
+
+            window.criteo_q.push({
+                    event: "setAccount",
+                    account: 119681
+                }, {
+                    event: "setSiteType",
+                    type: deviceType
+                },
+
+                @if (Auth::check())
+                    {
+                        event: "setEmail",
+                        email: "{{ hash('sha256', strtolower(trim(Auth::user()->email))) }}",
+                        hash_method: "sha256"
+                    }, {
+                        event: "setCustomerId",
+                        id: {{ Auth::user()->id }}
+                    },
+                @endif
+
+                {
+                    event: "viewList",
+                    item: {!! json_encode($sortedArray->pluck('id')->map(fn($id) => "ig_$id")) !!}
+                }
+            );
+
+        }, 3000); // ⏳ load after 3 seconds
+    </script>
+@endsection
+{{-- criteo ends --}}

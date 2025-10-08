@@ -1,5 +1,4 @@
 @extends('layouts.front.app')
-
 {{-- @inject('footer_settings', 'App\Models\Settings') --}}
 @section('css')
     <style>
@@ -201,7 +200,9 @@
 <!-- product info and media -->
 
 @section('content')
-
+    <script>
+        document.getElementById("loader-overlay").style.display = "flex";
+    </script>
     {{-- pop up content start from here --}}
 
     <div class="modal fade sharesocial" id="sharesocial" tabindex="-1" aria-labelledby="sharesocialLabel" aria-hidden="true">
@@ -1025,7 +1026,7 @@
                     item: "ig_{{ $data->id }}"
                 }
             );
-        }, 5000); // ⏳ load after 5 seconds
+        }, 3000); // ⏳ load after 3 seconds
     </script>
 @endsection
 {{-- criteo ends --}}

@@ -13,21 +13,47 @@ use App\Models\User;
 use Auth;
 use Redirect;
 use App\Http\Controllers\Front\LoginController;
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 class PlaceOrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
         $email = $request->cust_email;
+        $validatedData = $request->validate([
+            'mobile' => 'required|phone:' . $request->input('country_id') . ',MOBILE,national',
+            'pin_code' => 'required|postal_code:' . $request->input('country_id'),
+        ], [
+            'mobile.phone' => 'Please enter a valid mobile number.',
+            'pin_code.postal_code' => 'Please enter a valid postal code.',
+        ]);
 
         // Care plan validation
-        // if (isset($request['yearlySupportStatus']) && $request['yearlySupportStatus'] == 1) {
-        if (isset($request['yearlySupport'])) {
-            if (in_array($request['yearlySupport'], ['0', '89', '170', '220', '300', '400']) == false) {
-                return response()->json(['status' => 500, 'msg' => 'Invalid yearly support plan']);
+        if ($request->has('yearlySupport')) {
+            $yearlySupport = $request->input('yearlySupport');
+
+            // Ensure it's an array
+            if (!is_array($yearlySupport)) {
+                return response()->json([
+                    'status' => 500,
+                    'msg' => 'Invalid format for yearly support. Expected array.',
+                ]);
+            }
+
+            // Allowed values
+            $allowed = ['0', '89', '170', '220', '300', '400'];
+
+            // Find any invalid values
+            $invalidValues = array_diff($yearlySupport, $allowed);
+
+            if (!empty($invalidValues)) {
+                return response()->json([
+                    'status' => 500,
+                    'msg' => 'Invalid yearly support plan: ' . implode(', ', $invalidValues),
+                ]);
             }
         }
-        // }
+
 
         // Extract domain from the email
         $emailDomain = substr(strrchr($email, "@"), 1);
@@ -204,7 +230,7 @@ class PlaceOrderController extends Controller
                             )->update(['order_id' => $getOrders->id]);
                         }
 
-                        $getOrderDetail = Order::with('customerOrderAddress','customerShippingAddress','getOrderDetailsFunction')->find($getOrders->id);
+                        $getOrderDetail = Order::with('customerOrderAddress', 'customerShippingAddress', 'getOrderDetailsFunction')->find($getOrders->id);
                         // dd($getOrderDetail);
                         // $getOrderDetail = OrderDetail::where('order_id', '=', $getOrders->id)->get()->toArray();
 

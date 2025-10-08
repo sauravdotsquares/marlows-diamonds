@@ -76,13 +76,13 @@
                                     Signup
                                 </a>
                                 <!-- <label class="rememberme">
-                                                                                                                                                                        <input type="checkbox">
-                                                                                                                                                                        <span>Remember me</span>
-                                                                                                                                                                    </label> -->
+                                                                                                                                                                                                <input type="checkbox">
+                                                                                                                                                                                                <span>Remember me</span>
+                                                                                                                                                                                            </label> -->
                             </div>
                             <!-- <div class="lostpassword">
-                                                                                                                                                                    <a href="javascript:void(0)">Lost your password</a>
-                                                                                                                                                                </div> -->
+                                                                                                                                                                                            <a href="javascript:void(0)">Lost your password</a>
+                                                                                                                                                                                        </div> -->
                         </form>
                     </div>
                 @endif
@@ -92,12 +92,12 @@
                 <div class="checkout-main-wrap">
                     <!--<div class="checkout-table">
 
-                                                                                                                                                                <ul>
-                                                                                                                                                                    <li><span class="active">1</span>Shipping</li>
-                                                                                                                                                                    <li><span>2</span>Payment</li>
-                                                                                                                                                                </ul>
+                                                                                                                                                                                        <ul>
+                                                                                                                                                                                            <li><span class="active">1</span>Shipping</li>
+                                                                                                                                                                                            <li><span>2</span>Payment</li>
+                                                                                                                                                                                        </ul>
 
-                                                                                                                                                            </div> -->
+                                                                                                                                                                                    </div> -->
 
                     <form id="finalPlaceOrderPage">
                         @csrf
@@ -164,10 +164,6 @@
                                                                 value="{{ isset($getUsersDetails->getCustomerAddressFunction->state) ? $getUsersDetails->getCustomerAddressFunction->state : '' }}"
                                                                 id="state" name="state" required="required"
                                                                 class="form-control">
-                                                            <!-- <select id="state" name="state" required="required" class="form-control">
-                                                                                                                                                                                                        <option>Select Option</option>
-                                                                                                                                                                                                        <option>Rajasthan</option>
-                                                                                                                                                                                                    </select> -->
                                                         </div>
                                                     </div>
 
@@ -583,7 +579,7 @@
                                                                         <div class="plancare-section">
                                                                             <h5>Jewellery Care Plan</h5>
                                                                             <select class="form-control"
-                                                                                name="yearlySupport"
+                                                                                name="yearlySupport[]"
                                                                                 id="yearlySupport{{ $id }}">
                                                                                 <option value="0"
                                                                                     @if (isset($details['yearlySupport']) && $details['yearlySupport'] == 0) selected @endif>
@@ -893,7 +889,7 @@
         data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
     </script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
-   <script src="https://applepay.cdn-apple.com/jsapi/1/latest/apple-pay-sdk.js"></script>
+    <script src="https://applepay.cdn-apple.com/jsapi/1/latest/apple-pay-sdk.js"></script>
     {{-- <script src="{{ asset('/applepay_sdk/app.js') }}"></script> --}}
     <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script>
     {{-- <script src="{{$url}}"></script> --}}
@@ -1307,6 +1303,7 @@
                     required: "Deposit percentage is required",
                 },
             },
+
             submitHandler: function(form) {
                 const getValue = $('#already_inserted').val();
                 if (getValue != "order_inserted") {
@@ -1394,6 +1391,34 @@
                                     // New Flow for Apple Pay
                                     applepayAfterOrderCreated(response.order_dt, price);
                                 }
+                            }
+                        },
+                        error: function(xhr) {
+                            $('.cc_place_order_btn button').text('PLACE ORDER');
+                            $('.cc_place_order_btn button').prop('disabled', false);
+                            if (xhr.status === 422) {
+                                var errors = xhr.responseJSON.errors;
+                                console.log(errors);
+
+                                // Remove any previous error messages
+                                $('.backend-error').remove();
+
+                                $.each(errors, function(key, value) {
+                                    // Find the input with name matching the key
+                                    var input = $('[name="' + key + '"]');
+
+                                    if (input.length) {
+                                        // Create a new span element for the error
+                                        var errorEl = $(
+                                            '<span class="backend-error" style="color:red;"></span>'
+                                        ).text(value[0]);
+
+                                        // Insert the error **after the input element**
+                                        input.after(errorEl);
+                                    }
+                                });
+                            } else {
+                                alert('Something went wrong!');
                             }
                         }
                     });

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "axlon/laravel-postal-code-validation": "^3.8",
         "billythekid/dekopay-api": "0.0.2",
         "doctrine/dbal": "^3.3",
         "fruitcake/laravel-cors": "^2.0",
@@ -18,6 +19,7 @@
         "laravel/ui": "^3.4",
         "paypal/rest-api-sdk-php": "^1.14",
         "phpfastcache/phpfastcache": "8.1",
+        "propaganistas/laravel-phone": "^4.4",
         "raiym/instagram-php-scraper": "*",
         "santigarcor/laratrust": "^7.1",
         "seansch/rapnet": "dev-master",
