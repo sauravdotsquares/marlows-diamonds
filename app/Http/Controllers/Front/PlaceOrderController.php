@@ -19,14 +19,15 @@ class PlaceOrderController extends Controller
 {
     public function placeOrder(Request $request)
     {
+    
         $email = $request->cust_email;
-        $validatedData = $request->validate([
-            'mobile' => 'required|phone:' . $request->input('country_id') . ',MOBILE,national',
-            'pin_code' => 'required|postal_code:' . $request->input('country_id'),
-        ], [
-            'mobile.phone' => 'Please enter a valid mobile number.',
-            'pin_code.postal_code' => 'Please enter a valid postal code.',
-        ]);
+        // $validatedData = $request->validate([
+        //     'mobile' => 'required|phone:' . $request->input('country_id') . ',MOBILE,national',
+        //     'pin_code' => 'required|postal_code:' . $request->input('country_id'),
+        // ], [
+        //     'mobile.phone' => 'Please enter a valid mobile number.',
+        //     'pin_code.postal_code' => 'Please enter a valid postal code.',
+        // ]);
 
         // Care plan validation
         if ($request->has('yearlySupport')) {
@@ -231,7 +232,7 @@ class PlaceOrderController extends Controller
                         }
 
                         $getOrderDetail = Order::with('customerOrderAddress', 'customerShippingAddress', 'getOrderDetailsFunction')->find($getOrders->id);
-                        // dd($getOrderDetail);
+                       
                         // $getOrderDetail = OrderDetail::where('order_id', '=', $getOrders->id)->get()->toArray();
 
                         return response()->json(['status' => 200, 'msg' => 'Order added', 'order_dt' => $getOrders->id, 'get_order_detail' => $getOrderDetail]);

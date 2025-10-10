@@ -3127,26 +3127,53 @@ if (!function_exists("getLabPriceDefaultVariations")) {
 if (!function_exists("generateClientToken")) {
     function generateClientToken()
     {
+        $base = config('paypal.base_new_url') ?: config('paypal.base_url');
 
-        $base = env('PAYPAL_BASE_NEW_URL');
+        if (empty($base)) {
+            Log::error('generateClientToken: PAYPAL base URL not configured');
+            return null;
+        }
+
         $accessToken = generateAccessToken();
-        $ch = curl_init("$base/v1/identity/generate-token");
+        if (empty($accessToken)) {
+            Log::error('generateClientToken: unable to obtain access token');
+            return null;
+        }
+
+        $url = rtrim($base, '/') . '/v1/identity/generate-token';
+        $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             "Authorization: Bearer $accessToken",
             "Accept-Language: en_US",
-            "Content-Type: application/json"
+            "Content-Type: application/json",
         ]);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $response = curl_exec($ch);
+
         if (curl_errno($ch)) {
-            throw new Exception(curl_error($ch));
+            $err = curl_error($ch);
+            curl_close($ch);
+            Log::error('generateClientToken: curl error', ['error' => $err, 'url' => $url]);
+            return null;
         }
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
+        if ($httpCode < 200 || $httpCode >= 300) {
+            Log::error('generateClientToken: unexpected HTTP status', ['http_code' => $httpCode, 'url' => $url, 'response_snippet' => substr($response, 0, 1000)]);
+            return null;
+        }
+
         $json = json_decode($response, true);
-        return $json['client_token'];
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            Log::error('generateClientToken: invalid JSON response', ['body' => substr($response, 0, 1000)]);
+            return null;
+        }
+
+        return $json['client_token'] ?? null;
     }
 }
 
@@ -3228,23 +3255,53 @@ if (!function_exists("generateKlarnaClientToken")) {
 if (!function_exists("generateAccessToken")) {
     function generateAccessToken()
     {
-        $clientId = env('PAYPAL_CLIENT_ID');
-        $appSecret = env('PAYPAL_SECRET');
-        $base = env('PAYPAL_BASE_NEW_URL');
+        $clientId = config('paypal.client_id');
+        $appSecret = config('paypal.secret');
+        $base = config('paypal.base_new_url') ?: config('paypal.base_url');
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "$base/v1/oauth2/token");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Basic " . base64_encode("$clientId:$appSecret")]);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+        if (empty($clientId) || empty($appSecret) || empty($base)) {
+            Log::error('generateAccessToken: missing PayPal configuration', [
+                'client_id_set' => !empty($clientId),
+                'secret_set' => !empty($appSecret),
+                'base_set' => !empty($base),
+            ]);
+            return null;
+        }
+
+        $url = rtrim($base, '/') . '/v1/oauth2/token';
+        $ch = curl_init($url);
+        // Use HTTP Basic Auth via CURLOPT_USERPWD
+        curl_setopt($ch, CURLOPT_USERPWD, $clientId . ':' . $appSecret);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Accept: application/json',
+        ]);
 
         $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
         if (curl_errno($ch)) {
-            throw new Exception(curl_error($ch));
+            $err = curl_error($ch);
+            curl_close($ch);
+            Log::error('generateAccessToken: curl error', ['error' => $err, 'url' => $url]);
+            return null;
         }
+
         curl_close($ch);
 
+        if ($httpCode < 200 || $httpCode >= 300) {
+            Log::error('generateAccessToken: unexpected HTTP status', ['http_code' => $httpCode, 'url' => $url, 'response_snippet' => substr($response, 0, 1000)]);
+            return null;
+        }
+
         $json = json_decode($response, true);
-        return $json['access_token'];
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            Log::error('generateAccessToken: invalid JSON response', ['body' => substr($response, 0, 1000)]);
+            return null;
+        }
+
+        return $json['access_token'] ?? null;
     }
 }

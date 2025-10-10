@@ -1,5 +1,8 @@
 {
-    "/js/app.js": "/js/app.js?id=5dad3eebfe3a99671a07478dbd3f1ec8",
-    "/js/product_listing_page.js": "/js/product_listing_page.js?id=e98c1cbd4fb87711257b2ed40c81b83c",
-    "/css/app.css": "/css/app.css?id=68b329da9893e34099c7d8ad5cb9c940"
+    "/js/app.min.js": "/js/app.min.js?id=8b0acb3921b71a7b97c81588261611a2",
+    "/js/index.min.js": "/js/index.min.js?id=8d4390cfd24dae7d1062af5df70fa4c6",
+    "/js/product_listing_page.min.js": "/js/product_listing_page.min.js?id=17f01c909b28445c64e0cb1e577485d5",
+    "/js/product-details-dyes.min.js": "/js/product-details-dyes.min.js?id=0be0fc6c8666929e89be0c69a426df1f",
+    "/js/googlepay_checkout_code.min.js": "/js/googlepay_checkout_code.min.js?id=0fa90f73e1a12b31b26a86abc32c7477",
+    "/js/applepay_checkout_code.min.js": "/js/applepay_checkout_code.min.js?id=df6568906d1c9644e879b9970f73f513"
 }

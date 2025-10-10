@@ -855,23 +855,23 @@
 @section('js')
     <script src="https://x.klarnacdn.net/kp/lib/v1/api.js" async></script>
     <script>
-        // This is to capture .env value
-        const environmentCheckPhp = "{{ env('APP_ENV') }}";
-        const PAYPAL_CLIENT_ID_PHP = "{{ env('PAYPAL_CLIENT_ID') }}";
-        const PAYPAL_SECRET_PHP = "{{ env('PAYPAL_SECRET') }}";
-        const PAYPAL_BASE_URL_PHP = "{{ env('PAYPAL_BASE_URL') }}";
-        const PAYPAL_BASE_NEW_URL_PHP = "{{ env('PAYPAL_BASE_NEW_URL') }}";
+    // Pull values from config instead of calling env() in views
+    const environmentCheckPhp = "{{ config('app.env') }}";
+    const PAYPAL_CLIENT_ID_PHP = "{{ config('paypal.client_id') }}";
+    const PAYPAL_SECRET_PHP = "{{ config('paypal.secret') }}";
+    const PAYPAL_BASE_URL_PHP = "{{ config('paypal.base_url') }}";
+    const PAYPAL_BASE_NEW_URL_PHP = "{{ config('paypal.base_new_url') }}";
     </script>
     @php
         // Request client token from the server-side PHP
         $clientToken = generateClientToken();
 
-        if (env('APP_ENV') == 'production') {
-            $merchantId = env('PAYPAL_MERCHANTID_LIVE');
-        } elseif (env('APP_ENV') == 'local') {
-            $merchantId = env('PAYPAL_MERCHANTID_STAG');
+        if (config('app.env') == 'production') {
+            $merchantId = config('paypal.merchant_id_live');
+        } else {
+            $merchantId = config('paypal.merchant_id_stag');
         }
-        $clientId = env('PAYPAL_CLIENT_ID'); // Hardcode or set these manually
+        $clientId = config('paypal.client_id');
     @endphp
     <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
     {{-- <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script> --}}
@@ -904,7 +904,7 @@
             $("input[name='payment_type']:checked").closest("li").find(".payment-box-main-drop").slideDown();
 
             $(document).on('change', "[id^=yearlySupport]", function() {
-
+                  document.getElementById("loader-overlay").style.display = "flex";   
                 var index = parseInt($(this).attr("id").replace("yearlySupport", ''));
                 $.ajax({
                     url: "{{ route('update.cart.coupon') }}",
@@ -943,6 +943,7 @@
                         // get_deko_data();
                         /** End of dekopay */
                         $('#totalP').val(response.result.finalPrice);
+                        $('#loader-overlay').hide(); 
                         toastr.success(response.result.errormsg);
                     }
                 });
@@ -1305,6 +1306,8 @@
             },
 
             submitHandler: function(form) {
+                document.getElementById("loader-overlay").style.display = "flex";
+             
                 const getValue = $('#already_inserted').val();
                 if (getValue != "order_inserted") {
                     $('.cc_place_order_btn button').text('Please Wait ...');
@@ -1391,6 +1394,7 @@
                                     // New Flow for Apple Pay
                                     applepayAfterOrderCreated(response.order_dt, price);
                                 }
+                                  
                             }
                         },
                         error: function(xhr) {
@@ -1420,6 +1424,7 @@
                             } else {
                                 alert('Something went wrong!');
                             }
+                               $('#loader-overlay').hide();
                         }
                     });
                 }

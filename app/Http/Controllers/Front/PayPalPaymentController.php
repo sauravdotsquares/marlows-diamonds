@@ -41,7 +41,7 @@ class PayPalPaymentController extends Controller
     public function handlePayment($orderId)
     {
         $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id',$orderId)->first();
-
+        
         $getProdustItems = [];
         foreach($getOrderDetails->getOrderDetailsFunction as $key => $orderDetails){
             $item = new Item();
@@ -51,7 +51,7 @@ class PayPalPaymentController extends Controller
                         ->setPrice(isset($orderDetails->deposited_product_price)?$orderDetails->deposited_product_price:'1.00'); /** unit price **/
             $getProdustItems[] = $item;
         }
-
+        
         $payer = new Payer();
         $payer->setPaymentMethod('paypal');
 
@@ -83,6 +83,7 @@ class PayPalPaymentController extends Controller
         } catch (\PayPal\Exception\PPConnectionException $ex) {
             if (\Config::get('app.debug')) {
             \Session::put('error', 'Connection timeout');
+            
                             return Redirect::route('paywithpaypal');
             } else {
             \Session::put('error', 'Some error occur, sorry for inconvenient');
