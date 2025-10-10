@@ -109,6 +109,7 @@ async function onGooglePaymentButtonClicked(price, orderId, payloadGooglepay, is
     } catch (err) {
         console.error("Google Pay error:", err);
         alert("Googlepay is not available! Please try again later.");
+        
     }
 }
 

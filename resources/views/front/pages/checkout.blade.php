@@ -1372,8 +1372,32 @@
                                     let payload = getGooglePayloadInfo(response.order_dt, response
                                         .get_order_detail,
                                         price, "GBP");
-                                    onGooglePaymentButtonClicked(price, response.order_dt, payload,
-                                        true);
+
+                                    // Call Google Pay flow and ensure loader overlay is hidden after completion.
+                                    try {
+                                        const result = onGooglePaymentButtonClicked(price, response.order_dt, payload, true);
+
+                                        // If it returns a Promise, hide loader when it resolves/rejects
+                                        if (result && typeof result.then === 'function') {
+                                            result.then(() => {
+                                                $('#loader-overlay').hide();
+                                                $('body').removeClass('loading');
+                                            }).catch(() => {
+                                                $('#loader-overlay').hide();
+                                                $('body').removeClass('loading');
+                                            });
+                                        } else {
+                                            // Fallback: if no Promise is returned, hide the loader after a timeout
+                                            setTimeout(function() {
+                                                $('#loader-overlay').hide();
+                                                $('body').removeClass('loading');
+                                            }, 10000); // 10s
+                                        }
+                                    } catch (e) {
+                                        console.error('Error during Google Pay flow', e);
+                                        $('#loader-overlay').hide();
+                                        $('body').removeClass('loading');
+                                    }
                                 } else if (selectedPaymentType == 'klarna') {
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
@@ -1421,8 +1445,10 @@
                                         input.after(errorEl);
                                     }
                                 });
+                                 $('#loader-overlay').hide(); 
                             } else {
                                 alert('Something went wrong!');
+                                 $('#loader-overlay').hide(); 
                             }
                                $('#loader-overlay').hide();
                         }
@@ -1627,6 +1653,7 @@
 
                     if (!clientToken) {
                         alert("Client token is missing.");
+                        $('#loader-overlay').hide();
                         return;
                     }
 
@@ -1641,6 +1668,7 @@
                         if (res.error) {
                             console.error("Klarna load error:", res);
                             alert("Failed to load Klarna payment method.");
+                            $('#loader-overlay').hide();
                             return;
                         }
 
@@ -1650,6 +1678,7 @@
                             if (res.error) {
                                 console.error("Authorization error:", res);
                                 alert("Authorization failed.");
+                                $('#loader-overlay').hide();
                                 return;
                             }
 
@@ -1674,14 +1703,17 @@
                                         } else {
                                             alert("Order placement failed: " + (data.error ||
                                                 "Unknown error"));
+                                                $('#loader-overlay').hide();
                                         }
                                     })
                                     .catch(err => {
                                         alert("Order placement failed.");
                                         console.error(err);
+                                        $('#loader-overlay').hide();
                                     });
                             } else {
                                 alert("Payment not approved.");
+                                $('#loader-overlay').hide();
                             }
                         });
                     });
@@ -1689,6 +1721,7 @@
                 .catch(err => {
                     console.error("Error fetching client token:", err);
                     alert("Failed to generate Klarna client token.");
+                    $('#loader-overlay').hide();
                 });
         }
 
