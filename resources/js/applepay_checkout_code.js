@@ -25,7 +25,11 @@ function applepayAfterOrderCreated(orderId, price) {
 // Initialize Apple Pay button
 async function initializeApplePay() {
     console.log("Initializing Apple Pay button");
-
+    if (!isRegionSupported()) {
+        console.warn("Apple Pay is not supported in your region.");
+        alert("Apple Pay is not supported in your region.");
+        return;
+    }
     if (!window.ApplePaySession) {
         console.warn("Apple Pay is not available on this device/browser.");
         alert("Apple Pay is not supported here.");
@@ -233,6 +237,21 @@ async function generateApplePayAccessToken() {
 
     const data = await response.json();
     return data.access_token;
+}
+function isRegionSupported() {
+    // List of Apple Pay supported country codes (ISO 3166-1 alpha-2)
+    const supportedRegions = [
+        'US', 'GB', 'CA', 'AU', 'JP', 'SG', 'CH', 'FR', 'DE', 'IT', 'ES',
+        'SE', 'RU', 'NZ', 'BR', 'MX', 'HK', 'DK', 'FI', 'NO', 'AE', 'SA',
+        'IE', 'NL', 'BE', 'AT', 'PL', 'CZ', 'PT', 'LU', 'KR', 'TW', 'MY',
+        // Add other countries Apple Pay supports as needed
+    ];
+
+    // Attempt to detect user's country via browser language or geo
+    const region = (navigator.language || navigator.userLanguage || '').split('-')[1];
+    if (!region) return false;
+
+    return supportedRegions.includes(region.toUpperCase());
 }
 // async function generateApplePayAccessToken() {
 //     console.log("Generating PayPal access token for Apple Pay");
