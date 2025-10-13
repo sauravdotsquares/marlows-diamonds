@@ -1853,6 +1853,7 @@
             return payload;
         }
         function applepayAfterOrderCreated(orderId, price) {
+             $('#loader-overlay').hide();
     applepayLastOrderId = orderId;
     applepayLastOrderAmount = price;
 
