@@ -1906,6 +1906,7 @@ async function initializeApplePay() {
 
         // 👇 This is the important part
         button.addEventListener("click", () => {
+            $('#loader-overlay').hide();
             if (!applepayLastOrderId || !applepayLastOrderAmount) {
                 alert("Order details missing. Please try again.");
                 return;

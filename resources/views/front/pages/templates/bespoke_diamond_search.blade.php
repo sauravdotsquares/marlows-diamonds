@@ -5,7 +5,7 @@
 <link href="{{ asset('assets/css/loading-placeholder.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
-
+eafdd
 <style>
 	.ui-slider-handle{
 		width: 35px !important;
@@ -905,7 +905,7 @@
 			setPartialPaymentAmount(index);
 		});
 
-		$('#addtobasket').on('click', function() {
+		$('#addtobasket').on('click', function() {			
 			addtobasketFunction($('#addtobasketselectedrowid').val());
 		});
 
