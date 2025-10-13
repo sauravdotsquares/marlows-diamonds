@@ -142,26 +142,35 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 }
                 const paypalOrderId = createOrderResponse.id;
 
-                // 2. Confirm Apple Pay payment with PayPal via backend (avoid relying on browser paypal SDK here)
-                const confirmRes = await confirmPayPalOrderWithApplePay(paypalOrderId, paymentData);
-                const status = confirmRes?.status;
+                // 2. Confirm Apple Pay payment with PayPal
+                const { status } = await paypal.Applepay().confirmOrder({
+                    orderId: paypalOrderId,
+                    paymentMethodData: paymentData
+                });
 
                 if (status === "APPROVED") {
                     // 3. Capture the order
                     const captureRes = await capturePayPalOrder(paypalOrderId);
-                    const orderUpdatePayload = {
-                        payment: paymentData,         // Apple Pay details
-                        captureRes: captureRes,       // PayPal capture response
+                    const payload = {
+                        payment: payment,         // Apple Pay details (your existing object)
+                        captureRes: captureRes,   // PayPal capture response
                         tokenOrdIdUpdated: orderId
+                    };
+                    const paymentPayload = {
+                        paymentMethod: paymentData.payment.token.paymentMethod.displayName,
+                        token: paymentData.payment.token.transactionIdentifier,
+                        billingAddress: paymentData.payment.billingContact,
+                        countryCode: paymentData.payment.billingContact.countryCode,
+                        tokenOrdIdUp: orderId
                     };
 
                     // 4. Notify backend
                     const backendRes = await fetch("/process-apple-pay", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(orderUpdatePayload)
+                        body: JSON.stringify({ orderId, captureRes })
                     });
-                    const backendData = await safeJson(backendRes);
+                    const backendData = await backendRes.json();
 
                     if (backendData.success) {
                         session.completePayment(ApplePaySession.STATUS_SUCCESS);
@@ -197,7 +206,7 @@ async function createPayPalOrder(payload) {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` },
         body: JSON.stringify(payload)
     });
-    return safeJson(response);
+    return response.json();
 }
 
 async function capturePayPalOrder(orderId) {
@@ -206,18 +215,14 @@ async function capturePayPalOrder(orderId) {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` }
     });
-    return safeJson(response);
+    return response.json();
 }
 
 async function generateApplePayAccessToken() {
-    // Use the injected PAYPAL_CLIENT_ID and PAYPAL_SECRET variables (PHP should render them)
-    if (!PAYPAL_CLIENT_ID || !PAYPAL_SECRET || !APPLE_PAY_BASE) {
-        throw new Error('Missing PayPal credentials or base URL');
-    }
-    const clientCredentials = `${PAYPAL_CLIENT_ID}:${PAYPAL_SECRET}`;
+    const clientCredentials = `${PAYPAL_CLIENT_ID_PHP}:${PAYPAL_SECRET_PHP}`;
     const base64Encoded = btoa(clientCredentials);
 
-    const response = await fetch(`${APPLE_PAY_BASE}/v1/oauth2/token`, {
+    const response = await fetch(`${base}/v1/oauth2/token`, {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -226,45 +231,8 @@ async function generateApplePayAccessToken() {
         body: new URLSearchParams({ grant_type: "client_credentials" }),
     });
 
-    const data = await safeJson(response);
+    const data = await response.json();
     return data.access_token;
-}
-
-// Helper to POST payment confirmation to backend which should call PayPal server-side
-async function confirmPayPalOrderWithApplePay(paypalOrderId, paymentMethodData) {
-    try {
-        const resp = await fetch('/paypal/confirm-applepay', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ orderId: paypalOrderId, paymentMethodData })
-        });
-        return safeJson(resp);
-    } catch (err) {
-        console.error('Error confirming PayPal order via backend:', err);
-        return { status: 'ERROR', error: err.message };
-    }
-}
-
-// Safe JSON helper that throws on non-OK responses and returns parsed JSON
-async function safeJson(response) {
-    let text;
-    try {
-        text = await response.text();
-    } catch (err) {
-        throw new Error('Failed to read response body: ' + err.message);
-    }
-    let data = null;
-    try {
-        data = text ? JSON.parse(text) : {};
-    } catch (err) {
-        // If not JSON, include raw text for debugging
-        throw new Error('Invalid JSON response: ' + text);
-    }
-    if (!response.ok) {
-        const msg = data?.message || data?.error || response.statusText || 'Request failed';
-        throw new Error(msg);
-    }
-    return data;
 }
 // async function generateApplePayAccessToken() {
 //     console.log("Generating PayPal access token for Apple Pay");
