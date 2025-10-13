@@ -1852,6 +1852,69 @@
 
             return payload;
         }
+        function applepayAfterOrderCreated(orderId, price) {
+    applepayLastOrderId = orderId;
+    applepayLastOrderAmount = price;
+
+    // Hide place order button, show Apple Pay button
+    $('#already_inserted').val('order_inserted');
+    $('.applepay-button-container').show();
+    $('#place-order').hide();
+
+    initializeApplePay(); // this will insert the Apple Pay button
+}
+
+// Initialize Apple Pay button
+async function initializeApplePay() {
+    console.log("Initializing Apple Pay button");
+
+    if (!window.ApplePaySession) {
+        console.warn("Apple Pay is not available on this device/browser.");
+        alert("Apple Pay is not supported here 1.");
+        return;
+    }
+    console.log("Apple Pay Session is available");
+
+    if (!ApplePaySession.canMakePayments()) {
+        console.warn("Apple Pay is not available on this device/browser.");
+        alert("Apple Pay is not supported here 2.");
+        return;
+    }
+    console.log("Apple Pay can make payments");
+
+    if (!window.isSecureContext) {
+        console.error("Apple Pay requires a secure context (HTTPS).");
+        alert("Apple Pay only works on secure pages (HTTPS).");
+        return;
+    }
+    console.log("Secure context confirmed");
+
+    const buttonContainer = document.getElementById("applepay-button-container");
+
+    if (buttonContainer && !document.getElementById("btn-appl")) {
+        const button = document.createElement("button");
+        button.id = "btn-appl";
+        button.style = `
+            appearance: -apple-pay-button;
+            -apple-pay-button-type: buy;
+            -apple-pay-button-style: black;
+            width: 100%;
+            height: 44px;
+            margin-top: 10px;
+        `;
+
+        // 👇 This is the important part
+        button.addEventListener("click", () => {
+            if (!applepayLastOrderId || !applepayLastOrderAmount) {
+                alert("Order details missing. Please try again.");
+                return;
+            }
+            triggerApplePayViaPayPal(applepayLastOrderAmount, applepayLastOrderId, "GBP");
+        });
+
+        buttonContainer.appendChild(button);
+    }
+}
 
         // Apple pay transaction payload code only
         function getApplePayPayloadInfo(internal_order_id, get_order_detail, totalAmt, currencyCode = "GBP") {
