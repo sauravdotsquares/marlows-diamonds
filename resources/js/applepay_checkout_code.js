@@ -28,14 +28,14 @@ async function initializeApplePay() {
 
     if (!window.ApplePaySession) {
         console.warn("Apple Pay is not available on this device/browser.");
-        alert("Apple Pay is not supported here.");
+        alert("Apple Pay is not supported here 1.");
         return;
     }
     console.log("Apple Pay Session is available");
 
     if (!ApplePaySession.canMakePayments()) {
         console.warn("Apple Pay is not available on this device/browser.");
-        alert("Apple Pay is not supported here.");
+        alert("Apple Pay is not supported here 2.");
         return;
     }
     console.log("Apple Pay can make payments");

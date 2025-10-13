@@ -979,6 +979,7 @@ $(document).ready(function () {
 });
 
 function addtobasketFunction(getUrl, product_slug, index) {
+   
     var trdata = $('#finaldiamondprice .price').text().replace(/[^\0-9.-]+/g, '');
     var rrpPrice = $('#rrpPrice.rrpPriceval').text().replace(/[^\0-9.-]+/g, '');
     var savePriceval = $('#savePrice.save').text().replace(/[^\0-9.-]+/g, '');

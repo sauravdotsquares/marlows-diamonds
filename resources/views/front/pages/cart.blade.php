@@ -196,7 +196,7 @@
                                     number_format($details['deposited_price'] * $details['quantity'],2) }}</td>
                                 <td class="product-action-col" class="actions" data-th="">
                                     <button class="btn btn-danger btn-sm remove-from-cart"><i
-                                            class="fa fa-trash-o"></i></button>
+                                            class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             @endforeach
