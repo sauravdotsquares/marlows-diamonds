@@ -990,6 +990,21 @@
 {{-- criteo start --}}
 @section('criteo-tracking')
     <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#addtobasket').on('click', function() {
+                // Show loader
+               document.getElementById("loader-overlay").style.display = "flex";
+
+                // Disable button to prevent multiple clicks
+                $(this).prop('disabled', true);
+
+                // After 4 seconds hide loader and enable button
+                setTimeout(function() {
+                    $('#loader-overlay').hide();
+                    $('#addtobasket').prop('disabled', false);
+                }, 4000);
+            });
+        });
         setTimeout(function() {
             window.criteo_q = window.criteo_q || [];
             var deviceType = /iPad/.test(navigator.userAgent) ? "t" :

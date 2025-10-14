@@ -205,6 +205,7 @@ $(document).ready(function () {
         });
 
     $('#addtobasket').on('click', function () {
+      
         addtobasketFunction(addToCartRoute, dataPhpVariable.slug, '');
     });
 
@@ -535,6 +536,10 @@ function addtobasketFunction(getUrl, product_slug = null, index = null) {
                     }
                 }
                 toastr.success(res.success);
+                setTimeout(() => {
+                    $('#loader-overlay').hide();
+                }, 2000);
+                
             } else {
                 if (res.error) {
                     if (index > 0) {
@@ -557,8 +562,11 @@ function addtobasketFunction(getUrl, product_slug = null, index = null) {
                     }
                 }
                 toastr.error(res.error);
+               setTimeout(() => {
+                    $('#loader-overlay').hide();
+                }, 500);
+                
             }
-            $('#loader-overlay').hide();
         }
     });
 }
