@@ -25,11 +25,11 @@ function applepayAfterOrderCreated(orderId, price) {
 // Initialize Apple Pay button
 async function initializeApplePay() {
     console.log("Initializing Apple Pay button");
-    if (!isRegionSupported()) {
-        console.warn("Apple Pay is not supported in your region.");
-        alert("Apple Pay is not supported in your region.");
-        return;
-    }
+    // if (!isRegionSupported()) {
+    //     console.warn("Apple Pay is not supported in your region.");
+    //     alert("Apple Pay is not supported in your region.");
+    //     return;
+    // }
     if (!window.ApplePaySession) {
         console.warn("Apple Pay is not available on this device/browser.");
         alert("Apple Pay is not supported here.");
