@@ -102,7 +102,7 @@ class AddToCartController extends Controller
                 ];
 
                 session()->put('cart', $cart);
-                return response()->json(['cartcount' => count((array) session('cart')), 'success' => 'Product added to cart successfully!']);
+                return response()->json(['cartcount' => count((array) session('cart')),'cart' => $cart, 'success' => 'Product added to cart successfully!']);
             }
         }
 
