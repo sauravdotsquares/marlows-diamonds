@@ -99,11 +99,33 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
             total: { label: "Marlows Diamond", amount: amountStr, type: "final" }
         };
 
+        alert("Starting Apple Pay for £" + amountStr + " (" + currency + ")");
+
         const session = new ApplePaySession(3, request);
+        let apValidated = false;
+        let apAuthorized = false;
+        let apCancelled = false;
 
         // --- Merchant Validation ---
         session.onvalidatemerchant = async (event) => {
+            alert("Validating Apple Pay merchant…");
+            console.log("Apple Pay merchant validation started", { validationURL: event.validationURL });
             try {
+                // Prefer PayPal SDK helper if available
+                if (window.paypal && paypal.Applepay) {
+                    const applepay = paypal.Applepay();
+                    const payload = await applepay.validateMerchant({ validationUrl: event.validationURL });
+                    if (payload && payload.merchantSession) {
+                        session.completeMerchantValidation(payload.merchantSession);
+                        console.log("Merchant validation successful via PayPal SDK");
+                        apValidated = true;
+                        alert("Merchant validated (PayPal SDK)");
+                        return;
+                    }
+                    console.warn("PayPal SDK validateMerchant returned unexpected payload", payload);
+                }
+
+                // Fallback: direct call to PayPal validate endpoint
                 const accessToken = await generateApplePayAccessToken();
                 const validateRes = await fetch(`${APPLE_PAY_BASE}/v1/apple-pay/validate-payment`, {
                     method: "POST",
@@ -117,11 +139,28 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                     })
                 });
 
+                if (!validateRes.ok) {
+                    const text = await validateRes.text();
+                    console.error("Merchant validation HTTP error", validateRes.status, text);
+                    alert("Merchant validation failed (HTTP " + validateRes.status + "). Check domain association / credentials.");
+                    session.abort();
+                    return;
+                }
+
                 const merchantSession = await validateRes.json();
+                if (!merchantSession || typeof merchantSession !== "object") {
+                    console.error("Invalid merchant session payload", merchantSession);
+                    alert("Merchant validation failed (bad payload).");
+                    session.abort();
+                    return;
+                }
                 session.completeMerchantValidation(merchantSession);
-                console.log("Merchant validation successful");
+                console.log("Merchant validation successful via REST");
+                apValidated = true;
+                alert("Merchant validated (REST)");
             } catch (err) {
                 console.error("Merchant validation failed", err);
+                alert("Apple Pay validation failed: " + (err && err.message ? err.message : err));
                 session.abort();
             }
         };
@@ -130,6 +169,8 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
         session.onpaymentauthorized = async (event) => {
             try {
                 const paymentData = event.payment;
+                apAuthorized = true;
+                alert("Payment authorized. Creating PayPal order…");
 
                 // 1. Create PayPal order AFTER Apple validation
                 const payload = {
@@ -142,11 +183,16 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
 
                 const createOrderResponse = await createPayPalOrder(payload);
                 if (!createOrderResponse?.id) {
+                    alert("Failed to create PayPal order.");
                     throw new Error("Failed to create PayPal order");
                 }
                 const paypalOrderId = createOrderResponse.id;
 
                 // 2. Confirm Apple Pay payment with PayPal
+                if (!window.paypal || !paypal.Applepay) {
+                    alert("PayPal Applepay SDK not available.");
+                    throw new Error("PayPal Applepay SDK not available");
+                }
                 const { status } = await paypal.Applepay().confirmOrder({
                     orderId: paypalOrderId,
                     paymentMethodData: paymentData
@@ -165,6 +211,11 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                             tokenOrdIdUpdated: orderId
                         })
                     });
+                    if (!backendRes.ok) {
+                        const text = await backendRes.text();
+                        alert("Order update failed (" + backendRes.status + "): " + text);
+                        throw new Error("Backend update failed");
+                    }
                     const backendData = await backendRes.json();
 
                     if (backendData.success) {
@@ -176,15 +227,29 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                     }
                 } else {
                     session.completePayment(ApplePaySession.STATUS_FAILURE);
-                    alert("Apple Pay transaction was not approved");
+                    alert("Apple Pay not approved (status=" + status + ")");
                 }
             } catch (err) {
                 console.error("Apple Pay processing error:", err);
-                session.completePayment(ApplePaySession.STATUS_FAILURE);
+                try { session.completePayment(ApplePaySession.STATUS_FAILURE); } catch(e) {}
+                alert("Apple Pay failed to authorize or capture. See console for details.");
             }
         };
 
+        session.oncancel = () => {
+            apCancelled = true;
+            alert("Apple Pay cancelled.");
+            console.log("Apple Pay sheet cancelled by user");
+        };
+
         session.begin();
+
+        // Watchdog: if neither validated nor cancelled/authorized within 10s, alert probable cause
+        setTimeout(() => {
+            if (!apValidated && !apCancelled && !apAuthorized) {
+                alert("Apple Pay closed before validation. Ensure HTTPS, domain association, and valid PayPal credentials.");
+            }
+        }, 10000);
     } catch (err) {
         console.error("Apple Pay trigger error:", err);
         alert("Unable to start Apple Pay: " + err.message);
