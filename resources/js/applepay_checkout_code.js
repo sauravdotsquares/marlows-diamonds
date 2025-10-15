@@ -155,24 +155,15 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 if (status === "APPROVED") {
                     // 3. Capture the order
                     const captureRes = await capturePayPalOrder(paypalOrderId);
-                    const payload = {
-                        payment: payment,         // Apple Pay details (your existing object)
-                        captureRes: captureRes,   // PayPal capture response
-                        tokenOrdIdUpdated: orderId
-                    };
-                    const paymentPayload = {
-                        paymentMethod: paymentData.payment.token.paymentMethod.displayName,
-                        token: paymentData.payment.token.transactionIdentifier,
-                        billingAddress: paymentData.payment.billingContact,
-                        countryCode: paymentData.payment.billingContact.countryCode,
-                        tokenOrdIdUp: orderId
-                    };
-
                     // 4. Notify backend
-                    const backendRes = await fetch("/process-apple-pay", {
+                    const backendRes = await fetch("/handle-apple-pay", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ orderId, captureRes })
+                        body: JSON.stringify({
+                            payment: paymentData,
+                            captureRes,
+                            tokenOrdIdUpdated: orderId
+                        })
                     });
                     const backendData = await backendRes.json();
 
@@ -226,7 +217,7 @@ async function generateApplePayAccessToken() {
     const clientCredentials = `${PAYPAL_CLIENT_ID_PHP}:${PAYPAL_SECRET_PHP}`;
     const base64Encoded = btoa(clientCredentials);
 
-    const response = await fetch(`${base}/v1/oauth2/token`, {
+    const response = await fetch(`${APPLE_PAY_BASE}/v1/oauth2/token`, {
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",

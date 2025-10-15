@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
         //
         'https://192.168.3.151/gitProjects/marlows-diamond/public/p/diamond-jeweller',
         '/process-apple-pay',
+        '/handle-apple-pay',
         '/api/orders',
         '/api/validate-merchant',
         'applepay_sdk/api/orders',

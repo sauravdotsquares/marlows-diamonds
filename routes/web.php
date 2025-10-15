@@ -561,6 +561,7 @@ Route::get('/paypal-payment', [ApplePayController::class, 'generateClientToken']
 Route::get('/generate-client-token', 'PaymentController@generateClientToken');
 Route::post('/validate-apple-pay', [ApplePayController::class, 'validateApplePay']);
 Route::post('/process-apple-pay', [ApplePayController::class, 'processApplePay']);
+Route::post('/handle-apple-pay', [ApplePayController::class, 'handleApplePay']);
 Route::post('/process-google-pay', [ApplePayController::class, 'processGooglePay']);
 Route::post('/update-order-status', [ApplePayController::class, 'updateStatus']);
 Route::post('/update-order-google-status', [ApplePayController::class, 'updateGoogleStatus']);

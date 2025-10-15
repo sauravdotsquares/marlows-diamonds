@@ -1617,7 +1617,7 @@
             // Check if the Apple Pay radio button is selected
             if (applePayRadio && applePayRadio.checked) {
                 // placeOrderButton.style.display = "none"; // Hide the Place Order button
-                applepaybuttoncontainer.style.dispnone = "inline"; // Show the Place Order button
+                applepaybuttoncontainer.style.display = "inline"; // Show the Place Order button
             } else {
                 placeOrderButton.style.display = "inline"; // Show the Place Order button
                 applepaybuttoncontainer.style.display = "none"; // Show the Place Order button

@@ -991,9 +991,37 @@
 @section('criteo-tracking')
     <script type="text/javascript">
         jQuery(document).ready(function($) {
+            $('.product-to-basket a').each(function() {
+                var $link = $(this);
+
+                // Disable the link
+                $link.css('pointer-events', 'none')
+                    .css('color', 'gray')
+                    .css('cursor', 'not-allowed');
+
+                // Save original text
+                var originalText = $link.text();
+
+                // Show loader
+                $link.html('<span class="loader" style="color: #fff">Loading...</span>');
+
+                // Re-enable after 5 seconds
+                setTimeout(function() {
+                    $link.css('pointer-events', 'auto')
+                        .css('color', '')
+                        .css('cursor', 'pointer');
+
+                    // Restore original text
+                    $link.text(originalText);
+                }, 3000);
+            });
+
+
+
+
             $('#addtobasket').on('click', function() {
                 // Show loader
-               document.getElementById("loader-overlay").style.display = "flex";
+                document.getElementById("loader-overlay").style.display = "flex";
 
                 // Disable button to prevent multiple clicks
                 $(this).prop('disabled', true);

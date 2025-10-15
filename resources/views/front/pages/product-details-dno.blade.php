@@ -814,6 +814,32 @@
 	<script src="{{ asset('assets/vendors/fancybox-master/dist/jquery.fancybox.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script>
+		jQuery(document).ready(function($) {
+            $('.product-to-basket a').each(function() {
+                var $link = $(this);
+
+                // Disable the link
+                $link.css('pointer-events', 'none')
+                    .css('color', 'gray')
+                    .css('cursor', 'not-allowed');
+
+                // Save original text
+                var originalText = $link.text();
+
+                // Show loader
+                $link.html('<span class="loader" style="color: #fff">Loading...</span>');
+
+                // Re-enable after 5 seconds
+                setTimeout(function() {
+                    $link.css('pointer-events', 'auto')
+                        .css('color', '')
+                        .css('cursor', 'pointer');
+
+                    // Restore original text
+                    $link.text(originalText);
+                }, 3000);
+            });
+		});
 		const imagesPath = "{{env('APP_IMAGE_URL')}}/storage/";
 		const customSlider = "{{ !empty($customSlider) ? $customSlider : '0'  }}";
 		var diamondSelectedType = "{{$diamondtype}}";
