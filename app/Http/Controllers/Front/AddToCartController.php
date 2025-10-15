@@ -49,7 +49,9 @@ class AddToCartController extends Controller
             /** Add item in cart for lab grown */
             $productData = Products::with('getProductImages', 'getProductVariation')->where('slug', $request->slug)->first();
             if (!empty($productData)) {
-
+                try {
+                    //code...
+                
                 /** If product already exists then show exit message */
                 $cart = session()->get('cart', []);
                 if (isset($cart[$productData->id])) {
@@ -104,6 +106,9 @@ class AddToCartController extends Controller
                 session()->put('cart', $cart);
                 session()->save();
                 return response()->json(['cartcount' => count((array) session('cart')),'cart' => $cart, 'success' => 'Product added to cart successfully!']);
+                } catch (\Throwable $th) {
+                     return response()->json(['error' => 'Something went wrong...','data'=>$th]);//throw $th;
+                }
             }
         }
 
