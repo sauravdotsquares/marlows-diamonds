@@ -9,8 +9,9 @@ use App\Models\Products;
 use App\Models\Country;
 use App\Models\CouponCodeDetail;
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use billythekid\dekopay\Core\DekoPayApiClient;
+use Illuminate\Support\Facades\Log;
 
 class AddToCartController extends Controller
 {
@@ -101,9 +102,13 @@ class AddToCartController extends Controller
                     'getLabDiamondPrices' => $getPriceFunction['getLabDiamondPrices'],
                 ];
 
-                session()->put('cart', $cart);
-                session()->save();
-                return response()->json(['cartcount' => count((array) session('cart')),'cart' => $cart, 'success' => 'Product added to cart successfully!']);
+                $saved = $this->saveCartWithRetry($cart, $productData->id);
+                if (! $saved) {
+                    // If we couldn't reliably persist the cart, return an error so client can retry.
+                    return response()->json(['error' => 'Could not save cart, please try again.'], 500);
+                }
+
+                return response()->json(['cartcount' => count((array) session('cart')), 'cart' => session('cart'), 'success' => 'Product added to cart successfully!']);
             }
         }
 
@@ -510,10 +515,55 @@ class AddToCartController extends Controller
             $cart = session()->get('cart');
             if (isset($cart[$request->id])) {
                 unset($cart[$request->id]);
-                session()->put('cart', $cart);
+                $saved = $this->saveCartWithRetry($cart, $request->id);
+                if (! $saved) {
+                    return response()->json(['error' => 'Could not save cart, please try again.'], 500);
+                }
             }
             return response()->json(['status' => 200, 'msg' => 'Product removed successfully']);
         }
+    }
+
+    /**
+     * Try to persist the cart to session with lightweight retry and logging.
+     * This helps surface intermittent session write failures (race/lock/driver issues).
+     *
+     * @param array $cart
+     * @param string|int $itemKey
+     * @return bool
+     */
+    private function saveCartWithRetry(array $cart, $itemKey): bool
+    {
+        $maxAttempts = 3;
+        $attempt = 0;
+        while ($attempt < $maxAttempts) {
+            $attempt++;
+            try {
+                session()->put('cart', $cart);
+                // session()->save() can throw for some drivers; wrap in try/catch
+                session()->save();
+            } catch (\Throwable $e) {
+                Log::error('Session save exception', ['attempt' => $attempt, 'error' => $e->getMessage(), 'session_id' => session()->getId()]);
+            }
+
+            $sessionCart = session()->get('cart', []);
+            if (isset($sessionCart[$itemKey])) {
+                // success
+                if ($attempt > 1) {
+                    Log::info('Session cart saved after retries', ['attempts' => $attempt, 'session_id' => session()->getId(), 'itemKey' => $itemKey]);
+                }
+                return true;
+            }
+
+            // Merge latest session cart to avoid overwriting concurrent changes
+            $current = session()->get('cart', []);
+            $current[$itemKey] = $cart[$itemKey];
+            $cart = $current;
+            // small pause is not ideal in PHP web request; just loop to retry
+        }
+
+        Log::warning('Failed to persist cart after attempts', ['attempts' => $maxAttempts, 'session_id' => session()->getId(), 'itemKey' => $itemKey, 'cart_snapshot' => $cart]);
+        return false;
     }
 
 
