@@ -122,6 +122,12 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 // Prefer PayPal SDK helper if available
                 if (window.paypal && paypal.Applepay) {
                     const applepay = paypal.Applepay();
+                    try {
+                        // Initialize SDK config first (required by some environments)
+                        await applepay.config();
+                    } catch (e) {
+                        console.warn("paypal.Applepay().config() failed, falling back to REST", e);
+                    }
                     const payload = await applepay.validateMerchant({ validationUrl: event.validationURL });
                     if (payload && payload.merchantSession) {
                         session.completeMerchantValidation(payload.merchantSession);
@@ -131,7 +137,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                         return;
                     }
                     console.warn("PayPal SDK validateMerchant returned unexpected payload", payload);
-                    alert("PayPal SDK validateMerchant returned unexpected payload", payload);
+                    try { alert("PayPal validateMerchant unexpected payload: " + JSON.stringify(payload)); } catch(_) { alert("PayPal validateMerchant unexpected payload"); }
                 }
 
                 // Fallback: direct call to PayPal validate endpoint
