@@ -9,6 +9,14 @@ PAYPAL_SECRET = PAYPAL_SECRET_PHP;
 let applepayLastOrderId = null;
 let applepayLastOrderAmount = null;
 
+function hideApplePayLoader() {
+    try {
+        if (typeof $ !== 'undefined' && $('#loader-overlay').length) {
+            $('#loader-overlay').hide();
+        }
+    } catch (e) {}
+}
+
 // After Place Order Ajax succeeds
 function applepayAfterOrderCreated(orderId, price) {
     applepayLastOrderId = orderId;
@@ -123,6 +131,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                         return;
                     }
                     console.warn("PayPal SDK validateMerchant returned unexpected payload", payload);
+                    alert("PayPal SDK validateMerchant returned unexpected payload", payload);
                 }
 
                 // Fallback: direct call to PayPal validate endpoint
@@ -142,8 +151,9 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 if (!validateRes.ok) {
                     const text = await validateRes.text();
                     console.error("Merchant validation HTTP error", validateRes.status, text);
-                    alert("Merchant validation failed (HTTP " + validateRes.status + "). Check domain association / credentials.");
+                    alert("Merchant validation failed (HTTP " + validateRes.status + " " + text + "). Check domain association / credentials.");
                     session.abort();
+                    hideApplePayLoader();
                     return;
                 }
 
@@ -152,6 +162,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                     console.error("Invalid merchant session payload", merchantSession);
                     alert("Merchant validation failed (bad payload).");
                     session.abort();
+                    hideApplePayLoader();
                     return;
                 }
                 session.completeMerchantValidation(merchantSession);
@@ -162,6 +173,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 console.error("Merchant validation failed", err);
                 alert("Apple Pay validation failed: " + (err && err.message ? err.message : err));
                 session.abort();
+                hideApplePayLoader();
             }
         };
 
@@ -222,19 +234,23 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
 
                     if (backendData.success) {
                         session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                        hideApplePayLoader();
                         window.location.href = backendData.redirect || "/payment/success";
                     } else {
                         session.completePayment(ApplePaySession.STATUS_FAILURE);
                         alert("Failed to update order: " + (backendData.message || ""));
+                        hideApplePayLoader();
                     }
                 } else {
                     session.completePayment(ApplePaySession.STATUS_FAILURE);
                     alert("Apple Pay not approved (status=" + status + ")");
+                    hideApplePayLoader();
                 }
             } catch (err) {
                 console.error("Apple Pay processing error:", err);
                 try { session.completePayment(ApplePaySession.STATUS_FAILURE); } catch(e) {}
                 alert("Apple Pay failed to authorize or capture. See console for details.");
+                hideApplePayLoader();
             }
         };
 
@@ -242,6 +258,7 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
             apCancelled = true;
             alert("Apple Pay cancelled.");
             console.log("Apple Pay sheet cancelled by user");
+            hideApplePayLoader();
         };
 
         session.begin();
@@ -250,11 +267,13 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
         setTimeout(() => {
             if (!apValidated && !apCancelled && !apAuthorized) {
                 alert("Apple Pay closed before validation. Ensure HTTPS, domain association, and valid PayPal credentials.");
+                hideApplePayLoader();
             }
         }, 10000);
     } catch (err) {
         console.error("Apple Pay trigger error:", err);
         alert("Unable to start Apple Pay: " + err.message);
+        hideApplePayLoader();
     }
 }
 
