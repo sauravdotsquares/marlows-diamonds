@@ -195,7 +195,9 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 }
                 const { status } = await paypal.Applepay().confirmOrder({
                     orderId: paypalOrderId,
-                    paymentMethodData: paymentData
+                    token: paymentData.token,
+                    billingContact: paymentData.billingContact,
+                    shippingContact: paymentData.shippingContact
                 });
 
                 if (status === "APPROVED") {
