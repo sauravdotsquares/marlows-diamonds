@@ -164,14 +164,16 @@ async function triggerApplePayViaPayPal(price, orderId, currency = "GBP") {
                 }
 
                 const merchantSession = await validateRes.json();
-                if (!merchantSession || typeof merchantSession !== "object") {
+                // PayPal may return either the raw Apple session or { merchantSession: {...} }
+                const sessionObj = (merchantSession && merchantSession.merchantSession) ? merchantSession.merchantSession : merchantSession;
+                if (!sessionObj || typeof sessionObj !== "object") {
                     console.error("Invalid merchant session payload", merchantSession);
-                    alert("Merchant validation failed (bad payload).");
+                    try { alert("Merchant validation failed (bad payload): " + JSON.stringify(merchantSession)); } catch(_) { alert("Merchant validation failed (bad payload)"); }
                     session.abort();
                     hideApplePayLoader();
                     return;
                 }
-                session.completeMerchantValidation(merchantSession);
+                session.completeMerchantValidation(sessionObj);
                 console.log("Merchant validation successful via REST");
                 apValidated = true;
                 alert("Merchant validated (REST)");
