@@ -890,11 +890,20 @@
     {{-- <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script> --}}
     <script>
         function onPayPalScriptLoaded() {
-            if (window.paypal && paypal.Googlepay) {
-                // onGooglePayLoaded();
-            } else {
-                console.error('Google Pay not found in PayPal SDK');
+            console.log('PayPal SDK loaded successfully');
+
+            // Verify PayPal SDK is available
+            if (!window.paypal) {
+                console.error('PayPal SDK not found');
+                alert('Payment system initialization failed. Please refresh the page.');
+                return;
             }
+
+            // Initialize PayPal button
+            initializePayPalButton();
+
+            // Initialize Google Pay button
+            initializeGooglePayButton();
         }
     </script>
     <script
