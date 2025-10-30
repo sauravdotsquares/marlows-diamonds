@@ -1655,38 +1655,23 @@
                                 $('#tokenOrdId').val(response.order_dt);
 
                                 if (selectedPaymentType == 'paypal') {
-                                    window.location.href = "{{ route('make.payment') }}/" +
-                                        response.order_dt;
+                                    // Store order ID for PayPal button
+                                    $('#already_inserted').val('order_inserted');
+
+                                    // Hide Place Order button, show instructions
+                                    $('#place-order').text('Click the PayPal button below to complete payment');
+                                    $('#place-order').prop('disabled', true);
+                                    $('#loader-overlay').hide();
+
+                                    // PayPal button will handle the rest
+
                                 } else if (selectedPaymentType == 'googlepay') {
-                                    let payload = getGooglePayloadInfo(response.order_dt, response
-                                        .get_order_detail,
-                                        price, "GBP");
+                                    // Store order ID for Google Pay button
+                                    $('#already_inserted').val('order_inserted');
 
-                                    // Call Google Pay flow and ensure loader overlay is hidden after completion.
-                                    try {
-                                        const result = onGooglePaymentButtonClicked(price, response.order_dt, payload, true);
+                                    // Trigger Google Pay button click programmatically
+                                    onGooglePayButtonClicked();
 
-                                        // If it returns a Promise, hide loader when it resolves/rejects
-                                        if (result && typeof result.then === 'function') {
-                                            result.then(() => {
-                                                $('#loader-overlay').hide();
-                                                $('body').removeClass('loading');
-                                            }).catch(() => {
-                                                $('#loader-overlay').hide();
-                                                $('body').removeClass('loading');
-                                            });
-                                        } else {
-                                            // Fallback: if no Promise is returned, hide the loader after a timeout
-                                            setTimeout(function() {
-                                                $('#loader-overlay').hide();
-                                                $('body').removeClass('loading');
-                                            }, 10000); // 10s
-                                        }
-                                    } catch (e) {
-                                        console.error('Error during Google Pay flow', e);
-                                        $('#loader-overlay').hide();
-                                        $('body').removeClass('loading');
-                                    }
                                 } else if (selectedPaymentType == 'klarna') {
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
