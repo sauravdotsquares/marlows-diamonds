@@ -699,6 +699,7 @@
                                             value="paypal">
                                         <input type="hidden" id="already_inserted" name="already_inserted"
                                             value="">
+                                        <input type="hidden" id="tokenOrdId" name="tokenOrdId" value="">
 
                                         <div
                                             style="color: #000; font-size: 18px; font-weight: bold; margin: 15px 0; text-align: center;">
