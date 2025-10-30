@@ -873,7 +873,8 @@
         }
         $clientId = config('paypal.client_id');
     @endphp
-    <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
+    {{-- Google Pay logic moved inline, no longer loading external JS file --}}
+    {{-- <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script> --}}
     {{-- <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script> --}}
     <script>
         function onPayPalScriptLoaded() {
