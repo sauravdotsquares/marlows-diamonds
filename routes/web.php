@@ -469,9 +469,10 @@ Route::get('/success-page/{id}', [ApplePayController::class, 'showSuccessPage'])
 
 	Route::post('products/products-final-price-with-diamond','ProductPriceController@getProductFinalPriceWithDiamond')->name('products-final-price-with-diamond');
 
-	Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
-	Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
-	Route::get('products/payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
+	// LEGACY - Old PayPal redirect flow routes (disabled)
+	// Route::get('products/handle-payment/{order_id?}', 'PayPalPaymentController@handlePayment')->name('make.payment');
+	// Route::get('products/cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
+	// Route::get('products/payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
 	Route::view('products/payment-successf', 'front.pages.success-page-fake')->name('successf.payment');
 
     Route::get('order-success/{orderId?}', 'KlarnaController@paymentSuccess')->name('order.success');
@@ -563,6 +564,7 @@ Route::post('/validate-apple-pay', [ApplePayController::class, 'validateApplePay
 Route::post('/process-apple-pay', [ApplePayController::class, 'processApplePay']);
 Route::post('/handle-apple-pay', [ApplePayController::class, 'handleApplePay']);
 Route::post('/process-google-pay', [ApplePayController::class, 'processGooglePay']);
+Route::post('/process-paypal', [App\Http\Controllers\Front\PayPalPaymentController::class, 'processPayPal'])->name('process.paypal');
 Route::post('/update-order-status', [ApplePayController::class, 'updateStatus']);
 Route::post('/update-order-google-status', [ApplePayController::class, 'updateGoogleStatus']);
 Route::post('/paypal/token', function () {
