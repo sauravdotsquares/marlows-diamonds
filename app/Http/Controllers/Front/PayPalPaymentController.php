@@ -261,8 +261,75 @@ class PayPalPaymentController extends Controller
         //     return view('front.pages.cancel-page',[]);
         // }
 
-        
+
 
         dd('Error occured!');
+    }
+
+    /**
+     * Process modern PayPal JS SDK payment
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function processPayPal(Request $request)
+    {
+        try {
+            // Get request data
+            $orderId = $request->input('order_id');
+            $captureResponse = $request->input('captureResponse');
+
+            // Validate required data
+            if (!$orderId || !$captureResponse) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Missing required payment data'
+                ], 400);
+            }
+
+            // Find order in database
+            $order = Order::find($orderId);
+
+            if (!$order) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Order not found'
+                ], 404);
+            }
+
+            // Extract PayPal capture details
+            $paypalOrderId = $captureResponse['id'] ?? null;
+            $paymentStatus = $captureResponse['status'] ?? null;
+            $captureId = $captureResponse['purchase_units'][0]['payments']['captures'][0]['id'] ?? null;
+
+            // Update order with payment details
+            $order->status = 2; // Paid status
+            $order->payment_method = 'PayPal (JS SDK)';
+            $order->token = $paypalOrderId;
+            $order->payment_status = $paymentStatus;
+            $order->transaction_id = $captureId;
+            $order->save();
+
+            // Clear cart session
+            session()->forget('cart');
+
+            // Send order confirmation email
+            email_order_custom($order->id);
+
+            // Return success response
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Order processed successfully',
+                'order_id' => $orderId
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('PayPal payment processing error: ' . $e->getMessage());
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Payment processing failed: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
