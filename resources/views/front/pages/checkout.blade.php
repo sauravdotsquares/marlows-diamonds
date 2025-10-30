@@ -707,15 +707,27 @@
                                         <div class="checkout-payment-options">
                                             <ul class="cc_payment_methods_options">
 
-                                                {{-- previous paypal --}}
-                                                @include('front.pages.payments.paypal', [
-                                                    'totalAmount' => $total,
-                                                ])
+                                                {{-- Old PayPal redirect (commented for reference) --}}
+                                                {{-- @include('front.pages.payments.paypal', ['totalAmount' => $total]) --}}
 
-                                                {{-- new payapl integration --}}
-                                                {{-- <div id="paypal-button-container"></div>
-                                                     <div id="paypal-marks-container"></div> --}}
-                                                {{-- <div id="container"></div> --}}
+                                                {{-- Modern PayPal button --}}
+                                                <li class="cc_payment_methods paypal_payment paypalpaymentgateway_wrap">
+                                                    <div class="paypal_pay_button">
+                                                        <input type="radio" name="payment_type" id="paypal_radio" value="paypal" autocomplete="off">
+                                                        <label class="paypal_label" for="paypal_radio">
+                                                            PayPal
+                                                            <a class="what-paypal" href="https://www.paypal.com/" target="_blank">
+                                                                What is PayPal?
+                                                            </a>
+                                                        </label>
+                                                    </div>
+
+                                                    <i class="diamond-icon payment-checkout"></i>
+                                                    <div class="payment-box-main-drop paypal-box" style="display: none;">
+                                                        Pay securely via PayPal using your PayPal account or credit card.
+                                                    </div>
+                                                    <div id="paypal-button-container" class="paypal-button-container"></div>
+                                                </li>
 
 
 
