@@ -38,6 +38,10 @@ class PayPalPaymentController extends Controller
         $this->_api_context->setConfig($paypal_conf['settings']);
     }
 
+    /**
+     * LEGACY METHOD - Old PayPal redirect flow
+     * Kept for reference only. Use processPayPal() for modern integration.
+     */
     public function handlePayment($orderId)
     {
         $getOrderDetails = Order::with('getOrderDetailsFunction')->where('id',$orderId)->first();
@@ -108,6 +112,10 @@ class PayPalPaymentController extends Controller
         return redirect()->back()->with('error','Payment gateway initiliazation failed.');
     }
 
+    /**
+     * LEGACY METHOD - Old PayPal redirect flow
+     * Kept for reference only. Use processPayPal() for modern integration.
+     */
     public function paymentCancel(Request $request)
     {
         session()->forget('cart');
@@ -174,6 +182,10 @@ class PayPalPaymentController extends Controller
         // dd('Your payment has been decliend. The payment cancelation page goes here!');
     }
 
+    /**
+     * LEGACY METHOD - Old PayPal redirect flow
+     * Kept for reference only. Use processPayPal() for modern integration.
+     */
     public function paymentSuccess(Request $request)
     {
         session()->forget('cart');
