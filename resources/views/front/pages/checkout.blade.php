@@ -885,8 +885,8 @@
         }
     </script>
     <script
-        src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
-        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
+        src="https://www.paypal.com/sdk/js?components=buttons,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
+        data-client-token="{{ $clientToken }}" onload="onPayPalScriptLoaded()">
     </script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
     <script src="https://applepay.cdn-apple.com/jsapi/1/latest/apple-pay-sdk.js"></script>
