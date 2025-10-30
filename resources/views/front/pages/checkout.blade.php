@@ -889,6 +889,273 @@
     {{-- <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script> --}}
     {{-- <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script> --}}
     <script>
+        // Initialize PayPal button
+        function initializePayPalButton() {
+            if (!paypal.Buttons) {
+                console.error('PayPal Buttons component not available');
+                return;
+            }
+
+            paypal.Buttons({
+                // Style configuration
+                style: {
+                    layout: 'vertical',
+                    color: 'gold',
+                    shape: 'rect',
+                    label: 'paypal'
+                },
+
+                // Create order callback
+                createOrder: function(data, actions) {
+                    console.log('PayPal createOrder called');
+
+                    // Get order amount from DOM
+                    const totalElement = document.getElementById('totalFinalPrices');
+                    if (!totalElement) {
+                        alert('Unable to determine order total');
+                        throw new Error('Total element not found');
+                    }
+
+                    const totalText = totalElement.querySelector('strong').textContent.trim();
+                    const totalAmount = totalText.replace(/[^0-9.]/g, '');
+
+                    // Create PayPal order via SDK
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                currency_code: 'GBP',
+                                value: totalAmount
+                            }
+                        }]
+                    });
+                },
+
+                // Approve callback (user authorized payment)
+                onApprove: function(data, actions) {
+                    console.log('PayPal approved:', data.orderID);
+
+                    // Show loading state
+                    document.getElementById('loader-overlay').style.display = 'flex';
+
+                    // Capture the payment
+                    return actions.order.capture().then(function(captureDetails) {
+                        console.log('PayPal capture complete:', captureDetails);
+
+                        // Send to backend for order finalization
+                        processPayPalPayment(captureDetails);
+                    });
+                },
+
+                // Error callback
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    document.getElementById('loader-overlay').style.display = 'none';
+                    alert('Payment processing error: ' + (err.message || 'Please try again'));
+                },
+
+                // Cancel callback
+                onCancel: function(data) {
+                    console.log('PayPal payment cancelled by user');
+                    document.getElementById('loader-overlay').style.display = 'none';
+                    alert('Payment cancelled. You can try again when ready.');
+                }
+            }).render('#paypal-button-container');
+
+            console.log('PayPal button rendered');
+        }
+
+        // Initialize Google Pay button
+        function initializeGooglePayButton() {
+            if (!paypal.Googlepay) {
+                console.error('Google Pay component not available');
+                return;
+            }
+
+            const googlepay = paypal.Googlepay();
+
+            // Get Google Pay configuration from PayPal
+            googlepay.config().then(function(googlePayConfig) {
+                console.log('Google Pay config received');
+
+                if (!googlePayConfig.isEligible) {
+                    console.warn('Google Pay not eligible');
+                    return;
+                }
+
+                // Configure Google Pay payment data request
+                const paymentsClient = new google.payments.api.PaymentsClient({
+                    environment: '{{ config("app.env") == "production" ? "PRODUCTION" : "TEST" }}'
+                });
+
+                // Render Google Pay button
+                const googlePayButton = paymentsClient.createButton({
+                    onClick: onGooglePayButtonClicked,
+                    buttonType: 'pay',
+                    buttonColor: 'black',
+                    buttonSizeMode: 'fill'
+                });
+
+                document.getElementById('googlepay-button-container').appendChild(googlePayButton);
+                console.log('Google Pay button rendered');
+
+            }).catch(function(err) {
+                console.error('Google Pay config error:', err);
+            });
+        }
+
+        // Handle Google Pay button click
+        function onGooglePayButtonClicked() {
+            console.log('Google Pay button clicked');
+
+            // Show loading
+            document.getElementById('loader-overlay').style.display = 'flex';
+
+            // Get order amount
+            const totalElement = document.getElementById('totalFinalPrices');
+            if (!totalElement) {
+                alert('Unable to determine order total');
+                document.getElementById('loader-overlay').style.display = 'none';
+                return;
+            }
+
+            const totalText = totalElement.querySelector('strong').textContent.trim();
+            const totalAmount = totalText.replace(/[^0-9.]/g, '');
+
+            const googlepay = paypal.Googlepay();
+
+            // Get Google Pay config
+            googlepay.config().then(function(googlePayConfig) {
+
+                // Build payment data request
+                const paymentDataRequest = {
+                    apiVersion: 2,
+                    apiVersionMinor: 0,
+                    allowedPaymentMethods: googlePayConfig.allowedPaymentMethods,
+                    transactionInfo: {
+                        currencyCode: 'GBP',
+                        totalPriceStatus: 'FINAL',
+                        totalPrice: totalAmount
+                    },
+                    merchantInfo: googlePayConfig.merchantInfo
+                };
+
+                // Create Google Payments API client
+                const paymentsClient = new google.payments.api.PaymentsClient({
+                    environment: '{{ config("app.env") == "production" ? "PRODUCTION" : "TEST" }}'
+                });
+
+                // Load payment data (show Google Pay sheet)
+                return paymentsClient.loadPaymentData(paymentDataRequest);
+
+            }).then(function(paymentData) {
+                console.log('Google Pay payment data received');
+
+                // Confirm payment with PayPal
+                return googlepay.confirmOrder({
+                    orderId: paymentData.paymentMethodData.tokenizationData.token,
+                    paymentMethodData: paymentData.paymentMethodData
+                });
+
+            }).then(function(confirmResult) {
+                console.log('Google Pay order confirmed:', confirmResult);
+
+                // Process payment (backend call)
+                processGooglePayPayment(confirmResult);
+
+            }).catch(function(err) {
+                console.error('Google Pay error:', err);
+                document.getElementById('loader-overlay').style.display = 'none';
+
+                if (err.statusCode === 'CANCELED') {
+                    alert('Payment cancelled');
+                } else {
+                    alert('Google Pay error: ' + (err.message || 'Please try again'));
+                }
+            });
+        }
+
+        // Send PayPal payment to backend
+        function processPayPalPayment(captureDetails) {
+            console.log('Processing PayPal payment on backend');
+
+            // Get order ID from hidden input (set during "Place Order" flow)
+            const orderId = $('#tokenOrdId').val();
+
+            if (!orderId) {
+                alert('Order ID not found. Please try placing your order again.');
+                document.getElementById('loader-overlay').style.display = 'none';
+                return;
+            }
+
+            // Send to backend
+            $.ajax({
+                url: '/process-paypal',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    order_id: orderId,
+                    captureResponse: captureDetails
+                },
+                success: function(response) {
+                    console.log('Backend processing complete:', response);
+                    document.getElementById('loader-overlay').style.display = 'none';
+
+                    if (response.status === 'success') {
+                        // Redirect to success page
+                        window.location.href = '/success-page/' + orderId;
+                    } else {
+                        alert('Payment completed but order processing failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Backend processing error:', error);
+                    document.getElementById('loader-overlay').style.display = 'none';
+                    alert('Payment was captured but order processing failed. Please contact support with order ID: ' + orderId);
+                }
+            });
+        }
+
+        // Send Google Pay payment to backend
+        function processGooglePayPayment(confirmResult) {
+            console.log('Processing Google Pay payment on backend');
+
+            // Get order ID from hidden input
+            const orderId = $('#tokenOrdId').val();
+
+            if (!orderId) {
+                alert('Order ID not found. Please try placing your order again.');
+                document.getElementById('loader-overlay').style.display = 'none';
+                return;
+            }
+
+            // Send to existing backend route
+            $.ajax({
+                url: '/process-google-pay',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    order_id: orderId,
+                    captureResponse: confirmResult
+                },
+                success: function(response) {
+                    console.log('Backend processing complete:', response);
+                    document.getElementById('loader-overlay').style.display = 'none';
+
+                    if (response.status === 'success') {
+                        // Redirect to success page
+                        window.location.href = '/success-page/' + orderId;
+                    } else {
+                        alert('Payment completed but order processing failed: ' + (response.message || 'Unknown error'));
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Backend processing error:', error);
+                    document.getElementById('loader-overlay').style.display = 'none';
+                    alert('Payment was captured but order processing failed. Please contact support with order ID: ' + orderId);
+                }
+            });
+        }
+
         function onPayPalScriptLoaded() {
             console.log('PayPal SDK loaded successfully');
 
