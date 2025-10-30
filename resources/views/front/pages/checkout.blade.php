@@ -1023,11 +1023,27 @@
             const totalAmount = totalText.replace(/[^0-9.]/g, '');
 
             const googlepay = paypal.Googlepay();
+            let paypalOrderId = null;
 
-            // Get Google Pay config
-            googlepay.config().then(function(googlePayConfig) {
+            // Step 1: Create PayPal order first
+            googlepay.createOrder({
+                purchase_units: [{
+                    amount: {
+                        currency_code: 'GBP',
+                        value: totalAmount
+                    }
+                }]
+            }).then(function(orderData) {
+                console.log('PayPal order created:', orderData);
+                paypalOrderId = orderData.id;
 
-                // Build payment data request
+                // Step 2: Get Google Pay config
+                return googlepay.config();
+
+            }).then(function(googlePayConfig) {
+                console.log('Google Pay config received');
+
+                // Build payment data request with PayPal order ID
                 const paymentDataRequest = {
                     apiVersion: 2,
                     apiVersionMinor: 0,
@@ -1045,15 +1061,15 @@
                     environment: '{{ config("app.env") == "production" ? "PRODUCTION" : "TEST" }}'
                 });
 
-                // Load payment data (show Google Pay sheet)
+                // Step 3: Load payment data (show Google Pay sheet)
                 return paymentsClient.loadPaymentData(paymentDataRequest);
 
             }).then(function(paymentData) {
                 console.log('Google Pay payment data received');
 
-                // Confirm payment with PayPal
+                // Step 4: Confirm payment with PayPal using the order ID we created
                 return googlepay.confirmOrder({
-                    orderId: paymentData.paymentMethodData.tokenizationData.token,
+                    orderId: paypalOrderId,
                     paymentMethodData: paymentData.paymentMethodData
                 });
 
