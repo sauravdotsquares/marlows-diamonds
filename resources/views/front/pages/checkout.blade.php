@@ -16,43 +16,6 @@
             border: 1px solid #e3d0d4;
             margin: 0px 14px 14px;
         }
-        
-        /* Payment Method Styling */
-        .payment-method-content {
-            padding: 20px;
-        }
-        
-        .payment-button-container {
-            margin: 15px auto;
-            max-width: 400px;
-            min-height: 40px;
-        }
-        
-        .payment-features {
-            margin: 15px 0;
-            padding: 0;
-            list-style: none;
-        }
-        
-        .payment-features li {
-            margin: 8px 0;
-            padding-left: 20px;
-            position: relative;
-        }
-        
-        .payment-features li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #8e2e65;
-        }
-        
-        /* PayPal and Google Pay Button Containers */
-        #paypal-button-container,
-        #googlepay-button-container {
-            width: 100%;
-            margin: 10px auto;
-        }
     </style>
 @endsection
 
@@ -757,30 +720,29 @@
 
 
 
-                                                <!-- Google Pay with PayPal Integration -->
+                                                {{-- google checkbox --}}
                                                 <li class="cc_payment_methods googlepay_payment googlepaygateway_wrap">
+
                                                     <div class="google_pay_button">
                                                         <input type="radio" name="payment_type" id="googlepay_radio"
                                                             value="googlepay" autocomplete="off">
                                                         <label class="googlepay_label" for="googlepay_radio">
                                                             Google Pay
                                                             <a class="what-googlepay" href="https://pay.google.com/about/"
-                                                                target="_blank">What is Google Pay?</a>
+                                                                target="_blank">
+                                                                What is Google Pay?
+                                                            </a>
                                                         </label>
                                                     </div>
-                                                    <i class="diamond-icon payment-checkout"></i>
-                                                    <div class="payment-box-main-drop googlepay-box">
-                                                        <div class="payment-method-content">
-                                                            <p>Pay securely with Google Pay:</p>
-                                                            <!-- PayPal's Google Pay Button Container -->
-                                                            <div id="googlepay-button-container" class="payment-button-container"></div>
-                                                            <ul class="payment-features">
-                                                                <li>Fast and secure checkout</li>
-                                                                <li>Your payment details are protected</li>
-                                                                <li>No need to enter card details manually</li>
-                                                            </ul>
-                                                        </div>
+
+                                                    <i class="diamond-icon paypent-checkout"></i>
+                                                    <div class="payment-box-main-drop googlepay-box"
+                                                        style="display: none;">
+                                                        Pay via Google Pay; a fast and secure way to pay using your saved
+                                                        cards.
                                                     </div>
+                                                    <div id="googlepay-button-container"
+                                                        class="googlepay-button-container"></div>
                                                 </li>
 
 
@@ -901,102 +863,30 @@
     const PAYPAL_BASE_NEW_URL_PHP = "{{ config('paypal.base_new_url') }}";
     </script>
     @php
+        // Request client token from the server-side PHP
+        $clientToken = generateClientToken();
+
         if (config('app.env') == 'production') {
-            $paypalClientId = config('paypal.client_id');
-            $paypalEnvironment = 'production';
+            $merchantId = config('paypal.merchant_id_live');
         } else {
-            $paypalClientId = config('paypal.client_id');
-            $paypalEnvironment = 'sandbox';
+            $merchantId = config('paypal.merchant_id_stag');
         }
+        $clientId = config('paypal.client_id');
     @endphp
-    
-    <!-- PayPal SDK with Google Pay Component -->
-    <script src="https://www.paypal.com/sdk/js?components=buttons,googlepay&client-id={{ $paypalClientId }}&currency=GBP&buyer-country=GB"></script>
-    
-    <!-- PayPal + Google Pay Integration -->
+    <script src="{{ mix('js/googlepay_checkout_code.min.js') }}"></script>
+    {{-- <script src="{{ mix('js/applepay_checkout_code.min.js') }}"></script> --}}
     <script>
-    // Verify PayPal SDK loaded correctly
-    window.addEventListener('load', function() {
-        if (!window.paypal) {
-            console.error('PayPal SDK failed to load');
-            // Hide payment methods that require PayPal SDK
-            document.querySelectorAll('.googlepay_payment, .paypal_payment').forEach(el => {
-                el.style.display = 'none';
-            });
-            return;
-        }
-        // PayPal button configuration
-        const paypalButtonsConfig = {
-            // Create order on PayPal servers
-            createOrder: async (data, actions) => {
-                // Get order details from form
-                const orderData = {
-                    amount: parseFloat(document.getElementById('final_price').value),
-                    currency: 'GBP'
-                };
-
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: orderData.amount.toFixed(2),
-                            currency_code: orderData.currency
-                        }
-                    }]
-                });
-            },
-            // Handle PayPal approval
-            onApprove: async (data, actions) => {
-                document.getElementById("loader-overlay").style.display = "flex";
-                try {
-                    const captureResult = await actions.order.capture();
-                    // Send capture result to your server
-                    await fetch('/api/paypal/capture-order', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                        },
-                        body: JSON.stringify({
-                            orderID: data.orderID,
-                            captureResult: captureResult
-                        })
-                    });
-                    
-                    // Show success message and redirect
-                    window.location.href = '/order/success';
-                } catch (error) {
-                    console.error('Payment capture failed:', error);
-                    document.getElementById("loader-overlay").style.display = "none";
-                    alert('Payment failed. Please try again.');
-                }
+        function onPayPalScriptLoaded() {
+            if (window.paypal && paypal.Googlepay) {
+                // onGooglePayLoaded();
+            } else {
+                console.error('Google Pay not found in PayPal SDK');
             }
-        };
-
-        // Google Pay configuration
-        const googlePayConfig = {
-            buttonColor: 'black', // or 'white'
-            buttonType: 'pay',    // or 'plain'
-            // Create order when Google Pay is clicked
-            createOrder: paypalButtonsConfig.createOrder,
-            // Handle successful payment
-            onApprove: paypalButtonsConfig.onApprove
-        };
-
-        // Initialize buttons when PayPal SDK is loaded
-        window.paypal.Buttons(paypalButtonsConfig)
-            .render('#paypal-button-container')
-            .catch(err => {
-                console.error('PayPal Buttons failed to render:', err);
-            });
-
-        // Initialize Google Pay button when available
-        window.paypal.Googlepay(googlePayConfig)
-            .render('#googlepay-button-container')
-            .catch(err => {
-                console.error('Google Pay failed to render:', err);
-                // Hide Google Pay container if not available
-                document.getElementById('googlepay-button-container').style.display = 'none';
-            });
+        }
+    </script>
+    <script
+        src="https://www.paypal.com/sdk/js?components=applepay,googlepay&client-id={{ $clientId }}&currency=GBP&buyer-country=GB&merchant-id={{ $merchantId }}"
+        data-client-token="{{ $clientToken }}" data-partner-attribution-id="APPLEPAY" onload="onPayPalScriptLoaded()">
     </script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
     <script src="https://applepay.cdn-apple.com/jsapi/1/latest/apple-pay-sdk.js"></script>
@@ -1479,16 +1369,35 @@
                                     window.location.href = "{{ route('make.payment') }}/" +
                                         response.order_dt;
                                 } else if (selectedPaymentType == 'googlepay') {
-                                    // Payment will be handled by PayPal's Google Pay integration
-                                    // Just store the order ID and show the Google Pay button
-                                    $('#already_inserted').val('order_inserted');
-                                    // Update order ID for PayPal's Google Pay integration
-                                    window.marlowsOrderId = response.order_dt;
-                                    // Show the Google Pay button
-                                    $('#googlepay-button-container').show();
-                                    // Hide loader since payment will be handled by PayPal SDK
-                                    $('#loader-overlay').hide();
-                                    $('body').removeClass('loading');
+                                    let payload = getGooglePayloadInfo(response.order_dt, response
+                                        .get_order_detail,
+                                        price, "GBP");
+
+                                    // Call Google Pay flow and ensure loader overlay is hidden after completion.
+                                    try {
+                                        const result = onGooglePaymentButtonClicked(price, response.order_dt, payload, true);
+
+                                        // If it returns a Promise, hide loader when it resolves/rejects
+                                        if (result && typeof result.then === 'function') {
+                                            result.then(() => {
+                                                $('#loader-overlay').hide();
+                                                $('body').removeClass('loading');
+                                            }).catch(() => {
+                                                $('#loader-overlay').hide();
+                                                $('body').removeClass('loading');
+                                            });
+                                        } else {
+                                            // Fallback: if no Promise is returned, hide the loader after a timeout
+                                            setTimeout(function() {
+                                                $('#loader-overlay').hide();
+                                                $('body').removeClass('loading');
+                                            }, 10000); // 10s
+                                        }
+                                    } catch (e) {
+                                        console.error('Error during Google Pay flow', e);
+                                        $('#loader-overlay').hide();
+                                        $('body').removeClass('loading');
+                                    }
                                 } else if (selectedPaymentType == 'klarna') {
                                     console.log('selected option is klarna !!');
                                     handleKlarnaPayment(response.order_dt);
@@ -1817,8 +1726,133 @@
                 });
         }
 
-        // Modern PayPal + Google Pay Integration
-        // No custom payload needed - handled by PayPal SDK
+        // Google pay transaction payload code only
+        function getGooglePayloadInfo(internal_order_id, get_order_detail, total, currencyCode = "GBP") {
+            let items = [];
+            let itemsTotal = 0;
+            total = parseFloat(total);
+            total = total.toFixed(2);
+
+            if (get_order_detail.get_order_details_function && get_order_detail.get_order_details_function.length > 0) {
+                get_order_detail.get_order_details_function.forEach(item => {
+                    let details = {};
+                    try {
+                        details = JSON.parse(item.order_product_details || "{}");
+                    } catch (e) {
+                        details = {};
+                    }
+
+                    const price = parseFloat(item.final_product_price) || 0;
+                    const quantity = parseInt(item.quantity) || 1;
+
+                    items.push({
+                        name: details.slug || ("Product " + item.product_id),
+                        description: details.metal_type ?
+                            `${details.carat || ""} ${details.metal_type} ${details.shape || ""}`.trim() :
+                            "Order Item",
+                        unit_amount: {
+                            currency_code: currencyCode,
+                            value: price.toFixed(2)
+                        },
+                        quantity: quantity,
+                        sku: item.product_id.toString()
+                    });
+
+                    itemsTotal += price * quantity;
+
+                    // Yearly Care Plan for product
+                    if (item.yearly_support_status == '1') {
+                        const carePlanPrice = parseFloat(item.yearly_support_price) || 0;
+                        const carePlanQuantity = parseInt(item.quantity) || 1;
+                        switch (item.yearly_support_price) {
+                            case '89.00':
+                                $yearCarePlan = '1 year care plan for ';
+                                break;
+
+                            case '170.00':
+                                $yearCarePlan = '2 years care plan for ';
+                                break;
+
+                            case '220.00':
+                                $yearCarePlan = '3 years care plan for ';
+                                break;
+
+                            case '300.00':
+                                $yearCarePlan = '4 years care plan for ';
+                                break;
+
+                            case '400.00':
+                                $yearCarePlan = '5 years care plan for ';
+                                break;
+
+                            default:
+                                $yearCarePlan = 'Care plan for ';
+                                break;
+                        }
+                        const carePlanName = details.slug ? $yearCarePlan + details.slug : ("Product " + item
+                            .product_id +
+                            " care plan");
+                        const carePlanDescription = details.metal_type ?
+                            `${details.carat || ""} ${details.metal_type} ${details.shape || ""}`
+                            .trim() : "Care Plan"
+                        items.push({
+                            name: carePlanName,
+                            description: carePlanDescription,
+                            unit_amount: {
+                                currency_code: currencyCode,
+                                value: carePlanPrice.toFixed(2)
+                            },
+                            quantity: carePlanQuantity,
+                            sku: item.product_id.toString()
+                        });
+                        itemsTotal += carePlanPrice * carePlanQuantity;
+                    }
+                });
+            }
+
+            let payload = {
+                intent: "CAPTURE",
+                purchase_units: [{
+                    reference_id: "ORDER_REF_" + internal_order_id,
+                    amount: {
+                        currency_code: currencyCode,
+                        value: itemsTotal.toFixed(2), // must match sum
+                        breakdown: {
+                            item_total: {
+                                currency_code: currencyCode,
+                                value: itemsTotal.toFixed(2)
+                            }
+                        }
+                    },
+                    items: items
+                }]
+            };
+
+            // ✅ Add shipping if available
+            // if (get_order_detail.customer_shipping_address) {
+            //     const shipping = get_order_detail.customer_shipping_address;
+            //     payload.purchase_units[0].shipping = {
+            //         name: {
+            //             full_name: shipping.first_name + " " + shipping.last_name
+            //         },
+            //         address: {
+            //             address_line_1: shipping.street_address_l1,
+            //             address_line_2: shipping.street_address_l2 || "",
+            //             admin_area_2: shipping.town_city,
+            //             admin_area_1: shipping.state,
+            //             postal_code: shipping.pin_code,
+            //             country_code: shipping.country_id
+            //         }
+            //     };
+            // } else {
+            //     payload.purchase_units[0].shipping = null;
+            // }
+
+            // Paypal check shipping address  with client address
+            payload.purchase_units[0].shipping = null;
+
+            return payload;
+        }
 
         // Apple pay transaction payload code only
         function getApplePayPayloadInfo(internal_order_id, get_order_detail, totalAmt, currencyCode = "GBP") {
